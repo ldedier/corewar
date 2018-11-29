@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 16:49:37 by ldedier           #+#    #+#             */
-/*   Updated: 2018/11/29 20:41:18 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/11/29 20:42:14 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct	s_champion
 typedef struct	s_parser
 {
 	int			nb_line;
+	//...
 }				t_parser;
 
 typedef struct	s_env
