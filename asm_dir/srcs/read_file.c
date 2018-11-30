@@ -26,7 +26,7 @@ char   **read_file(char **argv)
     ft_printf("bad file descriptor\n");
     return (0);
   }
-  while (get_next_line(3, &line))
+  while (get_next_line(fd, &line))
   {
 		str = ft_strjoin(str, line);
 		str = ft_strjoin(str, "\n\0");
@@ -50,10 +50,10 @@ int read_name_file(char *argv, t_env *env)
 	i = 0;
 	if (!argv)
 		return (1);
-	while (argv[i] != '.')
+	while (argv[i])
 		i++;
 	len = i;
-	if (argv[i + 1] != 's' || i == 0)
+	if (argv[i - 1] != 's' || i == 0)
 		return (1);
 	index = i;
 	env->champ.file_name = ft_strnew(len + 4);
