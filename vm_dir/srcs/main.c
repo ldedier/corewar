@@ -6,11 +6,11 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:41:48 by ldedier           #+#    #+#             */
-/*   Updated: 2018/11/29 17:42:03 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/11/30 13:29:05 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "corewar.h"
+#include "visu.h"
 
 int main(int argc, char **argv)
 {

@@ -6,13 +6,14 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/29 17:38:52 by ldedier           #+#    #+#              #
-#    Updated: 2018/11/29 20:22:54 by ldedier          ###   ########.fr        #
+#    Updated: 2018/11/30 13:38:04 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 DEBUG ?= 0
 
 LIBFTDIR		= libft
+LIBOPDIR		= libop
 VMDIR			= vm_dir
 ASMDIR			= asm_dir
 DECOMPILERDIR	= decompiler_dir
@@ -21,35 +22,35 @@ VM_NAME			= corewar
 ASM_NAME		= asm
 DECOMPILER_NAME = decompiler
 
+OP				= $(LIBOPDIR)/op.a
+
 opti:
 	@make all -j
+
 all:
+	@make -C $(LIBOPDIR) opti
 	@make -C $(LIBFTDIR) opti
 	@make -C $(ASMDIR) optilibcomp
 	@make -C $(VMDIR) optilibcomp
 	@make -C $(DECOMPILERDIR) optilibcomp
+	@cp $(ASMDIR)/$(ASM_NAME) .
+	@cp $(VMDIR)/$(VM_NAME) .
+	@cp $(DECOMPILERDIR)/$(DECOMPILER_NAME) .
 
 debug:
 	@make opti DEBUG=1
 
 redebug: fclean debug
 
-$(LIBFT):
-	@make -C $(LIBFTDIR) opti
-$(VMDIR):
-	@make -C $(VMDIR) opti
-$(ASMDIR):
-	@make -C $(VMDIR) opti
-$(DECOMPILERDIR):
-	@make -C $(VMDIR) opti
-
 clean:
+	@make clean -C $(LIBOPDIR)
 	@make clean -C $(LIBFTDIR)
 	@make clean -C $(ASMDIR)
 	@make clean -C $(VMDIR)
 	@make clean -C $(DECOMPILERDIR)
 
 fclean: clean
+	@make fclean -C $(LIBOPDIR)
 	@make fclean -C $(LIBFTDIR)
 	@make fclean -C $(ASMDIR)
 	@make fclean -C $(VMDIR)

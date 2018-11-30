@@ -6,17 +6,12 @@
 #    By: ldedier <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/06 18:20:16 by ldedier           #+#    #+#              #
-#    Updated: 2018/11/29 17:57:26 by ldedier          ###   ########.fr        #
+#    Updated: 2018/11/30 13:35:11 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
-
-ifeq ($(DEBUG), 1)
-	CFLAGS += -DDEBUG 
-endif
 
 SRCDIR   = srcs
 OBJDIR   = objs
@@ -65,11 +60,17 @@ SRCS_NO_PREFIX = ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c\
 SOURCES = $(addprefix $(SRCDIR)/, $(SRCS_NO_PREFIX))
 OBJECTS = $(addprefix $(OBJDIR)/, $(SRCS_NO_PREFIX:%.c=%.o))
 
-INC_PATH = -I $(INCLUDESDIR)
+INC = -I $(INCLUDESDIR)
 INCLUDES_NO_PREFIX = libft.h ft_printf.h get_next_line.h
 INCLUDES = $(addprefix $(INCLUDESDIR)/, $(INCLUDES_NO_PREFIX))
 
-CFLAGS += $(INC_PATH)
+
+CFLAGS = -Wall -Wextra -Werror $(INC)
+
+ifeq ($(DEBUG), 1)
+	CFLAGS += -DDEBUG 
+	CC += -g3
+endif
 
 opti:
 	@make all -j
@@ -86,6 +87,7 @@ $(BINDIR)/$(NAME): $(OBJECTS)
 	@echo "$(OK_COLOR)$(NAME) linked with success !$(EOC)"
 clean:
 	@rm -f $(OBJECTS)
+	@rm -rf $(OBJDIR)
 
 fclean: clean
 	@rm -f $(BINDIR)/$(NAME)

@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2018/11/21 13:40:59 by ldedier           #+#    #+#              #
-#    Updated: 2018/11/29 20:16:30 by ldedier          ###   ########.fr        #
+#    Created: 2018/11/30 13:25:13 by ldedier           #+#    #+#              #
+#    Updated: 2018/11/30 13:28:00 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,22 +27,26 @@ LIBFTDIR = ../libft
 LIBFT_INCLUDEDIR = includes
 LIBFT = $(LIBFTDIR)/libft.a
 
+LIBOPDIR = ../libop
+LIBOP_INCLUDEDIR = includes
+LIBOP = $(LIBOPDIR)/libop.a
+
 OK_COLOR = \x1b[32;01m
 EOC = \033[0m
 
-SRCS_NO_PREFIX =	main.c op.c
+SRCS_NO_PREFIX =		main.c
 
-
-INCLUDES_NO_PREFIX = corewar.h visu.h op.h
-
+INCLUDES_NO_PREFIX =	corewar.h visu.h
 
 SOURCES = $(addprefix $(SRCDIR)/, $(SRCS_NO_PREFIX))
 OBJECTS = $(addprefix $(OBJDIR)/, $(SRCS_NO_PREFIX:%.c=%.o))
-INCLUDES = $(addprefix $(INCLUDESDIR)/, $(INCLUDES_NO_PREFIX))
+	INCLUDES = $(addprefix $(INCLUDESDIR)/, $(INCLUDES_NO_PREFIX))
 
-INC = -I $(INCLUDESDIR) -I $(LIBFTDIR)/$(LIBFT_INCLUDEDIR)
+INC = -I $(INCLUDESDIR) -I $(LIBFTDIR)/$(LIBFT_INCLUDEDIR)\
+	  -I $(LIBOPDIR)/$(LIBOP_INCLUDEDIR)
 
-LFLAGS = -L $(LIBFTDIR) -lft
+LFLAGS = -L $(LIBFTDIR) -lft -L $(LIBOPDIR) -lop
+
 CFLAGS = -DPATH=$(PWD) -Wall -Wextra -Werror\
 		 -Wno-missing-field-initializers $(INC)
 
@@ -72,6 +76,7 @@ libcomp:
 
 all:
 	@make -C $(LIBFTDIR) all
+	@make -C $(LIBOPDIR) all
 	@make $(BINDIR)/$(NAME)
 
 debug:
@@ -94,11 +99,13 @@ $(OBJDIR)/%.o : $(SRCDIR)/%.c $(INCLUDES)
 
 clean:
 	@make clean -C $(LIBFTDIR)
+	@make clean -C $(LIBOPDIR)
 	@rm -f $(OBJECTS)
 	@rm -rf $(OBJDIR)
 
 fclean: clean
 	@make fclean -C $(LIBFTDIR)
+	@make fclean -C $(LIBOPDIR)
 	@rm -f $(BINDIR)/$(NAME)
 
 re: fclean opti

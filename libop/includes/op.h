@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 19:01:37 by ldedier           #+#    #+#             */
-/*   Updated: 2018/11/29 20:21:46 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/11/30 13:19:49 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ typedef struct					s_op
 	char						*description;
 	char						change_carry;
 	char						describe_address;
-
 }								t_op;
 
 typedef struct					s_header
@@ -81,4 +80,5 @@ typedef struct					s_header
 	char						comment[COMMENT_LENGTH + 1];
 }								t_header;
 
+t_op							g_op_tab[17];
 #endif
