@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/07 01:13:42 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/12 10:49:02 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/11/30 22:40:18 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define L_BLUE		"\x1B[94m"
 # define L_MAGENTA	"\x1B[95m"
 # define L_CYAN		"\x1B[96m"
-
+# define L_GREEN 	"\e[1;32m"
 # define BRED		"\x1B[41m"
 # define BGREEN 	"\x1B[42m"
 # define BYELLOW	"\x1B[43m"

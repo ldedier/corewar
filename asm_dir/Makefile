@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/21 13:40:59 by ldedier           #+#    #+#              #
-#    Updated: 2018/11/30 20:08:06 by ldedier          ###   ########.fr        #
+#    Updated: 2018/11/30 22:09:50 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,8 @@ LIBOP = $(LIBOPDIR)/libop.a
 OK_COLOR = \x1b[32;01m
 EOC = \033[0m
 
-SRCS_NO_PREFIX		= main.c ft_parse.c ft_parse_header.c
+SRCS_NO_PREFIX		= main.c ft_parse.c ft_parse_header.c ft_read_name.c\
+					  ft_log_tools.c
 
 INCLUDES_NO_PREFIX	= asm.h
 

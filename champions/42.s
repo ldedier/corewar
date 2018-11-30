@@ -18,7 +18,7 @@ tirf:	live	%42
 	sub	r3,r5,r3
 	zjmp	%:top
 	ld	%0,r11
-	fork	%:tirvd
+	fork	%:tirgvd
 	live	%42
 	sti	r10,%-510,%0
 	sti	r10,%-404,%0

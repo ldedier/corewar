@@ -3,134 +3,142 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/08 21:46:51 by ldedier           #+#    #+#             */
-/*   Updated: 2018/03/23 17:14:51 by ldedier          ###   ########.fr       */
+/*   Created: 2018/07/08 15:44:18 by ldedier           #+#    #+#             */
+/*   Updated: 2018/11/15 14:36:24 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "libft.h"
 
-char	*ft_get_buffer_rest(t_list **list, int const fd)
+/*
+** free the node if it is not relevant anymore before returning ret
+*/
+
+int		ft_may_free_node(int ret, t_list **gnls, t_gnl *to_del)
 {
-	t_fd_buffer		*to_add;
-	t_list			*ptr;
-	t_list			*new_node;
+	t_list *prev;
+	t_list *current;
 
-	ptr = *list;
-	while (ptr != NULL)
+	if (ret == 0)
 	{
-		if (((t_fd_buffer *)(ptr->content))->fd == fd)
-			return (((t_fd_buffer *)(ptr->content))->buffer);
+		prev = NULL;
+		current = *gnls;
+		while (current != NULL)
+		{
+			if ((t_gnl *)current->content == to_del)
+			{
+				if (prev == NULL)
+					*gnls = current->next;
+				else
+					prev->next = current->next;
+				free(to_del->whole_buffer);
+				free(to_del);
+				free(current);
+			}
+			prev = current;
+			current = current->next;
+		}
+	}
+	return (ret);
+}
+
+/*
+** get the rest of the "already read buffer" by previouses calls or create a
+** new buffer for this particular fd and returns it
+*/
+
+t_gnl	*ft_get_gnl(int fd, t_list **gnls)
+{
+	t_list	*ptr;
+	t_gnl	*to_add;
+	t_list	*new_node;
+
+	ptr = *gnls;
+	while (ptr)
+	{
+		if (((t_gnl *)ptr->content)->fd == fd)
+			return ((t_gnl *)ptr->content);
 		ptr = ptr->next;
 	}
-	if (!(to_add = (t_fd_buffer *)malloc(sizeof(t_fd_buffer))))
+	if (!(to_add = (t_gnl *)ft_memalloc(sizeof(t_gnl))))
 		return (NULL);
+	if (!(new_node = ft_lstnew_ptr(to_add, sizeof(t_list))))
+	{
+		free(to_add);
+		return (NULL);
+	}
+	ft_lstadd(gnls, new_node);
 	to_add->fd = fd;
-	if (!(new_node = ft_lstnew((void *)to_add, sizeof(to_add))))
+	if (!(to_add->rest = ft_strnew(BUFF_SIZE)))
 		return (NULL);
-	ft_lstadd(list, new_node);
-	if (!(((t_fd_buffer *)((*list)->content))->buffer = ft_strnew(BUFF_SIZE)))
-		return (NULL);
-	free(to_add);
-	return (((t_fd_buffer *)((*list)->content))->buffer);
+	to_add->whole_buffer = to_add->rest;
+	return (to_add);
 }
 
-int		ft_process_strcadline(int i, char **line, char *res, char *rest)
+/*
+** read until a newline is found and stock the rest of the buffer in
+** the static node of get_next_line
+*/
+
+int		ft_process_gnl(int const fd, char **line, t_gnl *gnl)
 {
-	int index;
+	int			ret;
+	int			new_line_index;
+	int			readd;
 
-	if (!(*line = ft_strsub(res, 0, i)))
-		return (-1);
-	i = 0;
-	while (rest[i] != '\n')
-		i++;
-	index = i + 1;
-	while (index < BUFF_SIZE)
+	readd = (ft_strcmp(*line, "") == 0) ? 0 : 1;
+	while (((ret = read(fd, gnl->rest, BUFF_SIZE)) > 0 &&
+				((new_line_index = ft_strichr(gnl->rest, '\n')) == -1)))
 	{
-		rest[index - (i + 1)] = rest[index];
-		index++;
-	}
-	rest[index - (i + 1)] = '\0';
-	ft_strdel(&res);
-	return (0);
-}
-
-int		ft_strcadline(char **line, char *rest, int *endline)
-{
-	char	*res;
-	int		i;
-
-	if (!(res = ft_strjoin(*line, rest)))
-		return (-1);
-	ft_strdel(line);
-	i = 0;
-	while (res[i] && res[i] != '\n')
-		i++;
-	if (res[i] == '\n')
-	{
-		if (ft_process_strcadline(i, line, res, rest) == -1)
+		readd = 1;
+		gnl->rest[ret] = '\0';
+		if (!(*line = ft_strjoin_free(*line, gnl->rest)))
 			return (-1);
-		*endline = 1;
+		ft_bzero(gnl->rest, BUFF_SIZE);
 	}
-	else
+	if (ret > 0)
 	{
-		if (!(*line = ft_strdup(res)))
+		readd = 1;
+		gnl->rest[ret] = '\0';
+		if (!(*line = ft_strnjoin_free(*line, gnl->rest, new_line_index)))
 			return (-1);
-		ft_strdel(&res);
-		ft_bzero(rest, BUFF_SIZE);
+		ft_strcpy(gnl->rest, &(gnl->rest[new_line_index + 1]));
 	}
-	return (0);
+	return (ret == -1 ? -1 : readd);
 }
 
-int		process_get_next_line(int fd, char **line, int endline, char *rest)
-{
-	int ret;
-
-	ret = 1;
-	if (!endline)
-	{
-		ft_bzero(rest, BUFF_SIZE);
-		while (!endline && (ret = read(fd, rest, BUFF_SIZE)) > 0)
-		{
-			if (ft_strcadline(line, rest, &endline) == -1)
-				return (-1);
-		}
-		if (ret == -1)
-			return (ret);
-	}
-	if (!ft_strcmp(*line, "") && ret == 0)
-		return (0);
-	else
-		return (1);
-}
+/*
+** get the first string in the "already read buffer" by previouses calls
+** OR
+** read more with ft_process_gnl (may also free the node if it became useless)
+*/
 
 int		get_next_line(int const fd, char **line)
 {
-	static t_list	*list = NULL;
+	static t_list	*gnls = NULL;
+	t_gnl			*gnl;
 	int				i;
-	int				endline;
-	char			*rest;
-	int				index;
+	int				ret;
 
-	if (line == NULL)
+	if (fd == -1 || line == NULL || (!(gnl = ft_get_gnl(fd, &gnls))))
 		return (-1);
-	if (!(rest = ft_get_buffer_rest(&list, fd)))
-		return (-1);
-	endline = 0;
 	i = 0;
-	while (rest[i] && rest[i] != '\n')
+	while (gnl->rest[i] && gnl->rest[i] != '\n')
 		i++;
-	if (rest[i] == '\n')
-		endline = 1;
-	if (!(*line = ft_strndup(rest, i)))
+	if (!(*line = ft_strndup(gnl->rest, i)))
 		return (-1);
-	index = i + 1;
-	while (index < BUFF_SIZE)
+	if (gnl->rest[i] == '\n')
 	{
-		rest[index - (i + 1)] = rest[index];
-		index++;
+		gnl->rest += i + 1;
+		return (1);
 	}
-	return (process_get_next_line(fd, line, endline, rest));
+	else
+	{
+		gnl->rest = gnl->whole_buffer;
+		ft_bzero(gnl->rest, BUFF_SIZE);
+		ret = ft_process_gnl(fd, line, gnl);
+		return (ft_may_free_node(ret, &gnls, gnl));
+	}
 }

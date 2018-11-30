@@ -1,31 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strnjoin_free.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/07/08 15:42:52 by ldedier           #+#    #+#             */
-/*   Updated: 2018/11/15 14:24:58 by ldedier          ###   ########.fr       */
+/*   Created: 2018/07/09 01:04:49 by ldedier           #+#    #+#             */
+/*   Updated: 2018/07/09 20:58:52 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_GET_NEXT_LINE_H
-# define FT_GET_NEXT_LINE_H
+#include "libft.h"
 
-# include <limits.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include "libft.h"
-# define BUFF_SIZE 4096
-
-typedef struct	s_gnl
+char	*ft_strnjoin_free(char *s1, char *s2, size_t n)
 {
-	int			fd;
-	char		*rest;
-	char		*whole_buffer;
-}				t_gnl;
+	char *res;
 
-int				get_next_line(int const fd, char **line);
-
-#endif
+	if (s1 == NULL || s2 == NULL)
+		return (NULL);
+	if (!(res = ft_strnew(ft_strlen(s1) + ft_min(ft_strlen(s2), n) + 1)))
+	{
+		ft_strdel(&s1);
+		return (NULL);
+	}
+	ft_strclr(res);
+	ft_strcat(res, s1);
+	ft_strncat(res, s2, n);
+	ft_strdel(&s1);
+	return (res);
+}
