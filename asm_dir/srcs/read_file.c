@@ -12,7 +12,7 @@
 
 #include "asm.h"
 
-static char   **read_file(char **argv)
+char   **read_file(char **argv)
 {
   char *str;
   char *line;

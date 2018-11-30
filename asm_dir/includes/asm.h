@@ -39,8 +39,10 @@ typedef struct	s_champion
 {
 	t_list		*labels;
 	char		*name;
+	char		*file_name;
 	char		*comment;
-	t_list		*instructions;
+	char 		**instrus;
+	t_list	*instructions;
 }				t_champion;
 
 typedef struct	s_parser
@@ -61,9 +63,10 @@ typedef struct	s_env
 ** (mets a jour le champion)
 */
 int				ft_parse_asm(char *filename, t_env *e);
-
+char   		**read_file(char **argv);
+int 			read_name_file(char *argv, t_env *env);
 /*
-** encode le 
+** encode le
 */
 int				ft_encode_to_cor(char *file, t_env *e);
 

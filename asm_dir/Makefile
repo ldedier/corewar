@@ -34,7 +34,7 @@ LIBOP = $(LIBOPDIR)/libop.a
 OK_COLOR = \x1b[32;01m
 EOC = \033[0m
 
-SRCS_NO_PREFIX		= main.c
+SRCS_NO_PREFIX		= main.c read_file.c
 
 INCLUDES_NO_PREFIX	= asm.h
 
@@ -51,7 +51,7 @@ LFLAGS = -L $(LIBFTDIR) -lft -L $(LIBOPDIR) -lop
 
 ifeq ($(DEBUG), 1)
 	LFLAGS += -fsanitize=address
-	CFLAGS += -DDEBUG 
+	CFLAGS += -DDEBUG
 	CC += -g3
 endif
 
@@ -83,7 +83,7 @@ $(BINDIR)/$(NAME): $(OBJECTS) $(LIBFT) $(LIBOP)
 
 $(OBJDIR)/%.o : $(SRCDIR)/%.c $(INCLUDES)
 	@mkdir -p $(OBJDIR)
-	$(CC) -c $< -o $@ $(CFLAGS) 
+	$(CC) -c $< -o $@ $(CFLAGS)
 
 clean:
 	@make clean -C $(LIBFTDIR)

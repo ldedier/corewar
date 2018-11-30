@@ -82,6 +82,8 @@ int main(int argc, char **argv)
 
 	instru = NULL;
 	env.champ.instrus = NULL;
+  (void)argc;
+  (void)argv;
 	ft_bzero(&env, 0);
 	if ((read_name_file(argv[1], &env)) == 1)
 	{
@@ -91,21 +93,12 @@ int main(int argc, char **argv)
 	if ((env.champ.instrus = read_file(argv)))
 	{
 		printf("instru = %s\n", *env.champ.instrus);
-		if(!(parse_line(env.champ.instrus, env, 0)))
+		if(!(parse_line(env.champ.instrus, &env, 0)))
 		{
 			printf("Bad syntax .name\n");
 			return (1);
 		}
-		/*if (!(read_comment(env)))
-		{
-			printf("Bad syntax >comment\n");
-			return (1);
-		}*/
-		/*if (!(read_label(env)))
-		{
-			printf("Bad syntax label\n");
-			return (1);
-		}*/
+
 	}
 	return (0);
 }
