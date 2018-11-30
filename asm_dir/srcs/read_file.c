@@ -45,22 +45,19 @@ int read_name_file(char *argv, t_env *env)
 	int i;
 	char *name;
 	int index;
-	int len;
 
 	i = 0;
 	if (!argv)
 		return (1);
 	while (argv[i])
 		i++;
-	len = i;
 	if (argv[i - 1] != 's' || i == 0)
 		return (1);
-	index = i;
-	env->champ.file_name = ft_strnew(len + 4);
-	if (argv[i + 1] == 's')
+	index = 0;
+	if (argv[i - 1] == 's')
 	{
-		i = 0;
-		name = ft_strndup(&argv[i], index);
+		//i = 0;
+		name = ft_strndup(&argv[index], i - 2);
 		env->champ.file_name = ft_strjoin(name, ".cor");
 		printf("name = %s\n", name);
 		printf("name = %s\n", env->champ.file_name);
