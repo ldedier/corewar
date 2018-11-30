@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 19:01:37 by ldedier           #+#    #+#             */
-/*   Updated: 2018/11/30 13:19:49 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/11/30 16:53:57 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ typedef struct					s_op
 	char						op_code;
 	int							nb_cycles;
 	char						*description;
-	char						change_carry;
+	char						has_ocp;
 	char						describe_address;
 }								t_op;
 
