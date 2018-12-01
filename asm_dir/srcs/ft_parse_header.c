@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 20:04:45 by ldedier           #+#    #+#             */
-/*   Updated: 2018/11/30 20:04:53 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/01 15:34:13 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,15 @@ static int read_name(char *line, t_env *env, int i)
 		return (0);
 	while (line[i++])
 	{
-		env->champ.name[j] = line[i];
+		env->champ.header.prog_name[j] = line[i];
 		if (line[i] == '"')
 			break;
 		j++;
 	}
-	env->champ.name[j] = '\0';
+	env->champ.header.prog_name[j] = '\0';
 	if (line[i + 1] != '\0')
 		return (0);
-	printf("%s\n", env->champ.name);
+	printf("%s\n", env->champ.header.prog_name);
 	return (1);
 }
 

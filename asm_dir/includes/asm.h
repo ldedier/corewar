@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 16:49:37 by ldedier           #+#    #+#             */
-/*   Updated: 2018/11/30 23:38:04 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/01 15:35:52 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,11 @@ typedef struct	s_instruction
 
 typedef struct	s_champion
 {
+	t_header	header;
 	t_list		*instructions;
 	t_list		*labels;
 	char		*file_name;
 	char		*assembly_name;
-	char		name[PROG_NAME_LENGTH + 1];
-	char		comment[COMMENT_LENGTH + 1];
 }				t_champion;
 
 typedef struct	s_parser

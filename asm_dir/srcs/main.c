@@ -6,11 +6,19 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:44:16 by ldedier           #+#    #+#             */
-/*   Updated: 2018/11/30 23:31:37 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/01 15:33:42 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
+
+void	ft_init_champion(t_champion *champ, char **argv)
+{
+	champ->assembly_name = argv[1];
+	champ->instructions = NULL;
+	champ->header.magic = COREWAR_EXEC_MAGIC;
+	champ->header.prog_size = 0;
+}
 
 void	ft_init_env(t_env *e, char **argv)
 {
@@ -20,8 +28,7 @@ void	ft_init_env(t_env *e, char **argv)
 	e->parser.parsed_name = 0;
 	e->parser.parsed_comment = 0;
 	e->parser.too_much_errors_displayed = 0;
-	e->champ.assembly_name = argv[1];
-	e->champ.instructions = NULL;
+	ft_init_champion(&(e->champ), argv);
 }
 
 int ft_print_usage(char *progname)
