@@ -6,21 +6,24 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 22:00:06 by ldedier           #+#    #+#             */
-/*   Updated: 2018/11/30 23:15:05 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/01 17:56:05 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-int		ft_log_error(char *str, char *line, int column, t_env *e)
+int		ft_log_error(char *str, int column, t_env *e)
 {
+	int col_true;
+
+	col_true = column + e->parser.column_offset;
 	if (e->parser.nb_errors < MAX_ERRORS_DISPLAYED)
 	{
 		ft_printf("%s%s:%d:%d: %serror: %s%s%s\n", BOLD WHITE,
 				e->champ.assembly_name, e->parser.nb_line,
-				column, RED, WHITE, str, EOC);
-		ft_printf("%s\n", line);
-		ft_printf("%s%*c%s\n", L_GREEN, column + 1, '^', EOC);
+					col_true, RED, WHITE, str, EOC);
+		ft_printf("%s\n", e->parser.current_line);
+		ft_printf("%s%*c%s\n", L_GREEN, col_true + 1, '^', EOC);
 		e->parser.nb_errors++;
 	}
 	else if (!e->parser.too_much_errors_displayed)
@@ -49,13 +52,16 @@ int		ft_log_error_no_line(char *str, t_env *e)
 	return (1);
 }
 
-int		ft_log_warning(char *str, char *line, int column, t_env *e)
+int		ft_log_warning(char *str, int column, t_env *e)
 {
+	int col_true;
+
+	col_true = column + e->parser.column_offset;
 	ft_printf("%s%s:%d:%d: %swarning: %s%s%s\n", BOLD WHITE,
 			e->champ.assembly_name, e->parser.nb_line,
-				column, MAGENTA, WHITE, str, EOC);
-	ft_printf("%s\n", line);
-	ft_printf("%s%*c%s\n", L_GREEN, column + 1, '^', EOC);
+				col_true, MAGENTA, WHITE, str, EOC);
+	ft_printf("%s\n", e->parser.current_line);
+	ft_printf("%s%*c%s\n", L_GREEN, col_true + 1, '^', EOC);
 	e->parser.nb_warnings++;
 	return (1);
 }
