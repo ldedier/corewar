@@ -18,6 +18,7 @@
 # include "op.h"
 
 # define MAX_ERRORS_DISPLAYED	20
+# define TAB_SIZE				8
 # define MALLOC_ERROR			"could not execute malloc instruction"
 # define LEXICAL_ERROR			"lexical error"
 

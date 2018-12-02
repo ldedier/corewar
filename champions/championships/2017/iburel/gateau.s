@@ -5,7 +5,7 @@ wall:
 	ld		%0, r10
 	zjmp	%:debut
 
-def:
+def:			 i 
 	live	%2
 	ld		%251658240, r2
 	ld		%0, r10

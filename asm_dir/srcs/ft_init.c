@@ -16,6 +16,7 @@ void	ft_init_champion(t_champion *champ, char *filename)
 {
 	champ->assembly_name = filename;
 	champ->instructions = NULL;
+	champ->labels = NULL;
 	champ->header.magic = COREWAR_EXEC_MAGIC;
 	champ->header.prog_size = 0;
 }
