@@ -31,6 +31,16 @@ static int error(int error)
 		ft_printf("Lexical error\n");
 		return (0);
 	}
+	if (error == 4)
+	{
+		printf("Champion name too long (Max length 128)\n");
+		return (0);
+	}
+	if (error == 5)
+	{
+		printf("Champion comment too long (Max length 2048)\n");
+		return (0);
+	}
 	return (1);
 }
 
@@ -45,6 +55,7 @@ static int read_name(char *line, t_env *env, int i)
 	if (line[i] != '"')
 		if (error(1) == 0)
 			return (0);
+		(void)env;
 	while (line[i++])
 	{
 		env->champ.header.prog_name[j] = line[i];
@@ -53,9 +64,10 @@ static int read_name(char *line, t_env *env, int i)
 		j++;
 	}
 	env->champ.header.prog_name[j] = '\0';
-	printf("name = %s\n", env->champ.header.prog_name);
 	if (ft_strlen(env->champ.header.prog_name) > PROG_NAME_LENGTH)
-		return (0);
+		if (error(4) == 0)
+			return (0);
+	printf("name = %s\n", env->champ.header.prog_name);
 	return (1);
 }
 
@@ -80,9 +92,10 @@ static int read_comment(char *line, t_env *env)
 		j++;
 	}
 	env->champ.header.comment[j] = '\0';
-	printf("comment = %s\n", env->champ.header.comment);
 	if (ft_strlen(env->champ.header.comment) > COMMENT_LENGTH)
-		return (0);
+		if (error(5) == 0)
+			return (0);
+	printf("comment = %s\n", env->champ.header.comment);
 	return (1);
 }
 
