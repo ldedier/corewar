@@ -212,8 +212,8 @@ int		ft_log_custom_nb_params_error(int offset, t_env *e)
 	}
 	free(nb_instructions);
 	if (!(str = ft_strjoin_free(str,
-		e->parser.current_instruction->op.nb_params == 1 ?
-			" argument !" : " arguments !")))
+					e->parser.current_instruction->op.nb_params == 1 ?
+					" argument !" : " arguments !")))
 		return (ft_log_error(MALLOC_ERROR, 0, e));
 	return (ft_log_error(str, offset, e));
 }
@@ -698,7 +698,7 @@ char	*ft_refine_line(char *str)
 	return (ft_strndup(str, i));
 }
 
-int		ft_parse_line(char *str, t_env *e)
+int		ft_parse_line(char *str, t_env *e, int i)
 {
 	char *refined;
 	int ret;
@@ -707,9 +707,9 @@ int		ft_parse_line(char *str, t_env *e)
 	{
 		return (ft_log_error_no_line(MALLOC_ERROR, e));
 	}
-	if ((!e->parser.parsed_comment || !e->parser.parsed_name))
+	if ((!e->parser.parsed_comment || !e->parser.parsed_name) && i <= 4)
 	{
-		ret = ft_parse_line_header(refined, e);
+		ret = ft_parse_line_header(refined, e, 0);
 		free(refined);
 	}
 	else
@@ -721,7 +721,7 @@ int		ft_parse_line(char *str, t_env *e)
 }
 
 int		ft_process_fill_instruction_label_value(t_instruction *instruction,
-			int index, t_list *labels)
+		int index, t_list *labels)
 {
 	t_list	*ptr;
 	t_label	*label;
@@ -761,9 +761,9 @@ int		ft_fill_instructions_labels_values(t_env *e)
 			if (instruction->params[i].type & T_LAB)
 			{
 				if (ft_process_fill_instruction_label_value(instruction,
-						i, e->champ.labels))
+							i, e->champ.labels))
 					return (ft_log_no_label_error(instruction,
-							i, e));
+								i, e));
 			}
 			i++;
 		}
@@ -792,7 +792,7 @@ int		ft_parse_asm(char *str, t_env *e)
 		e->parser.nb_line++;
 		if (ft_is_relevant(line)) // pas une ligne vide ou un commentaire
 		{
-			if (ft_parse_line(line, e) == 0)
+			if (ft_parse_line(line, e, e->parser.nb_line) == 0)
 			{
 				ft_lstdel_value(&(e->champ.instructions));
 				return (1);
