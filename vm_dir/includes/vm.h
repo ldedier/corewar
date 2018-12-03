@@ -47,6 +47,7 @@ typedef struct		s_vm
 }					t_vm;
 
 void				error_exit(int n);
+void				error_exit2(int n);
 int					check_type(int ac, char **av);
 void				init_vm(t_vm *vm, char **argv);
 void				flags(t_vm *vm, int argc, char **argv);

@@ -40,6 +40,8 @@ void		error_exit(int n)
 		ft_putstr_fd("Issue while handling file\n", 2);
 	else if (n == 10)
 		ft_putstr_fd("Size of the given file is too large to be handled\n", 2);
+	else if (n == 11)
+		ft_putstr_fd("Incorrect characters were used in the .cor file\n", 2);
 	exit(1);
 }
 
@@ -53,6 +55,18 @@ void		error_exit_mgc(char *name)
 	ft_putstr_fd("File ", 2);
 	ft_putstr_fd(name, 2);
 	ft_putstr_fd(" has wrong magic number and is therefore not readable", 2);
+	exit(1);
+}
+
+/*
+**error_exit2 function is the second function used to output error messages
+**before exiting the program (because error_exit was too long)
+*/
+
+void		error_exit2(int n)
+{
+	if (n == 1)
+		ft_putstr_fd("Champion exceeded maximum allowed size\n", 2);
 	exit(1);
 }
 
