@@ -6,11 +6,11 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 17:19:23 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/11/23 16:38:00 by uboumedj         ###   ########.fr       */
+/*   Updated: 2018/12/03 23:41:17 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/vm.h"
+#include "vm.h"
 
 /*
 **Yo cette fonction me sert à tester chaque composant des structures

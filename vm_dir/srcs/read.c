@@ -6,11 +6,11 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 16:42:17 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/03 21:43:20 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/03 23:44:27 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/vm.h"
+#include "vm.h"
 
 /*
 **check_length static function is used by read_files to check the length of

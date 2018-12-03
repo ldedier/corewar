@@ -6,11 +6,11 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 17:19:23 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/11/23 16:45:45 by uboumedj         ###   ########.fr       */
+/*   Updated: 2018/12/03 23:43:02 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/vm.h"
+#include "vm.h"
 
 /*
 **dump_nb_cycles function is called when the -dump flag is used and stores the

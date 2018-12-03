@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 20:04:45 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/03 21:03:58 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/03 22:52:45 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ static int read_name(char *line, t_env *env, int i)
 	if (ft_strlen(env->champ.header.prog_name) > PROG_NAME_LENGTH)
 		if (error(4) == 0)
 			return (0);
+	env->parser.parsed_name = 1;
 	printf("name = %s\n", env->champ.header.prog_name);
 	return (1);
 }
@@ -94,6 +95,7 @@ static int read_comment(char *line, t_env *env)
 	if (ft_strlen(env->champ.header.comment) > COMMENT_LENGTH)
 		if (error(5) == 0)
 			return (0);
+	env->parser.parsed_comment = 1;
 	printf("comment = %s\n", env->champ.header.comment);
 	return (1);
 }
@@ -156,9 +158,9 @@ int	ft_parse_line_header(char *str, t_env *env, int i)
 			i++;
 		if (ft_strncmp(str + i, NAME_CMD_STRING, ft_strlen(NAME_CMD_STRING)) != 0)
 			if (error(1) == 0)
-				return (0);
+				return (1);
 		if ((read_name(str, env, i)) == 0)
-			return (0);
+			return (1);
 	}
 	else if (ft_strstr(str, COMMENT_CMD_STRING))
 	{
@@ -166,12 +168,11 @@ int	ft_parse_line_header(char *str, t_env *env, int i)
 			i++;
 		if (ft_strncmp(str + i, COMMENT_CMD_STRING, ft_strlen(COMMENT_CMD_STRING)) != 0)
 			if (error(2) == 0)
-				return (0);
+				return (1);
 		if (!(read_comment(str, env)))
-			return (0);
+			return (1);
 	}
 	if ((check_error(str, i) == 0))
-		return (0);
-	return (1);
+		return (1);
+	return (0);
 }
-

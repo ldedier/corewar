@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 16:49:37 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/03 16:10:29 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/03 23:35:54 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # define EXISTS_LABEL			"label name already defined"
 # define NO_PARAMETERS			"no parameter given for this instruction"
 # define INVALID_REG_NUMBER		"invalid register number (up to 16)"
+# define TOO_BIG_CHAMP			"Champion is too big for this corewar setup"
 
 typedef struct		s_parser
 {

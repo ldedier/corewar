@@ -6,11 +6,11 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 17:22:33 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/11/23 16:43:40 by uboumedj         ###   ########.fr       */
+/*   Updated: 2018/12/03 23:41:32 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/vm.h"
+#include "vm.h"
 
 /*
 **error_exit function outputs the error message associated with the ID used

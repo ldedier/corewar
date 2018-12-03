@@ -1,7 +1,7 @@
 #!/bin/bash
 
 make > /dev/null
-./asm $1 > /dev/null
+./asm $1 
 ./zaz_asm $1 > /dev/null
 
 firstString=$1
@@ -12,21 +12,30 @@ myfile="mycor"
 zaz_tmp="/tmp/zaz_output"
 my_tmp="/tmp/my_output"
 
+my_hex="/tmp/my_hex"
+zaz_hex="/tmp/zaz_hex"
+
+trace="/tmp/asm_trace"
+
 mv $myfile $my_tmp
 mv $zazfile $zaz_tmp
 
-diff $zaz_tmp $my_tmp
+
+hexdump < $my_tmp > $my_hex
+hexdump < $zaz_tmp > $zaz_hex
+
+echo "MY hexdump" > $trace
+cat $my_hex >> $trace 
+echo "ZAZ hexdump" >> $trace
+cat $zaz_hex >> $trace 
+
+
+diff $my_hex $zaz_hex >> $trace
 let "res = $?"
-trace="/tmp/asm_trace"
 
-
-if [ $res = 1 ]
+if [ $res != 0 ]
 then
-	echo "my .cor:\n" > $trace
-	hexdump < $my_tmp >> $trace
-	echo "\nzaz .cor:\n" >> $trace
-	hexdump < $zaz_tmp >> $trace
 	vim $trace
 else
-	echo "\x1B[32mOK\033[0m :)"
+	echo "no diff with zaz's asm :)"
 fi

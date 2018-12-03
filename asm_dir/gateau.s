@@ -1,5 +1,5 @@
-#.name "🎂#"
-#.comment "🎂"
+.name "🎂"
+.comment "🎂"
 
 wall:
 	ld		%0, r10
@@ -7,7 +7,7 @@ wall:
 
 def:			  
 	live	%2
-	ld		%251658240, r1
+	ld		%251658240, r2
 	ld		%0, r10
 	fork	%:ouais
 

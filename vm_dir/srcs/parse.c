@@ -6,11 +6,11 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/01 15:40:17 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/11/31 17:46:43 by uboumedj         ###   ########.fr       */
+/*   Updated: 2018/12/03 23:44:19 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/vm.h"
+#include "vm.h"
 
 /*
 **name_and_comm static function is used by the parse function to save

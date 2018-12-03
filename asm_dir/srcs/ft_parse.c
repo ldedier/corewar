@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 20:06:08 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/03 21:22:19 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/03 23:37:08 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -324,7 +324,7 @@ int		ft_process_parse_register(char *str, int index, int offset, t_env *e)
 	ret = ft_patoi(&str);
 	if (str == str2)
 		return (ft_log_error(LEXICAL_ERROR, offset + 1, e));
-	if (ret < 0 || ret > REG_NUMBER)
+	if (ret <= 0 || ret > REG_NUMBER)
 		return (ft_log_error(INVALID_REG_NUMBER, offset + 1, e));
 	e->parser.current_instruction->params[index].type = T_REG;
 	e->parser.current_instruction->params[index].value = ret;
@@ -363,10 +363,10 @@ int		ft_process_parse_indirect_value(char *str, int index, int offset, t_env *e)
 	i = 0;
 	str2 = str;
 	if (str[0] == '\0' || !ft_is_atoiable(str))
-		return (ft_log_error(LEXICAL_ERROR, offset + 1, e));
+		return (ft_log_error(LEXICAL_ERROR, offset, e));
 	ret = ft_patoi(&str);
 	if (str == str2)
-		return (ft_log_error(LEXICAL_ERROR, offset + 1, e));
+		return (ft_log_error(LEXICAL_ERROR, offset, e));
 	//if (ret < 0 || ret > REG_NUMBER)
 	//	return (ft_log_error(INVALID_IND_NUMBER, offset + 1, e));
 	e->parser.current_instruction->params[index].value = ret;
@@ -386,10 +386,10 @@ int		ft_process_parse_direct_value(char *str, int index, int offset, t_env *e)
 	i = 0;
 	str2 = str;
 	if (str[0] == '\0' || !ft_is_atoiable(str))
-		return (ft_log_error(LEXICAL_ERROR, offset + 1, e));
+		return (ft_log_error(LEXICAL_ERROR, offset, e));
 	ret = ft_patoi(&str);
 	if (str == str2)
-		return (ft_log_error(LEXICAL_ERROR, offset + 1, e));
+		return (ft_log_error(LEXICAL_ERROR, offset, e));
 	//	if (ret < 0 || ret > REG_NUMBER)
 	//		return (ft_log_error(INVALID_IND_NUMBER, offset + 1, e));
 	e->parser.current_instruction->params[index].value = ret;
@@ -461,11 +461,15 @@ int		ft_parse_param(char *str, int index, t_env *e)
 	(void)index;
 	(void)e;
 	int i;
+	int ret;
 
 	i = 0;
 	while (ft_isseparator(str[i]) && ft_addco(str[i], e))
 		i++;
-	return (ft_process_parse_param(&(str[i]), index, i, e));
+	ret = ft_process_parse_param(&(str[i]), index, i, e);
+	if (e->champ.header.prog_size > CHAMP_MAX_SIZE)
+		return (ft_log_error(TOO_BIG_CHAMP, 0, e));
+	return (ret);
 }
 
 void	ft_update_co(char *str, t_env *e)
