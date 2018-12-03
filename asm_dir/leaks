@@ -1,0 +1,19 @@
+Process:         asm [35288]
+Path:            /Users/ldedier/Projects/corewar/asm_dir/asm
+Load Address:    0x10cc16000
+Identifier:      asm
+Version:         ???
+Code Type:       X86-64
+Parent Process:  zsh [14881]
+
+Date/Time:       2018-12-03 00:33:14.547 +0100
+Launch Time:     2018-12-03 00:33:10.420 +0100
+OS Version:      Mac OS X 10.12.6 (16G29)
+Report Version:  7
+Analysis Tool:   /Applications/Xcode.app/Contents/Developer/usr/bin/leaks
+Analysis Tool Version:  Xcode 9.2 (9C40b)
+----
+
+leaks Report Version:  2.0
+Process 35288: 643 nodes malloced for 44 KB
+Process 35288: 0 leaks for 0 total leaked bytes.

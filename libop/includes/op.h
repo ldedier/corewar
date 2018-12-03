@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 19:01:37 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/01 17:07:27 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/03 01:29:35 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,10 @@
 ** On part du principe qu'un int fait 32 bits. Est-ce vrai chez vous ?
 */
 
+# define REG_SIZE				1
 # define IND_SIZE				2
-# define REG_SIZE				4
-# define DIR_SIZE				REG_SIZE
+# define DIR_SIZE				4
+
 # define REG_CODE				1
 # define DIR_CODE				2
 # define IND_CODE				3
@@ -30,6 +31,7 @@
 # define IDX_MOD				(MEM_SIZE / 8)
 # define CHAMP_MAX_SIZE			(MEM_SIZE / 6)
 # define COMMENT_CHAR			'#'
+# define REGISTER_CHAR			'r'
 # define LABEL_CHAR				':'
 # define DIRECT_CHAR			'%'
 # define SEPARATOR_CHAR			','
@@ -52,20 +54,14 @@ typedef char	t_arg_type;
 # define PROG_NAME_LENGTH		(128)
 # define COMMENT_LENGTH			(2048)
 # define COREWAR_EXEC_MAGIC		0xea83f3
-
-typedef struct					s_param_styles
-{
-	char						param_style1;
-	char						param_style2;
-	char						param_style3;
-}								t_param_styles;
+# define NB_INSTRUCTIONS		16
 
 typedef struct					s_op
 {
 	char						*instruction_name;
 	char						nb_params;
-	t_param_styles				param_styles;
-	char						op_code;
+	t_arg_type					arg_types[3];
+	char						opcode;
 	int							nb_cycles;
 	char						*description;
 	char						has_ocp;
@@ -80,5 +76,5 @@ typedef struct					s_header
 	char						comment[COMMENT_LENGTH + 1];
 }								t_header;
 
-t_op							g_op_tab[17];
+t_op							g_op_tab[NB_INSTRUCTIONS + 1];
 #endif

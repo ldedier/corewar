@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/21 13:40:59 by ldedier           #+#    #+#              #
-#    Updated: 2018/12/01 16:55:35 by ldedier          ###   ########.fr        #
+#    Updated: 2018/12/03 01:07:02 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,8 @@ OK_COLOR = \x1b[32;01m
 EOC = \033[0m
 
 SRCS_NO_PREFIX		= main.c ft_init.c ft_parse.c ft_parse_header.c\
-					  ft_read_name.c ft_log_tools.c ft_debug.c
+					  ft_read_name.c ft_log_tools.c ft_debug.c ft_free.c\
+					  ft_encode.c
 
 INCLUDES_NO_PREFIX	= asm.h
 

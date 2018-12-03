@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 21:53:31 by ldedier           #+#    #+#             */
-/*   Updated: 2018/11/30 23:30:39 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/03 01:12:05 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,8 @@ int read_name_file(char *str, t_env *env) //toprotect
 	{
 		//i = 0;
 		name = ft_strndup(&str[index], i - 2);
-		env->champ.file_name = ft_strjoin_free(name, ".cor");
-		printf("name = %s\n", name);
-		printf("name = %s\n", env->champ.file_name);
+		env->champ.cor_name = ft_strjoin_free(name, ".cor");
+		printf("name = %s\n", env->champ.cor_name);
 		return (0);
 	}
 	return (0);

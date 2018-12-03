@@ -196,7 +196,7 @@ part3:
 
 part4:
 	live	%1
-	ld		%151587073, r5
+	ld		%151587073, r5   		 	#dfqfqw 
 	st		r5, r9
 	st		r9, r10
 	ld		%511, r4
