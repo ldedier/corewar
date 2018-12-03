@@ -55,7 +55,6 @@ static int read_name(char *line, t_env *env, int i)
 	if (line[i] != '"')
 		if (error(1) == 0)
 			return (0);
-		(void)env;
 	while (line[i++])
 	{
 		env->champ.header.prog_name[j] = line[i];
@@ -161,8 +160,10 @@ int	ft_parse_line_header(char *str, t_env *env, int i)
 			return (0);
 	}
 	if (str[i + 1] == 'n')
-		check_name(str);
+		if (check_name(str) == 0)
+			return (0);
 	if (str[i + 1] == 'c')
-		check_comment(str);
+		if (check_comment(str) == 0)
+			return (0);
 	return (1);
 }
