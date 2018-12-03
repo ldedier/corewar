@@ -707,7 +707,7 @@ int		ft_parse_line(char *str, t_env *e)
 	{
 		return (ft_log_error_no_line(MALLOC_ERROR, e));
 	}
-	if ((!e->parser.parsed_comment || !e->parser.parsed_name) && 0)
+	if ((!e->parser.parsed_comment || !e->parser.parsed_name))
 	{
 		ret = ft_parse_line_header(refined, e);
 		free(refined);
@@ -792,7 +792,7 @@ int		ft_parse_asm(char *str, t_env *e)
 		e->parser.nb_line++;
 		if (ft_is_relevant(line)) // pas une ligne vide ou un commentaire
 		{
-			if (ft_parse_line(line, e))
+			if (ft_parse_line(line, e) == 0)
 			{
 				ft_lstdel_value(&(e->champ.instructions));
 				return (1);
