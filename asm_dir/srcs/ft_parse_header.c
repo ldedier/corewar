@@ -137,6 +137,16 @@ static int check_comment(char *str)
 	return (1);
 }
 
+int check_error(char *str)
+{
+	if (str[i] == '.' && str[i + 1] == 'n')
+		if (check_name(str) == 0)
+			return (0);
+	if (str[i] == '.' && str[i + 1] == 'c')
+		if (check_comment(str) == 0)
+			return (0);
+}
+
 int	ft_parse_line_header(char *str, t_env *env, int i)
 {
 	if (ft_strstr(str, NAME_CMD_STRING) )
@@ -159,11 +169,7 @@ int	ft_parse_line_header(char *str, t_env *env, int i)
 		if (!(read_comment(str, env)))
 			return (0);
 	}
-	if (str[i + 1] == 'n')
-		if (check_name(str) == 0)
-			return (0);
-	if (str[i + 1] == 'c')
-		if (check_comment(str) == 0)
-			return (0);
+	if (!(check_error(str)) == 0)
+		return (0);
 	return (1);
 }
