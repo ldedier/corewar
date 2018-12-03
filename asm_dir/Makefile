@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/21 13:40:59 by ldedier           #+#    #+#              #
-#    Updated: 2018/12/03 01:07:02 by ldedier          ###   ########.fr        #
+#    Updated: 2018/12/03 22:18:05 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,8 +35,7 @@ OK_COLOR = \x1b[32;01m
 EOC = \033[0m
 
 SRCS_NO_PREFIX		= main.c ft_init.c ft_parse.c ft_parse_header.c\
-					  ft_read_name.c ft_log_tools.c ft_debug.c ft_free.c\
-					  ft_encode.c
+					  ft_log_tools.c ft_debug.c ft_free.c ft_encode.c
 
 INCLUDES_NO_PREFIX	= asm.h
 
@@ -67,8 +66,7 @@ libcomp:
 	@make $(BINDIR)/$(NAME)
 
 all:
-	@make -C $(LIBFTDIR) all
-	@make -C $(LIBOPDIR) all
+	@make -C $(LIBOPDIR) opti
 	@make $(BINDIR)/$(NAME)
 
 debug:
@@ -77,7 +75,7 @@ debug:
 $(LIBFT):
 	@make -C $(LIBFTDIR) opti
 $(LIBOP):
-	@make -C $(LIBOP) opti
+	@make -C $(LIBOPDIR) opti
 
 $(BINDIR)/$(NAME): $(OBJECTS) $(LIBFT) $(LIBOP)
 	@$(CC) -o $@ $^ $(CFLAGS) $(LFLAGS)
@@ -88,13 +86,11 @@ $(OBJDIR)/%.o : $(SRCDIR)/%.c $(INCLUDES)
 	$(CC) -c $< -o $@ $(CFLAGS)
 
 clean:
-	@make clean -C $(LIBFTDIR)
 	@make clean -C $(LIBOPDIR)
 	@rm -f $(OBJECTS)
 	@rm -rf $(OBJDIR)
 
 fclean: clean
-	@make fclean -C $(LIBFTDIR)
 	@make fclean -C $(LIBOPDIR)
 	@rm -f $(BINDIR)/$(NAME)
 

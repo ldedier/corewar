@@ -6,17 +6,16 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/11/23 16:42:17 by uboumedj         ###   ########.fr       */
+/*   Updated: 2018/12/03 21:42:37 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VM_H
-
 # define VM_H
 
-# include "../../libft/inc/libft.h"
-# include "../../libop/includes/op.h"
-
+# include "libft.h"
+# include "op.h"
+# include <fcntl.h>
 # define TOT_SIZE (CHAMP_MAX_SIZE + PROG_NAME_LENGTH + COMMENT_LENGTH + 4)
 
 typedef struct		s_arena

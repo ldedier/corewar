@@ -1,24 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_add_to_list_ptr.c                               :+:      :+:    :+:   */
+/*   ft_get_next_chunk.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/15 12:29:16 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/03 22:13:53 by ldedier          ###   ########.fr       */
+/*   Created: 2018/12/03 17:16:24 by ldedier           #+#    #+#             */
+/*   Updated: 2018/12/03 17:31:40 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "decompiler.h"
 
-int			ft_add_to_list_ptr(t_list **list, void *content, size_t size)
+int			get_next_chunk(int fd, t_chunk *chunk)
 {
-	t_list *node;
-
-	if (!(node = ft_lstnew_ptr(content, size)))
-		return (1);
-	else
-		ft_lstadd(list, node);
-	return (0);
+	chunk->size = read(fd, chunk->buf, CHUNK_SIZE);
+	return (chunk->size );
 }

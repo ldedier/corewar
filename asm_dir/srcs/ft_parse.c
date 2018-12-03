@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 20:06:08 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/03 01:31:01 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/03 21:22:19 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -704,9 +704,7 @@ int		ft_parse_line(char *str, t_env *e)
 	int ret;
 
 	if (!(refined = ft_refine_line(str)))
-	{
 		return (ft_log_error_no_line(MALLOC_ERROR, e));
-	}
 	if (!e->parser.parsed_comment || !e->parser.parsed_name)
 	{
 		ret = ft_parse_line_header(refined, e, 0);
@@ -776,25 +774,27 @@ int		ft_parse_asm(char *str, t_env *e)
 {
 	char *line;
 	int fd;
+	int ret;
 
 	if ((fd = open(str , O_RDONLY)) == -1)
 	{
 		perror(str);
 		return (1);
 	}
-	else if ((read_name_file(str, e)) == 1)
+	else if ((ret = ft_switch_extension(str, ".s", ".cor", &(e->champ.cor_name))))
 	{
-		ft_log_error_no_line("File must be of extension \'.s\'", e);
-		return (1);
+		if (ret == -1)
+			return ft_log_error_no_line(MALLOC_ERROR, e);
+		else
+			return ft_log_error_no_line("File must be of extension \'.s\'", e);
 	}
 	while (get_next_line(fd, &line))
 	{
 		e->parser.nb_line++;
 		if (ft_is_relevant(line)) // pas une ligne vide ou un commentaire
 		{
-			if (ft_parse_line(line, e) == 0)
+			if (ft_parse_line(line, e))
 			{
-				printf("la\n");
 				ft_lstdel_value(&(e->champ.instructions));
 				return (1);
 			}

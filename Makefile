@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/29 17:38:52 by ldedier           #+#    #+#              #
-#    Updated: 2018/11/30 13:38:04 by ldedier          ###   ########.fr        #
+#    Updated: 2018/12/03 21:45:07 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,14 +22,12 @@ VM_NAME			= corewar
 ASM_NAME		= asm
 DECOMPILER_NAME = decompiler
 
-OP				= $(LIBOPDIR)/op.a
-
 opti:
 	@make all -j
 
 all:
-	@make -C $(LIBOPDIR) opti
 	@make -C $(LIBFTDIR) opti
+	@make -C $(LIBOPDIR) optilibcomp
 	@make -C $(ASMDIR) optilibcomp
 	@make -C $(VMDIR) optilibcomp
 	@make -C $(DECOMPILERDIR) optilibcomp

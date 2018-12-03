@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/30 13:25:13 by ldedier           #+#    #+#              #
-#    Updated: 2018/11/30 13:28:00 by ldedier          ###   ########.fr        #
+#    Updated: 2018/12/03 22:22:04 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -98,13 +98,11 @@ $(OBJDIR)/%.o : $(SRCDIR)/%.c $(INCLUDES)
 	$(CC) -c $< -o $@ -F $(FRAMEWORKS_DIR) $(CFLAGS)
 
 clean:
-	@make clean -C $(LIBFTDIR)
 	@make clean -C $(LIBOPDIR)
 	@rm -f $(OBJECTS)
 	@rm -rf $(OBJDIR)
 
 fclean: clean
-	@make fclean -C $(LIBFTDIR)
 	@make fclean -C $(LIBOPDIR)
 	@rm -f $(BINDIR)/$(NAME)
 

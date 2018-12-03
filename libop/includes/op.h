@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 19:01:37 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/03 01:29:35 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/03 14:30:55 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ typedef struct					s_op
 	char						*instruction_name;
 	char						nb_params;
 	t_arg_type					arg_types[3];
-	char						opcode;
+	int							opcode;
 	int							nb_cycles;
 	char						*description;
 	char						has_ocp;

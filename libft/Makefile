@@ -6,7 +6,7 @@
 #    By: ldedier <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/06 18:20:16 by ldedier           #+#    #+#              #
-#    Updated: 2018/11/30 21:49:24 by ldedier          ###   ########.fr        #
+#    Updated: 2018/12/03 21:47:34 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,14 +58,12 @@ SRCS_NO_PREFIX = ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c\
 	   ft_treelen.c ft_tree_at.c ft_strjoin_free.c ft_strnjoin_free.c\
 	   ft_strichr.c ft_atoll.c
 
-
 SOURCES = $(addprefix $(SRCDIR)/, $(SRCS_NO_PREFIX))
 OBJECTS = $(addprefix $(OBJDIR)/, $(SRCS_NO_PREFIX:%.c=%.o))
 
 INC = -I $(INCLUDESDIR)
 INCLUDES_NO_PREFIX = libft.h ft_printf.h get_next_line.h
 INCLUDES = $(addprefix $(INCLUDESDIR)/, $(INCLUDES_NO_PREFIX))
-
 
 CFLAGS = -Wall -Wextra -Werror $(INC)
 

@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 20:04:45 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/01 15:34:13 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/03 21:03:58 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ static int check_comment(char *str)
 	return (1);
 }
 
-int check_error(char *str)
+int check_error(char *str, int i)
 {
 	if (str[i] == '.' && str[i + 1] == 'n')
 		if (check_name(str) == 0)
@@ -145,6 +145,7 @@ int check_error(char *str)
 	if (str[i] == '.' && str[i + 1] == 'c')
 		if (check_comment(str) == 0)
 			return (0);
+	return (1);
 }
 
 int	ft_parse_line_header(char *str, t_env *env, int i)
@@ -169,7 +170,8 @@ int	ft_parse_line_header(char *str, t_env *env, int i)
 		if (!(read_comment(str, env)))
 			return (0);
 	}
-	if (!(check_error(str)) == 0)
+	if ((check_error(str, i) == 0))
 		return (0);
 	return (1);
 }
+

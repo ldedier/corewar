@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 16:42:17 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/11/23 16:44:56 by uboumedj         ###   ########.fr       */
+/*   Updated: 2018/12/03 21:43:20 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	check_mgc(t_vm *vm, int i)
 
 	bin = vm->player[i].bin;
 	mgc = (((bin[0] & 0xFF) << 24) | ((bin[1] & 0xFF) << 16) |
-					((bin[2] & 0xFF) << 8) | bin[3] & 0xFF);
+					((bin[2] & 0xFF) << 8) | (bin[3] & 0xFF));
 	return (mgc == COREWAR_EXEC_MAGIC);
 }
 
