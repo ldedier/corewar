@@ -76,7 +76,8 @@ static void   check_name_comm(t_vm *vm, int i)
 
 /*
 **instructions static function is used by the parse function to add the [algo]
-**part (the instructions) inside the player structure
+**part (the instructions) inside the player structure. It also checks if the
+**instructions part exceeds the max allowed size CHAMP_MAX_SIZE.
 */
 
 static void   instructions(t_vm *vm, int i)
