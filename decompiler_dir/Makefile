@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/21 13:40:59 by ldedier           #+#    #+#              #
-#    Updated: 2018/11/30 13:22:36 by ldedier          ###   ########.fr        #
+#    Updated: 2018/12/03 17:27:26 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ LIBOP = $(LIBOPDIR)/libop.a
 OK_COLOR = \x1b[32;01m
 EOC = \033[0m
 
-SRCS_NO_PREFIX		= main.c
+SRCS_NO_PREFIX		= main.c ft_init.c ft_parse.c get_next_chunk.c
 
 INCLUDES_NO_PREFIX	= decompiler.h
 
