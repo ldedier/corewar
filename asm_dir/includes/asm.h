@@ -87,7 +87,7 @@ typedef struct		s_env
 
 int					ft_parse_asm(char *filename, t_env *e);
 
-int					ft_parse_line_header(char *str, t_env *e);
+int					ft_parse_line_header(char *str, t_env *e, int c);
 int					ft_parse_line_source_code(char *str, t_env *e);
 char				**read_file(char **argv);
 int					read_name_file(char *argv, t_env *env);

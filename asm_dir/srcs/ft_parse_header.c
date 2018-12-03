@@ -14,6 +14,26 @@
 
 // j'ai change les char * en char[PROG_NAME] etc (voir struct s_champion)
 
+static int error(int error)
+{
+	if (error == 1)
+	{
+		ft_printf("Syntax error at token [TOKEN][001]\n");
+		return (0);
+	}
+	if (error == 2)
+	{
+		ft_printf("Syntax error at token [TOKEN][002]\n");
+		return (0);
+	}
+	if (error == 3)
+	{
+		ft_printf("Lexical error\n");
+		return (0);
+	}
+	return (1);
+}
+
 static int read_name(char *line, t_env *env, int i)
 {
 	int j;
@@ -23,7 +43,8 @@ static int read_name(char *line, t_env *env, int i)
 	while (line[i] == ' ' || line[i] == '\t')
 		i++;
 	if (line[i] != '"')
-		return (0);
+		if (error(1) == 0)
+			return (0);
 	while (line[i++])
 	{
 		env->champ.header.prog_name[j] = line[i];
@@ -32,13 +53,13 @@ static int read_name(char *line, t_env *env, int i)
 		j++;
 	}
 	env->champ.header.prog_name[j] = '\0';
-	if (line[i + 1] != '\0')
-		return (0);
 	printf("name = %s\n", env->champ.header.prog_name);
+	if (ft_strlen(env->champ.header.prog_name) > PROG_NAME_LENGTH)
+		return (0);
 	return (1);
 }
 
-int read_comment(char *line, t_env *env)
+static int read_comment(char *line, t_env *env)
 {
 	int i;
 	int j;
@@ -49,47 +70,86 @@ int read_comment(char *line, t_env *env)
 	while (line[i] == ' ' || line[i] == '\t')
 		i++;
 	if (line[i] != '"')
-		return (0);
+		if (error(1) == 0)
+			return (0);
 	while (line[i++])
 	{
-			env->champ.header.comment[j] = line[i];
-			if (line[i] == '"')
-				break;
-			j++;
+		env->champ.header.comment[j] = line[i];
+		if (line[i] == '"')
+			break;
+		j++;
 	}
 	env->champ.header.comment[j] = '\0';
-	if (line[i + 1] != '\0')
-		return (0);
 	printf("comment = %s\n", env->champ.header.comment);
-  return (1);
+	if (ft_strlen(env->champ.header.comment) > COMMENT_LENGTH)
+		return (0);
+	return (1);
 }
 
 //devrait mettre a jour
 //le parser sur has_comment, has_name
 
-int	ft_parse_line_header(char *str, t_env *env)
+static int check_name(char *str)
 {
 	int i;
+	char *name;
 
 	i = 0;
+	name = NULL;
+	if (str[0] == '.')
+	{
+		name = ft_strndup(str,  ft_strlen(NAME_CMD_STRING));
+		if (ft_strcmp(name, NAME_CMD_STRING) != 0)
+			if (error(3) == 0)
+				return (0);
+	}
+	free(name);
+	return (1);
+}
+
+static int check_comment(char *str)
+{
+	int i;
+	char *comment;
+
+	i = 0;
+	comment = NULL;
+	if (str[0] == '.')
+	{
+		comment = ft_strndup(str,  ft_strlen(COMMENT_CMD_STRING));
+		if (ft_strcmp(comment, COMMENT_CMD_STRING) != 0)
+			if (error(3) == 0)
+				return (0);
+	}
+	free(comment);
+	return (1);
+}
+
+int	ft_parse_line_header(char *str, t_env *env, int i)
+{
 	if (ft_strstr(str, NAME_CMD_STRING) )
 	{
 		while (str[i] == ' ' || str[i] == '\t')
 			i++;
 		if (ft_strncmp(str + i, NAME_CMD_STRING, ft_strlen(NAME_CMD_STRING)) != 0)
-			return (0);
+			if (error(1) == 0)
+				return (0);
 		if ((read_name(str, env, i)) == 0)
 			return (0);
 	}
-	else if (ft_strstr(str, COMMENT_CMD_STRING) )
-	 {
-	  i = 0;
-	  while (str[i] == ' ' || str[i] == '\t')
-	  	i++;
-	  if (ft_strncmp(str + i, COMMENT_CMD_STRING, ft_strlen(COMMENT_CMD_STRING)) != 0)
-	  	return (0);
-	  if (!(read_comment(str, env)))
-	 		return (0);
- 	}
+	else if (ft_strstr(str, COMMENT_CMD_STRING))
+	{
+		while (str[i] == ' ' || str[i] == '\t')
+			i++;
+		if (ft_strncmp(str + i, COMMENT_CMD_STRING, ft_strlen(COMMENT_CMD_STRING)) != 0)
+			if (error(2) == 0)
+				return (0);
+		if (!(read_comment(str, env)))
+			return (0);
+	}
+	if (str[i + 1] == 'n')
+		check_name(str);
+	if (str[i + 1] == 'c')
+		check_comment(str);
 	return (1);
 }
