@@ -34,9 +34,9 @@ LIBOP = $(LIBOPDIR)/libop.a
 OK_COLOR = \x1b[32;01m
 EOC = \033[0m
 
-SRCS_NO_PREFIX =		main.c
+SRCS_NO_PREFIX =		arena.c error.c flags.c main.c parse.c read.c
 
-INCLUDES_NO_PREFIX =	corewar.h visu.h
+INCLUDES_NO_PREFIX =	visu.h  vm.h
 
 SOURCES = $(addprefix $(SRCDIR)/, $(SRCS_NO_PREFIX))
 OBJECTS = $(addprefix $(OBJDIR)/, $(SRCS_NO_PREFIX:%.c=%.o))
@@ -52,7 +52,7 @@ CFLAGS = -DPATH=$(PWD) -Wall -Wextra -Werror\
 
 ifeq ($(DEBUG), 1)
 	LFLAGS += -fsanitize=address
-	CFLAGS += -DDEBUG 
+	CFLAGS += -DDEBUG
 	CC += -g3
 endif
 
