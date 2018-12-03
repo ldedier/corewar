@@ -698,7 +698,7 @@ char	*ft_refine_line(char *str)
 	return (ft_strndup(str, i));
 }
 
-int		ft_parse_line(char *str, t_env *e, int i)
+int		ft_parse_line(char *str, t_env *e)
 {
 	char *refined;
 	int ret;
@@ -707,7 +707,7 @@ int		ft_parse_line(char *str, t_env *e, int i)
 	{
 		return (ft_log_error_no_line(MALLOC_ERROR, e));
 	}
-	if ((!e->parser.parsed_comment || !e->parser.parsed_name) && i <= 4)
+	if (!e->parser.parsed_comment || !e->parser.parsed_name)
 	{
 		ret = ft_parse_line_header(refined, e, 0);
 		free(refined);
@@ -792,8 +792,9 @@ int		ft_parse_asm(char *str, t_env *e)
 		e->parser.nb_line++;
 		if (ft_is_relevant(line)) // pas une ligne vide ou un commentaire
 		{
-			if (ft_parse_line(line, e, e->parser.nb_line) == 0)
+			if (ft_parse_line(line, e) == 0)
 			{
+				printf("la\n");
 				ft_lstdel_value(&(e->champ.instructions));
 				return (1);
 			}
