@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:44:16 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/03 21:05:55 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/04 12:00:35 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,6 @@ int main(int argc, char **argv)
 //		ft_show_me_those_amazing_logs(&e); //a decommenter de toute urgence
 	if (ft_parse_asm(argv[argc - 1], &e))
 		return (1);
-//	ft_strcpy(e.champ.header.prog_name, "zork\0");
-//	ft_strcpy(e.champ.header.comment, "just a basic living prog\0");
 	if (ft_encode_to_cor(e.champ.cor_name, &e))
 		ret = 1;
 	ft_free_all(&e);

@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 17:22:33 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/03 23:41:32 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/04 20:53:55 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,9 @@
 void		error_exit(int n)
 {
 	if (n == 1)
-		ft_putstr_fd("Usage: ./corewar [-dump nb] [[-n nb] champ1.cor] ...\n",
-				2);
+		ft_putstr_fd(
+				"Usage: ./corewar [-dump nb] [[-n nb] [-w] champ1.cor] ...\n",
+		2);
 	else if (n == 2)
 		ft_putstr_fd("File type invalid\n", 2);
 	else if (n == 3)

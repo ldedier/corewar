@@ -2,7 +2,7 @@
 
 make > /dev/null
 ./asm $1 
-./zaz_asm $1 > /dev/null
+./zaz_asm $1
 
 firstString=$1
 zazfile="${firstString/.s/.cor}"

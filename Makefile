@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/29 17:38:52 by ldedier           #+#    #+#              #
-#    Updated: 2018/12/03 21:45:07 by ldedier          ###   ########.fr        #
+#    Updated: 2018/12/04 20:48:58 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,10 +17,12 @@ LIBOPDIR		= libop
 VMDIR			= vm_dir
 ASMDIR			= asm_dir
 DECOMPILERDIR	= decompiler_dir
+SERVERDIR		= server_dir
 
 VM_NAME			= corewar
 ASM_NAME		= asm
 DECOMPILER_NAME = decompiler
+SERVER_NAME		= corewar_server
 
 opti:
 	@make all -j
@@ -31,9 +33,11 @@ all:
 	@make -C $(ASMDIR) optilibcomp
 	@make -C $(VMDIR) optilibcomp
 	@make -C $(DECOMPILERDIR) optilibcomp
+	@make -C $(SERVERDIR) optilibcomp
 	@cp $(ASMDIR)/$(ASM_NAME) .
 	@cp $(VMDIR)/$(VM_NAME) .
 	@cp $(DECOMPILERDIR)/$(DECOMPILER_NAME) .
+	@cp $(SERVERDIR)/$(SERVER_NAME) .
 
 debug:
 	@make opti DEBUG=1
@@ -46,6 +50,7 @@ clean:
 	@make clean -C $(ASMDIR)
 	@make clean -C $(VMDIR)
 	@make clean -C $(DECOMPILERDIR)
+	@make clean -C $(SERVERDIR)
 
 fclean: clean
 	@make fclean -C $(LIBOPDIR)
@@ -53,9 +58,12 @@ fclean: clean
 	@make fclean -C $(ASMDIR)
 	@make fclean -C $(VMDIR)
 	@make fclean -C $(DECOMPILERDIR)
+	@make fclean -C $(SERVERDIR)
+
 	@rm -f $(VM_NAME)
 	@rm -f $(ASM_NAME)
 	@rm -f $(DECOMPILER_NAME)
+	@rm -f $(SERVER_NAME)
 
 re: fclean opti
 
