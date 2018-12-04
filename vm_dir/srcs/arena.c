@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 16:42:17 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/04 16:59:05 by uboumedj         ###   ########.fr       */
+/*   Updated: 2018/12/04 18:21:17 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void		dispatch_players(t_vm *vm)
 		start = (MEM_SIZE / vm->nb_players) * nb;
 		algo = vm->player[nb].algo;
 		i = 0;
-		while (i < CHAMP_MAX_SIZE)
+		while (i < vm->player[nb].algo_len)
 		{
 			vm->arena[start].hex = algo[i];
 			i++;

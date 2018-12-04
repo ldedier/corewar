@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 17:19:23 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/04 17:00:40 by uboumedj         ###   ########.fr       */
+/*   Updated: 2018/12/04 18:37:02 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /*
 **Yo cette fonction me sert à tester chaque composant des structures
 **pour être sûr que tout va bien lors de la lecture/parsing. Comme son nom
-**l'indique c: 
+**l'indique c:
 */
 
 void	test(t_vm vm, int argc, char **argv)
@@ -49,7 +49,7 @@ void	test(t_vm vm, int argc, char **argv)
 		j = 0;
 		while (j < CHAMP_MAX_SIZE)
 		{
-			ft_printf("%02X ", algo[j]);
+			ft_printf("%02x ", algo[j]);
 			j++;
 		}
 		ft_printf("\n");
@@ -64,17 +64,16 @@ void	test(t_vm vm, int argc, char **argv)
 	ft_printf("\nARENA\n\n");
 	while (i < MEM_SIZE)
 	{
-		ft_printf("%02X", 0xFF & vm.arena[i].hex);
+		ft_printf("%02x", 0xFF & vm.arena[i].hex);
 		i++;
 		j++;
-		if (j == 32)
+		if (j == 64)
 		{
 			ft_printf("\n");
 			j = 0;
 		}
 		else
 			ft_printf(" ");
-
 	}
 	ft_printf("\n");
 	(void)argc;

@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/04 16:18:50 by uboumedj         ###   ########.fr       */
+/*   Updated: 2018/12/04 18:17:22 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct		s_player
 	char			algo[CHAMP_MAX_SIZE + 1];
 	char			bin[TOT_SIZE + 1];
 	int				file_len;
+	int				algo_len;
 	int				num;
 	int				prog;
 }					t_player;
