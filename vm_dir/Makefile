@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/30 13:25:13 by ldedier           #+#    #+#              #
-#    Updated: 2018/11/30 13:28:00 by ldedier          ###   ########.fr        #
+#    Updated: 2018/12/04 19:34:49 by emuckens         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ SRCDIR   = srcs
 OBJDIR   = objs
 BINDIR   = .
 INCLUDESDIR = includes
+INSDIR = instructions
 
 LIBFTDIR = ../libft
 LIBFT_INCLUDEDIR = includes
@@ -34,13 +35,19 @@ LIBOP = $(LIBOPDIR)/libop.a
 OK_COLOR = \x1b[32;01m
 EOC = \033[0m
 
-SRCS_NO_PREFIX =		arena.c error.c flags.c main.c parse.c read.c
+SRCS_NO_PREFIX =		arena.c error.c flags.c main.c parse.c read.c \
+						tmp.c utils.c op.c navigate.c 
+INS_NO_PREFIX =			live.c ld.c st.c add.c sub.c and.c or.c xor.c zjmp.c \
+						ldi.c sti.c fork.c lld.c lldi.c lfork.c aff.c
 
 INCLUDES_NO_PREFIX =	visu.h  vm.h
 
-SOURCES = $(addprefix $(SRCDIR)/, $(SRCS_NO_PREFIX))
-OBJECTS = $(addprefix $(OBJDIR)/, $(SRCS_NO_PREFIX:%.c=%.o))
-	INCLUDES = $(addprefix $(INCLUDESDIR)/, $(INCLUDES_NO_PREFIX))
+SOURCES = $(addprefix $(SRCDIR)/, $(SRCS_NO_PREFIX)) \
+		$(addprefix $(SRCDIR)/$(INSDIR)/, $(INS_NO_PREFIX))
+OBJECTS =	$(addprefix $(OBJDIR)/, $(SRCS_NO_PREFIX:%.c=%.o))
+OBJECTS +=	$(addprefix $(OBJDIR)/$(INSDIR)/, $(INS_NO_PREFIX:%.c=%.o))
+
+INCLUDES = $(addprefix $(INCLUDESDIR)/, $(INCLUDES_NO_PREFIX))
 
 INC = -I $(INCLUDESDIR) -I $(LIBFTDIR)/$(LIBFT_INCLUDEDIR)\
 	  -I $(LIBOPDIR)/$(LIBOP_INCLUDEDIR)
@@ -85,7 +92,7 @@ debug:
 $(LIBFT):
 	@make -C $(LIBFTDIR) all
 
-$(BINDIR)/$(NAME): $(OBJECTS) $(LIBFT)
+$(BINDIR)/$(NAME): $(OBJECTS)  $(LIBFT)
 	@$(CC) -o $@ $^ -F $(FRAMEWORKS_DIR) $(SDL2_FRAMEWORKS) $(CFLAGS) $(LFLAGS)
 	@echo "$(OK_COLOR)$(NAME) linked with success !$(EOC)"
 	@install_name_tool -change @rpath/SDL2.framework/Versions/A/SDL2 $(SDL2) $(NAME)
@@ -95,7 +102,11 @@ $(BINDIR)/$(NAME): $(OBJECTS) $(LIBFT)
 
 $(OBJDIR)/%.o : $(SRCDIR)/%.c $(INCLUDES)
 	@mkdir -p $(OBJDIR)
-	$(CC) -c $< -o $@ -F $(FRAMEWORKS_DIR) $(CFLAGS)
+	@mkdir -p $(OBJDIR)/$(INSDIR)
+	@$(CC) -c $< -o $@ -F $(FRAMEWORKS_DIR) $(CFLAGS)
+
+$(OBJDIR)/$(INSDIR)/%.o : $(SRCDIR)/$(INSDIR)/%.c $(INCLUDES)
+	@$(CC) -c $< -o $@ -F $(FRAMEWORKS_DIR) $(CFLAGS)
 
 clean:
 	@make clean -C $(LIBFTDIR)

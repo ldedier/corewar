@@ -6,17 +6,17 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 16:42:17 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/04 20:47:53 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/03 20:01:00 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "vm.h"
+#include "../includes/vm.h"
 #include <fcntl.h>
 
 /*
- * **check_length static function is used by read_files to check the length of
- * **each file before storing it inside a structure, to avoid exceeding TOT_SIZE.
- * */
+**check_length static function is used by read_files to check the length of
+**each file before storing it inside a structure, to avoid exceeding TOT_SIZE.
+*/
 
 static int	check_length(t_vm *vm, int num)
 {
@@ -36,10 +36,10 @@ static int	check_length(t_vm *vm, int num)
 }
 
 /*
- * **check_magic static function is used at the end of each read_files iteration
- * **to check if the magic number at the beginning of the file matches the correct
- * **magic number for a corewar .cor file, which is 0xea83f3.
- * */
+**check_magic static function is used at the end of each read_files iteration
+**to check if the magic number at the beginning of the file matches the correct
+**magic number for a corewar .cor file, which is 0xea83f3.
+*/
 
 static int	check_mgc(t_vm *vm, int i)
 {
@@ -48,14 +48,14 @@ static int	check_mgc(t_vm *vm, int i)
 
 	bin = vm->player[i].bin;
 	mgc = (((bin[0] & 0xFF) << 24) | ((bin[1] & 0xFF) << 16) |
-			((bin[2] & 0xFF) << 8) | (bin[3] & 0xFF));
+					((bin[2] & 0xFF) << 8) | (bin[3] & 0xFF));
 	return (mgc == COREWAR_EXEC_MAGIC);
 }
 
 /*
- * **read_files function reads each given file and stores their content inside
- * **the respective [bin] components of each player's structure.
- * */
+**read_files function reads each given file and stores their content inside
+**the respective [bin] components of each player's structure.
+*/
 
 void		read_files(t_vm *vm)
 {
@@ -78,4 +78,3 @@ void		read_files(t_vm *vm)
 		i++;
 	}
 }
-

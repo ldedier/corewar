@@ -6,11 +6,11 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 17:19:23 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/11/23 16:38:00 by uboumedj         ###   ########.fr       */
+/*   Updated: 2018/12/04 21:29:49 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/vm.h"
+#include "vm.h"
 
 /*
 **Yo cette fonction me sert à tester chaque composant des structures
@@ -58,5 +58,17 @@ int		main(int argc, char **argv)
 	flags(&vm, argc, argv);
 	read_files(&vm);
 	test(vm, argc, argv);
+	/* */
+
+
+	t_process 	proc;
+	ft_bzero((void **)&proc, sizeof(proc));
+
+	t_arg arg[3] = {{2, T_REG}, {3, T_REG}};
+	ins_st(&vm, &proc, arg);
+	test_ins(&vm, &proc);	
+	display_arena(vm.arena);
+
+
 	return (0);
 }
