@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 16:42:17 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/03 23:41:24 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/04 16:59:05 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 void		init_vm(t_vm *vm, char **argv)
 {
-	int i;
+	int		i;
 
 	vm->c_to_die = CYCLE_TO_DIE;
 	vm->files = argv;
@@ -30,5 +30,33 @@ void		init_vm(t_vm *vm, char **argv)
 	{
 		vm->arena[i].hex = 0;
 		i++;
+	}
+}
+
+/*
+**dispatch_players function sends each player to their respective starting
+**point in the arena.
+*/
+
+void		dispatch_players(t_vm *vm)
+{
+	int		nb;
+	int		i;
+	int		start;
+	char	*algo;
+
+	nb = 0;
+	while (nb < vm->nb_players)
+	{
+		start = (MEM_SIZE / vm->nb_players) * nb;
+		algo = vm->player[nb].algo;
+		i = 0;
+		while (i < CHAMP_MAX_SIZE)
+		{
+			vm->arena[start].hex = algo[i];
+			i++;
+			start++;
+		}
+		nb++;
 	}
 }

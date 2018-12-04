@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 17:22:33 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/03 23:41:32 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/04 15:16:06 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void		error_exit_mgc(char *name)
 {
 	ft_putstr_fd("File ", 2);
 	ft_putstr_fd(name, 2);
-	ft_putstr_fd(" has wrong magic number and is therefore not readable", 2);
+	ft_putstr_fd(" has wrong magic number and is therefore not readable\n", 2);
 	exit(1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/03 23:45:09 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/04 16:18:50 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,6 @@ void				flags(t_vm *vm, int argc, char **argv);
 void				read_files(t_vm *vm);
 void				error_exit_mgc(char *name);
 void				parse(t_vm *vm);
+void				dispatch_players(t_vm *vm);
 
 #endif
