@@ -6,11 +6,23 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 20:06:08 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/03 23:37:08 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/04 15:36:45 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
+
+int		ft_addco(char c, t_env *e)
+{
+	if (c == '\t')
+	{
+		e->parser.column_offset += TAB_SIZE -
+			(e->parser.column_offset % TAB_SIZE);
+	}
+	else
+		e->parser.column_offset++;
+	return  (1);
+}
 
 int		ft_is_relevant(char *str)
 {
@@ -19,7 +31,7 @@ int		ft_is_relevant(char *str)
 	i = 0;
 	while (str[i] && ft_isseparator(str[i]))
 		i++;
-	if (!str[i] || str[i] == COMMENT_CHAR)
+	if (!str[i] || str[i] == COMMENT_CHAR || str[i] == ';')
 		return (0);
 	return (1);
 }
@@ -45,6 +57,7 @@ int			ft_init_instruction(t_instruction *instruction, t_env *e)
 
 	instruction->address = e->champ.header.prog_size;
 	instruction->nb_line = e->parser.nb_line;
+	instruction->ocp = 0;
 	i = 0;
 	while (i < 3)
 	{
@@ -76,7 +89,7 @@ t_instruction	*ft_add_new_instruction(t_env *e)
 	return (instruction);
 }
 
-int     ft_is_atoiable(char *s)
+int     ft_is_atouiable(char *s) 
 {
 	long    res;
 	int     start;
@@ -91,8 +104,8 @@ int     ft_is_atoiable(char *s)
 		i++;
 	while (ft_isdigit(s[i]))
 	{
-		if ((s[start] != '-' && (res * 10 + s[i] - '0' <= 2147483647))
-				|| (s[start] == '-' && (res * 10 + s[i] - '0' <= 2147483648)))
+		if ((s[start] != '-' && (res * 10 + s[i] - '0' <= 4294967295))
+				|| (s[start] == '-' && (res * 10 + s[i] - '0' <= 4294967296)))
 			res = res * 10 + s[i] - '0';
 		else
 			return (0);
@@ -101,7 +114,7 @@ int     ft_is_atoiable(char *s)
 	return (1);
 }
 
-int		ft_patoi(char **str)
+unsigned int	ft_patoui(char **str)
 {
 	int		multiplier;
 	int		result;
@@ -120,7 +133,7 @@ int		ft_patoi(char **str)
 		result = result * 10 + (**str - '0');
 		(*str)++;
 	}
-	return (result * multiplier);
+	return ((unsigned int)(result * multiplier));
 }
 
 char			*ft_get_str(char **line)
@@ -159,17 +172,6 @@ int		ft_describe_label(char *str, int n, t_env *e)
 	return (1);
 }
 
-int		ft_addco(char c, t_env *e)
-{
-	if (c == '\t')
-	{
-		e->parser.column_offset += TAB_SIZE -
-			(e->parser.column_offset % TAB_SIZE);
-	}
-	else
-		e->parser.column_offset++;
-	return  (1);
-}
 
 int		ft_process_populate_from_opcode(char *opcode_str, t_env *e)
 {
@@ -218,8 +220,8 @@ int		ft_log_custom_nb_params_error(int offset, t_env *e)
 	return (ft_log_error(str, offset, e));
 }
 
-int		ft_log_custom_wrong_param_type(char *arg_type, int index,
-		t_env *e)
+int		ft_log_custom_wrong_param_type(char *arg_type, int index, int offset,
+			t_env *e)
 {
 	char *str;
 	char *index_str;
@@ -243,7 +245,7 @@ int		ft_log_custom_wrong_param_type(char *arg_type, int index,
 		return (ft_log_error(MALLOC_ERROR, 0, e));
 	if (!(str = ft_strjoin_free(str, arg_type)))
 		return (ft_log_error(MALLOC_ERROR, 0, e));
-	return (ft_log_error(str, 0, e));
+	return (ft_log_error(str, offset, e));
 }
 
 int		ft_set_parser_co(int save, t_env *e, int ret)
@@ -251,7 +253,7 @@ int		ft_set_parser_co(int save, t_env *e, int ret)
 	save = e->parser.column_offset;
 	return (ret);
 }
-
+/*
 int	ft_nb_words(char const *s)
 {
 	int res;
@@ -277,7 +279,7 @@ int	ft_nb_words(char const *s)
 	}
 	return (res);
 }
-
+*/
 int		ft_nb_params_coherent(char *str, t_env *e)
 {
 	int i;
@@ -311,27 +313,28 @@ int		ft_process_parse_register(char *str, int index, int offset, t_env *e)
 	int ret;
 	char *str2;
 	int i;
-
 	e->champ.header.prog_size += REG_SIZE;
 	e->parser.current_instruction->params[index].nb_bytes = REG_SIZE;
 	e->parser.current_instruction->ocp |= (REG_CODE << (6 - (2 * index)));
 	i = 0;
 	str2 = str;
-	if (!(REG_CODE & e->parser.current_instruction->op.arg_types[index]))
-		return (ft_log_custom_wrong_param_type("register", index, e));
-	if (str[0] == '\0' || !ft_is_atoiable(str))
+	if (!(T_REG & e->parser.current_instruction->op.arg_types[index]))
+		return (ft_log_custom_wrong_param_type("register", index, 0, e));
+	if (str[0] == '\0')
+		return (ft_log_error(LEXICAL_ERROR, offset, e));
+	else if(!ft_is_atouiable(str))
 		return (ft_log_error(LEXICAL_ERROR, offset + 1, e));
-	ret = ft_patoi(&str);
+	ret = ft_patoui(&str);
 	if (str == str2)
-		return (ft_log_error(LEXICAL_ERROR, offset + 1, e));
+		return (ft_log_error(LEXICAL_ERROR, offset, e));
 	if (ret <= 0 || ret > REG_NUMBER)
-		return (ft_log_error(INVALID_REG_NUMBER, offset + 1, e));
+		return (ft_log_error(INVALID_REG_NUMBER, offset, e));
 	e->parser.current_instruction->params[index].type = T_REG;
 	e->parser.current_instruction->params[index].value = ret;
 	while (ft_isseparator(str[i]) && ft_addco(str[i], e))
 		i++;
 	if (str[i])
-		return (ft_log_error(LEXICAL_ERROR, str2 - str + 1 + offset, e));
+		return (ft_log_error(LEXICAL_ERROR, 0, e));
 	return (0);
 }
 
@@ -362,9 +365,11 @@ int		ft_process_parse_indirect_value(char *str, int index, int offset, t_env *e)
 
 	i = 0;
 	str2 = str;
-	if (str[0] == '\0' || !ft_is_atoiable(str))
+	if (str[0] == '\0')
 		return (ft_log_error(LEXICAL_ERROR, offset, e));
-	ret = ft_patoi(&str);
+	else if (!ft_is_atouiable(str))
+		return (ft_log_error(LEXICAL_ERROR, offset + 1, e));
+	ret = ft_patoui(&str);
 	if (str == str2)
 		return (ft_log_error(LEXICAL_ERROR, offset, e));
 	//if (ret < 0 || ret > REG_NUMBER)
@@ -373,7 +378,7 @@ int		ft_process_parse_indirect_value(char *str, int index, int offset, t_env *e)
 	while (ft_isseparator(str[i]) && ft_addco(str[i], e))
 		i++;
 	if (str[i])
-		return (ft_log_error(LEXICAL_ERROR, str2 - str + 1 + offset, e));
+		return (ft_log_error(LEXICAL_ERROR, 0, e));
 	return (0);
 }
 
@@ -385,9 +390,11 @@ int		ft_process_parse_direct_value(char *str, int index, int offset, t_env *e)
 
 	i = 0;
 	str2 = str;
-	if (str[0] == '\0' || !ft_is_atoiable(str))
+	if (str[0] == '\0')
 		return (ft_log_error(LEXICAL_ERROR, offset, e));
-	ret = ft_patoi(&str);
+	else if(!ft_is_atouiable(str))
+		return (ft_log_error(LEXICAL_ERROR, offset + 1, e));
+	ret = ft_patoui(&str);
 	if (str == str2)
 		return (ft_log_error(LEXICAL_ERROR, offset, e));
 	//	if (ret < 0 || ret > REG_NUMBER)
@@ -396,7 +403,7 @@ int		ft_process_parse_direct_value(char *str, int index, int offset, t_env *e)
 	while (ft_isseparator(str[i]) && ft_addco(str[i], e))
 		i++;
 	if (str[i])
-		return (ft_log_error(LEXICAL_ERROR, str2 - str + 1 + offset, e));
+		return (ft_log_error(LEXICAL_ERROR, 0, e));
 	return (0);
 }
 
@@ -405,8 +412,8 @@ int		ft_process_parse_indirect(char *str, int index, int offset, t_env *e)
 	e->champ.header.prog_size += IND_SIZE;
 	e->parser.current_instruction->params[index].nb_bytes = IND_SIZE;
 	e->parser.current_instruction->ocp |= (IND_CODE << (6 - (2 * index)));
-	if (!(IND_CODE & e->parser.current_instruction->op.arg_types[index]))
-		return (ft_log_custom_wrong_param_type("indirect", index, e));
+	if (!(T_IND & e->parser.current_instruction->op.arg_types[index]))
+		return (ft_log_custom_wrong_param_type("indirect", index, 0, e));
 	e->parser.current_instruction->params[index].type |= T_IND;
 	if (str[0] == LABEL_CHAR)
 		return (ft_process_parse_label(&(str[1]), index, offset + 1, e));
@@ -427,8 +434,8 @@ int		ft_process_parse_direct(char *str, int index, int offset, t_env *e)
 		e->champ.header.prog_size += DIR_SIZE;
 	}
 	e->parser.current_instruction->ocp |= (DIR_CODE << (6 - (2 * index)));
-	if (!(DIR_CODE & e->parser.current_instruction->op.arg_types[index]))
-		return (ft_log_custom_wrong_param_type("direct", index, e));
+	if (!(T_DIR & e->parser.current_instruction->op.arg_types[index]))
+		return (ft_log_custom_wrong_param_type("direct", index, 0, e));
 	e->parser.current_instruction->params[index].type |= T_DIR;
 	if (str[0] == LABEL_CHAR)
 		return (ft_process_parse_label(&(str[1]), index, offset + 1, e));
@@ -443,23 +450,18 @@ int		ft_process_parse_param(char *param, int index, int offset, t_env *e)
 	(void)e;
 
 	if (param[0] == REGISTER_CHAR)
-		return (ft_process_parse_register(&(param[1]), index, offset + 1, e));
+		return (ft_process_parse_register(&(param[1]), index, 1, e));
 	else if (ft_isdigit(param[0]) || param[0] == '-' || param[0] == LABEL_CHAR)
-		return (ft_process_parse_indirect(param, index, offset, e));
+		return (ft_process_parse_indirect(param, index, 0, e));
 	else if (param[0] == DIRECT_CHAR)
-		return (ft_process_parse_direct(&(param[1]), index, offset + 1, e));
+		return (ft_process_parse_direct(&(param[1]), index, 1, e));
 	else
-	{
-		ft_printf("%s\n", param);
 		return ft_log_error(LEXICAL_ERROR, offset, e);
-	}
 	return (0);
 }
 
 int		ft_parse_param(char *str, int index, t_env *e)
 {
-	(void)index;
-	(void)e;
 	int i;
 	int ret;
 
@@ -485,15 +487,20 @@ int		ft_process_parse_params(char **params_split,
 		t_env *e)
 {
 	int i;
+	int save;
 
 	i = 0;
 	while (params_split[i])
 	{
+		save = e->parser.column_offset;
 		if (ft_parse_param(params_split[i], i, e))
 		{
 			ft_free_split(params_split);
 			return (1);
 		}
+		e->parser.column_offset = save;
+		ft_update_co(params_split[i], e);
+		e->parser.column_offset++;
 		i++;
 	}
 	ft_free_split(params_split);
@@ -615,7 +622,7 @@ int		ft_parse_instruction(char *str, t_env *e)
 	while (str[i] && !ft_isseparator(str[i]) && str[i] != LABEL_CHAR)
 		i++;
 	if (!str[i])
-		return (ft_log_error(LEXICAL_ERROR, i, e));
+		return (ft_log_error(LEXICAL_ERROR, 0, e));
 	else if (str[i] == LABEL_CHAR)
 	{
 		if (ft_describe_label(&(str[start]), i - start, e))
@@ -697,7 +704,7 @@ char	*ft_refine_line(char *str)
 	int i;
 
 	i = 0;
-	while (str[i] && str[i] != COMMENT_CHAR)
+	while (str[i] && str[i] != COMMENT_CHAR && str[i] != ';')
 		i++;
 	return (ft_strndup(str, i));
 }

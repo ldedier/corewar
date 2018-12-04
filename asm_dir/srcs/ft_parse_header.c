@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 20:04:45 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/03 22:52:45 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/04 11:38:52 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,7 @@ static int read_name(char *line, t_env *env, int i)
 	while (line[i] == ' ' || line[i] == '\t')
 		i++;
 	if (line[i] != '"')
-		if (error(1) == 0)
-			return (0);
+		return (error(1));
 	while (line[i++])
 	{
 		env->champ.header.prog_name[j] = line[i];

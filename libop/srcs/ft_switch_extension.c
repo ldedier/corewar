@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 21:23:51 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/03 21:24:51 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/04 14:39:08 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ int ft_switch_extension(char *str, char *ext_from, char *ext_to,
 			return (-1);
 		if (!(*new_name = ft_strjoin_free(name, ext_to)))
 			return (-1);
-		ft_printf("%s\n", *new_name);
 		return (0);
 	}
 	else
