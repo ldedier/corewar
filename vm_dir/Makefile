@@ -6,13 +6,13 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/30 13:25:13 by ldedier           #+#    #+#              #
-#    Updated: 2018/12/04 19:34:49 by emuckens         ###   ########.fr        #
+#    Updated: 2018/12/05 13:57:59 by emuckens         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= corewar
 
-CC      = gcc
+CC      = gcc -g
 
 PWD = \"$(shell pwd)\"
 
@@ -36,7 +36,7 @@ OK_COLOR = \x1b[32;01m
 EOC = \033[0m
 
 SRCS_NO_PREFIX =		arena.c error.c flags.c main.c parse.c read.c \
-						tmp.c utils.c op.c navigate.c 
+						tmp.c utils.c op.c navigate.c play.c 
 INS_NO_PREFIX =			live.c ld.c st.c add.c sub.c and.c or.c xor.c zjmp.c \
 						ldi.c sti.c fork.c lld.c lldi.c lfork.c aff.c
 

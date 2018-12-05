@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/04 21:32:23 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/05 22:35:08 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "../../libop/includes/op.h"
 
 # define TOT_SIZE (CHAMP_MAX_SIZE + PROG_NAME_LENGTH + COMMENT_LENGTH + 4)
+# define DEAD		-100
 
 typedef struct		s_arena
 {
@@ -112,13 +113,15 @@ int					ins_aff(t_vm *vm, t_process *proc, t_arg arg[3]);
 ** NAVIGATION
 */
 
-int				get_instruction(t_vm *vm, t_op tab[17], t_process *proc);
+int				check_resize_cycle(t_vm *vm, int *cycle);
+int				play(t_vm *vm, t_process **proc, t_op *tab);
 
 /*
 ** ENV
 */
 
-void				set_optab(t_op	*tab[17]);
+void				set_optab(t_op	**tab);
+void				set_processes(t_vm *vm, t_process **proc);
 
 /*
 ** UTILS
@@ -129,7 +132,7 @@ int					ft_pow(int n, int pow);
 
 // TEMP delete at end
 void				display_arena(t_arena *arena); //tmp for test and debug
-void				test_ins(t_vm *vm, t_process *proc);
+void				test_ins(t_vm *vm);
 
 
 #endif

@@ -6,11 +6,11 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 20:49:29 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/04 21:32:27 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/05 22:35:17 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/vm.h"
+#include "vm.h"
 
 void		display_arena(t_arena *arena)
 {
@@ -29,7 +29,7 @@ void		display_arena(t_arena *arena)
 	}
 }
 
-int			resize_cycle(t_vm *vm)
+int			check_resize_cycle(t_vm *vm, int *cycle)
 {
 	if (vm->nb_live >= NBR_LIVE)
 	{
@@ -44,33 +44,22 @@ int			resize_cycle(t_vm *vm)
 	}
 	else if (++vm->max_checks) 
 		return (0);
+	*cycle = 0;
 	return (1);
 }
 
-void		test_ins(t_vm *vm, t_process *proc)
+void		test_ins(t_vm *vm)
 {
-	static char reg[REG_NUMBER] = {10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160};
-	static int	cycles;
-	int			opcode;
+	static t_process	*proc;
 
-	t_op tab[17];
+	proc = (t_process *)ft_memalloc(sizeof(t_process) + (MAX_PLAYERS));
 
+
+	t_op tab[NB_INSTRUCTIONS + 1];
 	set_optab((t_op **)&tab);
-	ft_memmove(proc->reg, reg, REG_NUMBER);
-	t_arg arg[3] = {{2, 0}, {3, 0}, {2, 4}};
-	cycles = 0;
-	ins_ld(vm, proc, arg);
+	set_processes(vm, &proc);
+	play(vm, (t_process **)&proc, tab);
+//	t_arg arg[3] = {{2, 0}, {3, 0}, {2, 4}};
+//	ins_ld(vm, proc, arg);
 
-	if (cycles)
-	{
-		--cycles;
-		return ;
-	}	
-	if (!(opcode = get_instruction(vm, tab, proc)))
-	{
-		++cycles;
-		proc->pc = (proc->pc == MEM_SIZE - 1 ? 0 : proc->pc + 1);
-	}
-	else
-		cycles += tab[opcode].nb_cycles;
 }

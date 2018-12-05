@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 17:19:23 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/04 21:29:49 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/05 16:40:53 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,16 +57,12 @@ int		main(int argc, char **argv)
 	init_vm(&vm, argv);
 	flags(&vm, argc, argv);
 	read_files(&vm);
-	test(vm, argc, argv);
+//	test(vm, argc, argv);
 	/* */
 
 
-	t_process 	proc;
-	ft_bzero((void **)&proc, sizeof(proc));
 
-	t_arg arg[3] = {{2, T_REG}, {3, T_REG}};
-	ins_st(&vm, &proc, arg);
-	test_ins(&vm, &proc);	
+	test_ins(&vm);	
 	display_arena(vm.arena);
 
 
