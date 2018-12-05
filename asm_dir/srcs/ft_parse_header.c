@@ -14,36 +14,6 @@
 
 // j'ai change les char * en char[PROG_NAME] etc (voir struct s_champion)
 
-static int error(int error)
-{
-	if (error == 1)
-	{
-		ft_printf("Syntax error at token [TOKEN][001]\n");
-		return (0);
-	}
-	if (error == 2)
-	{
-		ft_printf("Syntax error at token [TOKEN][002]\n");
-		return (0);
-	}
-	if (error == 3)
-	{
-		ft_printf("Lexical error\n");
-		return (0);
-	}
-	if (error == 4)
-	{
-		printf("Champion name too long (Max length 128)\n");
-		return (0);
-	}
-	if (error == 5)
-	{
-		printf("Champion comment too long (Max length 2048)\n");
-		return (0);
-	}
-	return (1);
-}
-
 static int read_name(char *line, t_env *env, int i)
 {
 	int j;
@@ -78,9 +48,12 @@ static int read_comment(char *line, t_env *env)
 	i += ft_strlen(COMMENT_CMD_STRING);
 	while (line[i] == ' ' || line[i] == '\t')
 		i++;
+	if (line[i] == '\n')
+		i++;
+	printf("str = %s\n", line);
+	printf("str[i] = %c\n", line[i]);
 	if (line[i] != '"')
-		if (error(1) == 0)
-			return (0);
+		ft_log_error_no_line("Syntax error at token [TOKEN][002] INSTRUCTION", env);
 	while (line[i++])
 	{
 		env->champ.header.comment[j] = line[i];
@@ -90,10 +63,9 @@ static int read_comment(char *line, t_env *env)
 	}
 	env->champ.header.comment[j] = '\0';
 	if (ft_strlen(env->champ.header.comment) > COMMENT_LENGTH)
-		if (error(5) == 0)
-			return (0);
+		ft_log_error_no_line("Champion name too long (Max length 2048)", env);
 	printf("comment = %s\n", env->champ.header.comment);
-	return (1);
+	return (0);
 }
 
 //devrait mettre a jour
@@ -140,25 +112,24 @@ int	ft_parse_line_header(char *str, t_env *env, int i)
 		while (str[i] == ' ' || str[i] == '\t')
 			i++;
 		if (ft_strncmp(str + i, NAME_CMD_STRING, ft_strlen(NAME_CMD_STRING)) != 0)
-			return (ft_log_error_no_line("Syntax error at token [TOKEN][001:006] INSTRUCTION", env));
+			return (ft_log_error_no_line("Syntax error at token [TOKEN][001] INSTRUCTION", env));
 		if (read_name(str, env, i) == 1)
-			return (0);
+			return (1);
 	}
 	else if (ft_strstr(str, COMMENT_CMD_STRING))
 	{
 		while (str[i] == ' ' || str[i] == '\t')
 			i++;
 		if (ft_strncmp(str + i, COMMENT_CMD_STRING, ft_strlen(COMMENT_CMD_STRING)) != 0)
-			if (error(2) == 0)
-				return (0);
-		if (!(read_comment(str, env)))
-			return (0);
+			return (ft_log_error_no_line("Syntax error at token [TOKEN][002] INSTRUCTION", env));
+		if (read_comment(str, env) == 1)
+			return (1);
 	}
 	if (str[i + 1] == 'n' && str[i] == '.')
-		if (check_name(str, env))
-			return (0);
+		if (check_name(str, env) == 1)
+			return (1);
 	if (str[i + 1] == 'c' && str[i] == '.')
-		if (check_comment(str, env) == 0)
-			return (0);
-	return (1);
+		if (check_comment(str, env) == 1)
+			return (1);
+	return (0);
 }

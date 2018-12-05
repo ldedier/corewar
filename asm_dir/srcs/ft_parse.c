@@ -792,7 +792,7 @@ int		ft_parse_asm(char *str, t_env *e)
 		e->parser.nb_line++;
 		if (ft_is_relevant(line)) // pas une ligne vide ou un commentaire
 		{
-			if (ft_parse_line(line, e) == 0)
+			if (ft_parse_line(line, e) == 1)
 			{
 				ft_lstdel_value(&(e->champ.instructions));
 				return (1);
