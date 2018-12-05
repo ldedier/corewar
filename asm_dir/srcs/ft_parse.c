@@ -89,7 +89,7 @@ t_instruction	*ft_add_new_instruction(t_env *e)
 	return (instruction);
 }
 
-int     ft_is_atouiable(char *s) 
+int     ft_is_atouiable(char *s)
 {
 	long    res;
 	int     start;
@@ -804,7 +804,7 @@ int		ft_parse_asm(char *str, t_env *e)
 		e->parser.nb_line++;
 		if (ft_is_relevant(line)) // pas une ligne vide ou un commentaire
 		{
-			if (ft_parse_line(line, e))
+			if (ft_parse_line(line, e) == 1)
 			{
 				ft_lstdel_value(&(e->champ.instructions));
 				return (1);
