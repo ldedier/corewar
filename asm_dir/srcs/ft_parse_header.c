@@ -53,8 +53,7 @@ static int read_name(char *line, t_env *env, int i)
 	while (line[i] == ' ' || line[i] == '\t')
 		i++;
 	if (line[i] != '"')
-		if (error(1) == 0)
-			return (0);
+		ft_log_error_no_line("Syntax error at token [TOKEN][001:006] INSTRUCTION", env);
 	while (line[i++])
 	{
 		env->champ.header.prog_name[j] = line[i];
@@ -64,10 +63,9 @@ static int read_name(char *line, t_env *env, int i)
 	}
 	env->champ.header.prog_name[j] = '\0';
 	if (ft_strlen(env->champ.header.prog_name) > PROG_NAME_LENGTH)
-		if (error(4) == 0)
-			return (0);
+		ft_log_error_no_line("Champion name too long (Max length 128)", env);
 	printf("name = %s\n", env->champ.header.prog_name);
-	return (1);
+	return (0);
 }
 
 static int read_comment(char *line, t_env *env)
@@ -101,7 +99,7 @@ static int read_comment(char *line, t_env *env)
 //devrait mettre a jour
 //le parser sur has_comment, has_name
 
-static int check_name(char *str)
+static int check_name(char *str, t_env *env)
 {
 	int i;
 	char *name;
@@ -112,14 +110,13 @@ static int check_name(char *str)
 	{
 		name = ft_strndup(str,  ft_strlen(NAME_CMD_STRING));
 		if (ft_strcmp(name, NAME_CMD_STRING) != 0)
-			if (error(3) == 0)
-				return (0);
+			return (ft_log_error_no_line("Lexical error at [1:1]", env));
 	}
 	free(name);
-	return (1);
+	return (0);
 }
 
-static int check_comment(char *str)
+static int check_comment(char *str, t_env *env)
 {
 	int i;
 	char *comment;
@@ -130,21 +127,10 @@ static int check_comment(char *str)
 	{
 		comment = ft_strndup(str,  ft_strlen(COMMENT_CMD_STRING));
 		if (ft_strcmp(comment, COMMENT_CMD_STRING) != 0)
-			if (error(3) == 0)
-				return (0);
+			return (ft_log_error_no_line("Lexical error at [2:1]", env));
 	}
 	free(comment);
-	return (1);
-}
-
-int check_error(char *str)
-{
-	if (str[i] == '.' && str[i + 1] == 'n')
-		if (check_name(str) == 0)
-			return (0);
-	if (str[i] == '.' && str[i + 1] == 'c')
-		if (check_comment(str) == 0)
-			return (0);
+	return (0);
 }
 
 int	ft_parse_line_header(char *str, t_env *env, int i)
@@ -154,9 +140,8 @@ int	ft_parse_line_header(char *str, t_env *env, int i)
 		while (str[i] == ' ' || str[i] == '\t')
 			i++;
 		if (ft_strncmp(str + i, NAME_CMD_STRING, ft_strlen(NAME_CMD_STRING)) != 0)
-			if (error(1) == 0)
-				return (0);
-		if ((read_name(str, env, i)) == 0)
+			return (ft_log_error_no_line("Syntax error at token [TOKEN][001:006] INSTRUCTION", env));
+		if (read_name(str, env, i) == 1)
 			return (0);
 	}
 	else if (ft_strstr(str, COMMENT_CMD_STRING))
@@ -169,7 +154,11 @@ int	ft_parse_line_header(char *str, t_env *env, int i)
 		if (!(read_comment(str, env)))
 			return (0);
 	}
-	if (!(check_error(str)) == 0)
-		return (0);
+	if (str[i + 1] == 'n' && str[i] == '.')
+		if (check_name(str, env))
+			return (0);
+	if (str[i + 1] == 'c' && str[i] == '.')
+		if (check_comment(str, env) == 0)
+			return (0);
 	return (1);
 }

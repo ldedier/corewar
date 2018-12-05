@@ -794,7 +794,6 @@ int		ft_parse_asm(char *str, t_env *e)
 		{
 			if (ft_parse_line(line, e) == 0)
 			{
-				printf("la\n");
 				ft_lstdel_value(&(e->champ.instructions));
 				return (1);
 			}
