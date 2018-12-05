@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 17:19:23 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/04 22:12:30 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/05 18:29:51 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 **l'indique c:
 */
 
-void	test(t_vm vm, int argc, char **argv)
+void	test(t_vm vm)
 {
 	int		i;
 	int		j;
@@ -32,7 +32,7 @@ void	test(t_vm vm, int argc, char **argv)
 	{
 		ft_printf("player %d has been assigned the number %d ", i + 1,
 				vm.player[i].num);
-		ft_printf("and his .cor is %s\n", argv[vm.player[i].prog]);
+		ft_printf("and his .cor is %s\n", vm.player[i].cor_name);
 		ft_printf("As a string, the contents of the .cor are: \n");
 		j = 0;
 		while (j++ < TOT_SIZE)
@@ -49,7 +49,7 @@ void	test(t_vm vm, int argc, char **argv)
 		j = 0;
 		while (j < CHAMP_MAX_SIZE)
 		{
-			ft_printf("%02x ", algo[j]);
+			ft_printf("%.02x ", 0xFF & algo[j]);
 			j++;
 		}
 		ft_printf("\n");
@@ -76,7 +76,6 @@ void	test(t_vm vm, int argc, char **argv)
 			ft_printf(" ");
 	}
 	ft_printf("\n");
-	(void)argc;
 }
 
 int		main(int argc, char **argv)
@@ -91,7 +90,9 @@ int		main(int argc, char **argv)
 	flags(&vm, argc, argv);
 	read_files(&vm);
 	parse(&vm);
+	if (vm.client.active)
+		return (process_client(&vm));
 	dispatch_players(&vm);
-	test(vm, argc, argv);
+	test(vm);
 	return (0);
 }

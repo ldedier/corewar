@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/04 15:20:42 by ldedier           #+#    #+#              #
-#    Updated: 2018/12/04 22:13:20 by ldedier          ###   ########.fr        #
+#    Updated: 2018/12/05 18:30:20 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,9 +34,10 @@ LIBOP = $(LIBOPDIR)/libop.a
 OK_COLOR = \x1b[32;01m
 EOC = \033[0m
 
-SRCS_NO_PREFIX =		arena.c error.c flags.c main.c parse.c read.c visu.c
+SRCS_NO_PREFIX =	arena.c error.c flags.c main.c parse.c read.c visu.c\
+					init_sdl.c client.c bonus_flags.c net_tools.c
 
-INCLUDES_NO_PREFIX = vm.h
+INCLUDES_NO_PREFIX = vm.h visu.h client.h
 
 SOURCES = $(addprefix $(SRCDIR)/, $(SRCS_NO_PREFIX))
 OBJECTS = $(addprefix $(OBJDIR)/, $(SRCS_NO_PREFIX:%.c=%.o))

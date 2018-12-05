@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 16:06:44 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/04 14:41:32 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/05 14:39:59 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,5 @@ typedef struct		s_champion
 */
 int					ft_switch_extension(char *str, char *ext_from, char *ext_to,
 						char **new_name);
+int					ft_is_of_extension(char *str, char *extension);
 #endif

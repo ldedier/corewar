@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 16:42:17 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/04 18:21:17 by uboumedj         ###   ########.fr       */
+/*   Updated: 2018/12/05 18:29:36 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void		init_vm(t_vm *vm, char **argv)
 	vm->files = argv;
 	vm->win = 0;
 	vm->dump = 0;
+	vm->client.active = 0;
+	vm->client.port = 0;
 	i = 0;
 	while (i < MEM_SIZE)
 	{

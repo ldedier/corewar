@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/29 17:38:52 by ldedier           #+#    #+#              #
-#    Updated: 2018/12/04 20:48:58 by ldedier          ###   ########.fr        #
+#    Updated: 2018/12/05 17:05:14 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ SERVERDIR		= server_dir
 VM_NAME			= corewar
 ASM_NAME		= asm
 DECOMPILER_NAME = decompiler
-SERVER_NAME		= corewar_server
+SERVER_NAME		= corehub
 
 opti:
 	@make all -j

@@ -6,11 +6,17 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 17:22:33 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/04 22:12:41 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/05 17:43:12 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
+
+void		ft_error_exit(const char *str)
+{
+	ft_dprintf(2, "%s\n", str);
+	exit(1);
+}
 
 /*
 **error_exit function outputs the error message associated with the ID used
@@ -21,7 +27,7 @@ void		error_exit(int n)
 {
 	if (n == 1)
 		ft_putstr_fd(
-				"Usage: ./corewar [-dump nb] [[-n nb] [-w] champ1.cor] ...\n",
+		"Usage: ./corewar [-dump nb] [-v | -w] [-n nb] <champ1.cor> <...>\n",
 		2);
 	else if (n == 2)
 		ft_putstr_fd("File type invalid\n", 2);
@@ -79,26 +85,21 @@ void		error_exit2(int n)
 int			check_type(int ac, char **av)
 {
 	int	i;
-	int	j;
 
 	i = 1;
 	while (i < ac)
 	{
-		if ((!ft_strcmp("-dump", av[i]) || !ft_strcmp("-n", av[i]))
-			&& i + 2 < ac)
+		if (((!ft_strcmp("-dump", av[i]) || !ft_strcmp("-n", av[i])) &&
+				i + 1 < ac))
 			i += 2;
-		else
-		{
-			if (ft_strlen(av[i]) < 4)
-				return (0);
-			j = 0;
-			while (av[i][j])
-				j++;
-			if (av[i][j - 1] != 'r' || av[i][j - 2] != 'o'
-					|| av[i][j - 3] != 'c' || av[i][j - 4] != '.')
-				return (0);
+		else if (!ft_strcmp("-corehub", av[i]) && i + 2 < ac)
+			i += 3;
+		else if ((!ft_strcmp("-v", av[i]) && i + 1 < ac))
 			i++;
-		}
+		else if (ft_is_of_extension(av[i], ".cor"))
+			i++;
+		else
+			return (0);
 	}
 	return (1);
 }
