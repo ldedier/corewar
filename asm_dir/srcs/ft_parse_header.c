@@ -48,10 +48,6 @@ static int read_comment(char *line, t_env *env)
 	i += ft_strlen(COMMENT_CMD_STRING);
 	while (line[i] == ' ' || line[i] == '\t')
 		i++;
-	if (line[i] == '\n')
-		i++;
-	printf("str = %s\n", line);
-	printf("str[i] = %c\n", line[i]);
 	if (line[i] != '"')
 		ft_log_error_no_line("Syntax error at token [TOKEN][002] INSTRUCTION", env);
 	while (line[i++])
