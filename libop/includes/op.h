@@ -14,9 +14,9 @@
 # define OP_H
 
 /*
-** Toutes les tailles sont en octets.
-** On part du principe qu'un int fait 32 bits. Est-ce vrai chez vous ?
-*/
+ ** Toutes les tailles sont en octets.
+ ** On part du principe qu'un int fait 32 bits. Est-ce vrai chez vous ?
+ */
 
 # define REG_SIZE				1
 # define IND_SIZE				2
@@ -75,6 +75,26 @@ typedef struct					s_header
 	unsigned int				prog_size;
 	char						comment[COMMENT_LENGTH + 1];
 }								t_header;
+
+typedef struct		s_parameter
+{
+	t_arg_type		type; //T_REG || T_DIR || T_IND || T_LAB
+	int				value;
+	char			*label_name;
+	int				source_code_col;
+	int				nb_bytes;
+}					t_parameter;
+
+typedef struct		s_instruction
+{
+	t_op			op;
+	t_parameter		params[3];
+	unsigned int	address;
+	int				nb_line;
+	unsigned char	ocp;
+	char			*source_code_line;
+}					t_instruction;
+
 
 t_op							g_op_tab[NB_INSTRUCTIONS + 1];
 #endif

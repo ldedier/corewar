@@ -32,25 +32,6 @@ typedef struct		s_label
 	char			*name;
 }					t_label;
 
-typedef struct		s_parameter
-{
-	t_arg_type		type; //T_REG || T_DIR || T_IND || T_LAB
-	int				value;
-	char			*label_name;
-	int				source_code_col;
-	int				nb_bytes;
-}					t_parameter;
-
-typedef struct		s_instruction
-{
-	t_op			op;
-	t_parameter		params[3];
-	unsigned int	address;
-	int				nb_line;
-	unsigned char	ocp;
-	char			*source_code_line;
-}					t_instruction;
-
 typedef struct		s_champion
 {
 	t_header		header;
