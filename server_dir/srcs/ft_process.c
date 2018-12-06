@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 17:50:39 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/05 18:53:31 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/06 16:17:51 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,7 @@ int		ft_accept_player(t_server *server)
 	if (SDLNet_TCP_AddSocket(server->socket_set,
 			server->client_sockets[i].socket) == -1)
 		return (1);
-	server->message.flag = LOGGED;
-	if (ft_send_protected(server->client_sockets[i].socket, &(server->message),
-				sizeof(server->message)))
+	if (ft_send_all_cores(server->client_sockets[i].socket, server))
 		return (ft_error());
 	server->nb_players++;
 	ft_printf("connect: %d\n", server->nb_players);

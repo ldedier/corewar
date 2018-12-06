@@ -6,13 +6,13 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 21:23:51 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/05 14:33:27 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/06 12:15:05 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_is_of_extension(char *str, int length, char *extension,
+static int	ft_is_of_ext_len(char *str, int length, char *extension,
 			int ext_length)
 {
 	int i;
@@ -43,7 +43,7 @@ int ft_switch_extension(char *str, char *ext_from, char *ext_to,
 	len = ft_strlen(str);
 	len_ext_to = ft_strlen(ext_to);
 	len_ext_from = ft_strlen(ext_from);
-	if (ft_is_of_extension(str, len, ext_from, len_ext_from))
+	if (ft_is_of_ext_len(str, len, ext_from, len_ext_from))
 	{
 		if ((!(name = ft_strndup(str, len - len_ext_from))))
 			return (-1);

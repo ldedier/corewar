@@ -6,11 +6,17 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:54:14 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/05 19:14:43 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/06 15:35:27 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
+
+int		ft_disconnect_client(t_client *client, int ret)
+{
+	client->running = 0;
+	return (ret);
+}
 
 int		ft_init_client(t_client *client)
 {
@@ -27,6 +33,7 @@ int		ft_init_client(t_client *client)
 		return (ft_net_error());
 	if (SDLNet_TCP_AddSocket(client->socket_set, client->socket) == -1)
 		return (ft_net_error());
+	client->cores = NULL;
 	return (0);
 }
 
@@ -41,7 +48,15 @@ int		ft_receive_connect_status(t_client *client)
 				return (ft_net_error());
 			else
 			{
-				ft_printf("WAH C CHO\n");
+				if (client->received.flag == LOGGED)
+					ft_printf(
+						GREEN"successfully connected to server %s on port %d\n",
+							client->server_address, client->port);
+				else if (client->received.flag == SERVER_FULL)
+				{
+					ft_printf("server is full\n");
+					return (1);
+				}
 				return (0);
 			}
 		}
@@ -72,8 +87,11 @@ int		process_client(t_vm *vm)
 		vm->client.running = 1;
 	while (vm->client.running)
 	{
-		if (ft_process_loop_client(vm))
-			ret = 1;
+		if ((ret = ft_process_loop_client(vm)))
+		{
+			vm->client.running = 0;
+			ret	= 1;
+		}
 	}
 	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 17:20:50 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/05 17:58:23 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/06 16:03:18 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ typedef struct			s_server
 	t_client_message	received;
 	int					nb_players;
 	int					running;
-	t_list				*champions;
+	t_flag				flag;
+	t_list				*cores;
 }						t_server;
 
 int						ft_process_server(t_server *server);

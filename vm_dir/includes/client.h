@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 18:26:19 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/05 19:09:44 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/06 16:22:48 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 # define NB_CONNECTION_RETRIES	5
 
-typedef struct			t_client
+typedef struct			s_client
 {
 	char				active;
 	int					port;
@@ -29,6 +29,8 @@ typedef struct			t_client
 	char				running;
 	t_client_message	message;
 	t_server_message	received;
+	t_list				*cores;
+	t_flag				flag;
 }						t_client;
 
 int						ft_net_error(void);
