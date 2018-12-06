@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 17:21:44 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/05 18:50:54 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/06 16:38:08 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,14 @@ int		ft_init_server(int argc, char **argv, t_server *server)
 		i++;
 	}
 	server->nb_players = 0;
-	server->message.flag = STANDARD;
+	server->message.flag = GET_LIST;
 	server->running = 1;
 	return (0);
 }
 
 int		ft_init_db(t_server *server)
 {
-	server->champions = NULL;
+	server->cores = NULL;
 	return (0);
 }
 

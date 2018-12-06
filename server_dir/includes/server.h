@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 17:20:50 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/06 16:03:18 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/06 16:35:46 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,6 @@ int						ft_process_server(t_server *server);
 int						ft_error(void);
 int						ft_send_protected(TCPsocket socket, void *data,
 							size_t size);
+int						ft_send_all_cores(TCPsocket socket, t_server *server);
 void					ft_init_client_socket(t_client_socket *cs);
 #endif

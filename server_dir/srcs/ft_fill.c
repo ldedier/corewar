@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 17:50:39 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/06 16:17:39 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/06 16:39:56 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,14 @@ int		ft_get_data_size_all(t_server *server)
 	ptr = server->cores;
 	while (ptr != NULL)
 	{
+		core = (t_core *)(ptr->content);
 		size += ft_get_core_size_all(core);
 		ptr = ptr->next;
 	}
 	return (size);
 }
 
-void	ft_add_size(void *content_core, char *data, int *size)
+void	ft_add_core_data_all(void *content_core, char *data, int *size)
 {
 	t_core			*core;
 	t_name_size		name_size;
@@ -66,10 +67,10 @@ int		ft_send_all_cores(TCPsocket socket, t_server *server)
 	int			size;
 	t_list		*ptr;
 
-	server->flag = GET_ALL;
+	server->flag = GET_LIST;
 	total_size = ft_get_data_size_all(server);
-	nb_champions = ft_lstlength(server->champions);
-	if (!(data = (char *)(malloc(size))))
+	nb_cores = ft_lstlength(server->cores);
+	if (!(data = (char *)(malloc(total_size))))
 		return (1);
 	size = 0;
 	size += ft_memcpy_ret(&(data[size]), &(server->flag), sizeof(server->flag));
@@ -77,7 +78,7 @@ int		ft_send_all_cores(TCPsocket socket, t_server *server)
 	ptr = server->cores;
 	while (ptr != NULL)
 	{
-		ft_add_size_all(ptr->content, char *data, &size);
+		ft_add_core_data_all(ptr->content, data, &size);
 		ptr = ptr->next;
 	}
 	if (ft_send_protected(socket, data, size))
