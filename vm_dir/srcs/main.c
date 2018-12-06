@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 17:19:23 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/06 16:53:03 by uboumedj         ###   ########.fr       */
+/*   Updated: 2018/12/06 16:55:22 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,14 @@ int		main(int argc, char **argv)
 	init_vm(&vm, argv);
 	flags(&vm, argc, argv);
 	read_files(&vm);
+//	test(vm, argc, argv);
+
+	/* */
+
+//	test_ins(&vm);
+//	display_arena(vm.arena);
+
+
 	parse(&vm);
 	dispatch_players(&vm);
 	//test(vm, argc, argv);

@@ -1,22 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   visu.h                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
+/*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/06 17:25:57 by emuckens         ###   ########.fr       */
+/*   Created: 2018/12/04 17:38:14 by emuckens          #+#    #+#             */
+/*   Updated: 2018/12/06 16:54:16 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef VISU_H
-# define VISU_H
+#include "vm.h"
 
-# include <SDL2/SDL.h>
-# include <SDL2_image/SDL_image.h>
-# include <SDL2_ttf/SDL_ttf.h>
-# include <SDL2_mixer/SDL_mixer.h>
-# include <SDL2_net/SDL_net.h>
+int			mod(int val, int max)
+{
+	return (val % max);
+}
 
-#endif
+int		ft_pow(int n, int pow)
+{
+	int result;
+
+	result = 1;
+	if (pow <= 0)
+		return (pow ? 0 : 1);
+	while (pow >= 1)
+	{
+		result *= n;
+		pow--;
+	}
+	return (result);
+}

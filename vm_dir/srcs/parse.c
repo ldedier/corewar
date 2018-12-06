@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 18:41:42 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/06 16:59:59 by uboumedj         ###   ########.fr       */
+/*   Updated: 2018/12/06 17:31:17 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static void		check_name_comm(t_vm *vm, int i)
 **check_head_size static function is used to
 **
 */
-
+/*
 static void		check_head_size(t_vm *vm, int i)
 {
 	char	*bin;
@@ -94,7 +94,7 @@ static void		check_head_size(t_vm *vm, int i)
 	}
 	ft_printf("%d", *(int *)size);
 }
-
+*/
 /*
 **instructions static function is used by the parse function to add the [algo]
 **part (the instructions) inside the player structure. It also checks if the

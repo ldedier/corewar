@@ -42,8 +42,9 @@ INC = -I $(INCLUDESDIR) -I $(LIBFTDIR)/$(LIBFT_INCLUDEDIR)
 CFLAGS = -DPATH=$(PWD) -Wall -Wextra -Werror\
 		 -Wno-missing-field-initializers $(INC)
 
+
 ifeq ($(DEBUG), 1)
-	CFLAGS += -DDEBUG 
+	CFLAGS += -DDEBUG
 	CC += -g3
 endif
 
