@@ -2,7 +2,7 @@
 .name "Tching tching(Intercepteur), Bouh!Bouh!(bruits d'anti-jeu)"
 .comment ""
 
-label02: ld    %4,r2              	# 7,45,236
+label00: ld    %4,r2              	# 7,45,236
 	 fork  %:label00          		# 3,0,281
 	 ld    %-272,r3           		# 7,3,278
 	 live  %0                 		# 5,10,271
@@ -19,7 +19,7 @@ label02: ld    %4,r2              	# 7,45,236
 
 label01: ld    %-202,r3           	# 7,62,219
 	 fork  %:label04          		# 3,69,212
-	 ld    %0,r99             		# 7,72,209
+ 	 			 ld   	 	  %0,			  	r99             		# 7,72,209
 	 ld    %0,r4              		# 7,79,202
 	 zjmp  %:label05          		# 3,86,195
 
