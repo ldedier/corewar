@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 16:42:17 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/06 12:13:18 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/06 22:44:42 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,10 @@ void		init_vm(t_vm *vm, char **argv)
 /*
 **dispatch_players function sends each player to their respective starting
 **point in the arena.
+** Initialize processes
 */
 
-void		dispatch_players(t_vm *vm)
+void		dispatch_players(t_vm *vm, t_process **proc)
 {
 	int		nb;
 	int		i;
@@ -48,10 +49,14 @@ void		dispatch_players(t_vm *vm)
 	char	*algo;
 
 	nb = 0;
+	*proc = (t_process *)ft_memalloc(sizeof(t_process) * vm->nb_players);
 	while (nb < vm->nb_players)
 	{
 		start = (MEM_SIZE / vm->nb_players) * nb;
+		ft_printf("start = %d nbplayers = %d\n", start, vm->nb_players);
 		algo = vm->player[nb].algo;
+		(*proc)[nb].pc = start;
+		(*proc)[nb].id = nb;
 		i = 0;
 		while (i < vm->player[nb].algo_len)
 		{

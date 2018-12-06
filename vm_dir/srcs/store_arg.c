@@ -6,63 +6,37 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 16:36:33 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/06 16:53:24 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/06 21:41:23 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-static int		arg_mod(char *arena, t_parameter *arg, int i)
+static int			memmove_arg(char *arena, t_parameter *arg, int i, int mod)
 {
-	ft_memmove((void *)&arg->value, (void *)(arena + i), IND_SIZE);
-	return (IND_SIZE);
-}
-
-static int		arg_uni(char *arena, t_parameter *arg, int i)
-{
-	ft_memmove((void *)&arg->value, (void *)(arena + i), 1);
-	return (1);
-}
-
-static int			arg_reg(char *arena, t_parameter *arg, int i)
-{
-
-	if (arg->nb_bytes & T_REG)
-		arg->value = *(char *)(arena + i);
-	else if (i + arg->nb_bytes < MEM_SIZE)
+	if (i + arg->nb_bytes < mod)
 		ft_memmove((void *)&arg->value, (void *)(arena + i), arg->nb_bytes);
 	else
 	{
 		ft_memmove((void *)&arg->value, (void *)(arena + i), MEM_SIZE - i);
 		ft_memmove((void *)&arg->value, (void *)(arena + i),
-				(i + arg->nb_bytes) % MEM_SIZE);
+				(i + arg->nb_bytes) % mod);
 	}
+	if (arg->type == REG_CODE && (arg->value >= REG_SIZE || arg->value < 0))
+		return (0);
 	return (arg->nb_bytes);
 }
 
-int		store_arg(char *arena, t_instruction *ins, int i, int ocp)
+// mettre un argument de taille
+int		store_arg(char *arena, t_instruction *ins, int i, int mod)
 {
 	int	arg;
 	int	start;
-	static int (*fstore[NB_INSTRUCTIONS])(char *ar, t_parameter *arg, int c) =
-	{&arg_mod, &arg_reg, &arg_reg, &arg_reg, &arg_reg, &arg_reg, &arg_reg,
-		&arg_reg, &arg_mod, &arg_reg, &arg_reg, &arg_mod, &arg_reg, &arg_reg,
-		&arg_mod, &arg_uni};
 
 	arg = -1;
 	start = i;
 	while (++arg < ins->op.nb_params)
-	{
-		ft_printf("ocp = %d ins op arg type = %d\n", ocp, ins->op.arg_types[i]);
-		ocp = ocp & (11 << i);
-		ocp = (ocp >> (i + i));
-		if (!(ocp & ins->op.arg_types[i])
-				|| ((ocp & T_REG && *(arena + i) >= REG_NUMBER)))
-		{
-			ft_printf("invalid file type!\n");
+		if (!(i += memmove_arg(arena, &ins->params[arg], i, mod)))
 			return (0);
-		}
-		i += fstore[(int)ins->op.opcode](arena, &ins->params[arg], i);
-	}
 	return (i - start);
 }

@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 17:19:23 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/06 17:41:42 by uboumedj         ###   ########.fr       */
+/*   Updated: 2018/12/06 22:44:37 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ void	test(t_vm vm)
 int		main(int argc, char **argv)
 {
 	t_vm	vm;
-
+	t_process	*all_process;
+	
 	if (argc <= 1)
 		error_exit(1);
 	if (!check_type(argc, argv))
@@ -89,18 +90,18 @@ int		main(int argc, char **argv)
 	init_vm(&vm, argv);
 	flags(&vm, argc, argv);
 	read_files(&vm);
+//	all_process = (t_process *)ft_memalloc(sizeof(t_process) * (vm.nb_players));
 //	test(vm, argc, argv);
 
 	/* */
 
-//	test_ins(&vm);
 //	display_arena(vm.arena);
-
-
 	parse(&vm);
 	if (vm.client.active)
 		return (process_client(&vm));
-	dispatch_players(&vm);
-	test(vm);
+	dispatch_players(&vm, (t_process **)&all_process);
+	ft_printf("player 2 starts at %d\n", all_process[0].pc);
+	play(&vm, (t_process **)&all_process);
+//	test(vm);
 	return (0);
 }

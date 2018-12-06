@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 19:01:37 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/04 14:59:27 by uboumedj         ###   ########.fr       */
+/*   Updated: 2018/12/06 21:53:42 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ t_op							g_op_tab[NB_INSTRUCTIONS + 1];
 
 
 
-int								get_instruction(char *arena, t_op *tab, int i, t_instruction *ins);
+int								get_instruction(char *arena, t_instruction *ins, int i, int mod);
 int								store_arg(char *arena, t_instruction *ins, int i, int ocp);
 void							set_optab(t_op **tab);
 
