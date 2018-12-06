@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 17:19:23 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/04 22:12:30 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/06 16:53:03 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,6 @@ int		main(int argc, char **argv)
 	read_files(&vm);
 	parse(&vm);
 	dispatch_players(&vm);
-	test(vm, argc, argv);
+	//test(vm, argc, argv);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 18:41:42 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/04 18:54:48 by uboumedj         ###   ########.fr       */
+/*   Updated: 2018/12/06 16:59:59 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,27 @@ static void		check_name_comm(t_vm *vm, int i)
 }
 
 /*
+**check_head_size static function is used to
+**
+*/
+
+static void		check_head_size(t_vm *vm, int i)
+{
+	char	*bin;
+	char	size[4];
+	int		n;
+
+	bin = vm->player[i].bin;
+	n = 0;
+	while (n < 4)
+	{
+		size[n] = bin[PROG_NAME_LENGTH + 13 + n];
+		n++;
+	}
+	ft_printf("%d", *(int *)size);
+}
+
+/*
 **instructions static function is used by the parse function to add the [algo]
 **part (the instructions) inside the player structure. It also checks if the
 **instructions part exceeds the max allowed size CHAMP_MAX_SIZE.
@@ -95,6 +116,7 @@ static void		instructions(t_vm *vm, int i)
 		n++;
 	}
 	vm->player[i].algo_len = n;
+	//check_head_size(vm, i);
 	if (n > CHAMP_MAX_SIZE)
 		error_exit2(1);
 	while (n < CHAMP_MAX_SIZE)

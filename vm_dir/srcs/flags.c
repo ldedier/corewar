@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 17:19:23 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/03 23:43:02 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/06 16:36:47 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,11 @@ static void	add_player_n(t_vm *vm, int argc, char **argv, int *cur)
 	if (*cur + 3 > argc)
 		error_exit(6);
 	i = 0;
+	if (argv[*cur + 1][i] == '-')
+		i++;
 	while (argv[*cur + 1][i])
 	{
-		if (!(ft_strchr("-0123456789", argv[*cur + 1][i])))
+		if (!(ft_strchr("0123456789", argv[*cur + 1][i])))
 			error_exit(6);
 		i++;
 	}
