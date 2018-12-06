@@ -6,11 +6,11 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/04 15:20:42 by ldedier           #+#    #+#              #
-#    Updated: 2018/12/06 16:35:24 by ldedier          ###   ########.fr        #
+#    Updated: 2018/12/06 16:51:58 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	= corehub
+NAME	= scorewar
 
 CC      = gcc
 
