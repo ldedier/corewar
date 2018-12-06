@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/05 22:35:08 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/06 17:00:00 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,6 @@ enum				e_arg
 	FIRST, SECOND, THIRD
 };
 
-enum				e_op
-{
-	LIVE, LD, ST, ADD, SUB, AND, OR, XOR, ZJMP, LDI, STI, FORK, LLD, LLDI, LFORK, AFF
-};
-
-
 void				error_exit(int n);
 void				error_exit2(int n);
 int					check_type(int ac, char **av);
@@ -122,8 +116,7 @@ int				launch_instruction(t_vm *vm, t_process *proc, t_op *tab);
 ** ENV
 */
 
-void				set_optab(t_op	**tab);
-void				set_processes(t_vm *vm, t_process **proc);
+//void				set_optab(t_op	**tab);
 
 /*
 ** UTILS
@@ -135,6 +128,7 @@ int					ft_pow(int n, int pow);
 // TEMP delete at end
 void				display_arena(t_arena *arena); //tmp for test and debug
 void				test_ins(t_vm *vm);
+void				set_processes(t_vm *vm, t_process **proc);
 
 
 #endif
