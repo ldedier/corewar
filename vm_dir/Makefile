@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2018/11/30 13:25:13 by ldedier           #+#    #+#              #
-#    Updated: 2018/11/30 13:28:00 by ldedier          ###   ########.fr        #
+#    Created: 2018/12/04 15:20:42 by ldedier           #+#    #+#              #
+#    Updated: 2018/12/04 22:13:20 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME	= corewar
 
 CC      = gcc
 
-PWD = \"$(shell pwd)\"
+PWD = $(shell pwd)
 
 DEBUG ?= 0
 
@@ -34,9 +34,9 @@ LIBOP = $(LIBOPDIR)/libop.a
 OK_COLOR = \x1b[32;01m
 EOC = \033[0m
 
-SRCS_NO_PREFIX =		main.c
+SRCS_NO_PREFIX =		arena.c error.c flags.c main.c parse.c read.c visu.c
 
-INCLUDES_NO_PREFIX =	corewar.h visu.h
+INCLUDES_NO_PREFIX = vm.h
 
 SOURCES = $(addprefix $(SRCDIR)/, $(SRCS_NO_PREFIX))
 OBJECTS = $(addprefix $(OBJDIR)/, $(SRCS_NO_PREFIX:%.c=%.o))
@@ -47,23 +47,26 @@ INC = -I $(INCLUDESDIR) -I $(LIBFTDIR)/$(LIBFT_INCLUDEDIR)\
 
 LFLAGS = -L $(LIBFTDIR) -lft -L $(LIBOPDIR) -lop
 
-CFLAGS = -DPATH=$(PWD) -Wall -Wextra -Werror\
+CFLAGS = -DPATH="$(PWD)" -Wall -Wextra -Werror\
 		 -Wno-missing-field-initializers $(INC)
 
 ifeq ($(DEBUG), 1)
 	LFLAGS += -fsanitize=address
-	CFLAGS += -DDEBUG 
+	CFLAGS += -DDEBUG
 	CC += -g3
 endif
 
-SDL2 = ./frameworks/SDL2.framework/Versions/A/SDL2
-SDL2_image = ./frameworks/SDL2_image.framework/Versions/A/SDL2_image
-SDL2_mixer = ./frameworks/SDL2_mixer.framework/Versions/A/SDL2_mixer
-SDL2_ttf = ./frameworks/SDL2_ttf.framework/Versions/A/SDL2_ttf
+FRAMEWORKSDIR = ../frameworks
+
+SDL2 = $(PWD)/$(FRAMEWORKSDIR)/SDL2.framework/Versions/A/SDL2
+SDL2_image = $(PWD)/$(FRAMEWORKSDIR)/SDL2_image.framework/Versions/A/SDL2_image
+SDL2_mixer = $(PWD)/$(FRAMEWORKSDIR)/SDL2_mixer.framework/Versions/A/SDL2_mixer
+SDL2_ttf = $(PWD)/$(FRAMEWORKSDIR)/SDL2_ttf.framework/Versions/A/SDL2_ttf
+SDL2_net = $(PWD)/$(FRAMEWORKSDIR)/SDL2_net.framework/Versions/A/SDL2_net
 
 SDL2_FRAMEWORKS =	-framework SDL2 -framework SDL2_image \
-					-framework SDL2_mixer -framework SDL2_ttf
-FRAMEWORKS_DIR = ./frameworks
+					-framework SDL2_mixer -framework SDL2_ttf\
+					-framework SDL2_net
 
 opti:
 	@make all -j
@@ -86,25 +89,24 @@ $(LIBFT):
 	@make -C $(LIBFTDIR) all
 
 $(BINDIR)/$(NAME): $(OBJECTS) $(LIBFT)
-	@$(CC) -o $@ $^ -F $(FRAMEWORKS_DIR) $(SDL2_FRAMEWORKS) $(CFLAGS) $(LFLAGS)
+	@$(CC) -o $@ $^ -F $(FRAMEWORKSDIR) $(SDL2_FRAMEWORKS) $(CFLAGS) $(LFLAGS)
 	@echo "$(OK_COLOR)$(NAME) linked with success !$(EOC)"
 	@install_name_tool -change @rpath/SDL2.framework/Versions/A/SDL2 $(SDL2) $(NAME)
 	@install_name_tool -change @rpath/SDL2_image.framework/Versions/A/SDL2_image $(SDL2_image) $(NAME)
 	@install_name_tool -change @rpath/SDL2_mixer.framework/Versions/A/SDL2_mixer $(SDL2_mixer) $(NAME)
 	@install_name_tool -change @rpath/SDL2_ttf.framework/Versions/A/SDL2_ttf $(SDL2_ttf) $(NAME)
+	@install_name_tool -change @rpath/SDL2_net.framework/Versions/A/SDL2_net $(SDL2_net) $(NAME)
 
 $(OBJDIR)/%.o : $(SRCDIR)/%.c $(INCLUDES)
 	@mkdir -p $(OBJDIR)
-	$(CC) -c $< -o $@ -F $(FRAMEWORKS_DIR) $(CFLAGS)
+	$(CC) -c $< -o $@ -F $(FRAMEWORKSDIR) $(CFLAGS)
 
 clean:
-	@make clean -C $(LIBFTDIR)
 	@make clean -C $(LIBOPDIR)
 	@rm -f $(OBJECTS)
 	@rm -rf $(OBJDIR)
 
 fclean: clean
-	@make fclean -C $(LIBFTDIR)
 	@make fclean -C $(LIBOPDIR)
 	@rm -f $(BINDIR)/$(NAME)
 

@@ -110,7 +110,7 @@ top:	live	%42
 	ld	%2,r3
 	sti	r3,%:p32deb,%-16
 	ld	%0,r3
-	zjmp	%:topdodo
+	zjmp	%:topd
 
 
 infi:	sti	r1,%:l0,%1

@@ -154,4 +154,5 @@ char				*ft_strjoin_3(char const *s1, char const *s2,
 						char const *s3);
 int					ft_free_turn(void *to_free, int ret);
 int					ft_is_in_str(const char *str, char c);
+long long int	ft_atoll(const char *str);
 #endif

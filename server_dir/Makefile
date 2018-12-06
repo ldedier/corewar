@@ -5,47 +5,63 @@
 #                                                     +:+ +:+         +:+      #
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2018/11/21 13:40:59 by ldedier           #+#    #+#              #
-#    Updated: 2018/12/03 22:20:22 by ldedier          ###   ########.fr        #
+#    Created: 2018/12/04 15:20:42 by ldedier           #+#    #+#              #
+#    Updated: 2018/12/04 20:33:26 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	= libop.a
+NAME	= corewar_server
+
 CC      = gcc
 
-PWD = \"$(shell pwd)\"
+PWD = $(shell pwd)
 
 DEBUG ?= 0
 
-BINDIR		= .
-SRCDIR		= srcs
-OBJDIR		= objs
+SRCDIR   = srcs
+OBJDIR   = objs
+BINDIR   = .
 INCLUDESDIR = includes
 
 LIBFTDIR = ../libft
 LIBFT_INCLUDEDIR = includes
 LIBFT = $(LIBFTDIR)/libft.a
 
+LIBOPDIR = ../libop
+LIBOP_INCLUDEDIR = includes
+LIBOP = $(LIBOPDIR)/libop.a
+
 OK_COLOR = \x1b[32;01m
 EOC = \033[0m
 
-SRCS_NO_PREFIX = op.c ft_switch_extension.c
+SRCS_NO_PREFIX =	main.c ft_process.c
 
-INCLUDES_NO_PREFIX = op.h champion.h
+INCLUDES_NO_PREFIX = server.h
 
 SOURCES = $(addprefix $(SRCDIR)/, $(SRCS_NO_PREFIX))
 OBJECTS = $(addprefix $(OBJDIR)/, $(SRCS_NO_PREFIX:%.c=%.o))
 INCLUDES = $(addprefix $(INCLUDESDIR)/, $(INCLUDES_NO_PREFIX))
 
-INC = -I $(INCLUDESDIR) -I $(LIBFTDIR)/$(LIBFT_INCLUDEDIR)
+INC = -I $(INCLUDESDIR) -I $(LIBFTDIR)/$(LIBFT_INCLUDEDIR)\
+	  -I $(LIBOPDIR)/$(LIBOP_INCLUDEDIR)
 
-CFLAGS = -DPATH=$(PWD) -Wall -Wextra -Werror\
+LFLAGS = -L $(LIBFTDIR) -lft -L $(LIBOPDIR) -lop
+
+CFLAGS = -DPATH="$(PWD)" -Wall -Wextra -Werror\
 		 -Wno-missing-field-initializers $(INC)
 
 ifeq ($(DEBUG), 1)
-	CFLAGS += -DDEBUG 
+	LFLAGS += -fsanitize=address
+	CFLAGS += -DDEBUG
 	CC += -g3
 endif
+
+FRAMEWORKSDIR = ../frameworks
+
+SDL2 = $(PWD)/$(FRAMEWORKSDIR)/SDL2.framework/Versions/A/SDL2
+SDL2_net = $(PWD)/$(FRAMEWORKSDIR)/SDL2_net.framework/Versions/A/SDL2_net
+
+SDL2_FRAMEWORKS =	-framework SDL2 -framework SDL2_net
 
 opti:
 	@make all -j
@@ -57,29 +73,35 @@ libcomp:
 	@make $(BINDIR)/$(NAME)
 
 all:
-	@make -C $(LIBFTDIR)
+	@make -C $(LIBFTDIR) all
+	@make -C $(LIBOPDIR) all
 	@make $(BINDIR)/$(NAME)
 
+debug:
+	@make opti DEBUG=1
+
 $(LIBFT):
-	make -C $(LIBFTDIR) opti
+	@make -C $(LIBFTDIR) all
+
+$(BINDIR)/$(NAME): $(OBJECTS) $(LIBFT)
+	@$(CC) -o $@ $^ -F $(FRAMEWORKSDIR) $(SDL2_FRAMEWORKS) $(CFLAGS) $(LFLAGS)
+	@echo "$(OK_COLOR)$(NAME) linked with success !$(EOC)"
+	@install_name_tool -change @rpath/SDL2.framework/Versions/A/SDL2 $(SDL2) $(NAME)
+	@install_name_tool -change @rpath/SDL2_net.framework/Versions/A/SDL2_net $(SDL2_net) $(NAME)
 
 $(OBJDIR)/%.o : $(SRCDIR)/%.c $(INCLUDES)
 	@mkdir -p $(OBJDIR)
-	$(CC) -c $< -o $@ $(CFLAGS)
+	$(CC) -c $< -o $@ -F $(FRAMEWORKSDIR) $(CFLAGS)
 
-$(BINDIR)/$(NAME): $(OBJECTS)
-	@ar rc $@ $^
-	@ranlib $(NAME)
-	@echo "$(OK_COLOR)$(NAME) linked with success !$(EOC)"
 clean:
-	@make -C $(LIBFTDIR) clean
+	@make clean -C $(LIBOPDIR)
 	@rm -f $(OBJECTS)
 	@rm -rf $(OBJDIR)
 
 fclean: clean
-	@make -C $(LIBFTDIR) fclean
+	@make fclean -C $(LIBOPDIR)
 	@rm -f $(BINDIR)/$(NAME)
 
-re: fclean all
+re: fclean opti
 
 .PHONY: all clean fclean re
