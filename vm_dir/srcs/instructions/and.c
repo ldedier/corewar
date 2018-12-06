@@ -16,14 +16,14 @@
 ** check for bitwise & between arg1 and arg2, store result in register # arg3
 ** Input: vm (for arena and player), proc (for register and pc),
 ** arg for 3 args, arg3 necessarily a REGISTER
-** Returns failure if invalid register, success otherwise
+** Returns failure if i.valueid register, success otherwise
 */
 
-int		ins_and(t_vm *vm, t_process *proc, t_arg arg[3])
+int		ins_and(t_vm *vm, t_process *proc, t_parameter arg[3])
 {
 	(void)vm;
-	if (arg[THIRD].val >= REG_NUMBER)
+	if (arg[THIRD].value >= REG_NUMBER)
 		return (FAILURE); // verifier que c'est bien le cas
-	proc->reg[arg[THIRD].val] = arg[FIRST].val & arg[SECOND].val;
+	proc->reg[arg[THIRD].value] = arg[FIRST].value & arg[SECOND].value;
 	return (SUCCESS);
 }

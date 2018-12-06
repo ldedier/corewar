@@ -13,22 +13,22 @@
 #include "../includes/vm.h"
 
 /*
-** Add value from registers # arg1 and # arg2, store in register # arg3
+** Add.valueue from registers # arg1 and # arg2, store in register # arg3
 ** Input: vm (for arena and player), proc (for register and pc),
 ** arg for 3 args, all necessarily REGISTERS
-** Returns failure if invalid register, success otherwise
+** Returns failure if i.valueid register, success otherwise
 */
 
-int		ins_add(t_vm *vm, t_process *proc, t_arg arg[3])
+int		ins_add(t_vm *vm, t_process *proc, t_parameter arg[3])
 {
 	int sum;
 
 	(void)vm;
-	if (arg[FIRST].val >= REG_NUMBER
-			|| arg[SECOND].val >= REG_NUMBER
-			|| arg[THIRD].val >= REG_NUMBER)
+	if (arg[FIRST].value >= REG_NUMBER
+			|| arg[SECOND].value >= REG_NUMBER
+			|| arg[THIRD].value >= REG_NUMBER)
 		return (FAILURE); // verifier que c'est bien le cas
-	sum = proc->reg[arg[FIRST].val] + proc->reg[arg[SECOND].val];
-	proc->reg[arg[THIRD].val] = sum; 
+	sum = proc->reg[arg[FIRST].value] + proc->reg[arg[SECOND].value];
+	proc->reg[arg[THIRD].value] = sum; 
 	return (SUCCESS);
 }

@@ -15,16 +15,14 @@
 void		display_arena(t_arena *arena)
 {
 	int		cur;
-	char	*ptr;
 
-	cur = 0;
-	ptr = (char *)arena;
+	cur = -1;
 	while (++cur < MEM_SIZE)
 	{
 		ft_printf("%0*x ", 2, arena[cur]);
-		if (!(cur % 64))
+		if (cur >= 2 && !((cur + 1) % 64))
 			ft_printf("\n");
-		else if (!(cur % 8))
+		else if (cur >= 2 && !((cur + 1) % 8))
 			ft_printf("| ");
 	}
 }
@@ -51,6 +49,7 @@ int			check_resize_cycle(t_vm *vm, int *cycle)
 void		test_ins(t_vm *vm)
 {
 	static t_process	*proc;
+	static char	ins[10] = {0x0b, 0x68, 0x01, 0x00, 0x0f, 0x01, 0x00};
 
 	proc = (t_process *)ft_memalloc(sizeof(t_process) + (MAX_PLAYERS));
 
@@ -58,6 +57,7 @@ void		test_ins(t_vm *vm)
 	t_op tab[NB_INSTRUCTIONS + 1];
 	set_optab((t_op **)&tab);
 	set_processes(vm, &proc);
+	ft_memmove((void *)vm->arena + 5, (void *)ins, 7);
 	play(vm, (t_process **)&proc, tab);
 //	t_arg arg[3] = {{2, 0}, {3, 0}, {2, 4}};
 //	ins_ld(vm, proc, arg);

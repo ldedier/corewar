@@ -93,12 +93,13 @@ $(LIBFT):
 	@make -C $(LIBFTDIR) all
 
 $(BINDIR)/$(NAME): $(OBJECTS)  $(LIBFT)
-	@$(CC) -o $@ $^ -F $(FRAMEWORKS_DIR) $(SDL2_FRAMEWORKS) $(CFLAGS) $(LFLAGS)
+#	@$(CC) -o $@ $^ -F $(FRAMEWORKS_DIR) $(SDL2_FRAMEWORKS) $(CFLAGS) $(LFLAGS)
+	@$(CC) -o $@ $^ -F $(FRAMEWORKS_DIR) $(CFLAGS) $(LFLAGS) #pour linux Emma | desolee!
 	@echo "$(OK_COLOR)$(NAME) linked with success !$(EOC)"
-	@install_name_tool -change @rpath/SDL2.framework/Versions/A/SDL2 $(SDL2) $(NAME)
-	@install_name_tool -change @rpath/SDL2_image.framework/Versions/A/SDL2_image $(SDL2_image) $(NAME)
-	@install_name_tool -change @rpath/SDL2_mixer.framework/Versions/A/SDL2_mixer $(SDL2_mixer) $(NAME)
-	@install_name_tool -change @rpath/SDL2_ttf.framework/Versions/A/SDL2_ttf $(SDL2_ttf) $(NAME)
+#	@install_name_tool -change @rpath/SDL2.framework/Versions/A/SDL2 $(SDL2) $(NAME)
+#	@install_name_tool -change @rpath/SDL2_image.framework/Versions/A/SDL2_image $(SDL2_image) $(NAME)
+#	@install_name_tool -change @rpath/SDL2_mixer.framework/Versions/A/SDL2_mixer $(SDL2_mixer) $(NAME)
+#	@install_name_tool -change @rpath/SDL2_ttf.framework/Versions/A/SDL2_ttf $(SDL2_ttf) $(NAME)
 
 $(OBJDIR)/%.o : $(SRCDIR)/%.c $(INCLUDES)
 	@mkdir -p $(OBJDIR)

@@ -86,15 +86,16 @@ static int		store_arg(char *arena, t_instruction *ins, int i, int ocp)
 	start = i;
 	while (++arg < ins->op.nb_params)
 	{
-		ocp = ocp && (11 << i);
-		ocp = (ocp >> (i + i);
-		if (!(ocp & ins->op.arg_types[i]))
+		ft_printf("ocp = %d ins op arg type = %d\n", ocp, ins->op.arg_types[i]);
+		ocp = ocp & (11 << i);
+		ocp = (ocp >> (i + i));
+		if (!(ocp & ins->op.arg_types[i])
 			|| ((ocp & T_REG && *(arena + i) >= REG_NUMBER)))
 		{
 			ft_printf("invalid file type!\n");
 			return (0);
 		}
-		i += fstore[(int)ins->op.opcode](ar, ins->params[arg], i);
+		i += fstore[(int)ins->op.opcode](arena, &ins->params[arg], i);
 	}
 	return (i - start);
 }
@@ -103,6 +104,7 @@ int				get_instruction(char *arena, t_op *tab, int i, t_instruction *ins)
 {
 	char	hex;
 	int		arglen;
+	t_parameter	*arg;
 	int		ret;
 
 
@@ -110,67 +112,38 @@ int				get_instruction(char *arena, t_op *tab, int i, t_instruction *ins)
 	if (!(ret = is_valid_opcode(hex)))
 		return (0);
 	else
-		ft_memmove(ins->op, tab[ret]);
-	hex = *(arena + (i + 1) >= MEM_SIZE ? 1 : i + 1);
-	if (!(ins->op.ocp = is_valid_ocp(hex, ins->op, ins->params))
+		ft_memmove((void *)&ins->op, (void *)&tab[ret], sizeof(t_op));
+	hex = *(arena + ((unsigned int)(i + 1) >= MEM_SIZE ? 1 : i + 1));
+	if (!(ins->ocp = is_valid_ocp(hex, ins)))
 		return (0);
-	if (!(ins->params.nb_bytes = store_arg(arena, ins, i, ins->op.ocp))
+	if (!(ins->params->nb_bytes = store_arg(arena, ins, i, ins->ocp)))
 		return (0);
-//	ft_printf("valid opcode! = %d in index %d\n", ins->op, i)
-	arg = ins->param;
+	ft_printf("valid opcode! = %d in index %d\n", ins->op.opcode, i);
+	arg = ins->params;
 	arglen = arg[0].nb_bytes + arg[1].nb_bytes + arg[2].nb_bytes;
-	return (1 + needs_ocp(ins->op) + arglen);
+	return (1 + needs_ocp(ins->op.opcode) + arglen);
 }
 
-int			launch_instruction(char *arena, int *pc)
+int			launch_instruction(t_vm *vm, t_process *proc, t_op *tab)
 {
 	t_instruction	ins;
 	int				ret;
-
-	ft_bzero(ins, sizeof(*ins));
-	
 	static int 	(*f_ins[NB_INSTRUCTIONS + 1])(t_vm *vm, t_process *proc,
-			t_arg arg[3]) = {NULL, &ins_live, &ins_ld,
-		&ins_st, &ins_add, &ins_sub, &ins_and, &ins_or, &ins_xor, &ins_zjmp,
-		&ins_ldi, &ins_sti, &ins_fork, &ins_lld, &ins_lldi, &ins_lfork,
-		&ins_aff};
-	if (ret = get_instruction(arena, *pc, &ins))
-	{
-		f_ins[ins.op](vm, pr, ins.params);
-		*pc += ret;
-	}
-	else
-		*pc += 1;
-}
-
-
-/*
-
-
-int				get_instruction(t_vm *vm, t_op *tab, t_process *pr)
-{
-	char	hex;
-	int		opcode;
-	t_arg	arg[3];
-	static int 	(*ins[NB_INSTRUCTIONS + 1])(t_vm *vm, t_process *proc,
-			t_arg arg[3]) = {NULL, &ins_live, &ins_ld,
+			t_parameter arg[3]) = {NULL, &ins_live, &ins_ld,
 		&ins_st, &ins_add, &ins_sub, &ins_and, &ins_or, &ins_xor, &ins_zjmp,
 		&ins_ldi, &ins_sti, &ins_fork, &ins_lld, &ins_lldi, &ins_lfork,
 		&ins_aff};
 
-	hex = *(char *)vm->arena;
-	if (!(opcode = is_valid_opcode(hex)))
-		return (0);
-	if ((hex = *(char *)(vm->arena + 1)) && !is_valid_ocp(hex, opcode, (t_arg **)&arg))
-		return (0);
-	if (store_argval(vm, (t_arg **)&arg, &tab[opcode], pr))
+	ft_printf("launch instruction | proc cycle = %d\n", proc->cycle);
+	if (--proc->cycle)
+		return (1);
+	ft_bzero((void *)&ins, sizeof(ins));
+	if ((ret = get_instruction((char *)vm->arena, (t_op *)tab, proc->pc, &ins)))
 	{
-		ft_printf("valid opcode! = %d in index %d\n", opcode, pr->pc);
-		ins[opcode](vm, pr, arg);
-		pr->pc = (1 + needs_ocp(opcode) + arg[FIRST].nb_bytes
-			+ arg[SECOND].nb_bytes + arg[THIRD].nb_bytes) % MEM_SIZE;
-		return (opcode);
+		f_ins[(int)ins.op.opcode](vm, proc, ins.params);
+		proc->pc = (proc->pc + ret) & MEM_SIZE;
+		return (tab[(int)ins.op.opcode].nb_cycles);
 	}
-	return (0);
+	proc->pc = (proc->pc == MEM_SIZE - 1 ? 0 : proc->pc + 1);
+	return (1);
 }
-*/

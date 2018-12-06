@@ -18,7 +18,7 @@
 ** Returns 
 */
 
-int		ins_lfork(t_vm *vm, t_process *proc, t_arg arg[3])
+int		ins_lfork(t_vm *vm, t_process *proc, t_parameter arg[3])
 {
 	(void)vm;
 	(void)proc;

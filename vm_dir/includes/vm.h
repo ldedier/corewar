@@ -60,6 +60,7 @@ typedef struct		s_process
 	int				live;
 	unsigned char	reg[REG_NUMBER];
 	int				pc;
+	int				cycle;
 	unsigned char	carry;
 }					t_process;
 
@@ -92,29 +93,30 @@ void				parse(t_vm *vm);
 ** INSTRUCTIONS
 */
 
-int					ins_live(t_vm *vm, t_process *proc, t_arg arg[3]);
-int					ins_ld(t_vm *vm, t_process *proc, t_arg arg[3]);
-int					ins_st(t_vm *vm, t_process *proc, t_arg arg[3]);
-int					ins_add(t_vm *vm, t_process *proc, t_arg arg[3]);
-int					ins_sub(t_vm *vm, t_process *proc, t_arg arg[3]);
-int					ins_and(t_vm *vm, t_process *proc, t_arg arg[3]);
-int					ins_or(t_vm *vm, t_process *proc, t_arg arg[3]);
-int					ins_xor(t_vm *vm, t_process *proc, t_arg arg[3]);
-int					ins_zjmp(t_vm *vm, t_process *proc, t_arg arg[3]);
-int					ins_ldi(t_vm *vm, t_process *proc, t_arg arg[3]);
-int					ins_sti(t_vm *vm, t_process *proc, t_arg arg[3]);
-int					ins_fork(t_vm *vm, t_process *proc, t_arg arg[3]);
-int					ins_lld(t_vm *vm, t_process *proc, t_arg arg[3]);
-int					ins_lldi(t_vm *vm, t_process *proc, t_arg arg[3]);
-int					ins_lfork(t_vm *vm, t_process *proc, t_arg arg[3]);
-int					ins_aff(t_vm *vm, t_process *proc, t_arg arg[3]);
+int					ins_live(t_vm *vm, t_process *proc, t_parameter arg[3]);
+int					ins_ld(t_vm *vm, t_process *proc, t_parameter arg[3]);
+int					ins_st(t_vm *vm, t_process *proc, t_parameter arg[3]);
+int					ins_add(t_vm *vm, t_process *proc, t_parameter arg[3]);
+int					ins_sub(t_vm *vm, t_process *proc, t_parameter arg[3]);
+int					ins_and(t_vm *vm, t_process *proc, t_parameter arg[3]);
+int					ins_or(t_vm *vm, t_process *proc, t_parameter arg[3]);
+int					ins_xor(t_vm *vm, t_process *proc, t_parameter arg[3]);
+int					ins_zjmp(t_vm *vm, t_process *proc, t_parameter arg[3]);
+int					ins_ldi(t_vm *vm, t_process *proc, t_parameter arg[3]);
+int					ins_sti(t_vm *vm, t_process *proc, t_parameter arg[3]);
+int					ins_fork(t_vm *vm, t_process *proc, t_parameter arg[3]);
+int					ins_lld(t_vm *vm, t_process *proc, t_parameter arg[3]);
+int					ins_lldi(t_vm *vm, t_process *proc, t_parameter arg[3]);
+int					ins_lfork(t_vm *vm, t_process *proc, t_parameter arg[3]);
+int					ins_aff(t_vm *vm, t_process *proc, t_parameter arg[3]);
 
 /*
-** NAVIGATION
+** PLAY
 */
 
 int				check_resize_cycle(t_vm *vm, int *cycle);
 int				play(t_vm *vm, t_process **proc, t_op *tab);
+int				launch_instruction(t_vm *vm, t_process *proc, t_op *tab);
 
 /*
 ** ENV

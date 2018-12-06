@@ -15,23 +15,32 @@
 void		set_processes(t_vm *vm, t_process **proc)
 {
 	int i;
+	int op = 1;
 	static char reg[REG_NUMBER] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
-	t_arg arg[3];
+	t_parameter arg[3];
 
 	i = -1;
+	(void)arg;
 	while (++i < MAX_PLAYERS)
 	{
 		(*proc)[i].id = i;
 		(*proc)[i].pc = i * (MEM_SIZE / MAX_PLAYERS); // verifier calcul
+		(*proc)[i].cycle = 1;
+		(*proc)[i].live = 1;
+
 		ft_memmove((void *)(*proc)[i].reg, (void *)reg, REG_NUMBER);
-		arg[0].val = i;
+		arg[0].value = i;
 		arg[0].nb_bytes = 4;
-		ins_live(vm, *proc, arg);
-		ft_printf("i = %d | arg[0] = %d arg[1] = %d\n", i, i * 2, reg[i]);
-		arg[0].val = i * 2;
-		arg[0].nb_bytes = 4;
-		arg[1].val = reg[i];
-		arg[1].nb_bytes = 1;
+		ft_memmove((void *)(vm->arena + i * 1024), (void *)&op, sizeof(char));
+		ft_memmove((void *)(vm->arena + i * 1024 + 4), (void *)&arg[0].value, sizeof(int));
+
+//		display_arena(vm->arena);
+//		ins_live(vm, *proc, arg);
+//		ft_printf("i = %d | arg[0] = %d arg[1] = %d\n", i, i * 2, reg[i]);
+//		arg[0].value = i * 2;
+//		arg[0].nb_bytes = 4;
+//		arg[1].value = reg[i];
+//		arg[1].nb_bytes = 1;
 //		arg[3].val = 0;
 //		arg[3].nb_bytes = 0;
 //		ins_st(vm, *proc, arg);
@@ -45,7 +54,7 @@ void		declare_winner(t_vm *vm, t_process **proc)
 	i = -1;
 	while (++i < MAX_PLAYERS)
 		if ((*proc)[i].live == 1)
-			ft_printf("player %s wins!\n", vm->player[i].name);
+			ft_printf("player %d [%s] wins!\n", i, vm->player[i].name);
 // Incorrect, penser a detecter le DERNIER live
 // plus gerer cas d'egalite, si c_to_die = 0 ou plusieurs live sur le meme cycle?
 }
@@ -73,7 +82,6 @@ int		play(t_vm *vm, t_process **proc, t_op *tab)
 {
 	static int			cycle;
 	int					pl;
-	int					opcode;
 	static int					total_live;
 
 	ft_printf("play | cycle = %d total live = %d\n", cycle, total_live);
@@ -98,20 +106,13 @@ int		play(t_vm *vm, t_process **proc, t_op *tab)
 	pl = 2;
 	while (pl--)
 	{
-		ft_printf("PLAYER %d: \n", pl);
+		ft_printf("PLAYER %d | pc = %d: \n", pl, (*proc)[pl].pc);
 		if (!stay_alive(vm, (*proc)[pl], pl))
 			(*proc)[pl].live = DEAD;
 		else
 			++total_live;
 		if ((*proc)[pl].live != DEAD)
-		{
-			if ((opcode = get_instruction(vm->arena, tab, (*proc)[pl].pc, &ins)) && ++cycle)
-				cycle += tab[opcode].nb_cycles;
-			else if ((*proc)[pl].pc == MEM_SIZE)
-				(*proc)[pl].pc = 0;
-			else
-				++(*proc)[pl].pc;
-		}
+			(*proc)[pl].cycle += launch_instruction(vm, *proc, tab);
 		ft_printf("PC %d in %d\n", pl, (*proc)[pl].pc);
 	}
 	++cycle;
