@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 20:06:08 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/04 15:36:45 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/05 13:15:14 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -412,7 +412,7 @@ int		ft_process_parse_indirect(char *str, int index, int offset, t_env *e)
 	e->champ.header.prog_size += IND_SIZE;
 	e->parser.current_instruction->params[index].nb_bytes = IND_SIZE;
 	e->parser.current_instruction->ocp |= (IND_CODE << (6 - (2 * index)));
-	if (!(T_IND & e->parser.current_instruction->op.arg_types[index]))
+	if (!(T_IND & e->parser.current_instruction->op.arg_types[index]) && 0)
 		return (ft_log_custom_wrong_param_type("indirect", index, 0, e));
 	e->parser.current_instruction->params[index].type |= T_IND;
 	if (str[0] == LABEL_CHAR)

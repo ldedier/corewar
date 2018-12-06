@@ -6,7 +6,8 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/30 13:25:13 by ldedier           #+#    #+#              #
-#    Updated: 2018/12/06 17:30:19 by emuckens         ###   ########.fr        #
+#    Created: 2018/12/04 15:20:42 by ldedier           #+#    #+#              #
+#    Updated: 2018/12/06 16:56:32 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,11 +37,13 @@ OK_COLOR = \x1b[32;01m
 EOC = \033[0m
 
 SRCS_NO_PREFIX =		arena.c error.c flags.c main.c parse.c read.c visu.c\
-						tmp.c utils.c op.c play.c get_instruction.c store_arg.c
+						tmp.c utils.c op.c play.c get_instruction.c store_arg.c\
+						init_sdl.c client.c bonus_flags.c net_tools.c
+
 INS_NO_PREFIX =			live.c ld.c st.c add.c sub.c and.c or.c xor.c zjmp.c \
 						ldi.c sti.c fork.c lld.c lldi.c lfork.c aff.c
 
-INCLUDES_NO_PREFIX = vm.h visu.h
+INCLUDES_NO_PREFIX =	vm.h visu.h client.h
 
 SOURCES = $(addprefix $(SRCDIR)/, $(SRCS_NO_PREFIX)) \
 		$(addprefix $(SRCDIR)/$(INSDIR)/, $(INS_NO_PREFIX))
@@ -95,7 +98,6 @@ debug:
 $(LIBFT):
 	@make -C $(LIBFTDIR) all
 
-
 #	@$(CC) -o $@ $^ -F $(FRAMEWORKSDIR) $(CFLAGS) $(LFLAGS) #pour linux Emma | desolee!
 
 $(BINDIR)/$(NAME): $(OBJECTS)  $(LIBFT)
@@ -105,6 +107,7 @@ $(BINDIR)/$(NAME): $(OBJECTS)  $(LIBFT)
 	@install_name_tool -change @rpath/SDL2_image.framework/Versions/A/SDL2_image $(SDL2_image) $(NAME)
 	@install_name_tool -change @rpath/SDL2_mixer.framework/Versions/A/SDL2_mixer $(SDL2_mixer) $(NAME)
 	@install_name_tool -change @rpath/SDL2_ttf.framework/Versions/A/SDL2_ttf $(SDL2_ttf) $(NAME)
+	@install_name_tool -change @rpath/SDL2_net.framework/Versions/A/SDL2_net $(SDL2_net) $(NAME)
 
 $(OBJDIR)/%.o : $(SRCDIR)/%.c $(INCLUDES)
 	@mkdir -p $(OBJDIR)

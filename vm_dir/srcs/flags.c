@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 17:19:23 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/06 16:36:47 by uboumedj         ###   ########.fr       */
+/*   Updated: 2018/12/06 17:36:05 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static void	add_player_n(t_vm *vm, int argc, char **argv, int *cur)
 	}
 	vm->player[vm->nb_players].num = nb;
 	*cur += 2;
-	vm->player[vm->nb_players].prog = *cur;
+	vm->player[vm->nb_players].cor_name = argv[*cur];
 }
 
 /*
@@ -103,7 +103,7 @@ static int	add_player_2(t_vm *vm, int min)
 **number specified with the [-n] flag.
 */
 
-static void	add_player(t_vm *vm, int *cur, int nb_pl)
+static void	add_player(t_vm *vm, char **argv, int *cur, int nb_pl)
 {
 	int	nb;
 	int	i;
@@ -125,7 +125,7 @@ static void	add_player(t_vm *vm, int *cur, int nb_pl)
 		nb = add_player_2(vm, min);
 	}
 	vm->player[nb_pl].num = nb;
-	vm->player[nb_pl].prog = *cur;
+	vm->player[nb_pl].cor_name = argv[*cur];
 }
 
 /*
@@ -144,13 +144,20 @@ void		flags(t_vm *vm, int argc, char **argv)
 		dump_nb_cycles(vm, argc, argv, &cur);
 	while (cur < argc)
 	{
-		if (ft_strcmp("-n", argv[cur]) == 0)
-			add_player_n(vm, argc, argv, &cur);
+		if (!ft_strcmp("-v", argv[cur]))
+			vm->visu.active = 1;
+		else if (!ft_strcmp("-corehub", argv[cur]))
+			corehub_port_and_address(vm, argc, argv, &cur);
 		else
-			add_player(vm, &cur, vm->nb_players);
-		vm->nb_players += 1;
-		if (vm->nb_players > MAX_PLAYERS)
-			error_exit(5);
+		{
+			if (ft_strcmp("-n", argv[cur]) == 0)
+				add_player_n(vm, argc, argv, &cur);
+			else
+				add_player(vm, argv, &cur, vm->nb_players);
+			vm->nb_players += 1;
+			if (vm->nb_players > MAX_PLAYERS)
+				error_exit(5);
+		}
 		cur++;
 	}
 }
