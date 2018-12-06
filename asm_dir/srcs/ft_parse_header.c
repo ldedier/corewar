@@ -69,10 +69,10 @@ static int read_comment(char *line, t_env *env)
 
 static int check_name(char *str, t_env *env)
 {
-	int i;
+//	int i;
 	char *name;
 
-	i = 0;
+//	i = 0;
 	name = NULL;
 	if (str[0] == '.')
 	{
@@ -86,10 +86,10 @@ static int check_name(char *str, t_env *env)
 
 static int check_comment(char *str, t_env *env)
 {
-	int i;
+//	int i;
 	char *comment;
 
-	i = 0;
+//	i = 0;
 	comment = NULL;
 	if (str[0] == '.')
 	{

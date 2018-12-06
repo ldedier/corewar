@@ -16,6 +16,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <stdint.h>
 
 # define NB_CHARS	255
 # define BUF_SIZE	1000000

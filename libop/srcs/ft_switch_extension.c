@@ -37,11 +37,11 @@ int ft_switch_extension(char *str, char *ext_from, char *ext_to,
 {
 	char *name;
 	int len;
-	int len_ext_to;
+//	int len_ext_to;
 	int len_ext_from;
 
 	len = ft_strlen(str);
-	len_ext_to = ft_strlen(ext_to);
+//	len_ext_to = ft_strlen(ext_to);
 	len_ext_from = ft_strlen(ext_from);
 	if (ft_is_of_ext_len(str, len, ext_from, len_ext_from))
 	{

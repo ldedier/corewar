@@ -44,10 +44,10 @@ void	ft_free_label_tlst(void *label, size_t dummy)
 
 void	ft_free_instruction_tlst(void *instruction, size_t dummy)
 {
-	t_instruction *i;
+//	t_instruction *i;
 
 	(void)dummy;
-	i = instruction;
+//	i = instruction;
 	ft_free_instruction(instruction);
 }
 void	ft_free_all(t_env *e)

@@ -36,9 +36,9 @@ int		ft_put_wchar(int value, t_pf *pf)
 	else
 		ft_4_bytes_len(str, value);
 	i = 0;
-	if (len <= MB_CUR_MAX)
+	if ((unsigned int)len <= MB_CUR_MAX)
 	{
-		while (i < len && i < MB_CUR_MAX)
+		while (i < len && (unsigned int)i < MB_CUR_MAX)
 			ft_putchar_buff(str[i++], pf);
 	}
 	else
