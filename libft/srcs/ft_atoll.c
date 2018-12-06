@@ -6,11 +6,11 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/10 11:29:24 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/03/01 14:34:40 by uboumedj         ###   ########.fr       */
+/*   Updated: 2018/12/06 16:33:00 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/libft.h"
+#include "libft.h"
 
 long long int	ft_atoll(const char *str)
 {

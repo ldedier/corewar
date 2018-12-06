@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/21 13:40:59 by ldedier           #+#    #+#              #
-#    Updated: 2018/11/30 13:35:09 by ldedier          ###   ########.fr        #
+#    Updated: 2018/12/06 16:51:56 by emuckens         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ INC = -I $(INCLUDESDIR)
 CFLAGS = -DPATH=$(PWD) -Wall -Wextra -Werror\
 		 -Wno-missing-field-initializers $(INC)
 
+
 ifeq ($(DEBUG), 1)
 	CFLAGS += -DDEBUG 
 	CC += -g3
@@ -51,7 +52,7 @@ all:
 
 $(OBJDIR)/%.o : $(SRCDIR)/%.c $(INCLUDES)
 	@mkdir -p $(OBJDIR)
-	$(CC) -c $< -o $@ $(CFLAGS)
+	$(CC) -c $< -o $@ $(CFLAGS) 
 
 $(BINDIR)/$(NAME): $(OBJECTS)
 	@ar rc $@ $^
