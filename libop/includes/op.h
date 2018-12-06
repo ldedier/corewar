@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 19:01:37 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/03 01:29:35 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/06 16:43:47 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,19 @@ typedef struct		s_instruction
 	char			*source_code_line;
 }					t_instruction;
 
+enum				e_op
+{
+	LIVE, LD, ST, ADD, SUB, AND, OR, XOR, ZJMP, LDI, STI, FORK, LLD, LLDI, LFORK, AFF
+};
+
 
 t_op							g_op_tab[NB_INSTRUCTIONS + 1];
+
+
+
+
+int								get_instruction(char *arena, t_op *tab, int i, t_instruction *ins);
+int								store_arg(char *arena, t_instruction *ins, int i, int ocp);
+void							set_optab(t_op **tab);
+
 #endif
