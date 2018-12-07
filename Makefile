@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/29 17:38:52 by ldedier           #+#    #+#              #
-#    Updated: 2018/12/06 17:47:43 by uboumedj         ###   ########.fr        #
+#    Updated: 2018/12/06 19:21:55 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ DECOMPILER_NAME = decompiler
 SERVER_NAME		= scorewar
 
 opti:
-	@make all -j
+	@make all
 
 all:
 	@make -C $(LIBFTDIR) opti
@@ -33,7 +33,7 @@ all:
 	@make -C $(ASMDIR) optilibcomp
 	@make -C $(VMDIR) optilibcomp
 	@make -C $(DECOMPILERDIR) optilibcomp
-	@make -C $(SERVERDIR) optilibcomp
+	@make -C $(SERVERDIR) libcomp
 	@cp $(ASMDIR)/$(ASM_NAME) .
 	@cp $(VMDIR)/$(VM_NAME) .
 	@cp $(DECOMPILERDIR)/$(DECOMPILER_NAME) .

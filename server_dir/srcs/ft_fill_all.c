@@ -1,30 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_process.c                                       :+:      :+:    :+:   */
+/*   ft_fill_all.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/04 17:50:39 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/06 16:39:56 by ldedier          ###   ########.fr       */
+/*   Created: 2018/12/06 20:48:17 by ldedier           #+#    #+#             */
+/*   Updated: 2018/12/06 22:02:54 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "server.h"
-
-size_t	ft_memcpy_ret(void *dest, void *src, size_t size)
-{
-	ft_memcpy(dest, src, size);
-	return (size);
-}
 
 int		ft_get_core_size_all(t_core *core)
 {
 	int size;
 
 	size = 0;
+	size += sizeof(t_score);
 	size += sizeof(t_name_size);
-	size += sizeof(t_score_size);
 	size += ft_strlen(core->name);
 	return (size);
 }
@@ -55,8 +49,9 @@ void	ft_add_core_data_all(void *content_core, char *data, int *size)
 
 	core = (t_core *)content_core;
 	name_size = ft_strlen(core->name);
-	*size += ft_memcpy_ret(&(data[*size]), &(name_size), sizeof(name_size));
 	*size += ft_memcpy_ret(&(data[*size]), &(core->score), sizeof(core->score));
+	*size += ft_memcpy_ret(&(data[*size]), &(name_size), sizeof(name_size));
+	*size += ft_memcpy_ret(&(data[*size]), core->name, name_size);
 }
 
 int		ft_send_all_cores(TCPsocket socket, t_server *server)
