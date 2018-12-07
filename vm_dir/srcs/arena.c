@@ -37,8 +37,7 @@ void		init_vm(t_vm *vm, char **argv)
 
 /*
 **dispatch_players function sends each player to their respective starting
-**point in the arena.
-** Initialize processes
+**point in the arena and initializes processes for each player.
 */
 
 void		dispatch_players(t_vm *vm, t_process **proc)

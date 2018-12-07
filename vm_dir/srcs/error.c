@@ -19,40 +19,6 @@ void		ft_error_exit(const char *str)
 }
 
 /*
-**error_exit function outputs the error message associated with the ID used
-**during its call, then exits the program.
-*/
-
-void		error_exit(int n)
-{
-	if (n == 1)
-		ft_putstr_fd(
-		"Usage: ./corewar [-dump nb] [-v | -w] [-n nb] <champ1.cor> <...>\n",
-		2);
-	else if (n == 2)
-		ft_putstr_fd("File type invalid\n", 2);
-	else if (n == 3)
-		ft_putstr_fd("Wrong arguments after -dump!\n", 2);
-	else if (n == 4)
-		ft_putstr_fd("[-dump nbr_cycle]: nbr_cycle can't exceed INT_MAX!\n", 2);
-	else if (n == 5)
-		ft_putstr_fd("Number of players exceeded max amount\n", 2);
-	else if (n == 6)
-		ft_putstr_fd("Wrong arguments after -n!\n", 2);
-	else if (n == 7)
-		ft_putstr_fd("[-n nb] :  nb can't exceed INT_MAX or -INT_MAX\n", 2);
-	else if (n == 8)
-		ft_putstr_fd("Trying to assign a player number already taken\n", 2);
-	else if (n == 9)
-		ft_putstr_fd("Issue while handling file\n", 2);
-	else if (n == 10)
-		ft_putstr_fd("Size of the given file is too large to be handled\n", 2);
-	else if (n == 11)
-		ft_putstr_fd("Incorrect characters were used in the .cor file\n", 2);
-	exit(1);
-}
-
-/*
 **error_exit_mgc function outputs an error message if a file is given with
 **the wrong magic number at the beginning, then exits the program.
 */
@@ -66,14 +32,13 @@ void		error_exit_mgc(char *name)
 }
 
 /*
-**error_exit2 function is the second function used to output error messages
-**before exiting the program (because error_exit was too long)
+**error_exit_msg function outputs the error message specified in error.h used
+**during its call, then exits the program.
 */
 
-void		error_exit2(int n)
+void		error_exit_msg(const char *str)
 {
-	if (n == 1)
-		ft_putstr_fd("Champion exceeded maximum allowed size\n", 2);
+	ft_dprintf(2, "%s\n", str);
 	exit(1);
 }
 

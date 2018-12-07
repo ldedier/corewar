@@ -24,17 +24,17 @@ static void	dump_nb_cycles(t_vm *vm, int argc, char **argv, int *cur)
 
 	*cur += 1;
 	if (*cur + 2 > argc)
-		error_exit(3);
+		error_exit_msg(WRG_DUMP);
 	i = 0;
 	while (argv[*cur][i])
 	{
 		if (!(ft_strchr("0123456789", argv[*cur][i])))
-			error_exit(3);
+			error_exit_msg(WRG_DUMP);
 		i++;
 	}
 	nb = ft_atoll(argv[*cur]);
 	if (nb > 2147483647)
-		error_exit(4);
+		error_exit_msg(MAX_DUMP);
 	vm->dump = nb;
 	*cur += 1;
 }
@@ -50,24 +50,24 @@ static void	add_player_n(t_vm *vm, int argc, char **argv, int *cur)
 	int				i;
 
 	if (*cur + 3 > argc)
-		error_exit(6);
+		error_exit_msg(WRG_N_FLAG);
 	i = 0;
 	if (argv[*cur + 1][i] == '-')
 		i++;
 	while (argv[*cur + 1][i])
 	{
 		if (!(ft_strchr("0123456789", argv[*cur + 1][i])))
-			error_exit(6);
+			error_exit_msg(WRG_N_FLAG);
 		i++;
 	}
 	nb = ft_atoll(argv[*cur + 1]);
 	if (nb > 2147483647 || nb < -2147483648)
-		error_exit(7);
+		error_exit_msg(MAX_N_FLAG);
 	i = 0;
 	while (i < vm->nb_players)
 	{
 		if (vm->player[i].num == nb)
-			error_exit(8);
+			error_exit_msg(WRG_P_NUM);
 		i++;
 	}
 	vm->player[vm->nb_players].num = nb;
@@ -156,7 +156,7 @@ void		flags(t_vm *vm, int argc, char **argv)
 				add_player(vm, argv, &cur, vm->nb_players);
 			vm->nb_players += 1;
 			if (vm->nb_players > MAX_PLAYERS)
-				error_exit(5);
+				error_exit_msg(MAX_P_NUM);
 		}
 		cur++;
 	}
