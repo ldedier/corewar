@@ -2,4 +2,4 @@
 .name "Tching tching(Intercepteur), Bouh!Bouh!(bruits d'anti-jeu)"
 .comment ""
 
-ld  	 r4,r4
+ld  	 14,11

@@ -6,11 +6,11 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/04 15:20:42 by ldedier           #+#    #+#              #
-#    Updated: 2018/12/04 20:33:26 by ldedier          ###   ########.fr        #
+#    Updated: 2018/12/06 22:53:20 by emuckens         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	= corewar_server
+NAME	= scorewar
 
 CC      = gcc
 
@@ -34,7 +34,7 @@ LIBOP = $(LIBOPDIR)/libop.a
 OK_COLOR = \x1b[32;01m
 EOC = \033[0m
 
-SRCS_NO_PREFIX =	main.c ft_process.c
+SRCS_NO_PREFIX =	main.c ft_process.c ft_fill.c tools.c
 
 INCLUDES_NO_PREFIX = server.h
 
@@ -86,8 +86,8 @@ $(LIBFT):
 $(BINDIR)/$(NAME): $(OBJECTS) $(LIBFT)
 	@$(CC) -o $@ $^ -F $(FRAMEWORKSDIR) $(SDL2_FRAMEWORKS) $(CFLAGS) $(LFLAGS)
 	@echo "$(OK_COLOR)$(NAME) linked with success !$(EOC)"
-	@install_name_tool -change @rpath/SDL2.framework/Versions/A/SDL2 $(SDL2) $(NAME)
-	@install_name_tool -change @rpath/SDL2_net.framework/Versions/A/SDL2_net $(SDL2_net) $(NAME)
+#	install_name_tool -change @rpath/SDL2.framework/Versions/A/SDL2 $(SDL2) $(NAME)
+#	install_name_tool -change @rpath/SDL2_net.framework/Versions/A/SDL2_net $(SDL2_net) $(NAME)
 
 $(OBJDIR)/%.o : $(SRCDIR)/%.c $(INCLUDES)
 	@mkdir -p $(OBJDIR)

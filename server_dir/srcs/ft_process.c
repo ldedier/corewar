@@ -6,18 +6,11 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 17:50:39 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/04 20:38:50 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/06 16:17:51 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "server.h"
-
-int		ft_send_protected(TCPsocket socket, void *data, size_t size)
-{
-	if (SDLNet_TCP_Send(socket, data, size) < (int)size)
-		return (1);
-	return (0);
-}
 
 int		ft_accept_player(t_server *server)
 {
@@ -38,11 +31,10 @@ int		ft_accept_player(t_server *server)
 	if (SDLNet_TCP_AddSocket(server->socket_set,
 			server->client_sockets[i].socket) == -1)
 		return (1);
-	server->message.flag = LOGGED;
-	if (ft_send_protected(server->client_sockets[i].socket, &(server->message),
-				sizeof(server->message)))
+	if (ft_send_all_cores(server->client_sockets[i].socket, server))
 		return (ft_error());
 	server->nb_players++;
+	ft_printf("connect: %d\n", server->nb_players);
 	return (0);
 }
 
@@ -74,6 +66,7 @@ int		ft_disconnect_player(t_server *server, int i)
 	SDLNet_TCP_DelSocket(server->socket_set, server->client_sockets[i].socket);
 	SDLNet_TCP_Close(server->client_sockets[i].socket);
 	server->nb_players--;
+	ft_printf("disconnect: %d\n", server->nb_players);
 	server->message.player_number = server->client_sockets[i].player_number;
 	server->message.flag = DISCONNECTION;
 	ft_init_client_socket(&(server->client_sockets[i]));

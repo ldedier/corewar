@@ -5,14 +5,15 @@
 #                                                     +:+ +:+         +:+      #
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2018/11/30 13:25:13 by ldedier           #+#    #+#              #
 #    Created: 2018/12/04 15:20:42 by ldedier           #+#    #+#              #
-#    Updated: 2018/12/04 22:13:20 by ldedier          ###   ########.fr        #
+#    Updated: 2018/12/06 16:56:32 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= corewar
 
-CC      = gcc
+CC      = gcc -g
 
 PWD = $(shell pwd)
 
@@ -22,6 +23,7 @@ SRCDIR   = srcs
 OBJDIR   = objs
 BINDIR   = .
 INCLUDESDIR = includes
+INSDIR = instructions
 
 LIBFTDIR = ../libft
 LIBFT_INCLUDEDIR = includes
@@ -34,13 +36,21 @@ LIBOP = $(LIBOPDIR)/libop.a
 OK_COLOR = \x1b[32;01m
 EOC = \033[0m
 
-SRCS_NO_PREFIX =		arena.c error.c flags.c main.c parse.c read.c visu.c
+SRCS_NO_PREFIX =		arena.c error.c flags.c main.c parse.c read.c visu.c\
+						tmp.c utils.c op.c play.c get_instruction.c \
+						init_sdl.c client.c bonus_flags.c net_tools.c
 
-INCLUDES_NO_PREFIX = vm.h
+INS_NO_PREFIX =			live.c ld.c st.c add.c sub.c and.c or.c xor.c zjmp.c \
+						ldi.c sti.c fork.c lld.c lldi.c lfork.c aff.c
 
-SOURCES = $(addprefix $(SRCDIR)/, $(SRCS_NO_PREFIX))
-OBJECTS = $(addprefix $(OBJDIR)/, $(SRCS_NO_PREFIX:%.c=%.o))
-	INCLUDES = $(addprefix $(INCLUDESDIR)/, $(INCLUDES_NO_PREFIX))
+INCLUDES_NO_PREFIX =	vm.h visu.h client.h
+
+SOURCES = $(addprefix $(SRCDIR)/, $(SRCS_NO_PREFIX)) \
+		$(addprefix $(SRCDIR)/$(INSDIR)/, $(INS_NO_PREFIX))
+OBJECTS =	$(addprefix $(OBJDIR)/, $(SRCS_NO_PREFIX:%.c=%.o))
+OBJECTS +=	$(addprefix $(OBJDIR)/$(INSDIR)/, $(INS_NO_PREFIX:%.c=%.o))
+
+INCLUDES = $(addprefix $(INCLUDESDIR)/, $(INCLUDES_NO_PREFIX))
 
 INC = -I $(INCLUDESDIR) -I $(LIBFTDIR)/$(LIBFT_INCLUDEDIR)\
 	  -I $(LIBOPDIR)/$(LIBOP_INCLUDEDIR)
@@ -88,7 +98,9 @@ debug:
 $(LIBFT):
 	@make -C $(LIBFTDIR) all
 
-$(BINDIR)/$(NAME): $(OBJECTS) $(LIBFT)
+#	@$(CC) -o $@ $^ -F $(FRAMEWORKSDIR) $(CFLAGS) $(LFLAGS) #pour linux Emma | desolee!
+
+$(BINDIR)/$(NAME): $(OBJECTS)  $(LIBFT)
 	@$(CC) -o $@ $^ -F $(FRAMEWORKSDIR) $(SDL2_FRAMEWORKS) $(CFLAGS) $(LFLAGS)
 	@echo "$(OK_COLOR)$(NAME) linked with success !$(EOC)"
 	@install_name_tool -change @rpath/SDL2.framework/Versions/A/SDL2 $(SDL2) $(NAME)
@@ -99,7 +111,11 @@ $(BINDIR)/$(NAME): $(OBJECTS) $(LIBFT)
 
 $(OBJDIR)/%.o : $(SRCDIR)/%.c $(INCLUDES)
 	@mkdir -p $(OBJDIR)
-	$(CC) -c $< -o $@ -F $(FRAMEWORKSDIR) $(CFLAGS)
+	@mkdir -p $(OBJDIR)/$(INSDIR)
+	@$(CC) -c $< -o $@ -F $(FRAMEWORKSDIR) $(CFLAGS)
+
+$(OBJDIR)/$(INSDIR)/%.o : $(SRCDIR)/$(INSDIR)/%.c $(INCLUDES)
+	@$(CC) -c $< -o $@ -F $(FRAMEWORKSDIR) $(CFLAGS)
 
 clean:
 	@make clean -C $(LIBOPDIR)
