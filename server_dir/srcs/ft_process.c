@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 17:50:39 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/06 16:17:51 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/06 21:27:04 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,7 @@ int		ft_deny_player(t_server *server)
 
 	if(!(temp = SDLNet_TCP_Accept(server->socket)))
 		return (ft_error());
-	server->message.flag = SERVER_FULL;
-	if (ft_send_protected(temp, &(server->message), sizeof(server->message)))
+	if (ft_send_rejection(temp))
 		return (ft_error());
 	SDLNet_TCP_Close(temp);
 	return (0);
@@ -67,17 +66,15 @@ int		ft_disconnect_player(t_server *server, int i)
 	SDLNet_TCP_Close(server->client_sockets[i].socket);
 	server->nb_players--;
 	ft_printf("disconnect: %d\n", server->nb_players);
-	server->message.player_number = server->client_sockets[i].player_number;
-	server->message.flag = DISCONNECTION;
 	ft_init_client_socket(&(server->client_sockets[i]));
 	j = 0;
 	while (i < MAX_PLAYERS)
 	{
 		if (!server->client_sockets[j].isfree)
 		{
-			if (ft_send_protected(server->client_sockets[j].socket,
-					&(server->message), sizeof(server->message)))
-			return (ft_error());
+			if (ft_send_deconnexion(server->client_sockets[j].socket, 
+				server->client_sockets[i].player_number))
+					return (ft_error());
 		}
 		i++;
 	}
@@ -96,7 +93,7 @@ int		ft_process_player_activity(t_server *server, int i)
 	if (SDLNet_SocketReady(server->client_sockets[i].socket) != 0)
 	{
 		if (SDLNet_TCP_Recv(server->client_sockets[i].socket,
-				&(server->received), sizeof(server->received)) <= 0)
+			server->buffer, MAX_TCP_PACKET) <= 0)
 		{
 			if (ft_disconnect_player(server, i))
 				return (1);

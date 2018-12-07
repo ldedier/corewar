@@ -112,7 +112,7 @@ int		ft_encode_to_cor(char *filename, t_env *e)
 	int fd;
 	int script;
 	
-	script = 0;
+	script = 1;
 	if (script)
 		filename = ft_strdup("mycor");
 	if ((fd = open(filename, O_RDWR | O_CREAT | O_TRUNC, 0644)) == -1)
