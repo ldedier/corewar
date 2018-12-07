@@ -62,14 +62,14 @@ static void		check_name_comm(t_vm *vm, int i)
 	while (name[n] != 0)
 	{
 		if (!(ft_strchr(LABEL_CHARS, name[n])))
-			error_exit(11);
+			error_exit_msg(INVALID_CHARS);
 		n++;
 	}
 	n = 0;
 	while (comm[n] != 0)
 	{
 		if (!(ft_strchr(LABEL_CHARS, comm[n])))
-			error_exit(11);
+			error_exit_msg(INVALID_CHARS);
 		n++;
 	}
 }
@@ -78,7 +78,7 @@ static void		check_name_comm(t_vm *vm, int i)
 **check_head_size static function is used to
 **
 */
-/*
+
 static void		check_head_size(t_vm *vm, int i)
 {
 	char	*bin;
@@ -89,12 +89,12 @@ static void		check_head_size(t_vm *vm, int i)
 	n = 0;
 	while (n < 4)
 	{
-		size[n] = bin[PROG_NAME_LENGTH + 13 + n];
+		size[3 - n] = bin[PROG_NAME_LENGTH + 8 + n];
 		n++;
 	}
-	ft_printf("%d", *(int *)size);
+	vm->player[i].header_size = *(int *)size;
 }
-*/
+
 /*
 **instructions static function is used by the parse function to add the [algo]
 **part (the instructions) inside the player structure. It also checks if the
@@ -116,9 +116,11 @@ static void		instructions(t_vm *vm, int i)
 		n++;
 	}
 	vm->player[i].algo_len = n;
-	//check_head_size(vm, i);
+	check_head_size(vm, i);
+	if (n != vm->player[i].header_size)
+		error_exit_msg(WRG_HEAD_SIZE);
 	if (n > CHAMP_MAX_SIZE)
-		error_exit2(1);
+		error_exit_msg(MAX_CHAMP);
 	while (n < CHAMP_MAX_SIZE)
 	{
 		algo[n] = 0;
