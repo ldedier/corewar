@@ -16,8 +16,8 @@
 # include "libft.h"
 # include "op.h"
 # include "champion.h"
-# include "visu.h"
-# include "client.h"
+//# include "visu.h"
+//# include "client.h"
 # include <fcntl.h>
 # define TOT_SIZE (CHAMP_MAX_SIZE + PROG_NAME_LENGTH + COMMENT_LENGTH + 4)
 # define DEAD		-100
@@ -52,8 +52,8 @@ typedef struct		s_vm
 	int				nb_players;
 	char			**files;
 	int				dump;
-	t_client		client;
-	t_visu			visu;
+//	t_client		client;
+//	t_visu			visu;
 	t_arena			arena[MEM_SIZE];
 	t_player		player[MAX_PLAYERS + 1];
 }					t_vm;

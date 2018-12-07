@@ -19,8 +19,8 @@
  */
 
 # define REG_SIZE				1
-# define IND_SIZE				2
 # define DIR_SIZE				4
+# define IND_SIZE				2
 
 # define REG_CODE				1
 # define DIR_CODE				2
@@ -78,8 +78,9 @@ typedef struct					s_header
 
 typedef struct		s_parameter
 {
-	t_arg_type		type; //T_REG || T_DIR || T_IND || T_LAB
+	t_arg_type		type; //T_REG || T_IND || T_DIR || T_LAB
 	int				value;
+	char			*ptr;
 	char			*label_name;
 	int				source_code_col;
 	int				nb_bytes;
@@ -97,7 +98,7 @@ typedef struct		s_instruction
 
 enum				e_op
 {
-	LIVE, LD, ST, ADD, SUB, AND, OR, XOR, ZJMP, LDI, STI, FORK, LLD, LLDI, LFORK, AFF
+	NA, LIVE, LD, ST, ADD, SUB, AND, OR, XOR, ZJMP, LDI, STI, FORK, LLD, LLDI, LFORK, AFF
 };
 
 
