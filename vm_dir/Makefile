@@ -43,7 +43,7 @@ SRCS_NO_PREFIX =		arena.c error.c flags.c main.c parse.c read.c visu.c\
 INS_NO_PREFIX =			live.c ld.c st.c add.c sub.c and.c or.c xor.c zjmp.c \
 						ldi.c sti.c fork.c lld.c lldi.c lfork.c aff.c
 
-INCLUDES_NO_PREFIX =	vm.h visu.h client.h
+INCLUDES_NO_PREFIX =	vm.h visu.h client.h errors.h
 
 SOURCES = $(addprefix $(SRCDIR)/, $(SRCS_NO_PREFIX)) \
 		$(addprefix $(SRCDIR)/$(INSDIR)/, $(INS_NO_PREFIX))
