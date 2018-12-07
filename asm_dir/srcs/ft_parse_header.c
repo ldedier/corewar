@@ -23,7 +23,7 @@ static int read_name(char *line, t_env *env, int i)
 	while (line[i] == ' ' || line[i] == '\t')
 		i++;
 	if (line[i] != '"')
-		ft_log_error_no_line("Syntax error at token [TOKEN][001:006] INSTRUCTION", env);
+		ft_log_error("Syntax error at token [TOKEN][001] NAME", 5, env);
 	while (line[i++])
 	{
 		env->champ.header.prog_name[j] = line[i];
@@ -32,6 +32,18 @@ static int read_name(char *line, t_env *env, int i)
 		j++;
 	}
 	env->champ.header.prog_name[j] = '\0';
+	if (line[i + 1] != '\0')
+	{
+		while(line[i] || line[i] == ' ' || line[i] == '\t')
+		{
+			if (ft_isdigit(line[i]) || ft_isalpha(line[i]))
+			{
+				ft_log_error_no_line("Syntax error at token [TOKEN][001] AFTER NAME", env);
+				return (1);
+			}
+			i++;
+		}
+	}
 	if (ft_strlen(env->champ.header.prog_name) > PROG_NAME_LENGTH)
 		ft_log_error_no_line("Champion name too long (Max length 128)", env);
 	printf("name = %s\n", env->champ.header.prog_name);
@@ -90,8 +102,14 @@ static int read_comment(char *line, t_env *env, int fd)
 	if (line[i] != '\0' && line[i + 1])
 	{
 		while(line[i])
-			if (line[i] == '\t' || line[i] == ' ')
-				ft_log_error_no_line("Syntax error at token [TOKEN][002] INSTRUCTION", env);
+		{
+			if (line[i] == '\t' || line[i] == ' ' || ft_isdigit(line[i]) || ft_isalpha(line[i]))
+			{
+				ft_log_error_no_line("Syntax error at token [TOKEN][002] AFTER COMMENT", env);
+				return (1);
+			}
+			i++;
+		}
 	}
 	if (ft_strlen(env->champ.header.comment) > COMMENT_LENGTH)
 		ft_log_error_no_line("Champion name too long (Max length 2048)", env);
@@ -150,7 +168,7 @@ int verif_format(char *str, t_env *env)
 	while (str[i] && str[i] != '"')
 	{
 		if (str[i] != ' ' && str[i] != '\t')
-			return (ft_log_error_no_line("Syntax error at token [TOKEN][002] COMMENT", env));
+			return (ft_log_error("Syntax error at token [TOKEN][002] COMMENT", 8,env));
 		i++;
 	}
 	return (0);
