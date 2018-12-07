@@ -16,6 +16,7 @@
 # include "op.h"
 # include "libft.h"
 # include "champion.h"
+# include "player.h"
 # include <fcntl.h>
 # include <stdio.h>
 
@@ -40,11 +41,13 @@ typedef struct		s_parser
 
 typedef struct		s_env
 {
+	t_player		player;
 	t_champion		champ;
 }					t_env;
 
 int					ft_init_env(t_env *e, char *filename);
 int					ft_parse_cor(char *filename, t_env *e);
 int					get_next_chunk(int fd, t_chunk *chunk);
+int					ft_encode_to_assembly(t_env *e);
 
 #endif

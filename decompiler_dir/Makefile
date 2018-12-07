@@ -34,7 +34,7 @@ LIBOP = $(LIBOPDIR)/libop.a
 OK_COLOR = \x1b[32;01m
 EOC = \033[0m
 
-SRCS_NO_PREFIX		= main.c ft_init.c ft_parse.c get_next_chunk.c
+SRCS_NO_PREFIX		= main.c ft_init.c ft_encode_to_assembly.c
 
 INCLUDES_NO_PREFIX	= decompiler.h
 
