@@ -36,15 +36,14 @@ static void		parsing(t_vm vm, int i)
 	char	*name;
 	char	*comm;
 	char	*algo;
-	int		j;
+//	int		j;
 
 	name = vm.player[i].name;
 	comm = vm.player[i].comm;
 	algo = vm.player[i].algo;
 	ft_printf("The name of the champion is: [%s]\n", name);
 	ft_printf("The comment is: [%s]\n", comm);
-	ft_printf("The size of the code specified in the header is [%d]\n",
-																										vm.player[i].header_size);
+//	ft_printf("The size of the code specified in the header is [%d]\n", algo);
 }
 
 /*
