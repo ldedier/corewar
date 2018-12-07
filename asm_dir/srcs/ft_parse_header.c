@@ -64,7 +64,7 @@ static int get_comment_other_line(t_env *env, int fd)
 	while (ft_strchr(&env->champ.header.comment[i], '"'))
 		i++;
 	if (env->champ.header.comment[i - 1] == '"')
-			env->champ.header.comment[i - 1] = '\0';
+		env->champ.header.comment[i - 1] = '\0';
 	free(tmp);
 	return (0);
 }
@@ -109,6 +109,7 @@ static int check_name(char *str, t_env *env)
 
 	i = 0;
 	name = NULL;
+
 	if (str[0] == '.')
 	{
 		name = ft_strndup(str,  ft_strlen(NAME_CMD_STRING));
@@ -149,7 +150,7 @@ int verif_format(char *str, t_env *env)
 	while (str[i] && str[i] != '"')
 	{
 		if (str[i] != ' ' && str[i] != '\t')
-			return (ft_log_error_no_line("Syntax error at token [TOKEN][002] INSTRUCTION", env));
+			return (ft_log_error_no_line("Syntax error at token [TOKEN][002] COMMENT", env));
 		i++;
 	}
 	return (0);
@@ -171,23 +172,27 @@ int check_format(char *str, t_env *env)
 
 int	ft_parse_line_header(char *str, t_env *env, int i, int fd)
 {
+	if (check_format(str, env) == 1)
+		return (1);
 	if (ft_strstr(str, NAME_CMD_STRING) )
 	{
 		while (str[i] == ' ' || str[i] == '\t')
 			i++;
 		if (ft_strncmp(str + i, NAME_CMD_STRING, ft_strlen(NAME_CMD_STRING)) != 0)
-			return (ft_log_error_no_line("Syntax error at token [TOKEN][001] INSTRUCTION", env));
+			return (ft_log_error_no_line("Syntax error at token [TOKEN][001] NAME", env));
 		if (read_name(str, env, i) == 1)
 			return (1);
 	}
 	else if (ft_strstr(str, COMMENT_CMD_STRING))
 	{
+		while (str[i] == ' ' || str[i] == '\t')
+			i++;
+		if (ft_strncmp(str + i, COMMENT_CMD_STRING, ft_strlen(COMMENT_CMD_STRING)) != 0)
+			return (ft_log_error_no_line("Syntax error at token [TOKEN][002] COMMENT", env));
 		if (verif_format(str, env) == 1)
 			return (1);
 		if (read_comment(str, env, fd) == 1)
 			return (1);
 	}
-	if (check_format(str, env) == 1)
-		return (1);
 	return (0);
 }

@@ -29,12 +29,9 @@ int ft_print_usage(char *progname)
 void	ft_show_me_those_amazing_logs(t_env *e)
 {
 	e->parser.current_line = ft_strdup("ouai c'est la fete !");
-
 	ft_log_error("ce \"c apostrophe\" possede beaucoup trop de style !", 5, e);
-
 	e->parser.column_offset = 3;
 	ft_log_warning("en fait c juste un warning", 2, e);
-
 	ft_log_error_no_line("juste une error de plus haha", e);
 	ft_log_warning_no_line("juste un warning de plus haha", e);
 }
