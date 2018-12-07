@@ -31,6 +31,6 @@ int		main(int argc, char **argv)
 	dispatch_players(&vm, (t_process **)&all_process);
 //	ft_printf("player 2 starts at %d\n", all_process[0].pc);
 //	play(&vm, (t_process **)&all_process);
-	test(vm);
+//	test(vm);
 	return (0);
 }
