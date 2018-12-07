@@ -26,7 +26,7 @@ void		display_arena(t_arena *arena)
 			ft_printf("| ");
 	}
 }
-
+/*
 void		test_ins(t_vm *vm)
 {
 	static t_process	*proc;
@@ -40,8 +40,8 @@ void		test_ins(t_vm *vm)
 	//	ins_ld(vm, proc, arg);
 
 }
-
-
+*/
+/*
 void		set_processes(t_vm *vm, t_process **proc)
 {
 	int i;
@@ -65,4 +65,4 @@ void		set_processes(t_vm *vm, t_process **proc)
 		ft_memmove((void *)(vm->arena + i * 1024 + 4), (void *)&arg[0].value, sizeof(int));
 
 	}
-}
+}*/

@@ -12,34 +12,20 @@
 
 #include "vm.h"
 
+
+/*
 static int			memmove_arg(char *arena, t_parameter *arg, int i, int mod)
 {
-	if (i + arg->nb_bytes < mod)
-		ft_memmove((void *)&arg->value, (void *)(arena + i), arg->nb_bytes);
+	(void)mod;
+	if (i < MEM_SIZE - 1)
+		arg->ptr = (char *)(arena + i);
 	else
-	{
-		ft_memmove((void *)&arg->value, (void *)(arena + i), MEM_SIZE - i);
-		ft_memmove((void *)&arg->value, (void *)(arena + i),
-				(i + arg->nb_bytes) % mod);
-	}
-	if (arg->type == REG_CODE && (arg->value >= REG_SIZE || arg->value < 0))
+		arg->ptr = (char *)arena;
+	if (arg->type == REG_CODE && ((char)*(arg->ptr) >= REG_NUMBER || (char)*(arg->ptr) < 0))
 		return (0);
-	return (arg->nb_bytes);
+	return (1);
 }
-
-int		store_arg(char *arena, t_instruction *ins, int i, int mod)
-{
-	int	arg;
-	int	start;
-
-	arg = -1;
-	start = i;
-	while (++arg < ins->op.nb_params)
-		if (!(i += memmove_arg(arena, &ins->params[arg], i, mod)))
-			return (0);
-	return (i - start);
-}
-
+*/
 /*
  ** Returns true if instruction includes parameter encoding byte, (else false)
  ** Input: opcode of instruction
@@ -50,6 +36,38 @@ static int		needs_ocp(int op)
 	return (op != LIVE && op != ZJMP && op != FORK && op != LFORK);
 }
 
+int		store_arg(char *arena, t_instruction *ins, int i, int mod)
+{
+	int		j;
+	int		start;
+//	t_parameter	arg;
+
+	j = -1;
+	start = i;
+	i += (1 + (ins->ocp ? 1 : 0));
+	while (++j < ins->op.nb_params)
+	{	
+//		arg = ins->params[j];
+		ft_printf("after len param j = %d\n", ins->params[j].nb_bytes);
+		if (i < mod - 1)
+			ins->params[j].ptr = (char *)(arena + i);
+		else
+			ins->params[j].ptr = (char *)arena;
+	if (ins->params[j].type == REG_CODE && ((char )*ins->params[j].ptr > REG_NUMBER
+					|| (char )*ins->params[j].ptr <= 0))
+		{
+			ft_printf("Invalid registre number\n");
+			return (0);
+		}
+//		memmove_arg(arena, &ins->params[j], i, mod))
+		i += ins->params[j].nb_bytes;
+//		ft_printf("i = %d\n", i);
+
+	}
+	return (i - start - 1);
+}
+
+
 /*
  ** Checks validity of parameters encoding byte, stores in instruction structure
  ** handles exception when T_DIR > 2 bytes instead of 4
@@ -58,33 +76,25 @@ static int		needs_ocp(int op)
 static int		is_valid_ocp(char hex, t_instruction *ins)
 {
 	static int	type[3] = {REG_CODE, DIR_CODE, IND_CODE};
-	static int	len[3] = {T_REG, T_DIR, T_IND};
-	int			i;
+	static int	len[4] = {NA, REG_SIZE, DIR_SIZE, IND_SIZE};
 	int			t;
-	int			op;
 
-	i = 0;
-	if (!needs_ocp(op = ins->op.opcode))
-		return (1);
-	while (++i < 4)
-	{
-		t = -1;
-		while (++t < 3 && !(ins->params[i].nb_bytes = 0))
-			if (hex & (type[t] << (i + 2)))
+	t = -1;
+	while (++t < 3 && !(ins->params[t].nb_bytes = 0))
+		if ((int)hex &  len[t + 1] << ((3 - t) * 2))
+		{
+			if ((g_op_tab[ins->op.opcode - 1].arg_types[t] & type[t]))
 			{
-				if (g_op_tab[op].arg_types[t] & type[t])
-				{
-					ft_printf("param # %d : %d bytes\n", i, type[t]);
-					ins->params[i].type = type[t];
-					ins->params[i].nb_bytes = len[t];
-					if (type[t] == T_DIR && g_op_tab[op].describe_address)
-						ins->params[i].nb_bytes = 2;
-				}
-				else
-					return (0);
+				ins->params[t].type = type[t];
+				ins->params[t].nb_bytes = len[type[t]];
+				if (type[t] == DIR_CODE
+					&& g_op_tab[ins->op.opcode - 1].describe_address == 1)
+					ins->params[t].nb_bytes = 2;
 			}
-	}
-	return (!(hex & 3));
+			else
+				return (0);
+		}
+	return (!((hex & 3)) * hex);
 }
 
 /*
@@ -97,27 +107,25 @@ static int		is_valid_ocp(char hex, t_instruction *ins)
 int				get_instruction(char *arena, t_instruction *ins, int i, int mod)
 {
 	char	hex;
-	int		arglen;
-	t_parameter	*arg;
+	int	len;
 
-	arg = ins->params;
-	hex = *(arena + (i >= mod ? 0 : i));
+	hex = (char)*(arena + (i >= mod ? 0 : i));
 	if (hex >= NB_INSTRUCTIONS || hex < 0)
 		return (0);
 	else
-		ft_memmove((void *)&ins->op, (void *)&g_op_tab[(int)hex], sizeof(t_op));
+		ft_memmove((void *)&ins->op, (void *)&g_op_tab[(int)hex - 1], sizeof(t_op));
 	hex = *(arena + ((i + 1) >= mod ? 1 : i + 1));
-	if (!(ins->ocp = is_valid_ocp(hex, ins)))
+	if (needs_ocp(hex) && !(ins->ocp = is_valid_ocp(hex, ins)))
 	{
 		ft_bzero((void *)ins, sizeof(*ins));
 		return (0);
 	}
-	if (!(ins->params->nb_bytes = store_arg(arena, ins, i, ins->ocp)))
+	if (!(len = store_arg(arena, ins, i, mod)))
 	{
 		ft_bzero((void *)ins, sizeof(*ins));
 		return (0);
 	}
-	//	ft_printf("valid opcode! = %d in index %d\n", ins->op.opcode, i);
-	arglen = arg[0].nb_bytes + arg[1].nb_bytes + arg[2].nb_bytes;
-	return (1 + needs_ocp(ins->op.opcode) + arglen);
+	ins->params->nb_bytes = len -1 - (ins->ocp ? 1 : 0);
+	ft_printf("valid instruction >> %s\n", ins->op.description);
+	return (len);
 }
