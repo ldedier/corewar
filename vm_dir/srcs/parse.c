@@ -92,7 +92,6 @@ static void		check_head_size(t_vm *vm, int i)
 		size[3 - n] = bin[PROG_NAME_LENGTH + 8 + n];
 		n++;
 	}
-	ft_printf("%d", *(int *)size);
 	vm->player[i].header_size = *(int *)size;
 }
 

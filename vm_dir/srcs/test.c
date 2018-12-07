@@ -43,15 +43,8 @@ static void		parsing(t_vm vm, int i)
 	algo = vm.player[i].algo;
 	ft_printf("The name of the champion is: [%s]\n", name);
 	ft_printf("The comment is: [%s]\n", comm);
-	ft_printf("The algorithm hex information is:\n");
-	j = 0;
-	while (j < CHAMP_MAX_SIZE)
-	{
-		ft_printf("%.02x ", 0xFF & algo[j]);
-		j++;
-	}
-	ft_printf("\n");
-
+	ft_printf("The size of the code specified in the header is [%d]\n",
+																										vm.player[i].header_size);
 }
 
 /*
