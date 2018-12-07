@@ -718,6 +718,7 @@ int		ft_parse_line(char *str, t_env *e, int fd)
 		return (ft_log_error_no_line(MALLOC_ERROR, e));
 	if (!e->parser.parsed_comment || !e->parser.parsed_name)
 	{
+		ft_reset_parser(&(e->parser), str);
 		ret = ft_parse_line_header(refined, e, 0, fd);
 		free(refined);
 	}
