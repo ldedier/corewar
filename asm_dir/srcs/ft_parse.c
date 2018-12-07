@@ -72,6 +72,7 @@ int			ft_init_instruction(t_instruction *instruction, t_env *e)
 t_instruction	*ft_add_new_instruction(t_env *e)
 {
 	t_instruction	*instruction;
+
 	if (!(instruction = (t_instruction *)malloc(sizeof(t_instruction))))
 		return (NULL);
 	if (ft_init_instruction(instruction, e))
@@ -820,6 +821,7 @@ int		ft_parse_asm(char *str, t_env *e)
 		ft_print_labels(e->champ.labels);
 		ft_printf(":)\n");
 	}
+	ft_encode_instructions(1, e->champ.instructions);
 	free(line);
 	close(fd);
 	return (0);

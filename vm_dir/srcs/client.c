@@ -65,12 +65,11 @@ int		ft_process_add_cores(int nb_bytes, t_client *client)
 	t_nb_cores	core_iter;
 	int			i;
 
-	ft_printf("%d\n", nb_bytes);
+	(void)nb_bytes;
 	i = sizeof(t_flag);
 	nb_cores = (t_nb_cores)client->buffer[i];
 	i += sizeof(nb_cores);
 	core_iter = 0;
-	ft_printf("NBCORES: %d\n\n", nb_cores);	
 	while (core_iter < nb_cores)
 	{
 		score = (t_score)(client->buffer[i]);

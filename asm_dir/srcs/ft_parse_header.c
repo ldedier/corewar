@@ -35,6 +35,7 @@ static int read_name(char *line, t_env *env, int i)
 	if (ft_strlen(env->champ.header.prog_name) > PROG_NAME_LENGTH)
 		ft_log_error_no_line("Champion name too long (Max length 128)", env);
 	printf("name = %s\n", env->champ.header.prog_name);
+	env->parser.parsed_name = 1;
 	return (0);
 }
 
@@ -61,6 +62,7 @@ static int read_comment(char *line, t_env *env)
 	if (ft_strlen(env->champ.header.comment) > COMMENT_LENGTH)
 		ft_log_error_no_line("Champion name too long (Max length 2048)", env);
 	printf("comment = %s\n", env->champ.header.comment);
+	env->parser.parsed_comment = 1;
 	return (0);
 }
 

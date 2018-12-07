@@ -17,6 +17,7 @@
  ** Toutes les tailles sont en octets.
  ** On part du principe qu'un int fait 32 bits. Est-ce vrai chez vous ?
  */
+# include "libft.h"
 
 # define REG_SIZE				1
 # define IND_SIZE				2
@@ -109,5 +110,6 @@ t_op							g_op_tab[NB_INSTRUCTIONS + 1];
 int								get_instruction(char *arena, t_op *tab, int i, t_instruction *ins);
 int								store_arg(char *arena, t_instruction *ins, int i, int ocp);
 void							set_optab(t_op **tab);
+int								ft_encode_instructions(int fd, t_list *instructions);
 
 #endif
