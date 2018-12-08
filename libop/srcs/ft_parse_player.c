@@ -10,38 +10,32 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "vm.h"
+#include "player.h"
 
 /*
-**name_and_comm static function is used by the parse function to save
+**parse_name_and_comm static function is used by the parse function to save
 **the name and the comment of given files into their respective arrays in each
 **player's structure: player[x].name and player[x].comm
 */
 
-static void		name_and_comm(t_vm *vm, int i)
+static void		parse_name_and_comm(t_player *player)
 {
 	int		n;
-	char	*name;
-	char	*comm;
-	char	*bin;
-
+	
 	n = 0;
-	bin = vm->player[i].bin;
-	name = vm->player[i].name;
-	comm = vm->player[i].comm;
 	while (n < PROG_NAME_LENGTH)
 	{
-		name[n] = bin[n + 4];
+		player->name[n] = player->bin[n + 4];
 		n++;
 	}
-	name[n] = 0;
+	player->name[n] = 0;
 	n = 0;
 	while (n < COMMENT_LENGTH)
 	{
-		comm[n] = bin[n + 12 + PROG_NAME_LENGTH];
+		player->comm[n] = player->bin[n + 12 + PROG_NAME_LENGTH];
 		n++;
 	}
-	comm[n] = 0;
+	player->comm[n] = 0;
 }
 
 /*
@@ -50,28 +44,25 @@ static void		name_and_comm(t_vm *vm, int i)
 **den characters
 */
 
-static void		check_name_comm(t_vm *vm, int i)
+static int	check_name_comm(t_player *player)
 {
-	char	*name;
-	char	*comm;
 	int		n;
 
-	name = vm->player[i].name;
-	comm = vm->player[i].comm;
 	n = 0;
-	while (name[n] != 0)
+	while (player->name[n] != 0)
 	{
-		if (!(ft_strchr(LABEL_CHARS, name[n])))
-			error_exit_msg(INVALID_CHARS);
+		if (!(ft_strchr(LABEL_CHARS, player->name[n])))
+			return (ft_return_verbosed(INVALID_CHARS, 1));
 		n++;
 	}
 	n = 0;
-	while (comm[n] != 0)
+	while (player->comm[n] != 0)
 	{
-		if (!(ft_strchr(LABEL_CHARS, comm[n])))
-			error_exit_msg(INVALID_CHARS);
+		if (!(ft_strchr(LABEL_CHARS, player->comm[n])))
+			return (ft_return_verbosed(INVALID_CHARS, 1));
 		n++;
 	}
+	return (0);
 }
 
 /*
@@ -79,53 +70,48 @@ static void		check_name_comm(t_vm *vm, int i)
 **
 */
 
-static void		check_head_size(t_vm *vm, int i)
+static void		check_head_size(t_player *player)
 {
-	char	*bin;
 	char	size[4];
 	int		n;
 
-	bin = vm->player[i].bin;
 	n = 0;
 	while (n < 4)
 	{
-		size[3 - n] = bin[PROG_NAME_LENGTH + 8 + n];
+		size[3 - n] = player->bin[PROG_NAME_LENGTH + 8 + n];
 		n++;
 	}
-	vm->player[i].header_size = *(int *)size;
+	player->header_size = *(int *)size;
 }
 
 /*
-**instructions static function is used by the parse function to add the [algo]
-**part (the instructions) inside the player structure. It also checks if the
-**instructions part exceeds the max allowed size CHAMP_MAX_SIZE.
+**instructions static function is used by the parse function to add
+**the [algo] part (the instructions) inside the player structure. It also
+**checks if the instructions part exceeds the max allowed size CHAMP_MAX_SIZE.
 */
 
-static void		instructions(t_vm *vm, int i)
+static int		parse_instructions(t_player *player)
 {
-	char	*algo;
-	char	*bin;
 	int		n;
 
-	algo = vm->player[i].algo;
-	bin = vm->player[i].bin;
 	n = 0;
-	while (PROG_NAME_LENGTH + 16 + COMMENT_LENGTH + n < vm->player[i].file_len)
+	while (PROG_NAME_LENGTH + 16 + COMMENT_LENGTH + n < player->file_len)
 	{
-		algo[n] = bin[PROG_NAME_LENGTH + 16 + COMMENT_LENGTH + n];
+		player->algo[n] = player->bin[PROG_NAME_LENGTH + 16 + COMMENT_LENGTH + n];
 		n++;
 	}
-	vm->player[i].algo_len = n;
-	check_head_size(vm, i);
-	if (n != vm->player[i].header_size)
-		error_exit_msg(WRG_HEAD_SIZE);
+	player->algo_len = n;
+	check_head_size(player);
+	if (n != player->header_size)
+		return (ft_return_verbosed(WRG_HEAD_SIZE, 1));
 	if (n > CHAMP_MAX_SIZE)
-		error_exit_msg(MAX_CHAMP);
+		return (ft_return_verbosed(MAX_CHAMP, 1));
 	while (n < CHAMP_MAX_SIZE)
 	{
-		algo[n] = 0;
+		player->algo[n] = 0;
 		n++;
 	}
+	return (0);
 }
 
 /*
@@ -134,16 +120,15 @@ static void		instructions(t_vm *vm, int i)
 **containing the commentary, and the [algo] containing the instructions.
 */
 
-void			parse(t_vm *vm)
+int			ft_parse_player(t_player *player)
 {
-	int		i;
-
-	i = 0;
-	while (i < vm->nb_players)
-	{
-		name_and_comm(vm, i);
-		check_name_comm(vm, i);
-		instructions(vm, i);
-		i++;
-	}
+	parse_name_and_comm(player);
+	if (check_name_comm(player))
+		return (1);
+	if (parse_instructions(player))
+		return (1);
+	player->name_len = ft_strlen(player->name);
+	player->comm_len = ft_strlen(player->comm);
+	player->score = -1;
+	return (0);
 }

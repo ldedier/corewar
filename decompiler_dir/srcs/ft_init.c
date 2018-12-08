@@ -14,6 +14,18 @@
 
 int		ft_init_env(t_env *e, char *filename)
 {
+	int ret;
+
 	e->champ.cor_name = filename;
+	if ((ret = ft_switch_extension(filename, ".cor", "_decomp.s",
+		&(e->champ.assembly_name))))
+	{
+		if (ret == -1)
+			return (ft_return_verbosed("malloc error", 1));
+		else
+			return (ft_return_verbosed(
+				"file must be of exension \'.cor\'",
+					1));
+	}
 	return (0);
 }

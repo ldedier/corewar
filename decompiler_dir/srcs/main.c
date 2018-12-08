@@ -34,11 +34,12 @@ int main(int argc, char **argv)
 	ret = 0;
 	if (argc != 2)
 		return (ft_print_usage(argv[0]));
-	ft_init_env(&e, argv[1]);
-	if (ft_parse_cor(argv[1], &e))
+	if (ft_init_env(&e, argv[1]))
 		return (1);
-//	if (ft_encode_to_assembly(&e))
-//		ret = 1;
+	if (ft_read_player(argv[1], &(e.player)))
+		return (1);
+	if (ft_encode_to_assembly(&e))
+		ret = 1;
 //	ft_free_all(&e);
 	return (ret);
 }

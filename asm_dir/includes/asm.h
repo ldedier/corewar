@@ -39,6 +39,7 @@ typedef struct		s_parser
 	int				nb_warnings;
 	char			*current_line;
 	int				column_offset;
+	int				fd;
 	char			too_much_errors_displayed;
 }					t_parser;
 
@@ -55,7 +56,7 @@ typedef struct		s_env
 
 int					ft_parse_asm(char *filename, t_env *e);
 
-int					ft_parse_line_header(char *str, t_env *e, int c);
+int					ft_parse_line_header(char *str, t_env *env, int c, int fd);
 int					ft_parse_line_source_code(char *str, t_env *e);
 char				**read_file(char **argv);
 int					read_name_file(char *argv, t_env *env);

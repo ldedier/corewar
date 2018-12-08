@@ -6,11 +6,11 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 16:21:43 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/04 16:24:16 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/08 18:33:39 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include "visu.h"
+#include "visu.h"
 
 int visu_comp_test(void)
 {

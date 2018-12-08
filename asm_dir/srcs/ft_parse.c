@@ -72,6 +72,7 @@ int			ft_init_instruction(t_instruction *instruction, t_env *e)
 t_instruction	*ft_add_new_instruction(t_env *e)
 {
 	t_instruction	*instruction;
+
 	if (!(instruction = (t_instruction *)malloc(sizeof(t_instruction))))
 		return (NULL);
 	if (ft_init_instruction(instruction, e))
@@ -711,7 +712,7 @@ char	*ft_refine_line(char *str)
 	return (ft_strndup(str, i));
 }
 
-int		ft_parse_line(char *str, t_env *e)
+int		ft_parse_line(char *str, t_env *e, int fd)
 {
 	char *refined;
 	int ret;
@@ -720,7 +721,8 @@ int		ft_parse_line(char *str, t_env *e)
 		return (ft_log_error_no_line(MALLOC_ERROR, e));
 	if (!e->parser.parsed_comment || !e->parser.parsed_name)
 	{
-		ret = ft_parse_line_header(refined, e, 0);
+		ft_reset_parser(&(e->parser), str);
+		ret = ft_parse_line_header(refined, e, 0, fd);
 		free(refined);
 	}
 	else
@@ -786,10 +788,9 @@ int		ft_fill_instructions_labels_values(t_env *e)
 int		ft_parse_asm(char *str, t_env *e)
 {
 	char *line;
-	int fd;
 	int ret;
 
-	if ((fd = open(str , O_RDONLY)) == -1)
+	if ((e->parser.fd = open(str , O_RDONLY)) == -1)
 	{
 		perror(str);
 		return (1);
@@ -801,12 +802,12 @@ int		ft_parse_asm(char *str, t_env *e)
 		else
 			return ft_log_error_no_line("File must be of extension \'.s\'", e);
 	}
-	while (get_next_line(fd, &line))
+	while (get_next_line(e->parser.fd, &line))
 	{
 		e->parser.nb_line++;
 		if (ft_is_relevant(line)) // pas une ligne vide ou un commentaire
 		{
-			if (ft_parse_line(line, e) == 1)
+			if (ft_parse_line(line, e, e->parser.fd) == 1)
 			{
 				ft_lstdel_value(&(e->champ.instructions));
 				return (1);
@@ -822,7 +823,8 @@ int		ft_parse_asm(char *str, t_env *e)
 		ft_print_labels(e->champ.labels);
 		ft_printf(":)\n");
 	}
+	ft_encode_instructions(1, e->champ.instructions);
 	free(line);
-	close(fd);
+	close(e->parser.fd);
 	return (0);
 }

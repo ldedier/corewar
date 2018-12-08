@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_get_next_chunk.c                                :+:      :+:    :+:   */
+/*   ft_encode_to_assembly.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/03 17:16:24 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/03 17:31:40 by ldedier          ###   ########.fr       */
+/*   Created: 2018/12/08 00:08:01 by ldedier           #+#    #+#             */
+/*   Updated: 2018/12/08 00:08:01 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "decompiler.h"
 
-int			get_next_chunk(int fd, t_chunk *chunk)
+int		ft_encode_to_assembly(t_env *e)
 {
-	chunk->size = read(fd, chunk->buf, CHUNK_SIZE);
-	return (chunk->size );
+	ft_printf(".name:\"%s\"\n", e->player.name);
+	ft_printf(".comment:\"%s\"\n", e->player.comm);
+	return (0);
 }

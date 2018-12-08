@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/21 13:40:59 by ldedier           #+#    #+#              #
-#    Updated: 2018/12/05 16:58:45 by ldedier          ###   ########.fr        #
+#    Updated: 2018/12/08 18:32:18 by emuckens         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,9 +29,11 @@ LIBFT = $(LIBFTDIR)/libft.a
 OK_COLOR = \x1b[32;01m
 EOC = \033[0m
 
-SRCS_NO_PREFIX = op.c ft_is_of_extension.c ft_switch_extension.c
+SRCS_NO_PREFIX =	op.c ft_is_of_extension.c ft_switch_extension.c\
+					ft_encode_instructions.c ft_read_player.c ft_parse_player.c\
+					player.c
 
-INCLUDES_NO_PREFIX = op.h champion.h network.h color.h
+INCLUDES_NO_PREFIX = op.h champion.h player.h network.h color.h
 
 SOURCES = $(addprefix $(SRCDIR)/, $(SRCS_NO_PREFIX))
 OBJECTS = $(addprefix $(OBJDIR)/, $(SRCS_NO_PREFIX:%.c=%.o))
