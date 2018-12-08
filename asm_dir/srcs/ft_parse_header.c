@@ -14,11 +14,8 @@
 
 // j'ai change les char * en char[PROG_NAME] etc (voir struct s_champion)
 
-static int read_name(char *line, t_env *env, int i)
+static int read_name(char *line, t_env *env, int i, int j)
 {
-	int j;
-
-	j = 0;
 	i += ft_strlen(NAME_CMD_STRING);
 	while (line[i] == ' ' || line[i] == '\t')
 		i++;
@@ -32,18 +29,16 @@ static int read_name(char *line, t_env *env, int i)
 		j++;
 	}
 	env->champ.header.prog_name[j] = '\0';
-	if (line[i + 1] != '\0')
-	{
-		while(line[i] || line[i] == ' ' || line[i] == '\t')
+	if (line[i] != '\0' && line[i + 1])
+		while(line[i] || line[i] == '\t' || line[i] == ' ')
 		{
-			if (ft_isdigit(line[i]) || ft_isalpha(line[i]))
+			if (ft_isalpha(line[i]) || ft_isdigit(line[i]))
 			{
-				ft_log_error_no_line("Syntax error at token [TOKEN][001] AFTER NAME", env);
+				ft_log_error_no_line("Syntax error at token [TOKEN][002] AFTER NAME", env);
 				return (1);
 			}
 			i++;
 		}
-	}
 	if (ft_strlen(env->champ.header.prog_name) > PROG_NAME_LENGTH)
 		ft_log_error_no_line("Champion name too long (Max length 128)", env);
 	printf("name = %s\n", env->champ.header.prog_name);
@@ -81,13 +76,26 @@ static int get_comment_other_line(t_env *env, int fd)
 	return (0);
 }
 
-static int read_comment(char *line, t_env *env, int fd)
+int after_comment(char *line, int i, t_env *env)
 {
-	int i;
+	if (line[i] != '\0' && line[i + 1])
+		while(line[i] || line[i] == '\t' || line[i] == ' ')
+		{
+			if (ft_isalpha(line[i]) || ft_isdigit(line[i]))
+			{
+				ft_log_error_no_line("Syntax error at token [TOKEN][002] AFTER COMMENT", env);
+				return (1);
+			}
+			i++;
+		}
+	return (0);
+}
+
+static int read_comment(char *line, t_env *env, int fd, int i)
+{
 	int j;
 
 	j = 0;
-	i = 0;
 	while (*line && *line != COMMENT_CHAR && *line != '"')
 		line++;
 	if (line[i] != '"' || line[i] == '\0')
@@ -99,24 +107,12 @@ static int read_comment(char *line, t_env *env, int fd)
 	if (line[i] == '\0')
 		if (get_comment_other_line(env, fd) == 1)
 			ft_log_error_no_line("Syntax error at token [TOKEN][002] COMMENT", env);
-	if (line[i] != '\0' && line[i + 1])
-	{
-		while(line[i])
-		{
-			if (line[i] == '\t' || line[i] == ' ' || ft_isdigit(line[i]) || ft_isalpha(line[i]))
-			{
-				ft_log_error_no_line("Syntax error at token [TOKEN][002] AFTER COMMENT", env);
-				return (1);
-			}
-			i++;
-		}
-	}
+	after_comment(line, i, env);
 	if (ft_strlen(env->champ.header.comment) > COMMENT_LENGTH)
 		ft_log_error_no_line("Champion name too long (Max length 2048)", env);
 	printf("comment = %s\n", env->champ.header.comment);
 	return (0);
 }
-
 //devrait mettre a jour
 //le parser sur has_comment, has_name
 
@@ -162,7 +158,8 @@ int verif_format(char *str, t_env *env)
 	i = 0;
 	while (str[i] == ' ' || str[i] == '\t')
 		i++;
-	if (ft_strncmp(str + i, COMMENT_CMD_STRING, ft_strlen(COMMENT_CMD_STRING)) != 0)
+	if (ft_strncmp(str + i, COMMENT_CMD_STRING, ft_strlen(COMMENT_CMD_STRING))\
+	 	!= 0)
 		return (ft_log_error_no_line("Syntax error at token [TOKEN][002] INSTRUCTION", env));
 	i += ft_strlen(COMMENT_CMD_STRING);
 	while (str[i] && str[i] != '"')
@@ -197,19 +194,20 @@ int	ft_parse_line_header(char *str, t_env *env, int i, int fd)
 		while (str[i] == ' ' || str[i] == '\t')
 			i++;
 		if (ft_strncmp(str + i, NAME_CMD_STRING, ft_strlen(NAME_CMD_STRING)) != 0)
-			return (ft_log_error_no_line("Syntax error at token [TOKEN][001] NAME", env));
-		if (read_name(str, env, i) == 1)
+			return (ft_log_error_no_line("Syntax error at token [001] NAME", env));
+		if (read_name(str, env, i, 0) == 1)
 			return (1);
 	}
 	else if (ft_strstr(str, COMMENT_CMD_STRING))
 	{
 		while (str[i] == ' ' || str[i] == '\t')
 			i++;
-		if (ft_strncmp(str + i, COMMENT_CMD_STRING, ft_strlen(COMMENT_CMD_STRING)) != 0)
-			return (ft_log_error_no_line("Syntax error at token [TOKEN][002] COMMENT", env));
+		if (ft_strncmp(str + i, COMMENT_CMD_STRING, ft_strlen(COMMENT_CMD_STRING))\
+				!= 0)
+			return (ft_log_error_no_line("Syntax error at token [002] COMMENT", env));
 		if (verif_format(str, env) == 1)
 			return (1);
-		if (read_comment(str, env, fd) == 1)
+		if (read_comment(str, env, fd, 0) == 1)
 			return (1);
 	}
 	return (0);
