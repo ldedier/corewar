@@ -1,45 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_core.c                                          :+:      :+:    :+:   */
+/*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/06 22:05:47 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/06 22:31:14 by ldedier          ###   ########.fr       */
+/*   Created: 2018/12/08 14:56:45 by ldedier           #+#    #+#             */
+/*   Updated: 2018/12/08 14:56:45 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "network.h"
+#include "player.h"
 
-t_core  *ft_new_core(char *name, t_score score)
+t_player *ft_new_player(char *name, t_name_len name_len, t_score score)
 {
-	t_core *res;
+	t_player *res;
 
-	if (!(res = malloc(sizeof(t_core))))
+	if (!(res = (t_player *)(malloc(sizeof(t_player)))))
 		return (NULL);
-	res->code.size = 0;
+	ft_memcpy(res->name, name, name_len);
+	res->name[name_len] = '\0';
 	res->score = score;
-	res->name = name;
 	return (res);
 }
 
-void	ft_print_core(t_core *core)
+void	ft_print_player(t_player *player)
 {
-	ft_printf("name: %s\n", core->name);
-	ft_printf("score: %d\n\n", core->score);
+	ft_printf("%s\n", player->name);
+	ft_printf("%d\n\n", player->score);
 }
 
-void	ft_print_cores(t_list *cores)
+void	ft_print_players(t_list *players)
 {
-	t_list *ptr;
-	t_core *core;
+	t_list		*ptr;
+	t_player	*player;
 
-	ptr = cores;
+	ptr = players;
 	while (ptr != NULL)
 	{
-		core = ptr->content;
-		ft_print_core(core);	
+		player = (t_player *)(ptr->content);
+		ft_print_player(player);
 		ptr = ptr->next;
 	}
 }

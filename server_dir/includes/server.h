@@ -18,6 +18,7 @@
 # include "libft.h"
 # include "op.h"
 # include "network.h"
+# include "player.h"
 # include <dirent.h>
 # include <sys/stat.h>
 # define MAX_SOCKETS	MAX_PLAYERS + 1
@@ -41,7 +42,7 @@ typedef struct			s_server
 	int					running;
 	char				buffer[MAX_TCP_PACKET];
 	t_flag				flag;
-	t_list				*cores;
+	t_list				*players;
 }						t_server;
 
 int						ft_print_usage(char *progname);

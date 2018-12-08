@@ -127,5 +127,8 @@ int			ft_parse_player(t_player *player)
 		return (1);
 	if (parse_instructions(player))
 		return (1);
+	player->name_len = ft_strlen(player->name);
+	player->comm_len = ft_strlen(player->comm);
+	player->score = -1;
 	return (0);
 }

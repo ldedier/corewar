@@ -29,8 +29,9 @@ LIBFT = $(LIBFTDIR)/libft.a
 OK_COLOR = \x1b[32;01m
 EOC = \033[0m
 
-SRCS_NO_PREFIX =	op.c ft_is_of_extension.c ft_switch_extension.c ft_core.c\
-					ft_encode_instructions.c ft_read_player.c ft_parse_player.c
+SRCS_NO_PREFIX =	op.c ft_is_of_extension.c ft_switch_extension.c\
+					ft_encode_instructions.c ft_read_player.c ft_parse_player.c\
+					player.c
 
 INCLUDES_NO_PREFIX = op.h champion.h player.h network.h
 

@@ -15,6 +15,7 @@
 
 # include <SDL2_net/SDL_net.h>
 # include "network.h"
+# include "player.h"
 
 typedef struct			s_client
 {
@@ -26,7 +27,7 @@ typedef struct			s_client
 	SDLNet_SocketSet	socket_set;
 	char				running;
 	char				buffer[MAX_TCP_PACKET];
-	t_list				*cores;
+	t_list				*players;
 	t_flag				flag;
 }						t_client;
 
