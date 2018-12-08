@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/21 13:40:59 by ldedier           #+#    #+#              #
-#    Updated: 2018/12/08 18:32:18 by emuckens         ###   ########.fr        #
+#    Updated: 2018/12/08 18:54:57 by emuckens         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ EOC = \033[0m
 
 SRCS_NO_PREFIX =	op.c ft_is_of_extension.c ft_switch_extension.c\
 					ft_encode_instructions.c ft_read_player.c ft_parse_player.c\
-					player.c
+					player.c get_instruction.c
 
 INCLUDES_NO_PREFIX = op.h champion.h player.h network.h color.h
 

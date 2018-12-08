@@ -37,7 +37,7 @@ OK_COLOR = \x1b[32;01m
 EOC = \033[0m
 
 SRCS_NO_PREFIX =		arena.c error.c flags.c main.c parse.c read.c visu.c\
-						tmp.c utils.c op.c play.c get_instruction.c \
+						tmp.c utils.c op.c play.c \
 						init_sdl.c client.c bonus_flags.c net_tools.c test.c
 
 INS_NO_PREFIX =			live.c ld.c st.c add.c sub.c and.c or.c xor.c zjmp.c \
