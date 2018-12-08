@@ -14,16 +14,44 @@
 
 // j'ai change les char * en char[PROG_NAME] etc (voir struct s_champion)
 
-static int read_name(char *line, t_env *env, int i)
+static int read_name_continue(char *line, int i, t_env *env)
 {
-	int j;
-
-	j = 0;
+	if (line[i] != '"')
+	{
+		ft_log_error("Lexical error", i - 1, env);
+		return (1);
+	}
+	if (line[i + 1] != '\0')
+	{
+		while(line[i] || line[i] == ' ' || line[i] == '\t')
+		{
+			if (ft_isdigit(line[i]) || ft_isalpha(line[i]))
+			{
+				ft_log_error("Syntax error at token AFTER NAME", i, env);
+				return (1);
+			}
+			i++;
+		}
+	}
+	if (ft_strlen(env->champ.header.prog_name) > PROG_NAME_LENGTH)
+		ft_log_error_no_line("Champion name too long (Max length 128)", env);
+	return (0);
+}
+static int read_name(char *line, t_env *env, int i, int j)
+{
+	if (env->champ.header.prog_name[j])
+	{
+		ft_log_error("Syntax error at token COMMAND_NAME", 0, env);
+		return (1);
+	}
 	i += ft_strlen(NAME_CMD_STRING);
 	while (line[i] == ' ' || line[i] == '\t')
 		i++;
 	if (line[i] != '"')
-		ft_log_error("Syntax error at token [TOKEN][001] NAME", 5, env);
+	{
+		ft_log_error("Lexical error", i, env);
+		return (1);
+	}
 	while (line[i++])
 	{
 		env->champ.header.prog_name[j] = line[i];
@@ -32,32 +60,41 @@ static int read_name(char *line, t_env *env, int i)
 		j++;
 	}
 	env->champ.header.prog_name[j] = '\0';
-	if (line[i + 1] != '\0')
-	{
-		while(line[i] || line[i] == ' ' || line[i] == '\t')
-		{
-			if (ft_isdigit(line[i]) || ft_isalpha(line[i]))
-			{
-				ft_log_error_no_line("Syntax error at token [TOKEN][001] AFTER NAME", env);
-				return (1);
-			}
-			i++;
-		}
-	}
-	if (ft_strlen(env->champ.header.prog_name) > PROG_NAME_LENGTH)
-		ft_log_error_no_line("Champion name too long (Max length 128)", env);
-	printf("name = %s\n", env->champ.header.prog_name);
+	if (read_name_continue(line, i, env) == 1)
+		return (1);
+	printf("%s\n", env->champ.header.prog_name);
 	env->parser.parsed_name = 1;
 	return (0);
 }
 
-static int get_comment_other_line(t_env *env, int fd)
+static int check_after_comment(char *tmp, int i, t_env *env)
+{
+	while(ft_strchr(&tmp[++i], '"'))
+		;
+	if (tmp[i - 1] != '"')
+	{
+		ft_log_error("Lexical error", i ,env);
+		return (1);
+	}
+	while (tmp[i] || tmp[i] == ' ' || tmp[i] == '\t')
+	{
+		if (ft_isalpha(tmp[i]) || ft_isdigit(tmp[i]))
+		{
+			ft_log_error_no_line("Syntax error at token AFTER COMMENT", env);
+			return (1);
+		}
+		i++;
+	}
+	if (ft_strlen(env->champ.header.prog_name) > PROG_NAME_LENGTH)
+		ft_log_error_no_line("Champion name too long (Max length 128)", env);
+	return (0);
+}
+
+static int get_comment_other_line(t_env *env, int fd, int i)
 {
 	char	*tmp;
-	int i;
 
 	tmp = NULL;
-	i = 0;
 	while (get_next_line(fd, &tmp))
 	{
 		ft_strcat(env->champ.header.comment, tmp);
@@ -66,14 +103,8 @@ static int get_comment_other_line(t_env *env, int fd)
 			break;
 		free(tmp);
 	}
-	while(ft_strchr(&tmp[++i], '"'))
-		;
-	while (tmp[i])
-	{
-		if (ft_isalpha(tmp[i]) || ft_isdigit(tmp[i]))
-			return (1);
-		i++;
-	}
+	if (check_after_comment(tmp, i, env) == 1)
+		return (1);
 	while (ft_strchr(&env->champ.header.comment[i], '"'))
 		i++;
 	if (env->champ.header.comment[i - 1] == '"')
@@ -82,31 +113,22 @@ static int get_comment_other_line(t_env *env, int fd)
 	return (0);
 }
 
-static int read_comment(char *line, t_env *env, int fd)
+static int read_comment_continue(char *line, int i, t_env *env, int fd)
 {
-	int i;
-	int j;
-
-	j = 0;
-	i = 0;
-	while (*line && *line != COMMENT_CHAR && *line != '"')
-		line++;
-	if (line[i] != '"' || line[i] == '\0')
-		ft_log_error_no_line("Syntax error at token [TOKEN][002]", env);
-	line++;
-	while(line[i] && line[i] != '"')
-		env->champ.header.comment[j++] = line[i++];
-	env->champ.header.comment[j] = '\0';
 	if (line[i] == '\0')
-		if (get_comment_other_line(env, fd) == 1)
-			ft_log_error_no_line("Syntax error at token [TOKEN][002] COMMENT", env);
-	if (line[i] != '\0' && line[i + 1])
 	{
-		while(line[i])
+		if (get_comment_other_line(env, fd, 0) == 1)
+			return (1);
+		i++;
+	}
+	line++;
+	if (line[i + 2] != '\0' && line[i + 1])
+	{
+		while(line[i] || line[i] == '\t' || line[i] == ' ')
 		{
-			if (line[i] == '\t' || line[i] == ' ' || ft_isdigit(line[i]) || ft_isalpha(line[i]))
+			if (ft_isdigit(line[i]) || ft_isalpha(line[i]))
 			{
-				ft_log_error_no_line("Syntax error at token [TOKEN][002] AFTER COMMENT", env);
+				ft_log_error("Syntax error at token AFTER COMMENT", i + 1, env);
 				return (1);
 			}
 			i++;
@@ -114,27 +136,63 @@ static int read_comment(char *line, t_env *env, int fd)
 	}
 	if (ft_strlen(env->champ.header.comment) > COMMENT_LENGTH)
 		ft_log_error_no_line("Champion name too long (Max length 2048)", env);
-	printf("comment = %s\n", env->champ.header.comment);
+	printf("%s\n", env->champ.header.comment);
 	env->parser.parsed_comment = 1;
 	return (0);
 }
 
+static int read_comment(char *line, t_env *env, int fd, int i)
+{
+	int j;
+
+	j = 0;
+	if (env->champ.header.comment[j])
+	{
+		ft_log_error("Syntax error at token COMMAND_COMMENT", 0, env);
+		return (1);
+	}
+	i += ft_strlen(COMMENT_CMD_STRING);
+	while (line[i] == ' ' || line[i] == '\t')
+		i++;
+	if (line[i] != '"')
+	{
+		ft_log_error("Lexical error", i, env);
+		return (1);
+	}
+	while(line[i] && line[i + 1] != '"')
+		env->champ.header.comment[j++] = line[++i];
+	env->champ.header.comment[j] = '\0';
+	if (	env->champ.header.comment[0])
+	{
+		if (line[i + 1] != '"')
+		{
+			ft_log_error("Lexical error", i, env);
+			return (1);
+		}
+	}
+	if (read_comment_continue(line, i, env, fd) == 1)
+		return (1);
+	return (0);
+}
 //devrait mettre a jour
 //le parser sur has_comment, has_name
 
 static int check_name(char *str, t_env *env)
 {
-	int i;
 	char *name;
 
-	i = 0;
 	name = NULL;
-
 	if (str[0] == '.')
 	{
-		name = ft_strndup(str,  ft_strlen(NAME_CMD_STRING));
+		if (!(name = ft_strndup(str,  ft_strlen(NAME_CMD_STRING))))
+			return (1);
 		if (ft_strcmp(name, NAME_CMD_STRING) != 0)
-			return (ft_log_error_no_line("Lexical error at [1:1]", env));
+			return (ft_log_error_no_line("Lexical error", env));
+	}
+	else if (str[0] != '.')
+	{
+		ft_log_error("Lexical error", 0, env);
+		return (1);
 	}
 	free(name);
 	return (0);
@@ -149,70 +207,45 @@ static int check_comment(char *str, t_env *env)
 	comment = NULL;
 	if (str[0] == '.')
 	{
-		comment = ft_strndup(str,  ft_strlen(COMMENT_CMD_STRING));
+		if (!(comment = ft_strndup(str,  ft_strlen(COMMENT_CMD_STRING))))
+			return (1);
 		if (ft_strcmp(comment, COMMENT_CMD_STRING) != 0)
-			return (ft_log_error_no_line("Lexical error at [2:1]", env));
+			return (ft_log_error_no_line("Lexical error", env));
+	}
+	else if (str[0] != '.')
+	{
+		ft_log_error("Lexical error", 0, env);
+		return (1);
 	}
 	free(comment);
 	return (0);
 }
 
-int verif_format(char *str, t_env *env)
-{
-	int i;
-
-	i = 0;
-	while (str[i] == ' ' || str[i] == '\t')
-		i++;
-	if (ft_strncmp(str + i, COMMENT_CMD_STRING, ft_strlen(COMMENT_CMD_STRING)) != 0)
-		return (ft_log_error_no_line("Syntax error at token [TOKEN][002] INSTRUCTION", env));
-	i += ft_strlen(COMMENT_CMD_STRING);
-	while (str[i] && str[i] != '"')
-	{
-		if (str[i] != ' ' && str[i] != '\t')
-			return (ft_log_error("Syntax error at token [TOKEN][002] COMMENT", 8,env));
-		i++;
-	}
-	return (0);
-}
-
-int check_format(char *str, t_env *env)
-{
-	int i;
-
-	i = 0;
-	if (str[i + 1] == 'n' && str[i] == '.')
-		if (check_name(str, env) == 1)
-			return (1);
-	if (str[i + 1] == 'c' && str[i] == '.')
-		if (check_comment(str, env) == 1)
-			return (1);
-	return (0);
-}
-
 int	ft_parse_line_header(char *str, t_env *env, int i, int fd)
 {
-	if (check_format(str, env) == 1)
-		return (1);
-	if (ft_strstr(str, NAME_CMD_STRING) )
+	if (ft_strstr(str, NAME_CMD_STRING))
 	{
-		while (str[i] == ' ' || str[i] == '\t')
-			i++;
-		if (ft_strncmp(str + i, NAME_CMD_STRING, ft_strlen(NAME_CMD_STRING)) != 0)
-			return (ft_log_error_no_line("Syntax error at token [TOKEN][001] NAME", env));
-		if (read_name(str, env, i) == 1)
+		if (check_name(str, env) == 1)
+			return (1);
+		if (read_name(str, env, i, 0) == 1)
 			return (1);
 	}
 	else if (ft_strstr(str, COMMENT_CMD_STRING))
 	{
-		while (str[i] == ' ' || str[i] == '\t')
-			i++;
-		if (ft_strncmp(str + i, COMMENT_CMD_STRING, ft_strlen(COMMENT_CMD_STRING)) != 0)
-			return (ft_log_error_no_line("Syntax error at token [TOKEN][002] COMMENT", env));
-		if (verif_format(str, env) == 1)
+		if (check_comment(str, env) == 1)
 			return (1);
-		if (read_comment(str, env, fd) == 1)
+		if (read_comment(str, env, fd, 0) == 1)
 			return (1);
+	}
+	else if (!ft_strcmp(env->champ.header.prog_name, ""))
+	{
+		ft_log_error_no_line("Lexical error", env);
+		return (1);
+	}
+	else if (!ft_strcmp(env->champ.header.comment, ""))
+	{
+		ft_log_error_no_line("Lexical error",env);
+		return (1);
 	}
 	return (0);
 }
