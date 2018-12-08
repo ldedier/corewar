@@ -21,7 +21,7 @@
 # include "libft.h"
 
 # define NB_TEXTURES	10
-
+# define FRAMERATE		60
 typedef struct          s_sdl
 {
 	SDL_Rect			screen;
@@ -48,12 +48,31 @@ typedef struct          s_reactive
 	int                 grass_border;
 }                       t_reactive;
 
+typedef struct          s_framerate
+{
+	Uint64				current;
+	Uint64				previous;
+	double				delta;
+	int					fps_counter;
+	Uint32				ms_counter;
+}                       t_framerate;
+
 typedef struct			s_visu
 {
 	char				active;
 	t_sdl				sdl;
 	t_dim				dim;
 	t_reactive			react;
+	t_framerate			framerate;
 }						t_visu;
 
+int						ft_init_all_sdl(t_visu *v);
+
+/*
+** framerate functions
+*/
+
+void					ft_process_delta_first(t_framerate *framerate);
+void					ft_process_delta(t_framerate *framerate);
+void					ft_print_fps(t_framerate *framerate);
 #endif

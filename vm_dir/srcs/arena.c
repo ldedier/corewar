@@ -27,6 +27,7 @@ void		init_vm(t_vm *vm, char **argv)
 	vm->dump = 0;
 	vm->client.active = 0;
 	vm->client.port = 0;
+	vm->visu.active = 0;
 	i = 0;
 	while (i < MEM_SIZE)
 	{

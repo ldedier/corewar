@@ -46,7 +46,10 @@ INCLUDES = $(addprefix $(INCLUDESDIR)/, $(INCLUDES_NO_PREFIX))
 INC = -I $(INCLUDESDIR) -I $(LIBFTDIR)/$(LIBFT_INCLUDEDIR)\
 	  -I $(LIBOPDIR)/$(LIBOP_INCLUDEDIR)
 
-LFLAGS = -L $(LIBFTDIR) -lft -L $(LIBOPDIR) -lop
+FRAMEWORKSDIR = $(PWD)/../frameworks
+
+LFLAGS =	-L $(LIBFTDIR) -lft -L $(LIBOPDIR) -lop\
+			-Wl,-rpath $(FRAMEWORKSDIR)
 
 CFLAGS = -DPATH=\"$(PWD)\" -Wall -Wextra -Werror\
 		 -Wno-missing-field-initializers $(INC)
@@ -57,7 +60,6 @@ ifeq ($(DEBUG), 1)
 	CC += -g3
 endif
 
-FRAMEWORKSDIR = ../frameworks
 
 SDL2 = $(PWD)/$(FRAMEWORKSDIR)/SDL2.framework/Versions/A/SDL2
 SDL2_net = $(PWD)/$(FRAMEWORKSDIR)/SDL2_net.framework/Versions/A/SDL2_net
@@ -85,8 +87,6 @@ $(LIBFT):
 $(BINDIR)/$(NAME): $(OBJECTS) $(LIBFT)
 	@$(CC) -o $@ $^ -F $(FRAMEWORKSDIR) $(SDL2_FRAMEWORKS) $(CFLAGS) $(LFLAGS)
 	@echo "$(OK_COLOR)$(NAME) linked with success !$(EOC)"
-	@install_name_tool -change @rpath/SDL2.framework/Versions/A/SDL2 $(SDL2) $(NAME)
-	@install_name_tool -change @rpath/SDL2_net.framework/Versions/A/SDL2_net $(SDL2_net) $(NAME)
 
 $(OBJDIR)/%.o : $(SRCDIR)/%.c $(INCLUDES)
 	@mkdir -p $(OBJDIR)
