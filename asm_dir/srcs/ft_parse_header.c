@@ -136,7 +136,7 @@ static int read_comment_continue(char *line, int i, t_env *env, int fd)
 	}
 	if (ft_strlen(env->champ.header.comment) > COMMENT_LENGTH)
 		ft_log_error_no_line("Champion name too long (Max length 2048)", env);
-	printf("comment = %s\n", env->champ.header.comment);
+	printf("%s\n", env->champ.header.comment);
 	env->parser.parsed_comment = 1;
 	return (0);
 }
