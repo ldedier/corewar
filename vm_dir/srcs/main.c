@@ -95,11 +95,11 @@ int		main(int argc, char **argv)
 
 	/* */
 
-//	display_arena(vm.arena);
 	parse(&vm);
-	if (vm.client.active)
-		return (process_client(&vm));
+//	if (vm.client.active)
+//		return (process_client(&vm));
 	dispatch_players(&vm, (t_process **)&all_process);
+	display_arena(vm.arena);
 	ft_printf("player 2 starts at %d\n", all_process[0].pc);
 	play(&vm, (t_process **)&all_process);
 //	test(vm);

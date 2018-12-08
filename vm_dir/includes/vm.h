@@ -16,11 +16,13 @@
 # include "libft.h"
 # include "op.h"
 # include "champion.h"
+//# include "color.h"
 //# include "visu.h"
 //# include "client.h"
 # include <fcntl.h>
 # define TOT_SIZE (CHAMP_MAX_SIZE + PROG_NAME_LENGTH + COMMENT_LENGTH + 4)
 # define DEAD		-100
+# define NEEDS_OCP	60925
 
 # define INVALID_PORT	"invalid port for the corehub server"
 # define INSUF_INFO_CH	"port and address of the corehub server are needed"
@@ -43,6 +45,13 @@ typedef struct		s_player
 	char			*cor_name;
 }					t_player;
 
+typedef struct		s_color
+{
+	char			player[MAX_PLAYERS * 2][10];
+	
+	
+}			t_color;
+
 typedef struct		s_vm
 {
 	int				c_to_die;
@@ -52,6 +61,7 @@ typedef struct		s_vm
 	int				nb_players;
 	char			**files;
 	int				dump;
+	t_color				color;
 //	t_client		client;
 //	t_visu			visu;
 	t_arena			arena[MEM_SIZE];
@@ -118,15 +128,10 @@ int					ins_aff(t_vm *vm, t_process *proc, t_parameter arg[3]);
 ** PLAY
 */
 
-int				check_resize_cycle(t_vm *vm, int *cycle);
+void				check_resize_cycle(t_vm *vm, int *cycle);
 int				play(t_vm *vm, t_process **proc);
-int				launch_instruction(t_vm *vm, t_process *proc);
+void				launch_instruction(t_vm *vm, t_process *proc);
 
-/*
-** ENV
-*/
-
-//void				set_optab(t_op	**tab);
 
 /*
 ** UTILS

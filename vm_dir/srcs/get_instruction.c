@@ -21,19 +21,15 @@
 int		set_arg_ptr(char *arena, t_instruction *ins, int i, int mod)
 {
 	int		j;
-	int		start;
+//	int		start;
 
 	j = -1;
-	start = i;
+//	start = i;
 	i += (1 + (ins->ocp ? 1 : 0));
 	while (++j < ins->op.nb_params)
 	{	
 		if ( !(ins->params[j].type & g_op_tab[ins->op.opcode - 1].arg_types[j]))
-		{
-			ft_printf("invalid param[%d].type = %d and g_op_tab[%d].argtypes[%d] = %d\n", j, ins->params[j].type, ins->op.opcode - 1, g_op_tab[ins->op.opcode - 1].arg_types[j]);
-
 			return (0);
-		}
 		if (i < mod - 1)
 			ins->params[j].ptr = (char *)(arena + i);
 		else
@@ -47,7 +43,6 @@ int		set_arg_ptr(char *arena, t_instruction *ins, int i, int mod)
 //		ins->params->nb_bytes += ins->params[j].nb_bytes;
 	}
 	return (1);
-	return (i - start - 1 - ins->ocp ? 1 : 0);
 }
 
 
@@ -59,28 +54,22 @@ int		set_arg_ptr(char *arena, t_instruction *ins, int i, int mod)
 
 static int		is_valid_ocp(char hex, t_instruction *ins)
 {
-//	static int	type[3] = {REG_CODE, DIR_CODE, IND_CODE};
 	static int	len[4] = {NA, REG_SIZE, DIR_SIZE, IND_SIZE};
 	int			t;
 	int			arg;
-	char			starthex;
 
 	arg = g_op_tab[ins->op.opcode - 1].nb_params;
 	ft_bzero((void *)ins->params, sizeof(t_parameter) * 3);
 	ins->params[0].nb_bytes = 0;
 	ins->params[1].nb_bytes = 0;
 	ins->params[2].nb_bytes = 0;
-//	ft_printf("init ocp hex = #d\n", hex);
-	starthex = (char)hex;
-//	if ((starthex = (char)hex) & 3)
-//		return (0);
+//	ft_printf("init ocp hex = %#x\n", (unsigned char)hex);
+	if ((NEEDS_OCP & (1 << ins->op.opcode) )&& (hex & 3))
+		return (0);
 	while (--arg >= 0)
 	{
 		hex = hex >> 2;
-//		ft_printf("new hex = %#x\n", hex);
-
 		t = -1;
-	//	ins->params[arg].nb_bytes = 0;
 		while (++t < 3)
 		{
 			if (g_op_tab[ins->op.opcode - 1].nb_params == 1)
@@ -91,26 +80,21 @@ static int		is_valid_ocp(char hex, t_instruction *ins)
 //				ft_printf("ins params[%d].bytes = %d`\n", arg, ins->params[arg].nb_bytes);
 
 			}
-	//		ft_printf("hex = %#x | %d << (t * 2) + 2 = %#x\n", (hex & 3), t + 1, arg, (hex) & 3);
 			if ((int)((hex & 3)))
 			{
 				ins->params[arg].type = hex & 3;
 //				ft_printf("ins params[%d].type = %d`\n", arg, ins->params[arg].type);
 				ins->params[arg].nb_bytes = len[hex & 3];
-//				ft_printf("ins params[%d].bytes = %d`\n", arg, ins->params[arg].nb_bytes);
 				if ((hex & 3) == DIR_CODE
 					&& g_op_tab[ins->op.opcode - 1].describe_address == 1)
 						ins->params[arg].nb_bytes = 2;
-		//		ins->params->nb_bytes += ins->params[arg].nb_bytes;
 				t = 2;
-			
-
-
 			}
 		}
+		if (!ins->params[arg].nb_bytes)
+			return (0);
 	}
-//	ft_printf("\n");
-	return (starthex);
+	return (1);
 }
 
 /*
@@ -126,7 +110,6 @@ int				get_instruction(char *arena, t_instruction *ins, int i, int mod)
 //	int	len;
 
 	hex = *(arena + (i % mod));
-//	ft_printf("i = %d hex = %#x\n", i, (unsigned char)hex);
 	if (hex >= NB_INSTRUCTIONS || !hex)
 		return (0);
 	else
@@ -136,12 +119,14 @@ int				get_instruction(char *arena, t_instruction *ins, int i, int mod)
 	}
 	ins->ocp = *(arena + ((i + 1) % mod));
 	
-	is_valid_ocp(ins->ocp, ins);
-//	ft_printf("ocp = %#x nb bytes = %d OCP = %#x opcode bit = %#x\n", ins->ocp, ins->params->nb_bytes, NEEDS_OCP, 1 << ins->op.opcode);
+	if (!is_valid_ocp(ins->ocp, ins))
+	{
+		ft_bzero((void *)ins, sizeof(*ins));
+		return (0);
+	}
 	if (!(NEEDS_OCP & (1 << (ins->op.opcode))))
 		ins->ocp = 0;
 //	ft_printf("ocp = %#x nb bytes = %d\n", ins->ocp, ins->params->nb_bytes);
-
 	if (!(set_arg_ptr(arena, ins, i, mod)))
 	{
 		ft_bzero((void *)ins, sizeof(*ins));
@@ -150,7 +135,7 @@ int				get_instruction(char *arena, t_instruction *ins, int i, int mod)
 	ft_printf("%svalid instruction >> %s%s\n", COLF_CYAN, ins->op.description, COLF_OFF);
 //	ft_printf("NEEDS OCP = %#x 1 << opcode = %#x\n", NEEDS_OCP, 1 << (ins->op.opcode));
 	int len = ins->params[0].nb_bytes + ins->params[1].nb_bytes + ins->params[2].nb_bytes + ((NEEDS_OCP & (1 << (ins->op.opcode))) ? 1 : 0) + 1;
-//	ft_printf("get instruciton ret len = %d\n", len);
+	ft_printf("get instruciton ret len = %d\n", len);
 //	ft_printf("in 0 = %d in 1 = %d in 2 = %d\n", ins->params[0].nb_bytes, ins->params[1].nb_bytes, ins->params[2].nb_bytes);
 	return (len);
 

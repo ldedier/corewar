@@ -18,6 +18,8 @@
  ** On part du principe qu'un int fait 32 bits. Est-ce vrai chez vous ?
  */
 
+# include "color.h"
+
 # define REG_SIZE				1
 # define DIR_SIZE				4
 # define IND_SIZE				2
@@ -39,10 +41,10 @@
 # define NAME_CMD_STRING		".name"
 # define COMMENT_CMD_STRING		".comment"
 # define REG_NUMBER				16
-# define CYCLE_TO_DIE			1536
+# define CYCLE_TO_DIE			100 //anciennement 1536
 # define CYCLE_DELTA			50
 # define NBR_LIVE				21
-# define MAX_CHECKS				10
+# define MAX_CHECKS				2 //anciennement 10
 
 typedef char	t_arg_type;
 

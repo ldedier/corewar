@@ -73,12 +73,9 @@ void			launch_instruction(t_vm *vm, t_process *proc)
 	if ((ret = get_instruction((char *)vm->arena, &ins, proc->pc, MEM_SIZE)))
 	{
 		f_ins[(int)ins.op.opcode](vm, proc, ins.params);
-//		ft_printf("ret = %d %svalid instruction >> %s%s ", ret, vm->color.player[(ins.op.opcode - 1) * 2], ins.op.description, COLF_OFF);
 		i = -1;
 		while (++i < ret)
-		{
 			proc->pc = ((proc->pc) < MEM_SIZE - 1) ? proc->pc + 1 : 0;
-		}
 		proc->cycle = g_op_tab[(int)ins.op.opcode - 1].nb_cycles;
 		ft_printf("%s.... %d%s ", COL_WAIT, proc->cycle, COLF_OFF);
 		return ;
@@ -86,7 +83,6 @@ void			launch_instruction(t_vm *vm, t_process *proc)
 	else
 	{
 		++proc->pc;
-//	ft_printf("proc pc = %d proc cycle = %d\n", proc->pc, proc->cycle);
 		ft_printf("%sMove forward... %s ", COLF_OFF, COLF_OFF);
 	}
 }
@@ -125,13 +121,14 @@ int		play(t_vm *vm, t_process **proc)
 	
 			ft_printf(" %s PLAYER %d %s%s ", vm->color.player[(vm->nb_players - pl - 1) * 2 + 1], vm->nb_players - pl, COLF_OFF, COLB_OFF);
 			launch_instruction(vm, &(*proc)[pl]);
+			ft_printf("%50s[%d]\n", "", (*proc)[pl].pc);
 			if (vm->nb_live > total_live)
 			{
 				total_live = vm->nb_live;
 				last = pl;
 			}
 		}
-		ft_printf("\n");
+	//	ft_printf("\n");
 		--pl;
 	}
 	++cycle;
