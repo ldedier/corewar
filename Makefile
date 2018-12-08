@@ -33,11 +33,11 @@ all:
 	@make -C $(ASMDIR) optilibcomp
 	@make -C $(VMDIR) optilibcomp
 	@make -C $(DECOMPILERDIR) optilibcomp
-	@make -C $(SERVERDIR) optilibcomp
+#	@make -C $(SERVERDIR) optilibcomp
 	@cp $(ASMDIR)/$(ASM_NAME) .
 	@cp $(VMDIR)/$(VM_NAME) .
 	@cp $(DECOMPILERDIR)/$(DECOMPILER_NAME) .
-	@cp $(SERVERDIR)/$(SERVER_NAME) .
+#	@cp $(SERVERDIR)/$(SERVER_NAME) .
 
 debug:
 	@make opti DEBUG=1

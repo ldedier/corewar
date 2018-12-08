@@ -250,7 +250,9 @@ int		ft_log_custom_wrong_param_type(char *arg_type, int index, int offset,
 
 int		ft_set_parser_co(int save, t_env *e, int ret)
 {
-	save = e->parser.column_offset;
+	(void)save;
+	(void)e;
+//	save = e->parser.column_offset;
 	return (ret);
 }
 /*

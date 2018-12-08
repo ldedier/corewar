@@ -16,9 +16,7 @@ int	ft_patoi(char **str)
 {
 	int		multiplier;
 	long	result;
-	long	int_max;
 
-	int_max = MAX_INT;
 	result = 0;
 	multiplier = 1;
 	while (ft_isspace(**str))

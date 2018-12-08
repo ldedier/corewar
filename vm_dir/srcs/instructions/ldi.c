@@ -20,12 +20,15 @@
 ** Returns failure if i.valueid register, success otherwise
 */
 
-int		ins_ldi(t_vm *vm, t_process *proc, t_parameter arg[3])
+int		ins_ldi(t_vm *vm,  t_parameter arg[3], int pl)
 {
 	int sum;
+	(void)sum;
+	(void)vm;
+	(void)pl;
 	if (arg[FIRST].nb_bytes != T_IND || arg[SECOND].nb_bytes != T_IND)
 		return (FAILURE); // verifier que c'est bien le cas
 	sum = arg[SECOND].value + arg[FIRST].value; // verifier si verification taille en amont?
-	ft_memmove(proc->reg + arg[THIRD].value, vm->arena + proc->pc + (sum % IDX_MOD), REG_SIZE);
+//	ft_memmove(proc->reg + arg[THIRD].value, (int)(&proc->pc - &(char *)vm->arena) + (sum % IDX_MOD), REG_SIZE);
 	return (SUCCESS);
 }

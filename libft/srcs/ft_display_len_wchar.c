@@ -53,7 +53,7 @@ int		ft_has_forbidden_values(t_pf pf)
 	{
 		if ((len = ft_wchar_len(data[i])) == -1)
 			return (1);
-		if (len > MB_CUR_MAX)
+		if ((unsigned int)len > MB_CUR_MAX)
 			return (1);
 		res += ft_wchar_len(data[i]);
 		i++;

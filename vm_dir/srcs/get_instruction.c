@@ -12,112 +12,119 @@
 
 #include "vm.h"
 
-static int			memmove_arg(char *arena, t_parameter *arg, int i, int mod)
-{
-	if (i + arg->nb_bytes < mod)
-		ft_memmove((void *)&arg->value, (void *)(arena + i), arg->nb_bytes);
-	else
-	{
-		ft_memmove((void *)&arg->value, (void *)(arena + i), MEM_SIZE - i);
-		ft_memmove((void *)&arg->value, (void *)(arena + i),
-				(i + arg->nb_bytes) % mod);
-	}
-	if (arg->type == REG_CODE && (arg->value >= REG_SIZE || arg->value < 0))
-		return (0);
-	return (arg->nb_bytes);
-}
+/*
+** store pointer on arg, loop to
+** beginning if ptr located after mod len in arena
+*/
 
-int		store_arg(char *arena, t_instruction *ins, int i, int mod)
+int		set_arg_ptr(char *arena, t_instruction *ins, int i, int mod)
 {
-	int	arg;
-	int	start;
+	int		j;
 
-	arg = -1;
-	start = i;
-	while (++arg < ins->op.nb_params)
-		if (!(i += memmove_arg(arena, &ins->params[arg], i, mod)))
+	j = -1;
+	i += (1 + (ins->ocp ? 1 : 0));
+	while (++j < ins->op.nb_params)
+	{	
+		if ( !(ins->params[j].type & g_op_tab[ins->op.opcode - 1].arg_types[j]))
 			return (0);
-	return (i - start);
+		if (i < mod - 1)
+			ins->params[j].ptr = (char *)(arena + i);
+		else
+			ins->params[j].ptr = (char *)arena;
+//	if (ins->params[j].type == REG_CODE && ((char )*ins->params[j].ptr > REG_NUMBER
+//					|| (char )*ins->params[j].ptr <= 0))
+//{
+//			ft_printf("wrong register number = %d\n", *ins->params[j].ptr);
+//			return (0);
+//}
+//		ins->params->nb_bytes += ins->params[j].nb_bytes;
+	}
+	return (1);
 }
 
 /*
- ** Returns true if instruction includes parameter encoding byte, (else false)
- ** Input: opcode of instruction
- */
-
-static int		needs_ocp(int op)
-{
-	return (op != LIVE && op != ZJMP && op != FORK && op != LFORK);
-}
-
-/*
- ** Checks validity of parameters encoding byte, stores in instruction structure
- ** handles exception when T_DIR > 2 bytes instead of 4
- */
+** Check validity of parameters encoding byte, store type and in instruction structure
+** handles exception when T_DIR > 2 bytes instead of 4
+** Return 1 if valid, 0 if invalid
+*/
 
 static int		is_valid_ocp(char hex, t_instruction *ins)
 {
-	static int	type[3] = {REG_CODE, DIR_CODE, IND_CODE};
-	static int	len[3] = {T_REG, T_DIR, T_IND};
-	int			i;
+	static int	len[4] = {NA, REG_SIZE, DIR_SIZE, IND_SIZE};
 	int			t;
-	int			op;
+	int			arg;
 
-	i = 0;
-	if (!needs_ocp(op = ins->op.opcode))
-		return (1);
-	while (++i < 4)
+	arg = g_op_tab[ins->op.opcode - 1].nb_params;
+	ft_bzero((void *)ins->params, sizeof(t_parameter ) * 3);
+	if ((NEEDS_OCP & (1 << ins->op.opcode) )&& (hex & 3))
+		return (0);
+	while (--arg >= 0)
 	{
+		hex = hex >> 2;
 		t = -1;
-		while (++t < 3 && !(ins->params[i].nb_bytes = 0))
-			if (hex & (type[t] << (i + 2)))
+		while (++t < 3)
+		{
+			if (g_op_tab[ins->op.opcode - 1].nb_params == 1)
 			{
-				if (g_op_tab[op].arg_types[t] & type[t])
-				{
-					ft_printf("param # %d : %d bytes\n", i, type[t]);
-					ins->params[i].type = type[t];
-					ins->params[i].nb_bytes = len[t];
-					if (type[t] == T_DIR && g_op_tab[op].describe_address)
-						ins->params[i].nb_bytes = 2;
-				}
-				else
-					return (0);
+				ins->params[arg].type = g_op_tab[ins->op.opcode - 1].arg_types[0];
+				ins->params[arg].nb_bytes = len[(int)ins->params[arg].type];
+
 			}
+			if ((int)((hex & 3)))
+			{
+				ins->params[arg].type = hex & 3;
+				ins->params[arg].nb_bytes = len[hex & 3];
+				if ((hex & 3) == DIR_CODE
+					&& g_op_tab[ins->op.opcode - 1].describe_address == 1)
+						ins->params[arg].nb_bytes = 2;
+				t = 2;
+			}
+//			ft_printf("ins params[%d].type = %d`\n", arg, ins->params[arg].type);
+//			ft_printf("ins params[%d].bytes = %d`\n", arg, ins->params[arg].nb_bytes);
+		}
+		if (!ins->params[arg].nb_bytes)
+			return (0);
 	}
-	return (!(hex & 3));
+	return (1);
 }
 
 /*
- ** Check validity of instruction at i, stores in instruction structure
- ** Return 0 if invalid instruction, length of instruction if valid
- ** Input: arena string, int starting point (i), structure to store instruction
- ** details, int size beyond which index circles back
- */
+** Check validity of instruction at i (op, ocp, args), store op and ocp in instruction structure
+** Return 0 if instruction is invalid (length of instruction if valid)
+** Input: memory string, int starting point (i), structure to store instruction, int size
+** beyond which index circles back
+*/
 
 int				get_instruction(char *arena, t_instruction *ins, int i, int mod)
 {
-	char	hex;
-	int		arglen;
-	t_parameter	*arg;
+	unsigned 	char	hex;
+	int	len;
 
-	arg = ins->params;
-	hex = *(arena + (i >= mod ? 0 : i));
-	if (hex >= NB_INSTRUCTIONS || hex < 0)
+	hex = *(arena + (i % mod));
+	if (hex >= NB_INSTRUCTIONS || !hex)
 		return (0);
 	else
-		ft_memmove((void *)&ins->op, (void *)&g_op_tab[(int)hex], sizeof(t_op));
-	hex = *(arena + ((i + 1) >= mod ? 1 : i + 1));
-	if (!(ins->ocp = is_valid_ocp(hex, ins)))
+	{
+		ft_memmove((void *)&ins->op, (void *)&g_op_tab[(int)hex - 1], sizeof(t_op));
+//		ft_printf("detected %d\n", ins->op.opcode);
+	}
+	ins->ocp = *(arena + ((i + 1) % mod));
+	
+	if (!is_valid_ocp(ins->ocp, ins))
 	{
 		ft_bzero((void *)ins, sizeof(*ins));
 		return (0);
 	}
-	if (!(ins->params->nb_bytes = store_arg(arena, ins, i, ins->ocp)))
+	if (!(NEEDS_OCP & (1 << (ins->op.opcode))))
+		ins->ocp = 0;
+	if (!(set_arg_ptr(arena, ins, i, mod)))
 	{
 		ft_bzero((void *)ins, sizeof(*ins));
 		return (0);
 	}
-	//	ft_printf("valid opcode! = %d in index %d\n", ins->op.opcode, i);
-	arglen = arg[0].nb_bytes + arg[1].nb_bytes + arg[2].nb_bytes;
-	return (1 + needs_ocp(ins->op.opcode) + arglen);
+//	ft_printf("%svalid instruction >> %s%s\n", COLF_CYAN, ins->op.description, COLF_OFF);
+	len = ins->params[0].nb_bytes + ins->params[1].nb_bytes + ins->params[2].nb_bytes + ((NEEDS_OCP & (1 << (ins->op.opcode))) ? 1 : 0) + 1;
+//	ft_printf("in 0 = %d in 1 = %d in 2 = %d\n", ins->params[0].nb_bytes, ins->params[1].nb_bytes, ins->params[2].nb_bytes);
+	return (len);
+
 }

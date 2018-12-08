@@ -19,16 +19,17 @@
 ** Returns failure if i.valueid register, success otherwise
 */
 
-int		ins_sub(t_vm *vm, t_process *proc, t_parameter arg[3])
+int		ins_sub(t_vm *vm, t_parameter arg[3], int pl)
 {
 	int	sub;
 
 	(void)vm;
+	(void)pl;
 	if (arg[FIRST].value >= REG_NUMBER
 			|| arg[SECOND].value >= REG_NUMBER
 			|| arg[THIRD].value >= REG_NUMBER)
 		return (FAILURE); // verifier que c'est bien le cas
-	sub = proc->reg[arg[FIRST].value] - proc->reg[arg[SECOND].value]; // verifier que la soustraction est bien dans ce sens
-	proc->reg[arg[THIRD].value] = sub;
+	sub = vm->proc[pl].reg[arg[FIRST].value] - vm->proc[pl].reg[arg[SECOND].value]; // verifier que la soustraction est bien dans ce sens
+	vm->proc[pl].reg[arg[THIRD].value] = sub;
 	return (SUCCESS);
 }

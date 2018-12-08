@@ -13,7 +13,7 @@
 #ifndef CLIENT_H
 # define CLIENT_H
 
-# include <SDL2_net/SDL_net.h>
+//# include <SDL2_net/SDL_net.h>
 # include "network.h"
 
 # define NB_CONNECTION_RETRIES	5

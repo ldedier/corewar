@@ -19,10 +19,10 @@
 ** Returns failure if i.valueid register, success otherwise
 */
 
-int		ins_zjmp(t_vm *vm, t_process *proc, t_parameter arg[3])
+int		ins_zjmp(t_vm *vm, t_parameter arg[3], int pl)
 {
 	(void)vm;
-	if (proc->carry)
-		proc->pc += (arg[FIRST].value % IDX_MOD);
+	if (vm->proc[pl].carry)
+		vm->proc[pl].pc += (arg[FIRST].value % IDX_MOD);
 	return (SUCCESS); // verifier si !carry = failure
 }
