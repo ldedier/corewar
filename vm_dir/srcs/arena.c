@@ -43,7 +43,7 @@ void		init_vm(t_vm *vm, char **argv)
 	i = 0;
 	while (i < MEM_SIZE)
 	{
-		vm->arena[i].hex = 0;
+		vm->arena[i] = 0;
 		i++;
 	}
 }
@@ -71,7 +71,7 @@ void		dispatch_players(t_vm *vm)
 		i = 0;
 		while (i < vm->player[nb].algo_len)
 		{
-			vm->arena[start].hex = algo[i];
+			vm->arena[start] = algo[i];
 			i++;
 			start++;
 		}

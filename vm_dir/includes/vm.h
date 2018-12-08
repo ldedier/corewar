@@ -24,16 +24,9 @@
 # define DEAD		-100
 # define NEEDS_OCP	60925
 
-typedef struct		s_arena
-{
-	char			hex;
-}					t_arena;
-
 typedef struct		s_color
 {
 	char			player[MAX_PLAYERS * 2][10];
-
-
 }			t_color;
 
 typedef struct		s_process
@@ -44,16 +37,14 @@ typedef struct		s_process
 	int				pc;
 	int				cycle;
 	unsigned char	carry;
-}
-					t_process;
+}									t_process;
+
 typedef struct		s_live
 {
 	int	nb;
 	int	total_pl;
 	int	last_pl;
 }			t_live;
-
-
 
 typedef struct		s_vm
 {
@@ -67,7 +58,7 @@ typedef struct		s_vm
 	t_color				color;
 	t_client		client;
 	t_visu			visu;
-	t_arena			arena[MEM_SIZE];
+	char			arena[MEM_SIZE];
 	t_player		player[MAX_PLAYERS + 1];
 	t_process		*proc;
 	t_live			live;
@@ -84,7 +75,7 @@ enum				e_arg
 };
 
 
-void				test(t_vm vm);
+
 void				ft_error_exit(const char *error);
 void				error_exit_msg(const char *error);
 int					check_type(int ac, char **av);
@@ -126,7 +117,6 @@ void				check_resize_cycle(t_vm *vm, int *cycle);
 int				play(t_vm *vm);
 void				launch_instruction(t_vm *vm, int player);
 
-
 /*
 ** UTILS
 */
@@ -135,9 +125,11 @@ int					mod(int val, int max);
 int					ft_pow(int n, int pow);
 
 // TEMP delete at end
-void				display_arena(t_arena *arena); //tmp for test and debug
+
+void				display_arena(char *arena); //tmp for test and debug
 void				test_ins(t_vm *vm);
 void				set_processes(t_vm *vm, t_process **proc);
+void				test(t_vm vm);
 
 /*
 ** client connection to scorewar

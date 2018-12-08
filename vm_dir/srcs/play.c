@@ -52,7 +52,6 @@ static void		reset_live_allprocesses(t_vm *vm)
 			ft_printf("%s%s PLAYER %d died %s%s\n", COL_FDEAD, COL_BDEAD, vm->nb_players - i, COLF_OFF, COLB_OFF);
 			++vm->dead;
 			vm->proc[i].live = DEAD;
-
 		}
 		else
 			vm->proc[i].live = 0;
@@ -60,7 +59,7 @@ static void		reset_live_allprocesses(t_vm *vm)
 //	vm->live.nb = 0;
 //	vm->live.total_pl = 0;
 }
-	
+
 void			launch_instruction(t_vm *vm, int pl)
 {
 	t_instruction	ins;
@@ -74,7 +73,7 @@ void			launch_instruction(t_vm *vm, int pl)
 		&& ft_printf("%s.... %d%s ", COL_WAIT, vm->proc[pl].cycle, COLF_OFF))
 		return ;
 	ft_bzero((void *)&ins, sizeof(ins));
-	if ((ret = get_instruction((char *)vm->arena, &ins, vm->proc[pl].pc, MEM_SIZE)))
+	if ((ret = get_instruction(vm->arena, &ins, vm->proc[pl].pc, MEM_SIZE)))
 	{
 		f_ins[(int)ins.op.opcode](vm, ins.params, pl);
 		i = -1;
@@ -104,7 +103,7 @@ int		play(t_vm *vm)
 	if (cycle == vm->c_to_die)
 	{
 		reset_live_allprocesses(vm);
-		if ((vm->live.total_pl <= 1 && vm->live.last_pl != -1) || vm->dead == vm->nb_players || !vm->c_to_die) 
+		if ((vm->live.total_pl <= 1 && vm->live.last_pl != -1) || vm->dead == vm->nb_players || !vm->c_to_die)
 		{
 			ft_printf("%splayer %d [%s]%s%s wins!\n", vm->color.player[(vm->nb_players - vm->live.last_pl * 2) + 1], vm->nb_players - vm->live.last_pl, vm->player[vm->live.last_pl].name, COLB_OFF, COLF_OFF);
 			return (1);

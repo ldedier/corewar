@@ -12,7 +12,7 @@
 
 #include "vm.h"
 
-void		display_arena(t_arena *arena)
+void		display_arena(char *arena)
 {
 	int		cur;
 
