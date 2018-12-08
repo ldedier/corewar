@@ -24,6 +24,7 @@ OBJDIR   = objs
 BINDIR   = .
 INCLUDESDIR = includes
 INSDIR = instructions
+VISUDIR = visu
 
 LIBFTDIR = ../libft
 LIBFT_INCLUDEDIR = includes
@@ -36,19 +37,26 @@ LIBOP = $(LIBOPDIR)/libop.a
 OK_COLOR = \x1b[32;01m
 EOC = \033[0m
 
-SRCS_NO_PREFIX =		arena.c error.c flags.c main.c parse.c read.c visu.c\
+
+SRCS_NO_PREFIX =		arena.c error.c flags.c main.c parse.c read.c \
 						tmp.c utils.c op.c play.c \
-						init_sdl.c client.c bonus_flags.c net_tools.c test.c
+						client.c bonus_flags.c net_tools.c test.c
 
 INS_NO_PREFIX =			live.c ld.c st.c add.c sub.c and.c or.c xor.c zjmp.c \
 						ldi.c sti.c fork.c lld.c lldi.c lfork.c aff.c
 
+VISU_NO_PREFIX =		init_sdl.c visu.c framerate.c
+						
+
 INCLUDES_NO_PREFIX =	vm.h visu.h client.h errors.h
 
 SOURCES = $(addprefix $(SRCDIR)/, $(SRCS_NO_PREFIX)) \
-		$(addprefix $(SRCDIR)/$(INSDIR)/, $(INS_NO_PREFIX))
-OBJECTS =	$(addprefix $(OBJDIR)/, $(SRCS_NO_PREFIX:%.c=%.o))
-OBJECTS +=	$(addprefix $(OBJDIR)/$(INSDIR)/, $(INS_NO_PREFIX:%.c=%.o))
+		$(addprefix $(SRCDIR)/$(INSDIR)/, $(INS_NO_PREFIX))\
+		$(addprefix $(SRCDIR)/$(VISUDIR)/, $(VISU_NO_PREFIX))
+
+OBJECTS =	$(addprefix $(OBJDIR)/, $(SRCS_NO_PREFIX:%.c=%.o)) \
+		$(addprefix $(OBJDIR)/$(INSDIR)/, $(INS_NO_PREFIX:%.c=%.o)) \
+		$(addprefix $(OBJDIR)/$(VISUDIR)/, $(VISU_NO_PREFIX:%.c=%.o))
 
 INCLUDES = $(addprefix $(INCLUDESDIR)/, $(INCLUDES_NO_PREFIX))
 
@@ -56,10 +64,13 @@ INC = -I $(INCLUDESDIR) -I $(LIBFTDIR)/$(LIBFT_INCLUDEDIR)\
 	  -I $(LIBOPDIR)/$(LIBOP_INCLUDEDIR) \
 	-I $(FRAMEWORKSDIR)/SDL2
 
-LFLAGS = -L $(LIBFTDIR) -lft -L $(LIBOPDIR) -lop
+FRAMEWORKSDIR = $(PWD)/../frameworks
 
-CFLAGS = -DPATH="$(PWD)" -Wall -Wextra -Werror\
-		 -Wno-missing-field-initializers $(INC)
+LFLAGS = -L $(LIBFTDIR) -lft -L $(LIBOPDIR) -lop\
+		 -Wl,-rpath $(FRAMEWORKSDIR)
+
+CFLAGS = -DPATH=\"$(PWD)\" -Wall -Wextra -Werror\
+		 -Wno-missing-field-initializers $(INC)\
 
 ifeq ($(DEBUG), 1)
 	LFLAGS += -fsanitize=address
@@ -67,18 +78,9 @@ ifeq ($(DEBUG), 1)
 	CC += -g3
 endif
 
-FRAMEWORKSDIR = ../frameworks
-
-SDL2 = $(PWD)/$(FRAMEWORKSDIR)/SDL2.framework/Versions/A/SDL2
-SDL2_image = $(PWD)/$(FRAMEWORKSDIR)/SDL2_image.framework/Versions/A/SDL2_image
-SDL2_mixer = $(PWD)/$(FRAMEWORKSDIR)/SDL2_mixer.framework/Versions/A/SDL2_mixer
-SDL2_ttf = $(PWD)/$(FRAMEWORKSDIR)/SDL2_ttf.framework/Versions/A/SDL2_ttf
-SDL2_net = $(PWD)/$(FRAMEWORKSDIR)/SDL2_net.framework/Versions/A/SDL2_net
-
 SDL2_FRAMEWORKS =	-framework SDL2 -framework SDL2_image \
 					-framework SDL2_mixer -framework SDL2_ttf\
 					-framework SDL2_net
-
 opti:
 	@make all -j
 
@@ -98,26 +100,23 @@ debug:
 
 $(LIBFT):
 	@make -C $(LIBFTDIR) all
-
-	#	@$(CC) -o $@ $^ -F  $(CFLAGS) $(LFLAGS) #pour linux Emma | desolee!
-
+	#@$(CC) -o $@ $^ -F $(FRAMEWORKSDIR) $(CFLAGS) $(LFLAGS) #pour linux Emma | desolee!
 $(BINDIR)/$(NAME): $(OBJECTS)  $(LIBFT)
 	@$(CC) -o $@ $^ -F $(FRAMEWORKSDIR) $(SDL2_FRAMEWORKS) $(CFLAGS) $(LFLAGS)
 	@echo "$(OK_COLOR)$(NAME) linked with success !$(EOC)"
-	@install_name_tool -change @rpath/SDL2.framework/Versions/A/SDL2 $(SDL2) $(NAME)
-	@install_name_tool -change @rpath/SDL2_image.framework/Versions/A/SDL2_image $(SDL2_image) $(NAME)
-	@install_name_tool -change @rpath/SDL2_mixer.framework/Versions/A/SDL2_mixer $(SDL2_mixer) $(NAME)
-	@install_name_tool -change @rpath/SDL2_ttf.framework/Versions/A/SDL2_ttf $(SDL2_ttf) $(NAME)
-	@install_name_tool -change @rpath/SDL2_net.framework/Versions/A/SDL2_net $(SDL2_net) $(NAME)
 
 $(OBJDIR)/%.o : $(SRCDIR)/%.c $(INCLUDES)
 	@mkdir -p $(OBJDIR)
 	@mkdir -p $(OBJDIR)/$(INSDIR)
+	@mkdir -p $(OBJDIR)/$(VISUDIR)
 #	@$(CC) -c $< -o $@ -F $(CFLAGS)
 	@$(CC) -c $< -o $@ -F $(FRAMEWORKSDIR) $(CFLAGS)
 
 $(OBJDIR)/$(INSDIR)/%.o : $(SRCDIR)/$(INSDIR)/%.c $(INCLUDES)
 #	@$(CC) -c $< -o $@ -F $(CFLAGS)
+	@$(CC) -c $< -o $@ -F $(FRAMEWORKSDIR) $(CFLAGS)
+
+$(OBJDIR)/$(VISUDIR)/%.o : $(SRCDIR)/$(VISUDIR)/%.c $(INCLUDES)
 	@$(CC) -c $< -o $@ -F $(FRAMEWORKSDIR) $(CFLAGS)
 
 clean:

@@ -24,8 +24,12 @@ int		main(int argc, char **argv)
 	flags(&vm, argc, argv);
 	read_files(&vm);
 //	parse(&vm); //now in read_files
+//	all_process = (t_process *)ft_memalloc(sizeof(t_process) * (vm.nb_players));
+//	dispatch_players(&vm, (t_process **)&all_process);
 	if (vm.client.active)
 		return (process_client(&vm));
+	if (vm.visu.active)
+		return (process_visu(&vm));
 //	ft_printf("player 2 starts at %d\n", all_process[0].pc);
 //	play(&vm, (t_process **)&all_process);
 

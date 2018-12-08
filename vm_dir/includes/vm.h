@@ -132,8 +132,12 @@ void				set_processes(t_vm *vm, t_process **proc);
 void				test(t_vm vm);
 
 /*
+** process visual loop and events
+*/
+int					process_visu(t_vm *vm);
+
+/*
 ** client connection to scorewar
 */
 int					process_client(t_vm *vm);
-
 #endif

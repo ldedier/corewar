@@ -38,8 +38,9 @@ void		init_vm(t_vm *vm, char **argv)
 	ft_strcpy(vm->color.player[2], COL_FPL2);
 	ft_strcpy(vm->color.player[4], COL_FPL3);
 	ft_strcpy(vm->color.player[6], COL_FPL4);
-//	vm->client.active = 0;
-//	vm->client.port = 0;
+	vm->client.active = 0;
+	vm->client.port = 0;
+	vm->visu.active = 0;
 	i = 0;
 	while (i < MEM_SIZE)
 	{

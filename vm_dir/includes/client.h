@@ -33,6 +33,6 @@ typedef struct			s_client
 
 int						ft_net_error(void);
 int						ft_send_protected(TCPsocket socket, void *data,
-							size_t size);
+		size_t size);
 
 #endif
