@@ -19,7 +19,7 @@
 ** Returns failure if i.valueid register, success otherwise
 */
 
-int		ins_add(t_vm *vm, t_process *proc, t_parameter arg[3])
+int		ins_add(t_vm *vm, t_parameter arg[3], int pl)
 {
 	int sum;
 
@@ -28,7 +28,7 @@ int		ins_add(t_vm *vm, t_process *proc, t_parameter arg[3])
 			|| arg[SECOND].value >= REG_NUMBER
 			|| arg[THIRD].value >= REG_NUMBER)
 		return (FAILURE); // verifier que c'est bien le cas
-	sum = proc->reg[arg[FIRST].value] + proc->reg[arg[SECOND].value];
-	proc->reg[arg[THIRD].value] = sum; 
+	sum = vm->proc[pl].reg[arg[FIRST].value] + vm->proc[pl].reg[arg[SECOND].value];
+	vm->proc[pl].reg[arg[THIRD].value] = sum; 
 	return (SUCCESS);
 }

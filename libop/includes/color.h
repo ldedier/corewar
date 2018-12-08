@@ -18,8 +18,8 @@
 # define NB_COLTYPES		11
 # define COL_FPL1		COLF_BLACK
 # define COL_FPL2		COLF_BGREEN
-# define COL_FPL3		COLF_MAGENTA
-# define COL_FPL4		COLF_BROWN
+# define COL_FPL3		COLF_BLUE
+# define COL_FPL4		COLF_CYAN
 # define COL_BPL1		COLB_BLACK
 # define COL_BPL2		COLB_GREEN
 # define COL_BPL3		COLB_BLUE
@@ -29,6 +29,7 @@
 # define COL_FCYCLE		COLF_BLACK
 # define COL_BDEAD		COLB_BBLACK
 # define COL_FDEAD		COLF_RED
+# define COL_VALIDINS		COLF_GREEN
 # define COL_DESIGNATOR		"abcdefghABCDEFGHx"
 
 

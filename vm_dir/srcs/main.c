@@ -81,7 +81,6 @@ void	test(t_vm vm)
 int		main(int argc, char **argv)
 {
 	t_vm	vm;
-	t_process	*all_process;
 	
 	if (argc <= 1)
 		error_exit(1);
@@ -90,18 +89,12 @@ int		main(int argc, char **argv)
 	init_vm(&vm, argv);
 	flags(&vm, argc, argv);
 	read_files(&vm);
-//	all_process = (t_process *)ft_memalloc(sizeof(t_process) * (vm.nb_players));
-//	test(vm, argc, argv);
-
-	/* */
-
 	parse(&vm);
 //	if (vm.client.active)
 //		return (process_client(&vm));
-	dispatch_players(&vm, (t_process **)&all_process);
+	dispatch_players(&vm);
 	display_arena(vm.arena);
-	ft_printf("player 2 starts at %d\n", all_process[0].pc);
-	play(&vm, (t_process **)&all_process);
+	play(&vm);
 //	test(vm);
 	return (0);
 }

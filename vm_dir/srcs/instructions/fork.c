@@ -18,10 +18,10 @@
 ** Returns 
 */
 
-int		ins_fork(t_vm *vm, t_process *proc, t_parameter arg[3])
+int		ins_fork(t_vm *vm, t_parameter arg[3], int pl)
 {
 	(void)vm;
-	(void)proc;
+	(void)pl;
 	(void)arg;
 	return (SUCCESS);
 }

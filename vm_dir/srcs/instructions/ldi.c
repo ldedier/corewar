@@ -20,12 +20,12 @@
 ** Returns failure if i.valueid register, success otherwise
 */
 
-int		ins_ldi(t_vm *vm, t_process *proc, t_parameter arg[3])
+int		ins_ldi(t_vm *vm,  t_parameter arg[3], int pl)
 {
 	int sum;
 	(void)sum;
 	(void)vm;
-	(void)proc;
+	(void)pl;
 	if (arg[FIRST].nb_bytes != T_IND || arg[SECOND].nb_bytes != T_IND)
 		return (FAILURE); // verifier que c'est bien le cas
 	sum = arg[SECOND].value + arg[FIRST].value; // verifier si verification taille en amont?

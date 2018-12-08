@@ -19,11 +19,12 @@
 ** Returns failure if i.valueid register, success otherwise
 */
 
-int		ins_xor(t_vm *vm, t_process *proc, t_parameter arg[3])
+int		ins_xor(t_vm *vm, t_parameter arg[3], int pl)
 {
 	(void)vm;
+	(void)pl;
 	if (arg[THIRD].value >= REG_NUMBER)
 		return (FAILURE); // verifier que c'est bien le cas
-	proc->reg[arg[THIRD].value] = arg[FIRST].value ^ arg[SECOND].value;
+	vm->proc[pl].reg[arg[THIRD].value] = arg[FIRST].value ^ arg[SECOND].value;
 	return (SUCCESS);
 }
