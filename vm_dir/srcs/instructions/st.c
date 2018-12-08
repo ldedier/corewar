@@ -21,6 +21,7 @@
 
 int		ins_st(t_vm *vm, t_process *proc, t_parameter arg[3])
 {
+(void)vm;
 //	if (arg[SECOND].value >= REG_NUMBER)
 //		return (FAILURE); // verifier que c'est bien le cas
 	ft_memmove(vm->arena + proc->pc + (arg[SECOND].value % IDX_MOD),

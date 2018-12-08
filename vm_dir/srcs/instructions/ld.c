@@ -16,11 +16,12 @@
 ** Loads.valueue from arena at 1st arg adress to register # 2nd arg
 ** Input: vm (for arena and player), proc (for register and pc),
 ** arg for 2 args, 2nd one necessarily a REGISTER
-** Returns failure if i.valueid register, success otherwise
+** Returns failure if invalid register, success otherwise
 */
 
 int		ins_ld(t_vm *vm, t_process *proc, t_parameter arg[3])
 {
+	(void)vm;
 	if (arg[SECOND].value >= REG_NUMBER)
 		return (FAILURE); // verifier que c'est bien le cas
 	ft_memmove(proc->reg + arg[SECOND].value,

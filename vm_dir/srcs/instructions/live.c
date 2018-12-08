@@ -19,6 +19,7 @@ int		ins_live(t_vm *vm, t_process *proc, t_parameter arg[3])
 		return (FAILURE);
 	// rajouter l'activation du marqueur live, voir avec usama s'il en a deja un
 	proc->live = 1;
+	++vm->nb_live;
 	ft_printf("Player %s lives !!\n", vm->player[arg[FIRST].value].name);
 	return (SUCCESS);
 }
