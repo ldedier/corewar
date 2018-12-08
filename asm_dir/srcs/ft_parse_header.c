@@ -18,7 +18,7 @@ static int read_name_continue(char *line, int i, t_env *env)
 {
 	if (line[i] != '"')
 	{
-		ft_log_error("Lexical error at [1:1]", i - 1, env);
+		ft_log_error("Lexical error", i - 1, env);
 		return (1);
 	}
 	if (line[i + 1] != '\0')
@@ -27,7 +27,7 @@ static int read_name_continue(char *line, int i, t_env *env)
 		{
 			if (ft_isdigit(line[i]) || ft_isalpha(line[i]))
 			{
-				ft_log_error("Syntax error at token [TOKEN][002] AFTER NAME", i, env);
+				ft_log_error("Syntax error at token AFTER NAME", i, env);
 				return (1);
 			}
 			i++;
@@ -49,7 +49,7 @@ static int read_name(char *line, t_env *env, int i, int j)
 		i++;
 	if (line[i] != '"')
 	{
-		ft_log_error("Lexical error at [1:1]", i, env);
+		ft_log_error("Lexical error", i, env);
 		return (1);
 	}
 	while (line[i++])
@@ -73,16 +73,15 @@ static int check_after_comment(char *tmp, int i, t_env *env)
 		;
 	if (tmp[i - 1] != '"')
 	{
-		printf("ici\n");
-		ft_log_error_no_line("Lexical error", env);
+		ft_log_error("Lexical error", i ,env);
 		return (1);
 	}
 	while (tmp[i] || tmp[i] == ' ' || tmp[i] == '\t')
 	{
 		if (ft_isalpha(tmp[i]) || ft_isdigit(tmp[i]))
 		{
-			ft_log_error_no_line("Syntax error at token [TOKEN][002] AFTER COMMENT", env);
-				return (1);
+			ft_log_error_no_line("Syntax error at token AFTER COMMENT", env);
+			return (1);
 		}
 		i++;
 	}
@@ -129,7 +128,7 @@ static int read_comment_continue(char *line, int i, t_env *env, int fd)
 		{
 			if (ft_isdigit(line[i]) || ft_isalpha(line[i]))
 			{
-				ft_log_error("Syntax error at token [TOKEN][002] AFTER COMMENT", i + 1, env);
+				ft_log_error("Syntax error at token AFTER COMMENT", i + 1, env);
 				return (1);
 			}
 			i++;
@@ -157,18 +156,17 @@ static int read_comment(char *line, t_env *env, int fd, int i)
 		i++;
 	if (line[i] != '"')
 	{
-		ft_log_error("Lexical error at [2:1]", i, env);
+		ft_log_error("Lexical error", i, env);
 		return (1);
 	}
 	while(line[i] && line[i + 1] != '"')
 		env->champ.header.comment[j++] = line[++i];
 	env->champ.header.comment[j] = '\0';
-	printf("c = %c\n", line[i]);
-	if (env->champ.header.comment[j])
+	if (	env->champ.header.comment[0])
 	{
 		if (line[i + 1] != '"')
 		{
-			ft_log_error("Lexical error at [2:13]", i, env);
+			ft_log_error("Lexical error", i, env);
 			return (1);
 		}
 	}
@@ -189,11 +187,11 @@ static int check_name(char *str, t_env *env)
 		if (!(name = ft_strndup(str,  ft_strlen(NAME_CMD_STRING))))
 			return (1);
 		if (ft_strcmp(name, NAME_CMD_STRING) != 0)
-			return (ft_log_error_no_line("Lexical error at [1:1]", env));
+			return (ft_log_error_no_line("Lexical error", env));
 	}
 	else if (str[0] != '.')
 	{
-		ft_log_error("Lexical error at [1:1]", 0, env);
+		ft_log_error("Lexical error", 0, env);
 		return (1);
 	}
 	free(name);
@@ -212,11 +210,11 @@ static int check_comment(char *str, t_env *env)
 		if (!(comment = ft_strndup(str,  ft_strlen(COMMENT_CMD_STRING))))
 			return (1);
 		if (ft_strcmp(comment, COMMENT_CMD_STRING) != 0)
-			return (ft_log_error_no_line("Lexical error at [2:1]", env));
+			return (ft_log_error_no_line("Lexical error", env));
 	}
 	else if (str[0] != '.')
 	{
-		ft_log_error("Lexical error at [2:1]", 0, env);
+		ft_log_error("Lexical error", 0, env);
 		return (1);
 	}
 	free(comment);
@@ -241,12 +239,12 @@ int	ft_parse_line_header(char *str, t_env *env, int i, int fd)
 	}
 	else if (!ft_strcmp(env->champ.header.prog_name, ""))
 	{
-		ft_log_error_no_line("Lexical error at [1:1]", env);
+		ft_log_error_no_line("Lexical error", env);
 		return (1);
 	}
 	else if (!ft_strcmp(env->champ.header.comment, ""))
 	{
-		ft_log_error_no_line("Lexical error at [1:2]",env);
+		ft_log_error_no_line("Lexical error",env);
 		return (1);
 	}
 	return (0);
