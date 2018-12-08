@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 16:42:17 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/06 22:44:42 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/08 18:20:18 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void		init_vm(t_vm *vm, char **argv)
 	vm->live.nb = 0;
 	vm->live.total_pl = 0;
 	vm->live.last_pl = -1;
+	vm->dead = 0;
 	ft_strcpy(vm->color.player[1], COL_BPL1);
 	ft_strcpy(vm->color.player[3], COL_BPL2);
 	ft_strcpy(vm->color.player[5], COL_BPL3);

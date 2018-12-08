@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 23:43:58 by ldedier           #+#    #+#             */
-/*   Updated: 2018/02/06 21:19:51 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/08 18:11:10 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int		ft_has_forbidden_values(t_pf pf)
 	{
 		if ((len = ft_wchar_len(data[i])) == -1)
 			return (1);
-		if ((unsigned int)len > MB_CUR_MAX)
+		if (len > MB_CUR_MAX)
 			return (1);
 		res += ft_wchar_len(data[i]);
 		i++;

@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:39:39 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/08 22:55:47 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/08 18:10:01 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ int		ft_put_wchar(int value, t_pf *pf)
 	else
 		ft_4_bytes_len(str, value);
 	i = 0;
-	if ((unsigned int)len <= MB_CUR_MAX)
+	if (len <= MB_CUR_MAX)
 	{
-		while (i < len && (unsigned int)i < MB_CUR_MAX)
+		while (i < len && i < MB_CUR_MAX)
 			ft_putchar_buff(str[i++], pf);
 	}
 	else

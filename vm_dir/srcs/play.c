@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/06 22:44:34 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/08 18:20:16 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,15 @@ void			check_resize_cycle(t_vm *vm, int *cycle)
 	ft_printf("max checks = %d\n", vm->max_checks);
 	if (vm->live.nb >= NBR_LIVE)
 	{
+	vm->live.nb = 0;
+	vm->live.total_pl = 0;
 		vm->max_checks = 0;
 		vm->c_to_die -= CYCLE_DELTA;
 		ft_printf("Too many lives! new cycle length to die: %d\n", vm->c_to_die);
 		return;;
 	}
+	vm->live.nb = 0;
+	vm->live.total_pl = 0;
 	if (vm->max_checks >= MAX_CHECKS)
 	{
 		vm->max_checks = 0;
@@ -46,14 +50,15 @@ static void		reset_live_allprocesses(t_vm *vm)
 		if (vm->proc[i].live == 0)
 		{
 			ft_printf("%s%s PLAYER %d died %s%s\n", COL_FDEAD, COL_BDEAD, vm->nb_players - i, COLF_OFF, COLB_OFF);
+			++vm->dead;
 			vm->proc[i].live = DEAD;
 
 		}
 		else
 			vm->proc[i].live = 0;
 	}
-	vm->live.nb = 0;
-	vm->live.total_pl = 0;
+//	vm->live.nb = 0;
+//	vm->live.total_pl = 0;
 }
 	
 void			launch_instruction(t_vm *vm, int pl)
@@ -99,7 +104,7 @@ int		play(t_vm *vm)
 	if (cycle == vm->c_to_die)
 	{
 		reset_live_allprocesses(vm);
-		if ((vm->live.total_pl <= 1 && vm->live.last_pl != -1) || !vm->c_to_die) 
+		if ((vm->live.total_pl <= 1 && vm->live.last_pl != -1) || vm->dead == vm->nb_players || !vm->c_to_die) 
 		{
 			ft_printf("%splayer %d [%s]%s%s wins!\n", vm->color.player[(vm->nb_players - vm->live.last_pl * 2) + 1], vm->nb_players - vm->live.last_pl, vm->player[vm->live.last_pl].name, COLB_OFF, COLF_OFF);
 			return (1);

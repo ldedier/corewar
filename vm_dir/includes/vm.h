@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/06 21:56:59 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/08 18:18:20 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ typedef struct		s_vm
 	int				win;
 	int				nb_players;
 	char			**files;
+	int				dead;
 	int				dump;
 	t_color				color;
 //	t_client		client;
