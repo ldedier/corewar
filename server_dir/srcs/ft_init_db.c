@@ -12,21 +12,14 @@
 
 #include "server.h"
 
-int		ft_process_add_to_db(char *filename, t_server *server)
+int		ft_process_add_to_db(char *path, t_server *server)
 {
-	t_core	*core;
-	char	*name;
+	t_player	player;
 
-	if (!(name = ft_strdup(filename)))
+	if (ft_read_player(path, &player))
 		return (1);
-	if (!(core = ft_new_core(filename, -1)))
-		return (ft_free_turn(name, 1));
-	if (ft_add_to_list_ptr(&(server->cores), core, sizeof(t_core)))
-	{
-		free(name);
-		free(core);
+	if (ft_add_to_list_back(&(server->players), &player, sizeof(t_player)))
 		return (1);
-	}
 	return (0);
 }
 
@@ -49,7 +42,7 @@ int		ft_add_to_db(DIR *dir, struct dirent *entry, t_server *server)
 	}
 	if (S_ISREG(st.st_mode))
 	{
-		if (ft_process_add_to_db(entry->d_name, server))
+		if (ft_process_add_to_db(full_path, server))
 		{
 			closedir(dir);
 			return (ft_free_turn(full_path, 1));
@@ -64,7 +57,7 @@ int		ft_init_db(t_server *server)
 	DIR				*dir;
 	struct dirent	*entry;
 
-	server->cores = NULL;
+	server->players = NULL;
 	if (!(dir = opendir(PATH"/cores")))
 	{
 		perror(PATH"/cores");

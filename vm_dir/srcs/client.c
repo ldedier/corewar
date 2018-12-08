@@ -33,53 +33,48 @@ int		ft_init_client(t_client *client)
 		return (ft_net_error());
 	if (SDLNet_TCP_AddSocket(client->socket_set, client->socket) == -1)
 		return (ft_net_error());
-	client->cores = NULL;
+	client->players = NULL;
 	return (0);
 }
 
-int		ft_add_new_core(t_client *client, int i, t_name_size size,
+int		ft_add_new_player(t_client *client, int i, t_name_len name_len,
 		t_score score)
 {
-	t_core *core;
+	t_player	*player;
 
-	char *name;
-
-	if (!(name = ft_strndup(&(client->buffer[i]), size)))
+	if (!(player = ft_new_player(&(client->buffer[i]), name_len, score)))
 		return (1);
-	if (!(core = ft_new_core(name, score)))
-		return (ft_free_turn(name, 1));
-	if (ft_add_to_list_ptr_back(&(client->cores), core, sizeof(t_core)))
+	if (ft_add_to_list_ptr_back(&(client->players), player, sizeof(t_player)))
 	{
-		free(name);
-		free(core);
+		free(player);
 		return (1);
 	}
 	return (0);
 }
 
-int		ft_process_add_cores(int nb_bytes, t_client *client)
+int		ft_process_add_players(int nb_bytes, t_client *client)
 {
-	t_nb_cores	nb_cores;
-	t_name_size	name_size;
-	t_score		score;
-	t_nb_cores	core_iter;
-	int			i;
+	t_nb_players	nb_players;
+	t_name_len		name_len;
+	t_score			score;
+	t_nb_players	player_iter;
+	int				i;
 
 	(void)nb_bytes;
 	i = sizeof(t_flag);
-	nb_cores = (t_nb_cores)client->buffer[i];
-	i += sizeof(nb_cores);
-	core_iter = 0;
-	while (core_iter < nb_cores)
+	nb_players = (t_nb_players)client->buffer[i];
+	i += sizeof(nb_players);
+	player_iter = 0;
+	while (player_iter < nb_players)
 	{
 		score = (t_score)(client->buffer[i]);
 		i += sizeof(score);
-		name_size = (t_name_size)(client->buffer[i]);
-		i += sizeof(name_size);
-		if (ft_add_new_core(client, i, name_size, score))
+		name_len = (t_name_len)(client->buffer[i]);
+		i += sizeof(name_len);
+		if (ft_add_new_player(client, i, name_len, score))
 			return (1);
-		i += name_size;
-		core_iter++;
+		i += name_len;
+		player_iter++;
 	}
 	return (0);
 }
@@ -90,12 +85,12 @@ int		ft_process_connect_status(int nb_bytes, t_client *client)
 		return (1);
 	if ((t_flag)client->buffer[0] == GET_LIST)
 	{
-		if (ft_process_add_cores(nb_bytes, client))
+		if (ft_process_add_players(nb_bytes, client))
 			return (1);
 		ft_printf(
 				GREEN"successfully connected to server %s on port %d\n"EOC,
 				client->server_address, client->port);
-		ft_print_cores(client->cores);
+		ft_print_players(client->players);
 		return (0);
 	}
 	else if ((t_flag)client->buffer[0] == SERVER_FULL)
@@ -158,8 +153,7 @@ int		ft_process_loop_client(t_vm *vm)
 int		process_client(t_vm *vm)
 {
 	int	ret;
-
-	//	test(*vm);
+	
 	if (SDLNet_Init() == -1)
 		return (ft_net_error());
 	if (ft_init_client(&(vm->client)))
