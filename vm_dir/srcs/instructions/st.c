@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 20:22:56 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/05 16:41:02 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/09 21:18:24 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,13 @@
 int		ins_st(t_vm *vm, t_parameter arg[3], int pl)
 {
 (void)vm;
-//	if (arg[SECOND].value >= REG_NUMBER)
-//		return (FAILURE); // verifier que c'est bien le cas
-	ft_memmove(vm->arena + vm->proc[pl].pc + (arg[SECOND].value % IDX_MOD),
-			vm->proc[pl].reg + arg[SECOND].value, REG_SIZE);
+	int		index;
+	int		val;
+
+	index = arg[SECOND].value % IDX_MOD;
+	val = getval(vm, &vm->proc[pl], arg[FIRST]);
+	loadval(vm, &vm->proc[pl], arg[FIRST], val);
+//	ft_memmove(vm->arena + vm->proc[pl].pc + (arg[SECOND].value % IDX_MOD),
+//			vm->proc[pl].reg + arg[SECOND].value, REG_SIZE);
 	return (SUCCESS);
 }

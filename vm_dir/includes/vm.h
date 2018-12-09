@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/08 18:18:20 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/09 21:16:44 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <fcntl.h>
 # define DEAD		-100
 # define NEEDS_OCP	60925
+# define NB_TYPES	3
 
 typedef struct		s_color
 {
@@ -91,6 +92,10 @@ void				dispatch_players(t_vm *vm);
 /*
 ** INSTRUCTIONS
 */
+
+int					getval(t_vm *vm, t_process *proc, t_parameter arg);
+void				loadval(t_vm *vm, t_process *proc, t_parameter arg, int val);
+
 
 int					ins_live(t_vm *vm, t_parameter arg[3], int pl);
 int					ins_ld(t_vm *vm, t_parameter arg[3], int pl);

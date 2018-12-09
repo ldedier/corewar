@@ -42,7 +42,8 @@ SRCS_NO_PREFIX =		arena.c error.c flags.c main.c parse.c read.c \
 						tmp.c utils.c op.c play.c \
 						client.c bonus_flags.c net_tools.c test.c
 
-INS_NO_PREFIX =			live.c ld.c st.c add.c sub.c and.c or.c xor.c zjmp.c \
+INS_NO_PREFIX =			get_val.c load_val.c\
+						live.c ld.c st.c add.c sub.c and.c or.c xor.c zjmp.c \
 						ldi.c sti.c fork.c lld.c lldi.c lfork.c aff.c
 
 VISU_NO_PREFIX =		init_sdl.c visu.c framerate.c
