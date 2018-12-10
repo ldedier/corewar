@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/06 18:21:30 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/01 17:34:22 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/10 15:46:03 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,5 +154,6 @@ char				*ft_strjoin_3(char const *s1, char const *s2,
 						char const *s3);
 int					ft_free_turn(void *to_free, int ret);
 int					ft_is_in_str(const char *str, char c);
-long long int	ft_atoll(const char *str);
+long long int		ft_atoll(const char *str);
+int					ft_round(double value);
 #endif

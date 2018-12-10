@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/08 18:18:20 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/10 11:35:43 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ int					ins_aff(t_vm *vm, t_parameter arg[3], int pl);
 */
 
 void				check_resize_cycle(t_vm *vm, int *cycle);
-int				play(t_vm *vm);
+int					play(t_vm *vm);
 void				launch_instruction(t_vm *vm, int player);
 
 /*
