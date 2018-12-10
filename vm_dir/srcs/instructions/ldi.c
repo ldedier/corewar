@@ -13,22 +13,21 @@
 #include "../includes/vm.h"
 
 /*
-** add arg2 and arg3.valueues, load arena content at the address off the sum into
+** add arg2 and arg3.values, load arena content at the address off the sum into
 ** register # arg3
-** Input: vm (for arena and player), proc (for register and pc),
+** Input: vm (for arena and player), pl for process index,
 ** arg for 3 args, two first necessarily INDEXES
-** Returns failure if i.valueid register, success otherwise
 */
 
 int		ins_ldi(t_vm *vm,  t_parameter arg[3], int pl)
 {
 	int sum;
-	(void)sum;
-	(void)vm;
-	(void)pl;
-	if (arg[FIRST].nb_bytes != T_IND || arg[SECOND].nb_bytes != T_IND)
-		return (FAILURE); // verifier que c'est bien le cas
-	sum = arg[SECOND].value + arg[FIRST].value; // verifier si verification taille en amont?
+
+	sum = getval(vm, &vm->proc[pl], arg[FIRST]);
+	sum += getval(vm, &vm->proc[pl], arg[SECOND]);
+	loadval(vm, &vm->proc[pl], arg[THIRD], *(vm->arena + sum % MEM_SIZE));
+
+//	sum = arg[SECOND].value + arg[FIRST].value; // verifier si verification taille en amont?
 //	ft_memmove(proc->reg + arg[THIRD].value, (int)(&proc->pc - &(vm->arena)) + (sum % IDX_MOD), REG_SIZE);
 	return (SUCCESS);
 }

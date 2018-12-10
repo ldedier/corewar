@@ -15,14 +15,14 @@
 static void		load_arena(t_vm *vm, t_process *proc, int index, int val)
 {
 	(void)proc;
-	ft_memmove((void *)(vm->arena + index), (void *)&val, sizeof(val)); 
+	ft_memmove((void *)(vm->arena + index), (void *)&val, IND_SIZE); 
 //	vm->arena[index - 1] = val;
 }
 
 static void		load_reg(t_vm *vm, t_process *proc, int index, int val)
 {
 	(void)vm;
-	ft_memmove((void *)(proc->reg + index - 1), (void *)&val, sizeof(val)); 
+	ft_memmove((void *)(proc->reg + index - 1), (void *)&val, REG_SIZE); 
 //	proc->reg[index - 1] = val;
 }
 

@@ -13,22 +13,17 @@
 #include "../includes/vm.h"
 
 /*
-** Loads.valueue from arena at 1st arg adress to register # 2nd arg
-** Input: vm (for arena and player), proc (for register and pc),
-** arg for 2 args, 2nd one necessarily a REGISTER
-** Returns failure if i.valueid register, success otherwise
+** Loads value from arena at 2nd + 3rd arg adress to register # 1st arg
+** Input: vm (for arena and player), pl for process index,
+** arg for 2 args, 1st one necessarily a REGISTER
 */
 
 int		ins_sti(t_vm *vm,  t_parameter arg[3], int pl)
 {
 	int sum;
-	(void)vm;
-(void)sum;
-(void)arg;
-(void)pl;
-//	if (arg[THIRD].nb_bytes != T_IND || arg[SECOND].nb_bytes != T_IND)
-//		return (FAILURE); // verifier que c'est bien le cas
-//	sum = arg[SECOND].value + arg[FIRST].value; // verifier si verification taille en amont?
-//	ft_memmove(proc->reg + arg[THIRD].value, proc->pc + (sum % IDX_MOD), REG_SIZE);
+
+	sum = getval(vm, &vm->proc[pl], arg[SECOND]);
+	sum += getval(vm, &vm->proc[pl], arg[THIRD]);
+	vm->proc[pl].reg.[arg[FIRST].value - 1] = vm->arena[sum % MEM_SIZE];
 	return (SUCCESS);
 }
