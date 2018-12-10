@@ -47,7 +47,6 @@
 # define NBR_LIVE				21
 # define MAX_CHECKS				2 //anciennement 10
 
-typedef char	t_arg_type;
 
 # define T_REG					1
 # define T_DIR					2
@@ -59,7 +58,56 @@ typedef char	t_arg_type;
 # define COREWAR_EXEC_MAGIC		0xea83f3
 # define NB_INSTRUCTIONS		16
 
+# define LIVE_STR			"alive"
+# define LD_STR				"load"
+# define ST_STR				"store"
+# define ADD_STR			"addition"
+# define SUB_STR			"soustraction"
+# define AND_STR			"et (and r1, r2, r3 r1&r2 -> r3"
+# define OR_STR				"ou (or r1, r2, r3 r1 | r2 -> r3"
+# define XOR_STR			"ou (xor r1, r2, r3 r1^r2 -> r3"
+# define ZJMP_STR			"jump if zero"
+# define LDI_STR			"load index"
+# define STI_STR			"store index"
+# define FORK_STR			"fork"
+# define LLD_STR			"long load"
+# define LLDI_STR			"long load index"
+# define LFORK_STR			"long fork"
+# define AFF_STR			"aff"
+
+# define 1_R				REG_SIZE
+# define 1_D				DIR_SIZE
+# define 1_I				IND_SIZE
+# define 2_RD				1_R + 1_D
+# define 2_RI				1_R + 1_I
+# define 2_DI				1_D + 1_I
+# define 3_RDI				2_RD + 1_I
+# define ARG3_BYTES			8
+# define ARG1_BYTES			3 * ARG
+# define ARG2_BYTES			2 * ARG
+# define GETARG(A1, A2, A3)		(A1 << ARG1_BYTES) | (A2 << ARG2_BYTES) | (A3 << ARG3_BYTES)	
+# define LIVE_ARG_TYPE			GET_ARGTYPE(1_D, 0, 0)
+# define LD_ARG_TYPE			GET_ARGTYPE(2_DI, 1_D, 0) 
+# define ST_ARG_TYPE			GET_ARGTYPE(1_R, 2_RI, 0)
+# define ADD_ARG_TYPE			GET_ARGTYPE(1_R, 1_R, 1_R)
+# define SUB_ARG_TYPE			GET_ARGTYPE(1_R, 1_R, 1_R)
+# define OR_ARG_TYPE			GET_ARGTYPE(3_RDI, 3_RDI, 1_R)
+# define AND_ARG_TYPE			GET_ARGTYPE(3_RDI, 3_RDI, 1_R)
+# define XOR_ARG_TYPE			GET_ARGTYPE(3_RD, 3_RD, 1_R)
+# define ZJMP_ARG_TYPE			GET_ARGTYPE(1_D, 0, 0)
+# define LDI_ARG_TYPE			GET_ARGTYPE(3_RDI, 2_RDi, 1_R)
+# define STI_ARG_TYPE			GET_ARGTYPE(1_R, 3_RDI, 2_RD)
+# define FORK_ARG_TYPE			GET_ARGTYPE(1_D, 0, 0)
+# define LLD_ARG_TYPE			GET_ARGTYPE(2_DI, 1_R, 0)
+# define LLDI_ARG_TYPE			GET_ARGTYPE(3_RDI, 2_RD, 1_R)
+# define LFORK_ARG_TYPE			GET_ARGTYPE(1_D, 0)
+# define AFF_ARG_TYPE			GET_ARGTYPE(1_R, 0)
+
 # define NEEDS_OCP				60925
+
+
+
+typedef char	t_arg_type;
 
 typedef struct					s_op
 {
@@ -70,6 +118,7 @@ typedef struct					s_op
 	int							nb_cycles;
 	char						*description;
 	char						has_ocp;
+	char						carry;
 	char						describe_address;
 }								t_op;
 
@@ -106,6 +155,20 @@ enum				e_op
 	NA, LIVE, LD, ST, ADD, SUB, AND, OR, XOR, ZJMP, LDI, STI, FORK, LLD, LLDI, LFORK, AFF
 };
 
+enum				e_nb_args
+{
+	ZERO, ONE, TWO, THREE
+};
+
+enum				e_has_ocp
+{
+	OCP_NO, OCP_YES
+};
+
+enum				e_mod_carry
+{
+	CARRY_NO, CARRY_YES
+}
 
 t_op							g_op_tab[NB_INSTRUCTIONS + 1];
 
