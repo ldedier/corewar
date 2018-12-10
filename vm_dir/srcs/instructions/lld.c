@@ -20,8 +20,12 @@
 
 int		ins_lld(t_vm *vm, t_parameter arg[3], int pl)
 {
-	(void)vm;
-	(void)pl;
-	(void)arg;
+	int	reg_ind;
+	int	ar_ind;
+
+	reg_ind = arg[SECOND].value;
+	ar_ind = getval(vm, &vm->proc[pl], arg[FIRST]) + vm->proc[pl].pc;
+	vm->proc[pl].reg[reg_ind] = vm->arena[ar_ind % MEM_SIZE];
 	return (SUCCESS);
 }
+
