@@ -19,9 +19,16 @@
 # include <SDL2_mixer/SDL_mixer.h>
 # include <SDL2_net/SDL_net.h>
 # include "libft.h"
-
 # define NB_TEXTURES	10
 # define FRAMERATE		60
+
+# define MEM_WIDTH		700
+# define MEM_BORDER		20
+
+# define MEM_COLS		20
+
+typedef struct			s_vm t_vm;
+
 typedef struct          s_sdl
 {
 	SDL_Rect			screen;
@@ -64,6 +71,7 @@ typedef struct			s_visu
 	t_dim				dim;
 	t_reactive			react;
 	t_framerate			framerate;
+	SDL_Rect			mem;
 }						t_visu;
 
 int						ft_init_all_sdl(t_visu *v);
@@ -75,4 +83,6 @@ int						ft_init_all_sdl(t_visu *v);
 void					ft_process_delta_first(t_framerate *framerate);
 void					ft_process_delta(t_framerate *framerate);
 void					ft_print_fps(t_framerate *framerate);
+int						ft_process_events(t_vm *vm);
+int						ft_render(t_vm *vm, t_sdl *sdl);
 #endif

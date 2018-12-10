@@ -144,12 +144,12 @@ void		flags(t_vm *vm, int argc, char **argv)
 		dump_nb_cycles(vm, argc, argv, &cur);
 	while (cur < argc)
 	{
-/*		if (!ft_strcmp("-v", argv[cur]))
+		if (!ft_strcmp("-v", argv[cur]))
 			vm->visu.active = 1;
-		else if (!ft_strcmp("-corehub", argv[cur]))
+		else if (!ft_strcmp("-w", argv[cur]))
 			corehub_port_and_address(vm, argc, argv, &cur);
 		else
-		{*/
+		{
 			if (ft_strcmp("-n", argv[cur]) == 0)
 				add_player_n(vm, argc, argv, &cur);
 			else
@@ -157,6 +157,7 @@ void		flags(t_vm *vm, int argc, char **argv)
 			vm->nb_players += 1;
 			if (vm->nb_players > MAX_PLAYERS)
 				error_exit_msg(MAX_P_NUM);
+		}
 		cur++;
 	}
 }

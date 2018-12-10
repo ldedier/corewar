@@ -14,11 +14,10 @@
 # define OP_H
 
 /*
- ** Toutes les tailles sont en octets.
- ** On part du principe qu'un int fait 32 bits. Est-ce vrai chez vous ?
- */
+** Toutes les tailles sont en octets.
+** On part du principe qu'un int fait 32 bits. Est-ce vrai chez vous ?
+*/
 # include "libft.h"
-
 # include "color.h"
 
 # define REG_SIZE				1
@@ -81,35 +80,33 @@ typedef struct					s_header
 	char						comment[COMMENT_LENGTH + 1];
 }								t_header;
 
-typedef struct		s_parameter
+typedef struct					s_parameter
 {
-	t_arg_type		type; //T_REG || T_IND || T_DIR || T_LAB
-	int				value;
-	char			*ptr;
-	char			*label_name;
-	int				source_code_col;
-	int				nb_bytes;
-}					t_parameter;
+	t_arg_type					type; //T_REG || T_IND || T_DIR || T_LAB
+	int							value;
+	char						*ptr;
+	char						*label_name;
+	int							source_code_col;
+	int							nb_bytes;
+}								t_parameter;
 
-typedef struct		s_instruction
+typedef struct					s_instruction
 {
-	t_op			op;
-	t_parameter		params[3];
-	unsigned int	address;
-	int				nb_line;
-	unsigned char	ocp;
-	char			*source_code_line;
-}					t_instruction;
+	t_op						op;
+	t_parameter					params[3];
+	unsigned int				address;
+	int							nb_line;
+	unsigned char				ocp;
+	char						*source_code_line;
+}								t_instruction;
 
-enum				e_op
+enum							e_op
 {
 	NA, LIVE, LD, ST, ADD, SUB, AND, OR, XOR, ZJMP, LDI, STI, FORK, LLD, LLDI, LFORK, AFF
 };
 
 
 t_op							g_op_tab[NB_INSTRUCTIONS + 1];
-
-
 
 
 int								get_instruction(char *arena, t_instruction *ins, int i, int mod);

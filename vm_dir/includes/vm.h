@@ -27,7 +27,7 @@
 typedef struct		s_color
 {
 	char			player[MAX_PLAYERS * 2][10];
-}			t_color;
+}					t_color;
 
 typedef struct		s_process
 {
@@ -37,14 +37,14 @@ typedef struct		s_process
 	int				pc;
 	int				cycle;
 	unsigned char	carry;
-}									t_process;
+}					t_process;
 
 typedef struct		s_live
 {
-	int	nb;
-	int	total_pl;
-	int	last_pl;
-}			t_live;
+	int				nb;
+	int				total_pl;
+	int				last_pl;
+}					t_live;
 
 typedef struct		s_vm
 {
@@ -55,7 +55,7 @@ typedef struct		s_vm
 	char			**files;
 	int				dead;
 	int				dump;
-	t_color				color;
+	t_color			color;
 	t_client		client;
 	t_visu			visu;
 	char			arena[MEM_SIZE];
