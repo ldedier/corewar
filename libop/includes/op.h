@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 19:01:37 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/08 19:00:07 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/10 16:26:58 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,33 +75,33 @@
 # define LFORK_STR			"long fork"
 # define AFF_STR			"aff"
 
-# define 1_R				REG_SIZE
-# define 1_D				DIR_SIZE
-# define 1_I				IND_SIZE
-# define 2_RD				1_R + 1_D
-# define 2_RI				1_R + 1_I
-# define 2_DI				1_D + 1_I
-# define 3_RDI				2_RD + 1_I
+# define R					REG_SIZE
+# define D					DIR_SIZE
+# define I					IND_SIZE
+# define RD					R + D
+# define RI					R + I
+# define DI					D + I
+# define RDI				RD + I
 # define ARG3_BYTES			8
 # define ARG1_BYTES			3 * ARG
 # define ARG2_BYTES			2 * ARG
 # define GETARG(A1, A2, A3)		(A1 << ARG1_BYTES) | (A2 << ARG2_BYTES) | (A3 << ARG3_BYTES)	
-# define LIVE_ARG_TYPE			GET_ARGTYPE(1_D, 0, 0)
-# define LD_ARG_TYPE			GET_ARGTYPE(2_DI, 1_D, 0) 
-# define ST_ARG_TYPE			GET_ARGTYPE(1_R, 2_RI, 0)
-# define ADD_ARG_TYPE			GET_ARGTYPE(1_R, 1_R, 1_R)
-# define SUB_ARG_TYPE			GET_ARGTYPE(1_R, 1_R, 1_R)
-# define OR_ARG_TYPE			GET_ARGTYPE(3_RDI, 3_RDI, 1_R)
-# define AND_ARG_TYPE			GET_ARGTYPE(3_RDI, 3_RDI, 1_R)
-# define XOR_ARG_TYPE			GET_ARGTYPE(3_RD, 3_RD, 1_R)
-# define ZJMP_ARG_TYPE			GET_ARGTYPE(1_D, 0, 0)
-# define LDI_ARG_TYPE			GET_ARGTYPE(3_RDI, 2_RDi, 1_R)
-# define STI_ARG_TYPE			GET_ARGTYPE(1_R, 3_RDI, 2_RD)
-# define FORK_ARG_TYPE			GET_ARGTYPE(1_D, 0, 0)
-# define LLD_ARG_TYPE			GET_ARGTYPE(2_DI, 1_R, 0)
-# define LLDI_ARG_TYPE			GET_ARGTYPE(3_RDI, 2_RD, 1_R)
-# define LFORK_ARG_TYPE			GET_ARGTYPE(1_D, 0)
-# define AFF_ARG_TYPE			GET_ARGTYPE(1_R, 0)
+# define LIVE_ARG_TYPE			GET_ARGTYPE(D, 0, 0)
+# define LD_ARG_TYPE			GET_ARGTYPE(DI, D, 0) 
+# define ST_ARG_TYPE			GET_ARGTYPE(R, RI, 0)
+# define ADD_ARG_TYPE			GET_ARGTYPE(R, R, R)
+# define SUB_ARG_TYPE			GET_ARGTYPE(R, R, R)
+# define OR_ARG_TYPE			GET_ARGTYPE(RDI, RDI, R)
+# define AND_ARG_TYPE			GET_ARGTYPE(RDI, RDI, R)
+# define XOR_ARG_TYPE			GET_ARGTYPE(RD, RD, R)
+# define ZJMP_ARG_TYPE			GET_ARGTYPE(D, 0, 0)
+# define LDI_ARG_TYPE			GET_ARGTYPE(RDI, RDi, R)
+# define STI_ARG_TYPE			GET_ARGTYPE(R, RDI, RD)
+# define FORK_ARG_TYPE			GET_ARGTYPE(D, 0, 0)
+# define LLD_ARG_TYPE			GET_ARGTYPE(DI, R, 0)
+# define LLDI_ARG_TYPE			GET_ARGTYPE(RDI, RD, R)
+# define LFORK_ARG_TYPE			GET_ARGTYPE(D, 0)
+# define AFF_ARG_TYPE			GET_ARGTYPE(R, 0)
 
 # define NEEDS_OCP				60925
 
@@ -168,7 +168,7 @@ enum				e_has_ocp
 enum				e_mod_carry
 {
 	CARRY_NO, CARRY_YES
-}
+};
 
 t_op							g_op_tab[NB_INSTRUCTIONS + 1];
 
