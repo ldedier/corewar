@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/09 20:29:58 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/09 21:18:16 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/10 21:39:37 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static void		load_reg(t_vm *vm, t_process *proc, int index, int val)
 {
 	(void)vm;
 	ft_memmove((void *)(proc->reg + index - 1), (void *)&val, REG_SIZE); 
+//	ft_printf("new in reg = %d\n", proc->reg[index - 1]);
 //	proc->reg[index - 1] = val;
 }
 

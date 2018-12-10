@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 20:22:56 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/04 18:40:44 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/10 18:25:46 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /*
 ** Input: vm (for arena and player), proc (for register and pc),
-** arg for X args, 
+** arg for X arg, 
 ** Returns 
 */
 

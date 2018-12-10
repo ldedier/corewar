@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 00:59:48 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/05 13:12:41 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/10 17:08:35 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int		ft_encode_to_cor(char *filename, t_env *e)
 	int fd;
 	int script;
 	
-	script = 1;
+	script = 0;
 	if (script)
 		filename = ft_strdup("mycor");
 	if ((fd = open(filename, O_RDWR | O_CREAT | O_TRUNC, 0644)) == -1)

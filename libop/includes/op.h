@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 19:01:37 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/10 16:26:58 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/10 22:24:49 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,12 @@
 # define RI					R + I
 # define DI					D + I
 # define RDI				RD + I
-# define ARG3_BYTES			8
+# define ARG3_BYTES			2
 # define ARG1_BYTES			3 * ARG
 # define ARG2_BYTES			2 * ARG
 # define GETARG(A1, A2, A3)		(A1 << ARG1_BYTES) | (A2 << ARG2_BYTES) | (A3 << ARG3_BYTES)	
 # define LIVE_ARG_TYPE			GET_ARGTYPE(D, 0, 0)
-# define LD_ARG_TYPE			GET_ARGTYPE(DI, D, 0) 
+# define LD_ARG_TYPE			GET_ARGTYPE(DI, R, 0) 
 # define ST_ARG_TYPE			GET_ARGTYPE(R, RI, 0)
 # define ADD_ARG_TYPE			GET_ARGTYPE(R, R, R)
 # define SUB_ARG_TYPE			GET_ARGTYPE(R, R, R)
@@ -146,7 +146,7 @@ typedef struct		s_instruction
 	t_parameter		params[3];
 	unsigned int	address;
 	int				nb_line;
-	unsigned char	ocp;
+	char	ocp;
 	char			*source_code_line;
 }					t_instruction;
 
@@ -174,7 +174,7 @@ t_op							g_op_tab[NB_INSTRUCTIONS + 1];
 
 
 
-
+void							set_argval(t_parameter *arg, int index, int size);
 int								get_instruction(char *arena, t_instruction *ins, int i, int mod);
 int								store_arg(char *arena, t_instruction *ins, int i, int ocp);
 void							set_optab(t_op **tab);

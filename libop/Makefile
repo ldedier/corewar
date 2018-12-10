@@ -6,12 +6,12 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/21 13:40:59 by ldedier           #+#    #+#              #
-#    Updated: 2018/12/08 18:54:57 by emuckens         ###   ########.fr        #
+#    Updated: 2018/12/10 18:16:52 by emuckens         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= libop.a
-CC      = gcc
+CC      = gcc -g
 
 PWD = \"$(shell pwd)\"
 

@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/09 20:00:32 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/10 16:30:07 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/10 22:24:45 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static int	getval_ind(t_vm *vm, t_process *proc, int index)
 static int	getval_reg(t_vm *vm, t_process *proc, int index)
 {	
 	(void)vm;
+//	ft_printf("getval index = %d\n", index);
 	return (proc->reg[index - 1]);
 }
 

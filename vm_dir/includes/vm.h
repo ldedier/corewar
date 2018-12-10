@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/09 21:16:44 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/10 22:28:05 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,10 @@ typedef struct		s_vm
 	t_color				color;
 	t_client		client;
 	t_visu			visu;
-	char			arena[MEM_SIZE];
+	char	arena[MEM_SIZE];
 	t_player		player[MAX_PLAYERS + 1];
 	t_process		*proc;
-	t_live			live;
+	t_live			 live;
 }					t_vm;
 
 enum				e_return
@@ -95,7 +95,7 @@ void				dispatch_players(t_vm *vm);
 
 int					getval(t_vm *vm, t_process *proc, t_parameter arg);
 void				loadval(t_vm *vm, t_process *proc, t_parameter arg, int val);
-
+void				set_argval(t_parameter *arg, int index, int size);
 
 int					ins_live(t_vm *vm, t_parameter arg[3], int pl);
 int					ins_ld(t_vm *vm, t_parameter arg[3], int pl);
@@ -131,7 +131,7 @@ int					ft_pow(int n, int pow);
 
 // TEMP delete at end
 
-void				display_arena(char *arena); //tmp for test and debug
+void				display_arena(unsigned char *arena); //tmp for test and debug
 void				test_ins(t_vm *vm);
 void				set_processes(t_vm *vm, t_process **proc);
 void				test(t_vm vm);

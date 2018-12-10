@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/08 18:20:16 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/10 22:26:10 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ static void		reset_live_allprocesses(t_vm *vm)
 		else
 			vm->proc[i].live = 0;
 	}
-//	vm->live.nb = 0;
-//	vm->live.total_pl = 0;
 }
 
 void			launch_instruction(t_vm *vm, int pl)
@@ -69,9 +67,13 @@ void			launch_instruction(t_vm *vm, int pl)
 		&ins_live, &ins_ld, &ins_st, &ins_add, &ins_sub, &ins_and, &ins_or, &ins_xor,
 		&ins_zjmp, &ins_ldi, &ins_sti, &ins_fork, &ins_lld, &ins_lldi, &ins_lfork, &ins_aff};
 
-	if (--vm->proc[pl].cycle >= 0
-		&& ft_printf("%s.... %d%s ", COL_WAIT, vm->proc[pl].cycle, COLF_OFF))
+//	ft_printf("cycle = %d\n", vm->proc[pl].cycle);
+	if (vm->proc[pl].cycle > 0
+			&& ft_printf("%s.... %d%s ", COL_WAIT, vm->proc[pl].cycle, COLF_OFF))
+	{
+		--vm->proc[pl].cycle;
 		return ;
+	}
 	ft_bzero((void *)&ins, sizeof(ins));
 	if ((ret = get_instruction(vm->arena, &ins, vm->proc[pl].pc, MEM_SIZE)))
 	{
@@ -79,6 +81,8 @@ void			launch_instruction(t_vm *vm, int pl)
 		i = -1;
 		while (++i < ret)
 			vm->proc[pl].pc = ((vm->proc[pl].pc) < MEM_SIZE - 1) ? vm->proc[pl].pc + 1 : 0;
+//		ft_printf("new pc = %d\n", vm->proc[pl].pc);
+//		ft_printf("nb cycles = %d\n", g_op_tab[(int)ins.op.opcode - 1].nb_cycles);
 		vm->proc[pl].cycle = g_op_tab[(int)ins.op.opcode - 1].nb_cycles;
 		ft_printf("%s.... %d%s ", COL_WAIT, vm->proc[pl].cycle, COLF_OFF);
 		ft_printf("%s%s%s", COL_VALIDINS, ins.op.description, COLF_OFF);
@@ -89,10 +93,9 @@ void			launch_instruction(t_vm *vm, int pl)
 	else
 	{
 		++vm->proc[pl].pc;
-		ft_printf("%sMove forward... %s ", COLF_OFF, COLF_OFF);
+//		ft_printf("%sMove forward... %s ", COLF_OFF, COLF_OFF);
 	}
 }
-
 
 int		play(t_vm *vm)
 {

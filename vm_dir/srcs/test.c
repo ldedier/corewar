@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 17:19:23 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/06 22:44:37 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/10 17:37:02 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,5 @@ void					test(t_vm vm)
 	}
 	if (vm.dump != 0)
 		ft_printf("There is a dump flag with number %d\n", vm.dump);
-	display_arena(vm.arena);
+	display_arena((unsigned char *)vm.arena);
 }
