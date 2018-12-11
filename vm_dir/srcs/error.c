@@ -68,3 +68,18 @@ int			check_type(int ac, char **av)
 	}
 	return (1);
 }
+
+/*
+**check_header function checks the op.h header file's global variables for any
+**illogical declarations.
+*/
+
+void		check_header(void)
+{
+	if (MAX_PLAYERS <= 0)
+	 	error_exit_msg(ERR_HEADER);
+	if (MEM_SIZE < MAX_PLAYERS * 1024)
+		error_exit_msg(ERR_HEADER);
+	if (CHAMP_MAX_SIZE > MEM_SIZE / MAX_PLAYERS)
+		error_exit_msg(ERR_HEADER);
+}

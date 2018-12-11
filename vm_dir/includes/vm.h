@@ -27,43 +27,43 @@
 
 typedef struct		s_color
 {
-	char			player[MAX_PLAYERS * 2][10];
-}			t_color;
+	char					player[MAX_PLAYERS * 2][10];
+}									t_color;
 
 typedef struct		s_process
 {
-	int				id;
-	int				live;
+	int						id;
+	int						live;
 	unsigned char	reg[REG_NUMBER];
-	int				pc;
-	int				cycle;
+	int						pc;
+	int						cycle;
 	unsigned char	carry;
 }									t_process;
 
 typedef struct		s_live
 {
-	int	nb;
-	int	total_pl;
-	int	last_pl;
-}			t_live;
+	int		nb;
+	int		total_pl;
+	int		last_pl;
+}									t_live;
 
 typedef struct		s_vm
 {
-	int				c_to_die;
-	int				max_checks;
-	int				win;
-	int				nb_players;
-	char			**files;
-	int				dead;
-	int				dump;
-	t_color				color;
+	int					c_to_die;
+	int					max_checks;
+	int					win;
+	int					nb_players;
+	char				**files;
+	int					dead;
+	int					dump;
+	t_color			color;
 	t_client		client;
 	t_visu			visu;
-	char	arena[MEM_SIZE];
+	char				arena[MEM_SIZE];
 	t_player		player[MAX_PLAYERS + 1];
 	t_process		*proc;
-	t_live			 live;
-}					t_vm;
+	t_live			live;
+}									t_vm;
 
 enum				e_return
 {
@@ -80,6 +80,7 @@ enum				e_arg
 void				ft_error_exit(const char *error);
 void				error_exit_msg(const char *error);
 int					check_type(int ac, char **av);
+void				check_header(void);
 void				init_vm(t_vm *vm, char **argv);
 void				corehub_port_and_address(t_vm *vm, int argc,
 						char **argv, int *cur);
@@ -119,7 +120,7 @@ int					ins_aff(t_vm *vm, t_parameter arg[3], int pl);
 */
 
 void				check_resize_cycle(t_vm *vm, int *cycle);
-int				play(t_vm *vm);
+int					play(t_vm *vm);
 void				launch_instruction(t_vm *vm, int player);
 
 /*
