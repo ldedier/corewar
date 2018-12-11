@@ -37,6 +37,7 @@ static int read_name_continue(char *line, int i, t_env *env)
 		ft_log_error_no_line("Champion name too long (Max length 128)", env);
 	return (0);
 }
+
 static int read_name(char *line, t_env *env, int i, int j)
 {
 	if (env->champ.header.prog_name[j])
@@ -97,6 +98,11 @@ static int get_comment_other_line(t_env *env, int fd, int i)
 	tmp = NULL;
 	while (get_next_line(fd, &tmp))
 	{
+		if (ft_strlen(tmp) + ft_strlen(env->champ.header.comment) > COMMENT_LENGTH)
+		{
+			ft_log_error_no_line("Syntax error at token COMMENT", env);
+			return (1);
+		}
 		ft_strcat(env->champ.header.comment, tmp);
 		ft_strcat(env->champ.header.comment, "\n");
 		if (ft_strchr(tmp, '"'))
