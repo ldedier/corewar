@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 20:04:45 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/08 18:33:07 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/11 15:12:54 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ static int get_comment_other_line(t_env *env, int fd, int i)
 	tmp = NULL;
 	while (get_next_line(fd, &tmp))
 	{
+		if (ft_strlen(tmp) + ft_strlen(env->champ.header.comment) > COMMENT_LENGTH)
+			return(1);
 		ft_strcat(env->champ.header.comment, tmp);
 		ft_strcat(env->champ.header.comment, "\n");
 		if (ft_strchr(tmp, '"'))

@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/11 14:27:09 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/11 18:43:50 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,17 @@
 # include <SDL2_mixer/SDL_mixer.h>
 # include <SDL2_net/SDL_net.h>
 # include "libft.h"
-# define NB_TEXTURES		10
-# define FRAMERATE			60
+# include "op.h"
+# define NB_TEXTURES			10
+# define FRAMERATE				60
 
-# define DASHBOARD_X		1700
-# define DASHBOARD_MID_Y	720
+# define DASHBOARD_X			1700
+# define DASHBOARD_MID_Y		720
 
-# define MEM_BORDER_TOP		100
-# define MEM_BORDER_BOTTOM	100
-# define MEM_BORDER_RIGHT	100
-# define MEM_BORDER_LEFT	100
+# define MEM_BORDER_TOP			100
+# define MEM_BORDER_BOTTOM		100
+# define MEM_BORDER_RIGHT		100
+# define MEM_BORDER_LEFT		100
 
 
 # define TITLE_BORDER_TOP		40
@@ -41,21 +42,33 @@
 # define PLAYER_BORDER_RIGHT	50
 # define PLAYER_BORDER_BOTTOM	50
 
-# define X_DIFF				7
-# define X_DIFF_BYTE		0
-# define Y_DIFF				7
+# define X_DIFF					7
+# define X_DIFF_BYTE			0
+# define Y_DIFF					7
 
-# define MEM_COLS			64
-# define NB_GLYPHS			256
-# define NB_TITLES			5
+# define MEM_COLS				64
 
-# define BATTLEFIELD		0
-# define LOCAL_PLAYERS		1
-# define NET				2
-# define COREWAR			3
+# define NB_GLYPHS				256
+
+# define NB_TITLES				5
+
+# define BATTLEFIELD			0
+# define LOCAL_PLAYERS			1
+# define NET					2
+# define COREWAR				3
 
 
 typedef struct			s_vm t_vm;
+
+typedef struct			s_atlas_char
+{
+	int					minx;
+	int					maxx;
+	int					miny;
+	int					maxy;
+	int					advance;
+	SDL_Surface			*surface;
+}						t_atlas_char;
 
 typedef struct          s_sdl
 {
@@ -67,8 +80,9 @@ typedef struct          s_sdl
 	SDL_Texture			*texture;
 	SDL_Color			color;
 	SDL_Texture			*textures[NB_TEXTURES];
-	SDL_Surface			*atlas[NB_GLYPHS];
+	t_atlas_char		atlas[NB_GLYPHS];
 	SDL_Surface			*titles[NB_TITLES];
+	SDL_Surface			*names[MAX_PLAYERS];
 	TTF_Font			*font;
 }						t_sdl;
 
@@ -146,4 +160,6 @@ void					ft_process_delta(t_framerate *framerate);
 void					ft_print_fps(t_framerate *framerate);
 int						ft_process_events(t_vm *vm);
 int						ft_render(t_vm *vm, t_sdl *sdl);
+int						ft_render_memory(t_vm *vm);
+int						ft_render_players(t_vm *vm);
 #endif

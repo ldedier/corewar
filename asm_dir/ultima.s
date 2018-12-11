@@ -79,7 +79,7 @@ Pour te détruire en quelques mots
 Abandonne tout idée osée,
 de m'échapper, de me défier
 car les roles sont deja figées.
-Je Suis le Prédateur, tu est Ma Proie"
+Je Suis le Prédateur, tu est Ma Proie
 
 begin_coromp2:
 	st				r1, :stock

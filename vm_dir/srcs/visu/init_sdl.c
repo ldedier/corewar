@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 13:58:59 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/11 14:25:56 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/11 18:58:10 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,14 @@ void	ft_init_sdl_to_null(t_visu *v)
 	v->sdl.font = NULL;
 	i = 0;
 	while (i < NB_GLYPHS)
+		v->sdl.atlas[i++].surface = NULL;
+	i = 0;
+	while (i < NB_TITLES)
+		v->sdl.titles[i++] = NULL;
+	i = 0;
+	while (i < MAX_PLAYERS)
 	{
-		v->sdl.atlas[i] = NULL;
+		v->sdl.names[i] = NULL;
 		i++;
 	}
 }
@@ -88,12 +94,6 @@ int		ft_init_atlas(t_sdl *sdl)
 	char			str[2];
 	SDL_Surface		*tmp;
 
-	i = 0;
-	while (i < NB_GLYPHS)
-	{
-		sdl->atlas[i] = NULL;
-		i++;
-	}
 	str[1] = '\0';
 	i = 33;
 	while (i < 126)
@@ -102,7 +102,12 @@ int		ft_init_atlas(t_sdl *sdl)
 		if (!(tmp = TTF_RenderText_Solid(sdl->font,
 				str, sdl->color)))
 			return (1);
-		sdl->atlas[i] = SDL_ConvertSurface(tmp, sdl->w_surface->format, 0);
+		sdl->atlas[i].surface = SDL_ConvertSurface(tmp,
+			sdl->w_surface->format, 0);
+		if (TTF_GlyphMetrics(sdl->font, i, &(sdl->atlas[i].minx),
+			&(sdl->atlas[i].maxx), &(sdl->atlas[i].miny), &(sdl->atlas[i].maxy),
+				&(sdl->atlas[i].advance)) == -1)
+			return (ft_net_error());
 		SDL_FreeSurface(tmp);
 		i++;
 	}
@@ -189,7 +194,7 @@ void	ft_init_center(t_visu *visu, t_center *c)
 	c->glyph_height = (visu->dim.height - c->top_margin - c->bottom_margin -
 		(c->nb_lines - 1) * c->y_diff) / ((double) c->nb_lines);
 //	printf("%f %f \n", c->glyph_width, c->glyph_height);
-	printf("%f %f \n", c->player_w, c->player_h);
+//	printf("%f %f \n", c->player_w, c->player_h);
 }
 
 int		ft_init_all_sdl(t_visu *v)
@@ -200,6 +205,8 @@ int		ft_init_all_sdl(t_visu *v)
 	//if (!(v->sdl.font = ft_load_font(PATH"/resources/kongtext.ttf", 1000)))
 	if (!(v->sdl.font = ft_load_font(PATH"/resources/mana.ttf", 1000)))
 		return (1);
+//	if (!(v->sdl.font = ft_load_font(PATH"/resources/mana.ttf", 80)))
+//		return (1);
 	v->sdl.color.r = 255;
 	v->sdl.color.g = 255;
 	v->sdl.color.b = 255;

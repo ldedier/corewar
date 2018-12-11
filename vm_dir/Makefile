@@ -45,7 +45,8 @@ SRCS_NO_PREFIX =		arena.c error.c flags.c main.c parse.c read.c \
 INS_NO_PREFIX =			live.c ld.c st.c add.c sub.c and.c or.c xor.c zjmp.c \
 						ldi.c sti.c fork.c lld.c lldi.c lfork.c aff.c
 
-VISU_NO_PREFIX =		init_sdl.c visu.c events.c framerate.c render.c
+VISU_NO_PREFIX =		init_sdl.c visu.c events.c framerate.c render.c \
+						render_mem.c render_players.c
 						
 
 INCLUDES_NO_PREFIX =	vm.h visu.h client.h errors.h
@@ -101,7 +102,8 @@ debug:
 $(LIBFT):
 	@make -C $(LIBFTDIR) all
 	#@$(CC) -o $@ $^ -F $(FRAMEWORKSDIR) $(CFLAGS) $(LFLAGS) #pour linux Emma | desolee!
-$(BINDIR)/$(NAME): $(OBJECTS)  $(LIBFT)
+
+$(BINDIR)/$(NAME): $(OBJECTS)  $(LIBFT) $(LIBOP)
 	@$(CC) -o $@ $^ -F $(FRAMEWORKSDIR) $(SDL2_FRAMEWORKS) $(CFLAGS) $(LFLAGS)
 	@echo "$(OK_COLOR)$(NAME) linked with success !$(EOC)"
 

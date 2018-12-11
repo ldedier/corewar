@@ -6,11 +6,31 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 16:42:17 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/08 18:20:18 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/11 16:23:13 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
+
+/*
+** update the number of players currently in the arena
+*/
+
+void	update_nb_players(t_vm *vm)
+{
+	int i;
+	int res;
+	
+	res = 0;
+	i = 0;
+	while (i < MAX_PLAYERS)
+	{
+		if (vm->player[i].relevant)
+			res++;
+		i++;
+	}
+	vm->nb_players = res;
+}
 
 /*
 **init_vm function initializes our corewar VM's environment by setting all
@@ -19,7 +39,7 @@
 
 void		init_vm(t_vm *vm, char **argv)
 {
-	int		i;
+	int i;
 
 	vm->c_to_die = CYCLE_TO_DIE;
 	vm->files = argv;
@@ -41,10 +61,11 @@ void		init_vm(t_vm *vm, char **argv)
 	vm->client.active = 0;
 	vm->client.port = 0;
 	vm->visu.active = 0;
+	ft_bzero(vm->arena, MEM_SIZE);
 	i = 0;
-	while (i < MEM_SIZE)
+	while (i < MAX_PLAYERS)
 	{
-		vm->arena[i] = 0;
+		vm->player[i].relevant = 0;
 		i++;
 	}
 }
@@ -58,24 +79,32 @@ void		dispatch_players(t_vm *vm)
 {
 	int		nb;
 	int		i;
+	int		j;
 	int		start;
 	char	*algo;
 
-	nb = 0;
+	update_nb_players(vm);
+	ft_bzero(vm->arena, MEM_SIZE);
 	vm->proc = (t_process *)ft_memalloc(sizeof(t_process) * vm->nb_players);
-	while (nb < vm->nb_players)
+	i = 0;
+	nb = 0;
+	while (i < MAX_PLAYERS)
 	{
-		start = (MEM_SIZE / vm->nb_players) * nb;
-		algo = vm->player[nb].algo;
-		vm->proc[nb].pc = start;
-		vm->proc[nb].id = nb;
-		i = 0;
-		while (i < vm->player[nb].algo_len)
+		if (vm->player[i].relevant)
 		{
-			vm->arena[start] = algo[i];
-			i++;
-			start++;
+			start = (MEM_SIZE / vm->nb_players) * nb;
+			algo = vm->player[nb].algo;
+			vm->proc[nb].pc = start;
+			vm->proc[nb].id = nb;
+			j = 0;
+			while (j < vm->player[nb].algo_len)
+			{
+				vm->arena[start] = algo[j];
+				j++;
+				start++;
+			}
+			nb++;
 		}
-		nb++;
+		i++;
 	}
 }
