@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/11 17:47:31 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/11 20:10:04 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/11 21:51:34 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,13 @@ int		ft_copy_str_to_surface(t_vm *vm, SDL_Surface *surface, char *str, SDL_Rect 
 void	ft_render_player_name(t_vm *vm, SDL_Rect player_rect, t_player player)
 {
 	SDL_Rect name_rect;
+	SDL_Rect inner_rect;
 
+	inner_rect.w = player_rect.w - 14;
+	inner_rect.h = player_rect.h - 14;
+	inner_rect.x = player_rect.x + 7;
+	inner_rect.y = player_rect.y + 7;
+	SDL_FillRect(vm->visu.sdl.w_surface, &inner_rect, 0x222222);
 	name_rect.w = player_rect.w / 2;
 	name_rect.h = player_rect.h / 2;
 	name_rect.x = player_rect.x + player_rect.w / 4;
@@ -56,7 +62,7 @@ void	ft_render_player(t_vm *vm, t_player player, double x, double y)
 	rect.h = vm->visu.center.player_h;
 	if (player.relevant)
 	{
-		SDL_FillRect(vm->visu.sdl.w_surface, &rect, 0x222222);
+		SDL_FillRect(vm->visu.sdl.w_surface, &rect, 0x111111);
 		ft_render_player_name(vm, rect, player);
 	}
 	else
