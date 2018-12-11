@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 13:58:59 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/10 19:13:38 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/11 14:25:56 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,19 +99,55 @@ int		ft_init_atlas(t_sdl *sdl)
 	while (i < 126)
 	{
 		str[0] = i;
-
 		if (!(tmp = TTF_RenderText_Solid(sdl->font,
 				str, sdl->color)))
 			return (1);
 		sdl->atlas[i] = SDL_ConvertSurface(tmp, sdl->w_surface->format, 0);
+		SDL_FreeSurface(tmp);
 		i++;
 	}
+	return (0);
+}
+
+SDL_Surface *ft_init_font_surface(char *str, TTF_Font *font, SDL_Color color,
+		SDL_Surface *to_blit_surface)
+{
+	SDL_Surface *res;
+	SDL_Surface *tmp;
+
+	if (!(tmp = TTF_RenderText_Solid(font, str, color)))
+			return (NULL);
+	if(!(res = SDL_ConvertSurface(tmp, to_blit_surface->format, 0)))
+	{
+		SDL_FreeSurface(tmp);
+		return (NULL);
+	}
+	SDL_FreeSurface(tmp);
+	return (res);
+}
+
+SDL_Surface *ft_init_font_surface_sdl(char *str, t_sdl sdl)
+{
+	return (ft_init_font_surface(str, sdl.font, sdl.color, sdl.w_surface));
+}
+
+int		ft_init_textures(t_visu *visu)
+{
+	if (!(visu->sdl.titles[BATTLEFIELD] =
+			ft_init_font_surface_sdl("battlefield:", visu->sdl)))
+		return (1);
+	if (!(visu->sdl.titles[LOCAL_PLAYERS] = 
+			ft_init_font_surface_sdl("local players:", visu->sdl)))
+		return (1);
 	return (0);
 }
 
 void	ft_init_center(t_visu *visu, t_center *c)
 {
 	c->dashboard_x = DASHBOARD_X * visu->react.w_scale;
+	c->dashboard_mid_y = DASHBOARD_MID_Y * visu->react.h_scale;
+	c->dashboard_mid_width = ((visu->dim.width - DASHBOARD_X) / 2.0) * visu->react.w_scale;
+	c->dashboard_mid_x = c->dashboard_x + c->dashboard_mid_width;
 	c->left_margin = MEM_BORDER_LEFT * visu->react.w_scale;
 	c->right_margin = MEM_BORDER_RIGHT * visu->react.w_scale;
 	c->top_margin = MEM_BORDER_TOP * visu->react.h_scale;
@@ -122,6 +158,23 @@ void	ft_init_center(t_visu *visu, t_center *c)
 	c->nb_cols = MEM_COLS;
 	c->nb_lines = ft_round((double)((double)MEM_SIZE /
 		(double)MEM_COLS));
+
+	c->title_top = TITLE_BORDER_TOP * visu->react.h_scale;
+	c->title_bottom = TITLE_BORDER_BOTTOM * visu->react.h_scale;
+	c->title_side = TITLE_BORDER_SIDE * visu->react.w_scale;
+	c->title_h = TITLE_HEIGHT * visu->react.h_scale;
+
+	c->player_left = PLAYER_BORDER_LEFT * visu->react.w_scale;
+	c->player_right = PLAYER_BORDER_RIGHT * visu->react.w_scale;
+	c->player_padding = PLAYER_PADDING * visu->react.h_scale;
+	c->player_bottom = PLAYER_BORDER_BOTTOM * visu->react.h_scale;
+
+	c->player_w = (visu->dim.width - c->dashboard_mid_x) - (c->player_left + c->player_right);
+
+	c->player_h = (c->dashboard_mid_y - (double)(c->title_top + c->title_h +
+			c->title_bottom + ((MAX_PLAYERS - 1) * c->player_padding) +
+			c->player_bottom)) / (double) MAX_PLAYERS;
+
 	while ((c->y_diff * (c->nb_lines - 1) > visu->dim.height
 		- c->top_margin - c->bottom_margin) &&
 			c->y_diff > 0)
@@ -130,13 +183,13 @@ void	ft_init_center(t_visu *visu, t_center *c)
 		c->dashboard_x - 2 * c->nb_cols *
 			c->x_diff_byte) && c->x_diff > 0)
 		c->x_diff--;
-
 	c->glyph_width = (c->dashboard_x - c->left_margin - c->right_margin -
 		(c->nb_cols - 1) * c->x_diff - c->nb_cols * c->x_diff_byte) / ((double)
 		(2 * c->nb_cols));
 	c->glyph_height = (visu->dim.height - c->top_margin - c->bottom_margin -
 		(c->nb_lines - 1) * c->y_diff) / ((double) c->nb_lines);
 //	printf("%f %f \n", c->glyph_width, c->glyph_height);
+	printf("%f %f \n", c->player_w, c->player_h);
 }
 
 int		ft_init_all_sdl(t_visu *v)
@@ -144,7 +197,7 @@ int		ft_init_all_sdl(t_visu *v)
 	ft_init_sdl_to_null(v);
 	if (ft_init_sdl(v))
 		return (1);
-	//if (!(v->sdl.font = ft_load_font(PATH"/resources/kongtext.ttf", 500)))
+	//if (!(v->sdl.font = ft_load_font(PATH"/resources/kongtext.ttf", 1000)))
 	if (!(v->sdl.font = ft_load_font(PATH"/resources/mana.ttf", 1000)))
 		return (1);
 	v->sdl.color.r = 255;
@@ -152,6 +205,8 @@ int		ft_init_all_sdl(t_visu *v)
 	v->sdl.color.b = 255;
 	v->sdl.color.a = 255;
 	if (ft_init_atlas(&(v->sdl)))
+		return (1);
+	if (ft_init_textures(v))
 		return (1);
 	v->react.w_scale = (double)v->dim.width / 2560.0;
 	v->react.h_scale = (double)v->dim.height / 1440.0;

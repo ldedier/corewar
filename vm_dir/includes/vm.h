@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/10 11:35:43 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/11 12:18:10 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ typedef struct		s_vm
 	t_client		client;
 	t_visu			visu;
 	char			arena[MEM_SIZE];
-	t_player		player[MAX_PLAYERS + 1];
+	t_player		player[MAX_PLAYERS];
+	t_player		local_player[MAX_PLAYERS];
 	t_process		*proc;
 	t_live			live;
 }					t_vm;
@@ -73,8 +74,6 @@ enum				e_arg
 {
 	FIRST, SECOND, THIRD
 };
-
-
 
 void				ft_error_exit(const char *error);
 void				error_exit_msg(const char *error);

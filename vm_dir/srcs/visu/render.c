@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/09 14:02:56 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/10 19:13:27 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/11 14:26:11 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,65 @@ void	ft_render_lines(t_vm *vm)
 		pix[(int)(vm->visu.center.dashboard_mid_y * vm->visu.sdl.w_surface->w + i)] = 0xffffff;
 		i++;
 	}
+	i = 0;
+	while (i < vm->visu.center.dashboard_mid_y)
+	{
+		pix[(int)(i * vm->visu.sdl.w_surface->w + vm->visu.center.dashboard_mid_x)] = 0xffffff;
+		i++;
+	}
+}
 
+void	ft_render_player(t_vm *vm, t_player player, double x_offset, double *y)
+{
+	SDL_Rect rect;
+
+	(void)player;
+	rect.x = x_offset + vm->visu.center.player_left;
+	rect.y = *y;
+	rect.w = vm->visu.center.player_w;
+	rect.h = vm->visu.center.player_h;
+	SDL_FillRect(vm->visu.sdl.w_surface, &rect, 0x222222);
+
+	*y += vm->visu.center.player_h + vm->visu.center.player_padding;
+}
+
+void	ft_render_title(t_vm *vm, int title_index, double x_offset, double *y)
+{
+	SDL_Rect	rect;
+
+	rect.x = x_offset + vm->visu.center.title_side;
+	rect.y = *y;
+	rect.w = vm->visu.center.dashboard_mid_width -
+		2 * vm->visu.center.title_side;
+	rect.h = vm->visu.center.title_h;
+	if (SDL_BlitScaled(vm->visu.sdl.titles[title_index], NULL, vm->visu.sdl.w_surface, &rect) < 0)
+		ft_net_error();
+	*y += vm->visu.center.title_h + vm->visu.center.title_bottom;
+}
+
+void	ft_render_player_pool(t_vm *vm, t_player players[MAX_PLAYERS],
+			double x_offset, int title_index)
+{
+	int		i;
+	double	y;
+
+	y = vm->visu.center.title_top;
+	ft_render_title(vm, title_index, x_offset, &y);
+	i = 0;
+	while (i < MAX_PLAYERS)
+	{
+		ft_render_player(vm, players[i], x_offset, &y);
+		i++;
+	}
+}
+
+
+void	ft_render_players(t_vm *vm)
+{
+	ft_render_player_pool(vm, vm->player, vm->visu.center.dashboard_x,
+			BATTLEFIELD);
+	ft_render_player_pool(vm, vm->local_player,
+		vm->visu.center.dashboard_mid_x, LOCAL_PLAYERS);
 }
 
 int		ft_render(t_vm *vm, t_sdl *sdl)
@@ -101,6 +159,7 @@ int		ft_render(t_vm *vm, t_sdl *sdl)
 	if (ft_render_memory(vm))
 		return (1);
 	ft_render_lines(vm);
+	ft_render_players(vm);
 	//	ft_render_players(client);
 	sdl->texture = SDL_CreateTextureFromSurface(sdl->renderer, sdl->w_surface);
 	SDL_RenderCopy(sdl->renderer, sdl->texture, NULL, NULL);

@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/10 19:13:18 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/11 14:27:09 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,30 @@
 # define MEM_BORDER_RIGHT	100
 # define MEM_BORDER_LEFT	100
 
+
+# define TITLE_BORDER_TOP		40
+# define TITLE_BORDER_BOTTOM	30
+# define TITLE_BORDER_SIDE		100
+# define TITLE_HEIGHT			50
+
+# define PLAYER_PADDING			50
+# define PLAYER_BORDER_LEFT		50
+# define PLAYER_BORDER_RIGHT	50
+# define PLAYER_BORDER_BOTTOM	50
+
 # define X_DIFF				7
 # define X_DIFF_BYTE		0
 # define Y_DIFF				7
 
 # define MEM_COLS			64
 # define NB_GLYPHS			256
+# define NB_TITLES			5
+
+# define BATTLEFIELD		0
+# define LOCAL_PLAYERS		1
+# define NET				2
+# define COREWAR			3
+
 
 typedef struct			s_vm t_vm;
 
@@ -50,6 +68,7 @@ typedef struct          s_sdl
 	SDL_Color			color;
 	SDL_Texture			*textures[NB_TEXTURES];
 	SDL_Surface			*atlas[NB_GLYPHS];
+	SDL_Surface			*titles[NB_TITLES];
 	TTF_Font			*font;
 }						t_sdl;
 
@@ -79,6 +98,7 @@ typedef struct			s_center
 {
 	double				dashboard_x;
 	double				dashboard_mid_y;
+	double				dashboard_mid_x;
 	double				left_margin;
 	double				right_margin;
 	double				top_margin;
@@ -90,6 +110,18 @@ typedef struct			s_center
 	double				glyph_height;
 	int					nb_cols;
 	int					nb_lines;
+	double				dashboard_mid_width;
+	double				title_top;
+	double				title_h;
+	double				title_side;
+	double				title_bottom;
+
+	double				player_left;
+	double				player_right;
+	double				player_w;
+	double				player_h;
+	double				player_padding;
+	double				player_bottom;
 }						t_center;
 
 typedef struct			s_visu
