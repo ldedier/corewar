@@ -13,22 +13,14 @@
 #ifndef VM_H
 # define VM_H
 
-# include "libft.h"
 # include "op.h"
 # include "champion.h"
 # include "player.h"
-# include "visu.h"
-# include "client.h"
-# include "errors.h"
+//# include "client.h"
+//# include "visu.h"
 # include <fcntl.h>
-# define DEAD		-100
-# define NEEDS_OCP	60925
-# define NB_TYPES	3
-
-typedef struct		s_color
-{
-	char			player[MAX_PLAYERS * 2][10];
-}			t_color;
+# include "errors.h"
+# include "libft.h"
 
 typedef struct		s_process
 {
@@ -38,7 +30,15 @@ typedef struct		s_process
 	int				pc;
 	int				cycle;
 	unsigned char	carry;
-}									t_process;
+}			t_process;
+
+typedef struct		s_color
+{
+	char		*ref;
+	char		player[MAX_PLAYERS][COL_LEN];
+	char		msg[NB_MSG_TYPE][NB_MSG_PLAYER][COL_LEN];
+}			t_color;
+
 
 typedef struct		s_live
 {
@@ -50,20 +50,24 @@ typedef struct		s_live
 typedef struct		s_vm
 {
 	int				c_to_die;
-	int				max_checks;
+	int				checks;
 	int				win;
 	int				nb_players;
 	char			**files;
 	int				dead;
 	int				dump;
 	t_color				color;
-	t_client		client;
-	t_visu			visu;
+//	t_client		client;
+//	t_visu			visu;
 	char	arena[MEM_SIZE];
 	t_player		player[MAX_PLAYERS + 1];
 	t_list			*proc;
 	t_live			 live;
 }					t_vm;
+
+# define DEAD		-100
+# define NEEDS_OCP	60925
+# define NB_TYPES	3
 
 enum				e_return
 {
@@ -76,7 +80,6 @@ enum				e_arg
 };
 
 
-
 void				ft_error_exit(const char *error);
 void				error_exit_msg(const char *error);
 int					check_type(int ac, char **av);
@@ -87,7 +90,7 @@ void				flags(t_vm *vm, int argc, char **argv);
 int					read_files(t_vm *vm);
 void				error_exit_mgc(char *name);
 void				parse(t_vm *vm);
-void				dispatch_players(t_vm *vm);
+int				dispatch_players(t_vm *vm);
 
 /*
 ** INSTRUCTIONS

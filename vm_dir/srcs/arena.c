@@ -25,7 +25,7 @@ void		init_vm(t_vm *vm, char **argv)
 	vm->files = argv;
 	vm->win = 0;
 	vm->dump = 0;
-	vm->max_checks = 0;
+	vm->checks = MAX_CHECKS;
 	vm->live.nb = 0;
 	vm->live.total_pl = 0;
 	vm->live.last_pl = -1;
@@ -39,9 +39,9 @@ void		init_vm(t_vm *vm, char **argv)
 	ft_strcpy(vm->color.player[2], COL_FPL2);
 	ft_strcpy(vm->color.player[4], COL_FPL3);
 	ft_strcpy(vm->color.player[6], COL_FPL4);
-	vm->client.active = 0;
-	vm->client.port = 0;
-	vm->visu.active = 0;
+//	vm->client.active = 0;
+//	vm->client.port = 0;
+//	vm->visu.active = 0;
 	i = 0;
 	while (i < MEM_SIZE)
 	{
@@ -52,12 +52,11 @@ void		init_vm(t_vm *vm, char **argv)
 
 t_list	*add_process(t_vm *vm, int start, int id, int num)
 {
-	t_list		*new;
 	t_process	*process;
 
 	process = (t_process *)ft_memalloc(sizeof(t_process));
 	process->pc = start;
-	process->id = nb; // revoir utilisation et valeur
+	process->id = id; // revoir utilisation et valeur
 	process->reg[0] = num;
 	if (ft_add_to_list_ptr(&vm->proc, (void *)process, sizeof(process)))
 		return (NULL);
@@ -71,21 +70,20 @@ t_list	*add_process(t_vm *vm, int start, int id, int num)
 **point in the arena and initializes processes for each player.
 */
 
-void		dispatch_players(t_vm *vm)
+int		dispatch_players(t_vm *vm)
 {
 	int		nb;
 	int		i;
 	int		start;
-	char		*arg;
-	t_list		*new_process;
+	char		*algo;
 
 	nb = 0;
 	while (nb < vm->nb_players)
 	{
 		start = (MEM_SIZE / vm->nb_players) * nb;
 		algo = vm->player[nb].algo;
-		if (!add_process(start, nb, vm->player[nb].num))
-			return (NULL);
+		if (!add_process(vm, start, nb, vm->player[nb].num))
+			return (-1);
 		i = 0;
 		while (i < vm->player[nb].algo_len)
 		{
@@ -95,4 +93,5 @@ void		dispatch_players(t_vm *vm)
 		}
 		nb++;
 	}
+	return (0);
 }
