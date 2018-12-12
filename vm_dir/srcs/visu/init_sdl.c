@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 13:58:59 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/12 19:41:40 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/12 23:45:24 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,6 +287,7 @@ int		ft_init_all_sdl(t_visu *v)
 	v->sdl.current_cursor = REGULAR;
 	v->event_manager.enable_mouse_up = 1;
 	v->drag_container.player = NULL;
+	v->drop_container.player = NULL;
 	SDL_SetCursor(v->sdl.cursor_packers[REGULAR].cursor);
 	return (0);
 }

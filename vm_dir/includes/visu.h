@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/12 22:03:42 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/12 23:48:56 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@
 # define PLAYER_HOVERED_BG_COL	0x666666
 # define LINE_COL				0xffffff
 
-# define DROP_TOLERANCE			30
+# define DROP_TOLERANCE_W		100
+# define DROP_TOLERANCE_H		30
 
 typedef struct			s_vm t_vm;
 
@@ -197,6 +198,11 @@ typedef struct			s_drag_container
 	char				from_arena;
 }						t_drag_container;
 
+typedef struct			s_drop_container
+{
+	t_player			*player;
+}						t_drop_container;
+
 typedef struct			s_event_manager
 {
 	Uint32				mouse_state;
@@ -211,6 +217,7 @@ typedef struct			s_visu
 	t_center			center;
 	t_event_manager		event_manager;
 	t_drag_container	drag_container;
+	t_drop_container	drop_container;
 	t_positions			positions;
 	t_reactive			react;
 	t_framerate			framerate;

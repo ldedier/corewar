@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/11 17:47:31 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/12 21:45:13 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/12 23:47:01 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,10 @@ void	ft_render_player(t_vm *vm, t_player *player, t_slot slot,
 		rect.y = slot.player.y;
 		rect.w = vm->visu.center.player_w;
 		rect.h = vm->visu.center.player_h;
-		SDL_FillRect(vm->visu.sdl.w_surface, &rect, PLAYER_BACKGROUND_COL);
+		if (player != vm->visu.drop_container.player)
+			SDL_FillRect(vm->visu.sdl.w_surface, &rect, PLAYER_BACKGROUND_COL);
+		else
+			SDL_FillRect(vm->visu.sdl.w_surface, &rect, PLAYER_HOVERED_BG_COL);
 	}
 }
 
