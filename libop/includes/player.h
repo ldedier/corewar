@@ -21,7 +21,7 @@
 # define INVALID_CHARS	"Incorrect characters were used in the .cor file"
 # define MAX_CHAMP		"Given champion is too large to be handled"
 # define WRG_HEAD_SIZE	"Header size does not match file's code size"
-# define TOT_SIZE (CHAMP_MAX_SIZE + PROG_NAME_LENGTH + COMMENT_LENGTH + 4)
+# define TOT_SIZE (CHAMP_MAX_SIZE + PROG_NAME_LENGTH + COMMENT_LENGTH + 12)
 
 typedef int				t_name_len;
 typedef int				t_comment_len;
