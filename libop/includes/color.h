@@ -13,9 +13,19 @@
 #ifndef COLOR_H
 # define COLOR_H
 
+
+/*
+** "pspcplpdpvrlrarrtmtctep0p1p2p3p4p5p6p7p8p9"
+*/
+# define DEFAULT_COLORS 	
+
+# define COL_DESIGNATOR	 "abcdefghABCDEFGHx"
 # define COL				t_color
+
+# define COL_LEN		20
 # define NB_DESIGNATOR		17
 # define NB_COLTYPES		11
+# define NB_COL			16
 # define COL_FPL1		COLF_BLACK
 # define COL_FPL2		COLF_BGREEN
 # define COL_FPL3		COLF_BLUE
@@ -32,6 +42,9 @@
 # define COL_VALIDINS		COLF_GREEN
 # define COL_DESIGNATOR		"abcdefghABCDEFGHx"
 
+/*
+**
+*/1
 
 
 
@@ -78,5 +91,10 @@
 # define COLB_BCYAN   	"\033[106m"
 # define COLB_BGREY		"\033[107m"
 # define COLB_OFF		"\033[49m"
+
+void		set_colors(t_vm *vm, int index);
+
+
+
 
 #endif
