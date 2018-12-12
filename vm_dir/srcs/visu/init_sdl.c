@@ -151,7 +151,7 @@ void	ft_init_center(t_visu *visu, t_center *c)
 {
 	c->dashboard_x = DASHBOARD_X * visu->react.w_scale;
 	c->dashboard_mid_y = DASHBOARD_MID_Y * visu->react.h_scale;
-	c->dashboard_mid_width = ((visu->dim.width - DASHBOARD_X) / 2.0) * visu->react.w_scale;
+	c->dashboard_mid_width = ((visu->dim.width - DASHBOARD_X * visu->react.w_scale) / 2.0);
 	c->dashboard_mid_x = c->dashboard_x + c->dashboard_mid_width;
 	c->left_margin = MEM_BORDER_LEFT * visu->react.w_scale;
 	c->right_margin = MEM_BORDER_RIGHT * visu->react.w_scale;
