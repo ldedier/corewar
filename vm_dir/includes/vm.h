@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/10 22:28:05 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/12 22:42:36 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 # include "op.h"
 # include "champion.h"
 # include "player.h"
-//# include "client.h"
-//# include "visu.h"
-# include <fcntl.h>
 # include "errors.h"
+# include "client.h"
+# include "visu.h"
+# include <fcntl.h>
 # include "libft.h"
 
 typedef struct		s_process
@@ -28,17 +28,18 @@ typedef struct		s_process
 	int				live;
 	unsigned char	reg[REG_NUMBER];
 	int				pc;
-	int				cycle;
+	int				ins_cycle;
+	int				cycle;			
 	unsigned char	carry;
 }			t_process;
-
+/*
 typedef struct		s_color
 {
 	char		*ref;
 	char		player[MAX_PLAYERS][COL_LEN];
-	char		msg[NB_MSG_TYPE][NB_MSG_PLAYER][COL_LEN];
+	char		msg[NB_MSG_TYPES][NB_MSG_PLAYER][COL_LEN];
 }			t_color;
-
+*/
 
 typedef struct		s_live
 {
@@ -52,13 +53,14 @@ typedef struct		s_vm
 	int				c_to_die;
 	int				checks;
 	int				win;
+	int				cycle;
 	int				nb_players;
 	char			**files;
 	int				dead;
 	int				dump;
-	t_color				color;
-//	t_client		client;
-//	t_visu			visu;
+	char			color[NB_COLTYPES];
+	t_client		client;
+	t_visu			visu;
 	char	arena[MEM_SIZE];
 	t_player		player[MAX_PLAYERS + 1];
 	t_list			*proc;
@@ -93,6 +95,25 @@ void				parse(t_vm *vm);
 int				dispatch_players(t_vm *vm);
 
 /*
+** DISPLAY
+*/
+
+void				display(t_vm *vm, int pl, int type);
+void				pl_death(t_vm *vm, int pl);
+void				pl_live(t_vm *vm, int pl);
+void				pl_victory(t_vm *vm, int pl);
+void				pl_cycle(t_vm *vm, int pl);
+void				pl_pc(t_vm * vm, int pl);
+void				lives_turn(t_vm *vm, int pl);
+void				cycles_to_autoresize(t_vm *vm, int pl);
+void				resize(t_vm *vm, int pl);
+void				cycle_end(t_vm *vm, int pl);
+void				move_one(t_vm *vm, int pl);
+void				cycle_nb(t_vm *vm, int pl);
+void				last_live(t_vm *vm, int pl);
+
+
+/*
 ** INSTRUCTIONS
 */
 
@@ -121,16 +142,16 @@ int					ins_aff(t_vm *vm, t_parameter arg[3], int pl);
 ** PLAY
 */
 
-void				check_resize_cycle(t_vm *vm, int *cycle);
 int				play(t_vm *vm);
-void				launch_instruction(t_vm *vm, int player);
 
 /*
 ** UTILS
 */
 
 int					mod(int val, int max);
-int					ft_pow(int n, int pow);
+int					ft_pow(int n, int pow); // remove?
+t_process		*get_proc_index(t_list *lst, int index);
+t_process		*get_proc_num(t_list *lst, int num);
 
 // TEMP delete at end
 

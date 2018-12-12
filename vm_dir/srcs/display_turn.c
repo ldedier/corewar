@@ -1,24 +1,31 @@
 #include "vm.h"
 
-void	cycle_end(void *content)
+void	last_live(t_vm *vm, int pl)
 {
-	t_vm *vm;
+	t_process	*proc;
 
-	vm = (t_vm *)content;
-	ft_printf("\n%s%s%s%s%s | ", COL_FCYCLE, COL_BCYCLE, MSG_CYCLE_END, COLF_OFF, COLB_OFF);
+	proc = get_proc_num(vm->proc, pl);
+	ft_printf(">>> %s ", proc->id);
 }
 
-void	move_one(void *content)
+
+void	cycle_end(t_vm *vm, int pl)
 {
-	(void)content;
-	ft_printf("%s%s%s ", COLF_OFF, MSG_MOVE_ONE, COLF_OFF);
+	(void)pl;
+	(void)vm;
+	ft_printf("\n%s | ", MSG_CYCLE_END);
 }
 
-void	cycle_nbr(void *content)
+void	move_one(t_vm *vm, int pl)
 {
-	t_vm *vm;
-	
-	vm = (t_vm *)content;
-	ft_printf("\n%s%s%d [ %d %s ] %s\n", COLF_BGREY, LABEL_CYCLE, cycle,MSG_ CYCLES_REMAINING, vm->c_to_die - cycle, COLF_OFF);
+	(void)vm;
+	(void)pl;
+	ft_printf("%-*s ", PAD_INS, MSG_MOVE_ONE);
+}
+
+void	cycle_nb(t_vm *vm, int pl)
+{
+	(void)pl;
+	ft_printf("\n%s %s [ %d ] \n", LABEL_CYCLE, MSG_CYCLES_REMAINING, CYCLE_TO_DIE - vm->cycle);
 }
 

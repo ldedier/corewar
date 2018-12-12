@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 20:22:56 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/10 18:24:52 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/12 19:25:56 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,11 @@
 
 int		ins_xor(t_vm *vm, t_parameter arg[3], int pl)
 {
-	(void)vm;
-	(void)pl;
+	t_process	*proc;
+
+	proc = get_proc_index(vm->proc, pl);
 	if (arg[THIRD].value >= REG_NUMBER)
 		return (FAILURE); // verifier que c'est bien le cas
-	vm->proc[pl].reg[arg[THIRD].value] = arg[FIRST].value ^ arg[SECOND].value;
+	proc->reg[arg[THIRD].value] = arg[FIRST].value ^ arg[SECOND].value;
 	return (SUCCESS);
 }

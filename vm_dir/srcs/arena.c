@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 16:42:17 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/08 18:20:18 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/12 22:02:33 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,23 +31,26 @@ void		init_vm(t_vm *vm, char **argv)
 	vm->live.last_pl = -1;
 	vm->dead = 0;
 	vm->proc = NULL;
-	ft_strcpy(vm->color.player[1], COL_BPL1);
-	ft_strcpy(vm->color.player[3], COL_BPL2);
-	ft_strcpy(vm->color.player[5], COL_BPL3);
-	ft_strcpy(vm->color.player[7], COL_BPL4);
-	ft_strcpy(vm->color.player[0], COL_FPL1);
-	ft_strcpy(vm->color.player[2], COL_FPL2);
-	ft_strcpy(vm->color.player[4], COL_FPL3);
-	ft_strcpy(vm->color.player[6], COL_FPL4);
-//	vm->client.active = 0;
-//	vm->client.port = 0;
-//	vm->visu.active = 0;
+//	ft_strcpy(vm->color.player[1], COL_BPL1);
+//	ft_strcpy(vm->color.player[3], COL_BPL2);
+//	ft_strcpy(vm->color.player[5], COL_BPL3);
+//	ft_strcpy(vm->color.player[7], COL_BPL4);
+//	ft_strcpy(vm->color.player[0], COL_FPL1);
+//	ft_strcpy(vm->color.player[2], COL_FPL2);
+//	ft_strcpy(vm->color.player[4], COL_FPL3);
+//	ft_strcpy(vm->color.player[6], COL_FPL4);
+	vm->client.active = 0;
+	vm->client.port = 0;
+	vm->visu.active = 0;
+	vm->cycle = 0; // ou 1?
 	i = 0;
 	while (i < MEM_SIZE)
 	{
 		vm->arena[i] = 0;
 		i++;
 	}
+	ft_strcpy(vm->color, "wxwxwxwxwxmxmxmxgxgxgxgxxLxGxCxByxyxyxyx");
+	set_colors(vm->color);
 }
 
 t_list	*add_process(t_vm *vm, int start, int id, int num)

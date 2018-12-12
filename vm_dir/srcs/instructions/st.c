@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 20:22:56 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/10 22:53:46 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/12 20:56:44 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,14 @@
 
 int		ins_st(t_vm *vm, t_parameter arg[3], int pl)
 {
-	int		index;
-	char	val;
-	int		i;
+	int			index;
+	char		val;
+	int			i;
+	t_process	*proc;
 
+	proc = get_proc_num(vm->proc, pl);
 	index = arg[SECOND].value % IDX_MOD;
-	val = getval(vm, &vm->proc[pl], arg[FIRST]);
+	val = getval(vm, proc, arg[FIRST]);
 	i = arg[SECOND].nb_bytes;
 	while (i)
 	{

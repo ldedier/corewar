@@ -6,14 +6,14 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 18:26:19 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/07 01:16:17 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/12 18:36:34 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CLIENT_H
 # define CLIENT_H
 
-//# include <SDL2_net/SDL_net.h>
+# include <SDL2_net/SDL_net.h>
 # include "network.h"
 # include "player.h"
 

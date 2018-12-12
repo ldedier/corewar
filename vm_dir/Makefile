@@ -40,7 +40,8 @@ EOC = \033[0m
 
 SRCS_NO_PREFIX =		arena.c error.c flags.c main.c parse.c read.c \
 						tmp.c utils.c op.c play.c \
-						client.c bonus_flags.c net_tools.c test.c
+						client.c bonus_flags.c net_tools.c test.c \
+						display.c display_player.c display_resize.c display_turn.c
 
 INS_NO_PREFIX =			get_val.c load_val.c\
 						live.c ld.c st.c add.c sub.c and.c or.c xor.c zjmp.c \
@@ -102,7 +103,7 @@ debug:
 $(LIBFT):
 	@make -C $(LIBFTDIR) all
 	#@$(CC) -o $@ $^ -F $(FRAMEWORKSDIR) $(CFLAGS) $(LFLAGS) #pour linux Emma | desolee!
-$(BINDIR)/$(NAME): $(OBJECTS)  $(LIBFT)
+$(BINDIR)/$(NAME): $(OBJECTS)  $(LIBFT) $(LIBOP)
 	@$(CC) -o $@ $^ -F $(FRAMEWORKSDIR) $(SDL2_FRAMEWORKS) $(CFLAGS) $(LFLAGS)
 	@echo "$(OK_COLOR)$(NAME) linked with success !$(EOC)"
 

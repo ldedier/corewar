@@ -6,18 +6,14 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/06 21:56:59 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/12 21:53:30 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ERRORS_H
 # define ERRORS_H
 
-# define NB_MSG_TYPES	3
-# define NB_MSG_PLAYER	5
-# define NB_MSG_RESIZE	3
-# define NB_MSG_TURN	3
-# define NB_MSG_TOTAL	NB_MSG_PLAYER + NB_MSG_RESIZE + NB_MSG_TURN
+# define NB_GAME_MSG 12
 
 /*
 ** ERROR MESSAGES
@@ -47,49 +43,16 @@
 # define MSG_VICTORY	"VICTORY FOR"
 # define MSG_DEATH	"just died"
 # define MSG_CYCLE_END	">>>END OF CYCLE "
+# define MSG_MOVE_ONE	"Move forward..."
 
 # define LABEL_PLAYER	" PLAYER "
 # define LABEL_CYCLE	" CYCLE "
 
-
-enum 	e_msg_types
+enum	e_game_msg
 {
-	PLAYER, RESIZE, TURN 
+	PL_PC, PL_CYCLE, PL_LIVE, PL_DEATH, PL_VICTORY,
+	LIVES_TURN, AUTO_RESIZE, NEW_RESIZE,
+	MOVE_ONE, LAST_LIVE, CYCLE_NBR, CYCLE_END
 };
-
-enum	e_msg_player_status
-{
-	PL_PC, PL_CYCLE, PL_LIVE, PL_DEATH, PL_VICTORY
-};
-
-
-enum 	e_msg_resize
-{
-	LIVES_TURN, AUTO_RESIZE, NEW_RESIZE
-};
-
-enum	e_msg_turn
-{
-	MOVE_ONE, CUR_CYCLE, CYCLE_END
-	
-}
-
-/*
-** GAME MSG DISPLAY
-*/
-void	display(t_vm *vm, t_process *proc, int type, int msg);
-void	pl_death(void *content);
-void	pl_live(void *content);
-void	pl_victory(void *content);
-void	pl_cycle(void *content);
-void	pl_pc(void * content);
-void	lives_turn(void *content);
-void	cycles_to_autoresize(void *content);
-void	resize(void *content);
-void	cycle_end(void *content);
-void	move_one(void *content);
-void	cycle_nb(void *content);
-
-
 
 #endif

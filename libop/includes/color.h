@@ -6,46 +6,34 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/22 15:55:47 by emuckens          #+#    #+#             */
-/*   Updated: 2018/11/28 13:57:27 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/12 22:42:38 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef COLOR_H
 # define COLOR_H
 
-
 /*
 ** "pspcplpdpvrlrarrtmtctep0p1p2p3p4p5p6p7p8p9"
 */
 # define DEFAULT_COLORS 	
 
-# define COL_DESIGNATOR	 "abcdefghABCDEFGHx"
 # define COL				t_color
 
 # define COL_LEN		20
 # define NB_DESIGNATOR		17
-# define NB_COLTYPES		11
-# define NB_COL			16
-# define COL_FPL1		COLF_BLACK
-# define COL_FPL2		COLF_BGREEN
-# define COL_FPL3		COLF_BLUE
-# define COL_FPL4		COLF_CYAN
-# define COL_BPL1		COLB_BLACK
-# define COL_BPL2		COLB_GREEN
-# define COL_BPL3		COLB_BLUE
-# define COL_BPL4		COLB_CYAN
-# define COL_WAIT		COLF_RED
-# define COL_BCYCLE		COLB_BGREY
-# define COL_FCYCLE		COLF_BLACK
-# define COL_BDEAD		COLB_BBLACK
-# define COL_FDEAD		COLF_RED
-# define COL_VALIDINS		COLF_GREEN
-# define COL_DESIGNATOR		"abcdefghABCDEFGHx"
+# define NB_COLTYPES		NB_GAME_MSG + 10
+# define NB_COLORS		9
+# define COL_DESIGNATOR		"brgwlmcyxBRGWLMCYx"
 
 /*
-**
-*/1
+** PADDING
+*/
 
+# define PAD_PLNAME		10
+# define PAD_PLCYCLE	7
+# define PAD_PLPC		4
+# define PAD_INS		60
 
 
 /*
@@ -92,7 +80,9 @@
 # define COLB_BGREY		"\033[107m"
 # define COLB_OFF		"\033[49m"
 
-void		set_colors(t_vm *vm, int index);
+void		set_colors(char	*color);
+void		color_on(char	*color, int type);
+void		color_off(void);
 
 
 
