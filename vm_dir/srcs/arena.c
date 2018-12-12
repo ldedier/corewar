@@ -30,6 +30,7 @@ void		init_vm(t_vm *vm, char **argv)
 	vm->live.total_pl = 0;
 	vm->live.last_pl = -1;
 	vm->dead = 0;
+	vm->proc = NULL;
 	ft_strcpy(vm->color.player[1], COL_BPL1);
 	ft_strcpy(vm->color.player[3], COL_BPL2);
 	ft_strcpy(vm->color.player[5], COL_BPL3);
@@ -49,6 +50,22 @@ void		init_vm(t_vm *vm, char **argv)
 	}
 }
 
+t_list	*add_process(t_vm *vm, int start, int id, int num)
+{
+	t_list		*new;
+	t_process	*process;
+
+	process = (t_process *)ft_memalloc(sizeof(t_process));
+	process->pc = start;
+	process->id = nb; // revoir utilisation et valeur
+	process->reg[0] = num;
+	if (ft_add_to_list_ptr(&vm->proc, (void *)process, sizeof(process)))
+		return (NULL);
+	return (vm->proc);
+}
+
+
+
 /*
 **dispatch_players function sends each player to their respective starting
 **point in the arena and initializes processes for each player.
@@ -59,16 +76,16 @@ void		dispatch_players(t_vm *vm)
 	int		nb;
 	int		i;
 	int		start;
-	char	*algo;
+	char		*arg;
+	t_list		*new_process;
 
 	nb = 0;
-	vm->proc = (t_process *)ft_memalloc(sizeof(t_process) * vm->nb_players);
 	while (nb < vm->nb_players)
 	{
 		start = (MEM_SIZE / vm->nb_players) * nb;
 		algo = vm->player[nb].algo;
-		vm->proc[nb].pc = start;
-		vm->proc[nb].id = nb;
+		if (!add_process(start, nb, vm->player[nb].num))
+			return (NULL);
 		i = 0;
 		while (i < vm->player[nb].algo_len)
 		{

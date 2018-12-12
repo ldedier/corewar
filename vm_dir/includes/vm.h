@@ -61,7 +61,7 @@ typedef struct		s_vm
 	t_visu			visu;
 	char	arena[MEM_SIZE];
 	t_player		player[MAX_PLAYERS + 1];
-	t_process		*proc;
+	t_list			*proc;
 	t_live			 live;
 }					t_vm;
 
