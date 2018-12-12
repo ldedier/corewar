@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/11 18:43:50 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/12 22:03:42 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@
 # include <SDL2_mixer/SDL_mixer.h>
 # include <SDL2_net/SDL_net.h>
 # include "libft.h"
+# include "player.h"
 # include "op.h"
-# define NB_TEXTURES			10
+
 # define FRAMERATE				60
 
 # define DASHBOARD_X			1700
@@ -32,8 +33,8 @@
 # define MEM_BORDER_LEFT		100
 
 
-# define TITLE_BORDER_TOP		40
-# define TITLE_BORDER_BOTTOM	30
+# define TITLE_BORDER_TOP		30
+# define TITLE_BORDER_BOTTOM	40
 # define TITLE_BORDER_SIDE		100
 # define TITLE_HEIGHT			50
 
@@ -41,6 +42,10 @@
 # define PLAYER_BORDER_LEFT		50
 # define PLAYER_BORDER_RIGHT	50
 # define PLAYER_BORDER_BOTTOM	50
+
+# define PLAYER_INNER_BORDER	6
+# define CROSS_BORDER			PLAYER_INNER_BORDER * 3
+# define CROSS_IB				CROSS_BORDER / 8
 
 # define X_DIFF					7
 # define X_DIFF_BYTE			0
@@ -57,6 +62,25 @@
 # define NET					2
 # define COREWAR				3
 
+# define NB_IMAGES				5
+
+# define CLOSE					0
+
+# define NB_CURSORS				5
+
+# define GRAB					0
+# define DRAGGABLE				1
+# define CLICK					2
+# define REGULAR				3
+
+# define PLAYER_COL_BORDER		0x000000
+# define PLAYER_COL				0x222222
+# define BACKGROUND_COL			0x333333
+# define PLAYER_BACKGROUND_COL	0x444444
+# define PLAYER_HOVERED_BG_COL	0x666666
+# define LINE_COL				0xffffff
+
+# define DROP_TOLERANCE			30
 
 typedef struct			s_vm t_vm;
 
@@ -70,6 +94,12 @@ typedef struct			s_atlas_char
 	SDL_Surface			*surface;
 }						t_atlas_char;
 
+typedef struct			s_cursor_packer
+{
+	SDL_Surface			*surface;
+	SDL_Cursor			*cursor;
+}						t_cursor_packer;
+
 typedef struct          s_sdl
 {
 	SDL_Rect			screen;
@@ -79,11 +109,12 @@ typedef struct          s_sdl
 	SDL_Surface			*surface;
 	SDL_Texture			*texture;
 	SDL_Color			color;
-	SDL_Texture			*textures[NB_TEXTURES];
+	SDL_Surface			*images[NB_IMAGES];
 	t_atlas_char		atlas[NB_GLYPHS];
 	SDL_Surface			*titles[NB_TITLES];
-	SDL_Surface			*names[MAX_PLAYERS];
+	t_cursor_packer		cursor_packers[NB_CURSORS];
 	TTF_Font			*font;
+	int					current_cursor;
 }						t_sdl;
 
 typedef struct			s_dim
@@ -138,15 +169,51 @@ typedef struct			s_center
 	double				player_bottom;
 }						t_center;
 
+typedef struct			s_xy
+{
+	double				x;
+	double				y;
+}						t_xy;
+
+typedef struct			s_slot
+{
+	t_xy				player;
+	t_xy				close;
+}						t_slot;
+
+typedef struct			s_positions
+{
+	t_slot				arena_slots[MAX_PLAYERS];
+	t_slot				local_slots[MAX_PLAYERS];
+}						t_positions;
+
+typedef struct			s_drag_container
+{
+	t_player			*player;
+	int					x;
+	int					y;
+	int					diff_x;
+	int					diff_y;
+	char				from_arena;
+}						t_drag_container;
+
+typedef struct			s_event_manager
+{
+	Uint32				mouse_state;
+	char				enable_mouse_up;
+}						t_event_manager;
+
 typedef struct			s_visu
 {
 	char				active;
 	t_sdl				sdl;
 	t_dim				dim;
 	t_center			center;
+	t_event_manager		event_manager;
+	t_drag_container	drag_container;
+	t_positions			positions;
 	t_reactive			react;
 	t_framerate			framerate;
-	SDL_Rect			mem;
 }						t_visu;
 
 int						ft_init_all_sdl(t_visu *v);

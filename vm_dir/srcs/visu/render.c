@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/09 14:02:56 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/11 17:32:36 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/12 21:45:50 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,19 @@ void	ft_render_lines(t_vm *vm)
 	pix = (int *)vm->visu.sdl.w_surface->pixels;
 	while (i < vm->visu.sdl.w_surface->h)
 	{
-		pix[(int)(i * vm->visu.sdl.w_surface->w + vm->visu.center.dashboard_x)] = 0xffffff;
+		pix[(int)(i * vm->visu.sdl.w_surface->w + vm->visu.center.dashboard_x)] = LINE_COL;
 		i++;
 	}
 	i = vm->visu.center.dashboard_x;
 	while (i < vm->visu.sdl.w_surface->w)
 	{
-		pix[(int)(vm->visu.center.dashboard_mid_y * vm->visu.sdl.w_surface->w + i)] = 0xffffff;
+		pix[(int)(vm->visu.center.dashboard_mid_y * vm->visu.sdl.w_surface->w + i)] = LINE_COL;
 		i++;
 	}
 	i = 0;
 	while (i < vm->visu.center.dashboard_mid_y)
 	{
-		pix[(int)(i * vm->visu.sdl.w_surface->w + vm->visu.center.dashboard_mid_x)] = 0xffffff;
+		pix[(int)(i * vm->visu.sdl.w_surface->w + vm->visu.center.dashboard_mid_x)] = LINE_COL;
 		i++;
 	}
 }
@@ -48,7 +48,7 @@ int		ft_render(t_vm *vm, t_sdl *sdl)
 	ft_render_players(vm);
 	sdl->texture = SDL_CreateTextureFromSurface(sdl->renderer, sdl->w_surface);
 	SDL_RenderCopy(sdl->renderer, sdl->texture, NULL, NULL);
-	SDL_FillRect(sdl->w_surface, NULL, 0x333333);
+	SDL_FillRect(sdl->w_surface, NULL, BACKGROUND_COL);
 	SDL_DestroyTexture(sdl->texture);
 	SDL_RenderPresent(sdl->renderer);
 	vm->visu.framerate.fps_counter++;
