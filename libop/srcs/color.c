@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 20:42:40 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/13 20:31:49 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/13 20:35:39 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,22 @@ void	color_on(char	*color, int index, int output)
 	static void	(*f[2])(t_color *color) = {
 		&color_on_term, &color_on_sdl};
 	static t_color col_fg[NB_COLORS] = {
-		{COLF_BLACK, 0}, {COLF_RED, 0}, {COLF_GREEN, 0}, {COLF_BROWN, 0},
-		{COLF_BLUE, 0}, {COLF_MAGENTA, 0}, {COLF_CYAN, 0}, {COLF_GREY, 0},
-		{COLF_BBLACK, 0}, {COLF_BRED, 0}, {COLF_BGREEN, 0}, {COLF_BBROWN, 0},
-		{COLF_BBLUE, 0}, {COLF_BMAGENTA, 0}, {COLF_BCYAN, 0}, {COLF_BGREY, 0},
+		{COLF_BLACK, COL_BLACK},
+		{COLF_RED, COL_RED},
+		{COLF_GREEN, COL_GREEN},
+		{COLF_BROWN, COL_BROWN},
+		{COLF_BLUE, COL_BLUE},
+		{COLF_MAGENTA, COL_MAGENTA},
+		{COLF_CYAN, COL_CYAN},
+		{COLF_GREY, COL_GREY},
+		{COLF_BBLACK, COL_BBLACK},
+		{COLF_BRED, COL_BRED},
+		{COLF_BGREEN, COL_BGREEN},
+		{COLF_BBROWN, COL_BBROWN},
+		{COLF_BBLUE, COL_BBLUE},
+		{COLF_BMAGENTA, COL_BMAGENTA},
+		{COLF_BCYAN, COL_BCYAN},
+		{COLF_BGREY, COL_BGREY},
 		{COLF_OFF, 0}};
 
 	f[output](&col_fg[(int)color[index]]);

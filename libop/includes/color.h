@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/22 15:55:47 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/13 20:24:30 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/13 20:45:36 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,28 @@
 # define COLF_BCYAN		"\033[01;36m"
 # define COLF_BGREY		"\033[01;37m"
 # define COLF_OFF		"\033[0m"
+
+/*
+** EQUIVALENT STANDARD COLORS FOR SDL
+*/
+
+# define COL_BLACK		0x212F3D
+# define COL_RED		0xA993226	
+# define COL_GREEN		0x196F3D
+# define COL_BROWN		0x9A7D0A
+# define COL_BLUE		0x0D47A1	
+# define COL_MAGENTA	0x62185B
+# define COL_CYAN		0x1A5276	
+# define COL_GREY		0xABB2B9	
+# define COL_BBLACK		0x17202A	
+# define COL_BRED		0xE74C3C
+# define COL_BGREEN		0x8BC34A
+# define COL_BBROWN		0xFFCA28
+# define COL_BBLUE		0x5DADE2
+# define COL_BMAGENTA	0xF48FB1
+# define COL_BCYAN		0x00BCDA
+# define COL_BGREY		0xEEEEEE
+
 
 typedef struct		s_color
 {
