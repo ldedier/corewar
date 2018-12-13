@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/13 19:09:26 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/13 19:13:11 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include "libft.h"
 
 # define NEEDS_OCP	60925
+# define NB_TYPES	3
 
 typedef struct		s_process
 {

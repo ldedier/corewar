@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 16:42:17 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/13 19:06:31 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/13 19:19:06 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void					init_vm(t_vm *vm, char **argv)
 		vm->arena[i] = 0;
 		i++;
 	}
-	ft_strcpy(vm->color, "RxLxYxBxyxyx");
+	ft_strcpy(vm->color, "RLWMGCgw"); // sera gere differemment par la suite
 	set_colors(vm->color);
 }
 
@@ -49,11 +49,10 @@ t_list	*add_process(t_vm *vm, char *name, int start, int num)
 	t_process	*process;
 
 	process = (t_process *)ft_memalloc(sizeof(t_process));
-	ft_printf("colindex = %d\n", color);
 	process->colindex = (color++) % MAX_PL_COL;
 	process->pc = start;
 	ft_strcpy(process->name, name);
-	process->id = num; // revoir utilisation et valeur
+	process->id = num; 
 	process->reg[0] = num;
 	if (ft_add_to_list_ptr(&vm->proc, (void *)process, sizeof(process)))
 		return (NULL);

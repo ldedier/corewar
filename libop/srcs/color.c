@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 20:42:40 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/13 17:56:54 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/13 19:18:47 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,27 +27,20 @@ static int		ft_strchri(const char *s, int c, int i)
 
 void	color_off(void)
 {
-	ft_printf("%s%s", COLF_OFF, COLB_OFF);
+	ft_printf("%s", COLF_OFF);
 }
 
 void	color_on(char *color, int index)
 {
 	static char *col_fg[NB_COLORS] = {COLF_BLACK, COLF_RED, COLF_GREEN, COLF_BROWN, COLF_BLUE, COLF_MAGENTA, COLF_CYAN, COLF_GREY, COLF_BBLACK, COLF_BRED, COLF_BGREEN, COLF_BBROWN, COLF_BBLUE, COLF_BMAGENTA, COLF_BCYAN, COLF_BGREY, COLF_OFF};
-	static char *col_bg[NB_COLORS] = {COLB_BLACK, COLB_RED, COLB_GREEN, COLB_BROWN, COLB_BLUE, COLB_MAGENTA, COLB_CYAN, COLB_GREY, COLB_BBLACK, COLB_BRED, COLB_BGREEN, COLB_BROWN, COLB_BBLUE, COLB_BMAGENTA, COLB_BCYAN, COLB_BGREY, COLB_OFF};
-	int		fg;
-	int		bg;
 
-	index *= 2;
-	fg = color[index];
-	bg = color[index + 1];
-	ft_printf("%s%s", col_bg[bg], col_fg[fg]);
+	ft_printf("%s", col_fg[(int)color[index]]);
 }
 
 void	set_colors(char	*color)
 {
 	int		index;
 	int		new_ref;
-//	char *color = "pspcplpdpvrlrarrtltmtctep0p1p2p3p4p5p6";
 	
 	index = 0;
 	while(color[index])

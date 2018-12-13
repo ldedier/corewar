@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/13 18:57:45 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/13 19:20:01 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ static void		launch_instruction(t_vm *vm, t_process *proc)
 	{
 		f_ins[(int)ins.op.opcode](vm, proc, ins.params);
 		proc->cycle = g_op_tab[(int)ins.op.opcode - 1].nb_cycles;
-		ft_printf("%s >>> %*-s%s", COLF_GREEN, PAD_INS - 5,
+		ft_printf("%s >>> %*-s%s", COLF_CYAN, PAD_INS - 5,
 				ins.op.description, COLF_OFF);
 		display(vm, proc, PL_CYCLE);
 		--proc->cycle; // voir si pertinent
@@ -146,7 +146,7 @@ static int	handle_end_cycle(t_vm *vm)
 		return (0);
 	}
 	check_resize_cycle(vm, &vm->cycle);
-//	display(vm, 0, CYCLE_NBR); // voir interet
+//	display(vm, 0, CYCLE_NBR); // euh... pourquoi deja? voir interet ??
 	return (1);
 }
 
