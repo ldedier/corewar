@@ -27,5 +27,5 @@ void	pl_cycle(t_vm *vm, t_process *proc)
 void	pl_pc(t_vm *vm, t_process *proc)
 {
 	(void)vm;
-	ft_printf("[%d]\n", proc->pc);
+	ft_printf("[%d]", proc->pc);
 }
