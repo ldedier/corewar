@@ -13,11 +13,27 @@
 #include "vm.h"
 
 /*
+**init_colors static function initializes the colors for each player.
+*/
+
+static void		init_colors(t_vm *vm)
+{
+	ft_strcpy(vm->color.player[1], COL_BPL1);
+	ft_strcpy(vm->color.player[3], COL_BPL2);
+	ft_strcpy(vm->color.player[5], COL_BPL3);
+	ft_strcpy(vm->color.player[7], COL_BPL4);
+	ft_strcpy(vm->color.player[0], COL_FPL1);
+	ft_strcpy(vm->color.player[2], COL_FPL2);
+	ft_strcpy(vm->color.player[4], COL_FPL3);
+	ft_strcpy(vm->color.player[6], COL_FPL4);
+}
+
+/*
 **init_vm function initializes our corewar VM's environment by setting all
 **its parameters to their default value.
 */
 
-void		init_vm(t_vm *vm, char **argv)
+void					init_vm(t_vm *vm, char **argv)
 {
 	int		i;
 
@@ -30,17 +46,10 @@ void		init_vm(t_vm *vm, char **argv)
 	vm->live.total_pl = 0;
 	vm->live.last_pl = -1;
 	vm->dead = 0;
-	ft_strcpy(vm->color.player[1], COL_BPL1);
-	ft_strcpy(vm->color.player[3], COL_BPL2);
-	ft_strcpy(vm->color.player[5], COL_BPL3);
-	ft_strcpy(vm->color.player[7], COL_BPL4);
-	ft_strcpy(vm->color.player[0], COL_FPL1);
-	ft_strcpy(vm->color.player[2], COL_FPL2);
-	ft_strcpy(vm->color.player[4], COL_FPL3);
-	ft_strcpy(vm->color.player[6], COL_FPL4);
 	vm->client.active = 0;
 	vm->client.port = 0;
 	vm->visu.active = 0;
+	init_colors(vm);
 	i = 0;
 	while (i < MEM_SIZE)
 	{
@@ -54,7 +63,7 @@ void		init_vm(t_vm *vm, char **argv)
 **point in the arena and initializes processes for each player.
 */
 
-void		dispatch_players(t_vm *vm)
+void					dispatch_players(t_vm *vm)
 {
 	int		nb;
 	int		i;
