@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/09 14:02:56 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/12 21:45:50 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/13 15:06:45 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,21 @@ void	ft_render_lines(t_vm *vm)
 	i = vm->visu.center.dashboard_x;
 	while (i < vm->visu.sdl.w_surface->w)
 	{
-		pix[(int)(vm->visu.center.dashboard_mid_y * vm->visu.sdl.w_surface->w + i)] = LINE_COL;
+		pix[(int)(vm->visu.center.top_dashboard_height * vm->visu.sdl.w_surface->w + i)] = LINE_COL;
 		i++;
 	}
 	i = 0;
-	while (i < vm->visu.center.dashboard_mid_y)
+	while (i < vm->visu.center.top_dashboard_height)
 	{
 		pix[(int)(i * vm->visu.sdl.w_surface->w + vm->visu.center.dashboard_mid_x)] = LINE_COL;
 		i++;
 	}
+}
+
+int		ft_render_offline(t_vm *vm)
+{
+	(void) vm;
+	return (0);
 }
 
 int		ft_render(t_vm *vm, t_sdl *sdl)
@@ -46,6 +52,10 @@ int		ft_render(t_vm *vm, t_sdl *sdl)
 		return (1);
 	ft_render_lines(vm);
 	ft_render_players(vm);
+	if (vm->client.active)
+		ft_render_online(vm);
+	else
+		ft_render_offline(vm);
 	sdl->texture = SDL_CreateTextureFromSurface(sdl->renderer, sdl->w_surface);
 	SDL_RenderCopy(sdl->renderer, sdl->texture, NULL, NULL);
 	SDL_FillRect(sdl->w_surface, NULL, BACKGROUND_COL);

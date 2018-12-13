@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:54:14 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/07 00:17:18 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/13 17:12:54 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int		ft_init_client(t_client *client)
 	if (SDLNet_TCP_AddSocket(client->socket_set, client->socket) == -1)
 		return (ft_net_error());
 	client->players = NULL;
+	client->upload_player.relevant = 0;
 	return (0);
 }
 
@@ -125,16 +126,16 @@ int		ft_receive_connect_status(t_client *client)
 	return (1);
 }
 
-int		ft_process_loop_client(t_vm *vm)
+int		ft_process_client_events(t_vm *vm)
 {
 	int nb_bytes;
-	if (SDLNet_CheckSockets(vm->client.socket_set, 50))
+	if (SDLNet_CheckSockets(vm->client.socket_set, 0))
 	{
 		if (SDLNet_SocketReady(vm->client.socket))
 		{
 			nb_bytes = SDLNet_TCP_Recv(vm->client.socket, vm->client.buffer,
-						MAX_TCP_PACKET);
-			if(nb_bytes <= 0)
+				MAX_TCP_PACKET);
+			if (nb_bytes <= 0)
 			{
 				ft_printf("lost connection with the server.\n");
 				vm->client.running = 0;
@@ -152,23 +153,11 @@ int		ft_process_loop_client(t_vm *vm)
 
 int		process_client(t_vm *vm)
 {
-	int	ret;
-	
 	if (SDLNet_Init() == -1)
 		return (ft_net_error());
 	if (ft_init_client(&(vm->client)))
 		return (1);
 	if (ft_receive_connect_status(&(vm->client)))
 		return (1);
-	else
-		vm->client.running = 1;
-	while (vm->client.running)
-	{
-		if ((ret = ft_process_loop_client(vm)))
-		{
-			vm->client.running = 0;
-			ret	= 1;
-		}
-	}
-	return (ret);
+	return (process_visu(vm));
 }

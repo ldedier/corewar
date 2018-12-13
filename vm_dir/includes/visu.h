@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/12 23:48:56 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/13 17:11:39 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,17 @@
 
 # define FRAMERATE				60
 
-# define DASHBOARD_X			1700
-# define DASHBOARD_MID_Y		720
+# define DASHBOARD_X			1900
+# define TOP_DASHBOARD_HEIGHT	600
 
 # define MEM_BORDER_TOP			100
 # define MEM_BORDER_BOTTOM		100
 # define MEM_BORDER_RIGHT		100
 # define MEM_BORDER_LEFT		100
 
-
 # define TITLE_BORDER_TOP		30
 # define TITLE_BORDER_BOTTOM	40
-# define TITLE_BORDER_SIDE		100
+# define TITLE_BORDER_SIDE		30
 # define TITLE_HEIGHT			50
 
 # define PLAYER_PADDING			50
@@ -46,6 +45,15 @@
 # define PLAYER_INNER_BORDER	6
 # define CROSS_BORDER			PLAYER_INNER_BORDER * 3
 # define CROSS_IB				CROSS_BORDER / 8
+
+
+# define S_TITLE_SIDE			100
+# define S_TITLE_HEIGHT			50
+
+# define UPLOAD_LEFT			PLAYER_BORDER_LEFT / 2
+# define UPLOAD_RIGHT			PLAYER_BORDER_LEFT / 2
+# define SORT_PADDING			50
+# define SORT_SCORE_RIGHT		PLAYER_BORDER_LEFT / 2
 
 # define X_DIFF					7
 # define X_DIFF_BYTE			0
@@ -59,7 +67,7 @@
 
 # define BATTLEFIELD			0
 # define LOCAL_PLAYERS			1
-# define NET					2
+# define SCOREWAR				2
 # define COREWAR				3
 
 # define NB_IMAGES				5
@@ -100,6 +108,14 @@ typedef struct			s_cursor_packer
 	SDL_Surface			*surface;
 	SDL_Cursor			*cursor;
 }						t_cursor_packer;
+
+typedef enum			e_player_source
+{
+	ARENA,
+	LOCAL,
+	UPLOAD,
+	SERVER
+}						t_player_source;
 
 typedef struct          s_sdl
 {
@@ -142,9 +158,6 @@ typedef struct          s_framerate
 
 typedef struct			s_center
 {
-	double				dashboard_x;
-	double				dashboard_mid_y;
-	double				dashboard_mid_x;
 	double				left_margin;
 	double				right_margin;
 	double				top_margin;
@@ -156,7 +169,14 @@ typedef struct			s_center
 	double				glyph_height;
 	int					nb_cols;
 	int					nb_lines;
+
+	double				dashboard_x;
+	double				top_dashboard_height;
+	double				dashboard_mid_x;
 	double				dashboard_mid_width;
+	double				dashboard_width;
+	double				bottom_dash_height;
+
 	double				title_top;
 	double				title_h;
 	double				title_side;
@@ -168,6 +188,14 @@ typedef struct			s_center
 	double				player_h;
 	double				player_padding;
 	double				player_bottom;
+
+	double				upload_left;
+	double				upload_right;
+	double				sort_padding;
+	double				sort_score_right;
+	double				toolbar_blank;
+	double				s_title_h;
+	double				s_title_side;
 }						t_center;
 
 typedef struct			s_xy
@@ -186,16 +214,17 @@ typedef struct			s_positions
 {
 	t_slot				arena_slots[MAX_PLAYERS];
 	t_slot				local_slots[MAX_PLAYERS];
+	t_slot				upload_slot;
 }						t_positions;
 
 typedef struct			s_drag_container
 {
 	t_player			*player;
+	t_player_source		source;
 	int					x;
 	int					y;
 	int					diff_x;
 	int					diff_y;
-	char				from_arena;
 }						t_drag_container;
 
 typedef struct			s_drop_container
@@ -208,6 +237,14 @@ typedef struct			s_event_manager
 	Uint32				mouse_state;
 	char				enable_mouse_up;
 }						t_event_manager;
+
+typedef struct			s_color_manager
+{
+	int					color;
+	char				r;
+	char				g;
+	char				b;
+}						t_color_manager;
 
 typedef struct			s_visu
 {
@@ -236,4 +273,10 @@ int						ft_process_events(t_vm *vm);
 int						ft_render(t_vm *vm, t_sdl *sdl);
 int						ft_render_memory(t_vm *vm);
 int						ft_render_players(t_vm *vm);
+int						ft_render_online(t_vm *vm);
+int						ft_render_offline(t_vm *vm);
+t_color_manager			ft_get_color(int color);
+t_color_manager			ft_scale_color(t_color_manager color, double scale);
+int						ft_render_player(t_vm *vm, t_player *player, t_xy xy,
+							t_player_source source);
 #endif

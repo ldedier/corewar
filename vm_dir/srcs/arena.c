@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 16:42:17 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/11 16:23:13 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/13 12:56:19 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,11 +93,11 @@ void		dispatch_players(t_vm *vm)
 		if (vm->player[i].relevant)
 		{
 			start = (MEM_SIZE / vm->nb_players) * nb;
-			algo = vm->player[nb].algo;
+			algo = vm->player[i].algo;
 			vm->proc[nb].pc = start;
 			vm->proc[nb].id = nb;
 			j = 0;
-			while (j < vm->player[nb].algo_len)
+			while (j < vm->player[i].algo_len)
 			{
 				vm->arena[start] = algo[j];
 				j++;

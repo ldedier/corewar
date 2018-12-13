@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 15:50:38 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/08 18:33:52 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/13 13:29:33 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	corehub_port_and_address(t_vm *vm, int argc, char **argv, int *cur)
 	int				i;
 
 	vm->client.active = 1;
+	vm->visu.active = 1;
 	if (*cur + 2 > argc)
 		ft_error_exit(INSUF_INFO_CH);
 	*cur += 1;

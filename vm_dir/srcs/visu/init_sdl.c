@@ -1,12 +1,12 @@
-/*                                                                            */
 /* ************************************************************************** */
+/*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   init_sdl.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/05 13:58:59 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/12 23:45:24 by ldedier          ###   ########.fr       */
+/*   Created: 2018/12/13 15:02:55 by ldedier           #+#    #+#             */
+/*   Updated: 2018/12/13 17:16:52 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,18 +148,17 @@ int		ft_init_textures(t_visu *visu)
 	if (!(visu->sdl.titles[LOCAL_PLAYERS] =
 			ft_init_font_surface_sdl("local players", visu->sdl)))
 		return (1);
+	if (!(visu->sdl.titles[SCOREWAR] =
+			ft_init_font_surface_sdl("Scorewar server", visu->sdl)))
+		return (1);
 	if (!(visu->sdl.images[CLOSE] =
 			ft_load_image(PATH"/resources/close.png")))
 		return (1);
 	return (0);
 }
 
-void	ft_init_center(t_visu *visu, t_center *c)
+void	ft_init_center_memory(t_visu *visu, t_center *c)
 {
-	c->dashboard_x = DASHBOARD_X * visu->react.w_scale;
-	c->dashboard_mid_y = DASHBOARD_MID_Y * visu->react.h_scale;
-	c->dashboard_mid_width = ((visu->dim.width - DASHBOARD_X * visu->react.w_scale) / 2.0);
-	c->dashboard_mid_x = c->dashboard_x + c->dashboard_mid_width;
 	c->left_margin = MEM_BORDER_LEFT * visu->react.w_scale;
 	c->right_margin = MEM_BORDER_RIGHT * visu->react.w_scale;
 	c->top_margin = MEM_BORDER_TOP * visu->react.h_scale;
@@ -170,22 +169,6 @@ void	ft_init_center(t_visu *visu, t_center *c)
 	c->nb_cols = MEM_COLS;
 	c->nb_lines = ft_round((double)((double)MEM_SIZE /
 				(double)MEM_COLS));
-
-	c->title_top = TITLE_BORDER_TOP * visu->react.h_scale;
-	c->title_bottom = TITLE_BORDER_BOTTOM * visu->react.h_scale;
-	c->title_side = TITLE_BORDER_SIDE * visu->react.w_scale;
-	c->title_h = TITLE_HEIGHT * visu->react.h_scale;
-
-	c->player_left = PLAYER_BORDER_LEFT * visu->react.w_scale;
-	c->player_right = PLAYER_BORDER_RIGHT * visu->react.w_scale;
-	c->player_padding = PLAYER_PADDING * visu->react.h_scale;
-	c->player_bottom = PLAYER_BORDER_BOTTOM * visu->react.h_scale;
-
-	c->player_w = (visu->dim.width - c->dashboard_mid_x) - (c->player_left + c->player_right);
-
-	c->player_h = (c->dashboard_mid_y - (double)(c->title_top + c->title_h +
-				c->title_bottom + ((MAX_PLAYERS - 1) * c->player_padding) +
-				c->player_bottom)) / (double) MAX_PLAYERS;
 
 	while ((c->y_diff * (c->nb_lines - 1) > visu->dim.height
 				- c->top_margin - c->bottom_margin) &&
@@ -200,8 +183,63 @@ void	ft_init_center(t_visu *visu, t_center *c)
 				(2 * c->nb_cols));
 	c->glyph_height = (visu->dim.height - c->top_margin - c->bottom_margin -
 			(c->nb_lines - 1) * c->y_diff) / ((double) c->nb_lines);
-	//	printf("%f %f \n", c->glyph_width, c->glyph_height);
-	//	printf("%f %f \n", c->player_w, c->player_h);
+}
+
+void	ft_init_center_players(t_visu *visu, t_center *c)
+{
+	c->title_top = TITLE_BORDER_TOP * visu->react.h_scale;
+	c->title_bottom = TITLE_BORDER_BOTTOM * visu->react.h_scale;
+	c->title_side = TITLE_BORDER_SIDE * visu->react.w_scale;
+	c->title_h = TITLE_HEIGHT * visu->react.h_scale;
+
+	c->player_left = PLAYER_BORDER_LEFT * visu->react.w_scale;
+	c->player_right = PLAYER_BORDER_RIGHT * visu->react.w_scale;
+	c->player_padding = PLAYER_PADDING * visu->react.h_scale;
+	c->player_bottom = PLAYER_BORDER_BOTTOM * visu->react.h_scale;
+
+	c->player_w = (visu->dim.width - c->dashboard_mid_x) - (c->player_left + c->player_right);
+	c->player_h = (c->top_dashboard_height - (double)(c->title_top + c->title_h +
+				c->title_bottom + ((MAX_PLAYERS - 1) * c->player_padding) +
+				c->player_bottom)) / (double) MAX_PLAYERS;
+}
+
+void	ft_init_center_online(t_visu *visu, t_center *c)
+{
+	c->s_title_side = S_TITLE_SIDE * visu->react.w_scale;
+	c->s_title_h = S_TITLE_HEIGHT * visu->react.h_scale;
+
+	c->upload_left = UPLOAD_LEFT * visu->react.w_scale;
+	c->upload_right = UPLOAD_RIGHT * visu->react.w_scale;
+	c->sort_padding = SORT_PADDING * visu->react.w_scale;
+	c->sort_score_right = SORT_SCORE_RIGHT * visu->react.w_scale;
+	c->toolbar_blank = c->dashboard_width - ((c->player_h * 3) + c->player_w +
+			c->upload_right + c->upload_left + c->sort_padding +
+				c->sort_score_right);
+}
+
+void	ft_init_center(t_visu *visu, t_center *c)
+{
+	c->dashboard_x = DASHBOARD_X * visu->react.w_scale;
+	c->top_dashboard_height = TOP_DASHBOARD_HEIGHT * visu->react.h_scale;
+	c->dashboard_width = (visu->dim.width - DASHBOARD_X * visu->react.w_scale);
+	c->dashboard_mid_width = c->dashboard_width / 2.0;
+	c->dashboard_mid_x = c->dashboard_x + c->dashboard_mid_width;
+
+	ft_init_center_memory(visu, c);
+	ft_init_center_players(visu, c);
+	ft_init_center_online(visu, c);
+}
+
+void	ft_populate_upload_slot(t_visu *v)
+{
+	v->positions.upload_slot.player.x = v->center.dashboard_x +
+		v->center.upload_left;
+	v->positions.upload_slot.player.y = v->center.top_dashboard_height +
+		v->center.title_top + v->center.s_title_h +
+			v->center.title_bottom;
+	v->positions.upload_slot.close.x =  v->positions.upload_slot.player.x +
+		v->center.player_w - CROSS_BORDER;
+	v->positions.upload_slot.close.y = v->positions.upload_slot.player.y;
 }
 
 void    ft_populate_slots_positions(t_visu *v)
@@ -217,21 +255,17 @@ void    ft_populate_slots_positions(t_visu *v)
 		v->positions.arena_slots[i].player.x = v->center.dashboard_x +
 			v->center.player_left;
 		v->positions.arena_slots[i].player.y = y;
-
 		v->positions.arena_slots[i].close.x =
 			v->positions.arena_slots[i].player.x +
 				v->center.player_w - CROSS_BORDER;
 		v->positions.arena_slots[i].close.y = y;
-
 		v->positions.local_slots[i].player.x = v->center.dashboard_mid_x +
 			v->center.player_left;
 		v->positions.local_slots[i].player.y = y;
-
-		v->positions.local_slots[i].close.x = -1;
-
 		y += v->center.player_h + v->center.player_padding;
 		i++;
 	}
+	ft_populate_upload_slot(v);
 }
 
 int		ft_populate_cursor(t_cursor_packer *cp, char *str, int hot_x, int hot_y)
@@ -268,8 +302,6 @@ int		ft_init_all_sdl(t_visu *v)
 	//if (!(v->sdl.font = ft_load_font(PATH"/resources/kongtext.ttf", 1000)))
 	if (!(v->sdl.font = ft_load_font(PATH"/resources/mana.ttf", 1000)))
 		return (1);
-	//	if (!(v->sdl.font = ft_load_font(PATH"/resources/mana.ttf", 80)))
-	//		return (1);
 	v->sdl.color.r = 255;
 	v->sdl.color.g = 255;
 	v->sdl.color.b = 255;

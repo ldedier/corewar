@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/08 23:37:36 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/12 23:53:26 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/13 16:12:53 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,11 @@ void	ft_fill_drag_container(t_drag_container *dc, int x, int y)
 }
 
 void	ft_populate_drag_container(t_drag_container *dc, t_player *player,
-			t_xy player_xy, int from_arena)
+			t_xy player_xy, t_player_source source)
 {
 	if (dc != NULL)
 	{
-		dc->from_arena = from_arena;
+		dc->source = source;
 		dc->player = player;
 		dc->diff_x = dc->x - player_xy.x;
 		dc->diff_y = dc->y - player_xy.y;
@@ -94,7 +94,7 @@ int		ft_is_on_draggable(t_vm *vm, int x, int y, t_drag_container *dc)
 					vm->visu.positions.arena_slots[i].player))
 		{
 			ft_populate_drag_container(dc, &(vm->player[i]),
-				vm->visu.positions.arena_slots[i].player, 1);
+				vm->visu.positions.arena_slots[i].player, ARENA);
 			return (1);
 		}
 		if (vm->local_player[i].relevant &&
@@ -102,7 +102,7 @@ int		ft_is_on_draggable(t_vm *vm, int x, int y, t_drag_container *dc)
 					vm->visu.positions.local_slots[i].player))
 		{
 			ft_populate_drag_container(dc, &(vm->local_player[i]),
-				vm->visu.positions.local_slots[i].player, 0);
+				vm->visu.positions.local_slots[i].player, LOCAL);
 			return (1);
 		}
 		i++;
@@ -134,6 +134,18 @@ int		ft_is_on_droppable(t_vm *vm, int x, int y, t_player **to_drop_on)
 	return (0);
 }
 
+void	ft_print_relevance(t_vm *vm)
+{
+	int i;
+
+	i = 0;
+	while (i < MAX_PLAYERS)
+	{
+		ft_printf("player #%d: relevant = %d\n",i, vm->player[i].relevant);
+		i++;
+	}
+}
+
 void	ft_drop_dragged_player(t_vm *vm, int x, int y)
 {
 	t_player	*to_drop_on;
@@ -141,7 +153,7 @@ void	ft_drop_dragged_player(t_vm *vm, int x, int y)
 
 	if (ft_is_on_droppable(vm, x, y, &to_drop_on))
 	{
-		if (vm->visu.drag_container.from_arena)
+		if (vm->visu.drag_container.source == ARENA)
 		{
 			tmp = *to_drop_on;
 			*to_drop_on = *(vm->visu.drag_container.player);
@@ -155,6 +167,7 @@ void	ft_drop_dragged_player(t_vm *vm, int x, int y)
 		dispatch_players(vm);
 	}
 	vm->visu.drag_container.player = NULL;
+	vm->visu.drop_container.player = NULL;
 }
 
 void		ft_change_cursor(t_vm *vm, int index)
