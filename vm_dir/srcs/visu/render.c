@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/09 14:02:56 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/13 20:18:24 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/13 20:50:42 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int		ft_render(t_vm *vm, t_sdl *sdl)
 {
 	//	SDL_SetRenderDrawColor(sdl->renderer, 100, 100, 100, 255);
 	//	SDL_RenderClear(sdl->renderer);
+
 	if (ft_render_memory(vm))
 		return (1);
 	ft_render_lines(vm);
