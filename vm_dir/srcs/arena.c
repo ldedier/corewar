@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 16:42:17 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/13 18:52:43 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/13 19:06:31 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 **its parameters to their default value.
 */
 
-void		init_vm(t_vm *vm, char **argv)
+void					init_vm(t_vm *vm, char **argv)
 {
 	int		i;
 
@@ -59,7 +59,6 @@ t_list	*add_process(t_vm *vm, char *name, int start, int num)
 		return (NULL);
 	return (vm->proc);
 }
-
 
 
 /*

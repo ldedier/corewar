@@ -30,6 +30,7 @@
 # define MAX_P_NUM "Number of players exceeded max amount"
 # define INVALID_PORT	"invalid port for the corehub server"
 # define INSUF_INFO_CH	"port and address of the corehub server are needed"
+# define ERR_HEADER "Header global error"
 
 
 /*

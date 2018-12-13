@@ -29,7 +29,7 @@
 # define IND_CODE				3
 # define MAX_ARGS_NUMBER		4
 # define MAX_PLAYERS			4
-# define MEM_SIZE				(4*1024)
+# define MEM_SIZE				(MAX_PLAYERS*1024)
 # define IDX_MOD				(MEM_SIZE / 8)
 # define CHAMP_MAX_SIZE			(MEM_SIZE / 6)
 # define COMMENT_CHAR			'#'
@@ -84,9 +84,9 @@
 # define ARG3_BYTES			2
 # define ARG1_BYTES			3 * ARG
 # define ARG2_BYTES			2 * ARG
-# define GETARG(A1, A2, A3)		(A1 << ARG1_BYTES) | (A2 << ARG2_BYTES) | (A3 << ARG3_BYTES)	
+# define GETARG(A1, A2, A3)		(A1 << ARG1_BYTES) | (A2 << ARG2_BYTES) | (A3 << ARG3_BYTES)
 # define LIVE_ARG_TYPE			GET_ARGTYPE(D, 0, 0)
-# define LD_ARG_TYPE			GET_ARGTYPE(DI, R, 0) 
+# define LD_ARG_TYPE			GET_ARGTYPE(DI, R, 0)
 # define ST_ARG_TYPE			GET_ARGTYPE(R, RI, 0)
 # define ADD_ARG_TYPE			GET_ARGTYPE(R, R, R)
 # define SUB_ARG_TYPE			GET_ARGTYPE(R, R, R)

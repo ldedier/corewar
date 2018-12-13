@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/13 18:37:46 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/13 19:09:26 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <fcntl.h>
 # include "libft.h"
 
+# define NEEDS_OCP	60925
+
 typedef struct		s_process
 {
 	int				id;
@@ -33,14 +35,14 @@ typedef struct		s_process
 	int				ins_cycle;
 	int				cycle;			
 	unsigned char	carry;
-}			t_process;
+}					t_process;
 
 typedef struct		s_live
 {
-	int	nb;
-	int	total_pl;
-	int	last_pl;
-}			t_live;
+	int		nb;
+	int		total_pl;
+	int		last_pl;
+}									t_live;
 
 typedef struct		s_vm
 {
@@ -54,15 +56,11 @@ typedef struct		s_vm
 	char			color[NB_COLTYPES];
 	t_client		client;
 	t_visu			visu;
-	char	arena[MEM_SIZE];
+	char				arena[MEM_SIZE];
 	t_player		player[MAX_PLAYERS + 1];
 	t_list			*proc;
 	t_live			 live;
 }					t_vm;
-
-# define DEAD		-100
-# define NEEDS_OCP	60925
-# define NB_TYPES	3
 
 enum				e_return
 {
@@ -78,6 +76,7 @@ enum				e_arg
 void				ft_error_exit(const char *error);
 void				error_exit_msg(const char *error);
 int					check_type(int ac, char **av);
+void				check_header(void);
 void				init_vm(t_vm *vm, char **argv);
 void				corehub_port_and_address(t_vm *vm, int argc,
 						char **argv, int *cur);

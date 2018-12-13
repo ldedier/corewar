@@ -51,24 +51,22 @@ static void	add_player_n(t_vm *vm, int argc, char **argv, int *cur)
 
 	if (*cur + 3 > argc)
 		error_exit_msg(WRG_N_FLAG);
-	i = 0;
-	if (argv[*cur + 1][i] == '-')
+	i = -1;
+	if (argv[*cur + 1][i + 1] == '-')
 		i++;
-	while (argv[*cur + 1][i])
+	while (argv[*cur + 1][++i])
 	{
 		if (!(ft_strchr("0123456789", argv[*cur + 1][i])))
 			error_exit_msg(WRG_N_FLAG);
-		i++;
 	}
 	nb = ft_atoll(argv[*cur + 1]);
 	if (nb > 2147483647 || nb < -2147483648)
 		error_exit_msg(MAX_N_FLAG);
-	i = 0;
-	while (i < vm->nb_players)
+	i = -1;
+	while (++i < vm->nb_players)
 	{
 		if (vm->player[i].num == nb)
 			error_exit_msg(WRG_P_NUM);
-		i++;
 	}
 	vm->player[vm->nb_players].num = nb;
 	*cur += 2;

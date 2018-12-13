@@ -20,6 +20,7 @@ int		main(int argc, char **argv)
 		error_exit_msg(USAGE);
 	if (!check_type(argc, argv))
 		error_exit_msg(WRG_FILE_TYPE);
+	check_header();
 	init_vm(&vm, argv);
 	flags(&vm, argc, argv);
 	read_files(&vm);
