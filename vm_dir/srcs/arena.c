@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 16:42:17 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/13 22:10:59 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/14 00:21:18 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,18 +60,16 @@ void					init_vm(t_vm *vm, char **argv)
 		vm->player[i].relevant = 0;
 		i++;
 	}
-	ft_strcpy(vm->color, "RLWMGCgw"); // sera gere differemment par la suite
+	ft_strcpy(vm->color, "xRWMGCgw"); // sera gere differemment par la suite
 	set_colors(vm->color);
 }
 
-
-t_list	*add_process(t_vm *vm, char *name, int start, int num)
+t_list	*add_process(t_vm *vm, char *name, int nb, int start, int num) //need name?
 {
-	static char	color;
 	t_process	*process;
 
 	process = (t_process *)ft_memalloc(sizeof(t_process));
-	process->colindex = (color++) % MAX_PL_COL;
+	process->colindex = (nb + 1) % MAX_PL_COL; //quick fix, needs rework
 	process->pc = start;
 	ft_strcpy(process->name, name);
 	process->id = num;
@@ -92,12 +90,11 @@ int		dispatch_players(t_vm *vm)
 	int		i;
 	int		j;
 	int		start;
-	char		*algo;
+	char	*algo;
 
 	update_nb_players(vm);
 	ft_bzero(vm->arena, MEM_SIZE);
 	ft_bzero(vm->metarena, sizeof(vm->metarena));
-	//free list
 	ft_lstdel_value(&vm->proc);
 	i = 0;
 	nb = 0;
@@ -107,12 +104,14 @@ int		dispatch_players(t_vm *vm)
 		{
 			start = (MEM_SIZE / vm->nb_players) * nb;
 			algo = vm->player[i].algo;
-			if (!add_process(vm, vm->player[i].name, start, vm->player[i].num))
+			if (!add_process(vm, vm->player[i].name, nb, start, vm->player[i].num))
 				return (-1);
+			vm->player[i].color_index =
+				((t_process *)(vm->proc->content))->colindex;
 			j = 0;
 			while (j < vm->player[i].algo_len)
 			{
-				vm->metarena[start].color = color_on(vm->color, ((t_process *)(vm->proc->content))->colindex, SDL);
+				vm->metarena[start].color_index = ((t_process *)(vm->proc->content))->colindex;
 				vm->arena[start] = algo[j];
 				j++;
 				start++;

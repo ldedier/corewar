@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 20:42:40 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/13 21:21:35 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/14 00:19:41 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		color_on_term(t_color	*color)
 
 int		color_on_sdl(t_color	*color)
 {
-	return (color->sdl);;
+	return (color->sdl);
 }
 
 int		color_on(char	*color, int index, int output)
@@ -50,7 +50,7 @@ int		color_on(char	*color, int index, int output)
 		{COLF_BGREY, COL_BGREY},
 		{COLF_OFF, 0}};
 
-	return(f[output](&col_fg[(int)color[index]]));
+	return (f[output](&col_fg[(int)color[index]]));
 }
 
 void	set_colors(char	*color)
@@ -59,7 +59,7 @@ void	set_colors(char	*color)
 	int		new_ref;
 	
 	index = 0;
-	while(color[index])
+	while (color[index])
 	{
 		new_ref = ft_strichr(COL_DESIGNATOR, color[index]);
 		if (new_ref != -1)

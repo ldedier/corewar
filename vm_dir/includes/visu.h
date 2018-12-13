@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/13 21:26:39 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/13 23:24:33 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <SDL2_net/SDL_net.h>
 # include "libft.h"
 # include "player.h"
+# include "color.h"
 # include "op.h"
 
 # define FRAMERATE				60
@@ -104,11 +105,6 @@ typedef struct			s_vm t_vm;
 
 typedef struct			s_atlas_char
 {
-	int					minx;
-	int					maxx;
-	int					miny;
-	int					maxy;
-	int					advance;
 	SDL_Surface			*surface;
 }						t_atlas_char;
 
@@ -142,7 +138,7 @@ typedef struct          s_sdl
 	SDL_Texture			*texture;
 	SDL_Color			color;
 	SDL_Surface			*images[NB_IMAGES];
-	t_atlas_char		atlas[NB_GLYPHS];
+	t_atlas_char		atlas[MAX_PL_COL][NB_GLYPHS];
 	t_button			buttons[NB_BUTTONS];
 	SDL_Surface			*titles[NB_TITLES];
 	t_cursor_packer		cursor_packers[NB_CURSORS];
@@ -288,7 +284,7 @@ typedef struct			s_visu
 	t_framerate			framerate;
 }						t_visu;
 
-int						ft_init_all_sdl(t_visu *v);
+int						ft_init_all_sdl(t_vm *vm, t_visu *v);
 
 /*
 ** framerate functions

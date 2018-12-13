@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 15:02:55 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/13 18:56:55 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/13 23:27:09 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,18 +43,26 @@ void	ft_get_dimensions(t_visu *v)
 void	ft_init_sdl_to_null(t_visu *v)
 {
 	int i;
+	int j;
 
 	v->sdl.window = NULL;
 	v->sdl.renderer = NULL;
 	v->sdl.w_surface = NULL;
 	v->sdl.font = NULL;
 	i = 0;
-	while (i < NB_GLYPHS)
-		v->sdl.atlas[i++].surface = NULL;
+	while (i < MAX_PL_COL)
+	{
+		j = 0;
+		while (j < NB_GLYPHS)
+		{
+			v->sdl.atlas[i][j].surface = NULL;
+			j++;
+		}
+		i++;
+	}
 	i = 0;
 	while (i < NB_TITLES)
 		v->sdl.titles[i++] = NULL;
-	i = 0;
 }
 
 int		ft_init_sdl_2(t_visu *v)
@@ -92,27 +100,41 @@ int		ft_init_sdl(t_visu *v)
 	return (0);
 }
 
-int		ft_init_atlas(t_sdl *sdl)
+void	ft_populate_sdl_color_from_int(int color, SDL_Color *sdl_color)
+{
+	t_color_manager col;
+
+	col = ft_get_color(color);
+	sdl_color->r = col.r;
+	sdl_color->g = col.g;
+	sdl_color->g = col.b;
+}
+
+int		ft_init_atlas(t_vm *vm, t_sdl *sdl)
 {
 	int				i;
+	int				j;
 	char			str[2];
 	SDL_Surface		*tmp;
+	SDL_Color		color;
 
 	str[1] = '\0';
-	i = 33;
-	while (i < 126)
+	i = 0;
+	while (i < MAX_PL_COL)
 	{
-		str[0] = i;
-		if (!(tmp = TTF_RenderText_Solid(sdl->font,
-						str, sdl->color)))
-			return (1);
-		sdl->atlas[i].surface = SDL_ConvertSurface(tmp,
-				sdl->w_surface->format, 0);
-		if (TTF_GlyphMetrics(sdl->font, i, &(sdl->atlas[i].minx),
-					&(sdl->atlas[i].maxx), &(sdl->atlas[i].miny), &(sdl->atlas[i].maxy),
-					&(sdl->atlas[i].advance)) == -1)
-			return (ft_net_error());
-		SDL_FreeSurface(tmp);
+		ft_populate_sdl_color_from_int(color_on(vm->color, i, SDL), &color);
+		j = 33;
+		while (j < 126)
+		{
+			str[0] = j;
+			if (!(tmp = TTF_RenderText_Solid(sdl->font,
+							str, color)))
+				return (1);
+			sdl->atlas[i][j].surface = SDL_ConvertSurface(tmp,
+					sdl->w_surface->format, 0);
+			SDL_FreeSurface(tmp);
+			j++;
+		}
 		i++;
 	}
 	return (0);
@@ -303,7 +325,7 @@ int		ft_init_cursors(t_visu *v)
 	return (0);
 }
 
-int		ft_init_all_sdl(t_visu *v)
+int		ft_init_all_sdl(t_vm *vm, t_visu *v)
 {
 	ft_init_sdl_to_null(v);
 	if (ft_init_sdl(v))
@@ -315,7 +337,7 @@ int		ft_init_all_sdl(t_visu *v)
 	v->sdl.color.g = 255;
 	v->sdl.color.b = 255;
 	v->sdl.color.a = 255;
-	if (ft_init_atlas(&(v->sdl)))
+	if (ft_init_atlas(vm, &(v->sdl)))
 		return (1);
 	if (ft_init_textures(v))
 		return (1);

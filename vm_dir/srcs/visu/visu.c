@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 16:21:43 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/13 15:32:21 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/13 23:24:17 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int process_visu(t_vm *vm)
 {
-	if (ft_init_all_sdl(&(vm->visu)))
+	if (ft_init_all_sdl(vm, &(vm->visu)))
 		return (ft_net_error());
 	vm->visu.framerate.ms_counter = SDL_GetTicks();
 	while (vm->visu.active)

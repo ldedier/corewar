@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 22:25:36 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/12 18:58:37 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/13 22:40:11 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct      s_player
 	int				num;
 	char			relevant;
 	char			*cor_name;
+	char			color_index;
 }					t_player;
 
 int					ft_read_player(char *path, t_player *player);

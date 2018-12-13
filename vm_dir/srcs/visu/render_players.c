@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/11 17:47:31 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/13 17:30:47 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/13 23:51:03 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int		ft_copy_str_to_surface(t_vm *vm, char *str,
 	SDL_Rect	char_rect;
 	int			len;
 
-	(void)color_index;
 	char_rect.h = rect.h;
 	char_rect.y = rect.y;
 	char_rect.x = rect.x;
@@ -28,8 +27,8 @@ int		ft_copy_str_to_surface(t_vm *vm, char *str,
 	i = 0;
 	while (str[i])
 	{
-		if (SDL_BlitScaled(vm->visu.sdl.atlas[(int)str[i]].surface, NULL,
-				vm->visu.sdl.w_surface, &char_rect) < 0)
+		if (SDL_BlitScaled(vm->visu.sdl.atlas[color_index][(int)str[i]].surface,
+				NULL, vm->visu.sdl.w_surface, &char_rect) < 0)
 			return (ft_net_error());
 		char_rect.x += char_rect.w;
 		i++;
@@ -81,8 +80,7 @@ int		ft_get_player_color(t_vm *vm, t_player *player, int initial_color,
 	}
 }
 
-void	ft_render_player_name(t_vm *vm, SDL_Rect player_rect, t_player *player,
-		int color)
+void	ft_render_player_name(t_vm *vm, SDL_Rect player_rect, t_player *player)
 {
 	SDL_Rect name_rect;
 	SDL_Rect inner_rect;
@@ -97,7 +95,7 @@ void	ft_render_player_name(t_vm *vm, SDL_Rect player_rect, t_player *player,
 	name_rect.h = player_rect.h / 2;
 	name_rect.x = player_rect.x + player_rect.w / 4;
 	name_rect.y = player_rect.y + player_rect.h / 4;
-	ft_copy_str_to_surface(vm, player->name, name_rect, color);
+	ft_copy_str_to_surface(vm, player->name, name_rect, player->color_index);
 }
 
 void	ft_render_relevant_player(t_vm *vm, t_player *player,
@@ -110,7 +108,7 @@ void	ft_render_relevant_player(t_vm *vm, t_player *player,
 	rect.w = vm->visu.center.player_w;
 	rect.h = vm->visu.center.player_h;
 	SDL_FillRect(vm->visu.sdl.w_surface, &rect, PLAYER_COL_BORDER);
-	ft_render_player_name(vm, rect, player, 0xffffff);
+	ft_render_player_name(vm, rect, player);
 	if (source == ARENA || source == UPLOAD)
 		ft_render_closing_cross(vm, xy);
 }
