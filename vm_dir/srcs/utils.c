@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 17:38:14 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/13 15:58:42 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/13 20:31:48 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,8 @@ t_process *get_proc_num(t_list *lst, int num)
 	tmp = lst;
 	while (tmp)
 	{
-//		ft_printf("lala id = %d\n");
 		if (((t_process *)(tmp->content))->id == num)
-		{
-//			ft_printf("found!\n");
 			return ((t_process *)(tmp->content));
-		}
 		tmp = tmp->next;
 	}
 	return (NULL);

@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/13 19:13:11 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/13 20:31:38 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ typedef struct		s_vm
 	int				nb_players;
 	char			**files;
 	int				dump;
-	char			color[NB_COLTYPES];
+	char			color[MAX_PL_COL];
 	t_client		client;
 	t_visu			visu;
 	char				arena[MEM_SIZE];
@@ -73,7 +73,6 @@ enum				e_arg
 	FIRST, SECOND, THIRD
 };
 
-
 void				ft_error_exit(const char *error);
 void				error_exit_msg(const char *error);
 int					check_type(int ac, char **av);
@@ -85,7 +84,7 @@ void				flags(t_vm *vm, int argc, char **argv);
 int					read_files(t_vm *vm);
 void				error_exit_mgc(char *name);
 void				parse(t_vm *vm);
-int				dispatch_players(t_vm *vm);
+int					dispatch_players(t_vm *vm);
 
 /*
 ** DISPLAY

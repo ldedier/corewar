@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 16:42:17 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/13 19:19:06 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/13 20:08:52 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void					init_vm(t_vm *vm, char **argv)
 	set_colors(vm->color);
 }
 
+
 t_list	*add_process(t_vm *vm, char *name, int start, int num)
 {
 	static char	color;
@@ -58,7 +59,6 @@ t_list	*add_process(t_vm *vm, char *name, int start, int num)
 		return (NULL);
 	return (vm->proc);
 }
-
 
 /*
 **dispatch_players function sends each player to their respective starting
