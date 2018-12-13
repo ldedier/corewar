@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/13 20:50:07 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/13 21:26:39 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,12 @@
 # define CLICK					2
 # define REGULAR				3
 
+# define NB_BUTTONS				3
+
+# define UPLOAD_BUTTON			0
+# define ALPHA_SORT_BUTTON		1
+# define SCORE_SORT_BUTTON		2
+
 # define PLAYER_COL_BORDER		0x000000
 # define PLAYER_COL				0x222222
 # define BACKGROUND_COL			0x333333
@@ -120,6 +126,12 @@ typedef enum			e_player_source
 	SERVER
 }						t_player_source;
 
+typedef struct			s_button
+{
+	SDL_Rect			rect;
+	void				(*action)();
+}						t_button;
+
 typedef struct          s_sdl
 {
 	SDL_Rect			screen;
@@ -131,6 +143,7 @@ typedef struct          s_sdl
 	SDL_Color			color;
 	SDL_Surface			*images[NB_IMAGES];
 	t_atlas_char		atlas[NB_GLYPHS];
+	t_button			buttons[NB_BUTTONS];
 	SDL_Surface			*titles[NB_TITLES];
 	t_cursor_packer		cursor_packers[NB_CURSORS];
 	TTF_Font			*font;
@@ -212,12 +225,6 @@ typedef struct			s_slot
 	t_xy				player;
 	t_xy				close;
 }						t_slot;
-
-typedef struct			s_button
-{
-	SDL_Rect			rect;
-	void				(*action)();
-}						t_button;
 
 typedef struct			s_positions
 {
