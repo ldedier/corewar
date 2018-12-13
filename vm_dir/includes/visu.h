@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/13 17:11:39 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/13 20:50:07 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@
 # define CROSS_BORDER			PLAYER_INNER_BORDER * 3
 # define CROSS_IB				CROSS_BORDER / 8
 
-
 # define S_TITLE_SIDE			100
 # define S_TITLE_HEIGHT			50
 
@@ -70,9 +69,13 @@
 # define SCOREWAR				2
 # define COREWAR				3
 
-# define NB_IMAGES				5
+# define NB_IMAGES				10
 
 # define CLOSE					0
+# define DL						1
+# define UL						2
+# define SORT_ALPHA				3
+# define SORT_SCORE				4
 
 # define NB_CURSORS				5
 
@@ -210,6 +213,12 @@ typedef struct			s_slot
 	t_xy				close;
 }						t_slot;
 
+typedef struct			s_button
+{
+	SDL_Rect			rect;
+	void				(*action)();
+}						t_button;
+
 typedef struct			s_positions
 {
 	t_slot				arena_slots[MAX_PLAYERS];
@@ -231,6 +240,18 @@ typedef struct			s_drop_container
 {
 	t_player			*player;
 }						t_drop_container;
+
+typedef enum			e_clickable_nature
+{
+	BUTTON,
+	PLAYER_CROSS
+}						t_clickable_nature;
+
+typedef struct			s_clickable_container
+{
+	t_clickable_nature	clickable_nature;
+	void				*clickable;
+}						t_clickable_container;
 
 typedef struct			s_event_manager
 {
@@ -279,4 +300,16 @@ t_color_manager			ft_get_color(int color);
 t_color_manager			ft_scale_color(t_color_manager color, double scale);
 int						ft_render_player(t_vm *vm, t_player *player, t_xy xy,
 							t_player_source source);
+int						ft_render_dragged_player(t_vm *vm);
+int						ft_is_on_close(t_vm *vm, int x, int y,
+							t_player **player);
+int						ft_is_on_draggable(t_vm *vm, int x, int y,
+							t_drag_container *dc);
+int						ft_is_on_droppable(t_vm *vm, int x, int y,
+							t_player **to_drop_on);
+void					ft_drop_dragged_player(t_vm *vm, int x, int y);
+void					ft_update_cursor(t_vm *vm, int x, int y);
+void					ft_change_cursor(t_vm *vm, int index);
+int						ft_is_on_clickable(t_vm *vm, int x, int y,
+							t_player **player);
 #endif

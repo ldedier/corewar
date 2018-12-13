@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 15:02:55 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/13 17:16:52 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/13 18:56:55 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,8 +151,17 @@ int		ft_init_textures(t_visu *visu)
 	if (!(visu->sdl.titles[SCOREWAR] =
 			ft_init_font_surface_sdl("Scorewar server", visu->sdl)))
 		return (1);
-	if (!(visu->sdl.images[CLOSE] =
-			ft_load_image(PATH"/resources/close.png")))
+	if (!(visu->sdl.images[CLOSE] = ft_load_image(PATH"/resources/close.png")))
+		return (1);
+	if (!(visu->sdl.images[DL] = ft_load_image(PATH"/resources/download.png")))
+		return (1);
+	if (!(visu->sdl.images[UL] = ft_load_image(PATH"/resources/upload.png")))
+		return (1);
+	if (!(visu->sdl.images[SORT_ALPHA] =
+			ft_load_image(PATH"/resources/alpha_sort.png")))
+		return (1);
+	if (!(visu->sdl.images[SORT_SCORE] =
+			ft_load_image(PATH"/resources/score_sort.png")))
 		return (1);
 	return (0);
 }

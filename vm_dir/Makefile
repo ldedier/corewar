@@ -47,7 +47,8 @@ INS_NO_PREFIX =			live.c ld.c st.c add.c sub.c and.c or.c xor.c zjmp.c \
 
 VISU_NO_PREFIX =		init_sdl.c visu.c events.c framerate.c render.c \
 						render_mem.c render_players.c ft_colors.c\
-						render_online.c
+						ft_is_on_close.c render_online.c drag.c drop.c\
+						cursor.c
 						
 
 INCLUDES_NO_PREFIX =	vm.h visu.h client.h errors.h

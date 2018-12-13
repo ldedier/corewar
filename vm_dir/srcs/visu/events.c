@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/08 23:37:36 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/13 16:12:53 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/13 19:12:42 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,113 +24,10 @@ void		ft_key_up(t_vm *vm, SDL_Keycode code)
 	(void)code;
 }
 
-int			ft_get_arena_close_id(t_vm *vm, int x, int y)
+int			ft_is_on_clickable(t_vm *vm, int x, int y, t_player **player)
 {
-	int i;
-
-	i = 0;
-	while (i < MAX_PLAYERS)
-	{
-		if (vm->player[i].relevant &&
-				vm->visu.positions.arena_slots[i].close.x + CROSS_IB < x &&
-				vm->visu.positions.arena_slots[i].close.x + CROSS_BORDER > x &&
-				vm->visu.positions.arena_slots[i].close.y < y &&
-				vm->visu.positions.arena_slots[i].close.y + CROSS_BORDER -
-					CROSS_IB > y
-			)
-			return (i);
-		i++;
-	}
-	return (-1);
-}
-
-int			ft_is_on_clickable(t_vm *vm, int x, int y)
-{
-	if (ft_get_arena_close_id(vm, x, y) != -1)
+	if (ft_is_on_close(vm, x, y, player))
 		return (1);
-	return (0);
-}
-
-int		ft_is_on_player(t_vm *vm, int x, int y, t_xy player_xy)
-{
-	return ((ft_get_arena_close_id(vm, x, y) == -1) &&
-			player_xy.x < x &&
-			player_xy.x + vm->visu.center.player_w > x &&
-			player_xy.y < y &&
-			player_xy.y + vm->visu.center.player_h  > y);
-}
-
-void	ft_fill_drag_container(t_drag_container *dc, int x, int y)
-{
-	if (dc != NULL)
-	{
-		dc->x = x;
-		dc->y = y;
-	}
-}
-
-void	ft_populate_drag_container(t_drag_container *dc, t_player *player,
-			t_xy player_xy, t_player_source source)
-{
-	if (dc != NULL)
-	{
-		dc->source = source;
-		dc->player = player;
-		dc->diff_x = dc->x - player_xy.x;
-		dc->diff_y = dc->y - player_xy.y;
-	}
-}
-
-int		ft_is_on_draggable(t_vm *vm, int x, int y, t_drag_container *dc)
-{
-	int i;
-
-	i = 0;
-	ft_fill_drag_container(dc, x, y);
-	while (i < MAX_PLAYERS)
-	{
-		if (vm->player[i].relevant &&
-				ft_is_on_player(vm, x, y,
-					vm->visu.positions.arena_slots[i].player))
-		{
-			ft_populate_drag_container(dc, &(vm->player[i]),
-				vm->visu.positions.arena_slots[i].player, ARENA);
-			return (1);
-		}
-		if (vm->local_player[i].relevant &&
-				ft_is_on_player(vm, x, y,
-					vm->visu.positions.local_slots[i].player))
-		{
-			ft_populate_drag_container(dc, &(vm->local_player[i]),
-				vm->visu.positions.local_slots[i].player, LOCAL);
-			return (1);
-		}
-		i++;
-	}
-	return (0);
-}
-
-int		ft_is_on_droppable(t_vm *vm, int x, int y, t_player **to_drop_on)
-{
-	int i;
-
-	if (vm->visu.drag_container.player != NULL)
-	{
-		i = 0;
-		while (i < MAX_PLAYERS)
-		{
-			if (ft_fabs((x - vm->visu.drag_container.diff_x) -
-				vm->visu.positions.arena_slots[i].player.x) < (vm->visu.center.player_w) && 
-				ft_fabs((y - vm->visu.drag_container.diff_y) -
-				vm->visu.positions.arena_slots[i].player.y) < (vm->visu.center.player_padding - 1))
-			{
-				*to_drop_on = &(vm->player[i]);
-				return (1);
-			}
-			i++;
-		}
-	}
-	*to_drop_on = NULL;
 	return (0);
 }
 
@@ -144,54 +41,6 @@ void	ft_print_relevance(t_vm *vm)
 		ft_printf("player #%d: relevant = %d\n",i, vm->player[i].relevant);
 		i++;
 	}
-}
-
-void	ft_drop_dragged_player(t_vm *vm, int x, int y)
-{
-	t_player	*to_drop_on;
-	t_player	tmp;
-
-	if (ft_is_on_droppable(vm, x, y, &to_drop_on))
-	{
-		if (vm->visu.drag_container.source == ARENA)
-		{
-			tmp = *to_drop_on;
-			*to_drop_on = *(vm->visu.drag_container.player);
-			if (tmp.relevant)
-				*(vm->visu.drag_container.player) = tmp;
-			else
-				vm->visu.drag_container.player->relevant = 0;
-		}
-		else
-			*to_drop_on = *(vm->visu.drag_container.player);
-		dispatch_players(vm);
-	}
-	vm->visu.drag_container.player = NULL;
-	vm->visu.drop_container.player = NULL;
-}
-
-void		ft_change_cursor(t_vm *vm, int index)
-{
-	if (vm->visu.sdl.current_cursor != index)	
-	{
-		if (!(SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT))
-				|| index == GRAB)
-		{
-			SDL_SetCursor(vm->visu.sdl.cursor_packers[index].cursor);
-			vm->visu.sdl.current_cursor = index;
-		}
-		vm->visu.event_manager.enable_mouse_up = 0;
-	}
-}
-
-void		ft_update_cursor(t_vm *vm, int x, int y)
-{
-	if (ft_is_on_clickable(vm, x, y))
-		ft_change_cursor(vm, CLICK);
-	else if (ft_is_on_draggable(vm, x, y, NULL))
-		ft_change_cursor(vm, DRAGGABLE);
-	else
-		ft_change_cursor(vm, REGULAR);
 }
 
 void		ft_mouse_down(t_vm *vm, SDL_Event event)
@@ -209,11 +58,11 @@ void		ft_mouse_down(t_vm *vm, SDL_Event event)
 
 void		ft_process_mouse_up(t_vm *vm, int x, int y)
 {
-	int id;
+	t_player	*player;
 
-	if ((id = ft_get_arena_close_id(vm, x, y)) != -1)
+	if ((ft_is_on_close(vm, x, y, &player)))
 	{
-		vm->player[id].relevant = 0;
+		player->relevant = 0;
 		dispatch_players(vm);
 		ft_update_cursor(vm, x, y);
 	}

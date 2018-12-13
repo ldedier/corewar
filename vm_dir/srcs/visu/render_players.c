@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/11 17:47:31 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/13 16:52:35 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/13 17:30:47 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,6 +204,5 @@ int		ft_render_players(t_vm *vm)
 {
 	ft_render_arena_players(vm);
 	ft_render_local_players(vm);
-	ft_render_dragged_player(vm);
 	return (0);
 }

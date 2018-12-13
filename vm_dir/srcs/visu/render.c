@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/09 14:02:56 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/13 15:06:45 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/13 20:18:24 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,22 @@ void	ft_render_lines(t_vm *vm)
 	pix = (int *)vm->visu.sdl.w_surface->pixels;
 	while (i < vm->visu.sdl.w_surface->h)
 	{
-		pix[(int)(i * vm->visu.sdl.w_surface->w + vm->visu.center.dashboard_x)] = LINE_COL;
+		pix[(int)(i * vm->visu.sdl.w_surface->w +
+			vm->visu.center.dashboard_x)] = LINE_COL;
 		i++;
 	}
 	i = vm->visu.center.dashboard_x;
 	while (i < vm->visu.sdl.w_surface->w)
 	{
-		pix[(int)(vm->visu.center.top_dashboard_height * vm->visu.sdl.w_surface->w + i)] = LINE_COL;
+		pix[(int)(vm->visu.center.top_dashboard_height *
+			vm->visu.sdl.w_surface->w + i)] = LINE_COL;
 		i++;
 	}
 	i = 0;
 	while (i < vm->visu.center.top_dashboard_height)
 	{
-		pix[(int)(i * vm->visu.sdl.w_surface->w + vm->visu.center.dashboard_mid_x)] = LINE_COL;
+		pix[(int)(i * vm->visu.sdl.w_surface->w +
+			vm->visu.center.dashboard_mid_x)] = LINE_COL;
 		i++;
 	}
 }
@@ -56,6 +59,7 @@ int		ft_render(t_vm *vm, t_sdl *sdl)
 		ft_render_online(vm);
 	else
 		ft_render_offline(vm);
+	ft_render_dragged_player(vm);
 	sdl->texture = SDL_CreateTextureFromSurface(sdl->renderer, sdl->w_surface);
 	SDL_RenderCopy(sdl->renderer, sdl->texture, NULL, NULL);
 	SDL_FillRect(sdl->w_surface, NULL, BACKGROUND_COL);
