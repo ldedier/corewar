@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 20:42:40 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/13 20:48:57 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/13 21:21:35 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,19 @@ void	color_off(void)
 	ft_printf("%s", COLF_OFF);
 }
 
-void	color_on_term(t_color	*color)
+int		color_on_term(t_color	*color)
 {
-	ft_printf("%s", color->term);
+	return (ft_printf("%s", color->term));
 }
 
-void	color_on_sdl(t_color	*color)
+int		color_on_sdl(t_color	*color)
 {
-	ft_printf("%d", color->sdl);
+	return (color->sdl);;
 }
 
-void	color_on(char	*color, int index, int output)
+int		color_on(char	*color, int index, int output)
 {
-	static void	(*f[2])(t_color *color) = {
+	static int	(*f[2])(t_color *color) = {
 		&color_on_term, &color_on_sdl};
 	static t_color col_fg[NB_COLORS] = {
 		{COLF_BLACK, COL_BLACK},
@@ -50,7 +50,7 @@ void	color_on(char	*color, int index, int output)
 		{COLF_BGREY, COL_BGREY},
 		{COLF_OFF, 0}};
 
-	f[output](&col_fg[(int)color[index]]);
+	return(f[output](&col_fg[(int)color[index]]));
 }
 
 void	set_colors(char	*color)

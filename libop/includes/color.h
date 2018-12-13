@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/22 15:55:47 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/13 20:46:13 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/13 21:20:10 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ enum				e_output
 };
 
 void		set_colors(char	*color);
-void		color_on(char *color, int type, int output);
+int			color_on(char *color, int type, int output);
 void		color_off(void);
 
 #endif

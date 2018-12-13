@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/13 20:31:38 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/13 21:19:52 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,11 @@ typedef struct		s_process
 	unsigned char	carry;
 }					t_process;
 
+typedef struct		s_metadata
+{
+	int				color;
+}					t_metadata;
+
 typedef struct		s_live
 {
 	int		nb;
@@ -57,7 +62,8 @@ typedef struct		s_vm
 	char			color[MAX_PL_COL];
 	t_client		client;
 	t_visu			visu;
-	char				arena[MEM_SIZE];
+	char			arena[MEM_SIZE];
+	t_metadata		metarena[MEM_SIZE];
 	t_player		player[MAX_PLAYERS + 1];
 	t_list			*proc;
 	t_live			 live;
