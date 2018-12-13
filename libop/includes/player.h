@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 22:25:36 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/13 16:25:43 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/12 18:58:37 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct      s_player
 	int				header_size;
 	int				file_len;
 	int				num;
+	char			relevant;
 	char			*cor_name;
 }					t_player;
 

@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/13 21:19:52 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/13 22:07:34 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct		s_process
 	unsigned char	reg[REG_NUMBER];
 	int				pc;
 	int				ins_cycle;
-	int				cycle;			
+	int				cycle;
 	unsigned char	carry;
 }					t_process;
 
@@ -64,7 +64,8 @@ typedef struct		s_vm
 	t_visu			visu;
 	char			arena[MEM_SIZE];
 	t_metadata		metarena[MEM_SIZE];
-	t_player		player[MAX_PLAYERS + 1];
+	t_player		player[MAX_PLAYERS];
+	t_player		local_player[MAX_PLAYERS];
 	t_list			*proc;
 	t_live			 live;
 }					t_vm;
@@ -141,7 +142,9 @@ int					ins_aff(t_vm *vm, t_process *proc, t_parameter arg[3]);
 ** PLAY
 */
 
-int				play(t_vm *vm);
+//void				check_resize_cycle(t_vm *vm, int *cycle);
+int					play(t_vm *vm);
+//void				launch_instruction(t_vm *vm, int player);
 
 /*
 ** UTILS

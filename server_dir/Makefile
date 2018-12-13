@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/04 15:20:42 by ldedier           #+#    #+#              #
-#    Updated: 2018/12/06 20:56:53 by ldedier          ###   ########.fr        #
+#    Updated: 2018/12/11 15:00:40 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -83,7 +83,7 @@ debug:
 $(LIBFT):
 	@make -C $(LIBFTDIR) all
 
-$(BINDIR)/$(NAME): $(OBJECTS) $(LIBFT)
+$(BINDIR)/$(NAME): $(OBJECTS) $(LIBFT) $(LIBOP)
 	@$(CC) -o $@ $^ -F $(FRAMEWORKSDIR) $(SDL2_FRAMEWORKS) $(CFLAGS) $(LFLAGS)
 	@echo "$(OK_COLOR)$(NAME) linked with success !$(EOC)"
 

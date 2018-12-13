@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 19:01:37 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/13 16:46:25 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/11 14:37:39 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 # define OP_H
 
 /*
- ** Toutes les tailles sont en octets.
- ** On part du principe qu'un int fait 32 bits. Est-ce vrai chez vous ?
- */
+** Toutes les tailles sont en octets.
+** On part du principe qu'un int fait 32 bits. Est-ce vrai chez vous ?
+*/
 # include "libft.h"
 # include "color.h"
 
@@ -129,17 +129,17 @@ typedef struct					s_header
 	char						comment[COMMENT_LENGTH + 1];
 }								t_header;
 
-typedef struct		s_parameter
+typedef struct					s_parameter
 {
-	t_arg_type		type; //T_REG || T_IND || T_DIR || T_LAB
-	int				value;
-	char			*ptr;
-	char			*label_name;
-	int				source_code_col;
-	int				nb_bytes;
-}					t_parameter;
+	t_arg_type					type; //T_REG || T_IND || T_DIR || T_LAB
+	int							value;
+	char						*ptr;
+	char						*label_name;
+	int							source_code_col;
+	int							nb_bytes;
+}								t_parameter;
 
-typedef struct		s_instruction
+typedef struct					s_instruction
 {
 	t_op			op;
 	t_parameter		params[3];

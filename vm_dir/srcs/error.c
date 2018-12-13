@@ -57,7 +57,7 @@ int			check_type(int ac, char **av)
 		if (((!ft_strcmp("-dump", av[i]) || !ft_strcmp("-n", av[i])) &&
 				i + 1 < ac))
 			i += 2;
-		else if (!ft_strcmp("-corehub", av[i]) && i + 2 < ac)
+		else if (!ft_strcmp("-w", av[i]) && i + 2 < ac)
 			i += 3;
 		else if ((!ft_strcmp("-v", av[i]) && i + 1 < ac))
 			i++;

@@ -12,9 +12,53 @@
 
 #include "decompiler.h"
 
+int		ft_process_encode_asm(int fd, t_list *instructions, t_env *e)
+{
+	ft_dprintf(fd, ".name \"%s\"\n", e->player.name);
+	ft_dprintf(fd, ".comment \"%s\"\n\n", e->player.comm);
+	return (ft_encode_instructions(fd, instructions));
+}
+
+int		ft_encode_asm(int fd, t_env *e)
+{
+	t_list			*instructions;
+	t_instruction	instruction;
+	int				i;
+	int				ret;
+
+	instructions = NULL;
+	i = 0;
+	while ((ret = get_instruction(e->player.algo, &instruction,
+			i, e->player.algo_len)) && i < e->player.algo_len)
+	{
+		if (ft_add_to_list_back(&instructions, &instruction,
+					sizeof(t_instruction)))
+		{
+			ft_lstdel_value(&instructions);
+			return (1);
+		}
+		i += ret;
+	}
+	if (i != e->player.algo_len)
+	{
+		ft_lstdel_value(&instructions);
+		return (1);
+	}
+	else
+		return (ft_process_encode_asm(fd, instructions, e));
+}
+
 int		ft_encode_to_assembly(t_env *e)
 {
-	ft_printf(".name:\"%s\"\n", e->player.name);
-	ft_printf(".comment:\"%s\"\n", e->player.comm);
+	int fd;
+
+	if ((fd = open(e->champ.assembly_name, O_RDWR | O_CREAT | O_TRUNC, 0644))
+			== -1)
+	{
+		perror(e->champ.assembly_name);
+		return (1);
+	}
+	fd = 1;
+	ft_encode_asm(fd, e);
 	return (0);
 }

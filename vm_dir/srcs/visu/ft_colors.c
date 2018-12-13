@@ -1,24 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_add_to_list_back.c                              :+:      :+:    :+:   */
+/*   ft_colors.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/22 11:34:32 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/10 11:01:09 by ldedier          ###   ########.fr       */
+/*   Created: 2018/12/13 11:22:52 by ldedier           #+#    #+#             */
+/*   Updated: 2018/12/13 11:26:35 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "visu.h"
 
-int		ft_add_to_list_back(t_list **list, void *content, size_t size)
+t_color_manager			ft_scale_color(t_color_manager c, double t)
 {
-	t_list *node;
+	t_color_manager ret;
 
-	if (!(node = ft_lstnew(content, size)))
-		return (1);
-	else
-		ft_lstpushback(list, node);
-	return (0);
+	ret.r = c.r * t;
+	ret.g = c.g * t;
+	ret.b = c.b * t;
+	ret.color = ret.r | (ret.g << 8) | (ret.b << 16);
+	return (ret);
+}
+
+t_color_manager			ft_get_color(int color)
+{
+	t_color_manager c;
+
+	c.color = color;
+	c.r = color & 0xff;
+	c.g = (color >> 8) & 0xff;
+	c.b = (color >> 16) & 0xff;
+	return (c);
 }
