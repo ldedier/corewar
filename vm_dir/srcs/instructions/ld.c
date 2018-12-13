@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 20:22:56 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/12 21:56:34 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/13 18:32:03 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,12 @@
 ** arg->for 2 arg->, 2nd one necessarily a REGISTER
 */
 
-int			ins_ld(t_vm *vm, t_parameter arg[3], int pl)
+int			ins_ld(t_vm *vm, t_process *proc, t_parameter arg[3])
 {
 	int			reg_ind;
 	int			val;
-	t_process	*proc;
 
 	reg_ind = arg[SECOND].value;
-	proc = get_proc_num(vm->proc, pl);
 	val = getval(vm, proc, (arg[FIRST])) % IDX_MOD + proc->pc;
 //	ft_printf("ld regind = %d val =  %d\n", reg_ind, val);
 	proc->reg[reg_ind - 1] = val;

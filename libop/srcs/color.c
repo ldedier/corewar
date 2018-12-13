@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 20:42:40 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/12 21:49:19 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/13 17:56:54 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,14 @@ void	color_off(void)
 
 void	color_on(char *color, int index)
 {
-	static char *col_fg[NB_COLORS] = {COLF_BLACK, COLF_RED, COLF_GREEN, COLF_BROWN, COLF_BLUE, COLF_MAGENTA, COLF_CYAN, COLF_GREY, COLF_OFF};
-	static char *col_bg[NB_COLORS] = {COLB_BLACK, COLB_RED, COLB_GREEN, COLB_BROWN, COLB_BLUE, COLB_MAGENTA, COLB_CYAN, COLB_GREY, COLB_OFF};
+	static char *col_fg[NB_COLORS] = {COLF_BLACK, COLF_RED, COLF_GREEN, COLF_BROWN, COLF_BLUE, COLF_MAGENTA, COLF_CYAN, COLF_GREY, COLF_BBLACK, COLF_BRED, COLF_BGREEN, COLF_BBROWN, COLF_BBLUE, COLF_BMAGENTA, COLF_BCYAN, COLF_BGREY, COLF_OFF};
+	static char *col_bg[NB_COLORS] = {COLB_BLACK, COLB_RED, COLB_GREEN, COLB_BROWN, COLB_BLUE, COLB_MAGENTA, COLB_CYAN, COLB_GREY, COLB_BBLACK, COLB_BRED, COLB_BGREEN, COLB_BROWN, COLB_BBLUE, COLB_BMAGENTA, COLB_BCYAN, COLB_BGREY, COLB_OFF};
 	int		fg;
 	int		bg;
 
 	index *= 2;
-//	ft_printf("colorfg[%d] = %d\n", index, color[index]);
-//	ft_printf("colorbg[%d] = %d\n", index + 1, color[index + 1]);
 	fg = color[index];
 	bg = color[index + 1];
-
-
-//	ft_printf("index * 2 = %d val in ref = \n", index * 2, col);
 	ft_printf("%s%s", col_bg[bg], col_fg[fg]);
 }
 
@@ -52,7 +47,7 @@ void	set_colors(char	*color)
 {
 	int		index;
 	int		new_ref;
-//	char *color = "pspcplpdpvrlrarrtltmtctep0p1p2p3p4p5p6p7p8p9";
+//	char *color = "pspcplpdpvrlrarrtltmtctep0p1p2p3p4p5p6";
 	
 	index = 0;
 	while(color[index])

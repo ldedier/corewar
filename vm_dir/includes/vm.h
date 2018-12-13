@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/12 22:42:36 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/13 18:37:46 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 typedef struct		s_process
 {
 	int				id;
+	char			colindex;
+	char			name[PROG_NAME_LENGTH + 1];
 	int				live;
 	unsigned char	reg[REG_NUMBER];
 	int				pc;
@@ -32,14 +34,6 @@ typedef struct		s_process
 	int				cycle;			
 	unsigned char	carry;
 }			t_process;
-/*
-typedef struct		s_color
-{
-	char		*ref;
-	char		player[MAX_PLAYERS][COL_LEN];
-	char		msg[NB_MSG_TYPES][NB_MSG_PLAYER][COL_LEN];
-}			t_color;
-*/
 
 typedef struct		s_live
 {
@@ -56,7 +50,6 @@ typedef struct		s_vm
 	int				cycle;
 	int				nb_players;
 	char			**files;
-	int				dead;
 	int				dump;
 	char			color[NB_COLTYPES];
 	t_client		client;
@@ -98,19 +91,20 @@ int				dispatch_players(t_vm *vm);
 ** DISPLAY
 */
 
-void				display(t_vm *vm, int pl, int type);
-void				pl_death(t_vm *vm, int pl);
-void				pl_live(t_vm *vm, int pl);
-void				pl_victory(t_vm *vm, int pl);
-void				pl_cycle(t_vm *vm, int pl);
-void				pl_pc(t_vm * vm, int pl);
-void				lives_turn(t_vm *vm, int pl);
-void				cycles_to_autoresize(t_vm *vm, int pl);
-void				resize(t_vm *vm, int pl);
-void				cycle_end(t_vm *vm, int pl);
-void				move_one(t_vm *vm, int pl);
-void				cycle_nb(t_vm *vm, int pl);
-void				last_live(t_vm *vm, int pl);
+void				display(t_vm *vm, t_process *proc, int type);
+void				pl_death(t_vm *vm, t_process *proc);
+void				pl_live(t_vm *vm, t_process *proc);
+void				pl_victory(t_vm *vm, t_process *proc);
+void				pl_cycle(t_vm *vm, t_process *proc);
+void				pl_pc(t_vm * vm, t_process *proc);
+void				lives_turn(t_vm *vm, t_process *proc);
+void				cycles_to_autoresize(t_vm *vm, t_process *proc);
+void				resize(t_vm *vm, t_process *proc);
+void				cycle_end(t_vm *vm, t_process *proc);
+void				move_one(t_vm *vm, t_process *proc);
+void				cycle_nb(t_vm *vm, t_process *proc);
+void				last_live(t_vm *vm, t_process *proc);
+void				turn_player(t_vm *vm, t_process *proc);
 
 
 /*
@@ -121,22 +115,22 @@ int					getval(t_vm *vm, t_process *proc, t_parameter arg);
 void				loadval(t_vm *vm, t_process *proc, t_parameter arg, int val);
 void				set_argval(t_parameter *arg, int index, int size);
 
-int					ins_live(t_vm *vm, t_parameter arg[3], int pl);
-int					ins_ld(t_vm *vm, t_parameter arg[3], int pl);
-int					ins_st(t_vm *vm, t_parameter arg[3], int pl);
-int					ins_add(t_vm *vm, t_parameter arg[3], int pl);
-int					ins_sub(t_vm *vm, t_parameter arg[3], int pl);
-int					ins_and(t_vm *vm, t_parameter arg[3], int pl);
-int					ins_or(t_vm *vm, t_parameter arg[3], int pl);
-int					ins_xor(t_vm *vm, t_parameter arg[3], int pl);
-int					ins_zjmp(t_vm *vm, t_parameter arg[3], int pl);
-int					ins_ldi(t_vm *vm, t_parameter arg[3], int pl);
-int					ins_sti(t_vm *vm, t_parameter arg[3], int pl);
-int					ins_fork(t_vm *vm, t_parameter arg[3], int pl);
-int					ins_lld(t_vm *vm, t_parameter arg[3], int pl);
-int					ins_lldi(t_vm *vm, t_parameter arg[3], int pl);
-int					ins_lfork(t_vm *vm, t_parameter arg[3], int pl);
-int					ins_aff(t_vm *vm, t_parameter arg[3], int pl);
+int					ins_live(t_vm *vm, t_process *proc, t_parameter arg[3]);
+int					ins_ld(t_vm *vm, t_process *proc, t_parameter arg[3]);
+int					ins_st(t_vm *vm, t_process *proc, t_parameter arg[3]);
+int					ins_add(t_vm *vm, t_process *proc, t_parameter arg[3]);
+int					ins_sub(t_vm *vm, t_process *proc, t_parameter arg[3]);
+int					ins_and(t_vm *vm, t_process *proc, t_parameter arg[3]);
+int					ins_or(t_vm *vm, t_process *proc, t_parameter arg[3]);
+int					ins_xor(t_vm *vm, t_process *proc, t_parameter arg[3]);
+int					ins_zjmp(t_vm *vm, t_process *proc, t_parameter arg[3]);
+int					ins_ldi(t_vm *vm, t_process *proc, t_parameter arg[3]);
+int					ins_sti(t_vm *vm, t_process *proc, t_parameter arg[3]);
+int					ins_fork(t_vm *vm, t_process *proc, t_parameter arg[3]);
+int					ins_lld(t_vm *vm, t_process *proc, t_parameter arg[3]);
+int					ins_lldi(t_vm *vm, t_process *proc, t_parameter arg[3]);
+int					ins_lfork(t_vm *vm, t_process *proc, t_parameter arg[3]);
+int					ins_aff(t_vm *vm, t_process *proc, t_parameter arg[3]);
 
 /*
 ** PLAY

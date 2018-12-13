@@ -6,14 +6,14 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/12 21:53:30 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/13 17:57:52 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ERRORS_H
 # define ERRORS_H
 
-# define NB_GAME_MSG 12
+# define NB_GAME_MSG 13
 
 /*
 ** ERROR MESSAGES
@@ -39,7 +39,7 @@
 # define MSG_RESIZE	"New cycle length before checking if players are alive:"
 # define MSG_NBR_LIVES_TURN	"Number of lives this turn "
 # define MSG_NBR_TO_AUTORESIZE	"cycles to automatic resize"
-# define MSG_CYCLES_REMAINING	"left to check lives"
+# define MSG_CYCLES_REMAINING	"cycles left to check lives"
 # define MSG_VICTORY	"VICTORY FOR"
 # define MSG_DEATH	"just died"
 # define MSG_CYCLE_END	">>>END OF CYCLE "
@@ -52,7 +52,7 @@ enum	e_game_msg
 {
 	PL_PC, PL_CYCLE, PL_LIVE, PL_DEATH, PL_VICTORY,
 	LIVES_TURN, AUTO_RESIZE, NEW_RESIZE,
-	MOVE_ONE, LAST_LIVE, CYCLE_NBR, CYCLE_END
+	MOVE_ONE, LAST_LIVE, CYCLE_NBR, CYCLE_END, TURN_PLAYER
 };
 
 #endif

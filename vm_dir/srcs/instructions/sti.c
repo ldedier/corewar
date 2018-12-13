@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 20:22:56 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/12 19:37:00 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/13 18:34:54 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,9 @@
 ** arg for 2 args, 1st one necessarily a REGISTER
 */
 
-int		ins_sti(t_vm *vm,  t_parameter arg[3], int pl)
+int		ins_sti(t_vm *vm, t_process *proc, t_parameter arg[3])
 {
 	int sum;
-	t_process 	*proc;
-
-	proc = get_proc_index(vm->proc, pl);
 
 	sum = getval(vm, proc, arg[SECOND]) +  getval(vm, proc, arg[THIRD]);
 //	ft_printf("sti, sum = %d\n", sum);

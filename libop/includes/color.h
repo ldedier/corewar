@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/22 15:55:47 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/12 22:42:38 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/13 18:43:15 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,20 @@
 # define COL_LEN		20
 # define NB_DESIGNATOR		17
 # define NB_COLTYPES		NB_GAME_MSG + 10
-# define NB_COLORS		9
-# define COL_DESIGNATOR		"brgwlmcyxBRGWLMCYx"
+# define NB_COLORS		17
+# define COL_DESIGNATOR		"brgwlmcyBRGWLMCYx"
+# define MAX_PL_COL	8
+# define MAX_PRESET_COLORS_BEFORE_PL NB_GAME_MSG - 1	
 
 /*
 ** PADDING
 */
 
-# define PAD_PLNAME		10
+# define PAD_PLNUM		4
+# define PAD_PLNAME		30
 # define PAD_PLCYCLE	7
 # define PAD_PLPC		4
-# define PAD_INS		60
+# define PAD_INS		30
 
 
 /*
@@ -83,8 +86,5 @@
 void		set_colors(char	*color);
 void		color_on(char	*color, int type);
 void		color_off(void);
-
-
-
 
 #endif

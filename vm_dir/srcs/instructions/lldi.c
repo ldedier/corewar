@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 20:22:56 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/10 18:25:46 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/13 18:33:57 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@
 ** Returns 
 */
 
-int		ins_lldi(t_vm *vm, t_parameter arg[3], int pl)
+int		ins_lldi(t_vm *vm, t_process *proc, t_parameter arg[3])
 {
 	(void)vm;
-	(void)pl;
+	(void)proc;
 	(void)arg;
 	return (SUCCESS);
 }

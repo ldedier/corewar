@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 20:22:56 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/12 20:56:44 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/13 18:34:38 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,12 @@
 ** arg : for 2 arg, 1st one necessarily a REGISTER
 */
 
-int		ins_st(t_vm *vm, t_parameter arg[3], int pl)
+int		ins_st(t_vm *vm, t_process *proc, t_parameter arg[3])
 {
 	int			index;
 	char		val;
 	int			i;
-	t_process	*proc;
-
-	proc = get_proc_num(vm->proc, pl);
+	
 	index = arg[SECOND].value % IDX_MOD;
 	val = getval(vm, proc, arg[FIRST]);
 	i = arg[SECOND].nb_bytes;

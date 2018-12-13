@@ -6,23 +6,21 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 21:43:44 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/12 21:56:28 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/13 18:14:23 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-void	display(t_vm *vm, int pl, int type)
+void	display(t_vm *vm, t_process *proc, int type)
 {
-	static void (*display[NB_GAME_MSG])(t_vm *vm, int pl) = {
+	static void (*display[NB_GAME_MSG])(t_vm *vm, t_process *proc) = {
 		&pl_pc, &pl_cycle, pl_live, &pl_death, &pl_victory,
 		&lives_turn, &cycles_to_autoresize, &resize,
-		&move_one, &last_live, &cycle_nb, &cycle_end};
-	
-//	ft_printf("type color = %d\n", type);
-	color_on(vm->color, type);
-//	ft_printf("display type = %d\n", type);
-//	ft_printf("type color after set color on = %d\n", type);
-	display[type](vm, pl);
+		&move_one, &last_live, &cycle_nb, &cycle_end, &turn_player};
+
+	if (type < LIVES_TURN || type == TURN_PLAYER)
+		color_on(vm->color, proc->colindex);
+	display[type](vm, proc);
 	color_off();
 }

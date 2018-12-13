@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 20:22:56 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/12 19:35:05 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/13 18:32:22 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,10 @@
 ** arg for 3 arg, two first necessarily INDEXES
 */
 
-int		ins_ldi(t_vm *vm,  t_parameter arg[3], int pl)
+int		ins_ldi(t_vm *vm, t_process *proc, t_parameter arg[3])
 {
 	int sum;
-	t_process	*proc;
 
-	proc = get_proc_index(vm->proc, pl);
 	sum = getval(vm, proc, arg[FIRST]);
 	sum += getval(vm, proc, arg[SECOND]);
 	loadval(vm, proc, arg[THIRD], *(vm->arena + sum % MEM_SIZE));

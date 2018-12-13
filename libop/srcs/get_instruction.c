@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 16:33:31 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/10 22:27:35 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/13 18:19:10 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ int				get_instruction(char *arena, t_instruction *ins, int i, int mod)
 	unsigned 	char	hex;
 	int	len;
 
+	ft_bzero((void *)ins, sizeof(t_instruction));
 	hex = *(unsigned char *)(arena + (i % mod));
 	if ((int)hex >= NB_INSTRUCTIONS || !hex)
 		return (0);

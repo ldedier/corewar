@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 16:42:17 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/12 22:02:33 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/13 18:52:43 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,38 +28,32 @@ void		init_vm(t_vm *vm, char **argv)
 	vm->checks = MAX_CHECKS;
 	vm->live.nb = 0;
 	vm->live.total_pl = 0;
-	vm->live.last_pl = -1;
-	vm->dead = 0;
 	vm->proc = NULL;
-//	ft_strcpy(vm->color.player[1], COL_BPL1);
-//	ft_strcpy(vm->color.player[3], COL_BPL2);
-//	ft_strcpy(vm->color.player[5], COL_BPL3);
-//	ft_strcpy(vm->color.player[7], COL_BPL4);
-//	ft_strcpy(vm->color.player[0], COL_FPL1);
-//	ft_strcpy(vm->color.player[2], COL_FPL2);
-//	ft_strcpy(vm->color.player[4], COL_FPL3);
-//	ft_strcpy(vm->color.player[6], COL_FPL4);
 	vm->client.active = 0;
 	vm->client.port = 0;
 	vm->visu.active = 0;
-	vm->cycle = 0; // ou 1?
+	vm->cycle = 0; 
 	i = 0;
 	while (i < MEM_SIZE)
 	{
 		vm->arena[i] = 0;
 		i++;
 	}
-	ft_strcpy(vm->color, "wxwxwxwxwxmxmxmxgxgxgxgxxLxGxCxByxyxyxyx");
+	ft_strcpy(vm->color, "RxLxYxBxyxyx");
 	set_colors(vm->color);
 }
 
-t_list	*add_process(t_vm *vm, int start, int id, int num)
+t_list	*add_process(t_vm *vm, char *name, int start, int num)
 {
+	static char	color;
 	t_process	*process;
 
 	process = (t_process *)ft_memalloc(sizeof(t_process));
+	ft_printf("colindex = %d\n", color);
+	process->colindex = (color++) % MAX_PL_COL;
 	process->pc = start;
-	process->id = id; // revoir utilisation et valeur
+	ft_strcpy(process->name, name);
+	process->id = num; // revoir utilisation et valeur
 	process->reg[0] = num;
 	if (ft_add_to_list_ptr(&vm->proc, (void *)process, sizeof(process)))
 		return (NULL);
@@ -85,7 +79,7 @@ int		dispatch_players(t_vm *vm)
 	{
 		start = (MEM_SIZE / vm->nb_players) * nb;
 		algo = vm->player[nb].algo;
-		if (!add_process(vm, start, nb, vm->player[nb].num))
+		if (!add_process(vm, vm->player[nb].name, start, vm->player[nb].num))
 			return (-1);
 		i = 0;
 		while (i < vm->player[nb].algo_len)
@@ -96,5 +90,6 @@ int		dispatch_players(t_vm *vm)
 		}
 		nb++;
 	}
+	vm->live.last_pl = vm->player[vm->nb_players - 1].num;;
 	return (0);
 }

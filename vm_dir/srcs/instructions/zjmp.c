@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 20:22:56 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/12 19:33:05 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/13 18:40:53 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,9 @@
 ** arg for 1 arg
 */
 
-int		ins_zjmp(t_vm *vm, t_parameter arg[3], int pl)
+int		ins_zjmp(t_vm *vm, t_process *proc, t_parameter arg[3])
 {
-	t_process *proc;
-
-	proc = get_proc_index(vm->proc, pl);
+	(void)vm;
 	if (proc->carry)
 		proc->pc += (arg[FIRST].value % IDX_MOD);
 	return (SUCCESS); // verifier si !carry = failure
