@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 15:02:55 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/13 23:27:09 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/14 18:16:22 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	ft_init_sdl_to_null(t_visu *v)
 	v->sdl.w_surface = NULL;
 	v->sdl.font = NULL;
 	i = 0;
-	while (i < MAX_PL_COL)
+	while (i < MAX_PL_COLOR)
 	{
 		j = 0;
 		while (j < NB_GLYPHS)
@@ -120,9 +120,9 @@ int		ft_init_atlas(t_vm *vm, t_sdl *sdl)
 
 	str[1] = '\0';
 	i = 0;
-	while (i < MAX_PL_COL)
+	while (i < MAX_PL_COLOR)
 	{
-		ft_populate_sdl_color_from_int(color_on(vm->color, i, SDL), &color);
+		ft_populate_sdl_color_from_int(get_color_sdl(vm->color[i]), &color);
 		j = 33;
 		while (j < 126)
 		{

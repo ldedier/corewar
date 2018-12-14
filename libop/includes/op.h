@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 19:01:37 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/11 14:37:39 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/14 17:54:45 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 ** On part du principe qu'un int fait 32 bits. Est-ce vrai chez vous ?
 */
 # include "libft.h"
-# include "color.h"
 
 # define REG_SIZE				1
 # define DIR_SIZE				4

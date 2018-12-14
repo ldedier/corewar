@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 22:25:36 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/13 22:40:11 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/14 17:56:42 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,12 @@ typedef int				t_comment_len;
 typedef int				t_code_len;
 typedef int				t_score;
 
+typedef struct		s_color
+{
+	void 	*value;
+	int		index;
+}					t_color;
+
 typedef struct      s_player
 {
 	char			name[PROG_NAME_LENGTH + 1];
@@ -43,7 +49,7 @@ typedef struct      s_player
 	int				num;
 	char			relevant;
 	char			*cor_name;
-	t_color			*color;
+	t_color			color;
 }					t_player;
 
 int					ft_read_player(char *path, t_player *player);

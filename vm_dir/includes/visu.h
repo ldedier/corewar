@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/13 23:24:33 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/14 17:47:44 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ typedef struct          s_sdl
 	SDL_Texture			*texture;
 	SDL_Color			color;
 	SDL_Surface			*images[NB_IMAGES];
-	t_atlas_char		atlas[MAX_PL_COL][NB_GLYPHS];
+	t_atlas_char		atlas[MAX_PL_COLOR][NB_GLYPHS];
 	t_button			buttons[NB_BUTTONS];
 	SDL_Surface			*titles[NB_TITLES];
 	t_cursor_packer		cursor_packers[NB_CURSORS];

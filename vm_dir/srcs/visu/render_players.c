@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/11 17:47:31 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/13 23:51:03 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/14 18:16:50 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	ft_render_player_name(t_vm *vm, SDL_Rect player_rect, t_player *player)
 	name_rect.h = player_rect.h / 2;
 	name_rect.x = player_rect.x + player_rect.w / 4;
 	name_rect.y = player_rect.y + player_rect.h / 4;
-	ft_copy_str_to_surface(vm, player->name, name_rect, player->color_index);
+	ft_copy_str_to_surface(vm, player->name, name_rect, player->color.index);
 }
 
 void	ft_render_relevant_player(t_vm *vm, t_player *player,

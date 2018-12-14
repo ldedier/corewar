@@ -3,7 +3,7 @@
 void	last_live(t_vm *vm, t_process *proc)
 {
 	(void)vm;
-	ft_printf(">>> %s ", proc->id);
+	ft_printf(">>> %s ", proc->player->num);
 }
 
 
@@ -30,5 +30,5 @@ void	cycle_nb(t_vm *vm, t_process *proc)
 void	turn_player(t_vm *vm, t_process *proc)
 {
 	(void)vm;
-	ft_printf("PLAYER %-*d aka %-*s", PAD_PLNUM, proc->id, PAD_PLNAME, proc->name); 
+	ft_printf("PLAYER %-*d aka %-*s", PAD_PLNUM, proc->player->num, PAD_PLNAME, proc->player->name); 
 }

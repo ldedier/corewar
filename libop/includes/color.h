@@ -6,24 +6,22 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/22 15:55:47 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/14 00:19:10 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/14 18:50:38 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+# include <player.h>
 
 #ifndef COLOR_H
 # define COLOR_H
 
-/*
-** "pspcplpdpvrlrarrtmtctep0p1p2p3p4p5p6p7p8p9"
-*/
-# define DEFAULT_COLORS 	
-# define COL				t_color
-
-# define NB_DESIGNATOR		17
-# define NB_COLORS		17
 # define COL_DESIGNATOR		"brgwlmcyBRGWLMCYx"
-# define MAX_PL_COLOR		9
 # define DEFAULT_COLORS		"xRZMGCgw"
+# define NB_DESIGNATOR		17
+# define NB_COLORS			17
+# define MAX_PL_COLOR		9
+# define COREWAR_VAR_NAME	"CW_COLORS"
+# define STR_COLOR_LEN		10
 
 /*
 ** PADDING
@@ -56,8 +54,8 @@
 # define COLF_BMAGENTA	"\033[01;35m"
 # define COLF_BCYAN		"\033[01;36m"
 # define COLF_BGREY		"\033[01;37m"
-# define COLF_OFF		"\033[0m"
 # define COLF_WHITE		"\x1B[37m"
+# define COLF_OFF		"\033[0m"
 
 /*
 ** EQUIVALENT STANDARD COLORS FOR SDL
@@ -80,27 +78,27 @@
 # define COL_BCYAN		0x00BCDA
 # define COL_BGREY		0xEEEEEE
 # define COL_WHITE		0xFFFFFF
-
-
-typedef struct		s_color
-{
-	void	*value;
-	int	index;
-}			t_color;
+# define COL_OFF		0x000000
 
 typedef struct		s_color_type
 {
-	int	sdl
-	char	*term;
-			s_color_type;
-
+	int		sdl;
+	char	term[STR_COLOR_LEN];
+}					t_color_type;
+/*
 enum				e_output
 {
 	TERM, SDL
 };
-
-void		set_colors(char	*color);
-int			color_on(char *color, int type, int output);
+*/
+void		set_color(t_player *player, char *color, char index);
+void		color_on_term(char index);
+int			get_color_sdl(char index);
 void		color_off(void);
+void		*get_term_color(char index);
+
+int			get_envar(char **env, char ****env_var);
+int			get_envar_index(char ***env_var, char *var, int nb_envar);
+char		*init_color_ref(char **env);
 
 #endif

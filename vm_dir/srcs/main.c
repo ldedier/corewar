@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 17:19:23 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/13 23:48:49 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/14 17:59:16 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int		main(int argc, char **argv, char **env)
 	if (!check_type(argc, argv))
 		error_exit_msg(WRG_FILE_TYPE);
 	check_header();
-	init_vm(&vm, argv);
+	init_vm(&vm, argv, env);
 	flags(&vm, argc, argv);
 	if (read_files(&vm))
 		return (1);

@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/13 19:20:01 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/14 18:01:50 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static void		reset_live_allprocesses(t_vm *vm)
 		}
 		else if ((proc->live = 1))
 		{
-			vm->live.last_pl = proc->id;
+			vm->live.last_pl = proc;
 			players = players->next;
 		}
 	}
@@ -121,7 +121,7 @@ static void		launch_instruction(t_vm *vm, t_process *proc)
 		display(vm, proc, PL_CYCLE);
 		--proc->cycle; // voir si pertinent
 		if (ins.op.opcode == LIVE)
-			display(vm, get_proc_num(vm->proc, vm->live.last_pl), LAST_LIVE);
+			display(vm, get_proc_num(vm->proc, vm->live.last_pl->player->num), LAST_LIVE);
 		proc->ins_cycle = ret;
 	}
 	else
@@ -142,7 +142,7 @@ static int	handle_end_cycle(t_vm *vm)
 	reset_live_allprocesses(vm);
 	if (vm->nb_players <= 1 || !vm->c_to_die)
 	{
-		display(vm, get_proc_num(vm->proc, vm->live.last_pl), PL_VICTORY);
+		display(vm, get_proc_num(vm->proc, vm->live.last_pl->player->num), PL_VICTORY);
 		return (0);
 	}
 	check_resize_cycle(vm, &vm->cycle);

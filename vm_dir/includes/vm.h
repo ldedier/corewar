@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/13 22:43:46 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/14 18:04:00 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,7 @@
 
 typedef struct		s_process
 {
-	int				id;
-	char			colindex;
-	char			name[PROG_NAME_LENGTH + 1];
+	t_player		*player;
 	int				live;
 	unsigned char	reg[REG_NUMBER];
 	int				pc;
@@ -46,7 +44,7 @@ typedef struct		s_live
 {
 	int		nb;
 	int		total_pl;
-	int		last_pl;
+	t_process	*last_pl;
 }									t_live;
 
 typedef struct		s_vm
@@ -58,7 +56,7 @@ typedef struct		s_vm
 	int				nb_players;
 	char			**files;
 	int				dump;
-	char			color[MAX_PL_COL];
+	char			color[MAX_PL_COLOR];
 	t_client		client;
 	t_visu			visu;
 	char			arena[MEM_SIZE];
@@ -83,7 +81,7 @@ void				ft_error_exit(const char *error);
 void				error_exit_msg(const char *error);
 int					check_type(int ac, char **av);
 void				check_header(void);
-void				init_vm(t_vm *vm, char **argv);
+void				init_vm(t_vm *vm, char **argv, char **env);
 void				corehub_port_and_address(t_vm *vm, int argc,
 						char **argv, int *cur);
 void				flags(t_vm *vm, int argc, char **argv);
@@ -111,6 +109,11 @@ void				cycle_nb(t_vm *vm, t_process *proc);
 void				last_live(t_vm *vm, t_process *proc);
 void				turn_player(t_vm *vm, t_process *proc);
 
+/*
+** ENV
+*/
+
+int					get_envar(char **env, char ****envvar);
 
 /*
 ** INSTRUCTIONS
@@ -141,9 +144,7 @@ int					ins_aff(t_vm *vm, t_process *proc, t_parameter arg[3]);
 ** PLAY
 */
 
-//void				check_resize_cycle(t_vm *vm, int *cycle);
 int					play(t_vm *vm);
-//void				launch_instruction(t_vm *vm, int player);
 
 /*
 ** UTILS
