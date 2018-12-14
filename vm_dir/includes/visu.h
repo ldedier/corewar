@@ -45,14 +45,14 @@
 
 # define PLAYER_INNER_BORDER	6
 # define CROSS_BORDER			PLAYER_INNER_BORDER * 3
-# define CROSS_IB				CROSS_BORDER / 8
+# define CROSS_IB				0
 
 # define S_TITLE_SIDE			100
 # define S_TITLE_HEIGHT			50
 
 # define UPLOAD_LEFT			PLAYER_BORDER_LEFT / 2
 # define UPLOAD_RIGHT			PLAYER_BORDER_LEFT / 2
-# define SORT_PADDING			50
+# define SORT_PADDING			20
 # define SORT_SCORE_RIGHT		PLAYER_BORDER_LEFT / 2
 
 # define X_DIFF					7
@@ -156,7 +156,6 @@ typedef struct          s_reactive
 {
 	double              w_scale;
 	double              h_scale;
-	int                 grass_border;
 }                       t_reactive;
 
 typedef struct          s_framerate
@@ -194,12 +193,15 @@ typedef struct			s_center
 	double				title_side;
 	double				title_bottom;
 
-	double				player_left;
-	double				player_right;
-	double				player_w;
-	double				player_h;
+	int					player_left;
+	int					player_right;
+	int					player_w;
+	int					player_h;
 	double				player_padding;
 	double				player_bottom;
+
+	int					cross_border;
+	int					player_inner_border;
 
 	double				upload_left;
 	double				upload_right;
@@ -250,9 +252,15 @@ typedef enum			e_clickable_nature
 	PLAYER_CROSS
 }						t_clickable_nature;
 
+typedef union			u_button_union
+{
+	t_player			*player;
+}						t_button_union;
+
 typedef struct			s_clickable_container
 {
 	t_clickable_nature	clickable_nature;
+	t_button_union		button_union;
 	void				*clickable;
 }						t_clickable_container;
 
@@ -314,5 +322,5 @@ void					ft_drop_dragged_player(t_vm *vm, int x, int y);
 void					ft_update_cursor(t_vm *vm, int x, int y);
 void					ft_change_cursor(t_vm *vm, int index);
 int						ft_is_on_clickable(t_vm *vm, int x, int y,
-							t_player **player);
+							t_clickable_container *cc);
 #endif

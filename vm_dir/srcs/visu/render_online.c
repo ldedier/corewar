@@ -27,15 +27,35 @@ int			ft_render_server_title(t_vm *vm, double y)
 	return (0);
 }
 
+int			ft_render_button(SDL_Surface *logo, SDL_Surface *to, t_button button)
+{
+	if (SDL_BlitScaled(logo, NULL,
+				to, &(button.rect)) < 0)
+		return (ft_net_error());
+	return (0);
+}
+
+int			ft_render_buttons(t_vm *vm, t_button buttons[NB_BUTTONS])
+{
+	ft_render_button(vm->visu.sdl.images[UL], vm->visu.sdl.w_surface,
+		buttons[UPLOAD_BUTTON]);
+	ft_render_button(vm->visu.sdl.images[SORT_ALPHA], vm->visu.sdl.w_surface,
+		buttons[ALPHA_SORT_BUTTON]);
+	ft_render_button(vm->visu.sdl.images[SORT_SCORE], vm->visu.sdl.w_surface,
+		buttons[SCORE_SORT_BUTTON]);
+	return (0);
+}
+
 int			ft_render_toolbar(t_vm *vm, double y)
 {
 	t_xy xy;
-
 	xy.x = vm->visu.center.dashboard_x + vm->visu.center.upload_left;
 	xy.y = y;
 	ft_render_player(vm, &(vm->client.upload_player), xy, ARENA);
-	xy.x += vm->visu.center.player_w;
+	//xy.x += vm->visu.center.player_w;
 	//draw buttons
+	ft_render_buttons(vm, vm->visu.sdl.buttons);
+//	ft_printf("OUAI\n");
 	return (0);
 }
 

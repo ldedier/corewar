@@ -24,10 +24,44 @@ void		ft_key_up(t_vm *vm, SDL_Keycode code)
 	(void)code;
 }
 
-int			ft_is_on_clickable(t_vm *vm, int x, int y, t_player **player)
+int			ft_is_in_rect(int x, int y, SDL_Rect rect)
 {
-	if (ft_is_on_close(vm, x, y, player))
+	return (x > rect.x && x < rect.x + rect.w &&
+				y > rect.y && y < rect.y + rect.h);
+}
+
+int			ft_is_on_button(t_vm *vm, int x, int y, t_button **button)
+{
+	int i;
+
+	i = 0;
+	while (i < NB_BUTTONS)
+	{
+		if (ft_is_in_rect(x, y,vm->visu.sdl.buttons[i].rect))
+		{
+			if (button != NULL)
+				*button = &(vm->visu.sdl.buttons[i]);
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}
+
+int			ft_is_on_clickable(t_vm *vm, int x, int y, t_clickable_container *cc)
+{
+	if (ft_is_on_close(vm, x, y, (cc == NULL ? NULL : (t_player **)&(cc->clickable))))
+	{
+		if (cc != NULL)
+			cc->clickable_nature = PLAYER_CROSS;
 		return (1);
+	}
+	if (ft_is_on_button(vm, x, y, cc == NULL ? NULL : (t_button**)&(cc->clickable)))
+	{
+		if (cc != NULL)
+			cc->clickable_nature = BUTTON;
+		return (1);
+	}
 	return (0);
 }
 
@@ -58,13 +92,21 @@ void		ft_mouse_down(t_vm *vm, SDL_Event event)
 
 void		ft_process_mouse_up(t_vm *vm, int x, int y)
 {
-	t_player	*player;
+	t_clickable_container	cc;
 
-	if ((ft_is_on_close(vm, x, y, &player)))
+	if ((ft_is_on_clickable(vm, x, y, &cc)))
 	{
-		player->relevant = 0;
-		dispatch_players(vm);
-		ft_update_cursor(vm, x, y);
+		if (cc.clickable_nature == PLAYER_CROSS)
+		{
+			((t_player *)(cc.clickable))->relevant = 0;
+			dispatch_players(vm);
+			ft_update_cursor(vm, x, y);
+
+		}
+		else if (cc.clickable_nature == BUTTON)
+		{
+			((t_button *)(cc.clickable))->action(vm, cc.button_union);
+		}
 	}
 }
 

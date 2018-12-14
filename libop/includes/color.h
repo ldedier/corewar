@@ -20,9 +20,9 @@
 # define COL				t_color
 
 # define NB_DESIGNATOR		17
-# define NB_COLORS		17
+# define NB_COLORS			17
 # define COL_DESIGNATOR		"brgwlmcyBRGWLMCYx"
-# define MAX_PL_COL		8
+# define MAX_PL_COL			8
 
 /*
 ** PADDING

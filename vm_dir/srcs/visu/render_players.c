@@ -40,9 +40,9 @@ int		ft_render_closing_cross(t_vm *vm, t_xy xy)
 {
 	SDL_Rect	cross_rect;
 
-	cross_rect.w = CROSS_BORDER;
-	cross_rect.h = CROSS_BORDER;
-	cross_rect.x = xy.x + vm->visu.center.player_w - CROSS_BORDER;
+	cross_rect.w = vm->visu.center.cross_border;
+	cross_rect.h = vm->visu.center.cross_border;
+	cross_rect.x = xy.x + vm->visu.center.player_w - vm->visu.center.cross_border;
 	cross_rect.y = xy.y;
 	if (SDL_BlitScaled(vm->visu.sdl.images[CLOSE], NULL,
 			vm->visu.sdl.w_surface, &cross_rect) < 0)
@@ -85,10 +85,10 @@ void	ft_render_player_name(t_vm *vm, SDL_Rect player_rect, t_player *player)
 	SDL_Rect name_rect;
 	SDL_Rect inner_rect;
 
-	inner_rect.w = player_rect.w - PLAYER_INNER_BORDER * 2;
-	inner_rect.h = player_rect.h - PLAYER_INNER_BORDER * 2;
-	inner_rect.x = player_rect.x + PLAYER_INNER_BORDER;
-	inner_rect.y = player_rect.y + PLAYER_INNER_BORDER;
+	inner_rect.w = player_rect.w - vm->visu.center.player_inner_border * 2;
+	inner_rect.h = player_rect.h - vm->visu.center.player_inner_border * 2;
+	inner_rect.x = player_rect.x + vm->visu.center.player_inner_border;
+	inner_rect.y = player_rect.y + vm->visu.center.player_inner_border;
 	SDL_FillRect(vm->visu.sdl.w_surface, &inner_rect,
 		ft_get_player_color_no_drag(vm, player, PLAYER_COL, 1.2));
 	name_rect.w = player_rect.w / 2;
