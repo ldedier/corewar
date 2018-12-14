@@ -37,10 +37,9 @@ void	update_nb_players(t_vm *vm)
 **its parameters to their default value.
 */
 
-void					init_vm(t_vm *vm, char **argv)
+void					init_vm(t_vm *vm, char **argv, char **env)
 {
-	int i;
-
+//	int i;
 	vm->c_to_die = CYCLE_TO_DIE;
 	vm->files = argv;
 	vm->win = 0;
@@ -53,27 +52,26 @@ void					init_vm(t_vm *vm, char **argv)
 	vm->client.port = 0;
 	vm->visu.active = 0;
 	vm->cycle = 0;
+	
 	ft_bzero(vm->arena, MEM_SIZE);
-	i = 0;
-	while (i < MAX_PLAYERS)
-	{
-		vm->player[i].relevant = 0;
-		i++;
-	}
-	ft_strcpy(vm->color, "xRWMGCgw"); // sera gere differemment par la suite
-	set_colors(vm->color);
+	ft_bzero(vm->player, sizeof(t_player * MAX_PLAYERS));
+	init_color_ref(env, (char *)vm->color);
+//	i = 0;
+//	while (i < MAX_PLAYERS)
+//	{
+//		vm->player[i].relevant = 0;
+//		i++;
+//	}
 }
 
-t_list	*add_process(t_vm *vm, char *name, int nb, int start, int num) //need name?
+t_list	*add_process(t_vm *vm, int index) //need name?
 {
 	t_process	*process;
 
 	process = (t_process *)ft_memalloc(sizeof(t_process));
-	process->colindex = (nb + 1) % MAX_PL_COL; //quick fix, needs rework
+	process->player = vm->player[index];
 	process->pc = start;
-	ft_strcpy(process->name, name);
-	process->id = num;
-	process->reg[0] = num;
+	process->reg[0] = process->player.num;
 	if (ft_add_to_list_ptr(&vm->proc, (void *)process, sizeof(t_process)))
 		return (NULL);
 	return (vm->proc);
@@ -86,40 +84,29 @@ t_list	*add_process(t_vm *vm, char *name, int nb, int start, int num) //need nam
 
 int		dispatch_players(t_vm *vm)
 {
-	int		nb;
-	int		i;
-	int		j;
-	int		start;
-	char	*algo;
+	int			index;
+	int			i;
+	int			j;
+	int			start;
 
 	update_nb_players(vm);
 	ft_bzero(vm->arena, MEM_SIZE);
 	ft_bzero(vm->metarena, sizeof(vm->metarena));
 	ft_lstdel_value(&vm->proc);
-	i = 0;
-	nb = 0;
-	while (i < MAX_PLAYERS)
-	{
-		if (vm->player[i].relevant)
+	i = -1;
+	while (++i < MAX_PLAYERS && !(index = 0))
+		if (++index && vm->player[i].relevant && (j = -1))
 		{
 			start = (MEM_SIZE / vm->nb_players) * nb;
-			algo = vm->player[i].algo;
-			if (!add_process(vm, vm->player[i].name, nb, start, vm->player[i].num))
+			set_color(player[i], vm->color, index % MAX_PL_COLOR);
+			if (!add_process(vm, start, i))
 				return (-1);
-			vm->player[i].color_index =
-				((t_process *)(vm->proc->content))->colindex;
-			j = 0;
-			while (j < vm->player[i].algo_len)
+			while (++j < vm->player[i].algo_len)
 			{
-				vm->metarena[start].color_index = ((t_process *)(vm->proc->content))->colindex;
-				vm->arena[start] = algo[j];
-				j++;
-				start++;
+				vm->metarena[start + j].color = vm->player[i]->color.index;
+				vm->arena[start + j] = vm->player[i].algo[j];
 			}
-			nb++;
 		}
-		i++;
-	}
 	vm->live.last_pl = vm->player[vm->nb_players - 1].num;
 	return (0);
 }

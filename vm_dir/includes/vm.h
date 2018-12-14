@@ -22,7 +22,6 @@
 # include <fcntl.h>
 # include "libft.h"
 
-# define NEEDS_OCP	60925
 # define NB_TYPES	3
 
 typedef struct		s_process

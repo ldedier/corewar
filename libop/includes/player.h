@@ -43,7 +43,7 @@ typedef struct      s_player
 	int				num;
 	char			relevant;
 	char			*cor_name;
-	char			color_index;
+	t_color			*color;
 }					t_player;
 
 int					ft_read_player(char *path, t_player *player);

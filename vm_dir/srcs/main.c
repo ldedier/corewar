@@ -12,7 +12,7 @@
 
 #include "vm.h"
 
-int		main(int argc, char **argv)
+int		main(int argc, char **argv, char **env)
 {
 	t_vm	vm;
 

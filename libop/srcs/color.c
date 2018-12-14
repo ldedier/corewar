@@ -12,58 +12,63 @@
 
 #include "op.h"
 
-void	color_off(void)
+void		color_off(void)
 {
 	ft_printf("%s", COLF_OFF);
 }
 
-int		color_on_term(t_color	*color)
+void		color_on_term(char index)
 {
-	return (ft_printf("%s", color->term));
+	ft_printf("%s", (char *)(get_term_color(index) + sizeof(int)));
 }
 
-int		color_on_sdl(t_color	*color)
+void	*get_color_ptr(char index)
 {
-	return (color->sdl);
+	static t_color_type [NB_COLORS] = {
+		{COL_BLACK, COLF_BLACK},
+		{COL_RED, COLF_RED},
+		{COL_GREEN, COLF_GREEN},
+		{COL_BROWN, COLF_BROWN},
+		{COL_BLUE, COLF_BLUE},
+		{COL_MAGENTA, COLF_MAGENTA},
+		{COL_CYAN, COLF_CYAN},
+		{COL_GREY, COLF_GREY}, 
+		{COL_BBLACK, COLF_BBLACK},
+		{COL_BRED, COLF_BRED},
+		{COL_BGREEN, COLF_BGREEN},
+		{COL_BBROWN, COLF_BBROWN},
+		{COL_BBLUE, COLF_BBLUE},
+		{COL_BMAGENTA, COLF_BMAGENTA},
+		{COL_BCYAN, COLF_BCYAN},
+		{COL_BGREY, COLF_BGREY},
+		{COL_OFF, COLF_OFF}};
+	return ((void *)color[index];
 }
 
-int		color_on(char	*color, int index, int output)
+void		set_color(t_player *player, char *color_index_ref, char index)
 {
-	static int	(*f[2])(t_color *color) = {
-		&color_on_term, &color_on_sdl};
-	static t_color col_fg[NB_COLORS] = {
-		{COLF_BLACK, COL_BLACK},
-		{COLF_RED, COL_RED},
-		{COLF_GREEN, COL_GREEN},
-		{COLF_BROWN, COL_BROWN},
-		{COLF_BLUE, COL_BLUE},
-		{COLF_MAGENTA, COL_MAGENTA},
-		{COLF_CYAN, COL_CYAN},
-		{COLF_GREY, COL_GREY},
-		{COLF_BBLACK, COL_BBLACK},
-		{COLF_BRED, COL_BRED},
-		{COLF_BGREEN, COL_BGREEN},
-		{COLF_BBROWN, COL_BBROWN},
-		{COLF_BBLUE, COL_BBLUE},
-		{COLF_BMAGENTA, COL_BMAGENTA},
-		{COLF_BCYAN, COL_BCYAN},
-		{COLF_BGREY, COL_BGREY},
-		{COLF_OFF, 0}};
+	int	ref_index;
 
-	return (f[output](&col_fg[(int)color[index]]));
+	player->color.index = index;
+	ref_index = ft_strichr(COL_DESIGNATOR, color[index]);
+	player->color.value = get_color_ptr((char)ref_index);
 }
 
-void	set_colors(char	*color)
+static void	init_color_ref(char **env, char *color)
 {
-	int		index;
-	int		new_ref;
-	
-	index = 0;
-	while (color[index])
-	{
-		new_ref = ft_strichr(COL_DESIGNATOR, color[index]);
-		if (new_ref != -1)
-			color[index] = new_ref;
-		++index;
+	char	***env_var;
+	int	i;
+	int	nb_envar;
+
+	if (!color[2])
+	{	
+		nb_envar = get_envvar(env, &env->var);
+		if (get_envvar_index(env_var, COREWAR_VAR_NAME, nb_envar)
+			ft_strncpy(color, env_var[index][1], MAX_PL_COLOR);
+		else
+			ft_strncpy(color, DEFAULT_COLORS, MAX_PL_COLOR);
+		i = -1;
+		while (color[++i])
+			color = ft_strichr(COL_DESIGNATOR, (int)color[i]);
 	}
 }

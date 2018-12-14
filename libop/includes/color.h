@@ -22,7 +22,8 @@
 # define NB_DESIGNATOR		17
 # define NB_COLORS		17
 # define COL_DESIGNATOR		"brgwlmcyBRGWLMCYx"
-# define MAX_PL_COL		8
+# define MAX_PL_COLOR		9
+# define DEFAULT_COLORS		"xRZMGCgw"
 
 /*
 ** PADDING
@@ -83,9 +84,15 @@
 
 typedef struct		s_color
 {
+	void	*value;
+	int	index;
+}			t_color;
+
+typedef struct		s_color_type
+{
+	int	sdl
 	char	*term;
-	int		sdl;
-}					t_color;
+			s_color_type;
 
 enum				e_output
 {
