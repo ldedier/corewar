@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/11 17:47:31 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/13 23:51:03 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/14 19:17:31 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,14 +103,13 @@ void	ft_render_relevant_player(t_vm *vm, t_player *player,
 {
 	SDL_Rect rect;
 
+	(void)source;
 	rect.x = xy.x;
 	rect.y = xy.y;
 	rect.w = vm->visu.center.player_w;
 	rect.h = vm->visu.center.player_h;
 	SDL_FillRect(vm->visu.sdl.w_surface, &rect, PLAYER_COL_BORDER);
 	ft_render_player_name(vm, rect, player);
-	if (source == ARENA || source == UPLOAD)
-		ft_render_closing_cross(vm, xy);
 }
 
 int		ft_render_player(t_vm *vm, t_player *player, t_xy xy,
@@ -147,7 +146,6 @@ void	ft_render_title(t_vm *vm, int title_index, double x, double y)
 		ft_net_error();
 }
 
-
 int		ft_render_dragged_player(t_vm *vm)
 {
 	t_xy xy;
@@ -160,8 +158,11 @@ int		ft_render_dragged_player(t_vm *vm)
 		xy.y = ft_fclamp(0, vm->visu.drag_container.y -
 				vm->visu.drag_container.diff_y,
 					vm->visu.dim.height - vm->visu.center.player_h);
-		ft_render_relevant_player(vm, vm->visu.drag_container.player,
-			xy, vm->visu.drag_container.source);
+		ft_render_relevant_player(vm, vm->visu.drag_container.player, xy,
+			vm->visu.drag_container.source);
+		if (vm->visu.drag_container.source == ARENA ||
+				vm->visu.drag_container.source == UPLOAD)
+			ft_render_closing_cross(vm, xy);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/09 14:02:56 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/13 20:50:42 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/14 17:43:02 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,21 @@ int		ft_render_offline(t_vm *vm)
 	return (0);
 }
 
+int		ft_render_crosses(t_vm *vm)
+{
+	int i;
+
+	i = 0;
+	while (i < MAX_PLAYERS)
+	{
+		if (ft_render_button(vm->visu.sdl.w_surface,
+				vm->visu.positions.arena_slots[i].close))
+			return (ft_net_error());
+		i++;
+	}
+	return (0);
+}
+
 int		ft_render(t_vm *vm, t_sdl *sdl)
 {
 	//	SDL_SetRenderDrawColor(sdl->renderer, 100, 100, 100, 255);
@@ -56,6 +71,7 @@ int		ft_render(t_vm *vm, t_sdl *sdl)
 		return (1);
 	ft_render_lines(vm);
 	ft_render_players(vm);
+	ft_render_crosses(vm);
 	if (vm->client.active)
 		ft_render_online(vm);
 	else

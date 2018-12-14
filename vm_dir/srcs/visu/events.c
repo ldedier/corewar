@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/08 23:37:36 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/13 19:12:42 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/14 18:51:43 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,43 +24,54 @@ void		ft_key_up(t_vm *vm, SDL_Keycode code)
 	(void)code;
 }
 
-int			ft_is_in_rect(int x, int y, SDL_Rect rect)
+int			ft_is_in_rect(t_ixy xy, SDL_Rect rect)
 {
-	return (x > rect.x && x < rect.x + rect.w &&
-				y > rect.y && y < rect.y + rect.h);
+	return (xy.x > rect.x && xy.x < rect.x + rect.w &&
+				xy.y > rect.y && xy.y < rect.y + rect.h);
 }
 
-int			ft_is_on_button(t_vm *vm, int x, int y, t_button **button)
+int			ft_is_on_button(t_ixy xy, t_button *button,
+				t_button **to_fill)
 {
-	int i;
-
-	i = 0;
-	while (i < NB_BUTTONS)
+	if (!button->visible)
+		return (0);
+	if (ft_is_in_rect(xy, button->rect))
 	{
-		if (ft_is_in_rect(x, y,vm->visu.sdl.buttons[i].rect))
-		{
-			if (button != NULL)
-				*button = &(vm->visu.sdl.buttons[i]);
-			return (1);
-		}
-		i++;
+		if (to_fill != NULL)
+			*to_fill = button;
+		return (1);
 	}
 	return (0);
 }
 
-int			ft_is_on_clickable(t_vm *vm, int x, int y, t_clickable_container *cc)
+int			ft_is_on_close(t_vm *vm, t_ixy xy, t_button **but)
 {
-	if (ft_is_on_close(vm, x, y, (cc == NULL ? NULL : (t_player **)&(cc->clickable))))
+	int i;
+
+	i = 0;
+	while (i < MAX_PLAYERS)
 	{
-		if (cc != NULL)
-			cc->clickable_nature = PLAYER_CROSS;
-		return (1);
+		if (ft_is_on_button(xy, &(vm->visu.positions.arena_slots[i].close), but))
+			return (1);
+		i++;
 	}
-	if (ft_is_on_button(vm, x, y, cc == NULL ? NULL : (t_button**)&(cc->clickable)))
-	{
-		if (cc != NULL)
-			cc->clickable_nature = BUTTON;
+	if (ft_is_on_button(xy, &(vm->visu.positions.upload_slot.close), but))
 		return (1);
+	return (0);
+}
+
+int			ft_is_on_buttons(t_vm *vm, t_ixy xy, t_button **but)
+{
+	int i;
+
+	if (ft_is_on_close(vm, xy, but))
+		return (1);
+	i = 0;
+	while (i < NB_BUTTONS)
+	{
+		if (ft_is_on_button(xy, &(vm->visu.sdl.buttons[i]), but))
+			return (1);
+		i++;
 	}
 	return (0);
 }
@@ -79,58 +90,52 @@ void	ft_print_relevance(t_vm *vm)
 
 void		ft_mouse_down(t_vm *vm, SDL_Event event)
 {
+	t_ixy xy;
+
+	xy = new_ixy(event.button.x, event.button.y);
 	if (event.button.button == SDL_BUTTON_LEFT)
 	{
 		vm->visu.event_manager.enable_mouse_up = 1;
-		if (ft_is_on_draggable(vm, event.button.x, event.button.y,
-				&(vm->visu.drag_container)))
+		if (ft_is_on_draggable(vm, xy, &(vm->visu.drag_container)))
 		{
 			ft_change_cursor(vm, GRAB);
 		}
 	}
 }
 
-void		ft_process_mouse_up(t_vm *vm, int x, int y)
+void		ft_process_mouse_up(t_vm *vm, t_ixy xy)
 {
-	t_clickable_container	cc;
+	t_button	*button;
 
-	if ((ft_is_on_clickable(vm, x, y, &cc)))
-	{
-		if (cc.clickable_nature == PLAYER_CROSS)
-		{
-			((t_player *)(cc.clickable))->relevant = 0;
-			dispatch_players(vm);
-			ft_update_cursor(vm, x, y);
-
-		}
-		else if (cc.clickable_nature == BUTTON)
-		{
-			((t_button *)(cc.clickable))->action(vm, cc.button_union);
-		}
-	}
+	if ((ft_is_on_buttons(vm, xy, &button)))
+		button->on_click(vm, button, xy);
 }
 
 void		ft_mouse_up(t_vm *vm, SDL_Event event)
 {
-	ft_drop_dragged_player(vm, event.button.x, event.button.y);
+	t_ixy xy;
+
+	xy = new_ixy( event.button.x, event.button.y);
+	ft_drop_dragged_player(vm, xy);
 	if (event.button.button == SDL_BUTTON_LEFT &&
 		vm->visu.event_manager.enable_mouse_up)
 	{
 		vm->visu.event_manager.enable_mouse_up = 0;
-		// process_buttons/drag
-		ft_process_mouse_up(vm, event.button.x, event.button.y);
+		ft_process_mouse_up(vm, xy);
 	}
 	else
-		ft_update_cursor(vm, event.button.x, event.button.y);
+		ft_update_cursor(vm, xy);
 }
 
 void		ft_mouse_motion(t_vm *vm, SDL_Event event)
 {
-	ft_update_cursor(vm, event.motion.x, event.motion.y);
+	t_ixy xy;
+
+	xy = new_ixy(event.motion.x, event.motion.y);
+	ft_update_cursor(vm, xy);
 	vm->visu.drag_container.x = event.motion.x;
 	vm->visu.drag_container.y = event.motion.y;
-	ft_is_on_droppable(vm, event.motion.x, event.motion.y,
-		&(vm->visu.drop_container.player));
+	ft_is_on_droppable(vm, xy, &(vm->visu.drop_container)); //update droppable player
 }
 
 void		ft_process_keys(t_vm *vm, const Uint8 *keys)
