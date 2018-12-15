@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 15:02:55 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/14 18:16:22 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/15 21:11:17 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void	ft_populate_sdl_color_from_int(int color, SDL_Color *sdl_color)
 	col = ft_get_color(color);
 	sdl_color->r = col.r;
 	sdl_color->g = col.g;
-	sdl_color->g = col.b;
+	sdl_color->b = col.b;
 }
 
 int		ft_init_atlas(t_vm *vm, t_sdl *sdl)
@@ -173,6 +173,9 @@ int		ft_init_textures(t_visu *visu)
 	if (!(visu->sdl.titles[SCOREWAR] =
 			ft_init_font_surface_sdl("Scorewar server", visu->sdl)))
 		return (1);
+	if (!(visu->sdl.titles[UPLOAD_HERE] =
+			ft_init_font_surface_sdl("upload slot", visu->sdl)))
+		return (1);
 	if (!(visu->sdl.images[CLOSE] = ft_load_image(PATH"/resources/close.png")))
 		return (1);
 	if (!(visu->sdl.images[DL] = ft_load_image(PATH"/resources/download.png")))
@@ -228,6 +231,8 @@ void	ft_init_center_players(t_visu *visu, t_center *c)
 	c->player_padding = PLAYER_PADDING * visu->react.h_scale;
 	c->player_bottom = PLAYER_BORDER_BOTTOM * visu->react.h_scale;
 
+	c->player_inner_border = PLAYER_INNER_BORDER * ft_fmin(visu->react.w_scale, visu->react.h_scale);
+	c->cross_border = CROSS_BORDER * ft_fmin(visu->react.w_scale, visu->react.h_scale);
 	c->player_w = (visu->dim.width - c->dashboard_mid_x) - (c->player_left + c->player_right);
 	c->player_h = (c->top_dashboard_height - (double)(c->title_top + c->title_h +
 				c->title_bottom + ((MAX_PLAYERS - 1) * c->player_padding) +
@@ -261,22 +266,59 @@ void	ft_init_center(t_visu *visu, t_center *c)
 	ft_init_center_online(visu, c);
 }
 
-void	ft_populate_upload_slot(t_visu *v)
+t_ixy	new_ixy(int x, int y)
 {
+	t_ixy res;
+
+	res.x = x;
+	res.y = y;
+	return (res);
+}
+
+void	ft_delete_player(t_vm *vm, t_button *this, t_ixy xy)
+{
+	this->button_union.player->relevant = 0;
+	dispatch_players(vm);
+	this->visible = 0;
+	ft_update_cursor(vm, xy);
+}
+
+void	ft_populate_closing_button(t_vm *vm, t_button *button,
+			t_player *player, t_ixy xy)
+{
+	button->rect.x = xy.x;
+	button->rect.y = xy.y;
+	button->rect.w = vm->visu.center.cross_border;
+	button->rect.h = vm->visu.center.cross_border;
+	button->surface = vm->visu.sdl.images[CLOSE];
+	button->button_union.player = player;
+	button->on_click = &ft_delete_player;
+	button->visible = 0;
+}
+
+void	ft_populate_upload_slot(t_vm *vm, t_visu *v)
+{
+	t_ixy xy;
+
 	v->positions.upload_slot.player.x = v->center.dashboard_x +
 		v->center.upload_left;
 	v->positions.upload_slot.player.y = v->center.top_dashboard_height +
 		v->center.title_top + v->center.s_title_h +
 			v->center.title_bottom;
-	v->positions.upload_slot.close.x =  v->positions.upload_slot.player.x +
-		v->center.player_w - CROSS_BORDER;
-	v->positions.upload_slot.close.y = v->positions.upload_slot.player.y;
+
+	xy.x = v->positions.upload_slot.player.x + v->center.player_w -
+			v->center.cross_border;
+	xy.y = v->positions.upload_slot.player.y;
+
+	ft_populate_closing_button(vm,
+		&(v->positions.upload_slot.close), &vm->client.upload_player, xy);
 }
 
-void    ft_populate_slots_positions(t_visu *v)
+void    ft_populate_slots_positions(t_vm *vm, t_visu *v)
 {
 	int		i;
 	double	y;
+	t_ixy	xy;
 
 	y = v->center.title_top;
 	y += v->center.title_h + v->center.title_bottom;
@@ -286,17 +328,18 @@ void    ft_populate_slots_positions(t_visu *v)
 		v->positions.arena_slots[i].player.x = v->center.dashboard_x +
 			v->center.player_left;
 		v->positions.arena_slots[i].player.y = y;
-		v->positions.arena_slots[i].close.x =
-			v->positions.arena_slots[i].player.x +
-				v->center.player_w - CROSS_BORDER;
-		v->positions.arena_slots[i].close.y = y;
+		xy.x = v->positions.arena_slots[i].player.x +
+				v->center.player_w - v->center.cross_border;
+		xy.y = y;
+		ft_populate_closing_button(vm, &(v->positions.arena_slots[i].close),
+			&(vm->player[i]), xy);
 		v->positions.local_slots[i].player.x = v->center.dashboard_mid_x +
 			v->center.player_left;
 		v->positions.local_slots[i].player.y = y;
 		y += v->center.player_h + v->center.player_padding;
 		i++;
 	}
-	ft_populate_upload_slot(v);
+	ft_populate_upload_slot(vm, v);
 }
 
 int		ft_populate_cursor(t_cursor_packer *cp, char *str, int hot_x, int hot_y)
@@ -325,6 +368,61 @@ int		ft_init_cursors(t_visu *v)
 	return (0);
 }
 
+void	nothing(t_vm *vm, t_button *this, t_ixy xy)
+{
+	(void)vm;
+	(void)this;
+	(void)xy;
+	ft_printf("hehehe\n");
+}
+
+void	ft_init_button(t_button *button, SDL_Rect rect, SDL_Surface *surface,
+			void (*on_click)(t_vm *, t_button *, t_ixy xy))
+{
+	button->rect = rect;
+	button->surface = surface;
+	button->on_click = on_click;
+	button->visible = 1;
+}
+
+void	ft_init_buttons(t_vm *vm, t_visu *visu)
+{
+	SDL_Rect	rect;
+
+	rect.w = visu->center.player_h;
+	rect.h = visu->center.player_h;
+	rect.x = visu->center.dashboard_x + visu->center.upload_left +
+		visu->center.player_w + visu->center.upload_right;
+	rect.y =  visu->center.top_dashboard_height + visu->center.s_title_h +
+		visu->center.title_bottom + visu->center.title_top;
+
+	ft_init_button(&(visu->sdl.buttons[UPLOAD_BUTTON]), rect,
+		vm->visu.sdl.images[UL], &nothing);
+
+	rect.x += visu->center.player_h + visu->center.toolbar_blank;
+
+	ft_init_button(&(visu->sdl.buttons[ALPHA_SORT_BUTTON]), rect,
+		vm->visu.sdl.images[SORT_ALPHA], &nothing);
+	
+	rect.x += visu->center.player_h + visu->center.sort_padding;
+
+	ft_init_button(&(visu->sdl.buttons[SCORE_SORT_BUTTON]), rect,
+		vm->visu.sdl.images[SORT_SCORE], &nothing);
+}
+
+void	ft_init_crosses(t_vm *vm)
+{
+	int i;
+
+	i = 0;
+	while (i < MAX_PLAYERS)
+	{
+		if (vm->player[i].relevant)
+			vm->visu.positions.arena_slots[i].close.visible = 1;
+		i++;
+	}
+}
+
 int		ft_init_all_sdl(t_vm *vm, t_visu *v)
 {
 	ft_init_sdl_to_null(v);
@@ -346,11 +444,13 @@ int		ft_init_all_sdl(t_vm *vm, t_visu *v)
 	v->react.w_scale = (double)v->dim.width / 2560.0;
 	v->react.h_scale = (double)v->dim.height / 1440.0;
 	ft_init_center(v, &(v->center));
-	ft_populate_slots_positions(v);
+	ft_populate_slots_positions(vm, v);
+	ft_init_buttons(vm, v);
 	v->sdl.current_cursor = REGULAR;
 	v->event_manager.enable_mouse_up = 1;
 	v->drag_container.player = NULL;
 	v->drop_container.player = NULL;
+	ft_init_crosses(vm);
 	SDL_SetCursor(v->sdl.cursor_packers[REGULAR].cursor);
 	return (0);
 }

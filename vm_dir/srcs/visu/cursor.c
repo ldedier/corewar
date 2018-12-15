@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 19:11:34 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/13 19:11:40 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/14 16:58:40 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ void		ft_change_cursor(t_vm *vm, int index)
 	}
 }
 
-void		ft_update_cursor(t_vm *vm, int x, int y)
+void		ft_update_cursor(t_vm *vm, t_ixy xy)
 {
-	if (ft_is_on_clickable(vm, x, y, NULL))
+	if (ft_is_on_buttons(vm, xy, NULL))
 		ft_change_cursor(vm, CLICK);
-	else if (ft_is_on_draggable(vm, x, y, NULL))
+	else if (ft_is_on_draggable(vm, xy, NULL))
 		ft_change_cursor(vm, DRAGGABLE);
 	else
 		ft_change_cursor(vm, REGULAR);

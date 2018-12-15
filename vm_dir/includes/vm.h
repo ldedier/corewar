@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/14 18:04:00 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/15 18:29:17 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ typedef struct		s_metadata
 
 typedef struct		s_live
 {
-	int		nb;
-	int		total_pl;
-	t_process	*last_pl;
-}									t_live;
+	int				nb;
+	int				total_pl;
+	t_process		*last_pl;
+}					t_live;
 
 typedef struct		s_vm
 {

@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 19:01:37 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/14 17:54:45 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/15 18:29:39 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,13 @@
 */
 # include "libft.h"
 
-# define REG_SIZE				1
-# define DIR_SIZE				4
+# define E_IND					2
+# define E_REG					1
+# define E_DIR					4
+
 # define IND_SIZE				2
+# define REG_SIZE				4
+# define DIR_SIZE				REG_SIZE
 
 # define REG_CODE				1
 # define DIR_CODE				2
@@ -44,7 +48,6 @@
 # define CYCLE_DELTA			50
 # define NBR_LIVE				21
 # define MAX_CHECKS				2 //anciennement 10
-
 
 # define T_REG					1
 # define T_DIR					2
@@ -102,8 +105,6 @@
 # define AFF_ARG_TYPE			GET_ARGTYPE(R, 0)
 
 # define NEEDS_OCP				60925
-
-
 
 typedef char	t_arg_type;
 
@@ -169,8 +170,6 @@ enum				e_mod_carry
 };
 
 t_op							g_op_tab[NB_INSTRUCTIONS + 1];
-
-
 
 void							set_argval(t_parameter *arg, int index, int size);
 int								get_instruction(char *arena, t_instruction *ins, int i, int mod);

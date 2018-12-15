@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 16:42:17 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/14 19:07:25 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/15 21:44:14 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	update_nb_players(t_vm *vm)
 void					init_vm(t_vm *vm, char **argv, char **env)
 {
 	int i;
+
 	vm->c_to_die = CYCLE_TO_DIE;
 	vm->files = argv;
 	vm->win = 0;
@@ -95,7 +96,8 @@ int		dispatch_players(t_vm *vm)
 	i = -1;
 	index = 0;
 	while (++i < MAX_PLAYERS)
-		if (++index && vm->player[i].relevant && (j = -1))
+	{
+		if (vm->player[i].relevant && ++index && (j = -1))
 		{
 			start = (MEM_SIZE / vm->nb_players) * (index - 1);
 			set_color(&vm->player[i], vm->color, index % MAX_PL_COLOR);
@@ -107,6 +109,8 @@ int		dispatch_players(t_vm *vm)
 				*(vm->arena + start + j) = vm->player[i].algo[j];
 			}
 		}
-	vm->live.last_pl = (t_process *)(vm->proc->content);
+	}
+	if (vm->proc)
+		vm->live.last_pl = (t_process *)(vm->proc->content);
 	return (0);
 }

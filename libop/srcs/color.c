@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 20:42:40 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/14 19:07:24 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/15 20:55:25 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,9 @@ char	*init_color_ref(char **env)
 			ft_strlcat(color_ref_index, DEFAULT_COLORS, MAX_PL_COLOR);
 		i = -1;
 		while (color_ref_index[++i])
+		{
 			color_ref_index[i] = (char)ft_strichr(COL_DESIGNATOR, color_ref_index[i]);
+		}
 	}
 	return (color_ref_index);
 }

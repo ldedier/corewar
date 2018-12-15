@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/14 17:47:44 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/15 18:28:42 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,14 @@
 
 # define PLAYER_INNER_BORDER	6
 # define CROSS_BORDER			PLAYER_INNER_BORDER * 3
-# define CROSS_IB				CROSS_BORDER / 8
+# define CROSS_IB				0
 
 # define S_TITLE_SIDE			100
 # define S_TITLE_HEIGHT			50
 
 # define UPLOAD_LEFT			PLAYER_BORDER_LEFT / 2
 # define UPLOAD_RIGHT			PLAYER_BORDER_LEFT / 2
-# define SORT_PADDING			50
+# define SORT_PADDING			20
 # define SORT_SCORE_RIGHT		PLAYER_BORDER_LEFT / 2
 
 # define X_DIFF					7
@@ -68,7 +68,8 @@
 # define BATTLEFIELD			0
 # define LOCAL_PLAYERS			1
 # define SCOREWAR				2
-# define COREWAR				3
+# define UPLOAD_HERE			3
+# define COREWAR				4
 
 # define NB_IMAGES				10
 
@@ -96,6 +97,7 @@
 # define BACKGROUND_COL			0x333333
 # define PLAYER_BACKGROUND_COL	0x444444
 # define PLAYER_HOVERED_BG_COL	0x666666
+# define UPLOAD_COLOR			PLAYER_BACKGROUND_COL
 # define LINE_COL				0xffffff
 
 # define DROP_TOLERANCE_W		100
@@ -122,11 +124,52 @@ typedef enum			e_player_source
 	SERVER
 }						t_player_source;
 
+typedef union			u_button_union
+{
+	char				*name;
+	t_player			*player;
+}						t_button_union;
+
+typedef struct			s_xy
+{
+	double				x;
+	double				y;
+}						t_xy;
+
+typedef struct			s_ixy
+{
+	int					x;
+	int					y;
+}						t_ixy;
+
 typedef struct			s_button
 {
 	SDL_Rect			rect;
-	void				(*action)();
+	SDL_Surface			*surface;
+	t_button_union		button_union;
+	char				visible;
+	void				(*on_click)(t_vm *, struct s_button *, t_ixy xy);
+	void				(*on_hover)(t_vm *, struct s_button *, t_ixy xy);
 }						t_button;
+
+/*
+** vertical scrollbar:
+** height:				the size of the section on the screen
+** compressed_height:	the actual size inside it (>= height)
+** state:				0 top, 1 bottom
+** pos:					bar position
+** y:					whole scrollbar y coordinate
+*/
+
+typedef struct			s_vscrollbar
+{
+	t_xy				pos;
+	double				state;
+	int					y;
+	int					height;
+	int					compressed_height;
+	int					bar_width;
+}						t_vscrollbar;
 
 typedef struct          s_sdl
 {
@@ -156,7 +199,6 @@ typedef struct          s_reactive
 {
 	double              w_scale;
 	double              h_scale;
-	int                 grass_border;
 }                       t_reactive;
 
 typedef struct          s_framerate
@@ -194,12 +236,15 @@ typedef struct			s_center
 	double				title_side;
 	double				title_bottom;
 
-	double				player_left;
-	double				player_right;
-	double				player_w;
-	double				player_h;
+	int					player_left;
+	int					player_right;
+	int					player_w;
+	int					player_h;
 	double				player_padding;
 	double				player_bottom;
+
+	int					cross_border;
+	int					player_inner_border;
 
 	double				upload_left;
 	double				upload_right;
@@ -210,16 +255,11 @@ typedef struct			s_center
 	double				s_title_side;
 }						t_center;
 
-typedef struct			s_xy
-{
-	double				x;
-	double				y;
-}						t_xy;
 
 typedef struct			s_slot
 {
 	t_xy				player;
-	t_xy				close;
+	t_button			close;
 }						t_slot;
 
 typedef struct			s_positions
@@ -232,6 +272,7 @@ typedef struct			s_positions
 typedef struct			s_drag_container
 {
 	t_player			*player;
+	t_button			*close;
 	t_player_source		source;
 	int					x;
 	int					y;
@@ -242,19 +283,8 @@ typedef struct			s_drag_container
 typedef struct			s_drop_container
 {
 	t_player			*player;
+	t_button			*close;
 }						t_drop_container;
-
-typedef enum			e_clickable_nature
-{
-	BUTTON,
-	PLAYER_CROSS
-}						t_clickable_nature;
-
-typedef struct			s_clickable_container
-{
-	t_clickable_nature	clickable_nature;
-	void				*clickable;
-}						t_clickable_container;
 
 typedef struct			s_event_manager
 {
@@ -304,15 +334,21 @@ t_color_manager			ft_scale_color(t_color_manager color, double scale);
 int						ft_render_player(t_vm *vm, t_player *player, t_xy xy,
 							t_player_source source);
 int						ft_render_dragged_player(t_vm *vm);
-int						ft_is_on_close(t_vm *vm, int x, int y,
-							t_player **player);
-int						ft_is_on_draggable(t_vm *vm, int x, int y,
+int						ft_is_on_close(t_vm *vm, t_ixy xy,
+							t_button **button);
+int						ft_is_on_draggable(t_vm *vm, t_ixy xy,
 							t_drag_container *dc);
-int						ft_is_on_droppable(t_vm *vm, int x, int y,
-							t_player **to_drop_on);
-void					ft_drop_dragged_player(t_vm *vm, int x, int y);
-void					ft_update_cursor(t_vm *vm, int x, int y);
+int						ft_is_on_droppable(t_vm *vm, t_ixy mouse,
+							t_drop_container *dc);
+void					ft_drop_dragged_player(t_vm *vm, t_ixy xy);
+void					ft_update_cursor(t_vm *vm, t_ixy xy);
 void					ft_change_cursor(t_vm *vm, int index);
-int						ft_is_on_clickable(t_vm *vm, int x, int y,
-							t_player **player);
+int						ft_is_on_button(t_ixy xy, t_button *button,
+							t_button **to_fill);
+int						ft_is_on_buttons(t_vm *vm, t_ixy xy, t_button **button);
+t_ixy					new_ixy(int x, int y);
+int						ft_render_button(SDL_Surface *to, t_button button);
+void					ft_delete_player(t_vm *vm, t_button *this, t_ixy xy);
+int						ft_get_player_color(t_vm *vm, t_player *player,
+							int initial_color, float value);
 #endif
