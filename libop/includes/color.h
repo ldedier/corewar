@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/22 15:55:47 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/15 21:11:46 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/15 22:11:29 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ enum				e_output
 	TERM, SDL
 };
 */
-void		set_color(t_player *player, char *color, char index);
+void		set_color(t_player *player, char *color);
 void		color_on_term(char index);
 int			get_color_sdl(char index);
 void		color_off(void);

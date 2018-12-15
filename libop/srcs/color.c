@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 20:42:40 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/15 20:55:25 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/15 22:15:48 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	*get_color_ptr(char index)
 		{COL_BLUE, COLF_BLUE},
 		{COL_MAGENTA, COLF_MAGENTA},
 		{COL_CYAN, COLF_CYAN},
-		{COL_GREY, COLF_GREY}, 
+		{COL_GREY, COLF_GREY},
 		{COL_BBLACK, COLF_BBLACK},
 		{COL_BRED, COLF_BRED},
 		{COL_BGREEN, COLF_BGREEN},
@@ -47,13 +47,28 @@ void		color_on_term(char index)
 
 int			get_color_sdl(char index)
 {
+	ft_printf("sdl color = %#x\n", *(int *)get_color_ptr(index));
 	return (*(int *)get_color_ptr(index));
 }
 
-void		set_color(t_player *player, char *color_index_ref, char index)
+void		set_color(t_player *player, char *color_index_ref)
 {
-	player->color.index = index;
-	player->color.value = get_color_ptr(color_index_ref[(int)index]);
+	static char color_counter[MAX_PL_COLOR];
+	int index_min_count;
+	int	i;
+
+	index_min_count = 0;
+	i = 0;
+	if (!player->relevant)
+		--color_counter[player->color.index];
+	if (player->color.value)
+		return ;
+	while (++i < MAX_PL_COLOR)
+		if (color_counter[i] < color_counter[index_min_count])
+			index_min_count = i;
+	++color_counter[index_min_count];
+	player->color.index = index_min_count;
+	player->color.value = get_color_ptr(color_index_ref[index_min_count]);
 }
 
 char	*init_color_ref(char **env)
@@ -65,7 +80,7 @@ char	*init_color_ref(char **env)
 	int index;
 
 	if (!color_ref_index[2])
-	{	
+	{
 		nb_envar = get_envar(env, &env_var);
 		if ((index = get_envar_index(env_var, COREWAR_VAR_NAME, nb_envar)) != -1)
 			ft_strlcat(color_ref_index, env_var[(int)index][1], MAX_PL_COLOR);
