@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 16:33:31 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/13 18:19:10 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/15 21:13:06 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int		set_arg_ptr(char *arena, t_instruction *ins, int i, int mod)
 
 static int		is_valid_ocp(unsigned char hex, t_instruction *ins)
 {
-	static int	len[4] = {NA, REG_SIZE, DIR_SIZE, IND_SIZE};
+	static int	len[4] = {NA, E_REG, E_DIR, E_IND};
 	int			t;
 	int			arg;
 
@@ -79,8 +79,6 @@ static int		is_valid_ocp(unsigned char hex, t_instruction *ins)
 						ins->params[arg].nb_bytes = 2;
 				t = 2;
 			}
-//			ft_printf("ins params[%d].type = %d\n", arg, ins->params[arg].type);
-//			ft_printf("ins params[%d].bytes = %d\n", arg, ins->params[arg].nb_bytes);
 		}
 		if (!ins->params[arg].nb_bytes)
 			return (0);
@@ -107,7 +105,7 @@ int				get_instruction(char *arena, t_instruction *ins, int i, int mod)
 	else
 	{
 		ft_memmove((void *)&ins->op, (void *)&g_op_tab[(int)hex - 1], sizeof(t_op));
-//		ft_printf("detected %d\n", ins->op.opcode);
+		ft_printf("detected %d\n", ins->op.opcode);
 	}
 	if (ins->op.has_ocp == OCP_YES)
 	{
@@ -123,7 +121,7 @@ int				get_instruction(char *arena, t_instruction *ins, int i, int mod)
 		ft_bzero((void *)ins, sizeof(*ins));
 		return (0);
 	}
-//	ft_printf("has ocp = %d\n", ins->op.has_ocp);
+	ft_printf("has ocp = %d\n", ins->op.has_ocp);
 	len = ins->params[0].nb_bytes + ins->params[1].nb_bytes + ins->params[2].nb_bytes + ins->op.has_ocp + 1;
 	return (len);
 

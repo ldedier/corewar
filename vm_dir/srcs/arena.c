@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 16:42:17 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/14 19:07:25 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/15 22:14:19 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,30 @@ t_list	*add_process(t_vm *vm, int index, int start) //need name?
 	return (vm->proc);
 }
 
+int		init_processes(t_vm *vm)
+{
+	int i;
+	int	index;
+	int start;
+
+	i = -1;
+	index = 0;
+	while (++i < MAX_PLAYERS)
+	{
+		start = (MEM_SIZE / vm->nb_players) * (index - 1);
+		if (vm->player[i].relevant && ++index && !add_process(vm, i, start))
+			return (0);
+	}
+	vm->live.last_pl = (t_process *)(vm->proc->content);
+	return (1);
+}
+
 /*
 **dispatch_players function sends each player to their respective starting
 **point in the arena and initializes processes for each player.
 */
 
-int		dispatch_players(t_vm *vm)
+void		dispatch_players(t_vm *vm)
 {
 	int			index;
 	int			i;
@@ -95,18 +113,14 @@ int		dispatch_players(t_vm *vm)
 	i = -1;
 	index = 0;
 	while (++i < MAX_PLAYERS)
-		if (++index && vm->player[i].relevant && (j = -1))
+		if (vm->player[i].relevant && ++index && (j = -1))
 		{
 			start = (MEM_SIZE / vm->nb_players) * (index - 1);
-			set_color(&vm->player[i], vm->color, index % MAX_PL_COLOR);
-			if (!add_process(vm, i, start))
-				return (-1);
+			set_color(&vm->player[i], vm->color);
 			while (++j < vm->player[i].algo_len)
 			{
 				vm->metarena[start + j].color_index = vm->player[i].color.index;
 				*(vm->arena + start + j) = vm->player[i].algo[j];
 			}
 		}
-	vm->live.last_pl = (t_process *)(vm->proc->content);
-	return (0);
 }

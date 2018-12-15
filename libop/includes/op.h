@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 19:01:37 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/14 17:54:45 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/15 21:53:13 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,10 @@
 # define T_DIR					2
 # define T_IND					4
 # define T_LAB					8
+
+# define E_REG					1
+# define E_DIR					4
+# define E_IND					2
 
 # define PROG_NAME_LENGTH		(128) // anciennement 128
 # define COMMENT_LENGTH			(2048)

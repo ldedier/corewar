@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/14 18:01:50 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/15 16:03:28 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ static void		launch_instruction(t_vm *vm, t_process *proc)
 
 	if (last_instruction_unresolved(vm, proc))
 		return ;
+	ft_printf("no ongoing instruction! pc = %d\n", proc->pc);
 	if ((ret = get_instruction(vm->arena, &ins, proc->pc, MEM_SIZE)))
 	{
 		f_ins[(int)ins.op.opcode](vm, proc, ins.params);
@@ -123,6 +124,7 @@ static void		launch_instruction(t_vm *vm, t_process *proc)
 		if (ins.op.opcode == LIVE)
 			display(vm, get_proc_num(vm->proc, vm->live.last_pl->player->num), LAST_LIVE);
 		proc->ins_cycle = ret;
+		ft_printf("ins cycle = %d\n", proc->ins_cycle);
 	}
 	else
 	{
@@ -173,7 +175,10 @@ int		play(t_vm *vm)
 	while (players)
 	{
 		proc = ((t_process *)(players->content));
-		proc->pc = (proc->pc + proc->ins_cycle) % MEM_SIZE;
+//		ft_printf("proc->pc = %d proc cycle = %d\n", proc->pc, proc->ins_cycle);
+		if (!proc->cycle)
+			proc->pc = (proc->pc + proc->ins_cycle) % MEM_SIZE;
+	
 		display(vm, proc, TURN_PLAYER);
 		launch_instruction(vm, proc);
 		ft_printf("\n");

@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/22 15:55:47 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/14 18:50:38 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/15 22:11:29 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # define COLOR_H
 
 # define COL_DESIGNATOR		"brgwlmcyBRGWLMCYx"
-# define DEFAULT_COLORS		"xRZMGCgw"
+# define DEFAULT_COLORS		"xrmMGCgw"
 # define NB_DESIGNATOR		17
 # define NB_COLORS			17
 # define MAX_PL_COLOR		9
@@ -91,7 +91,7 @@ enum				e_output
 	TERM, SDL
 };
 */
-void		set_color(t_player *player, char *color, char index);
+void		set_color(t_player *player, char *color);
 void		color_on_term(char index);
 int			get_color_sdl(char index);
 void		color_off(void);
