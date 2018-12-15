@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 15:02:55 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/15 21:11:17 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/15 21:57:02 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,18 @@ int		ft_init_atlas(t_vm *vm, t_sdl *sdl)
 			j++;
 		}
 		i++;
+	}
+	j = 33;
+	while (j < 126)
+	{
+		str[0] = j;
+		if (!(tmp = TTF_RenderText_Solid(sdl->font,
+						str, vm->visu.sdl.color)))
+			return (1);
+		sdl->atlas[i][j].surface = SDL_ConvertSurface(tmp,
+				sdl->w_surface->format, 0);
+		SDL_FreeSurface(tmp);
+		j++;
 	}
 	return (0);
 }

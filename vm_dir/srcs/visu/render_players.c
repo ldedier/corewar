@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/11 17:47:31 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/15 18:28:03 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/15 22:02:13 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ int		ft_get_player_color(t_vm *vm, t_player *player, int initial_color,
 	}
 }
 
-void	ft_render_player_name(t_vm *vm, SDL_Rect player_rect, t_player *player)
+void	ft_render_player_name(t_vm *vm, SDL_Rect player_rect, t_player *player,
+		t_player_source source)
 {
 	SDL_Rect name_rect;
 	SDL_Rect inner_rect;
@@ -95,7 +96,11 @@ void	ft_render_player_name(t_vm *vm, SDL_Rect player_rect, t_player *player)
 	name_rect.h = player_rect.h / 2;
 	name_rect.x = player_rect.x + player_rect.w / 4;
 	name_rect.y = player_rect.y + player_rect.h / 4;
-	ft_copy_str_to_surface(vm, player->name, name_rect, player->color.index);
+	if (source == ARENA)
+		ft_copy_str_to_surface(vm, player->name, name_rect, player->color.index);
+	else
+		ft_copy_str_to_surface(vm, player->name, name_rect, MAX_PL_COLOR);
+
 }
 
 void	ft_render_relevant_player(t_vm *vm, t_player *player,
@@ -103,13 +108,12 @@ void	ft_render_relevant_player(t_vm *vm, t_player *player,
 {
 	SDL_Rect rect;
 
-	(void)source;
 	rect.x = xy.x;
 	rect.y = xy.y;
 	rect.w = vm->visu.center.player_w;
 	rect.h = vm->visu.center.player_h;
 	SDL_FillRect(vm->visu.sdl.w_surface, &rect, PLAYER_COL_BORDER);
-	ft_render_player_name(vm, rect, player);
+	ft_render_player_name(vm, rect, player, source);
 }
 
 int		ft_render_player(t_vm *vm, t_player *player, t_xy xy,
