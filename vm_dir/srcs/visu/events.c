@@ -100,6 +100,7 @@ void		ft_mouse_down(t_vm *vm, SDL_Event event)
 		{
 			ft_change_cursor(vm, GRAB);
 		}
+		ft_is_on_droppable(vm, xy, &(vm->visu.drop_container)); //update droppable player
 	}
 }
 

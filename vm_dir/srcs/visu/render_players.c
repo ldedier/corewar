@@ -120,19 +120,32 @@ int		ft_render_player(t_vm *vm, t_player *player, t_xy xy,
 	if (player->relevant && (source == LOCAL ||
 			vm->visu.drag_container.player != player))
 		ft_render_relevant_player(vm, player, xy, source);
-	else if (source == ARENA)
+	else if (source != LOCAL)
 	{
 		rect.x = xy.x;
 		rect.y = xy.y;
 		rect.w = vm->visu.center.player_w;
 		rect.h = vm->visu.center.player_h;
-		SDL_FillRect(vm->visu.sdl.w_surface, &rect, ft_get_player_color(vm, player,
-			PLAYER_BACKGROUND_COL, 1.3));
+		if (source == ARENA)
+			SDL_FillRect(vm->visu.sdl.w_surface, &rect, ft_get_player_color(vm, player,
+				PLAYER_BACKGROUND_COL, 1.3));
+		else if (source == UPLOAD)
+		{
+			SDL_FillRect(vm->visu.sdl.w_surface, &rect, ft_get_player_color(vm, player,
+				UPLOAD_COLOR, 1.3));
+			rect.x += rect.w / 6;
+			rect.y += rect.h / 6;
+			rect.w -= rect.w / 3;
+			rect.h -= rect.h / 3;
+			if (SDL_BlitScaled(vm->visu.sdl.titles[UPLOAD_HERE], NULL,
+				vm->visu.sdl.w_surface, &rect) < 0)
+				return (ft_net_error());
+		}
 	}
 	return (0);
 }
 
-void	ft_render_title(t_vm *vm, int title_index, double x, double y)
+int		ft_render_title(t_vm *vm, int title_index, double x, double y)
 {
 	SDL_Rect	rect;
 
@@ -143,7 +156,8 @@ void	ft_render_title(t_vm *vm, int title_index, double x, double y)
 	rect.h = vm->visu.center.title_h;
 	if (SDL_BlitScaled(vm->visu.sdl.titles[title_index], NULL,
 			vm->visu.sdl.w_surface, &rect) < 0)
-		ft_net_error();
+		return (ft_net_error());
+	return (0);
 }
 
 int		ft_render_dragged_player(t_vm *vm)

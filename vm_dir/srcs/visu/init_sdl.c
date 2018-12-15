@@ -173,6 +173,9 @@ int		ft_init_textures(t_visu *visu)
 	if (!(visu->sdl.titles[SCOREWAR] =
 			ft_init_font_surface_sdl("Scorewar server", visu->sdl)))
 		return (1);
+	if (!(visu->sdl.titles[UPLOAD_HERE] =
+			ft_init_font_surface_sdl("upload slot", visu->sdl)))
+		return (1);
 	if (!(visu->sdl.images[CLOSE] = ft_load_image(PATH"/resources/close.png")))
 		return (1);
 	if (!(visu->sdl.images[DL] = ft_load_image(PATH"/resources/download.png")))

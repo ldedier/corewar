@@ -50,15 +50,39 @@ int			ft_render_buttons(t_vm *vm, t_button buttons[NB_BUTTONS])
 	return (0);
 }
 
+void		ft_render_upload_link(t_vm *vm, t_xy xy)
+{
+	int i;
+	int color;
+
+	if (vm->client.upload_player.relevant && vm->visu.drag_container.player != &vm->client.upload_player)
+		color = ft_scale_color(ft_get_color(UPLOAD_COLOR), 1.3).color;
+	else
+		color = ft_get_player_color(vm, &vm->client.upload_player, UPLOAD_COLOR, 1.3);
+	int *pixels = (int *)vm->visu.sdl.w_surface->pixels;
+	i = 0;
+	while (i < vm->visu.center.upload_left)
+	{
+		pixels[(int)xy.y * vm->visu.dim.width + i + (int)xy.x] = color;
+		i++;
+	}
+	i = 0;
+	SDL_FillRect(vm->visu.sdl.w_surface,
+		&vm->visu.sdl.buttons[UPLOAD_BUTTON].rect, color);
+}
+
 int			ft_render_toolbar(t_vm *vm, double y)
 {
 	t_xy xy;
 	xy.x = vm->visu.center.dashboard_x + vm->visu.center.upload_left;
 	xy.y = y;
-	ft_render_player(vm, &(vm->client.upload_player), xy, ARENA);
+
+	ft_render_player(vm, &(vm->client.upload_player), xy, UPLOAD);
+	xy.x += vm->visu.center.player_w;
+	xy.y += vm->visu.center.player_h / 2;
+	ft_render_upload_link(vm, xy);
 	ft_render_button(vm->visu.sdl.w_surface, vm->visu.positions.upload_slot.close);
 	ft_render_buttons(vm, vm->visu.sdl.buttons);
-//	ft_printf("OUAI\n");
 	return (0);
 }
 

@@ -68,7 +68,8 @@
 # define BATTLEFIELD			0
 # define LOCAL_PLAYERS			1
 # define SCOREWAR				2
-# define COREWAR				3
+# define UPLOAD_HERE			3
+# define COREWAR				4
 
 # define NB_IMAGES				10
 
@@ -96,6 +97,7 @@
 # define BACKGROUND_COL			0x333333
 # define PLAYER_BACKGROUND_COL	0x444444
 # define PLAYER_HOVERED_BG_COL	0x666666
+# define UPLOAD_COLOR			PLAYER_BACKGROUND_COL
 # define LINE_COL				0xffffff
 
 # define DROP_TOLERANCE_W		100
@@ -149,6 +151,25 @@ typedef struct			s_button
 	void				(*on_click)(t_vm *, struct s_button *, t_ixy xy);
 	void				(*on_hover)(t_vm *, struct s_button *, t_ixy xy);
 }						t_button;
+
+/*
+** vertical scrollbar:
+** height:				the size of the section on the screen
+** compressed_height:	the actual size inside it (>= height)
+** state:				0 top, 1 bottom
+** pos:					bar position
+** y:					whole scrollbar y coordinate
+*/
+
+typedef struct			s_vscrollbar
+{
+	t_xy				pos;
+	double				state;
+	int					y;
+	int					height;
+	int					compressed_height;
+	int					bar_width;
+}						t_vscrollbar;
 
 typedef struct          s_sdl
 {
@@ -328,5 +349,6 @@ int						ft_is_on_buttons(t_vm *vm, t_ixy xy, t_button **button);
 t_ixy					new_ixy(int x, int y);
 int						ft_render_button(SDL_Surface *to, t_button button);
 void					ft_delete_player(t_vm *vm, t_button *this, t_ixy xy);
-
+int						ft_get_player_color(t_vm *vm, t_player *player,
+							int initial_color, float value);
 #endif
