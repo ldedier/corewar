@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 19:09:06 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/15 19:46:15 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/15 22:36:07 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,34 +49,42 @@ int		ft_is_on_droppable(t_vm *vm, t_ixy mouse, t_drop_container *dc)
 	return (0);
 }
 
+void	ft_place_or_swap(t_vm *vm, t_drop_container *dc)
+{
+	t_player	tmp;
+
+	tmp = *dc->player;
+	*dc->player = *(vm->visu.drag_container.player);
+	if (tmp.relevant)
+	{
+		*(vm->visu.drag_container.player) = tmp;
+		vm->visu.drag_container.close->visible = 1;
+	}
+	else
+	{
+		vm->visu.drag_container.player->relevant = 0;
+		vm->visu.drag_container.close->visible = 0;
+		dc->close->visible = 1;
+	}
+}
+
+void	ft_drag_copy(t_vm *vm, t_drop_container *dc)
+{
+	*(dc->player) = *(vm->visu.drag_container.player);
+	dc->close->visible = 1;
+
+}
+
 void	ft_drop_dragged_player(t_vm *vm, t_ixy mouse)
 {
 	t_drop_container	dc;
-	t_player			tmp;
 
 	if (ft_is_on_droppable(vm, mouse, &dc))
 	{
 		if (vm->visu.drag_container.source != LOCAL)
-		{
-			tmp = (*dc.player);
-			*(dc.player) = *(vm->visu.drag_container.player);
-			if (tmp.relevant)
-			{
-				*(vm->visu.drag_container.player) = tmp;
-				vm->visu.drag_container.close->visible = 1;
-			}
-			else
-			{
-				vm->visu.drag_container.player->relevant = 0;
-				vm->visu.drag_container.close->visible = 0;
-				dc.close->visible = 1;
-			}
-		}
+			ft_place_or_swap(vm, &dc);
 		else
-		{
-			*(dc.player) = *(vm->visu.drag_container.player);
-			dc.close->visible = 1;
-		}
+			ft_drag_copy(vm, &dc);
 		dispatch_players(vm);
 	}
 	else if (vm->visu.drag_container.player &&
