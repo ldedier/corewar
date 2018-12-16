@@ -162,7 +162,7 @@ static int read_comment(char *line, t_env *env, int fd, int i)
 		i++;
 	if (line[i] != '"')
 	{
-		ft_log_error("Lexical error1", i, env);
+		ft_log_error_no_line("Lexical error", env);
 		return (1);
 	}
 	while(line[i] && line[i + 1] != '"')
