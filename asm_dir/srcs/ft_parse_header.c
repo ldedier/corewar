@@ -170,7 +170,7 @@ static int read_comment(char *line, t_env *env, int fd, int i)
 	env->champ.header.comment[j] = '\0';
 	if (line[i + 1] != '"' && line[i] != '\0')
 		{
-			ft_log_error("Lexical error2", i, env);
+			ft_log_error("Lexical error", i, env);
 			return (1);
 		}
 	if (read_comment_continue(line, i, env, fd) == 1)
