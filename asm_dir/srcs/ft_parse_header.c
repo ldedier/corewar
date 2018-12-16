@@ -74,7 +74,7 @@ static int check_after_comment(char *tmp, int i, t_env *env)
 		;
 	if (tmp[i - 1] != '"')
 	{
-		ft_log_error("Lexical error", i ,env);
+		ft_log_error_no_line("Lexical error", env);
 		return (1);
 	}
 	while (tmp[i] || tmp[i] == ' ' || tmp[i] == '\t')
@@ -162,20 +162,17 @@ static int read_comment(char *line, t_env *env, int fd, int i)
 		i++;
 	if (line[i] != '"')
 	{
-		ft_log_error("Lexical error", i, env);
+		ft_log_error("Lexical error1", i, env);
 		return (1);
 	}
 	while(line[i] && line[i + 1] != '"')
 		env->champ.header.comment[j++] = line[++i];
 	env->champ.header.comment[j] = '\0';
-	if (	env->champ.header.comment[0])
-	{
-		if (line[i + 1] != '"')
+	if (line[i + 1] != '"' && line[i] != '\0')
 		{
-			ft_log_error("Lexical error", i, env);
+			ft_log_error("Lexical error2", i, env);
 			return (1);
 		}
-	}
 	if (read_comment_continue(line, i, env, fd) == 1)
 		return (1);
 	return (0);
