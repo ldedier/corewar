@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:54:14 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/16 17:14:57 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/16 23:57:42 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,27 +33,51 @@ int		ft_init_client(t_client *client)
 		return (ft_net_error());
 	if (SDLNet_TCP_AddSocket(client->socket_set, client->socket) == -1)
 		return (ft_net_error());
-	client->players = NULL;
+	client->client_slots = NULL;
 	client->upload_player.relevant = 0;
 	return (0);
 }
 
-int		ft_add_new_player(t_client *client, int i, t_name_len name_len,
+void	ft_populate_download_button(t_player *player, t_button *button)
+{
+	(void)player;
+	(void)button;
+}
+
+t_client_slot	*ft_new_client_slot(t_player *player)
+{
+	t_client_slot *slot;
+
+	if (!(slot = (t_client_slot*)malloc(sizeof(t_slot))))
+		return (NULL);
+	slot->player = player;
+	ft_populate_download_button(player, &slot->download);
+	return (slot);
+}
+
+int		ft_add_new_client_slot(t_client *client, int i, t_name_len name_len,
 		t_score score)
 {
-	t_player	*player;
+	t_client_slot	*slot;
+	t_player		*player;
 
 	if (!(player = ft_new_player(&(client->buffer[i]), name_len, score)))
 		return (1);
-	if (ft_add_to_list_ptr_back(&(client->players), player, sizeof(t_player)))
+	if (!(slot = ft_new_client_slot(player)))
 	{
+		free(player);
+		return (1);
+	}
+	if (ft_add_to_list_ptr_back(&(client->client_slots), slot, sizeof(t_slot)))
+	{
+		free(slot);
 		free(player);
 		return (1);
 	}
 	return (0);
 }
 
-int		ft_process_add_players(int nb_bytes, t_client *client)
+int		ft_process_add_client_slots(int nb_bytes, t_client *client)
 {
 	t_nb_players	nb_players;
 	t_name_len		name_len;
@@ -72,7 +96,7 @@ int		ft_process_add_players(int nb_bytes, t_client *client)
 		i += sizeof(score);
 		name_len = (t_name_len)(client->buffer[i]);
 		i += sizeof(name_len);
-		if (ft_add_new_player(client, i, name_len, score))
+		if (ft_add_new_client_slot(client, i, name_len, score))
 			return (1);
 		i += name_len;
 		player_iter++;
@@ -86,12 +110,12 @@ int		ft_process_connect_status(int nb_bytes, t_client *client)
 		return (1);
 	if ((t_flag)client->buffer[0] == GET_LIST)
 	{
-		if (ft_process_add_players(nb_bytes, client))
+		if (ft_process_add_client_slots(nb_bytes, client))
 			return (1);
 		ft_printf(
 				GREEN"successfully connected to server %s on port %d\n"EOC,
 				client->server_address, client->port);
-		ft_print_players(client->players);
+	//	ft_print_players(client->players);
 		return (0);
 	}
 	else if ((t_flag)client->buffer[0] == SERVER_FULL)
@@ -161,5 +185,8 @@ int		process_client(t_vm *vm)
 		return (1);
 	if (ft_receive_connect_status(&(vm->client)))
 		return (1);
+	vm->visu.players_list[SERVER].vscrollbar.compressed_height =
+		ft_get_vscrollbar_compressed_height(&(vm->visu),
+			ft_lstlength(vm->client.client_slots));
 	return (process_visu(vm));
 }

@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 20:42:40 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/16 14:56:32 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/16 23:38:20 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void		set_color(t_player *player, char *color_index_ref)
 		if (player->color.value != NULL)
 		{
 			--color_counter[player->color.index];
-			ft_printf("color_counter[%d] = %d\n", player->color.index, color_counter[player->color.index]);
 			player->color.value = NULL;
 		}
 		return ;
@@ -76,7 +75,6 @@ void		set_color(t_player *player, char *color_index_ref)
 			index_min_count = i;
 	}
 	++color_counter[index_min_count];
-	ft_printf("color_counter[%d] = %d\n", index_min_count, color_counter[index_min_count]);
 	player->color.index = index_min_count;
 	player->color.value = get_color_ptr(color_index_ref[index_min_count]);
 }

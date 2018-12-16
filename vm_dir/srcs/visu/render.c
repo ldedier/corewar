@@ -6,11 +6,25 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/09 14:02:56 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/14 17:43:02 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/16 23:53:07 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
+
+void	ft_render_horizontal_line_dashboard(t_vm *vm, int y, int col)
+{
+	int		i;
+	int		*pix;
+
+	pix = (int *)vm->visu.sdl.w_surface->pixels;
+	i = vm->visu.center.dashboard_x;
+	while (i < vm->visu.sdl.w_surface->w)
+	{
+		pix[y * vm->visu.sdl.w_surface->w + i] = col;
+		i++;
+	}
+}
 
 void	ft_render_lines(t_vm *vm)
 {
@@ -25,13 +39,10 @@ void	ft_render_lines(t_vm *vm)
 			vm->visu.center.dashboard_x)] = LINE_COL;
 		i++;
 	}
-	i = vm->visu.center.dashboard_x;
-	while (i < vm->visu.sdl.w_surface->w)
-	{
-		pix[(int)(vm->visu.center.top_dashboard_height *
-			vm->visu.sdl.w_surface->w + i)] = LINE_COL;
-		i++;
-	}
+	ft_render_horizontal_line_dashboard(vm,
+		vm->visu.center.title_h +vm->visu.center.title_top + vm->visu.center.title_bottom , LINE_COL_DARKER);
+	ft_render_horizontal_line_dashboard(vm,
+		vm->visu.center.top_dashboard_height, LINE_COL);
 	i = 0;
 	while (i < vm->visu.center.top_dashboard_height)
 	{
@@ -62,6 +73,33 @@ int		ft_render_crosses(t_vm *vm)
 	return (0);
 }
 
+int		ft_render_scrollbar(t_vm *vm, t_vscrollbar vscrollbar)
+{
+	SDL_Rect rect;
+
+	rect.x = vscrollbar.pos.x;
+	rect.y = vscrollbar.pos.y;
+	rect.w = vscrollbar.bar_width;
+	rect.h = vscrollbar.height;
+
+	SDL_FillRect(vm->visu.sdl.w_surface, &rect, 0x777777);
+	return (0);
+}
+
+int		ft_render_vscrollbars(t_vm *vm)
+{
+	int i;
+
+	i = 0;
+	while (i < NB_SOURCES)
+	{
+		if (vm->visu.players_list[i].vscrollbar.relevant)
+			ft_render_scrollbar(vm, vm->visu.players_list[i].vscrollbar);
+		i++;
+	}
+	return (0);
+}
+
 int		ft_render(t_vm *vm, t_sdl *sdl)
 {
 	//	SDL_SetRenderDrawColor(sdl->renderer, 100, 100, 100, 255);
@@ -76,6 +114,7 @@ int		ft_render(t_vm *vm, t_sdl *sdl)
 		ft_render_online(vm);
 	else
 		ft_render_offline(vm);
+	ft_render_vscrollbars(vm);
 	ft_render_dragged_player(vm);
 	sdl->texture = SDL_CreateTextureFromSurface(sdl->renderer, sdl->w_surface);
 	SDL_RenderCopy(sdl->renderer, sdl->texture, NULL, NULL);

@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/08 23:37:36 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/14 18:51:43 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/16 21:24:49 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int			ft_is_on_buttons(t_vm *vm, t_ixy xy, t_button **but)
 	i = 0;
 	while (i < NB_BUTTONS)
 	{
-		if (ft_is_on_button(xy, &(vm->visu.sdl.buttons[i]), but))
+		if (ft_is_on_button(xy, &(vm->visu.buttons[i]), but))
 			return (1);
 		i++;
 	}

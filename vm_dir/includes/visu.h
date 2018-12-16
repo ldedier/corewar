@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/16 18:01:53 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/17 00:03:34 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 
 # define DASHBOARD_X			1900
 # define TOP_DASHBOARD_HEIGHT	580
-# define FOOTER_HEIGHT			100
+# define FOOTER_HEIGHT			150
 
 # define MEM_BORDER_TOP			100
 # define MEM_BORDER_BOTTOM		100
@@ -39,10 +39,13 @@
 # define TITLE_BORDER_SIDE		30
 # define TITLE_HEIGHT			50
 
-# define PLAYER_PADDING			50
+# define PLAYER_PADDING			40
+# define PLAYER_TOP				30
 # define PLAYER_BORDER_LEFT		50
 # define PLAYER_BORDER_RIGHT	50
-# define PLAYER_BORDER_BOTTOM	50
+# define PLAYER_BORDER_BOTTOM	30
+
+# define PLAYER_HEIGHT			74
 
 # define PLAYER_INNER_BORDER	6
 # define CROSS_BORDER			PLAYER_INNER_BORDER * 3
@@ -57,6 +60,15 @@
 # define SORT_SCORE_RIGHT		PLAYER_BORDER_LEFT / 2
 # define TOOLBAR_BOTTOM			30
 
+# define LABSCORE_LEFT			30
+# define LABSCORE_WIDTH			120
+# define LABSCORE_RIGHT			20
+# define SCORE_WIDTH			50
+# define SCORE_RIGHT			10
+
+# define SCROLLBAR_WIDTH		15
+# define SCROLLBAR_BTTN_HEIGHT	15
+
 # define X_DIFF					7
 # define X_DIFF_BYTE			0
 # define Y_DIFF					7
@@ -65,13 +77,16 @@
 
 # define NB_GLYPHS				256
 
-# define NB_TITLES				5
+# define NB_TITLES				10
 
 # define BATTLEFIELD			0
 # define LOCAL_PLAYERS			1
 # define SCOREWAR				2
 # define UPLOAD_HERE			3
-# define COREWAR				4
+# define SCORE					4
+# define NAME					5
+# define RANK					6
+# define COREWAR				7
 
 # define NB_IMAGES				10
 
@@ -101,11 +116,13 @@
 # define PLAYER_HOVERED_BG_COL	0x666666
 # define UPLOAD_COLOR			PLAYER_BACKGROUND_COL
 # define LINE_COL				0xffffff
+# define LINE_COL_DARKER		0x666666
 
 # define DROP_TOLERANCE_W		100
 # define DROP_TOLERANCE_H		30
 
-typedef struct			s_vm t_vm;
+typedef struct s_vm			t_vm;
+typedef struct s_vscrollbar	t_vscrollbar;
 
 typedef struct			s_atlas_char
 {
@@ -118,18 +135,17 @@ typedef struct			s_cursor_packer
 	SDL_Cursor			*cursor;
 }						t_cursor_packer;
 
-typedef enum			e_player_source
+typedef struct			s_sort_button
 {
-	ARENA,
-	LOCAL,
-	UPLOAD,
-	SERVER
-}						t_player_source;
+	char				on;
+}						t_sort_button;
 
 typedef union			u_button_union
 {
 	char				*name;
 	t_player			*player;
+	t_vscrollbar			*scrollbar;
+	t_sort_button		sort;
 }						t_button_union;
 
 typedef struct			s_xy
@@ -151,7 +167,9 @@ typedef struct			s_button
 	t_button_union		button_union;
 	char				visible;
 	void				(*on_click)(t_vm *, struct s_button *, t_ixy xy);
+	int					(*render)(t_vm *, struct s_button *, t_ixy xy);
 	void				(*on_hover)(t_vm *, struct s_button *, t_ixy xy);
+	t_vscrollbar		*scrollbar;
 }						t_button;
 
 /*
@@ -159,19 +177,35 @@ typedef struct			s_button
 ** height:				the size of the section on the screen
 ** compressed_height:	the actual size inside it (>= height)
 ** state:				0 top, 1 bottom
-** pos:					bar position
-** y:					whole scrollbar y coordinate
+** pos:					whole scrollbar x and y coordinate
 */
 
-typedef struct			s_vscrollbar
+struct					s_vscrollbar
 {
-	t_xy				pos;
+	t_ixy				pos;
 	double				state;
-	int					y;
 	int					height;
 	int					compressed_height;
 	int					bar_width;
-}						t_vscrollbar;
+	t_button			up_button;
+	t_button			down_button;
+	char				relevant;
+};
+
+typedef enum			e_player_source
+{
+	ARENA,
+	LOCAL,
+	UPLOAD,
+	SERVER,
+	NB_SOURCES
+}						t_player_source;
+
+typedef struct			s_player_list
+{
+	t_player_source		source;
+	t_vscrollbar		vscrollbar;
+}						t_player_list;
 
 typedef struct          s_sdl
 {
@@ -184,7 +218,6 @@ typedef struct          s_sdl
 	SDL_Color			color;
 	SDL_Surface			*images[NB_IMAGES];
 	t_atlas_char		atlas[MAX_PL_COLOR + 1][NB_GLYPHS];
-	t_button			buttons[NB_BUTTONS];
 	SDL_Surface			*titles[NB_TITLES];
 	t_cursor_packer		cursor_packers[NB_CURSORS];
 	TTF_Font			*font;
@@ -225,13 +258,14 @@ typedef struct			s_center
 	double				glyph_height;
 	int					nb_cols;
 	int					nb_lines;
-
+	
 	double				dashboard_x;
 	double				top_dashboard_height;
 	double				dashboard_mid_x;
 	double				dashboard_mid_width;
 	double				dashboard_width;
 	double				bottom_dash_height;
+	
 
 	double				mid_dashboard_height;
 	double				footer_height;
@@ -242,6 +276,7 @@ typedef struct			s_center
 	double				title_side;
 	double				title_bottom;
 
+	int					player_top;
 	int					player_left;
 	int					player_right;
 	int					player_w;
@@ -260,8 +295,20 @@ typedef struct			s_center
 	double				toolbar_bottom;
 	double				s_title_h;
 	double				s_title_side;
-}						t_center;
 
+	double				toolbar_y;
+	
+	double				labscore_left;
+	double				labscore_width;
+	double				labscore_right;
+
+	double				score_width;
+	double				score_right;
+
+	double				download_side;
+	double				scrollbar_width;
+	double				scrollbar_buttons_height;
+}						t_center;
 
 typedef struct			s_slot
 {
@@ -319,6 +366,8 @@ typedef struct			s_visu
 	t_positions			positions;
 	t_reactive			react;
 	t_framerate			framerate;
+	t_button			buttons[NB_BUTTONS];
+	t_player_list		players_list[NB_SOURCES];
 }						t_visu;
 
 int						ft_init_all_sdl(t_vm *vm, t_visu *v);
@@ -358,4 +407,12 @@ int						ft_render_button(SDL_Surface *to, t_button button);
 void					ft_delete_player(t_vm *vm, t_button *this, t_ixy xy);
 int						ft_get_player_color(t_vm *vm, t_player *player,
 							int initial_color, float value);
+
+void					ft_render_horizontal_line_dashboard(t_vm *vm, int y,
+							int col);
+int						ft_copy_str_to_surface(t_vm *vm, char *str,
+							SDL_Rect rect, int color_index);
+int						ft_get_vscrollbar_compressed_height(t_visu *v,
+							int nb_players);
+
 #endif
