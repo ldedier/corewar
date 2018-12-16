@@ -17,10 +17,6 @@
 # include "libft.h"
 # include <fcntl.h>
 
-# define FILE_TOO_BIG	"Size of the given file is too large to be handled"
-# define INVALID_CHARS	"Incorrect characters were used in the .cor file"
-# define MAX_CHAMP		"Given champion is too large to be handled"
-# define WRG_HEAD_SIZE	"Header size does not match file's code size"
 # define TOT_SIZE (CHAMP_MAX_SIZE + PROG_NAME_LENGTH + COMMENT_LENGTH + 16)
 
 typedef int				t_name_len;

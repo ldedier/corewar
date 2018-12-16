@@ -45,7 +45,7 @@ SRCS_NO_PREFIX =		arena.c error.c flags.c main.c parse.c read.c \
 
 INS_NO_PREFIX =			get_val.c load_val.c\
 						live.c ld.c st.c add.c sub.c and.c or.c xor.c zjmp.c \
-						ldi.c sti.c fork.c lld.c lldi.c lfork.c aff.c
+						ldi.c sti.c fork.c lld.c lldi.c lfork.c aff.c inst_utils.c
 
 VISU_NO_PREFIX =		init_sdl.c visu.c events.c framerate.c render.c \
 						render_mem.c render_players.c ft_colors.c\
@@ -53,7 +53,7 @@ VISU_NO_PREFIX =		init_sdl.c visu.c events.c framerate.c render.c \
 						cursor.c
 
 
-INCLUDES_NO_PREFIX =	vm.h visu.h client.h errors.h
+INCLUDES_NO_PREFIX =	vm.h visu.h client.h
 
 SOURCES = $(addprefix $(SRCDIR)/, $(SRCS_NO_PREFIX)) \
 		$(addprefix $(SRCDIR)/$(INSDIR)/, $(INS_NO_PREFIX))\

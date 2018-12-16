@@ -32,6 +32,14 @@
 # define INSUF_INFO_CH	"port and address of the corehub server are needed"
 # define ERR_HEADER "Header global error"
 
+/*
+** PLAYER MESSAGES
+*/
+
+# define FILE_TOO_BIG	"Size of the given file is too large to be handled"
+# define INVALID_CHARS	"Incorrect characters were used in the .cor file"
+# define MAX_CHAMP		"Given champion is too large to be handled"
+# define WRG_HEAD_SIZE	"Header size does not match file's code size"
 
 /*
 ** GAME MESSAGES

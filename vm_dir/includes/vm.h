@@ -120,6 +120,7 @@ void				turn_player(t_vm *vm, t_process *proc);
 int					getval(t_vm *vm, t_process *proc, t_parameter arg);
 void				loadval(t_vm *vm, t_process *proc, t_parameter arg, int val);
 void				set_argval(t_parameter *arg, int index, int size);
+int					check_reg(int r);
 
 int					ins_live(t_vm *vm, t_process *proc, t_parameter arg[3]);
 int					ins_ld(t_vm *vm, t_process *proc, t_parameter arg[3]);
