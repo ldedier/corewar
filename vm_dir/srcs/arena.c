@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 16:42:17 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/15 22:14:19 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/16 16:58:51 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void					init_vm(t_vm *vm, char **argv, char **env)
 	while (i < MAX_PLAYERS)
 	{
 		vm->player[i].relevant = 0;
+		vm->player[i].color.value = NULL;
 		i++;
 	}
 }
@@ -114,14 +115,16 @@ void		dispatch_players(t_vm *vm)
 	i = -1;
 	index = 0;
 	while (++i < MAX_PLAYERS)
+	{
+		set_color(&vm->player[i], vm->color);
 		if (vm->player[i].relevant && ++index && (j = -1))
 		{
 			start = (MEM_SIZE / vm->nb_players) * (index - 1);
-			set_color(&vm->player[i], vm->color);
 			while (++j < vm->player[i].algo_len)
 			{
 				vm->metarena[start + j].color_index = vm->player[i].color.index;
 				*(vm->arena + start + j) = vm->player[i].algo[j];
 			}
 		}
+	}
 }

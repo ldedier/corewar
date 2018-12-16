@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/15 22:02:48 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/16 13:56:10 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void				dispatch_players(t_vm *vm);
 
 
 int					init_processes(t_vm *vm);
-
+void				init_local_players(t_vm *vm);
 
 /*
 ** DISPLAY

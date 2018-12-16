@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 15:02:55 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/15 21:57:02 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/16 18:01:21 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -263,6 +263,7 @@ void	ft_init_center_online(t_visu *visu, t_center *c)
 	c->toolbar_blank = c->dashboard_width - ((c->player_h * 3) + c->player_w +
 			c->upload_right + c->upload_left + c->sort_padding +
 				c->sort_score_right);
+	c->toolbar_bottom = TOOLBAR_BOTTOM * visu->react.h_scale;
 }
 
 void	ft_init_center(t_visu *visu, t_center *c)
@@ -272,6 +273,10 @@ void	ft_init_center(t_visu *visu, t_center *c)
 	c->dashboard_width = (visu->dim.width - DASHBOARD_X * visu->react.w_scale);
 	c->dashboard_mid_width = c->dashboard_width / 2.0;
 	c->dashboard_mid_x = c->dashboard_x + c->dashboard_mid_width;
+
+	c->footer_height = FOOTER_HEIGHT * visu->react.h_scale;
+	c->mid_dashboard_height = c->top_dashboard_height - c->footer_height;
+	c->footer_y = visu->dim.height - c->footer_height;
 
 	ft_init_center_memory(visu, c);
 	ft_init_center_players(visu, c);
@@ -290,6 +295,7 @@ t_ixy	new_ixy(int x, int y)
 void	ft_delete_player(t_vm *vm, t_button *this, t_ixy xy)
 {
 	this->button_union.player->relevant = 0;
+//	set_color(this->button_union.player, vm->color);
 	dispatch_players(vm);
 	this->visible = 0;
 	ft_update_cursor(vm, xy);

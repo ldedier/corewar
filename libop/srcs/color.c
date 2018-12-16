@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 20:42:40 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/15 22:15:48 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/16 14:56:32 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	*get_color_ptr(char index)
 	return ((void *)&color[(int)index]);
 }
 
-
 void		color_on_term(char index)
 {
 	ft_printf("%s", (char *)(get_color_ptr(index) + sizeof(int)));
@@ -53,20 +52,31 @@ int			get_color_sdl(char index)
 
 void		set_color(t_player *player, char *color_index_ref)
 {
-	static char color_counter[MAX_PL_COLOR];
-	int index_min_count;
-	int	i;
+	static char	color_counter[MAX_PL_COLOR] = {0};
+	int			index_min_count;
+	int			i;
 
-	index_min_count = 0;
-	i = 0;
 	if (!player->relevant)
-		--color_counter[player->color.index];
+	{
+		if (player->color.value != NULL)
+		{
+			--color_counter[player->color.index];
+			ft_printf("color_counter[%d] = %d\n", player->color.index, color_counter[player->color.index]);
+			player->color.value = NULL;
+		}
+		return ;
+	}
 	if (player->color.value)
 		return ;
+	index_min_count = 1;
+	i = 0;
 	while (++i < MAX_PL_COLOR)
+	{
 		if (color_counter[i] < color_counter[index_min_count])
 			index_min_count = i;
+	}
 	++color_counter[index_min_count];
+	ft_printf("color_counter[%d] = %d\n", index_min_count, color_counter[index_min_count]);
 	player->color.index = index_min_count;
 	player->color.value = get_color_ptr(color_index_ref[index_min_count]);
 }

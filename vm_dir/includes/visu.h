@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/15 21:57:26 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/16 18:01:53 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@
 # define FRAMERATE				60
 
 # define DASHBOARD_X			1900
-# define TOP_DASHBOARD_HEIGHT	600
+# define TOP_DASHBOARD_HEIGHT	580
+# define FOOTER_HEIGHT			100
 
 # define MEM_BORDER_TOP			100
 # define MEM_BORDER_BOTTOM		100
@@ -34,7 +35,7 @@
 # define MEM_BORDER_LEFT		100
 
 # define TITLE_BORDER_TOP		30
-# define TITLE_BORDER_BOTTOM	40
+# define TITLE_BORDER_BOTTOM	25
 # define TITLE_BORDER_SIDE		30
 # define TITLE_HEIGHT			50
 
@@ -54,6 +55,7 @@
 # define UPLOAD_RIGHT			PLAYER_BORDER_LEFT / 2
 # define SORT_PADDING			20
 # define SORT_SCORE_RIGHT		PLAYER_BORDER_LEFT / 2
+# define TOOLBAR_BOTTOM			30
 
 # define X_DIFF					7
 # define X_DIFF_BYTE			0
@@ -231,6 +233,10 @@ typedef struct			s_center
 	double				dashboard_width;
 	double				bottom_dash_height;
 
+	double				mid_dashboard_height;
+	double				footer_height;
+	double				footer_y;
+
 	double				title_top;
 	double				title_h;
 	double				title_side;
@@ -251,6 +257,7 @@ typedef struct			s_center
 	double				sort_padding;
 	double				sort_score_right;
 	double				toolbar_blank;
+	double				toolbar_bottom;
 	double				s_title_h;
 	double				s_title_side;
 }						t_center;

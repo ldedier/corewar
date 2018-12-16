@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 17:19:23 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/15 22:14:07 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/16 13:56:47 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int		main(int argc, char **argv, char **env)
 	dispatch_players(&vm);
 	if (!init_processes(&vm))
 		return (1);
-	ft_memcpy(vm.local_player, vm.player, sizeof(vm.player));
+	init_local_players(&vm);
 	if (vm.client.active)
 		return (process_client(&vm));
 //	ft_printf("player 2 starts at %d\n", all_process[0].pc);
