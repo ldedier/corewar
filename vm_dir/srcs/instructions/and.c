@@ -21,8 +21,8 @@
 int		ins_and(t_vm *vm, t_process *proc, t_parameter arg[3])
 {
 	(void)vm;
-	if (arg[THIRD].value >= REG_NUMBER)
-		return (FAILURE); // verifier que c'est bien le cas
+	if (check_reg(arg[THIRD].value))
+		return (FAILURE);
 	proc->reg[arg[THIRD].value] = arg[FIRST].value & arg[SECOND].value;
 	return (SUCCESS);
 }

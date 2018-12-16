@@ -14,7 +14,7 @@
 
 /*
 ** Substracts two values from registers # arg 1 and # arg 2, and stores the
-** result in register #arg 3.
+** result in register # arg 3.
 ** Input: vm (for arena and player), proc (for register and pc),
 ** arg: for 3 args, all necessarily REGISTERS
 ** Returns failure if register value incorrect, success otherwise
