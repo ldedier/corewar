@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 15:05:42 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/17 00:04:18 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/17 22:30:28 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,9 @@ void		ft_render_upload_link(t_vm *vm, t_xy xy)
 	int i;
 	int color;
 
-	if (vm->client.upload_player.relevant && vm->visu.drag_container.player != &vm->client.upload_player)
+	if (vm->client.upload_player.relevant &&
+			vm->visu.drag_container.drag_union.drag_player.player !=
+				&vm->client.upload_player)
 		color = ft_scale_color(ft_get_color(UPLOAD_COLOR), 1.3).color;
 	else
 		color = ft_get_player_color(vm, &vm->client.upload_player, UPLOAD_COLOR, 1.3);
@@ -93,8 +95,8 @@ int			ft_render_score_label(t_vm *vm, int x, int y)
 	rect.y = y;
 	rect.w = vm->visu.center.labscore_width;
 	rect.h = vm->visu.center.player_h;
-	if (SDL_BlitScaled(vm->visu.sdl.titles[SCORE], NULL,
-				vm->visu.sdl.w_surface, &rect) < 0)
+	if (ft_blit_scaled_scrollbar(&vm->visu.sdl, vm->visu.sdl.titles[SCORE],
+		rect, vm->visu.players_list[SERVER].vscrollbar) < 0)
 		return (ft_net_error());
 	return (0);
 }
@@ -103,6 +105,7 @@ int			ft_render_client_score(t_vm *vm, int x, int y, t_client_slot *slot)
 {
 	char		*str;
 	SDL_Rect	rect;
+	t_ixy		col_source;
 
 	rect.x = x;
 	rect.y = y;
@@ -110,7 +113,9 @@ int			ft_render_client_score(t_vm *vm, int x, int y, t_client_slot *slot)
 	rect.h = vm->visu.center.player_h;
 	if (!(str = ft_itoa(slot->player->score)))
 		return (1);
-	if (ft_copy_str_to_surface(vm, str, rect, MAX_PL_COLOR))
+	col_source.x = MAX_PL_COLOR;
+	col_source.y = SERVER;
+	if (ft_copy_str_to_surface(vm, str, rect, col_source))
 		return (1);
 	return (0);
 }
@@ -163,7 +168,7 @@ int			ft_render_online(t_vm *vm)
 	if (ft_render_toolbar(vm, y))
 		return (1);
 	y += vm->visu.center.player_h + vm->visu.center.toolbar_bottom;
-	ft_render_horizontal_line_dashboard(vm, y, LINE_COL_DARKER);
+	ft_render_horizontal_line_dashboard(vm, y - 1, LINE_COL_DARKER);
 	if (ft_render_server_players(vm, y))
 		return (1);
 	ft_render_horizontal_line_dashboard(vm, vm->visu.center.footer_y,

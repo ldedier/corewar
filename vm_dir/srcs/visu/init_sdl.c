@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 15:02:55 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/17 00:01:35 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/17 21:49:28 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,9 @@ int		ft_init_sdl_2(t_visu *v)
 		return (1);
 	if (!(v->sdl.w_surface = SDL_CreateRGBSurface(0,
 					v->dim.width, v->dim.height, 32, 0, 0, 0, 0)))
+		return (1);
+	if (!(v->sdl.surface = SDL_CreateRGBSurface(0,
+				v->dim.width, v->dim.height, 32, 0, 0, 0, 0)))
 		return (1);
 	return (0);
 }
@@ -176,10 +179,10 @@ SDL_Surface *ft_init_font_surface_sdl(char *str, t_sdl sdl)
 
 int		ft_init_textures(t_visu *visu)
 {
-	if (!(visu->sdl.titles[BATTLEFIELD] =
+	if (!(visu->sdl.titles[ARENA] =
 			ft_init_font_surface_sdl("battlefield", visu->sdl)))
 		return (1);
-	if (!(visu->sdl.titles[LOCAL_PLAYERS] =
+	if (!(visu->sdl.titles[LOCAL] =
 			ft_init_font_surface_sdl("local players", visu->sdl)))
 		return (1);
 	if (!(visu->sdl.titles[SCOREWAR] =
@@ -209,6 +212,15 @@ int		ft_init_textures(t_visu *visu)
 	if (!(visu->sdl.images[SORT_SCORE] =
 			ft_load_image(PATH"/resources/score_sort.png")))
 		return (1);
+	if (!(visu->sdl.images[SCROLL_BAR] =
+			ft_load_image(PATH"/resources/scroll_bar.png")))
+		return (1);
+	if (!(visu->sdl.images[SCROLL_DOWN] =
+			ft_load_image(PATH"/resources/scroll_down.png")))
+		return (1);
+	if (!(visu->sdl.images[SCROLL_UP] =
+			ft_load_image(PATH"/resources/scroll_up.png")))
+		return (1);
 	return (0);
 }
 
@@ -224,7 +236,6 @@ void	ft_init_center_memory(t_visu *visu, t_center *c)
 	c->nb_cols = MEM_COLS;
 	c->nb_lines = ft_round((double)((double)MEM_SIZE /
 				(double)MEM_COLS));
-
 	while ((c->y_diff * (c->nb_lines - 1) > visu->dim.height
 				- c->top_margin - c->bottom_margin) &&
 			c->y_diff > 0)
@@ -256,12 +267,10 @@ void	ft_init_center_players(t_visu *visu, t_center *c)
 	c->player_inner_border = PLAYER_INNER_BORDER * ft_fmin(visu->react.w_scale, visu->react.h_scale);
 	c->cross_border = CROSS_BORDER * ft_fmin(visu->react.w_scale, visu->react.h_scale);
 	c->player_w = (visu->dim.width - c->dashboard_mid_x) - (c->player_left + c->player_right);
-/*
+
 	c->player_h = (c->top_dashboard_height - (double)(c->title_top + c->title_h +
-				c->title_bottom + c->player_top + ((MAX_PLAYERS - 1) * c->player_padding) +
-				c->player_bottom)) / (double) MAX_PLAYERS;
-*/
-	c->player_h = PLAYER_HEIGHT * visu->react.h_scale;
+				c->title_bottom + c->player_top + ((INIT_MAX_PLAYERS - 1) * (c->player_padding)) +
+				c->player_bottom)) /  (double)INIT_MAX_PLAYERS;
 }
 
 void	ft_init_center_online(t_visu *visu, t_center *c)
@@ -365,8 +374,8 @@ void    ft_populate_slots_positions(t_vm *vm, t_visu *v)
 	double	y;
 	t_ixy	xy;
 
-	y = v->center.title_top;
-	y += v->center.title_h + v->center.title_bottom + v->center.player_top;
+	y = v->center.title_top + v->center.title_h +
+		v->center.title_bottom + v->center.player_top;
 	i = 0;
 	while (i < MAX_PLAYERS)
 	{
@@ -391,8 +400,7 @@ int		ft_populate_cursor(t_cursor_packer *cp, char *str, int hot_x, int hot_y)
 {
 	if (!(cp->surface = ft_load_image(str)))
 		return (1);
-	if (!(cp->cursor = SDL_CreateColorCursor(cp->surface, hot_x,
-			hot_y)))
+	if (!(cp->cursor = SDL_CreateColorCursor(cp->surface, hot_x, hot_y)))
 	{
 		//free ?
 		return (1);
@@ -402,13 +410,17 @@ int		ft_populate_cursor(t_cursor_packer *cp, char *str, int hot_x, int hot_y)
 
 int		ft_init_cursors(t_visu *v)
 {
-	if (ft_populate_cursor(&(v->sdl.cursor_packers[GRAB]), PATH"/resources/grab.png", 7, 3))
+	if (ft_populate_cursor(&(v->sdl.cursor_packers[GRAB]),
+				PATH"/resources/grab.png", 7, 3))
 		return (1);
-	if (ft_populate_cursor(&(v->sdl.cursor_packers[DRAGGABLE]), PATH"/resources/draggable.png", 7, 5))
+	if (ft_populate_cursor(&(v->sdl.cursor_packers[DRAGGABLE]),
+				PATH"/resources/draggable.png", 7, 5))
 		return (1);
-	if (ft_populate_cursor(&(v->sdl.cursor_packers[CLICK]), PATH"/resources/click.png", 5, 0))
+	if (ft_populate_cursor(&(v->sdl.cursor_packers[CLICK]),
+				PATH"/resources/click.png", 5, 0))
 		return (1);
-	if (ft_populate_cursor(&(v->sdl.cursor_packers[REGULAR]), PATH"/resources/regular.png", 0, 0))
+	if (ft_populate_cursor(&(v->sdl.cursor_packers[REGULAR]),
+				PATH"/resources/regular.png", 0, 0))
 		return (1);
 	return (0);
 }
@@ -468,93 +480,6 @@ void	ft_init_crosses(t_vm *vm)
 	}
 }
 
-void	ft_scroll_up(t_vm *vm, t_button *button, t_ixy xy)
-{
-	(void)xy;
-	(void)vm;
-	(void)button;
-}
-
-void	ft_scroll_down(t_vm *vm, t_button *button, t_ixy xy)
-{
-	(void)xy;
-	(void)vm;
-	(void)button;
-}
-
-void	ft_init_scrollbar_button(t_visu *v, t_button *button,
-			t_vscrollbar *vscrollbar)
-{
-	button->scrollbar = vscrollbar;
-	button->rect.w = vscrollbar->bar_width;
-	button->rect.h = v->center.scrollbar_buttons_height;
-	button->rect.x = vscrollbar->pos.x;
-	if (button == &vscrollbar->up_button)
-	{
-		button->on_click = &ft_scroll_up;
-		button->rect.y = vscrollbar->pos.y;
-	}
-	else
-	{
-		button->on_click = &ft_scroll_down;
-		button->rect.y = vscrollbar->pos.y + vscrollbar->height;
-	}
-}
-
-void	ft_init_vscrollbar(t_visu *v, t_ixy xy, int height, t_vscrollbar *vscrollbar)
-{
-	vscrollbar->pos = xy;
-	vscrollbar->height = height;
-	vscrollbar->state = 0;
-	vscrollbar->bar_width = v->center.scrollbar_width;
-	ft_init_scrollbar_button(v, &vscrollbar->up_button, vscrollbar);
-	ft_init_scrollbar_button(v, &vscrollbar->down_button, vscrollbar);
-}
-
-void	ft_init_players_list(t_visu *v)
-{
-	int		i;
-	t_ixy	xy;
-
-	i = 0;
-	while (i < NB_SOURCES)
-	{
-		v->players_list[i].source = i;
-		v->players_list[i].vscrollbar.relevant = 1;
-		i++;
-	}
-	xy.x = v->center.dashboard_x +
-		v->center.dashboard_mid_width -
-			v->center.scrollbar_width;
-	xy.y = v->center.title_top + v->center.title_h +
-		v->center.title_bottom;
-	ft_init_vscrollbar(v, xy, v->center.top_dashboard_height - xy.y,
-			&v->players_list[ARENA].vscrollbar);
-	xy.x = v->dim.width - v->center.scrollbar_width;
-	ft_init_vscrollbar(v, xy, v->center.top_dashboard_height - xy.y,
-			&v->players_list[LOCAL].vscrollbar);
-	v->players_list[UPLOAD].vscrollbar.relevant = 0;
-
-	xy.y = v->center.toolbar_y + v->center.player_h + v->center.toolbar_bottom;
-	ft_init_vscrollbar(v, xy, v->dim.height - v->center.footer_height - xy.y,
-			&v->players_list[SERVER].vscrollbar);
-}
-
-int		ft_get_vscrollbar_compressed_height(t_visu *v, int nb_players)
-{
-	return (nb_players * v->center.player_h +
-			(nb_players - 1) * v->center.player_padding +
-			v->center.player_top + v->center.player_bottom);
-}
-
-void	ft_init_vscrollbars_compressed_size(t_vm *vm, t_visu *v)
-{
-	v->players_list[ARENA].vscrollbar.compressed_height =
-		ft_get_vscrollbar_compressed_height(v, MAX_PLAYERS);
-	v->players_list[LOCAL].vscrollbar.compressed_height =
-		ft_get_vscrollbar_compressed_height(v, vm->nb_players);
-}
-
 int		ft_init_all_sdl(t_vm *vm, t_visu *v)
 {
 	ft_init_sdl_to_null(v);
@@ -580,7 +505,7 @@ int		ft_init_all_sdl(t_vm *vm, t_visu *v)
 	ft_init_buttons(vm, v);
 	v->sdl.current_cursor = REGULAR;
 	v->event_manager.enable_mouse_up = 1;
-	v->drag_container.player = NULL;
+	v->drag_container.drag_union.drag_player.player = NULL;
 	v->drop_container.player = NULL;
 	ft_init_crosses(vm);
 	ft_init_players_list(v);

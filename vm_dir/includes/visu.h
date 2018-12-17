@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/17 00:03:34 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/17 20:52:58 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # include "color.h"
 # include "op.h"
 
+# define INIT_MAX_PLAYERS		4
+
 # define FRAMERATE				60
 
 # define DASHBOARD_X			1900
@@ -34,8 +36,8 @@
 # define MEM_BORDER_RIGHT		100
 # define MEM_BORDER_LEFT		100
 
-# define TITLE_BORDER_TOP		30
-# define TITLE_BORDER_BOTTOM	25
+# define TITLE_BORDER_TOP		15
+# define TITLE_BORDER_BOTTOM	10
 # define TITLE_BORDER_SIDE		30
 # define TITLE_HEIGHT			50
 
@@ -66,8 +68,8 @@
 # define SCORE_WIDTH			50
 # define SCORE_RIGHT			10
 
-# define SCROLLBAR_WIDTH		15
-# define SCROLLBAR_BTTN_HEIGHT	15
+# define SCROLLBAR_WIDTH		25
+# define SCROLLBAR_BTTN_HEIGHT	25
 
 # define X_DIFF					7
 # define X_DIFF_BYTE			0
@@ -79,8 +81,6 @@
 
 # define NB_TITLES				10
 
-# define BATTLEFIELD			0
-# define LOCAL_PLAYERS			1
 # define SCOREWAR				2
 # define UPLOAD_HERE			3
 # define SCORE					4
@@ -95,6 +95,9 @@
 # define UL						2
 # define SORT_ALPHA				3
 # define SORT_SCORE				4
+# define SCROLL_BAR				5
+# define SCROLL_UP				6
+# define SCROLL_DOWN			7
 
 # define NB_CURSORS				5
 
@@ -271,16 +274,16 @@ typedef struct			s_center
 	double				footer_height;
 	double				footer_y;
 
-	double				title_top;
-	double				title_h;
+	int					title_top;
+	int					title_h;
 	double				title_side;
-	double				title_bottom;
+	int					title_bottom;
 
 	int					player_top;
 	int					player_left;
 	int					player_right;
 	int					player_w;
-	int					player_h;
+	double				player_h;
 	double				player_padding;
 	double				player_bottom;
 
@@ -323,11 +326,29 @@ typedef struct			s_positions
 	t_slot				upload_slot;
 }						t_positions;
 
-typedef struct			s_drag_container
+typedef enum			e_drag_enum
+{
+	DRAG_PLAYER,
+	DRAG_VSCROLLBAR
+}						t_drag_enum;
+
+typedef struct			s_drag_player
 {
 	t_player			*player;
 	t_button			*close;
 	t_player_source		source;
+}						t_drag_player;
+
+typedef union			s_drag_union
+{
+	t_vscrollbar		*vscrollbar;
+	t_drag_player		drag_player;
+}						t_drag_union;
+
+typedef struct			s_drag_container
+{
+	t_drag_union		drag_union;
+	t_drag_enum			drag_enum;
 	int					x;
 	int					y;
 	int					diff_x;
@@ -411,8 +432,18 @@ int						ft_get_player_color(t_vm *vm, t_player *player,
 void					ft_render_horizontal_line_dashboard(t_vm *vm, int y,
 							int col);
 int						ft_copy_str_to_surface(t_vm *vm, char *str,
-							SDL_Rect rect, int color_index);
+							SDL_Rect rect, t_ixy col_source);
 int						ft_get_vscrollbar_compressed_height(t_visu *v,
 							int nb_players);
-
+void					ft_init_players_list(t_visu *v);
+void					ft_init_vscrollbars_compressed_size(t_vm *vm,
+							t_visu *v);
+int						ft_blit_scaled_scrollbar(t_sdl *sdl, SDL_Surface *from,
+							SDL_Rect rect, t_vscrollbar v);
+int						ft_fill_rect_scrollbar(SDL_Surface *from, SDL_Rect *rct,
+							int color, t_vscrollbar vscrollbar);
+t_ixy					ft_get_vscrollbar_bar_height_y(t_vscrollbar vscrollbar);
+double					ft_get_vscrollbar_bar_height(t_vscrollbar vscrollbar);
+int						ft_to_print_scrollbar(t_vscrollbar vscrollbar);
+void					ft_update_scrollbar(t_vm *vm, t_vscrollbar *vscrollbar);
 #endif

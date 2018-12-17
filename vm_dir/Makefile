@@ -51,7 +51,7 @@ INS_NO_PREFIX =			get_val.c load_val.c\
 VISU_NO_PREFIX =		init_sdl.c visu.c events.c framerate.c render.c \
 						render_mem.c render_players.c ft_colors.c\
 						render_online.c drag.c drop.c\
-						cursor.c
+						cursor.c scrollbar.c
 
 
 INCLUDES_NO_PREFIX =	vm.h visu.h client.h errors.h

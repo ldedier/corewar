@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/08 23:37:36 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/16 21:24:49 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/17 16:41:22 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,10 @@ void		ft_mouse_motion(t_vm *vm, SDL_Event event)
 	ft_update_cursor(vm, xy);
 	vm->visu.drag_container.x = event.motion.x;
 	vm->visu.drag_container.y = event.motion.y;
-	ft_is_on_droppable(vm, xy, &(vm->visu.drop_container)); //update droppable player
+	if (vm->visu.drag_container.drag_enum == DRAG_VSCROLLBAR &&
+			vm->visu.drag_container.drag_union.vscrollbar)
+		ft_update_scrollbar(vm, vm->visu.drag_container.drag_union.vscrollbar);
+	ft_is_on_droppable(vm, xy, &(vm->visu.drop_container)); //update droppable container
 }
 
 void		ft_process_keys(t_vm *vm, const Uint8 *keys)
