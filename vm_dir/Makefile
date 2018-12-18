@@ -85,7 +85,7 @@ ifeq ($(DEBUG), 1)
 endif
 
 SDL2_FRAMEWORKS =	-framework SDL2 -framework SDL2_image \
-					-framework SDL2_mixer -framework SDL2_ttf\
+					-framework SDL2_mixer -framework SDL2_ttf \
 					-framework SDL2_net
 opti:
 	@make all -j
@@ -112,19 +112,19 @@ $(BINDIR)/$(NAME): $(OBJECTS)  $(LIBFT) $(LIBOP)
 	@$(CC) -o $@ $^ -F $(FRAMEWORKSDIR) $(SDL2_FRAMEWORKS) $(CFLAGS) $(LFLAGS)
 	@echo "$(OK_COLOR)$(NAME) linked with success !$(EOC)"
 
-$(OBJDIR)/%.o : $(SRCDIR)/%.c $(INCLUDES)
+$(OBJDIR)/%.o : $(SRCDIR)/%.c $(INCLUDES) $(LIBOP)
 	@mkdir -p $(OBJDIR)
 	@mkdir -p $(OBJDIR)/$(INSDIR)
 	@mkdir -p $(OBJDIR)/$(VISUDIR)
 #	@$(CC) -c $< -o $@ -F $(CFLAGS)
-	@$(CC) -c $< -o $@ -F $(FRAMEWORKSDIR) $(CFLAGS)
+	$(CC) -c $< -o $@ -F $(FRAMEWORKSDIR) $(CFLAGS)
 
 $(OBJDIR)/$(INSDIR)/%.o : $(SRCDIR)/$(INSDIR)/%.c $(INCLUDES)
 #	@$(CC) -c $< -o $@ -F $(CFLAGS)
-	@$(CC) -c $< -o $@ -F $(FRAMEWORKSDIR) $(CFLAGS)
+	$(CC) -c $< -o $@ -F $(FRAMEWORKSDIR) $(CFLAGS)
 
 $(OBJDIR)/$(VISUDIR)/%.o : $(SRCDIR)/$(VISUDIR)/%.c $(INCLUDES)
-	@$(CC) -c $< -o $@ -F $(FRAMEWORKSDIR) $(CFLAGS)
+	$(CC) -c $< -o $@ -F $(FRAMEWORKSDIR) $(CFLAGS)
 
 clean:
 	@make clean -C $(LIBOPDIR)

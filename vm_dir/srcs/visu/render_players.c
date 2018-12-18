@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/11 17:47:31 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/17 21:49:52 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/18 17:19:49 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,15 +95,19 @@ void	ft_render_player_name(t_vm *vm, SDL_Rect player_rect, t_player *player,
 	inner_rect.h = player_rect.h - vm->visu.center.player_inner_border * 2;
 	inner_rect.x = player_rect.x + vm->visu.center.player_inner_border;
 	inner_rect.y = player_rect.y + vm->visu.center.player_inner_border;
-	ft_fill_rect_scrollbar(vm->visu.sdl.w_surface, &inner_rect,
-		ft_get_player_color_no_drag(vm, player, PLAYER_COL, 1.2),
-		vm->visu.players_list[source].vscrollbar);
+	if (source / NB_SOURCES)
+		SDL_FillRect(vm->visu.sdl.w_surface, &inner_rect,
+			ft_get_player_color_no_drag(vm, player, PLAYER_COL, 1.2));
+	else
+		ft_fill_rect_scrollbar(vm->visu.sdl.w_surface, &inner_rect,
+			ft_get_player_color_no_drag(vm, player, PLAYER_COL, 1.2),
+			vm->visu.players_list[source].vscrollbar);
 	name_rect.w = player_rect.w / 2;
 	name_rect.h = player_rect.h / 2;
 	name_rect.x = player_rect.x + player_rect.w / 4;
 	name_rect.y = player_rect.y + player_rect.h / 4;
 	col_source.y = source;
-	if (source == ARENA)
+	if (source % NB_SOURCES == ARENA)
 		col_source.x = player->color.index;
 	else
 		col_source.x = MAX_PL_COLOR;
@@ -120,7 +124,10 @@ void	ft_render_relevant_player(t_vm *vm, t_player *player,
 	rect.y = xy.y;
 	rect.w = vm->visu.center.player_w;
 	rect.h = vm->visu.center.player_h;
-	ft_fill_rect_scrollbar(vm->visu.sdl.w_surface, &rect, PLAYER_COL_BORDER,
+	if (source / NB_SOURCES)
+		SDL_FillRect(vm->visu.sdl.w_surface, &rect, PLAYER_COL_BORDER);
+	else
+		ft_fill_rect_scrollbar(vm->visu.sdl.w_surface, &rect, PLAYER_COL_BORDER,
 			vm->visu.players_list[source].vscrollbar);
 	ft_render_player_name(vm, rect, player, source);
 }
@@ -130,7 +137,7 @@ int		ft_render_player(t_vm *vm, t_player *player, t_xy xy,
 {
 	SDL_Rect rect;
 
-	if (player->relevant && (source == LOCAL ||
+	if (player->relevant && (source == LOCAL || source == SERVER ||
 		 vm->visu.drag_container.drag_union.drag_player.player != player)) //WATCH FOR ENUM MAYBE
 		ft_render_relevant_player(vm, player, xy, source);
 	else if (source != LOCAL)
@@ -191,7 +198,7 @@ int		ft_render_dragged_player(t_vm *vm)
 					vm->visu.dim.height - vm->visu.center.player_h);
 		ft_render_relevant_player(vm,
 				vm->visu.drag_container.drag_union.drag_player.player, xy,
-			vm->visu.drag_container.drag_union.drag_player.source);
+			vm->visu.drag_container.drag_union.drag_player.source + NB_SOURCES);
 		if (vm->visu.drag_container.drag_union.drag_player.source == ARENA ||
 				vm->visu.drag_container.drag_union.drag_player.source == UPLOAD)
 			ft_render_closing_cross(vm, xy);

@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 19:09:06 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/17 15:59:35 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/18 22:52:35 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,23 @@ int		ft_is_droppable(t_vm *vm, t_ixy mouse, t_xy xy)
 								vm->visu.center.player_h)));
 }
 
+int		ft_is_droppable_scrollbar(t_vm *vm, t_ixy mouse, t_xy xy,
+			t_vscrollbar vscrollbar)
+{
+	int		scrolled_height;
+
+	scrolled_height = ft_get_scrolled_height(vscrollbar);
+	if (!ft_to_print_scrollbar(vscrollbar))
+		return (ft_is_droppable(vm, mouse, xy));
+	if (xy.y - scrolled_height + vm->visu.center.player_h > vscrollbar.pos.y &&
+			xy.y - scrolled_height < vscrollbar.pos.y + vscrollbar.height)
+	{
+		mouse.y += scrolled_height;
+		return (ft_is_droppable(vm, mouse, xy));
+	}
+	return (0);
+}
+
 int		ft_is_on_droppable(t_vm *vm, t_ixy mouse, t_drop_container *dc)
 {
 	int i;
@@ -30,8 +47,9 @@ int		ft_is_on_droppable(t_vm *vm, t_ixy mouse, t_drop_container *dc)
 		i = 0;
 		while (i < MAX_PLAYERS)
 		{
-			if (ft_is_droppable(vm, mouse,
-				vm->visu.positions.arena_slots[i].player))
+			if (ft_is_droppable_scrollbar(vm, mouse,
+				vm->visu.positions.arena_slots[i].player,
+					vm->visu.players_list[ARENA].vscrollbar))
 			{
 				dc->player = &(vm->player[i]);
 				dc->close = &(vm->visu.positions.arena_slots[i].close);
@@ -39,7 +57,9 @@ int		ft_is_on_droppable(t_vm *vm, t_ixy mouse, t_drop_container *dc)
 			}
 			i++;
 		}
-		if (ft_is_droppable(vm, mouse, vm->visu.positions.upload_slot.player))
+		if (vm->visu.drag_container.drag_union.drag_player.source != SERVER &&
+			ft_is_droppable_scrollbar(vm, mouse, vm->visu.positions.upload_slot.player,
+				vm->visu.players_list[UPLOAD].vscrollbar))
 		{
 			dc->player = &(vm->client.upload_player);
 			dc->close = &(vm->visu.positions.upload_slot.close);
@@ -60,7 +80,8 @@ void	ft_remove_color_player(t_vm *vm, t_player *player)
 void	ft_swap(t_vm *vm, t_drop_container *dc, t_player dragged_on_player)
 {
 	*(vm->visu.drag_container.drag_union.drag_player.player) = dragged_on_player;
-	vm->visu.drag_container.drag_union.drag_player.close->visible = 1;
+	if (vm->visu.drag_container.drag_union.drag_player.close)
+		vm->visu.drag_container.drag_union.drag_player.close->visible = 1;
 	if (dc->player == &vm->client.upload_player) //on drop dans upload
 		ft_remove_color_player(vm, dc->player);
 	if (vm->visu.drag_container.drag_union.drag_player.source == UPLOAD) //on drop depuis upload
@@ -73,7 +94,8 @@ void	ft_place(t_vm *vm, t_drop_container *dc)
 		ft_remove_color_player(vm, dc->player);
 	vm->visu.drag_container.drag_union.drag_player.player->relevant = 0;
 	vm->visu.drag_container.drag_union.drag_player.player->color.value = NULL;
-	vm->visu.drag_container.drag_union.drag_player.close->visible = 0;
+	if (vm->visu.drag_container.drag_union.drag_player.close)
+		vm->visu.drag_container.drag_union.drag_player.close->visible = 0;
 	dc->close->visible = 1;
 }
 
@@ -107,14 +129,17 @@ void	ft_drop_dragged_player(t_vm *vm, t_ixy mouse)
 	{
 		if (ft_is_on_droppable(vm, mouse, &dc))
 		{
-			if (vm->visu.drag_container.drag_union.drag_player.source == LOCAL)
+			if (vm->visu.drag_container.drag_union.drag_player.source == LOCAL ||
+				vm->visu.drag_container.drag_union.drag_player.source == SERVER)
 				ft_copy(vm, &dc);
 			else
 				ft_place_or_swap(vm, &dc);
 			dispatch_players(vm);
 		}
 		else if (vm->visu.drag_container.drag_union.drag_player.player &&
-				vm->visu.drag_container.drag_union.drag_player.source == ARENA)
+				(vm->visu.drag_container.drag_union.drag_player.source
+				== ARENA || vm->visu.drag_container.drag_union.
+				drag_player.source == UPLOAD))
 		{
 			vm->visu.drag_container.drag_union.drag_player.player->relevant = 0;
 			set_color(vm->visu.drag_container.drag_union.drag_player.player, vm->color);

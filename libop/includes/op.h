@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 19:01:37 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/15 21:53:13 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/18 20:02:12 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@
 # define DIR_CODE				2
 # define IND_CODE				3
 # define MAX_ARGS_NUMBER		4
-# define MAX_PLAYERS			4
-# define MEM_SIZE				(MAX_PLAYERS*1024)
+# define MAX_PLAYERS			6
+# define MEM_SIZE				(MAX_PLAYERS * 1024)
 # define IDX_MOD				(MEM_SIZE / 8)
-# define CHAMP_MAX_SIZE			(MEM_SIZE / 6)
+# define CHAMP_MAX_SIZE			(MEM_SIZE / 6) // anciennement 6
 # define COMMENT_CHAR			'#'
 # define REGISTER_CHAR			'r'
 # define LABEL_CHAR				':'

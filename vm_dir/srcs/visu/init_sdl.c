@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 15:02:55 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/17 21:49:28 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/18 23:42:59 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,6 +221,9 @@ int		ft_init_textures(t_visu *visu)
 	if (!(visu->sdl.images[SCROLL_UP] =
 			ft_load_image(PATH"/resources/scroll_up.png")))
 		return (1);
+	if (!(visu->sdl.images[FIGHT] =
+			ft_load_image(PATH"/resources/fight.png")))
+		return (1);
 	return (0);
 }
 
@@ -300,6 +303,16 @@ void	ft_init_center_online(t_visu *visu, t_center *c)
 		c->score_right + c->player_w + c->player_h + c->scrollbar_width)) / 2.0;
 }
 
+void	ft_init_center_fight(t_visu *visu, t_center *c)
+{
+	c->fight_top = FIGHT_TOP * visu->react.h_scale;
+	c->fight_bottom = FIGHT_BOTTOM * visu->react.h_scale;
+	c->fight_left = FIGHT_LEFT * visu->react.w_scale;
+	c->fight_right = FIGHT_RIGHT * visu->react.w_scale;
+	c->fight_height = c->footer_height - c->fight_top - c->fight_bottom;
+	c->fight_width = c->dashboard_width - c->fight_left - c->fight_right;
+}
+
 void	ft_init_center(t_visu *visu, t_center *c)
 {
 	c->dashboard_x = DASHBOARD_X * visu->react.w_scale;
@@ -312,9 +325,11 @@ void	ft_init_center(t_visu *visu, t_center *c)
 	c->mid_dashboard_height = c->top_dashboard_height - c->footer_height;
 	c->footer_y = visu->dim.height - c->footer_height;
 
+
 	ft_init_center_memory(visu, c);
 	ft_init_center_players(visu, c);
 	ft_init_center_online(visu, c);
+	ft_init_center_fight(visu, c);
 	c->toolbar_y = c->top_dashboard_height + c->title_top +
 		c->s_title_h + c->title_bottom;
 }
@@ -328,6 +343,7 @@ t_ixy	new_ixy(int x, int y)
 	return (res);
 }
 
+
 void	ft_delete_player(t_vm *vm, t_button *this, t_ixy xy)
 {
 	this->button_union.player->relevant = 0;
@@ -335,6 +351,21 @@ void	ft_delete_player(t_vm *vm, t_button *this, t_ixy xy)
 	dispatch_players(vm);
 	this->visible = 0;
 	ft_update_cursor(vm, xy);
+}
+
+void	nothing_on_click(t_vm *vm, t_button *this, t_ixy xy)
+{
+	(void)vm;
+	(void)this;
+	(void)xy;
+	ft_printf("hehehe\n");
+}
+
+void	nothing_on_press(t_vm *vm, t_button *this)
+{
+	(void)vm;
+	(void)this;
+	ft_printf("hehehe\n");
 }
 
 void	ft_populate_closing_button(t_vm *vm, t_button *button,
@@ -347,7 +378,9 @@ void	ft_populate_closing_button(t_vm *vm, t_button *button,
 	button->surface = vm->visu.sdl.images[CLOSE];
 	button->button_union.player = player;
 	button->on_click = &ft_delete_player;
+	button->on_press = &nothing_on_press;
 	button->visible = 0;
+	button->vscrollbar = &vm->visu.players_list[ARENA].vscrollbar;
 }
 
 void	ft_populate_upload_slot(t_vm *vm, t_visu *v)
@@ -366,6 +399,8 @@ void	ft_populate_upload_slot(t_vm *vm, t_visu *v)
 
 	ft_populate_closing_button(vm,
 		&(v->positions.upload_slot.close), &vm->client.upload_player, xy);
+	v->positions.upload_slot.close.vscrollbar =
+		&vm->visu.players_list[UPLOAD].vscrollbar;
 }
 
 void    ft_populate_slots_positions(t_vm *vm, t_visu *v)
@@ -425,21 +460,15 @@ int		ft_init_cursors(t_visu *v)
 	return (0);
 }
 
-void	nothing(t_vm *vm, t_button *this, t_ixy xy)
-{
-	(void)vm;
-	(void)this;
-	(void)xy;
-	ft_printf("hehehe\n");
-}
-
 void	ft_init_button(t_button *button, SDL_Rect rect, SDL_Surface *surface,
 			void (*on_click)(t_vm *, t_button *, t_ixy xy))
 {
 	button->rect = rect;
 	button->surface = surface;
 	button->on_click = on_click;
+	button->on_press = &nothing_on_press;
 	button->visible = 1;
+	button->vscrollbar = NULL;
 }
 
 void	ft_init_buttons(t_vm *vm, t_visu *visu)
@@ -454,17 +483,24 @@ void	ft_init_buttons(t_vm *vm, t_visu *visu)
 		visu->center.title_bottom + visu->center.title_top;
 
 	ft_init_button(&(visu->buttons[UPLOAD_BUTTON]), rect,
-		vm->visu.sdl.images[UL], &nothing);
+		vm->visu.sdl.images[UL], &nothing_on_click);
 
 	rect.x += visu->center.player_h + visu->center.toolbar_blank;
 
 	ft_init_button(&(visu->buttons[ALPHA_SORT_BUTTON]), rect,
-		vm->visu.sdl.images[SORT_ALPHA], &nothing);
+		vm->visu.sdl.images[SORT_ALPHA], &nothing_on_click);
 	
 	rect.x += visu->center.player_h + visu->center.sort_padding;
 
 	ft_init_button(&(visu->buttons[SCORE_SORT_BUTTON]), rect,
-		vm->visu.sdl.images[SORT_SCORE], &nothing);
+		vm->visu.sdl.images[SORT_SCORE], &nothing_on_click);
+
+	rect.x = visu->center.dashboard_x + visu->center.fight_left;
+	rect.y = visu->center.footer_y + visu->center.fight_top;; 
+	rect.h = visu->center.fight_height;
+	rect.w = visu->center.fight_width;
+	ft_init_button(&(visu->buttons[FIGHT_BUTTON]), rect,
+	vm->visu.sdl.images[FIGHT], &nothing_on_click);
 }
 
 void	ft_init_crosses(t_vm *vm)
@@ -505,8 +541,10 @@ int		ft_init_all_sdl(t_vm *vm, t_visu *v)
 	ft_init_buttons(vm, v);
 	v->sdl.current_cursor = REGULAR;
 	v->event_manager.enable_mouse_up = 1;
+	v->event_manager.pressed_button = NULL;
 	v->drag_container.drag_union.drag_player.player = NULL;
 	v->drop_container.player = NULL;
+	v->drag_container.parent = v;
 	ft_init_crosses(vm);
 	ft_init_players_list(v);
 	ft_init_vscrollbars_compressed_size(vm, v);

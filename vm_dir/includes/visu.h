@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/17 20:52:58 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/18 23:46:38 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,13 @@
 # define FRAMERATE				60
 
 # define DASHBOARD_X			1900
-# define TOP_DASHBOARD_HEIGHT	580
+# define TOP_DASHBOARD_HEIGHT	530
 # define FOOTER_HEIGHT			150
+
+# define FIGHT_TOP				30
+# define FIGHT_BOTTOM			30
+# define FIGHT_LEFT				200
+# define FIGHT_RIGHT			200
 
 # define MEM_BORDER_TOP			100
 # define MEM_BORDER_BOTTOM		100
@@ -61,6 +66,7 @@
 # define SORT_PADDING			20
 # define SORT_SCORE_RIGHT		PLAYER_BORDER_LEFT / 2
 # define TOOLBAR_BOTTOM			30
+
 
 # define LABSCORE_LEFT			30
 # define LABSCORE_WIDTH			120
@@ -99,6 +105,8 @@
 # define SCROLL_UP				6
 # define SCROLL_DOWN			7
 
+# define FIGHT					8
+
 # define NB_CURSORS				5
 
 # define GRAB					0
@@ -106,11 +114,12 @@
 # define CLICK					2
 # define REGULAR				3
 
-# define NB_BUTTONS				3
+# define NB_BUTTONS				4
 
 # define UPLOAD_BUTTON			0
 # define ALPHA_SORT_BUTTON		1
 # define SCORE_SORT_BUTTON		2
+# define FIGHT_BUTTON			3
 
 # define PLAYER_COL_BORDER		0x000000
 # define PLAYER_COL				0x222222
@@ -125,6 +134,7 @@
 # define DROP_TOLERANCE_H		30
 
 typedef struct s_vm			t_vm;
+typedef struct s_visu		t_visu;
 typedef struct s_vscrollbar	t_vscrollbar;
 
 typedef struct			s_atlas_char
@@ -147,7 +157,7 @@ typedef union			u_button_union
 {
 	char				*name;
 	t_player			*player;
-	t_vscrollbar			*scrollbar;
+	t_vscrollbar		*vscrollbar;
 	t_sort_button		sort;
 }						t_button_union;
 
@@ -170,9 +180,10 @@ typedef struct			s_button
 	t_button_union		button_union;
 	char				visible;
 	void				(*on_click)(t_vm *, struct s_button *, t_ixy xy);
+	void				(*on_press)(t_vm *, struct s_button *);
 	int					(*render)(t_vm *, struct s_button *, t_ixy xy);
 	void				(*on_hover)(t_vm *, struct s_button *, t_ixy xy);
-	t_vscrollbar		*scrollbar;
+	t_vscrollbar		*vscrollbar;
 }						t_button;
 
 /*
@@ -186,6 +197,7 @@ typedef struct			s_button
 struct					s_vscrollbar
 {
 	t_ixy				pos;
+	int					pos_x;
 	double				state;
 	int					height;
 	int					compressed_height;
@@ -201,7 +213,11 @@ typedef enum			e_player_source
 	LOCAL,
 	UPLOAD,
 	SERVER,
-	NB_SOURCES
+	NB_SOURCES,
+	GRAB_ARENA,
+	GRAB_LOCAL,
+	GRAB_UPLOAD,
+	GRAB_SERVER,
 }						t_player_source;
 
 typedef struct			s_player_list
@@ -311,6 +327,13 @@ typedef struct			s_center
 	double				download_side;
 	double				scrollbar_width;
 	double				scrollbar_buttons_height;
+
+	int					fight_top;
+	int					fight_bottom;
+	int					fight_left;
+	int					fight_right;
+	int					fight_height;
+	int					fight_width;
 }						t_center;
 
 typedef struct			s_slot
@@ -353,6 +376,7 @@ typedef struct			s_drag_container
 	int					y;
 	int					diff_x;
 	int					diff_y;
+	t_visu				*parent;
 }						t_drag_container;
 
 typedef struct			s_drop_container
@@ -365,6 +389,7 @@ typedef struct			s_event_manager
 {
 	Uint32				mouse_state;
 	char				enable_mouse_up;
+	t_button			*pressed_button;
 }						t_event_manager;
 
 typedef struct			s_color_manager
@@ -375,7 +400,7 @@ typedef struct			s_color_manager
 	char				b;
 }						t_color_manager;
 
-typedef struct			s_visu
+struct					s_visu
 {
 	char				active;
 	t_sdl				sdl;
@@ -389,7 +414,7 @@ typedef struct			s_visu
 	t_framerate			framerate;
 	t_button			buttons[NB_BUTTONS];
 	t_player_list		players_list[NB_SOURCES];
-}						t_visu;
+};
 
 int						ft_init_all_sdl(t_vm *vm, t_visu *v);
 
@@ -424,7 +449,7 @@ int						ft_is_on_button(t_ixy xy, t_button *button,
 							t_button **to_fill);
 int						ft_is_on_buttons(t_vm *vm, t_ixy xy, t_button **button);
 t_ixy					new_ixy(int x, int y);
-int						ft_render_button(SDL_Surface *to, t_button button);
+int						ft_render_button(t_sdl *sdl, t_button button);
 void					ft_delete_player(t_vm *vm, t_button *this, t_ixy xy);
 int						ft_get_player_color(t_vm *vm, t_player *player,
 							int initial_color, float value);
@@ -446,4 +471,11 @@ t_ixy					ft_get_vscrollbar_bar_height_y(t_vscrollbar vscrollbar);
 double					ft_get_vscrollbar_bar_height(t_vscrollbar vscrollbar);
 int						ft_to_print_scrollbar(t_vscrollbar vscrollbar);
 void					ft_update_scrollbar(t_vm *vm, t_vscrollbar *vscrollbar);
+int						get_vscrollbar(t_vm *vm, t_ixy mouse,
+							t_vscrollbar **vscrollbar);
+int						ft_get_scrolled_height(t_vscrollbar vscrollbar);
+void					ft_swing_scrollbar(t_vscrollbar *scrollbar, t_ixy xy);
+void					nothing_on_click(t_vm *vm, t_button *this, t_ixy xy);
+void					nothing_on_press(t_vm *vm, t_button *this);
+void					ft_wheel_event(t_vm *vm, SDL_Event event);
 #endif

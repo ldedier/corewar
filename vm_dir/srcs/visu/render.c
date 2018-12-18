@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/09 14:02:56 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/17 22:38:41 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/18 23:44:25 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,15 @@ void	ft_render_horizontal_line_dashboard(t_vm *vm, int y, int col)
 	}
 }
 
+int		ft_get_scrolled_height(t_vscrollbar vscrollbar)
+{
+	if (vscrollbar.relevant)
+		return ((vscrollbar.compressed_height - vscrollbar.height) *
+			vscrollbar.state);
+	else
+		return (0);
+}
+
 int		ft_blit_scaled_scrollbar(t_sdl *sdl, SDL_Surface *from,	SDL_Rect rect,
 		t_vscrollbar vscrollbar)
 {
@@ -40,8 +49,7 @@ int		ft_blit_scaled_scrollbar(t_sdl *sdl, SDL_Surface *from,	SDL_Rect rect,
 			return (ft_net_error());
 		return (0);
 	}
-	scrolled_height = (vscrollbar.compressed_height - vscrollbar.height) *
-		vscrollbar.state;
+	scrolled_height = ft_get_scrolled_height(vscrollbar);
 	true_y = rect.y - scrolled_height;
 	if (true_y > vscrollbar.pos.y + vscrollbar.height ||
 		true_y + rect.h  < vscrollbar.pos.y)
@@ -74,8 +82,7 @@ int		ft_fill_rect_scrollbar(SDL_Surface *from, SDL_Rect *rect,
 		SDL_FillRect(from, rect, color);
 		return (0);
 	}
-	scrolled_height = (vscrollbar.compressed_height - vscrollbar.height) *
-		vscrollbar.state;
+	scrolled_height = ft_get_scrolled_height(vscrollbar);
 	true_y = rect->y - scrolled_height;
 	if (true_y > vscrollbar.pos.y + vscrollbar.height ||
 		true_y + rect->h  < vscrollbar.pos.y)
@@ -109,7 +116,7 @@ void	ft_render_lines(t_vm *vm)
 			vm->visu.center.title_h +vm->visu.center.title_top +
 			vm->visu.center.title_bottom - 1, LINE_COL_DARKER);
 	ft_render_horizontal_line_dashboard(vm,
-			vm->visu.center.top_dashboard_height, LINE_COL);
+		vm->visu.center.top_dashboard_height, LINE_COL);
 	i = 0;
 	while (i < vm->visu.center.top_dashboard_height)
 	{
@@ -132,8 +139,8 @@ int		ft_render_crosses(t_vm *vm)
 	i = 0;
 	while (i < MAX_PLAYERS)
 	{
-		if (ft_render_button(vm->visu.sdl.w_surface,
-					vm->visu.positions.arena_slots[i].close))
+		if (ft_render_button(&(vm->visu.sdl),
+				vm->visu.positions.arena_slots[i].close))
 			return (ft_net_error());
 		i++;
 	}
@@ -179,9 +186,9 @@ int		ft_render_scrollbar_bar(t_vm *vm, t_vscrollbar vscrollbar)
 
 int		ft_render_scrollbar_buttons(t_vm *vm, t_vscrollbar vscrollbar)
 {
-	if (ft_render_button(vm->visu.sdl.w_surface, vscrollbar.up_button))
+	if (ft_render_button(&(vm->visu.sdl), vscrollbar.up_button))
 		return (1);
-	if (ft_render_button(vm->visu.sdl.w_surface, vscrollbar.down_button))
+	if (ft_render_button(&(vm->visu.sdl), vscrollbar.down_button))
 		return (1);
 	return (0);
 }
@@ -235,6 +242,8 @@ int		ft_render(t_vm *vm, t_sdl *sdl)
 	else
 		ft_render_offline(vm);
 	ft_render_vscrollbars(vm);
+	if (ft_render_button(sdl, vm->visu.buttons[FIGHT_BUTTON]))
+		return (1);
 	ft_render_dragged_player(vm);
 	sdl->texture = SDL_CreateTextureFromSurface(sdl->renderer, sdl->w_surface);
 	SDL_RenderCopy(sdl->renderer, sdl->texture, NULL, NULL);
