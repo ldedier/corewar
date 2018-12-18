@@ -14,6 +14,11 @@
 
 // j'ai change les char * en char[PROG_NAME] etc (voir struct s_champion)
 
+int	isprint(int c)
+{
+	return (c >= 33 && c <= 126);
+}
+
 static int read_name_continue(char *line, int i, t_env *env)
 {
 	if (line[i] != '"')
@@ -23,9 +28,10 @@ static int read_name_continue(char *line, int i, t_env *env)
 	}
 	if (line[i + 1] != '\0')
 	{
+		i += 1;
 		while(line[i] || line[i] == ' ' || line[i] == '\t')
 		{
-			if (ft_isdigit(line[i]) || ft_isalpha(line[i]))
+			if (isprint(line[i]))
 			{
 				ft_log_error("Syntax error at token AFTER NAME", i, env);
 				return (1);
@@ -79,7 +85,7 @@ static int check_after_comment(char *tmp, int i, t_env *env)
 	}
 	while (tmp[i] || tmp[i] == ' ' || tmp[i] == '\t')
 	{
-		if (ft_isalpha(tmp[i]) || ft_isdigit(tmp[i]))
+		if (isprint(tmp[i]))
 		{
 			ft_log_error_no_line("Syntax error at token AFTER COMMENT", env);
 			return (1);
@@ -128,17 +134,15 @@ static int read_comment_continue(char *line, int i, t_env *env, int fd)
 		i++;
 	}
 	line++;
-	if (line[i + 2] != '\0' && line[i + 1])
+	i += 1;
+	while(line[i] || line[i] == '\t' || line[i] == ' ')
 	{
-		while(line[i] || line[i] == '\t' || line[i] == ' ')
+		if (isprint(line[i]))
 		{
-			if (ft_isdigit(line[i]) || ft_isalpha(line[i]))
-			{
-				ft_log_error("Syntax error at token AFTER COMMENT", i + 1, env);
-				return (1);
-			}
-			i++;
+			ft_log_error("Syntax error at token AFTER COMMENT", i + 1, env);
+			return (1);
 		}
+		i++;
 	}
 	if (ft_strlen(env->champ.header.comment) > COMMENT_LENGTH)
 		ft_log_error_no_line("Champion name too long (Max length 2048)", env);
