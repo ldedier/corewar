@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/11 17:08:36 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/13 23:36:59 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/15 20:23:13 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int		ft_print_byte_composant(t_vm *vm, t_xy *dist, t_metadata meta, int byte)
 {
 	int			ascii_byte;
 	SDL_Rect	rect;
-	(void)		meta;
+
 	rect.w = vm->visu.center.glyph_width;
 	rect.h = vm->visu.center.glyph_height;
 	rect.x = dist->x;

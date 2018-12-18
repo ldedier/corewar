@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 20:06:08 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/05 13:15:14 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/15 18:26:25 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -316,8 +316,8 @@ int		ft_process_parse_register(char *str, int index, int offset, t_env *e)
 	int ret;
 	char *str2;
 	int i;
-	e->champ.header.prog_size += REG_SIZE;
-	e->parser.current_instruction->params[index].nb_bytes = REG_SIZE;
+	e->champ.header.prog_size += E_REG;
+	e->parser.current_instruction->params[index].nb_bytes = E_REG;
 	e->parser.current_instruction->ocp |= (REG_CODE << (6 - (2 * index)));
 	i = 0;
 	str2 = str;
@@ -412,8 +412,8 @@ int		ft_process_parse_direct_value(char *str, int index, int offset, t_env *e)
 
 int		ft_process_parse_indirect(char *str, int index, int offset, t_env *e)
 {
-	e->champ.header.prog_size += IND_SIZE;
-	e->parser.current_instruction->params[index].nb_bytes = IND_SIZE;
+	e->champ.header.prog_size += E_IND;
+	e->parser.current_instruction->params[index].nb_bytes = E_IND;
 	e->parser.current_instruction->ocp |= (IND_CODE << (6 - (2 * index)));
 	if (!(T_IND & e->parser.current_instruction->op.arg_types[index]) && 0)
 		return (ft_log_custom_wrong_param_type("indirect", index, 0, e));
@@ -428,13 +428,13 @@ int		ft_process_parse_direct(char *str, int index, int offset, t_env *e)
 {
 	if (e->parser.current_instruction->op.describe_address)
 	{
-		e->parser.current_instruction->params[index].nb_bytes = IND_SIZE;
-		e->champ.header.prog_size += IND_SIZE;
+		e->parser.current_instruction->params[index].nb_bytes = E_IND;
+		e->champ.header.prog_size += E_IND;
 	}
 	else
 	{
-		e->parser.current_instruction->params[index].nb_bytes = DIR_SIZE;
-		e->champ.header.prog_size += DIR_SIZE;
+		e->parser.current_instruction->params[index].nb_bytes = E_DIR;
+		e->champ.header.prog_size += E_DIR;
 	}
 	e->parser.current_instruction->ocp |= (DIR_CODE << (6 - (2 * index)));
 	if (!(T_DIR & e->parser.current_instruction->op.arg_types[index]))

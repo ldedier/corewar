@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 20:22:56 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/13 18:33:11 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/14 18:08:21 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ int		ins_live(t_vm *vm, t_process *proc, t_parameter arg[3])
 	if (!proc->live)
 		++vm->live.total_pl;
 	proc->live = 1;
-	proc->live = 1;
-	vm->live.last_pl = arg[FIRST].value;
+	vm->live.last_pl = proc;
 	++vm->live.nb;
 	return (SUCCESS);
 }

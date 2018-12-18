@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 20:22:56 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/13 18:34:38 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/18 20:32:41 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,9 @@
 
 int		ins_st(t_vm *vm, t_process *proc, t_parameter arg[3])
 {
-	int			index;
-	char		val;
-	int			i;
+	int			val;
 	
-	index = arg[SECOND].value % IDX_MOD;
-	val = getval(vm, proc, arg[FIRST]);
-	i = arg[SECOND].nb_bytes;
-	while (i)
-	{
-		vm->arena[(index + i) % MEM_SIZE] = (val & 255); 
-//		ft_printf("val = %d arena = %#x\n", val, vm->arena[vm->proc[pl].pc + index + i]);
-		val = val >> 8;
-		--i;
-	}
-//	loadval(vm, &vm->proc[pl], arg[FIRST], val);
+	val = arg[0].dest_value % IDX_MOD;
+	loadval(vm, proc, &arg[1], val);
 	return (SUCCESS);
 }

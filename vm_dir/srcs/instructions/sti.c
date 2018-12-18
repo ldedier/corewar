@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 20:22:56 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/13 18:34:54 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/18 17:51:26 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,13 @@
 
 int		ins_sti(t_vm *vm, t_process *proc, t_parameter arg[3])
 {
-	int sum;
+	(void)vm;
+	(void)proc;
+	(void)arg;
+//	int sum;
 
-	sum = getval(vm, proc, arg[SECOND]) +  getval(vm, proc, arg[THIRD]);
+//	sum = getval(vm, proc, arg[SECOND]) +  getval(vm, proc, arg[THIRD]);
 //	ft_printf("sti, sum = %d\n", sum);
-	proc->reg[arg[FIRST].value - 1] = vm->arena[sum % MEM_SIZE];
+//	proc->reg[arg[FIRST].value - 1] = vm->arena[sum % MEM_SIZE];
 	return (SUCCESS);
 }

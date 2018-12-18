@@ -6,81 +6,91 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 16:33:31 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/13 18:19:10 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/18 20:21:25 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "op.h"
+
+int		getval_mod(char *arena, int index, int nb_bytes, int mod)
+{
+	int	i;
+	int val;
+
+	i = -1;
+	val = 0;
+	ft_printf("getval mod, index = %d nbbytes = %d\n", index, nb_bytes);
+	while (++i < nb_bytes)
+	{
+		ft_printf("getval mod: i = %d val = %d arena[index + i] = %d\n", i, val, arena[index + i]);
+		val = val * 10 + arena[(index + i) % mod];
+	}
+	return (val);
+}
 
 /*
 ** store pointer on arg, loop to
 ** beginning if ptr located after mod len in arena
 */
 
-int		set_arg_ptr(char *arena, t_instruction *ins, int i, int mod)
+int		getval_params(char *arena, t_instruction *ins, int i, int mod)
 {
 	int		j;
-	int		k;
+	t_parameter *param;
 
 	j = -1;
 	while (++j < ins->op.nb_params)
 	{	
-		if ( !(ins->params[j].type & g_op_tab[ins->op.opcode - 1].arg_types[j]))
+		param = &ins->params[j];
+		if ( !(param->type & g_op_tab[ins->op.opcode - 1].arg_types[j]))
 			return (-1);
-		ins->params[j].ptr = (char *)(arena + i);
-		ins->params[j].value = 0;
-		k = -1;
-		while (++k < ins->params[j].nb_bytes)
-		{
-			ins->params[j].value = ins->params[j].value << 8;
-			ins->params[j].value += arena[(i + 1) % mod];
-			++i;
-		}
+		param->value = getval_mod(arena, i, param->nb_bytes, mod);
+		i += param->nb_bytes;
+		ft_printf("param value = %d\n", param->value);
+		if (param->type == REG_CODE && param->value >= REG_NUMBER)
+			return (-1);
 	}
-//		ft_printf("arg1 = %#x arg2 = %#x arg3 = %#x\n", ins->params[0].value, ins->params[1].value, ins->params[2].value);
-	return (i);
+	return (0);
 }
 
 /*
-** Check validity of parameters encoding byte, store type and in instruction structure
+** Check validity of parameters encoding byte, store type and in instruction
+** structure
 ** handles exception when T_DIR > 2 bytes instead of 4
 ** Return 1 if valid, 0 if invalid
 */
 
 static int		is_valid_ocp(unsigned char hex, t_instruction *ins)
 {
-	static int	len[4] = {NA, REG_SIZE, DIR_SIZE, IND_SIZE};
-	int			t;
-	int			arg;
+	static int		len[4] = {NA, E_REG, E_DIR, E_IND};
+	int				t;
+	int				arg;
+	t_parameter		*param;
 
-//	ft_printf("opc = %#x\n", (unsigned char)hex);
 	arg = g_op_tab[ins->op.opcode - 1].nb_params;
 	ft_bzero((void *)ins->params, sizeof(t_parameter) * 3);
 	if (hex & 3)
 		return (0);
-	while (--arg >= 0)
+	while (--arg >= 0 && (t = -1))
 	{
-		t = -1;
 		while (++t < 3)
 		{
 			hex = hex >> 2;
+			param = &ins->params[arg];
 			if (g_op_tab[ins->op.opcode - 1].nb_params == 1)
 			{
-				ins->params[arg].type = g_op_tab[ins->op.opcode - 1].arg_types[0];
-				ins->params[arg].nb_bytes = len[(int)ins->params[arg].type];
+				param->type = g_op_tab[ins->op.opcode - 1].arg_types[0];
+				param->nb_bytes = len[(int)param->type];
 			}
 			if ((int)((hex & 3)))
 			{
-				
-				ins->params[arg].type = hex & 3;
-				ins->params[arg].nb_bytes = len[hex & 3];
+				param->type = hex & 3;
+				param->nb_bytes = len[hex & 3];
 				if ((hex & 3) == DIR_CODE
 					&& g_op_tab[ins->op.opcode - 1].describe_address == 1)
-						ins->params[arg].nb_bytes = 2;
-				t = 2;
+						param->nb_bytes = 2;
+				break;
 			}
-//			ft_printf("ins params[%d].type = %d\n", arg, ins->params[arg].type);
-//			ft_printf("ins params[%d].bytes = %d\n", arg, ins->params[arg].nb_bytes);
 		}
 		if (!ins->params[arg].nb_bytes)
 			return (0);
@@ -105,26 +115,24 @@ int				get_instruction(char *arena, t_instruction *ins, int i, int mod)
 	if ((int)hex >= NB_INSTRUCTIONS || !hex)
 		return (0);
 	else
-	{
 		ft_memmove((void *)&ins->op, (void *)&g_op_tab[(int)hex - 1], sizeof(t_op));
-//		ft_printf("detected %d\n", ins->op.opcode);
-	}
+	++i;
 	if (ins->op.has_ocp == OCP_YES)
 	{
-		ins->ocp = (unsigned char)*(arena + ((i + 1) % mod));
+		ins->ocp = (unsigned char)*(arena + (i % mod));
 		if (!is_valid_ocp((unsigned char)ins->ocp, ins))
 		{
 			ft_bzero((void *)ins, sizeof(*ins));
 			return (0);
 		}
 	}
-	if (set_arg_ptr(arena, ins, i + ins->op.has_ocp, mod) == -1)
+	if (getval_params(arena, ins, i + ins->op.has_ocp, mod) == -1)
 	{
 		ft_bzero((void *)ins, sizeof(*ins));
 		return (0);
 	}
-//	ft_printf("has ocp = %d\n", ins->op.has_ocp);
 	len = ins->params[0].nb_bytes + ins->params[1].nb_bytes + ins->params[2].nb_bytes + ins->op.has_ocp + 1;
 	return (len);
 
 }
+

@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 00:59:48 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/10 17:08:35 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/18 18:17:09 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		ft_write(int fd, int value, int size)
 {
-	char	bytes[4]; //check si max (SIZE) > 4 !
+	char	bytes[4]; //check si max (E_SIZE) > 4 !
 	char	tmp;
 	int i;
 
@@ -65,15 +65,15 @@ void	ft_encode_header(int fd, t_env *e)
 void	ft_encode_param(int fd, t_instruction *instruction, int index)
 {
 	if (instruction->params[index].type & T_REG)
-		ft_write(fd, instruction->params[index].value, REG_SIZE);
+		ft_write(fd, instruction->params[index].value, E_REG);
 	else if (instruction->params[index].type & T_IND)
-		ft_write(fd, instruction->params[index].value, IND_SIZE);
+		ft_write(fd, instruction->params[index].value, E_IND);
 	else if (instruction->params[index].type & T_DIR)
 	{
 		if (instruction->op.describe_address)
-			ft_write(fd, instruction->params[index].value, IND_SIZE);
+			ft_write(fd, instruction->params[index].value, E_IND);
 		else
-			ft_write(fd, instruction->params[index].value, DIR_SIZE);
+			ft_write(fd, instruction->params[index].value, E_DIR);
 	}
 }
 

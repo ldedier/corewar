@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 17:38:14 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/13 20:31:48 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/14 17:59:06 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_process *get_proc_num(t_list *lst, int num)
 	tmp = lst;
 	while (tmp)
 	{
-		if (((t_process *)(tmp->content))->id == num)
+		if (((t_process *)(tmp->content))->player->num == num)
 			return ((t_process *)(tmp->content));
 		tmp = tmp->next;
 	}

@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strequ.c                                        :+:      :+:    :+:   */
+/*   local_players.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/06 19:40:55 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/14 18:18:48 by emuckens         ###   ########.fr       */
+/*   Created: 2018/12/16 13:53:02 by ldedier           #+#    #+#             */
+/*   Updated: 2018/12/16 13:57:01 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "vm.h"
 
-int	ft_strequ(const char *s1, const char *s2)
+void		init_local_players(t_vm *vm)
 {
-	if (s1 != NULL && s2 != NULL)
+	int i;
+
+	i = 0;
+	while (i < MAX_PLAYERS)
 	{
-		if (ft_strcmp(s1, s2) == 0)
-			return (1);
-		else
-			return (0);
+		vm->local_player[i] = vm->player[i];
+		vm->local_player[i].color.value = NULL;
+		i++;
 	}
-	else
-		return (0);
 }

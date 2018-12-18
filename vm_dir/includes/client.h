@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 18:26:19 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/13 22:05:53 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/14 19:18:54 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,6 @@ typedef struct			s_client
 
 int						ft_net_error(void);
 int						ft_send_protected(TCPsocket socket, void *data,
-		size_t size);
+							size_t size);
 int						ft_process_client_events(t_vm *vm);
 #endif

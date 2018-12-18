@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:54:14 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/13 17:12:54 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/16 17:14:57 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ int		ft_receive_connect_status(t_client *client)
 int		ft_process_client_events(t_vm *vm)
 {
 	int nb_bytes;
+
 	if (SDLNet_CheckSockets(vm->client.socket_set, 0))
 	{
 		if (SDLNet_SocketReady(vm->client.socket))
@@ -138,7 +139,8 @@ int		ft_process_client_events(t_vm *vm)
 			if (nb_bytes <= 0)
 			{
 				ft_printf("lost connection with the server.\n");
-				vm->client.running = 0;
+				vm->client.active = 0;
+			//	vm->client.running = 0;
 			}
 		}
 		else
