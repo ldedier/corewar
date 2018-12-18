@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/15 16:03:28 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/18 20:27:28 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,9 +112,9 @@ static void		launch_instruction(t_vm *vm, t_process *proc)
 
 	if (last_instruction_unresolved(vm, proc))
 		return ;
-	ft_printf("no ongoing instruction! pc = %d\n", proc->pc);
 	if ((ret = get_instruction(vm->arena, &ins, proc->pc, MEM_SIZE)))
 	{
+		getval_param_dest(vm, proc, ins.params, ins.op.nb_params);
 		f_ins[(int)ins.op.opcode](vm, proc, ins.params);
 		proc->cycle = g_op_tab[(int)ins.op.opcode - 1].nb_cycles;
 		ft_printf("%s >>> %*-s%s", COLF_CYAN, PAD_INS - 5,
@@ -122,9 +122,9 @@ static void		launch_instruction(t_vm *vm, t_process *proc)
 		display(vm, proc, PL_CYCLE);
 		--proc->cycle; // voir si pertinent
 		if (ins.op.opcode == LIVE)
-			display(vm, get_proc_num(vm->proc, vm->live.last_pl->player->num), LAST_LIVE);
+			display(vm, get_proc_num(vm->proc, vm->live.last_pl->player->num),
+					LAST_LIVE);
 		proc->ins_cycle = ret;
-		ft_printf("ins cycle = %d\n", proc->ins_cycle);
 	}
 	else
 	{
@@ -169,6 +169,8 @@ int		play(t_vm *vm)
 	t_process			*proc;
 
 	display(vm, 0, CYCLE_NBR);
+	++vm->cycle;
+	ft_printf("%scycle = %d%s\n", COLF_RED, vm->cycle, COLF_OFF); 
 	if (vm->cycle == vm->c_to_die && !handle_end_cycle(vm))
 		return (0);
 	players = vm->proc;
@@ -182,8 +184,8 @@ int		play(t_vm *vm)
 		display(vm, proc, TURN_PLAYER);
 		launch_instruction(vm, proc);
 		ft_printf("\n");
+		display_arena((unsigned char *)vm->arena);
 		players = players->next;
 	}
-	++vm->cycle;
 	return (play(vm));
 }

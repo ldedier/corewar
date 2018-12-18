@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/16 13:56:10 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/18 18:15:45 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,8 +123,8 @@ int					get_envar(char **env, char ****envvar);
 ** INSTRUCTIONS
 */
 
-int					getval(t_vm *vm, t_process *proc, t_parameter arg);
-void				loadval(t_vm *vm, t_process *proc, t_parameter arg, int val);
+void				getval_param_dest(t_vm *vm, t_process *proc, t_parameter arg[3], int nb_params);
+void				loadval(t_vm *vm, t_process *proc, t_parameter *arg, int val);
 void				set_argval(t_parameter *arg, int index, int size);
 
 int					ins_live(t_vm *vm, t_process *proc, t_parameter arg[3]);
@@ -156,6 +156,7 @@ int					play(t_vm *vm);
 
 int					mod(int val, int max);
 int					ft_pow(int n, int pow); // remove?
+int					getval(t_vm *vm, t_process *proc, t_parameter arg);
 t_process		*get_proc_index(t_list *lst, int index);
 t_process		*get_proc_num(t_list *lst, int num);
 

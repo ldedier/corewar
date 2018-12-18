@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 19:01:37 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/15 21:53:13 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/18 18:10:43 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@
 # define LFORK_STR			"long fork"
 # define AFF_STR			"aff"
 
+/*
+PAS DE PANIQUE JE VAIS VIRER TOUT CA NORMALEMENT
 # define R					REG_SIZE
 # define D					DIR_SIZE
 # define I					IND_SIZE
@@ -103,8 +105,7 @@
 # define LLDI_ARG_TYPE			GET_ARGTYPE(RDI, RD, R)
 # define LFORK_ARG_TYPE			GET_ARGTYPE(D, 0)
 # define AFF_ARG_TYPE			GET_ARGTYPE(R, 0)
-
-# define NEEDS_OCP				60925
+*/
 
 typedef char	t_arg_type;
 
@@ -133,7 +134,8 @@ typedef struct					s_parameter
 {
 	t_arg_type					type; //T_REG || T_IND || T_DIR || T_LAB
 	int							value;
-	char						*ptr;
+	int							dest_value;
+	int							dest_index;
 	char						*label_name;
 	int							source_code_col;
 	int							nb_bytes;
@@ -170,6 +172,8 @@ enum				e_mod_carry
 };
 
 t_op							g_op_tab[NB_INSTRUCTIONS + 1];
+
+int							getval_mod(char *arena, int index, int nb_bytes,int mod);
 
 void							set_argval(t_parameter *arg, int index, int size);
 int								get_instruction(char *arena, t_instruction *ins, int i, int mod);

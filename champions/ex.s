@@ -1,11 +1,8 @@
 .name "zork"
 .comment "just a basic living prog"
 		
-l2:	ld	%666666,r2
-<<<<<<< HEAD
-=======
+l2:	ld	%100,r2
 	ld %3, r3
->>>>>>> emuckens
 	st r2, 20
 #	ld 	%5,r3
 #	ld	%:l2,r4
