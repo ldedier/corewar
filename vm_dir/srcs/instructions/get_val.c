@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/09 20:00:32 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/18 20:27:30 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/18 20:31:56 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void		getval_param_dest(t_vm *vm, t_process *proc, t_parameter arg[3], int nb_pa
 	i = -1;
 	while (++i < nb_params)
 	{
-//		ft_printf("arg # %d type = %d\n", i, (arg)[i].type);
 		(arg)[i].dest_value = f_data[(int)arg[i].type](vm, proc, arg[i].value);
 //		ft_printf("dest value = %d\n", (arg)[i].dest_value);
 	}
