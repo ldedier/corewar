@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 15:05:42 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/18 20:45:17 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/19 16:19:09 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,28 @@ int			ft_render_server_title(t_vm *vm, double y)
 	return (0);
 }
 
-int			ft_render_button(t_sdl *sdl, t_button button)
+int			ft_process_render_button(t_vm *vm, SDL_Rect rect,
+				SDL_Surface *surface, t_vscrollbar *vscrollbar)
 {
-	if (!button.visible)
-		return (0);
-	if (button.vscrollbar == NULL)
+	if (vscrollbar == NULL)
 	{
-		if (SDL_BlitScaled(button.surface, NULL,
-				sdl->w_surface, &(button.rect)) < 0)
+		if (SDL_BlitScaled(surface, NULL,
+				vm->visu.sdl.w_surface, &rect) < 0)
 			return (ft_net_error());
 	}
 	else
-		ft_blit_scaled_scrollbar(sdl, button.surface, button.rect,
-			*(button.vscrollbar));
+		return  (ft_blit_scaled_scrollbar(&vm->visu.sdl, surface,
+			rect, *vscrollbar));
+	return (0);
+}
+
+int			ft_render_button(t_vm *vm, t_button *button)
+{
+	if (!button->visible)
+		return (0);
+	if (ft_process_render_button(vm, button->rect, button->surface,
+			button->vscrollbar))
+		return (1);
 	return (0);
 }
 
@@ -50,7 +59,8 @@ int			ft_render_toolbar_buttons(t_vm *vm, t_button buttons[NB_BUTTONS])
 	i = 0;
 	while (i < NB_BUTTONS)
 	{
-		ft_render_button(&(vm->visu.sdl), buttons[i]);
+		if (buttons[i].render(vm, &buttons[i]))
+			return (1);
 		i++;
 	}
 	return (0);
@@ -74,9 +84,6 @@ void		ft_render_upload_link(t_vm *vm, t_xy xy)
 		pixels[(int)xy.y * vm->visu.dim.width + i + (int)xy.x] = color;
 		i++;
 	}
-	i = 0;
-	SDL_FillRect(vm->visu.sdl.w_surface,
-		&vm->visu.buttons[UPLOAD_BUTTON].rect, color);
 }
 
 int			ft_render_toolbar(t_vm *vm, double y)
@@ -88,7 +95,8 @@ int			ft_render_toolbar(t_vm *vm, double y)
 	xy.x += vm->visu.center.player_w;
 	xy.y += vm->visu.center.player_h / 2;
 	ft_render_upload_link(vm, xy);
-	ft_render_button(&(vm->visu.sdl), vm->visu.positions.upload_slot.close);
+	vm->visu.positions.upload_slot.close.render(vm,
+		&vm->visu.positions.upload_slot.close);
 	ft_render_toolbar_buttons(vm, vm->visu.buttons);
 	return (0);
 }
@@ -126,6 +134,34 @@ int			ft_render_client_score(t_vm *vm, int x, int y, t_client_slot *slot)
 	return (0);
 }
 
+void		ft_update_download_buttons_client_rect(t_vm *vm)
+{
+	t_list			*ptr;
+	t_client_slot	*slot;
+	double			y;
+	double			x;
+
+	y = vm->visu.players_list[SERVER].vscrollbar.pos.y +
+		vm->visu.center.player_top;
+	x = vm->visu.center.dashboard_x + vm->visu.center.labscore_left + 
+		vm->visu.center.labscore_width + vm->visu.center.labscore_right + 
+		vm->visu.center.score_width + vm->visu.center.score_right
+		+ vm->visu.center.player_w + vm->visu.center.download_side - 
+		(ft_to_print_scrollbar(vm->visu.players_list[SERVER].vscrollbar) ?
+		 vm->visu.center.scrollbar_width / 2  : 0);
+	ptr = vm->client.client_slots;
+	while (ptr != NULL)
+	{
+		slot = (t_client_slot *)(ptr->content);
+		slot->download.rect.x = x;
+		slot->download.rect.y = y;
+		slot->download.rect.w = vm->visu.center.player_h;
+		slot->download.rect.h = vm->visu.center.player_h;
+		y += vm->visu.center.player_padding + vm->visu.center.player_h;
+		ptr = ptr->next;
+	}
+}
+
 int			ft_render_client_slot(t_vm *vm, t_client_slot *slot, int y)
 {
 	double	x;
@@ -141,6 +177,8 @@ int			ft_render_client_slot(t_vm *vm, t_client_slot *slot, int y)
 	xy.x = x;
 	xy.y = y;
 	if (ft_render_player(vm, slot->player, xy, SERVER))
+		return (1);
+	if (slot->download.render(vm, &slot->download))
 		return (1);
 	return (0);
 }

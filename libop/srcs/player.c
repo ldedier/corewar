@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/08 14:56:45 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/11 14:58:23 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/19 14:54:05 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ t_player *ft_new_player(char *name, t_name_len name_len, t_score score)
 	res->name[name_len] = '\0';
 	res->score = score;
 	res->relevant = 1;
+	res->color.value = NULL;
+	res->algo_len = 0;
 	return (res);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/08 23:37:36 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/18 22:18:22 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/19 14:27:47 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,8 @@ int			ft_is_on_close(t_vm *vm, t_ixy xy, t_button **but)
 
 int			ft_is_on_buttons(t_vm *vm, t_ixy xy, t_button **but)
 {
-	int i;
+	int		i;
+	t_list	*ptr;
 
 	if (ft_is_on_close(vm, xy, but))
 		return (1);
@@ -109,6 +110,14 @@ int			ft_is_on_buttons(t_vm *vm, t_ixy xy, t_button **but)
 		if (ft_is_on_button(xy, &(vm->visu.buttons[i]), but))
 			return (1);
 		i++;
+	}
+	ptr = vm->client.client_slots;
+	while (ptr != NULL)
+	{
+		if (ft_is_on_button(xy, &((t_client_slot *)(ptr->content))->download,
+				but))
+			return (1);
+		ptr = ptr->next;
 	}
 	return (0);
 }
@@ -133,8 +142,6 @@ void		ft_mouse_down(t_vm *vm, SDL_Event event)
 	if (event.button.button == SDL_BUTTON_LEFT)
 	{
 		ft_is_on_buttons(vm, xy, &vm->visu.event_manager.pressed_button);
-		if (vm->visu.event_manager.pressed_button)
-			ft_printf("YA UN BOUTON\n");
 		vm->visu.event_manager.enable_mouse_up = 1;
 		if (ft_is_on_draggable(vm, xy, &(vm->visu.drag_container)))
 		{

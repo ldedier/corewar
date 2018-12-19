@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/17 10:54:59 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/18 20:47:57 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/19 16:12:29 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,20 +69,18 @@ void	ft_init_scrollbar_button(t_visu *v, t_button *button,
 	button->rect.x = vscrollbar->pos.x;
 	if (button == &vscrollbar->up_button)
 	{
-		button->on_click = &nothing_on_click;
 		button->on_press = &ft_scroll_up;
 		button->surface = v->sdl.images[SCROLL_UP];
 		button->rect.y = vscrollbar->pos.y;
 	}
 	else
 	{
-		button->on_click = &nothing_on_click;
 		button->on_press = &ft_scroll_down;
 		button->surface = v->sdl.images[SCROLL_DOWN];
 		button->rect.y = vscrollbar->pos.y + vscrollbar->height - button->rect.h;
 	}
-	ft_printf("%d %d %d %d\n", button->rect.w, button->rect.h, button->rect.x, button->rect.y);
-	ft_printf("%d %d\n", v->dim.width, v->dim.height);
+	button->on_click = &nothing_on_click;
+	button->render = &ft_render_button;
 }
 
 void	ft_init_vscrollbar(t_visu *v, t_ixy xy, int height, t_vscrollbar *vscrollbar)

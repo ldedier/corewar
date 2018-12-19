@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/11 17:47:31 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/18 17:19:49 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/19 12:15:29 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,7 @@ int		ft_render_player(t_vm *vm, t_player *player, t_xy xy,
 			ft_fill_rect_scrollbar(vm->visu.sdl.w_surface, &rect,
 					ft_get_player_color(vm, player, UPLOAD_COLOR, 1.3),
 					vm->visu.players_list[source].vscrollbar);
+			/*
 			rect.x += rect.w / 6;
 			rect.y += rect.h / 6;
 			rect.w -= rect.w / 3;
@@ -163,6 +164,7 @@ int		ft_render_player(t_vm *vm, t_player *player, t_xy xy,
 				rect,
 				vm->visu.players_list[source].vscrollbar) < 0)
 				return (ft_net_error());
+		*/
 		}
 	}
 	return (0);

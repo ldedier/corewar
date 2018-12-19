@@ -6,17 +6,11 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:54:14 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/17 10:28:22 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/19 16:48:54 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
-
-int		ft_disconnect_client(t_client *client, int ret)
-{
-	client->running = 0;
-	return (ret);
-}
 
 int		ft_init_client(t_client *client)
 {
@@ -38,10 +32,22 @@ int		ft_init_client(t_client *client)
 	return (0);
 }
 
-void	ft_populate_download_button(t_player *player, t_button *button)
+void	ft_download(t_vm *vm, t_button *this, t_ixy xy)
 {
-	(void)player;
-	(void)button;
+	(void)xy;
+	(void)vm;
+	if (!this->button_union.client_slot->downloaded)
+		this->button_union.client_slot->downloaded = 1;
+}
+
+void	ft_populate_download_button(t_client_slot *client_slot,
+			t_button *button)
+{
+	button->visible = 1;
+	button->button_union.client_slot = client_slot;
+	button->on_click = &ft_download;
+	button->on_press = &nothing_on_press;
+	button->render = &ft_render_download_button;
 }
 
 t_client_slot	*ft_new_client_slot(t_player *player)
@@ -51,7 +57,8 @@ t_client_slot	*ft_new_client_slot(t_player *player)
 	if (!(slot = (t_client_slot*)malloc(sizeof(t_slot))))
 		return (NULL);
 	slot->player = player;
-	ft_populate_download_button(player, &slot->download);
+	slot->downloaded = 0;
+	ft_populate_download_button(slot, &slot->download);
 	return (slot);
 }
 
@@ -164,7 +171,6 @@ int		ft_process_client_events(t_vm *vm)
 			{
 				ft_printf("lost connection with the server.\n");
 				vm->client.active = 0;
-			//	vm->client.running = 0;
 			}
 		}
 		else
