@@ -55,7 +55,11 @@ typedef struct		s_env
 */
 
 int					ft_parse_asm(char *filename, t_env *e);
-
+int 				check_name(char *str, t_env *env);
+int 				read_name(char *line, t_env *env, int i, int j);
+int					check_comment(char *str, t_env *env);
+int					read_comment(char *line, t_env *env, int fd, int i);
+int					isprint(int c);
 int					ft_parse_line_header(char *str, t_env *env, int c, int fd);
 int					ft_parse_line_source_code(char *str, t_env *e);
 char				**read_file(char **argv);
