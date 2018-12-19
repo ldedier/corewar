@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/22 15:55:47 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/15 22:11:29 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/19 19:33:33 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # define COLOR_H
 
 # define COL_DESIGNATOR		"brgwlmcyBRGWLMCYx"
-# define DEFAULT_COLORS		"xgrlcbmwM"
+# define DEFAULT_COLORS		"xgrlclmwM"
 # define NB_DESIGNATOR		17
 # define NB_COLORS			17
 # define MAX_PL_COLOR		9
