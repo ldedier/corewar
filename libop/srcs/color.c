@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 20:42:40 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/19 16:42:30 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/19 19:33:15 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ char	*init_color_ref(char **env)
 	int	nb_envar;
 	int index;
 
-	if (!color_ref_index[2])
+	if (!color_ref_index[1])
 	{
 		nb_envar = get_envar(env, &env_var);
 		if ((index = get_envar_index(env_var, COREWAR_VAR_NAME, nb_envar)) != -1)

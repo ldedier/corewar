@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/19 15:03:37 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/19 19:42:52 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct		s_vm
 	int				c_to_die;
 	int				checks;
 	int				win;
-	int				cycle;
+//	int				cycle;
 	int				nb_players;
 	char			**files;
 	int				dump;
@@ -98,6 +98,8 @@ void				init_local_players(t_vm *vm);
 ** DISPLAY
 */
 
+void				display_ins_description(t_vm *vm, char *str, int opcode);
+void				display_live_player(t_vm *vm, int op_code);
 void				display_register(t_process *proc);
 void				display(t_vm *vm, t_process *proc, int type);
 void				pl_death(t_vm *vm, t_process *proc);
