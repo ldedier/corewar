@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/19 20:00:47 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/19 20:02:59 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,10 +159,6 @@ void		process_cycle(t_vm *vm)
 	while (players)
 	{
 		proc = ((t_process *)(players->content));
-//		ft_printf("player pc = %d\n", proc->pc);
-//		if (!vm->visu.active)
-//			ft_printf("\n\n%sPLAYER num = %d name = %s%s\n\n", COLF_MAGENTA,
-//					proc->player->num, proc->player->name, COLF_OFF);
 		display(vm, proc, TURN_PLAYER);
 		if (!proc->cycle)
 		{
