@@ -6,30 +6,11 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 15:02:55 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/19 17:22:23 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/19 21:30:55 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
-
-TTF_Font    *ft_load_font(char *str, int quality)
-{
-	TTF_Font *font;
-
-	font = TTF_OpenFont(str, quality);
-	if (font == NULL)
-		ft_net_error();
-	return (font);
-}
-
-SDL_Surface *ft_load_image(char *str)
-{
-	SDL_Surface *surface;
-
-	if (!(surface = IMG_Load(str)))
-		ft_net_error();
-	return (surface);
-}
 
 void	ft_get_dimensions(t_visu *v)
 {
@@ -103,58 +84,6 @@ int		ft_init_sdl(t_visu *v)
 	return (0);
 }
 
-void	ft_populate_sdl_color_from_int(int color, SDL_Color *sdl_color)
-{
-	t_color_manager col;
-
-	col = ft_get_color(color);
-	sdl_color->r = col.r;
-	sdl_color->g = col.g;
-	sdl_color->b = col.b;
-}
-
-int		ft_init_atlas(t_vm *vm, t_sdl *sdl)
-{
-	int				i;
-	int				j;
-	char			str[2];
-	SDL_Surface		*tmp;
-	SDL_Color		color;
-
-	str[1] = '\0';
-	i = 0;
-	while (i < MAX_PL_COLOR)
-	{
-		ft_populate_sdl_color_from_int(get_color_sdl(vm->color[i]), &color);
-		j = 33;
-		while (j < 126)
-		{
-			str[0] = j;
-			if (!(tmp = TTF_RenderText_Solid(sdl->font,
-							str, color)))
-				return (1);
-			sdl->atlas[i][j].surface = SDL_ConvertSurface(tmp,
-					sdl->w_surface->format, 0);
-			SDL_FreeSurface(tmp);
-			j++;
-		}
-		i++;
-	}
-	j = 33;
-	while (j < 126)
-	{
-		str[0] = j;
-		if (!(tmp = TTF_RenderText_Solid(sdl->font,
-						str, vm->visu.sdl.color)))
-			return (1);
-		sdl->atlas[i][j].surface = SDL_ConvertSurface(tmp,
-				sdl->w_surface->format, 0);
-		SDL_FreeSurface(tmp);
-		j++;
-	}
-	return (0);
-}
-
 SDL_Surface *ft_init_font_surface(char *str, TTF_Font *font, SDL_Color color,
 		SDL_Surface *to_blit_surface)
 {
@@ -175,169 +104,6 @@ SDL_Surface *ft_init_font_surface(char *str, TTF_Font *font, SDL_Color color,
 SDL_Surface *ft_init_font_surface_sdl(char *str, t_sdl sdl)
 {
 	return (ft_init_font_surface(str, sdl.font, sdl.color, sdl.w_surface));
-}
-
-int		ft_init_textures(t_visu *visu)
-{
-	if (!(visu->sdl.titles[ARENA] =
-			ft_init_font_surface_sdl("battlefield", visu->sdl)))
-		return (1);
-	if (!(visu->sdl.titles[LOCAL] =
-			ft_init_font_surface_sdl("local players", visu->sdl)))
-		return (1);
-	if (!(visu->sdl.titles[SCOREWAR] =
-			ft_init_font_surface_sdl("Scorewar server", visu->sdl)))
-		return (1);
-	if (!(visu->sdl.titles[UPLOAD_HERE] =
-			ft_init_font_surface_sdl("upload slot", visu->sdl)))
-		return (1);
-	if (!(visu->sdl.titles[SCORE] =
-			ft_init_font_surface_sdl("score:", visu->sdl)))
-		return (1);
-	if (!(visu->sdl.titles[NAME] =
-			ft_init_font_surface_sdl("name:", visu->sdl)))
-		return (1);
-	if (!(visu->sdl.titles[RANK] =
-			ft_init_font_surface_sdl("rank:", visu->sdl)))
-		return (1);
-	if (!(visu->sdl.images[CLOSE] = ft_load_image(PATH"/resources/close.png")))
-		return (1);
-	if (!(visu->sdl.images[DL] = ft_load_image(PATH"/resources/download.png")))
-		return (1);
-	if (!(visu->sdl.images[UL] = ft_load_image(PATH"/resources/upload.png")))
-		return (1);
-	if (!(visu->sdl.images[SORT_ALPHA] =
-			ft_load_image(PATH"/resources/alpha_sort.png")))
-		return (1);
-	if (!(visu->sdl.images[SORT_SCORE] =
-			ft_load_image(PATH"/resources/score_sort.png")))
-		return (1);
-	if (!(visu->sdl.images[SCROLL_BAR] =
-			ft_load_image(PATH"/resources/scroll_bar.png")))
-		return (1);
-	if (!(visu->sdl.images[SCROLL_DOWN] =
-			ft_load_image(PATH"/resources/scroll_down.png")))
-		return (1);
-	if (!(visu->sdl.images[SCROLL_UP] =
-			ft_load_image(PATH"/resources/scroll_up.png")))
-		return (1);
-	if (!(visu->sdl.images[FIGHT] =
-			ft_load_image(PATH"/resources/fight.png")))
-		return (1);
-	if (!(visu->sdl.images[UL_DISABLED] =
-			ft_load_image(PATH"/resources/upload_disabled.png")))
-		return (1);
-	if (!(visu->sdl.images[DL_DISABLED] =
-			ft_load_image(PATH"/resources/download_disabled.png")))
-		return (1);
-	return (0);
-}
-
-void	ft_init_center_memory(t_visu *visu, t_center *c)
-{
-	c->left_margin = MEM_BORDER_LEFT * visu->react.w_scale;
-	c->right_margin = MEM_BORDER_RIGHT * visu->react.w_scale;
-	c->top_margin = MEM_BORDER_TOP * visu->react.h_scale;
-	c->bottom_margin = MEM_BORDER_BOTTOM * visu->react.h_scale;
-	c->x_diff = X_DIFF * visu->react.w_scale;
-	c->x_diff_byte = X_DIFF_BYTE * visu->react.w_scale;
-	c->y_diff = Y_DIFF * visu->react.h_scale;
-	c->nb_cols = MEM_COLS;
-	c->nb_lines = ft_round((double)((double)MEM_SIZE /
-				(double)MEM_COLS));
-	while ((c->y_diff * (c->nb_lines - 1) > visu->dim.height
-				- c->top_margin - c->bottom_margin) &&
-			c->y_diff > 0)
-		c->y_diff--;
-	while ((c->x_diff * (c->nb_cols - 1) > 
-				c->dashboard_x - 2 * c->nb_cols *
-				c->x_diff_byte) && c->x_diff > 0)
-		c->x_diff--;
-	c->glyph_width = (c->dashboard_x - c->left_margin - c->right_margin -
-			(c->nb_cols - 1) * c->x_diff - c->nb_cols * c->x_diff_byte) / ((double)
-				(2 * c->nb_cols));
-	c->glyph_height = (visu->dim.height - c->top_margin - c->bottom_margin -
-			(c->nb_lines - 1) * c->y_diff) / ((double) c->nb_lines);
-}
-
-void	ft_init_center_players(t_visu *visu, t_center *c)
-{
-	c->title_top = TITLE_BORDER_TOP * visu->react.h_scale;
-	c->title_bottom = TITLE_BORDER_BOTTOM * visu->react.h_scale;
-	c->title_side = TITLE_BORDER_SIDE * visu->react.w_scale;
-	c->title_h = TITLE_HEIGHT * visu->react.h_scale;
-
-	c->player_top = PLAYER_TOP * visu->react.h_scale;
-	c->player_left = PLAYER_BORDER_LEFT * visu->react.w_scale;
-	c->player_right = PLAYER_BORDER_RIGHT * visu->react.w_scale;
-	c->player_padding = PLAYER_PADDING * visu->react.h_scale;
-	c->player_bottom = PLAYER_BORDER_BOTTOM * visu->react.h_scale;
-
-	c->player_inner_border = PLAYER_INNER_BORDER * ft_fmin(visu->react.w_scale, visu->react.h_scale);
-	c->cross_border = CROSS_BORDER * ft_fmin(visu->react.w_scale, visu->react.h_scale);
-	c->player_w = (visu->dim.width - c->dashboard_mid_x) - (c->player_left + c->player_right);
-
-	c->player_h = (c->top_dashboard_height - (double)(c->title_top + c->title_h +
-				c->title_bottom + c->player_top + ((INIT_MAX_PLAYERS - 1) * (c->player_padding)) +
-				c->player_bottom)) /  (double)INIT_MAX_PLAYERS;
-}
-
-void	ft_init_center_online(t_visu *visu, t_center *c)
-{
-	c->s_title_side = S_TITLE_SIDE * visu->react.w_scale;
-	c->s_title_h = S_TITLE_HEIGHT * visu->react.h_scale;
-
-	c->upload_left = UPLOAD_LEFT * visu->react.w_scale;
-	c->upload_right = UPLOAD_RIGHT * visu->react.w_scale;
-	c->sort_padding = SORT_PADDING * visu->react.w_scale;
-	c->sort_score_right = SORT_SCORE_RIGHT * visu->react.w_scale;
-	c->toolbar_blank = c->dashboard_width - ((c->player_h * 3) + c->player_w +
-			c->upload_right + c->upload_left + c->sort_padding +
-				c->sort_score_right);
-	c->toolbar_bottom = TOOLBAR_BOTTOM * visu->react.h_scale;
-
-	c->labscore_left = LABSCORE_LEFT * visu->react.w_scale;
-	c->labscore_width = LABSCORE_WIDTH * visu->react.w_scale;
-	c->labscore_right = LABSCORE_RIGHT * visu->react.w_scale;
-
-	c->score_width = SCORE_WIDTH * visu->react.w_scale;
-	c->score_right = SCORE_RIGHT * visu->react.w_scale;
-	c->scrollbar_width = SCROLLBAR_WIDTH * visu->react.w_scale;
-	c->scrollbar_buttons_height = SCROLLBAR_BTTN_HEIGHT * visu->react.h_scale;
-	c->download_side = (c->dashboard_width - (c->labscore_left +
-		c->labscore_width + c->labscore_right + c->score_width +
-		c->score_right + c->player_w + c->player_h)) / 2.0;
-}
-
-void	ft_init_center_fight(t_visu *visu, t_center *c)
-{
-	c->fight_top = FIGHT_TOP * visu->react.h_scale;
-	c->fight_bottom = FIGHT_BOTTOM * visu->react.h_scale;
-	c->fight_left = FIGHT_LEFT * visu->react.w_scale;
-	c->fight_right = FIGHT_RIGHT * visu->react.w_scale;
-	c->fight_height = c->footer_height - c->fight_top - c->fight_bottom;
-	c->fight_width = c->dashboard_width - c->fight_left - c->fight_right;
-}
-
-void	ft_init_center(t_visu *visu, t_center *c)
-{
-	c->dashboard_x = DASHBOARD_X * visu->react.w_scale;
-	c->top_dashboard_height = TOP_DASHBOARD_HEIGHT * visu->react.h_scale;
-	c->dashboard_width = (visu->dim.width - DASHBOARD_X * visu->react.w_scale);
-	c->dashboard_mid_width = c->dashboard_width / 2.0;
-	c->dashboard_mid_x = c->dashboard_x + c->dashboard_mid_width;
-
-	c->footer_height = FOOTER_HEIGHT * visu->react.h_scale;
-	c->mid_dashboard_height = c->top_dashboard_height - c->footer_height;
-	c->footer_y = visu->dim.height - c->footer_height;
-
-
-	ft_init_center_memory(visu, c);
-	ft_init_center_players(visu, c);
-	ft_init_center_online(visu, c);
-	ft_init_center_fight(visu, c);
-	c->toolbar_y = c->top_dashboard_height + c->title_top +
-		c->s_title_h + c->title_bottom;
 }
 
 t_ixy	new_ixy(int x, int y)
@@ -371,115 +137,6 @@ void	nothing_on_press(t_vm *vm, t_button *this)
 	(void)this;
 }
 
-void	ft_populate_closing_button(t_vm *vm, t_button *button,
-			t_player *player, t_ixy xy)
-{
-	button->rect.x = xy.x;
-	button->rect.y = xy.y;
-	button->rect.w = vm->visu.center.cross_border;
-	button->rect.h = vm->visu.center.cross_border;
-	button->surface = vm->visu.sdl.images[CLOSE];
-	button->button_union.player = player;
-	button->on_click = &ft_delete_player;
-	button->on_press = &nothing_on_press;
-	button->render = &ft_render_button;
-	button->visible = 0;
-	button->vscrollbar = &vm->visu.players_list[ARENA].vscrollbar;
-}
-
-void	ft_populate_upload_slot(t_vm *vm, t_visu *v)
-{
-	t_ixy xy;
-
-	v->positions.upload_slot.player.x = v->center.dashboard_x +
-		v->center.upload_left;
-	v->positions.upload_slot.player.y = v->center.top_dashboard_height +
-		v->center.title_top + v->center.s_title_h +
-			v->center.title_bottom;
-
-	xy.x = v->positions.upload_slot.player.x + v->center.player_w -
-			v->center.cross_border;
-	xy.y = v->positions.upload_slot.player.y;
-
-	ft_populate_closing_button(vm,
-		&(v->positions.upload_slot.close), &vm->client.upload_player, xy);
-	v->positions.upload_slot.close.vscrollbar =
-		&vm->visu.players_list[UPLOAD].vscrollbar;
-}
-
-void    ft_populate_slots_positions(t_vm *vm, t_visu *v)
-{
-	int		i;
-	double	y;
-	t_ixy	xy;
-
-	y = v->center.title_top + v->center.title_h +
-		v->center.title_bottom + v->center.player_top;
-	i = 0;
-	while (i < MAX_PLAYERS)
-	{
-		v->positions.arena_slots[i].player.x = v->center.dashboard_x +
-			v->center.player_left -
-			(ft_to_print_scrollbar(v->players_list[ARENA].vscrollbar) ? 
-					v->center.scrollbar_width / 2 : 0);
-		v->positions.arena_slots[i].player.y = y;
-		xy.x = v->positions.arena_slots[i].player.x +
-				v->center.player_w - v->center.cross_border;
-		xy.y = y;
-		ft_populate_closing_button(vm, &(v->positions.arena_slots[i].close),
-			&(vm->player[i]), xy);
-		v->positions.local_slots[i].player.x = v->center.dashboard_mid_x +
-			v->center.player_left -
-			(ft_to_print_scrollbar(v->players_list[LOCAL].vscrollbar) ? 
-			 	v->center.scrollbar_width / 2 : 0);
-		v->positions.local_slots[i].player.y = y;
-		y += v->center.player_h + v->center.player_padding;
-		i++;
-	}
-	ft_populate_upload_slot(vm, v);
-}
-
-int		ft_populate_cursor(t_cursor_packer *cp, char *str, int hot_x, int hot_y)
-{
-	if (!(cp->surface = ft_load_image(str)))
-		return (1);
-	if (!(cp->cursor = SDL_CreateColorCursor(cp->surface, hot_x, hot_y)))
-	{
-		//free ?
-		return (1);
-	}
-	return (0);
-}
-
-int		ft_init_cursors(t_visu *v)
-{
-	if (ft_populate_cursor(&(v->sdl.cursor_packers[GRAB]),
-				PATH"/resources/grab.png", 7, 3))
-		return (1);
-	if (ft_populate_cursor(&(v->sdl.cursor_packers[DRAGGABLE]),
-				PATH"/resources/draggable.png", 7, 5))
-		return (1);
-	if (ft_populate_cursor(&(v->sdl.cursor_packers[CLICK]),
-				PATH"/resources/click.png", 5, 0))
-		return (1);
-	if (ft_populate_cursor(&(v->sdl.cursor_packers[REGULAR]),
-				PATH"/resources/regular.png", 0, 0))
-		return (1);
-	return (0);
-}
-
-void	ft_init_button(t_button *button, SDL_Rect rect, SDL_Surface *surface,
-			void (*on_click)(t_vm *, t_button *, t_ixy xy))
-{
-	button->rect = rect;
-	button->surface = surface;
-	button->on_click = on_click;
-	button->on_press = &nothing_on_press;
-	button->render = &ft_render_button;
-	button->visible = 1;
-	button->vscrollbar = NULL;
-}
-
 int		ft_render_upload_button(t_vm *vm, t_button *this)
 {
 	if ((vm->visu.drop_container.player == &vm->client.upload_player) ||
@@ -510,66 +167,6 @@ void	ft_upload(t_vm *vm, t_button *this, t_ixy mouse)
 	(void)mouse;
 	vm->client.upload_player.relevant = 0;
 	vm->visu.positions.upload_slot.close.visible = 0;
-}
-
-void	ft_init_buttons(t_vm *vm, t_visu *visu)
-{
-	SDL_Rect	rect;
-
-	rect.w = visu->center.player_h;
-	rect.h = visu->center.player_h;
-	rect.x = visu->center.dashboard_x + visu->center.upload_left +
-		visu->center.player_w + visu->center.upload_right;
-	rect.y =  visu->center.top_dashboard_height + visu->center.s_title_h +
-		visu->center.title_bottom + visu->center.title_top;
-
-	ft_init_button(&(visu->buttons[UPLOAD_BUTTON]), rect,
-		vm->visu.sdl.images[UL], &ft_upload);
-	visu->buttons[UPLOAD_BUTTON].render = &ft_render_upload_button;
-	rect.x += visu->center.player_h + visu->center.toolbar_blank;
-
-	ft_init_button(&(visu->buttons[ALPHA_SORT_BUTTON]), rect,
-		vm->visu.sdl.images[SORT_ALPHA], &nothing_on_click);
-	
-	rect.x += visu->center.player_h + visu->center.sort_padding;
-
-	ft_init_button(&(visu->buttons[SCORE_SORT_BUTTON]), rect,
-		vm->visu.sdl.images[SORT_SCORE], &nothing_on_click);
-
-	rect.x = visu->center.dashboard_x + visu->center.fight_left;
-	rect.y = visu->center.footer_y + visu->center.fight_top;; 
-	rect.h = visu->center.fight_height;
-	rect.w = visu->center.fight_width;
-	ft_init_button(&(visu->buttons[FIGHT_BUTTON]), rect,
-	vm->visu.sdl.images[FIGHT], &nothing_on_click);
-}
-
-void	ft_init_crosses(t_vm *vm)
-{
-	int i;
-
-	i = 0;
-	while (i < MAX_PLAYERS)
-	{
-		if (vm->player[i].relevant)
-			vm->visu.positions.arena_slots[i].close.visible = 1;
-		i++;
-	}
-}
-
-void	ft_init_client_slot_surface(t_vm *vm)
-{
-	t_list			*ptr;
-	t_client_slot	*slot;
-
-	ptr = vm->client.client_slots;
-	while (ptr != NULL)
-	{
-		slot = (t_client_slot *)(ptr->content);
-		slot->download.surface = vm->visu.sdl.images[DL];
-		slot->download.vscrollbar = &vm->visu.players_list[SERVER].vscrollbar;
-		ptr = ptr->next;
-	}
 }
 
 int		ft_init_all_sdl(t_vm *vm, t_visu *v)
@@ -609,5 +206,6 @@ int		ft_init_all_sdl(t_vm *vm, t_visu *v)
 		ft_update_download_buttons_client_rect(vm);
 	}
 	SDL_SetCursor(v->sdl.cursor_packers[REGULAR].cursor);
+	vm->visu.phase = PHASE_INIT;
 	return (0);
 }

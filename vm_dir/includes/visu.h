@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/19 16:48:32 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/19 21:31:20 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -404,9 +404,17 @@ typedef struct			s_color_manager
 	char				b;
 }						t_color_manager;
 
+typedef enum			e_phase
+{
+	PHASE_INIT,
+	PHASE_PLAY,
+	PHASE_END
+}						t_phase;
+
 struct					s_visu
 {
 	char				active;
+	t_phase				phase;
 	t_sdl				sdl;
 	t_dim				dim;
 	t_center			center;
@@ -433,7 +441,7 @@ int						ft_process_events(t_vm *vm);
 int						ft_render(t_vm *vm, t_sdl *sdl);
 int						ft_render_memory(t_vm *vm);
 int						ft_render_players(t_vm *vm);
-int						ft_render_online(t_vm *vm);
+int						ft_render_init_online(t_vm *vm);
 int						ft_render_offline(t_vm *vm);
 t_color_manager			ft_get_color(int color);
 t_color_manager			ft_scale_color(t_color_manager color, double scale);
@@ -459,7 +467,6 @@ int						ft_process_render_button(t_vm *vm, SDL_Rect rect,
 void					ft_delete_player(t_vm *vm, t_button *this, t_ixy xy);
 int						ft_get_player_color(t_vm *vm, t_player *player,
 							int initial_color, float value);
-
 void					ft_render_horizontal_line_dashboard(t_vm *vm, int y,
 							int col);
 int						ft_copy_str_to_surface(t_vm *vm, char *str,
@@ -486,4 +493,48 @@ void					nothing_on_press(t_vm *vm, t_button *this);
 void					ft_wheel_event(t_vm *vm, SDL_Event event);
 void					ft_update_download_buttons_client_rect(t_vm *vm);
 int						ft_render_download_button(t_vm *vm, t_button *this);
+int						ft_render_vscrollbars(t_vm *vm);
+void					ft_render_init_lines(t_vm *vm);
+int						ft_render_crosses(t_vm *vm);
+int						ft_render_phase(t_vm *vm);
+int						ft_is_in_scrollbar_focus(t_vscrollbar vscrollbar);
+void					ft_scroll_up(t_vm *vm, t_button *button);
+void					ft_scroll_down(t_vm *vm, t_button *button);
+void					ft_populate_drag_container_player(t_drag_container *dc,
+							t_player *player, t_player_source source);
+void					ft_populate_drag_container_vscrollbar(t_drag_container *dc,
+							t_vscrollbar *vscrollbar);
+void					ft_populate_drag_container_player_client_slot(
+							t_drag_container *dc, t_client_slot *client_slot,
+								t_xy player_pos, int scrolled_h);
+void					ft_populate_drag_container_player_slot(t_drag_container
+							*dc, t_player *player, t_slot *slot,
+								t_player_source source);
+void					ft_fill_drag_container(t_drag_container *dc, t_ixy xy);
+int						ft_is_on_scrollbars(t_vm *vm, t_ixy xy,
+							t_drag_container *dc);
+void					ft_copy(t_vm *vm, t_drop_container *dc);
+void					ft_place(t_vm *vm, t_drop_container *dc);
+void					ft_place_or_swap(t_vm *vm, t_drop_container *dc);
+int						ft_is_on_player_scrollbar(t_vm *vm, t_ixy xy, t_xy player_xy,
+							t_vscrollbar vscrollbar);
+int						ft_is_on_client_players(t_vm *vm, t_ixy xy,
+							t_drag_container *dc);
+SDL_Surface				*ft_load_image(char *str);
+TTF_Font				*ft_load_font(char *str, int quality);
+int						ft_init_atlas(t_vm *vm, t_sdl *sdl);
+void					ft_init_center(t_visu *v, t_center *c);
+SDL_Surface				*ft_init_font_surface_sdl(char *str, t_sdl sdl);
+int						ft_init_textures(t_visu *visu);
+int						ft_init_cursors(t_visu *v);
+void					ft_populate_upload_slot(t_vm *vm, t_visu *v);
+void					ft_populate_slots_positions(t_vm *vm, t_visu *v);
+void					ft_init_crosses(t_vm *vm);
+void					ft_init_client_slot_surface(t_vm *vm);
+void					ft_populate_closing_button(t_vm *vm, t_button *button,
+							t_player *player, t_ixy xy);
+void					ft_delete_player(t_vm *vm, t_button *this, t_ixy xy);
+void					ft_upload(t_vm *vm, t_button *this, t_ixy mouse);
+int						ft_render_upload_button(t_vm *vm, t_button *this);
+void					ft_init_buttons(t_vm *vm, t_visu *visu);
 #endif

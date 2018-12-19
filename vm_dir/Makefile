@@ -51,7 +51,13 @@ INS_NO_PREFIX =			get_val.c load_val.c\
 VISU_NO_PREFIX =		init_sdl.c visu.c events.c framerate.c render.c \
 						render_mem.c render_players.c ft_colors.c\
 						render_online.c drag.c drop.c\
-						cursor.c scrollbar.c
+						cursor.c scrollbar.c scrollbar_tools.c\
+						render_scrollbar.c render_view.c render_line.c\
+						render_phase.c scroll_scrollbar.c init_scrollbar.c\
+						populate_drag_container.c is_on_scrollbar.c\
+						drop_actions.c is_droppable.c is_on_draggable_server.c\
+						load_tools.c atlas.c init_center.c init_textures.c\
+						init_slots.c init_buttons.c
 
 
 INCLUDES_NO_PREFIX =	vm.h visu.h client.h errors.h

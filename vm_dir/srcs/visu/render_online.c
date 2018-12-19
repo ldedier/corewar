@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 15:05:42 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/19 16:19:09 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/19 19:04:04 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,7 +201,7 @@ int			ft_render_server_players(t_vm *vm, double y)
 	return (0);
 }
 
-int			ft_render_online(t_vm *vm)
+int			ft_render_init_online(t_vm *vm)
 {
 	double y;
 
