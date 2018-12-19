@@ -6,11 +6,22 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 21:43:44 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/14 19:07:27 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/19 11:42:19 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
+
+void	display_register(t_process *proc)
+{
+	int i;
+
+	i = -1;
+	while (++i < REG_NUMBER)
+		ft_printf("R%d: %d | ", i + 1, proc->reg[i]);
+	ft_printf("\n");
+}
+
 
 void	display(t_vm *vm, t_process *proc, int type)
 {

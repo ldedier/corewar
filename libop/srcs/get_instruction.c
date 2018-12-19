@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 16:33:31 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/18 20:21:25 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/19 11:35:26 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int		getval_mod(char *arena, int index, int nb_bytes, int mod)
 	while (++i < nb_bytes)
 	{
 		ft_printf("getval mod: i = %d val = %d arena[index + i] = %d\n", i, val, arena[index + i]);
-		val = val * 10 + arena[(index + i) % mod];
+		val <<= 8;
+		val |= arena[(index + i) % mod];
 	}
 	return (val);
 }

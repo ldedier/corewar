@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/18 20:27:28 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/19 11:45:32 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ static void		launch_instruction(t_vm *vm, t_process *proc)
 		return ;
 	if ((ret = get_instruction(vm->arena, &ins, proc->pc, MEM_SIZE)))
 	{
-		getval_param_dest(vm, proc, ins.params, ins.op.nb_params);
+//		getval_param_dest(vm, proc, ins.params, ins.op.nb_params);
 		f_ins[(int)ins.op.opcode](vm, proc, ins.params);
 		proc->cycle = g_op_tab[(int)ins.op.opcode - 1].nb_cycles;
 		ft_printf("%s >>> %*-s%s", COLF_CYAN, PAD_INS - 5,
@@ -177,14 +177,17 @@ int		play(t_vm *vm)
 	while (players)
 	{
 		proc = ((t_process *)(players->content));
+		display_register(proc);
 //		ft_printf("proc->pc = %d proc cycle = %d\n", proc->pc, proc->ins_cycle);
 		if (!proc->cycle)
+		{
 			proc->pc = (proc->pc + proc->ins_cycle) % MEM_SIZE;
+			display_arena((unsigned char *)vm->arena);
+		}
 	
 		display(vm, proc, TURN_PLAYER);
 		launch_instruction(vm, proc);
 		ft_printf("\n");
-		display_arena((unsigned char *)vm->arena);
 		players = players->next;
 	}
 	return (play(vm));

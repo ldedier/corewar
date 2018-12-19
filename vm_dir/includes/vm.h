@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/18 18:15:45 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/19 11:36:50 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ typedef struct		s_process
 {
 	t_player		*player;
 	int				live;
-	unsigned char	reg[REG_NUMBER];
+	unsigned int	reg[REG_NUMBER];
 	int				pc;
 	int				ins_cycle;
 	int				cycle;
@@ -98,6 +98,7 @@ void				init_local_players(t_vm *vm);
 ** DISPLAY
 */
 
+void				display_register(t_process *proc);
 void				display(t_vm *vm, t_process *proc, int type);
 void				pl_death(t_vm *vm, t_process *proc);
 void				pl_live(t_vm *vm, t_process *proc);
@@ -123,7 +124,7 @@ int					get_envar(char **env, char ****envvar);
 ** INSTRUCTIONS
 */
 
-void				getval_param_dest(t_vm *vm, t_process *proc, t_parameter arg[3], int nb_params);
+void				getval_param_dest(t_vm *vm, t_process *proc, t_parameter *arg, int mod);
 void				loadval(t_vm *vm, t_process *proc, t_parameter *arg, int val);
 void				set_argval(t_parameter *arg, int index, int size);
 
