@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 20:22:56 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/18 20:32:20 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/19 15:16:13 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,9 @@
 
 int			ins_ld(t_vm *vm, t_process *proc, t_parameter arg[3])
 {
-	int			val;
-
-	val = arg[0].dest_value % IDX_MOD;
-	loadval(vm, proc, &arg[1], val);
+	getval_param_dest(vm, proc, &arg[0], IDX_MOD);
+	loadval(vm, proc, &arg[1], arg[0].dest_value);
+	proc->carry = !arg[0].dest_value;
 	return (SUCCESS);
 }
 

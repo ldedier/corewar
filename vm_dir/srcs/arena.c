@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 16:42:17 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/16 16:58:51 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/19 19:56:04 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void					init_vm(t_vm *vm, char **argv, char **env)
 	vm->client.active = 0;
 	vm->client.port = 0;
 	vm->visu.active = 0;
-	vm->cycle = 0;
+//	vm->cycle = 0;
 	ft_bzero(vm->color, MAX_PL_COLOR);
 	ft_bzero(vm->arena, MEM_SIZE);
 	ft_strlcat(vm->color, init_color_ref(env), MAX_PL_COLOR);
@@ -65,7 +65,7 @@ void					init_vm(t_vm *vm, char **argv, char **env)
 	}
 }
 
-t_list	*add_process(t_vm *vm, int index, int start) //need name?
+t_list	*add_process(t_vm *vm, int index, int start) 
 {
 	t_process	*process;
 
@@ -85,7 +85,7 @@ int		init_processes(t_vm *vm)
 	int start;
 
 	i = -1;
-	index = 0;
+	index = 1;
 	while (++i < MAX_PLAYERS)
 	{
 		start = (MEM_SIZE / vm->nb_players) * (index - 1);
@@ -116,9 +116,9 @@ void		dispatch_players(t_vm *vm)
 	index = 0;
 	while (++i < MAX_PLAYERS)
 	{
-		set_color(&vm->player[i], vm->color);
 		if (vm->player[i].relevant && ++index && (j = -1))
 		{
+			set_color(&vm->player[i], vm->color);
 			start = (MEM_SIZE / vm->nb_players) * (index - 1);
 			while (++j < vm->player[i].algo_len)
 			{

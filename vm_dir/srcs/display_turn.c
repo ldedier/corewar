@@ -3,7 +3,7 @@
 void	last_live(t_vm *vm, t_process *proc)
 {
 	(void)vm;
-	ft_printf(">>> %s ", proc->player->num);
+	ft_printf(">>> %d [ %s ]", proc->player->num, proc->player->name);
 }
 
 
@@ -24,7 +24,8 @@ void	move_one(t_vm *vm, t_process *proc)
 void	cycle_nb(t_vm *vm, t_process *proc)
 {
 	(void)proc;
-	ft_printf("\n%s%s [ %d ] %s\n", COLF_BGREY, MSG_CYCLES_REMAINING, CYCLE_TO_DIE - vm->cycle, COLF_OFF);
+	(void)vm;
+//	ft_printf("\n%s%s [ %d ] %s\n", COLF_BGREY, MSG_CYCLES_REMAINING, CYCLE_TO_DIE - vm->cycle, COLF_OFF);
 }
 
 void	turn_player(t_vm *vm, t_process *proc)

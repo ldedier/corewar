@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 17:19:23 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/16 13:56:47 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/19 16:44:28 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int		main(int argc, char **argv, char **env)
 	init_local_players(&vm);
 	if (vm.client.active)
 		return (process_client(&vm));
+	for (int i = 0; i < MAX_PLAYERS; ++i)
+		ft_printf("player %d name= %s\n", i, vm.player[i].name);
 //	ft_printf("player 2 starts at %d\n", all_process[0].pc);
 //	play(&vm, (t_process **)&all_process);
 	if (vm.visu.active)

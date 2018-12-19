@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 20:42:40 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/18 17:42:49 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/19 20:00:39 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void		set_color(t_player *player, char *color_index_ref)
 		if (player->color.value != NULL)
 		{
 			--color_counter[player->color.index];
-			ft_printf("color_counter[%d] = %d\n", player->color.index, color_counter[player->color.index]);
+//			ft_printf("color_counter[%d] = %d\n", player->color.index, color_counter[player->color.index]);
 			player->color.value = NULL;
 		}
 		return ;
@@ -76,7 +76,7 @@ void		set_color(t_player *player, char *color_index_ref)
 			index_min_count = i;
 	}
 	++color_counter[index_min_count];
-	ft_printf("color_counter[%d] = %d\n", index_min_count, color_counter[index_min_count]);
+//	ft_printf("color_counter[%d] = %d\n", index_min_count, color_counter[index_min_count]);
 	player->color.index = index_min_count;
 	player->color.value = get_color_ptr(color_index_ref[index_min_count]);
 }
@@ -89,13 +89,14 @@ char	*init_color_ref(char **env)
 	int	nb_envar;
 	int index;
 
-	if (!color_ref_index[2])
+	if (!color_ref_index[1])
 	{
 		nb_envar = get_envar(env, &env_var);
 		if ((index = get_envar_index(env_var, COREWAR_VAR_NAME, nb_envar)) != -1)
 			ft_strlcat(color_ref_index, env_var[(int)index][1], MAX_PL_COLOR);
 		else
 			ft_strlcat(color_ref_index, DEFAULT_COLORS, MAX_PL_COLOR);
+		ft_printf("print ref colors = %s\n", color_ref_index);
 		i = -1;
 		while (color_ref_index[++i])
 		{

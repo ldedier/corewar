@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 16:33:31 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/18 20:21:25 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/19 19:44:28 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 int		getval_mod(char *arena, int index, int nb_bytes, int mod)
 {
-	int	i;
-	int val;
+	unsigned int	i;
+	int				val;
 
-	i = -1;
+	i = 0;
 	val = 0;
-	ft_printf("getval mod, index = %d nbbytes = %d\n", index, nb_bytes);
-	while (++i < nb_bytes)
+	while (i < (unsigned int)nb_bytes)
 	{
-		ft_printf("getval mod: i = %d val = %d arena[index + i] = %d\n", i, val, arena[index + i]);
-		val = val * 10 + arena[(index + i) % mod];
+		val <<= 8;
+		val |= (unsigned char)arena[(index + i) % mod];
+		++i;
 	}
 	return (val);
 }
@@ -36,18 +36,17 @@ int		getval_mod(char *arena, int index, int nb_bytes, int mod)
 int		getval_params(char *arena, t_instruction *ins, int i, int mod)
 {
 	int		j;
-	t_parameter *param;
+//	t_parameter *param;
 
 	j = -1;
 	while (++j < ins->op.nb_params)
 	{	
-		param = &ins->params[j];
-		if ( !(param->type & g_op_tab[ins->op.opcode - 1].arg_types[j]))
+//		param = &ins->params[j];
+		if ( !(ins->params[j].type & g_op_tab[ins->op.opcode - 1].arg_types[j]))
 			return (-1);
-		param->value = getval_mod(arena, i, param->nb_bytes, mod);
-		i += param->nb_bytes;
-		ft_printf("param value = %d\n", param->value);
-		if (param->type == REG_CODE && param->value >= REG_NUMBER)
+		ins->params[j].value = getval_mod(arena, i, ins->params[j].nb_bytes, mod);
+		i += ins->params[j].nb_bytes;
+		if (ins->params[j].type == REG_CODE && ins->params[j].value >= REG_NUMBER)
 			return (-1);
 	}
 	return (0);
@@ -105,13 +104,14 @@ static int		is_valid_ocp(unsigned char hex, t_instruction *ins)
 ** beyond which index circles back
 */
 
-int				get_instruction(char *arena, t_instruction *ins, int i, int mod)
+int				get_instruction(char *arena, t_instruction *ins, unsigned int i, int mod)
 {
 	unsigned 	char	hex;
 	int	len;
 
 	ft_bzero((void *)ins, sizeof(t_instruction));
 	hex = *(unsigned char *)(arena + (i % mod));
+	ins->op.nb_params = 1;
 	if ((int)hex >= NB_INSTRUCTIONS || !hex)
 		return (0);
 	else
@@ -126,6 +126,9 @@ int				get_instruction(char *arena, t_instruction *ins, int i, int mod)
 			return (0);
 		}
 	}
+	ins->params[0].type = DIR_CODE;
+	ins->params[1].type = DIR_CODE;
+	ins->params[2].type = DIR_CODE;
 	if (getval_params(arena, ins, i + ins->op.has_ocp, mod) == -1)
 	{
 		ft_bzero((void *)ins, sizeof(*ins));
@@ -133,6 +136,5 @@ int				get_instruction(char *arena, t_instruction *ins, int i, int mod)
 	}
 	len = ins->params[0].nb_bytes + ins->params[1].nb_bytes + ins->params[2].nb_bytes + ins->op.has_ocp + 1;
 	return (len);
-
 }
 

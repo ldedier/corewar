@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   zjmp.c		                                          :+:      :+:    :+:   */
+/*   zjmp.c		                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 20:22:56 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/16 18:40:53 by uboumedj         ###   ########.fr       */
+/*   Updated: 2018/12/19 15:33:55 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@
 
 int		ins_zjmp(t_vm *vm, t_process *proc, t_parameter arg[3])
 {
-	(void)vm;
+	getval_param_dest(vm, proc, &arg[0], 1);
 	if (proc->carry)
 	{
-		proc->pc += (arg[FIRST].value % IDX_MOD);
+		proc->pc += (arg[0].dest_value % IDX_MOD);
 		return (SUCCESS);
 	}
 	else

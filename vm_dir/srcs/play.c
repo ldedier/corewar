@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/18 20:27:28 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/19 20:02:59 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,10 +100,10 @@ static int		last_instruction_unresolved(t_vm *vm, t_process *proc)
 ** else move on
 */
 
-static void		launch_instruction(t_vm *vm, t_process *proc)
+static int		launch_instruction(t_vm *vm, t_process *proc)
 {
 	t_instruction	ins;
-	int				ret;
+//	int				ret;
 	static int 	(*f_ins[NB_INSTRUCTIONS + 1])(t_vm *vm, t_process *proc, 
 			t_parameter arg[3]) = {NULL,
 		&ins_live, &ins_ld, &ins_st, &ins_add, &ins_sub, &ins_and, &ins_or,
@@ -111,27 +111,20 @@ static void		launch_instruction(t_vm *vm, t_process *proc)
 		&ins_lfork, &ins_aff};
 
 	if (last_instruction_unresolved(vm, proc))
-		return ;
-	if ((ret = get_instruction(vm->arena, &ins, proc->pc, MEM_SIZE)))
+		return (0);
+	if ((proc->ins_cycle = get_instruction(vm->arena, &ins, proc->pc, MEM_SIZE)))
 	{
-		getval_param_dest(vm, proc, ins.params, ins.op.nb_params);
 		f_ins[(int)ins.op.opcode](vm, proc, ins.params);
 		proc->cycle = g_op_tab[(int)ins.op.opcode - 1].nb_cycles;
-		ft_printf("%s >>> %*-s%s", COLF_CYAN, PAD_INS - 5,
-				ins.op.description, COLF_OFF);
+		display_ins_description(vm, ins.op.description, ins.op.opcode);
 		display(vm, proc, PL_CYCLE);
-		--proc->cycle; // voir si pertinent
-		if (ins.op.opcode == LIVE)
-			display(vm, get_proc_num(vm->proc, vm->live.last_pl->player->num),
-					LAST_LIVE);
-		proc->ins_cycle = ret;
+		--proc->cycle; 
+		return (1);
 	}
-	else
-	{
-		proc->ins_cycle = 1;
-		display(vm, proc, MOVE_ONE);
-		display(vm, proc, PL_PC);
-	}
+	proc->ins_cycle = 1;
+	display(vm, proc, MOVE_ONE);
+	display(vm, proc, PL_PC);
+	return (0);
 }
 
 /*
@@ -139,7 +132,7 @@ static void		launch_instruction(t_vm *vm, t_process *proc)
 ** else check if cycle_to_die should change value
 */
 
-static int	handle_end_cycle(t_vm *vm)
+static int	handle_end_cycle(t_vm *vm, int *cycle)
 {
 	reset_live_allprocesses(vm);
 	if (vm->nb_players <= 1 || !vm->c_to_die)
@@ -147,9 +140,40 @@ static int	handle_end_cycle(t_vm *vm)
 		display(vm, get_proc_num(vm->proc, vm->live.last_pl->player->num), PL_VICTORY);
 		return (0);
 	}
-	check_resize_cycle(vm, &vm->cycle);
-//	display(vm, 0, CYCLE_NBR); // euh... pourquoi deja? voir interet ??
+	check_resize_cycle(vm, cycle);
 	return (1);
+}
+
+/*
+**
+*/
+
+void		process_cycle(t_vm *vm)
+{
+	t_list				*players;
+	t_process			*proc;
+	int					change;
+
+	players = vm->proc;
+	change = 0;
+	while (players)
+	{
+		proc = ((t_process *)(players->content));
+		display(vm, proc, TURN_PLAYER);
+		if (!proc->cycle)
+		{
+			proc->pc = (proc->pc + proc->ins_cycle) % MEM_SIZE;
+			display_register(proc);
+			ft_printf("\n");
+		}
+		if (launch_instruction(vm, proc))
+			change = 1;
+		if (!vm->visu.active)
+			ft_printf("\n");
+		if (!players->next && change)
+					display_arena((unsigned char *)vm->arena);
+		players = players->next;
+	}
 }
 
 /*
@@ -165,27 +189,14 @@ static int	handle_end_cycle(t_vm *vm)
 
 int		play(t_vm *vm)
 {
-	t_list				*players;
-	t_process			*proc;
-
+	static int cycle = 1;
 	display(vm, 0, CYCLE_NBR);
-	++vm->cycle;
-	ft_printf("%scycle = %d%s\n", COLF_RED, vm->cycle, COLF_OFF); 
-	if (vm->cycle == vm->c_to_die && !handle_end_cycle(vm))
-		return (0);
-	players = vm->proc;
-	while (players)
+	while (!(cycle == vm->c_to_die && !handle_end_cycle(vm, &cycle)))
 	{
-		proc = ((t_process *)(players->content));
-//		ft_printf("proc->pc = %d proc cycle = %d\n", proc->pc, proc->ins_cycle);
-		if (!proc->cycle)
-			proc->pc = (proc->pc + proc->ins_cycle) % MEM_SIZE;
-	
-		display(vm, proc, TURN_PLAYER);
-		launch_instruction(vm, proc);
-		ft_printf("\n");
-		display_arena((unsigned char *)vm->arena);
-		players = players->next;
+		ft_printf("\n%scycle = %d | %s ", COLF_BGREY, cycle, MSG_CYCLES_REMAINING);
+		ft_printf(" [ %d ] %s\n", CYCLE_TO_DIE - cycle, COLF_OFF);
+		process_cycle(vm);
+		++cycle;
 	}
-	return (play(vm));
+	return (0);
 }

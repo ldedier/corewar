@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   add.c		              	                          :+:      :+:    :+:   */
+/*   add.c		              	                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 20:22:56 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/16 19:19:17 by uboumedj         ###   ########.fr       */
+/*   Updated: 2018/12/19 15:24:59 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,8 @@ int		ins_add(t_vm *vm, t_process *proc, t_parameter arg[3])
 	int sum;
 
 	(void)vm;
-	if (check_reg(arg[FIRST]->value) || check_reg(arg[SECOND]->value)
-					|| check_reg(arg[THIRD]->value))
-				return (FAILURE);
-	sum = proc->reg[arg[FIRST].value] + proc->reg[arg[SECOND].value];
-	proc->reg[arg[THIRD].value] = sum;
-	proc->carry = (!proc->reg[arg[THIRD].value]) ? 1 : 0;
+	sum = proc->reg[arg[0].value - 1] + proc->reg[arg[1].value - 1];
+	proc->reg[arg[2].value - 1] = sum; 
+	proc->carry = !sum;
 	return (SUCCESS);
 }
