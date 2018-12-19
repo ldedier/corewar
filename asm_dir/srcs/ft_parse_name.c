@@ -1,15 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_parse_name.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cammapou <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/12/19 13:41:21 by cammapou          #+#    #+#             */
+/*   Updated: 2018/12/19 13:46:31 by cammapou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "asm.h"
 
-
-int check_name(char *str, t_env *env)
+int			check_name(char *str, t_env *env)
 {
 	char *name;
 
 	name = NULL;
 	if (str[0] == '.')
 	{
-		if (!(name = ft_strndup(str,  ft_strlen(NAME_CMD_STRING))))
+		if (!(name = ft_strndup(str, ft_strlen(NAME_CMD_STRING))))
 			return (1);
 		if (ft_strcmp(name, NAME_CMD_STRING) != 0)
 			return (ft_log_error_no_line("Lexical error NAME", env));
@@ -20,41 +30,33 @@ int check_name(char *str, t_env *env)
 	return (0);
 }
 
-
-static int read_name_continue(char *line, int i, t_env *env)
+static int	read_name_continue(char *line, int i, t_env *env)
 {
 	if (line[i] != '"')
 		return (ft_log_error("Lexical error", i - 1, env));
 	if (line[i + 1] != '\0')
-	{
-		i += 1;
-		while(line[i] || line[i] == ' ' || line[i] == '\t')
-		{
+		while (line[++i] || line[i] == ' ' || line[i] == '\t')
 			if (isprint(line[i]))
-				return (ft_log_error("Syntax error at token AFTER NAME", i, env));
-			i++;
-		}
-	}
+				return (ft_log_error("Syntax error token AFTER NAME", i, env));
 	if (ft_strlen(env->champ.header.prog_name) > PROG_NAME_LENGTH)
-		return (ft_log_error_no_line("Champ Name too long (Max length 128)", env));
+		return (ft_log_error_no_line("Name too long (Max length 128)", env));
 	return (0);
 }
 
-
-int read_name(char *line, t_env *env, int i, int j)
+int			read_name(char *line, t_env *env, int i, int j)
 {
 	if (env->champ.header.prog_name[j])
 		return (ft_log_error("Syntax error at token COMMAND_NAME", 0, env));
 	i += ft_strlen(NAME_CMD_STRING);
-	while (line[i] == ' ' || line[i] == '\t')
-		i++;
+	while (line[++i] == ' ' || line[i] == '\t')
+		;
 	if (line[i] != '"')
-		return (ft_log_error("Lexical error", i, env));
+		return (ft_log_error("Lexical error", i - 1, env));
 	while (line[i++])
 	{
 		env->champ.header.prog_name[j] = line[i];
 		if (line[i] == '"')
-			break;
+			break ;
 		j++;
 	}
 	env->champ.header.prog_name[j] = '\0';
