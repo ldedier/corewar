@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/19 21:31:20 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/19 22:00:42 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -428,7 +428,7 @@ struct					s_visu
 	t_player_list		players_list[NB_SOURCES];
 };
 
-int						ft_init_all_sdl(t_vm *vm, t_visu *v);
+int						ft_init_all_visu(t_vm *vm, t_visu *v);
 
 /*
 ** framerate functions
@@ -537,4 +537,12 @@ void					ft_delete_player(t_vm *vm, t_button *this, t_ixy xy);
 void					ft_upload(t_vm *vm, t_button *this, t_ixy mouse);
 int						ft_render_upload_button(t_vm *vm, t_button *this);
 void					ft_init_buttons(t_vm *vm, t_visu *visu);
+void					ft_get_dimensions(t_visu *v);
+void					ft_init_sdl_to_null(t_visu *v);
+int						ft_init_sdl(t_visu *v);
+int						ft_is_in_rect(t_ixy xy, SDL_Rect rect);
+void					ft_mouse_down(t_vm *vm, SDL_Event event);
+void					ft_mouse_up(t_vm *vm, SDL_Event event);
+void					ft_mouse_motion(t_vm *vm, SDL_Event event);
+int						ft_process_button_pressed(t_vm *vm);
 #endif

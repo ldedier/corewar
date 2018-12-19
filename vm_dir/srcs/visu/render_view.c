@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 18:59:39 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/19 18:59:56 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/19 22:01:46 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int		ft_blit_scaled_scrollbar(t_sdl *sdl, SDL_Surface *from,	SDL_Rect rect,
 	from_rect.w = rect.w;
 	from_rect.x = 0;
 	from_rect.h = ft_min(rect.h, (vscrollbar.pos.y + vscrollbar.height -
-					true_y));
+			true_y));
 	from_rect.y = ft_max(0, vscrollbar.pos.y - true_y); //OK
 	tmp = SDL_CreateRGBSurface(0, rect.w, rect.h, 32, 0, 0, 0, 0);
 	if (from != sdl->images[CLOSE]  && from != sdl->images[DL]

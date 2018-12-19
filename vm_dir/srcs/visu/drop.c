@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 19:09:06 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/19 20:31:36 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/19 22:03:30 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	ft_drop_dragged_player(t_vm *vm, t_ixy mouse)
 {
 	t_drop_container	dc;
+
 	if (vm->visu.drag_container.drag_enum == DRAG_PLAYER &&
 			vm->visu.drag_container.drag_union.drag_player.player)
 	{
