@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 20:22:56 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/13 19:19:17 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/19 15:24:59 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,9 @@ int		ins_add(t_vm *vm, t_process *proc, t_parameter arg[3])
 	int sum;
 
 	(void)vm;
-//	if (arg[FIRST]->value >= REG_NUMBER
-//			|| arg[SECOND]->value >= REG_NUMBER
-//			|| arg[THIRD]->value >= REG_NUMBER)
-//		return (FAILURE); // verifier que c'est bien le cas
-	sum = proc->reg[arg[FIRST].value] + proc->reg[arg[SECOND].value];
-	proc->reg[arg[THIRD].value] = sum; 
+
+	sum = proc->reg[arg[0].value - 1] + proc->reg[arg[1].value - 1];
+	proc->reg[arg[2].value - 1] = sum; 
+	proc->carry = !sum;
 	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/19 11:45:32 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/19 16:44:24 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,9 +110,10 @@ static void		launch_instruction(t_vm *vm, t_process *proc)
 		&ins_xor, &ins_zjmp, &ins_ldi, &ins_sti, &ins_fork, &ins_lld, &ins_lldi,
 		&ins_lfork, &ins_aff};
 
+	ft_printf("\n%s LAUNCH INSTRUCTION%s\n", COLF_CYAN, COLF_OFF);
 	if (last_instruction_unresolved(vm, proc))
 		return ;
-	if ((ret = get_instruction(vm->arena, &ins, proc->pc, MEM_SIZE)))
+	if ((ret = get_instruction(vm->arena, &ins, (unsigned int)proc->pc, MEM_SIZE)))
 	{
 //		getval_param_dest(vm, proc, ins.params, ins.op.nb_params);
 		f_ins[(int)ins.op.opcode](vm, proc, ins.params);
@@ -128,6 +129,7 @@ static void		launch_instruction(t_vm *vm, t_process *proc)
 	}
 	else
 	{
+		ft_printf("no valid instruction\n");
 		proc->ins_cycle = 1;
 		display(vm, proc, MOVE_ONE);
 		display(vm, proc, PL_PC);
@@ -177,15 +179,17 @@ int		play(t_vm *vm)
 	while (players)
 	{
 		proc = ((t_process *)(players->content));
-		display_register(proc);
 //		ft_printf("proc->pc = %d proc cycle = %d\n", proc->pc, proc->ins_cycle);
+		ft_printf("\n\n%sPLAYER num = %d name = %s%s\n\n", COLF_MAGENTA, proc->player->num, proc->player->name, COLF_OFF);
+		display(vm, proc, TURN_PLAYER);
 		if (!proc->cycle)
 		{
 			proc->pc = (proc->pc + proc->ins_cycle) % MEM_SIZE;
+			display_register(proc);
+			ft_printf("\n");
 			display_arena((unsigned char *)vm->arena);
 		}
 	
-		display(vm, proc, TURN_PLAYER);
 		launch_instruction(vm, proc);
 		ft_printf("\n");
 		players = players->next;

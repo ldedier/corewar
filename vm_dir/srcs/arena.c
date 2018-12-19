@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 16:42:17 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/16 16:58:51 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/19 15:11:26 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void					init_vm(t_vm *vm, char **argv, char **env)
 	ft_bzero(vm->color, MAX_PL_COLOR);
 	ft_bzero(vm->arena, MEM_SIZE);
 	ft_strlcat(vm->color, init_color_ref(env), MAX_PL_COLOR);
+	ft_printf("color ref = %s\n", vm->color);
 	i = 0;
 	while (i < MAX_PLAYERS)
 	{
@@ -65,7 +66,7 @@ void					init_vm(t_vm *vm, char **argv, char **env)
 	}
 }
 
-t_list	*add_process(t_vm *vm, int index, int start) //need name?
+t_list	*add_process(t_vm *vm, int index, int start) 
 {
 	t_process	*process;
 
@@ -75,6 +76,7 @@ t_list	*add_process(t_vm *vm, int index, int start) //need name?
 	process->reg[0] = process->player->num;
 	if (ft_add_to_list_ptr(&vm->proc, (void *)process, sizeof(t_process)))
 		return (NULL);
+	ft_printf("new process, index = %d num = %d name = %s\n", index, process->player->num, process->player->name);
 	return (vm->proc);
 }
 
@@ -85,7 +87,7 @@ int		init_processes(t_vm *vm)
 	int start;
 
 	i = -1;
-	index = 0;
+	index = 1;
 	while (++i < MAX_PLAYERS)
 	{
 		start = (MEM_SIZE / vm->nb_players) * (index - 1);
@@ -116,9 +118,10 @@ void		dispatch_players(t_vm *vm)
 	index = 0;
 	while (++i < MAX_PLAYERS)
 	{
-		set_color(&vm->player[i], vm->color);
 		if (vm->player[i].relevant && ++index && (j = -1))
 		{
+			set_color(&vm->player[i], vm->color);
+			ft_printf("player col index = %d\n", vm->player[i].color.index);
 			start = (MEM_SIZE / vm->nb_players) * (index - 1);
 			while (++j < vm->player[i].algo_len)
 			{

@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/09 20:00:32 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/19 11:45:37 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/19 12:53:37 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	getval_ind(t_vm *vm, t_process *proc, int index, int mod)
 
 	(void)proc;
 	val = getval_mod(vm->arena, index % mod, DIR_SIZE, MEM_SIZE);
-	ft_printf("indirect | index = %d val = %d\n", index, val);
+	ft_printf("indirect | index = %d val = %d\n", index % mod, val);
 	return (val);
 }
 

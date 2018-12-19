@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 20:22:56 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/13 18:38:19 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/19 15:25:18 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,8 @@ int		ins_sub(t_vm *vm, t_process *proc, t_parameter arg[3])
 	int	sub;
 
 	(void)vm;
-//	if (arg[FIRST]->value >= REG_NUMBER
-//			|| arg[SECOND]->value >= REG_NUMBER
-//			|| arg[THIRD]->value >= REG_NUMBER)
-//		return (FAILURE); // verifier que c'est bien le cas
-	sub = proc->reg[arg[FIRST].value] - proc->reg[arg[SECOND].value]; // verifier que la soustraction est bien dans ce sens
-	proc->reg[arg[THIRD].value] = sub;
+	sub = proc->reg[arg[0].value - 1] - proc->reg[arg[1].value - 1]; // verifier que la soustraction est bien dans ce sens
+	proc->reg[arg[2].value - 1] = sub;
+	proc->carry = !sub;
 	return (SUCCESS);
 }

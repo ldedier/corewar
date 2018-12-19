@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 16:33:31 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/19 11:35:26 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/19 15:10:06 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,18 @@
 
 int		getval_mod(char *arena, int index, int nb_bytes, int mod)
 {
-	int	i;
-	int val;
+	unsigned int	i;
+	int				val;
 
-	i = -1;
+	i = 0;
 	val = 0;
 	ft_printf("getval mod, index = %d nbbytes = %d\n", index, nb_bytes);
-	while (++i < nb_bytes)
+	while (i < (unsigned int)nb_bytes)
 	{
-		ft_printf("getval mod: i = %d val = %d arena[index + i] = %d\n", i, val, arena[index + i]);
+		ft_printf("getval mod: i = %d val = %d arena[index + i] = %d\n", i, val, (unsigned char)arena[(unsigned int)(index + i) % mod]);
 		val <<= 8;
-		val |= arena[(index + i) % mod];
+		val |= (unsigned char)arena[(index + i) % mod];
+		++i;
 	}
 	return (val);
 }
@@ -106,13 +107,14 @@ static int		is_valid_ocp(unsigned char hex, t_instruction *ins)
 ** beyond which index circles back
 */
 
-int				get_instruction(char *arena, t_instruction *ins, int i, int mod)
+int				get_instruction(char *arena, t_instruction *ins, unsigned int i, int mod)
 {
 	unsigned 	char	hex;
 	int	len;
 
 	ft_bzero((void *)ins, sizeof(t_instruction));
 	hex = *(unsigned char *)(arena + (i % mod));
+	ft_printf("i = %d hex = %d\n", i, hex);
 	if ((int)hex >= NB_INSTRUCTIONS || !hex)
 		return (0);
 	else

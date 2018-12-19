@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 19:01:37 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/19 11:36:38 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/19 16:44:30 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ typedef struct					s_parameter
 	t_arg_type					type; //T_REG || T_IND || T_DIR || T_LAB
 	int							value;
 	int							dest_value;
-	int							dest_index;
+//	int							dest_index;
 	char						*label_name;
 	int							source_code_col;
 	int							nb_bytes;
@@ -173,10 +173,10 @@ enum				e_mod_carry
 
 t_op							g_op_tab[NB_INSTRUCTIONS + 1];
 
-int							getval_mod(char *arena, int index, int nb_bytes,int mod);
+int							getval_mod(char *arena,  int index, int nb_bytes,int mod);
 
 void							set_argval(t_parameter *arg, int index, int size);
-int								get_instruction(char *arena, t_instruction *ins, int i, int mod);
+int								get_instruction(char *arena, t_instruction *ins, unsigned int i, int mod);
 int								store_arg(char *arena, t_instruction *ins, int i, int ocp);
 void							set_optab(t_op **tab);
 int								ft_encode_instructions(int fd, t_list *instructions);
