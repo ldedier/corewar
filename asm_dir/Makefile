@@ -35,7 +35,8 @@ OK_COLOR = \x1b[32;01m
 EOC = \033[0m
 
 SRCS_NO_PREFIX		= main.c ft_init.c ft_parse.c ft_parse_header.c\
-					  ft_log_tools.c ft_debug.c ft_free.c ft_encode.c
+					  ft_log_tools.c ft_debug.c ft_free.c ft_encode.c ft_parse_comment.c\
+						ft_parse_name.c
 
 INCLUDES_NO_PREFIX	= asm.h
 
