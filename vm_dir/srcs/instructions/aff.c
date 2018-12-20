@@ -18,13 +18,23 @@
 ** Returns
 */
 
-int		ins_aff(t_vm *vm, t_process *proc, t_parameter arg[3])
+static void		output_aff(t_process *proc)
+{
+	if (proc->player->aff_buf[0])
+		ft_printf("Aff: [%s] (player %d).\n", proc->player->aff_buf,
+			proc->player->num);
+	free(proc->player->aff_buf);
+}
+
+int						ins_aff(t_vm *vm, t_process *proc, t_parameter arg[3])
 {
 	char	*tmp;
 	int		i;
 	int		len;
 	if (!vm->dump)
 	{
+		if (arg[0].value % 256 == 0)
+			output_aff(proc);
 		len = ft_strlen(proc->player->aff_buf);
 		if (!len)
 		{
