@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:54:14 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/20 15:41:54 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/20 18:56:11 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int		ft_init_client(t_client *client)
 	return (0);
 }
 
-void	ft_download(t_vm *vm, t_button *this, t_ixy xy)
+int		ft_download(t_vm *vm, t_button *this, t_ixy xy)
 {
 	(void)xy;
 	(void)vm;
@@ -41,6 +41,7 @@ void	ft_download(t_vm *vm, t_button *this, t_ixy xy)
 		this->enabled = 0;
 		this->button_union.client_slot->downloaded = 1;
 	}
+	return (0);
 }
 
 void	ft_populate_download_button(t_client_slot *client_slot,

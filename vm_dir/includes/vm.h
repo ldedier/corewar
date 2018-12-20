@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/20 16:58:45 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/20 21:52:57 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct		s_process
 typedef struct		s_metadata
 {
 	char			color_index;
+	char			process_color_index;
 }					t_metadata;
 
 typedef struct		s_live

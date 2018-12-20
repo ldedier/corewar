@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 21:28:15 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/20 15:43:00 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/20 18:56:31 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ft_populate_closing_button(t_vm *vm, t_button *button,
 }
 
 void	ft_init_button(t_button *button, SDL_Rect rect, SDL_Surface *surface,
-			void (*on_click)(t_vm *, t_button *, t_ixy xy))
+			int (*on_click)(t_vm *, t_button *, t_ixy xy))
 {
 	button->rect = rect;
 	button->surface = surface;

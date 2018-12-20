@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 19:07:54 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/20 15:37:00 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/20 21:59:18 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,27 @@ int		ft_render_init(t_vm *vm)
 	return (0);
 }
 
+void	ft_reset_metarena(t_vm *vm)
+{
+	t_list		*ptr;
+	t_process	*process;
+
+	ptr = vm->proc;
+	while (ptr != NULL)
+	{
+		process = (t_process *)(ptr->content);
+		vm->metarena[process->pc].process_color_index = 0;
+		ptr = ptr->next;
+	}
+}
+
 int		ft_render_play(t_vm *vm)
 {
+	if (ft_render_all_process(vm))
+		return (1);
 	if (ft_render_memory(vm))
 		return (1);
+	ft_reset_metarena(vm);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/20 17:03:54 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/20 22:28:42 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,18 @@
 # include "op.h"
 
 # define INIT_MAX_PLAYERS		4
-# define INIT_CYCLES_PER_TURN	0.01
+# define INIT_CYCLES_PER_TURN	1
 
 # define FRAMERATE				60
 
-# define DASHBOARD_X			1900
+# define DASHBOARD_X			1950
 # define TOP_DASHBOARD_HEIGHT	530
 # define FOOTER_HEIGHT			120
 
 # define FIGHT_TOP				30
 # define FIGHT_BOTTOM			30
-# define FIGHT_LEFT				250
-# define FIGHT_RIGHT			250
+# define FIGHT_LEFT				200
+# define FIGHT_RIGHT			200
 
 # define MEM_BORDER_TOP			100
 # define MEM_BORDER_BOTTOM		100
@@ -81,6 +81,7 @@
 # define X_DIFF					7
 # define X_DIFF_BYTE			0
 # define Y_DIFF					7
+
 
 # define MEM_COLS				64
 
@@ -185,7 +186,7 @@ typedef struct			s_button
 	t_button_union		button_union;
 	char				visible;
 	char				enabled;
-	void				(*on_click)(t_vm *, struct s_button *, t_ixy xy);
+	int					(*on_click)(t_vm *, struct s_button *, t_ixy xy);
 	void				(*on_press)(t_vm *, struct s_button *);
 	int					(*render)(t_vm *, struct s_button *);
 	void				(*on_hover)(t_vm *, struct s_button *, t_ixy xy);
@@ -473,7 +474,7 @@ t_ixy					new_ixy(int x, int y);
 int						ft_render_button(t_vm *vm, t_button *button);
 int						ft_process_render_button(t_vm *vm, SDL_Rect rect,
 							SDL_Surface *surface, t_vscrollbar *vscrollbar);
-void					ft_delete_player(t_vm *vm, t_button *this, t_ixy xy);
+int						ft_delete_player(t_vm *vm, t_button *this, t_ixy xy);
 int						ft_get_player_color(t_vm *vm, t_player *player,
 							int initial_color, float value);
 void					ft_render_horizontal_line_dashboard(t_vm *vm, int y,
@@ -497,8 +498,8 @@ int						get_vscrollbar(t_vm *vm, t_ixy mouse,
 							t_vscrollbar **vscrollbar);
 int						ft_get_scrolled_height(t_vscrollbar vscrollbar);
 void					ft_swing_scrollbar(t_vscrollbar *scrollbar, t_ixy xy);
-void					nothing_on_click(t_vm *vm, t_button *this, t_ixy xy);
-void					fight(t_vm *vm, t_button *this, t_ixy xy);
+int						nothing_on_click(t_vm *vm, t_button *this, t_ixy xy);
+int						fight(t_vm *vm, t_button *this, t_ixy xy);
 void					nothing_on_press(t_vm *vm, t_button *this);
 void					ft_wheel_event(t_vm *vm, SDL_Event event);
 void					ft_update_download_buttons_client_rect(t_vm *vm);
@@ -543,8 +544,7 @@ void					ft_init_crosses(t_vm *vm);
 void					ft_init_client_slot_surface(t_vm *vm);
 void					ft_populate_closing_button(t_vm *vm, t_button *button,
 							t_player *player, t_ixy xy);
-void					ft_delete_player(t_vm *vm, t_button *this, t_ixy xy);
-void					ft_upload(t_vm *vm, t_button *this, t_ixy mouse);
+int						ft_upload(t_vm *vm, t_button *this, t_ixy mouse);
 int						ft_render_upload_button(t_vm *vm, t_button *this);
 void					ft_init_buttons(t_vm *vm, t_visu *visu);
 void					ft_get_dimensions(t_visu *v);
@@ -557,4 +557,6 @@ void					ft_mouse_motion(t_vm *vm, SDL_Event event);
 int						ft_process_button_pressed(t_vm *vm);
 void					ft_render_dashboard_separator(t_vm *vm);
 int						process(t_vm *vm);
+int						ft_render_all_process(t_vm *vm);
+int						start_fight(t_vm *vm);
 #endif

@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 16:42:17 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/19 19:56:04 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/20 18:50:00 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,6 @@ void		dispatch_players(t_vm *vm)
 	update_nb_players(vm);
 	ft_bzero(vm->arena, MEM_SIZE);
 	ft_bzero(vm->metarena, sizeof(vm->metarena));
-	ft_lstdel_value(&vm->proc);
 	i = -1;
 	index = 0;
 	while (++i < MAX_PLAYERS)
