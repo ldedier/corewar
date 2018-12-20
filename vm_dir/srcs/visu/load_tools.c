@@ -1,24 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_add_to_list_ptr.c                               :+:      :+:    :+:   */
+/*   load_tools.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/15 12:29:16 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/18 19:32:05 by ldedier          ###   ########.fr       */
+/*   Created: 2018/12/19 20:48:28 by ldedier           #+#    #+#             */
+/*   Updated: 2018/12/19 20:49:47 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "vm.h"
 
-int			ft_add_to_list_ptr(t_list **list, void *content, size_t size)
+TTF_Font    *ft_load_font(char *str, int quality)
 {
-	t_list *node;
+	TTF_Font *font;
 
-	if (!(node = ft_lstnew_ptr(content, size)))
-		return (1);
-	else
-		ft_lstadd(list, node);
-	return (0);
+	font = TTF_OpenFont(str, quality);
+	if (font == NULL)
+		ft_net_error();
+	return (font);
+}
+
+SDL_Surface *ft_load_image(char *str)
+{
+	SDL_Surface *surface;
+
+	if (!(surface = IMG_Load(str)))
+		ft_net_error();
+	return (surface);
 }

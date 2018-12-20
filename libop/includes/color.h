@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/22 15:55:47 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/19 20:00:41 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/20 17:07:22 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # define DEFAULT_COLORS		"xrclLmwM"
 # define NB_DESIGNATOR		17
 # define NB_COLORS			17
-# define MAX_PL_COLOR		3
+# define MAX_PL_COLOR		9
 # define COREWAR_VAR_NAME	"CW_COLORS"
 # define STR_COLOR_LEN		10
 

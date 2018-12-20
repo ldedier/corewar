@@ -6,15 +6,15 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 16:21:43 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/13 23:24:17 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/20 16:52:23 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-int process_visu(t_vm *vm)
+int		process_visu(t_vm *vm)
 {
-	if (ft_init_all_sdl(vm, &(vm->visu)))
+	if (ft_init_all_visu(vm, &(vm->visu)))
 		return (ft_net_error());
 	vm->visu.framerate.ms_counter = SDL_GetTicks();
 	while (vm->visu.active)
@@ -23,10 +23,11 @@ int process_visu(t_vm *vm)
 		ft_process_events(vm);
 		if ((vm->client.active && ft_process_client_events(vm)))
 			vm->client.active = 0;
+		process(vm);
 		ft_render(vm, &(vm->visu.sdl));
 		ft_process_delta(&(vm->visu.framerate));
 		ft_print_fps(&(vm->visu.framerate));
-		SDL_Delay(ft_fmax(0, (1000 / FRAMERATE) - (vm->visu.framerate.delta)));
+		SDL_Delay(ft_fmax(0, (1000 / (double)FRAMERATE) - (vm->visu.framerate.delta)));
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/19 19:42:52 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/20 16:58:45 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct		s_vm
 	int				c_to_die;
 	int				checks;
 	int				win;
-//	int				cycle;
+	int				cycle;
 	int				nb_players;
 	char			**files;
 	int				dump;
@@ -151,6 +151,8 @@ int					ins_aff(t_vm *vm, t_process *proc, t_parameter arg[3]);
 ** PLAY
 */
 
+void				process_cycle(t_vm *vm);
+int					handle_end_cycle(t_vm *vm, int *cycle);
 int					play(t_vm *vm);
 
 /*
