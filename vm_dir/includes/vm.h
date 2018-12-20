@@ -129,7 +129,6 @@ int					get_envar(char **env, char ****envvar);
 void				getval_param_dest(t_vm *vm, t_process *proc, t_parameter *arg, int mod);
 void				loadval(t_vm *vm, t_process *proc, t_parameter *arg, int val);
 void				set_argval(t_parameter *arg, int index, int size);
-int					check_reg(int r);
 
 int					ins_live(t_vm *vm, t_process *proc, t_parameter arg[3]);
 int					ins_ld(t_vm *vm, t_process *proc, t_parameter arg[3]);

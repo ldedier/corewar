@@ -46,6 +46,7 @@ typedef struct      s_player
 	char			relevant;
 	char			*cor_name;
 	t_color			color;
+	char			*aff_buf;
 }					t_player;
 
 int					ft_read_player(char *path, t_player *player);
