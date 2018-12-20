@@ -24,6 +24,7 @@ static void		output_aff(t_process *proc)
 		ft_printf("Aff: [%s] (player %d).\n", proc->player->aff_buf,
 			proc->player->num);
 	free(proc->player->aff_buf);
+	proc->carry = 1;
 }
 
 int						ins_aff(t_vm *vm, t_process *proc, t_parameter arg[3])
@@ -33,13 +34,13 @@ int						ins_aff(t_vm *vm, t_process *proc, t_parameter arg[3])
 	int		len;
 	if (!vm->dump)
 	{
-		if (arg[0].value % 256 == 0)
+		if ((proc->reg[arg[0].value - 1]) % 256 == 0)
 			output_aff(proc);
 		len = ft_strlen(proc->player->aff_buf);
 		if (!len)
 		{
 			proc->player->aff_buf = ft_memalloc(sizeof(char) + 1);
-			proc->player->aff_buf[0] = (arg[0].value) % 256;
+			proc->player->aff_buf[0] = (proc->reg[arg[0].value - 1]) % 256;
 		}
 		else
 		{
@@ -47,7 +48,7 @@ int						ins_aff(t_vm *vm, t_process *proc, t_parameter arg[3])
 				i = -1;
 				while (++i < len)
 					tmp[i] = proc->player->aff_buf[i];
-				tmp[i] = (arg[0].value) % 256;
+				tmp[i] = (proc->reg[arg[0].value - 1]) % 256;
 				free(proc->player->aff_buf);
 				proc->player->aff_buf = tmp;
 		}
