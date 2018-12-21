@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 21:54:50 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/20 15:39:37 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/21 14:07:37 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,22 +84,25 @@ int			ft_is_on_buttons(t_vm *vm, t_ixy xy, t_button **but)
 	int		i;
 	t_list	*ptr;
 
-	if (ft_is_on_close(vm, xy, but))
-		return (1);
-	i = 0;
-	while (i < NB_BUTTONS)
+	if (vm->visu.phase == PHASE_INIT)
 	{
-		if (ft_is_on_button(xy, &(vm->visu.buttons[i]), but))
+		if (ft_is_on_close(vm, xy, but))
 			return (1);
-		i++;
-	}
-	ptr = vm->client.client_slots;
-	while (ptr != NULL)
-	{
-		if (ft_is_on_button(xy, &((t_client_slot *)(ptr->content))->download,
-				but))
-			return (1);
-		ptr = ptr->next;
+		i = 0;
+		while (i < NB_BUTTONS)
+		{
+			if (ft_is_on_button(xy, &(vm->visu.buttons[i]), but))
+				return (1);
+			i++;
+		}
+		ptr = vm->client.client_slots;
+		while (ptr != NULL)
+		{
+			if (ft_is_on_button(xy, &((t_client_slot *)(ptr->content))->download,
+						but))
+				return (1);
+			ptr = ptr->next;
+		}
 	}
 	return (0);
 }

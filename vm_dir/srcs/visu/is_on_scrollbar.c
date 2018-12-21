@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 20:18:31 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/19 20:18:36 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/21 14:08:27 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,19 @@ int		ft_is_on_scrollbars(t_vm *vm, t_ixy xy, t_drag_container *dc)
 {
 	int i;
 
-	i = 0;
-	while (i < NB_SOURCES)
+	if (vm->visu.phase == PHASE_INIT)
 	{
-		if (ft_is_on_scrollbar_bar(xy, vm->visu.players_list[i].vscrollbar))
+		i = 0;
+		while (i < NB_SOURCES)
 		{
-			ft_populate_drag_container_vscrollbar(dc, 
-				&vm->visu.players_list[i].vscrollbar);
-			return (1);
+			if (ft_is_on_scrollbar_bar(xy, vm->visu.players_list[i].vscrollbar))
+			{
+				ft_populate_drag_container_vscrollbar(dc, 
+						&vm->visu.players_list[i].vscrollbar);
+				return (1);
+			}
+			i++;
 		}
-		i++;
 	}
 	return (0);
 }

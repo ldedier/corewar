@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 20:30:19 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/19 20:31:58 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/21 14:06:44 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ int		ft_is_on_droppable(t_vm *vm, t_ixy mouse, t_drop_container *dc)
 {
 	int i;
 
-	if (vm->visu.drag_container.drag_union.drag_player.player != NULL)
+	if (vm->visu.phase == PHASE_INIT && 
+		vm->visu.drag_container.drag_union.drag_player.player != NULL)
 	{
 		i = 0;
 		while (i < MAX_PLAYERS)

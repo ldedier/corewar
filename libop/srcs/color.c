@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 20:42:40 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/20 17:07:36 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/21 17:27:53 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int			get_color_sdl(char index)
 	return (*(int *)get_color_ptr(index));
 }
 
-void		set_color(t_player *player, char *color_index_ref)
+int			set_color(t_player *player, char *color_index_ref)
 {
 	static char	color_counter[MAX_PL_COLOR] = {0};
 	int			index_min_count;
@@ -63,10 +63,10 @@ void		set_color(t_player *player, char *color_index_ref)
 			--color_counter[player->color.index];
 			player->color.value = NULL;
 		}
-		return ;
+		return (0);
 	}
 	if (player->color.value)
-		return ;
+		return (0);
 	index_min_count = 1;
 	i = 0;
 	while (++i < MAX_PL_COLOR)
@@ -77,6 +77,7 @@ void		set_color(t_player *player, char *color_index_ref)
 	++color_counter[index_min_count];
 	player->color.index = index_min_count;
 	player->color.value = get_color_ptr(color_index_ref[index_min_count]);
+	return (1);
 }
 
 char	*init_color_ref(char **env)

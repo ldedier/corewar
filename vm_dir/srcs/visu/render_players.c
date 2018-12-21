@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/11 17:47:31 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/19 12:15:29 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/21 19:52:20 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int		ft_copy_str_to_surface(t_vm *vm, char *str,
 	char_rect.y = rect.y;
 	char_rect.x = rect.x;
 	len = ft_strlen(str);
-	char_rect.w = rect.w / len;
+	char_rect.w = ft_min(rect.w / len, len * rect.h * GLYPH_W_H_RATIO);
 	i = 0;
 	while (str[i])
 	{
@@ -83,13 +83,96 @@ int		ft_get_player_color(t_vm *vm, t_player *player, int initial_color,
 		return (ft_scale_color(c, value).color);
 	}
 }
+void	ft_render_inner_name_value(t_vm *vm, SDL_Rect inner_rect,
+		t_player *player, t_player_source source)
+{
+	SDL_Rect	name_rect;
+	t_ixy		col_source;
 
-void	ft_render_player_name(t_vm *vm, SDL_Rect player_rect, t_player *player,
+	name_rect.w = 3 * inner_rect.w / 8;
+	name_rect.h = inner_rect.h / 3;
+	name_rect.x = inner_rect.x +  7 * (inner_rect.w / 16);
+	name_rect.y = inner_rect.y + inner_rect.h / 12;
+	col_source.y = source;
+	if (source % NB_SOURCES == ARENA)
+		col_source.x = player->color.index;
+	else
+		col_source.x = MAX_PL_COLOR;
+	ft_copy_str_to_surface(vm, player->name, name_rect, col_source);
+}
+
+void	ft_render_inner_name(t_vm *vm, SDL_Rect inner_rect, t_player *player,
 		t_player_source source)
 {
 	SDL_Rect	name_rect;
-	SDL_Rect	inner_rect;
 	t_ixy		col_source;
+
+	name_rect.w = 3 * inner_rect.w / 16;
+	name_rect.h = inner_rect.h / 3;
+	name_rect.x = inner_rect.x + inner_rect.w / 16;
+	name_rect.y = inner_rect.y + inner_rect.h / 12;
+	col_source.y = source;
+	col_source.x = MAX_PL_COLOR;
+	ft_copy_str_to_surface(vm, "name", name_rect, col_source);
+	ft_render_inner_name_value(vm, inner_rect, player, source);
+}
+
+void	ft_render_inner_number_value(t_vm *vm, SDL_Rect inner_rect, t_player *player,
+		t_player_source source)
+{
+	SDL_Rect	name_rect;
+	t_ixy		col_source;
+	char		*number_to_str;
+
+	name_rect.w = 3 * inner_rect.w / 8;
+	name_rect.h = inner_rect.h / 3;
+	name_rect.x = inner_rect.x + 7 * (inner_rect.w / 16);
+	name_rect.y = inner_rect.y +  7 * inner_rect.h / 12;
+	col_source.y = source;
+	col_source.x = MAX_PL_COLOR;
+	number_to_str = ft_itoa(player->num);
+	ft_copy_str_to_surface(vm, number_to_str, name_rect, col_source);
+}
+
+void	ft_render_inner_number(t_vm *vm, SDL_Rect inner_rect, t_player *player,
+		t_player_source source)
+{
+	SDL_Rect	name_rect;
+	t_ixy		col_source;
+
+	name_rect.w = 3 * inner_rect.w / 16;
+	name_rect.h = inner_rect.h / 3;
+	name_rect.x = inner_rect.x + inner_rect.w / 16;
+	name_rect.y = inner_rect.y + 7 * inner_rect.h / 12;
+	col_source.y = source;
+	col_source.x = MAX_PL_COLOR;
+	ft_copy_str_to_surface(vm, "number", name_rect, col_source);
+	ft_render_inner_number_value(vm, inner_rect, player, source);
+}
+
+void	ft_render_inner_name_full(t_vm *vm, SDL_Rect player_rect, t_player *player,
+		t_player_source source)
+{
+	SDL_Rect	name_rect;
+	t_ixy		col_source;
+
+	name_rect.w = player_rect.w / 2;
+	name_rect.h = player_rect.h / 2;
+	name_rect.x = player_rect.x + player_rect.w / 4;
+	name_rect.y = player_rect.y + player_rect.h / 4;
+	col_source.y = source;
+	if (source % NB_SOURCES == ARENA)
+		col_source.x = player->color.index;
+	else
+		col_source.x = MAX_PL_COLOR;
+	ft_copy_str_to_surface(vm, player->name, name_rect, col_source);
+
+}
+
+void	ft_render_inner_player(t_vm *vm, SDL_Rect player_rect, t_player *player,
+		t_player_source source)
+{
+	SDL_Rect	inner_rect;
 
 	inner_rect.w = player_rect.w - vm->visu.center.player_inner_border * 2;
 	inner_rect.h = player_rect.h - vm->visu.center.player_inner_border * 2;
@@ -102,17 +185,13 @@ void	ft_render_player_name(t_vm *vm, SDL_Rect player_rect, t_player *player,
 		ft_fill_rect_scrollbar(vm->visu.sdl.w_surface, &inner_rect,
 			ft_get_player_color_no_drag(vm, player, PLAYER_COL, 1.2),
 			vm->visu.players_list[source].vscrollbar);
-	name_rect.w = player_rect.w / 2;
-	name_rect.h = player_rect.h / 2;
-	name_rect.x = player_rect.x + player_rect.w / 4;
-	name_rect.y = player_rect.y + player_rect.h / 4;
-	col_source.y = source;
 	if (source % NB_SOURCES == ARENA)
-		col_source.x = player->color.index;
+	{
+		ft_render_inner_name(vm, inner_rect, player, source);
+		ft_render_inner_number(vm, inner_rect, player, source);
+	}
 	else
-		col_source.x = MAX_PL_COLOR;
-	ft_copy_str_to_surface(vm, player->name, name_rect, col_source);
-
+		ft_render_inner_name_full(vm, player_rect, player, source);
 }
 
 void	ft_render_relevant_player(t_vm *vm, t_player *player,
@@ -129,7 +208,7 @@ void	ft_render_relevant_player(t_vm *vm, t_player *player,
 	else
 		ft_fill_rect_scrollbar(vm->visu.sdl.w_surface, &rect, PLAYER_COL_BORDER,
 			vm->visu.players_list[source].vscrollbar);
-	ft_render_player_name(vm, rect, player, source);
+	ft_render_inner_player(vm, rect, player, source);
 }
 
 int		ft_render_player(t_vm *vm, t_player *player, t_xy xy,
@@ -138,7 +217,8 @@ int		ft_render_player(t_vm *vm, t_player *player, t_xy xy,
 	SDL_Rect rect;
 
 	if (player->relevant && (source == LOCAL || source == SERVER ||
-		 vm->visu.drag_container.drag_union.drag_player.player != player)) //WATCH FOR ENUM MAYBE
+		(vm->visu.drag_container.drag_enum != DRAG_PLAYER ||
+		 vm->visu.drag_container.drag_union.drag_player.player != player))) //WATCH FOR ENUM MAYBE
 		ft_render_relevant_player(vm, player, xy, source);
 	else if (source != LOCAL)
 	{
@@ -155,16 +235,6 @@ int		ft_render_player(t_vm *vm, t_player *player, t_xy xy,
 			ft_fill_rect_scrollbar(vm->visu.sdl.w_surface, &rect,
 					ft_get_player_color(vm, player, UPLOAD_COLOR, 1.3),
 					vm->visu.players_list[source].vscrollbar);
-			/*
-			rect.x += rect.w / 6;
-			rect.y += rect.h / 6;
-			rect.w -= rect.w / 3;
-			rect.h -= rect.h / 3;
-			if (ft_blit_scaled_scrollbar(&vm->visu.sdl, vm->visu.sdl.titles[UPLOAD_HERE],
-				rect,
-				vm->visu.players_list[source].vscrollbar) < 0)
-				return (ft_net_error());
-		*/
 		}
 	}
 	return (0);

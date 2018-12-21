@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 19:07:08 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/19 20:42:59 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/21 14:09:10 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,29 +41,32 @@ int		ft_is_on_draggable(t_vm *vm, t_ixy xy, t_drag_container *dc)
 {
 	int i;
 
-	i = 0;
-	ft_fill_drag_container(dc, xy);
-	while (i < MAX_PLAYERS)
+	if (vm->visu.phase == PHASE_INIT)
 	{
-		if (vm->player[i].relevant && ft_is_on_player_scrollbar(vm, xy,
-				vm->visu.positions.arena_slots[i].player,
-				vm->visu.players_list[ARENA].vscrollbar))
+		i = 0;
+		ft_fill_drag_container(dc, xy);
+		while (i < MAX_PLAYERS)
 		{
-			ft_populate_drag_container_player_slot(dc, &(vm->player[i]),
-				&(vm->visu.positions.arena_slots[i]), ARENA);
-			return (1);
+			if (vm->player[i].relevant && ft_is_on_player_scrollbar(vm, xy,
+						vm->visu.positions.arena_slots[i].player,
+						vm->visu.players_list[ARENA].vscrollbar))
+			{
+				ft_populate_drag_container_player_slot(dc, &(vm->player[i]),
+						&(vm->visu.positions.arena_slots[i]), ARENA);
+				return (1);
+			}
+			if (vm->local_player[i].relevant && ft_is_on_player_scrollbar(vm, xy,
+						vm->visu.positions.local_slots[i].player,
+						vm->visu.players_list[LOCAL].vscrollbar))
+			{
+				ft_populate_drag_container_player_slot(dc, &(vm->local_player[i]),
+						&(vm->visu.positions.local_slots[i]), LOCAL);
+				return (1);
+			}
+			i++;
 		}
-		if (vm->local_player[i].relevant && ft_is_on_player_scrollbar(vm, xy,
-				vm->visu.positions.local_slots[i].player,
-				vm->visu.players_list[LOCAL].vscrollbar))
-		{
-			ft_populate_drag_container_player_slot(dc, &(vm->local_player[i]),
-				&(vm->visu.positions.local_slots[i]), LOCAL);
+		if (vm->client.active && ft_is_on_client_players(vm, xy, dc))
 			return (1);
-		}
-		i++;
 	}
-	if (vm->client.active && ft_is_on_client_players(vm, xy, dc))
-		return (1);
 	return (ft_is_on_scrollbars(vm, xy, dc));
 }

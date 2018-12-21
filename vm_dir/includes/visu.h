@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/20 22:28:42 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/21 19:51:30 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 
 # define INIT_MAX_PLAYERS		4
 # define INIT_CYCLES_PER_TURN	1
+# define GLYPH_W_H_RATIO		1
 
 # define FRAMERATE				60
 

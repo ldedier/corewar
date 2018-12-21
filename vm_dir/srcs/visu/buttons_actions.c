@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 21:45:31 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/20 18:59:42 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/21 19:34:01 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int		ft_delete_player(t_vm *vm, t_button *this, t_ixy xy)
 {
 	this->button_union.player->relevant = 0;
-	dispatch_players(vm);
+	dispatch_players(vm, NULL);
 	this->visible = 0;
 	ft_update_cursor(vm, xy);
 	return (0);

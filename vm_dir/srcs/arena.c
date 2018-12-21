@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 16:42:17 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/20 18:50:00 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/21 19:32:05 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,12 +96,8 @@ int		init_processes(t_vm *vm)
 	return (1);
 }
 
-/*
-**dispatch_players function sends each player to their respective starting
-**point in the arena and initializes processes for each player.
-*/
 
-void		dispatch_players(t_vm *vm)
+void		dispatch_players_init(t_vm *vm)
 {
 	int			index;
 	int			i;
@@ -115,9 +111,83 @@ void		dispatch_players(t_vm *vm)
 	index = 0;
 	while (++i < MAX_PLAYERS)
 	{
+		set_color(&vm->player[i], vm->color);
 		if (vm->player[i].relevant && ++index && (j = -1))
 		{
-			set_color(&vm->player[i], vm->color);
+			start = (MEM_SIZE / vm->nb_players) * (index - 1);
+			while (++j < vm->player[i].algo_len)
+			{
+				vm->metarena[start + j].color_index = vm->player[i].color.index;
+				*(vm->arena + start + j) = vm->player[i].algo[j];
+			}
+		}
+	}
+}
+
+int		ft_get_potential_num(int player_num)
+{
+	if (player_num == INT_MAX)
+		return (INT_MIN);
+	else
+		return (player_num + 1);
+	return (0);
+}
+
+void	ft_set_numbers(t_player players[MAX_PLAYERS], t_player *player)
+{
+	int i;
+	int j;
+	int found;
+
+	i = 0;
+	while (i < MAX_PLAYERS)
+	{
+		if (players[i].relevant && player != &players[i])
+		{
+			player->num = ft_get_potential_num(players[i].num);
+			found = 1;
+			j = 0;
+			while (j < MAX_PLAYERS)
+			{
+				if (i != j && players[j].relevant &&
+						&players[j] != player  &&
+						player->num == players[j].num)
+				{
+					found = 0;
+					break;
+				}
+				j++;
+			}
+			if (found)
+				return ;
+		}
+		i++;
+	}
+}
+
+/*
+**dispatch_players function sends each player to their respective starting
+**point in the arena and initializes processes for each player.
+*/
+
+void		dispatch_players(t_vm *vm, t_player *player)
+{
+	int			index;
+	int			i;
+	int			j;
+	int			start;
+
+	update_nb_players(vm);
+	ft_bzero(vm->arena, MEM_SIZE);
+	ft_bzero(vm->metarena, sizeof(vm->metarena));
+	i = -1;
+	index = 0;
+	while (++i < MAX_PLAYERS)
+	{
+		if (set_color(&vm->player[i], vm->color) && player != &vm->player[i])
+			ft_set_numbers(vm->player, &(vm->player[i]));
+		if (vm->player[i].relevant && ++index && (j = -1))
+		{
 			start = (MEM_SIZE / vm->nb_players) * (index - 1);
 			while (++j < vm->player[i].algo_len)
 			{

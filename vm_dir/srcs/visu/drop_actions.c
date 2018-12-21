@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 20:22:52 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/19 20:22:56 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/21 19:42:14 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,31 @@ void	ft_place_or_swap(t_vm *vm, t_drop_container *dc)
 		ft_swap(vm, dc, tmp);
 	else
 		ft_place(vm, dc);
+	dispatch_players(vm, NULL);
 }
 
 void	ft_copy(t_vm *vm, t_drop_container *dc)
 {
+	int tmp;
+	int rel;
+
+
 	if (dc->player == &vm->client.upload_player) //usefull si copie from arena
 		dc->player->color.value = NULL;
+	rel = dc->player->relevant;
 	dc->player->relevant = 0;
 	set_color(dc->player, vm->color);
-	*(dc->player) = *(vm->visu.drag_container.drag_union.drag_player.player);
+	if (rel)
+	{
+		tmp = dc->player->num;
+		*(dc->player) = *(vm->visu.drag_container.drag_union.drag_player.player);
+		dc->player->num = tmp;
+		dispatch_players(vm, dc->player);
+	}
+	else
+	{
+		*(dc->player) = *(vm->visu.drag_container.drag_union.drag_player.player);
+		dispatch_players(vm, NULL);
+	}
 	dc->close->visible = 1;
 }
