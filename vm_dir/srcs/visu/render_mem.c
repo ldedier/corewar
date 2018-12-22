@@ -36,9 +36,9 @@ int		ft_render_process(t_vm *vm, t_process *process)
 	SDL_Rect rect;
 	t_color_manager c;
 
-	ft_printf("ca va peter\n");
-	ft_printf("%d", process->pc);
-	ft_printf("\nca a peter\n");
+//	ft_printf("ca va peter\n");
+//	ft_printf("%d", process->pc);
+//	ft_printf("\nca a peter\n");
 
 	vm->metarena[process->pc].process_color_index = process->player->color.index;
 	c = ft_get_color(*(int *)(process->player->color.value));
