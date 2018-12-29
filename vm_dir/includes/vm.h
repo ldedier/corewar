@@ -55,6 +55,7 @@ typedef struct		s_vm
 	int				win;
 	int				cycle;
 	int				nb_players;
+	long long int	nb;
 	char			**files;
 	int				dump;
 	char			color[MAX_PL_COLOR];

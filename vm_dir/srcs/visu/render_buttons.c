@@ -29,7 +29,7 @@ int		ft_render_upload_button(t_vm *vm, t_button *this)
 
 int		ft_render_download_button(t_vm *vm, t_button *this)
 {
-	if (!this->button_union.client_slot->downloaded)
+	if (!this->button_union.client_slot->on_disk)
 		return (ft_process_render_button(vm, this->rect,
 					vm->visu.sdl.images[DL], this->vscrollbar));
 	else

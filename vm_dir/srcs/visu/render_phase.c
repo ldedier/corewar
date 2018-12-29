@@ -18,6 +18,20 @@ int		ft_render_init_offline(t_vm *vm)
 	return (0);
 }
 
+int		ft_render_offline_buttons(t_vm *vm, t_button buttons[NB_BUTTONS])
+{
+	int i;
+
+	i = NB_ONLINE_BUTTONS;
+	while (i < NB_BUTTONS)
+	{
+		if (buttons[i].render(vm, &buttons[i]))
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 int		ft_render_init(t_vm *vm)
 {
 	if (ft_render_memory(vm))
@@ -30,9 +44,7 @@ int		ft_render_init(t_vm *vm)
 	else
 		ft_render_init_offline(vm);
 	ft_render_vscrollbars(vm);
-	if (vm->visu.buttons[FIGHT_BUTTON].render(vm,
-			&vm->visu.buttons[FIGHT_BUTTON]))
-		return (1);
+	ft_render_offline_buttons(vm, vm->visu.buttons);
 	ft_render_dragged_player(vm);
 	return (0);
 }

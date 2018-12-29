@@ -22,16 +22,25 @@ int		ft_copy_str_to_surface(t_vm *vm, char *str,
 	char_rect.h = rect.h;
 	char_rect.y = rect.y;
 	char_rect.x = rect.x;
-	len = ft_strlen(str);
+	if (!(len = ft_strlen(str)))
+		return (0);
 	char_rect.w = ft_min(rect.w / len, len * rect.h * GLYPH_W_H_RATIO);
 	i = 0;
 	while (str[i])
 	{
-		if (ft_blit_scaled_scrollbar(&vm->visu.sdl,
-			vm->visu.sdl.atlas[col_source.x][(int)str[i]].surface,
-			char_rect,
-			vm->visu.players_list[col_source.y].vscrollbar) < 0)
-			return (ft_net_error());
+		if (col_source.y < NB_SOURCES)
+		{
+			if (ft_blit_scaled_scrollbar(&vm->visu.sdl,
+						vm->visu.sdl.atlas[col_source.x][(int)str[i]].surface,
+						char_rect, vm->visu.players_list[col_source.y].vscrollbar) < 0)
+				return (ft_net_error());
+		}
+		else
+		{
+			if (SDL_BlitScaled(vm->visu.sdl.atlas[col_source.x][(int)str[i]].surface, NULL,
+						vm->visu.sdl.w_surface, &char_rect) < 0)
+				return (ft_net_error());
+		}
 		char_rect.x += char_rect.w;
 		i++;
 	}
@@ -160,13 +169,12 @@ void	ft_render_inner_name_full(t_vm *vm, SDL_Rect player_rect, t_player *player,
 	name_rect.h = player_rect.h / 2;
 	name_rect.x = player_rect.x + player_rect.w / 4;
 	name_rect.y = player_rect.y + player_rect.h / 4;
-	col_source.y = source;
+	col_source.y = source;// % NB_SOURCES;
 	if (source % NB_SOURCES == ARENA)
 		col_source.x = player->color.index;
 	else
 		col_source.x = MAX_PL_COLOR;
 	ft_copy_str_to_surface(vm, player->name, name_rect, col_source);
-
 }
 
 void	ft_render_inner_player(t_vm *vm, SDL_Rect player_rect, t_player *player,
@@ -178,7 +186,7 @@ void	ft_render_inner_player(t_vm *vm, SDL_Rect player_rect, t_player *player,
 	inner_rect.h = player_rect.h - vm->visu.center.player_inner_border * 2;
 	inner_rect.x = player_rect.x + vm->visu.center.player_inner_border;
 	inner_rect.y = player_rect.y + vm->visu.center.player_inner_border;
-	if (source / NB_SOURCES)
+	if (source / NB_SOURCES) //dragged player
 		SDL_FillRect(vm->visu.sdl.w_surface, &inner_rect,
 			ft_get_player_color_no_drag(vm, player, PLAYER_COL, 1.2));
 	else
@@ -216,9 +224,10 @@ int		ft_render_player(t_vm *vm, t_player *player, t_xy xy,
 {
 	SDL_Rect rect;
 
-	if (player->relevant && (source == LOCAL || source == SERVER ||
-		(vm->visu.drag_container.drag_enum != DRAG_PLAYER ||
-		 vm->visu.drag_container.drag_union.drag_player.player != player))) //WATCH FOR ENUM MAYBE
+	if (player->relevant && (source == DOWNLOADS ||
+		source == LOCAL || source == SERVER ||
+			(vm->visu.drag_container.drag_enum != DRAG_PLAYER ||
+			vm->visu.drag_container.drag_union.drag_player.player != player)))
 		ft_render_relevant_player(vm, player, xy, source);
 	else if (source != LOCAL)
 	{
@@ -228,7 +237,7 @@ int		ft_render_player(t_vm *vm, t_player *player, t_xy xy,
 		rect.h = vm->visu.center.player_h;
 		if (source == ARENA)
 			ft_fill_rect_scrollbar(vm->visu.sdl.w_surface, &rect,
-					ft_get_player_color(vm, player,PLAYER_BACKGROUND_COL, 1.3),
+					ft_get_player_color(vm, player, PLAYER_BACKGROUND_COL, 1.3),
 					vm->visu.players_list[source].vscrollbar);
 		else if (source == UPLOAD)
 		{
@@ -294,12 +303,12 @@ int		ft_render_arena_players(t_vm *vm)
 	return (0);
 }
 
-int		ft_render_local_players(t_vm *vm)
+int		ft_render_local_local_players(t_vm *vm)
 {
 	int i;
 
 	ft_render_title(vm, LOCAL, vm->visu.center.dashboard_mid_x +
-			vm->visu.center.title_side, vm->visu.center.title_top);
+		vm->visu.center.title_side, vm->visu.center.title_top);
 	i = 0;
 	while (i < MAX_PLAYERS)
 	{
@@ -310,9 +319,36 @@ int		ft_render_local_players(t_vm *vm)
 	return (0);
 }
 
+int		ft_render_local_downloads_players(t_vm *vm, t_visu *v)
+{
+	t_list *ptr;
+	t_player *player;
+	t_xy xy;
+
+	ft_render_title(vm, DOWNLOADS, vm->visu.center.dashboard_mid_x +
+		vm->visu.center.title_side, vm->visu.center.title_top);
+	xy.x = v->center.dashboard_mid_x + v->center.player_left -
+		(ft_to_print_scrollbar(v->players_list[DOWNLOADS].vscrollbar) ?
+		v->center.scrollbar_width / 2 : 0);
+	xy.y = vm->visu.center.title_top + vm->visu.center.title_h +
+		vm->visu.center.title_bottom + vm->visu.center.player_top;
+	ptr = v->downloaded_players;
+	while (ptr != NULL)
+	{
+		player = ptr->content;
+		ft_render_player(vm, player, xy, DOWNLOADS);
+		xy.y += vm->visu.center.player_h + vm->visu.center.player_padding;
+		ptr = ptr->next;
+	}
+	return (0);
+}
+
 int		ft_render_players(t_vm *vm)
 {
 	ft_render_arena_players(vm);
-	ft_render_local_players(vm);
+	if (vm->visu.local_type == LOCAL_LOCAL)
+		ft_render_local_local_players(vm);
+	else
+		ft_render_local_downloads_players(vm, &vm->visu);
 	return (0);
 }

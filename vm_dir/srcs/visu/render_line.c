@@ -54,8 +54,12 @@ void	ft_render_init_lines(t_vm *vm)
 			vm->visu.center.title_bottom - 1, LINE_COL_DARKER);
 	ft_render_horizontal_line_dashboard(vm,
 		vm->visu.center.top_dashboard_height, LINE_COL);
+	ft_render_horizontal_line_dashboard(vm,
+		vm->visu.center.top_dashboard_height +
+			vm->visu.center.top_dashboard_fheight, LINE_COL);
 	i = 0;
-	while (i < vm->visu.center.top_dashboard_height)
+	while (i < vm->visu.center.top_dashboard_height +
+		vm->visu.center.top_dashboard_fheight)
 	{
 		pix[(int)(i * vm->visu.sdl.w_surface->w +
 				vm->visu.center.dashboard_mid_x)] = LINE_COL;

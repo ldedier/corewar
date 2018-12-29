@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   drag.c                                             :+:      :+:    :+:   */
+/*   is_on_draggable_server.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/13 19:07:08 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/19 20:44:16 by ldedier          ###   ########.fr       */
+/*   Created: 2018/12/28 19:43:08 by ldedier           #+#    #+#             */
+/*   Updated: 2018/12/28 19:43:08 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-int		ft_is_on_server_player(t_vm *vm, t_ixy xy, t_xy player_xy,
+int		ft_is_on_player_scrollbar_nocross(t_vm *vm, t_ixy xy, t_xy player_xy,
 			t_vscrollbar vscrollbar)
 {
 	int scrolled_height;
@@ -62,7 +62,7 @@ int		ft_is_on_server_slots(t_vm *vm, t_ixy xy, t_drag_container *dc)
 	player_pos.y = vm->visu.players_list[SERVER].vscrollbar.pos.y + c.player_top;
 	while (ptr != NULL)
 	{
-		if (ft_is_on_server_player(vm, xy, player_pos,
+		if (ft_is_on_player_scrollbar_nocross(vm, xy, player_pos,
 				vm->visu.players_list[SERVER].vscrollbar))
 		{
 			ft_populate_drag_container_player_client_slot(dc, ptr->content,
@@ -71,6 +71,35 @@ int		ft_is_on_server_slots(t_vm *vm, t_ixy xy, t_drag_container *dc)
 			return (1);
 		}
 		player_pos.y += vm->visu.center.player_padding + vm->visu.center.player_h;
+		ptr = ptr->next;
+	}
+	return (0);
+}
+
+int		ft_is_on_download_players(t_vm *vm, t_ixy xy, t_drag_container *dc)
+{
+	t_list		*ptr;
+	t_xy		player_pos;
+	t_center	c;
+
+	c = vm->visu.center;
+	ptr = vm->visu.downloaded_players;
+	player_pos.x = c.dashboard_mid_x + c.player_left -
+	(ft_to_print_scrollbar(vm->visu.players_list[DOWNLOADS].vscrollbar) ?
+		c.scrollbar_width / 2 : 0);
+	player_pos.y = vm->visu.players_list[DOWNLOADS].vscrollbar.pos.y +
+		c.player_top;
+	while (ptr != NULL)
+	{
+		if (ft_is_on_player_scrollbar_nocross(vm, xy, player_pos,
+				vm->visu.players_list[DOWNLOADS].vscrollbar))
+		{
+			ft_populate_drag_container_player_download(dc, ptr->content,
+				player_pos, ft_get_scrolled_height(vm->visu.
+						players_list[DOWNLOADS].vscrollbar));
+			return (1);
+		}
+		player_pos.y += c.player_padding + c.player_h;
 		ptr = ptr->next;
 	}
 	return (0);

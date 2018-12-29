@@ -42,10 +42,10 @@ int		get_vscrollbar(t_vm *vm, t_ixy mouse, t_vscrollbar **vscrollbar)
 		vscroll = &vm->visu.players_list[i].vscrollbar;
 		if (ft_to_print_scrollbar(*vscroll))
 		{
-			if (mouse.x > vscroll->pos.x &&
-					mouse.x < vscroll->pos.x + vscroll->bar_width &&
-					mouse.y > vscroll->pos.y + vscroll->up_button.rect.h &&
-					mouse.y < vscroll->pos.y + vscroll->height -
+			if (mouse.x >= vscroll->pos.x &&
+					mouse.x <= vscroll->pos.x + vscroll->bar_width &&
+					mouse.y >= vscroll->pos.y + vscroll->up_button.rect.h &&
+					mouse.y <= vscroll->pos.y + vscroll->height -
 					vscroll->down_button.rect.h)
 			{
 				*vscrollbar = vscroll;

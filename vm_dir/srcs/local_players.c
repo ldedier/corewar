@@ -21,6 +21,7 @@ void		init_local_players(t_vm *vm)
 	{
 		vm->local_player[i] = vm->player[i];
 		vm->local_player[i].color.value = NULL;
+		vm->local_player[i].num = vm->nb;
 		i++;
 	}
 }

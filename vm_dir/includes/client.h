@@ -25,6 +25,7 @@ typedef struct			s_client_slot
 	t_player			*player;
 	t_button			download;
 	char				downloaded;
+	char				on_disk;
 }						t_client_slot;
 
 typedef struct			s_client
@@ -42,6 +43,7 @@ typedef struct			s_client
 	t_flag				flag;
 }						t_client;
 
+int						ft_query_player(t_vm *vm, t_client_slot *cs);
 int						ft_net_error(void);
 int						ft_send_protected(TCPsocket socket, void *data,
 							size_t size);

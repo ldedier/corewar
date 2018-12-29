@@ -35,6 +35,8 @@ void	ft_scroll_down(t_vm *vm, t_button *button)
 void	ft_wheel_event(t_vm *vm, SDL_Event event)
 {
 	int i;
+	t_ixy xy;
+
 	i = 0;
 	while (i < NB_SOURCES)
 	{
@@ -42,6 +44,8 @@ void	ft_wheel_event(t_vm *vm, SDL_Event event)
 		{
 			ft_scroll_scrollbar(&vm->visu.players_list[i].vscrollbar,
 				event.wheel.y * 0.03);
+			SDL_GetMouseState(&(xy.x), &(xy.y));
+			ft_update_cursor(vm, xy);
 			return ;
 		}
 		i++;

@@ -19,8 +19,8 @@ void	ft_populate_upload_slot(t_vm *vm, t_visu *v)
 	v->positions.upload_slot.player.x = v->center.dashboard_x +
 		v->center.upload_left;
 	v->positions.upload_slot.player.y = v->center.top_dashboard_height +
-		v->center.title_top + v->center.s_title_h +
-			v->center.title_bottom;
+		v->center.top_dashboard_fheight +
+		v->center.title_top + v->center.s_title_h + v->center.title_bottom;
 	xy.x = v->positions.upload_slot.player.x + v->center.player_w -
 			v->center.cross_border;
 	xy.y = v->positions.upload_slot.player.y;

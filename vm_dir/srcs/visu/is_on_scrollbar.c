@@ -19,8 +19,8 @@ int		ft_is_on_scrollbar_bar(t_ixy xy, t_vscrollbar  vscrollbar)
 	if (!ft_to_print_scrollbar(vscrollbar))
 		return (0);
 	scrollbar_bar_height_y = ft_get_vscrollbar_bar_height_y(vscrollbar);
-	return (xy.x > vscrollbar.pos.x &&
-			xy.x < vscrollbar.pos.x + vscrollbar.bar_width &&
+	return (xy.x >= vscrollbar.pos.x &&
+			xy.x <= vscrollbar.pos.x + vscrollbar.bar_width &&
 			xy.y > scrollbar_bar_height_y.y &&
 			xy.y < scrollbar_bar_height_y.y + scrollbar_bar_height_y.x
 			);

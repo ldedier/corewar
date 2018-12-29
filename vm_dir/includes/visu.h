@@ -31,6 +31,9 @@
 
 # define DASHBOARD_X			1950
 # define TOP_DASHBOARD_HEIGHT	530
+# define TOP_DASHBOARD_FHEIGHT	60
+# define SPEC_SIDE				TOP_DASHBOARD_FHEIGHT / 2
+
 # define FOOTER_HEIGHT			120
 
 # define FIGHT_TOP				30
@@ -90,12 +93,16 @@
 
 # define NB_TITLES				10
 
-# define SCOREWAR				2
-# define UPLOAD_HERE			3
-# define SCORE					4
-# define NAME					5
-# define RANK					6
-# define COREWAR				7
+//								0 = ARENA
+//								1 = LOCAL
+//								2 = DOWNLOADS
+
+# define SCOREWAR				3
+# define UPLOAD_HERE			4
+# define SCORE					5
+# define NAME					6
+# define RANK					7
+# define COREWAR				8
 
 # define NB_IMAGES				11
 
@@ -119,12 +126,17 @@
 # define CLICK					2
 # define REGULAR				3
 
-# define NB_BUTTONS				4
+# define NB_BUTTONS				6
 
 # define UPLOAD_BUTTON			0
 # define ALPHA_SORT_BUTTON		1
 # define SCORE_SORT_BUTTON		2
+
+# define NB_ONLINE_BUTTONS		3
+
 # define FIGHT_BUTTON			3
+# define SWITCH_LOCAL_BUTTON	4
+# define CLEAN_ARENA_BUTTON		5
 
 # define PLAYER_COL_BORDER		0x000000
 # define PLAYER_COL				0x222222
@@ -219,11 +231,13 @@ typedef enum			e_player_source
 {
 	ARENA,
 	LOCAL,
+	DOWNLOADS,
 	UPLOAD,
 	SERVER,
 	NB_SOURCES,
 	GRAB_ARENA,
 	GRAB_LOCAL,
+	GRAB_DOWNLOADS,
 	GRAB_UPLOAD,
 	GRAB_SERVER,
 }						t_player_source;
@@ -285,14 +299,14 @@ typedef struct			s_center
 	double				glyph_height;
 	int					nb_cols;
 	int					nb_lines;
-	
+
 	double				dashboard_x;
 	double				top_dashboard_height;
+	double				top_dashboard_fheight;
 	double				dashboard_mid_x;
 	double				dashboard_mid_width;
 	double				dashboard_width;
 	double				bottom_dash_height;
-	
 
 	double				mid_dashboard_height;
 	double				footer_height;
@@ -324,7 +338,7 @@ typedef struct			s_center
 	double				s_title_side;
 
 	double				toolbar_y;
-	
+
 	double				labscore_left;
 	double				labscore_width;
 	double				labscore_right;
@@ -335,6 +349,10 @@ typedef struct			s_center
 	double				download_side;
 	double				scrollbar_width;
 	double				scrollbar_buttons_height;
+
+	double				spec_side;
+	double				spec_left;
+	double				spec_top;
 
 	int					fight_top;
 	int					fight_bottom;
@@ -366,6 +384,7 @@ typedef enum			e_drag_enum
 typedef struct			s_drag_player
 {
 	t_player			*player;
+	t_client_slot		*client_slot;
 	t_button			*close;
 	t_player_source		source;
 }						t_drag_player;
@@ -415,6 +434,12 @@ typedef enum			e_phase
 	PHASE_END
 }						t_phase;
 
+typedef enum			e_local_type
+{
+	LOCAL_LOCAL,
+	LOCAL_DOWNLOAD
+}						t_local_type;
+
 typedef struct			s_time_manager
 {
 	char				pause;
@@ -425,6 +450,7 @@ struct					s_visu
 {
 	char				active;
 	t_phase				phase;
+	t_local_type		local_type;
 	t_sdl				sdl;
 	t_dim				dim;
 	t_center			center;
@@ -436,6 +462,7 @@ struct					s_visu
 	t_framerate			framerate;
 	t_button			buttons[NB_BUTTONS];
 	t_player_list		players_list[NB_SOURCES];
+	t_list				*downloaded_players;
 	t_time_manager		time_manager;
 };
 
@@ -519,6 +546,9 @@ void					ft_populate_drag_container_vscrollbar(t_drag_container *dc,
 void					ft_populate_drag_container_player_client_slot(
 							t_drag_container *dc, t_client_slot *client_slot,
 								t_xy player_pos, int scrolled_h);
+void					ft_populate_drag_container_player_download(
+							t_drag_container *dc, t_player *player,
+								t_xy player_pos, int scrolled_h);
 void					ft_populate_drag_container_player_slot(t_drag_container
 							*dc, t_player *player, t_slot *slot,
 								t_player_source source);
@@ -531,6 +561,8 @@ void					ft_place_or_swap(t_vm *vm, t_drop_container *dc);
 int						ft_is_on_player_scrollbar(t_vm *vm, t_ixy xy, t_xy player_xy,
 							t_vscrollbar vscrollbar);
 int						ft_is_on_client_players(t_vm *vm, t_ixy xy,
+							t_drag_container *dc);
+int						ft_is_on_download_players(t_vm *vm, t_ixy xy,
 							t_drag_container *dc);
 SDL_Surface				*ft_load_image(char *str);
 TTF_Font				*ft_load_font(char *str, int quality);
@@ -560,4 +592,6 @@ void					ft_render_dashboard_separator(t_vm *vm);
 int						process(t_vm *vm);
 int						ft_render_all_process(t_vm *vm);
 int						start_fight(t_vm *vm);
+int						clean_arena(t_vm *vm, t_button *this, t_ixy xy);
+int						switch_local(t_vm *vm, t_button *this, t_ixy xy);
 #endif

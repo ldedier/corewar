@@ -40,7 +40,8 @@ int		ft_is_droppable_scrollbar(t_vm *vm, t_ixy mouse, t_xy xy,
 
 int		ft_is_on_upload_slot_drop(t_vm *vm, t_ixy mouse, t_drop_container *dc)
 {
-	if (vm->visu.drag_container.drag_union.drag_player.source != SERVER &&
+	if (vm->client.active &&
+		vm->visu.drag_container.drag_union.drag_player.source != SERVER &&
 			ft_is_droppable_scrollbar(vm, mouse, vm->visu.positions.upload_slot.player,
 				vm->visu.players_list[UPLOAD].vscrollbar))
 	{

@@ -44,7 +44,6 @@ void	ft_init_vscrollbar(t_visu *v, t_ixy xy, int height, t_vscrollbar *vscrollba
 	vscrollbar->bar_width = v->center.scrollbar_width;
 	ft_init_scrollbar_button(v, &vscrollbar->up_button, vscrollbar);
 	ft_init_scrollbar_button(v, &vscrollbar->down_button, vscrollbar);
-	//	vscrollbar->bar_y = vscrollbar->pos.y + vscrollbar.up_button.rect.h;
 }
 
 void	ft_init_players_list(t_visu *v)
@@ -68,6 +67,10 @@ void	ft_init_players_list(t_visu *v)
 	ft_init_vscrollbar(v, xy, v->center.top_dashboard_height - xy.y,
 			&v->players_list[LOCAL].vscrollbar);
 	v->players_list[LOCAL].vscrollbar.pos_x = v->center.dashboard_mid_x;
+	ft_init_vscrollbar(v, xy, v->center.top_dashboard_height - xy.y,
+			&v->players_list[DOWNLOADS].vscrollbar);
+	v->players_list[DOWNLOADS].vscrollbar.relevant = 0;
+	v->players_list[DOWNLOADS].vscrollbar.pos_x = v->center.dashboard_mid_x;
 	v->players_list[UPLOAD].vscrollbar.relevant = 0;
 	xy.y = v->center.toolbar_y + v->center.player_h + v->center.toolbar_bottom;
 	ft_init_vscrollbar(v, xy, v->dim.height - v->center.footer_height - xy.y,
@@ -85,4 +88,7 @@ void	ft_init_vscrollbars_compressed_size(t_vm *vm, t_visu *v)
 		v->players_list[SERVER].vscrollbar.compressed_height =
 			ft_get_vscrollbar_compressed_height(v,
 					ft_lstlength(vm->client.client_slots));
+	v->players_list[DOWNLOADS].vscrollbar.compressed_height =
+			ft_get_vscrollbar_compressed_height(v,
+					ft_lstlength(vm->visu.downloaded_players));
 }

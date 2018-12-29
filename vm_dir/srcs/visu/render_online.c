@@ -57,7 +57,7 @@ int			ft_render_toolbar_buttons(t_vm *vm, t_button buttons[NB_BUTTONS])
 	int i;
 
 	i = 0;
-	while (i < NB_BUTTONS)
+	while (i < NB_ONLINE_BUTTONS)
 	{
 		if (buttons[i].render(vm, &buttons[i]))
 			return (1);
@@ -205,7 +205,8 @@ int			ft_render_init_online(t_vm *vm)
 {
 	double y;
 
-	y = vm->visu.center.top_dashboard_height + vm->visu.center.title_top;
+	y = vm->visu.center.top_dashboard_height +
+		vm->visu.center.top_dashboard_fheight + vm->visu.center.title_top;
 	if (ft_render_server_title(vm, y))
 		return (1);
 	y += vm->visu.center.s_title_h + vm->visu.center.title_bottom;

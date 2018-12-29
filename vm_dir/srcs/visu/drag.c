@@ -55,8 +55,9 @@ int		ft_is_on_draggable(t_vm *vm, t_ixy xy, t_drag_container *dc)
 						&(vm->visu.positions.arena_slots[i]), ARENA);
 				return (1);
 			}
-			if (vm->local_player[i].relevant && ft_is_on_player_scrollbar(vm, xy,
-						vm->visu.positions.local_slots[i].player,
+			if (vm->visu.local_type == LOCAL_LOCAL &&
+				vm->local_player[i].relevant && ft_is_on_player_scrollbar(vm, xy,
+					vm->visu.positions.local_slots[i].player,
 						vm->visu.players_list[LOCAL].vscrollbar))
 			{
 				ft_populate_drag_container_player_slot(dc, &(vm->local_player[i]),
@@ -66,6 +67,9 @@ int		ft_is_on_draggable(t_vm *vm, t_ixy xy, t_drag_container *dc)
 			i++;
 		}
 		if (vm->client.active && ft_is_on_client_players(vm, xy, dc))
+			return (1);
+		if (vm->visu.local_type == LOCAL_DOWNLOAD &&
+			ft_is_on_download_players(vm, xy, dc))
 			return (1);
 	}
 	return (ft_is_on_scrollbars(vm, xy, dc));

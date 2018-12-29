@@ -21,12 +21,15 @@ void	ft_drop_dragged_player(t_vm *vm, t_ixy mouse)
 	{
 		if (ft_is_on_droppable(vm, mouse, &dc))
 		{
+			if (vm->visu.drag_container.drag_union.drag_player.source == SERVER &&
+				!vm->visu.drag_container.drag_union.drag_player.client_slot->downloaded)
+				ft_query_player(vm, vm->visu.drag_container.drag_union.drag_player.client_slot);
 			if (vm->visu.drag_container.drag_union.drag_player.source == LOCAL ||
+				vm->visu.drag_container.drag_union.drag_player.source == DOWNLOADS ||
 				vm->visu.drag_container.drag_union.drag_player.source == SERVER)
 				ft_copy(vm, &dc);
 			else
 				ft_place_or_swap(vm, &dc);
-	//		dispatch_players(vm, dc.player);
 		}
 		else if (vm->visu.drag_container.drag_union.drag_player.player &&
 				(vm->visu.drag_container.drag_union.drag_player.source

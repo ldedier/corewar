@@ -59,6 +59,19 @@ void	ft_populate_drag_container_player_client_slot(t_drag_container *dc,
 		dc->diff_x = dc->x - player_pos.x;
 		dc->diff_y = dc->y - player_pos.y + scrolled_h;
 		dc->drag_union.drag_player.close = NULL;
+		dc->drag_union.drag_player.client_slot = client_slot;
+	}
+}
+
+void	ft_populate_drag_container_player_download(t_drag_container *dc,
+			t_player *player, t_xy player_pos, int scrolled_h)
+{
+	if (dc != NULL)
+	{
+		ft_populate_drag_container_player(dc, player, DOWNLOADS);
+		dc->diff_x = dc->x - player_pos.x;
+		dc->diff_y = dc->y - player_pos.y + scrolled_h;
+		dc->drag_union.drag_player.close = NULL;
 	}
 }
 

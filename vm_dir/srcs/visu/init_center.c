@@ -97,23 +97,32 @@ void	ft_init_center_fight(t_visu *visu, t_center *c)
 	c->fight_width = c->dashboard_width - c->fight_left - c->fight_right;
 }
 
+void	ft_init_center_spec(t_visu *visu, t_center *c)
+{
+	c->spec_side = SPEC_SIDE * visu->react.h_scale;
+	c->spec_left = (c->dashboard_mid_width - c->spec_side) / 2.0;
+	c->spec_top = (c->top_dashboard_fheight - c->spec_side) / 2.0;
+}
+
 void	ft_init_center(t_visu *visu, t_center *c)
 {
 	c->dashboard_x = DASHBOARD_X * visu->react.w_scale;
 	c->top_dashboard_height = TOP_DASHBOARD_HEIGHT * visu->react.h_scale;
+	c->top_dashboard_fheight = TOP_DASHBOARD_FHEIGHT * visu->react.h_scale;
 	c->dashboard_width = (visu->dim.width - DASHBOARD_X * visu->react.w_scale);
 	c->dashboard_mid_width = c->dashboard_width / 2.0;
 	c->dashboard_mid_x = c->dashboard_x + c->dashboard_mid_width;
 
 	c->footer_height = FOOTER_HEIGHT * visu->react.h_scale;
-	c->mid_dashboard_height = c->top_dashboard_height - c->footer_height;
+	c->mid_dashboard_height = visu->dim.height - c->top_dashboard_height -
+		c->footer_height - c->top_dashboard_fheight;
 	c->footer_y = visu->dim.height - c->footer_height;
-
 
 	ft_init_center_memory(visu, c);
 	ft_init_center_players(visu, c);
 	ft_init_center_online(visu, c);
 	ft_init_center_fight(visu, c);
-	c->toolbar_y = c->top_dashboard_height + c->title_top +
-		c->s_title_h + c->title_bottom;
+	ft_init_center_spec(visu, c);
+	c->toolbar_y = c->top_dashboard_height + c->top_dashboard_fheight +
+		c->title_top + c->s_title_h + c->title_bottom;
 }

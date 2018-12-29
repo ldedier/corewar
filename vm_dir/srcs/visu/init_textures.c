@@ -20,6 +20,9 @@ int		ft_init_textures_1(t_visu *visu)
 	if (!(visu->sdl.titles[LOCAL] =
 				ft_init_font_surface_sdl("local players", visu->sdl)))
 		return (1);
+	if (!(visu->sdl.titles[DOWNLOADS] =
+				ft_init_font_surface_sdl("downloaded", visu->sdl)))
+		return (1);
 	if (!(visu->sdl.titles[SCOREWAR] =
 				ft_init_font_surface_sdl("Scorewar server", visu->sdl)))
 		return (1);

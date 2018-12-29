@@ -42,6 +42,30 @@ void	ft_init_button(t_button *button, SDL_Rect rect, SDL_Surface *surface,
 	button->vscrollbar = NULL;
 }
 
+void	ft_init_buttons_2(t_vm *vm, t_visu *visu)
+{
+	SDL_Rect	rect;
+
+	rect.x = visu->center.dashboard_x + visu->center.fight_left;
+	rect.y = visu->center.footer_y + visu->center.fight_top;; 
+	rect.h = visu->center.fight_height;
+	rect.w = visu->center.fight_width;
+	ft_init_button(&(visu->buttons[FIGHT_BUTTON]), rect,
+	vm->visu.sdl.images[FIGHT], &fight);
+
+	rect.x = visu->center.dashboard_x + visu->center.spec_left;
+	rect.y = visu->center.top_dashboard_height + visu->center.spec_top;
+	rect.h = visu->center.spec_side;
+	rect.w = visu->center.spec_side;
+	ft_init_button(&(visu->buttons[CLEAN_ARENA_BUTTON]), rect,
+	vm->visu.sdl.images[FIGHT], &clean_arena);
+
+	rect.x = visu->center.dashboard_x + visu->center.dashboard_mid_width +
+		visu->center.spec_left;
+	ft_init_button(&(visu->buttons[SWITCH_LOCAL_BUTTON]), rect,
+	vm->visu.sdl.images[FIGHT], &switch_local);
+}
+
 void	ft_init_buttons(t_vm *vm, t_visu *visu)
 {
 	SDL_Rect	rect;
@@ -50,7 +74,8 @@ void	ft_init_buttons(t_vm *vm, t_visu *visu)
 	rect.h = visu->center.player_h;
 	rect.x = visu->center.dashboard_x + visu->center.upload_left +
 		visu->center.player_w + visu->center.upload_right;
-	rect.y =  visu->center.top_dashboard_height + visu->center.s_title_h +
+	rect.y =  visu->center.top_dashboard_height +
+		visu->center.top_dashboard_fheight + visu->center.s_title_h +
 		visu->center.title_bottom + visu->center.title_top;
 	ft_init_button(&(visu->buttons[UPLOAD_BUTTON]), rect,
 		vm->visu.sdl.images[UL], &ft_upload);
@@ -62,10 +87,5 @@ void	ft_init_buttons(t_vm *vm, t_visu *visu)
 	rect.x += visu->center.player_h + visu->center.sort_padding;
 	ft_init_button(&(visu->buttons[SCORE_SORT_BUTTON]), rect,
 		vm->visu.sdl.images[SORT_SCORE], &nothing_on_click);
-	rect.x = visu->center.dashboard_x + visu->center.fight_left;
-	rect.y = visu->center.footer_y + visu->center.fight_top;; 
-	rect.h = visu->center.fight_height;
-	rect.w = visu->center.fight_width;
-	ft_init_button(&(visu->buttons[FIGHT_BUTTON]), rect,
-	vm->visu.sdl.images[FIGHT], &fight);
+	ft_init_buttons_2(vm, visu);
 }

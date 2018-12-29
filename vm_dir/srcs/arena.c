@@ -52,6 +52,7 @@ void					init_vm(t_vm *vm, char **argv, char **env)
 	vm->client.active = 0;
 	vm->client.port = 0;
 	vm->visu.active = 0;
+	vm->nb = 0;
 //	vm->cycle = 0;
 	ft_bzero(vm->color, MAX_PL_COLOR);
 	ft_bzero(vm->arena, MEM_SIZE);

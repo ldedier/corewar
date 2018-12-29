@@ -46,7 +46,6 @@ static void	dump_nb_cycles(t_vm *vm, int argc, char **argv, int *cur)
 
 static void	add_player_n(t_vm *vm, int argc, char **argv, int *cur)
 {
-	long long int	nb;
 	int				i;
 
 	if (*cur + 3 > argc)
@@ -59,16 +58,16 @@ static void	add_player_n(t_vm *vm, int argc, char **argv, int *cur)
 		if (!(ft_strchr("0123456789", argv[*cur + 1][i])))
 			error_exit_msg(WRG_N_FLAG);
 	}
-	nb = ft_atoll(argv[*cur + 1]);
-	if (nb > 2147483647 || nb < -2147483648)
+	vm->nb = ft_atoll(argv[*cur + 1]);
+	if (vm->nb > 2147483647 || vm->nb < -2147483648)
 		error_exit_msg(MAX_N_FLAG);
 	i = -1;
 	while (++i < vm->nb_players)
 	{
-		if (vm->player[i].num == nb)
+		if (vm->player[i].num == vm->nb)
 			error_exit_msg(WRG_P_NUM);
 	}
-	vm->player[vm->nb_players].num = nb;
+	vm->player[vm->nb_players].num = vm->nb;
 	*cur += 2;
 	vm->player[vm->nb_players].cor_name = argv[*cur];
 }

@@ -59,7 +59,6 @@ void	ft_copy(t_vm *vm, t_drop_container *dc)
 	int tmp;
 	int rel;
 
-
 	if (dc->player == &vm->client.upload_player) //usefull si copie from arena
 		dc->player->color.value = NULL;
 	rel = dc->player->relevant;

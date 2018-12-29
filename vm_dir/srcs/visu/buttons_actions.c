@@ -38,6 +38,42 @@ int		fight(t_vm *vm, t_button *this, t_ixy xy)
 	return (0);
 }
 
+int		clean_arena(t_vm *vm, t_button *this, t_ixy xy)
+{
+	int i;
+
+	(void)this;
+	(void)xy;
+	i = 0;
+	while (i < MAX_PLAYERS)
+	{
+		vm->player[i].relevant = 0;
+		vm->visu.positions.arena_slots[i].close.visible = 0;
+		i++;
+	}
+	dispatch_players(vm, NULL);
+	return (0);
+}
+
+int		switch_local(t_vm *vm, t_button *this, t_ixy xy)
+{
+	(void)this;
+	(void)xy;
+	if (vm->visu.local_type == LOCAL_LOCAL)
+	{
+		vm->visu.players_list[LOCAL].vscrollbar.relevant = 0;
+		vm->visu.players_list[DOWNLOADS].vscrollbar.relevant = 1;
+		vm->visu.local_type = LOCAL_DOWNLOAD;
+	}
+	else
+	{
+		vm->visu.players_list[DOWNLOADS].vscrollbar.relevant = 0;
+		vm->visu.players_list[LOCAL].vscrollbar.relevant = 1;
+		vm->visu.local_type = LOCAL_LOCAL;
+	}
+	return (0);
+}
+
 int		nothing_on_click(t_vm *vm, t_button *this, t_ixy xy)
 {
 	(void)vm;

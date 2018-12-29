@@ -38,9 +38,11 @@ int		ft_download(t_vm *vm, t_button *this, t_ixy xy)
 	(void)vm;
 	if (!this->button_union.client_slot->downloaded)
 	{
-		this->enabled = 0;
-		this->button_union.client_slot->downloaded = 1;
+		if (ft_query_player(vm, this->button_union.client_slot))
+			return (1);
 	}
+	this->enabled = 0;
+	this->button_union.client_slot->on_disk = 1;
 	return (0);
 }
 
@@ -63,33 +65,35 @@ t_client_slot	*ft_new_client_slot(t_player *player)
 		return (NULL);
 	slot->player = player;
 	slot->downloaded = 0;
+	slot->on_disk = 0;
 	ft_populate_download_button(slot, &slot->download);
 	return (slot);
 }
 
-int		ft_add_new_client_slot(t_client *client, int i, t_name_len name_len,
+int		ft_add_new_client_slot(t_vm *vm, int i, t_name_len name_len,
 		t_score score)
 {
 	t_client_slot	*slot;
 	t_player		*player;
 
-	if (!(player = ft_new_player(&(client->buffer[i]), name_len, score)))
+	if (!(player = ft_new_player(&(vm->client.buffer[i]), name_len, score)))
 		return (1);
 	if (!(slot = ft_new_client_slot(player)))
 	{
 		free(player);
 		return (1);
 	}
-	if (ft_add_to_list_ptr_back(&(client->client_slots), slot, sizeof(t_slot)))
+	if (ft_add_to_list_ptr_back(&(vm->client.client_slots), slot, sizeof(t_slot)))
 	{
 		free(slot);
 		free(player);
 		return (1);
 	}
+	player->num = vm->nb;
 	return (0);
 }
 
-int		ft_process_add_client_slots(int nb_bytes, t_client *client)
+int		ft_process_add_client_slots(int nb_bytes, t_vm *vm)
 {
 	t_nb_players	nb_players;
 	t_name_len		name_len;
@@ -99,16 +103,16 @@ int		ft_process_add_client_slots(int nb_bytes, t_client *client)
 
 	(void)nb_bytes;
 	i = sizeof(t_flag);
-	nb_players = (t_nb_players)client->buffer[i];
+	nb_players = (t_nb_players)vm->client.buffer[i];
 	i += sizeof(nb_players);
 	player_iter = 0;
 	while (player_iter < nb_players)
 	{
-		score = (t_score)(client->buffer[i]);
+		score = (t_score)(vm->client.buffer[i]);
 		i += sizeof(score);
-		name_len = (t_name_len)(client->buffer[i]);
+		name_len = (t_name_len)(vm->client.buffer[i]);
 		i += sizeof(name_len);
-		if (ft_add_new_client_slot(client, i, name_len, score))
+		if (ft_add_new_client_slot(vm, i, name_len, score))
 			return (1);
 		i += name_len;
 		player_iter++;
@@ -116,21 +120,21 @@ int		ft_process_add_client_slots(int nb_bytes, t_client *client)
 	return (0);
 }
 
-int		ft_process_connect_status(int nb_bytes, t_client *client)
+int		ft_process_connect_status(int nb_bytes, t_vm *vm)
 {
 	if (nb_bytes < (int)sizeof(t_flag))
 		return (1);
-	if ((t_flag)client->buffer[0] == GET_LIST)
+	if ((t_flag)vm->client.buffer[0] == GET_LIST)
 	{
-		if (ft_process_add_client_slots(nb_bytes, client))
+		if (ft_process_add_client_slots(nb_bytes, vm))
 			return (1);
 		ft_printf(
 				GREEN"successfully connected to server %s on port %d\n"EOC,
-				client->server_address, client->port);
+				vm->client.server_address, vm->client.port);
 	//	ft_print_players(client->players);
 		return (0);
 	}
-	else if ((t_flag)client->buffer[0] == SERVER_FULL)
+	else if ((t_flag)vm->client.buffer[0] == SERVER_FULL)
 	{
 		ft_printf("server is full\n");
 		return (1);
@@ -142,19 +146,19 @@ int		ft_process_connect_status(int nb_bytes, t_client *client)
 	}
 }
 
-int		ft_receive_connect_status(t_client *client)
+int		ft_receive_connect_status(t_vm *vm)
 {
 	int nb_bytes;
 
-	if (SDLNet_CheckSockets(client->socket_set, 1500))
+	if (SDLNet_CheckSockets(vm->client.socket_set, 1500))
 	{
-		if (SDLNet_SocketReady(client->socket))
+		if (SDLNet_SocketReady(vm->client.socket))
 		{
-			if ((nb_bytes = SDLNet_TCP_Recv(client->socket, client->buffer,
+			if ((nb_bytes = SDLNet_TCP_Recv(vm->client.socket, vm->client.buffer,
 							MAX_TCP_PACKET)) <= 0)
 				return (ft_net_error());
 			else
-				return (ft_process_connect_status(nb_bytes, client));
+				return (ft_process_connect_status(nb_bytes, vm));
 		}
 		else
 			return (ft_net_error());
@@ -177,6 +181,8 @@ int		ft_process_client_events(t_vm *vm)
 				ft_printf("lost connection with the server.\n");
 				vm->client.active = 0;
 			}
+			else
+				ft_printf("event\n");
 		}
 		else
 		{
@@ -194,7 +200,7 @@ int		process_client(t_vm *vm)
 		return (ft_net_error());
 	if (ft_init_client(&(vm->client)))
 		return (1);
-	if (ft_receive_connect_status(&(vm->client)))
+	if (ft_receive_connect_status(vm))
 		return (1);
 	vm->visu.players_list[SERVER].vscrollbar.compressed_height =
 		ft_get_vscrollbar_compressed_height(&(vm->visu),

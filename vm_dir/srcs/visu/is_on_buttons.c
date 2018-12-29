@@ -91,7 +91,8 @@ int			ft_is_on_buttons(t_vm *vm, t_ixy xy, t_button **but)
 		i = 0;
 		while (i < NB_BUTTONS)
 		{
-			if (ft_is_on_button(xy, &(vm->visu.buttons[i]), but))
+			if (ft_is_on_button(xy, &(vm->visu.buttons[i]), but) &&
+					(vm->client.active || i >= FIGHT_BUTTON))
 				return (1);
 			i++;
 		}

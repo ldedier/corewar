@@ -47,6 +47,20 @@ void	ft_init_time_manager(t_visu *visu)
 	visu->time_manager.cycles_per_turn = INIT_CYCLES_PER_TURN;
 }
 
+void	set_number_downloaded_players(t_vm *vm)
+{
+	t_list *ptr;
+	t_player *player;
+
+	ptr = vm->visu.downloaded_players;
+	while (ptr != NULL)
+	{
+		player = ptr->content;
+		player->num = vm->nb;
+		ptr = ptr->next;
+	}
+}
+
 int		ft_init_all_visu(t_vm *vm, t_visu *v)
 {
 	ft_init_sdl_to_null(v);
@@ -54,7 +68,10 @@ int		ft_init_all_visu(t_vm *vm, t_visu *v)
 		return (1);
 	if (ft_init_sdl_utils(vm, v))
 		return (1);
-	if(ft_init_positions(vm, v))
+	if (ft_parse_player_folder(PATH"/downloads", &vm->visu.downloaded_players))
+		return (1);
+	set_number_downloaded_players(vm);
+	if (ft_init_positions(vm, v))
 		return (1);
 	v->event_manager.enable_mouse_up = 1;
 	v->event_manager.pressed_button = NULL;
@@ -71,6 +88,7 @@ int		ft_init_all_visu(t_vm *vm, t_visu *v)
 	SDL_SetCursor(v->sdl.cursor_packers[REGULAR].cursor);
 	v->sdl.current_cursor = REGULAR;
 	vm->visu.phase = PHASE_INIT;
+	vm->visu.local_type = LOCAL_LOCAL;
 	vm->cycle = 1;
 	return (0);
 }

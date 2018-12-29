@@ -29,12 +29,13 @@ int		ft_render_crosses(t_vm *vm)
 
 int		ft_render(t_vm *vm, t_sdl *sdl)
 {
+	SDL_FillRect(sdl->w_surface, NULL, BACKGROUND_COL);
+	ft_render_dashboard_separator(vm);
 	if (ft_render_phase(vm))
 		return (1);
-	ft_render_dashboard_separator(vm);
 	sdl->texture = SDL_CreateTextureFromSurface(sdl->renderer, sdl->w_surface);
 	SDL_RenderCopy(sdl->renderer, sdl->texture, NULL, NULL);
-	SDL_FillRect(sdl->w_surface, NULL, BACKGROUND_COL);
+	//SDL_FillRect(sdl->w_surface, NULL, BACKGROUND_COL);
 	SDL_DestroyTexture(sdl->texture);
 	SDL_RenderPresent(sdl->renderer);
 	vm->visu.framerate.fps_counter++;
