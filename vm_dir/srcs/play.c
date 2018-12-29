@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/19 20:02:59 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/20 16:58:11 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 ** else check if cycle_to_die should change value
 */
 
-static int	handle_end_cycle(t_vm *vm, int *cycle)
+int			handle_end_cycle(t_vm *vm, int *cycle)
 {
 	reset_live_allprocesses(vm);
 	if (vm->nb_players <= 1 || !vm->c_to_die)

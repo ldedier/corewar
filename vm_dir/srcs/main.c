@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 17:19:23 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/19 16:44:28 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/21 17:34:21 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,7 @@ int		main(int argc, char **argv, char **env)
 	flags(&vm, argc, argv);
 	if (read_files(&vm))
 		return (1);
-	dispatch_players(&vm);
-	if (!init_processes(&vm))
-		return (1);
+	dispatch_players_init(&vm);
 	init_local_players(&vm);
 	if (vm.client.active)
 		return (process_client(&vm));
@@ -37,6 +35,8 @@ int		main(int argc, char **argv, char **env)
 //	play(&vm, (t_process **)&all_process);
 	if (vm.visu.active)
 		return (process_visu(&vm));
+	if (!init_processes(&vm))
+		return (1);
 	play(&vm);
 	display_arena((unsigned char *)vm.arena);
 //	test(vm);

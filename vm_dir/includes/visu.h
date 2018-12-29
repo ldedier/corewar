@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/16 18:01:53 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/21 19:51:30 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,26 +23,38 @@
 # include "color.h"
 # include "op.h"
 
+# define INIT_MAX_PLAYERS		4
+# define INIT_CYCLES_PER_TURN	1
+# define GLYPH_W_H_RATIO		1
+
 # define FRAMERATE				60
 
-# define DASHBOARD_X			1900
-# define TOP_DASHBOARD_HEIGHT	580
-# define FOOTER_HEIGHT			100
+# define DASHBOARD_X			1950
+# define TOP_DASHBOARD_HEIGHT	530
+# define FOOTER_HEIGHT			120
+
+# define FIGHT_TOP				30
+# define FIGHT_BOTTOM			30
+# define FIGHT_LEFT				200
+# define FIGHT_RIGHT			200
 
 # define MEM_BORDER_TOP			100
 # define MEM_BORDER_BOTTOM		100
 # define MEM_BORDER_RIGHT		100
 # define MEM_BORDER_LEFT		100
 
-# define TITLE_BORDER_TOP		30
-# define TITLE_BORDER_BOTTOM	25
+# define TITLE_BORDER_TOP		15
+# define TITLE_BORDER_BOTTOM	10
 # define TITLE_BORDER_SIDE		30
 # define TITLE_HEIGHT			50
 
-# define PLAYER_PADDING			50
+# define PLAYER_PADDING			40
+# define PLAYER_TOP				30
 # define PLAYER_BORDER_LEFT		50
 # define PLAYER_BORDER_RIGHT	50
-# define PLAYER_BORDER_BOTTOM	50
+# define PLAYER_BORDER_BOTTOM	30
+
+# define PLAYER_HEIGHT			74
 
 # define PLAYER_INNER_BORDER	6
 # define CROSS_BORDER			PLAYER_INNER_BORDER * 3
@@ -57,29 +69,48 @@
 # define SORT_SCORE_RIGHT		PLAYER_BORDER_LEFT / 2
 # define TOOLBAR_BOTTOM			30
 
+
+# define LABSCORE_LEFT			30
+# define LABSCORE_WIDTH			120
+# define LABSCORE_RIGHT			20
+# define SCORE_WIDTH			50
+# define SCORE_RIGHT			20
+
+# define SCROLLBAR_WIDTH		25
+# define SCROLLBAR_BTTN_HEIGHT	25
+
 # define X_DIFF					7
 # define X_DIFF_BYTE			0
 # define Y_DIFF					7
+
 
 # define MEM_COLS				64
 
 # define NB_GLYPHS				256
 
-# define NB_TITLES				5
+# define NB_TITLES				10
 
-# define BATTLEFIELD			0
-# define LOCAL_PLAYERS			1
 # define SCOREWAR				2
 # define UPLOAD_HERE			3
-# define COREWAR				4
+# define SCORE					4
+# define NAME					5
+# define RANK					6
+# define COREWAR				7
 
-# define NB_IMAGES				10
+# define NB_IMAGES				11
 
 # define CLOSE					0
 # define DL						1
 # define UL						2
 # define SORT_ALPHA				3
 # define SORT_SCORE				4
+# define SCROLL_BAR				5
+# define SCROLL_UP				6
+# define SCROLL_DOWN			7
+# define FIGHT					8
+# define UL_DISABLED			9
+# define DL_DISABLED			10
+
 
 # define NB_CURSORS				5
 
@@ -88,11 +119,12 @@
 # define CLICK					2
 # define REGULAR				3
 
-# define NB_BUTTONS				3
+# define NB_BUTTONS				4
 
 # define UPLOAD_BUTTON			0
 # define ALPHA_SORT_BUTTON		1
 # define SCORE_SORT_BUTTON		2
+# define FIGHT_BUTTON			3
 
 # define PLAYER_COL_BORDER		0x000000
 # define PLAYER_COL				0x222222
@@ -101,11 +133,15 @@
 # define PLAYER_HOVERED_BG_COL	0x666666
 # define UPLOAD_COLOR			PLAYER_BACKGROUND_COL
 # define LINE_COL				0xffffff
+# define LINE_COL_DARKER		0x666666
 
 # define DROP_TOLERANCE_W		100
 # define DROP_TOLERANCE_H		30
 
-typedef struct			s_vm t_vm;
+typedef struct s_vm			t_vm;
+typedef struct s_visu		t_visu;
+typedef struct s_vscrollbar	t_vscrollbar;
+typedef struct s_client_slot	t_client_slot;
 
 typedef struct			s_atlas_char
 {
@@ -118,18 +154,18 @@ typedef struct			s_cursor_packer
 	SDL_Cursor			*cursor;
 }						t_cursor_packer;
 
-typedef enum			e_player_source
+typedef struct			s_sort_button
 {
-	ARENA,
-	LOCAL,
-	UPLOAD,
-	SERVER
-}						t_player_source;
+	char				on;
+}						t_sort_button;
 
 typedef union			u_button_union
 {
 	char				*name;
 	t_player			*player;
+	t_client_slot		*client_slot;
+	t_vscrollbar		*vscrollbar;
+	t_sort_button		sort;
 }						t_button_union;
 
 typedef struct			s_xy
@@ -150,8 +186,12 @@ typedef struct			s_button
 	SDL_Surface			*surface;
 	t_button_union		button_union;
 	char				visible;
-	void				(*on_click)(t_vm *, struct s_button *, t_ixy xy);
+	char				enabled;
+	int					(*on_click)(t_vm *, struct s_button *, t_ixy xy);
+	void				(*on_press)(t_vm *, struct s_button *);
+	int					(*render)(t_vm *, struct s_button *);
 	void				(*on_hover)(t_vm *, struct s_button *, t_ixy xy);
+	t_vscrollbar		*vscrollbar;
 }						t_button;
 
 /*
@@ -159,19 +199,40 @@ typedef struct			s_button
 ** height:				the size of the section on the screen
 ** compressed_height:	the actual size inside it (>= height)
 ** state:				0 top, 1 bottom
-** pos:					bar position
-** y:					whole scrollbar y coordinate
+** pos:					whole scrollbar x and y coordinate
 */
 
-typedef struct			s_vscrollbar
+struct					s_vscrollbar
 {
-	t_xy				pos;
+	t_ixy				pos;
+	int					pos_x;
 	double				state;
-	int					y;
 	int					height;
 	int					compressed_height;
 	int					bar_width;
-}						t_vscrollbar;
+	t_button			up_button;
+	t_button			down_button;
+	char				relevant;
+};
+
+typedef enum			e_player_source
+{
+	ARENA,
+	LOCAL,
+	UPLOAD,
+	SERVER,
+	NB_SOURCES,
+	GRAB_ARENA,
+	GRAB_LOCAL,
+	GRAB_UPLOAD,
+	GRAB_SERVER,
+}						t_player_source;
+
+typedef struct			s_player_list
+{
+	t_player_source		source;
+	t_vscrollbar		vscrollbar;
+}						t_player_list;
 
 typedef struct          s_sdl
 {
@@ -184,7 +245,6 @@ typedef struct          s_sdl
 	SDL_Color			color;
 	SDL_Surface			*images[NB_IMAGES];
 	t_atlas_char		atlas[MAX_PL_COLOR + 1][NB_GLYPHS];
-	t_button			buttons[NB_BUTTONS];
 	SDL_Surface			*titles[NB_TITLES];
 	t_cursor_packer		cursor_packers[NB_CURSORS];
 	TTF_Font			*font;
@@ -225,27 +285,29 @@ typedef struct			s_center
 	double				glyph_height;
 	int					nb_cols;
 	int					nb_lines;
-
+	
 	double				dashboard_x;
 	double				top_dashboard_height;
 	double				dashboard_mid_x;
 	double				dashboard_mid_width;
 	double				dashboard_width;
 	double				bottom_dash_height;
+	
 
 	double				mid_dashboard_height;
 	double				footer_height;
 	double				footer_y;
 
-	double				title_top;
-	double				title_h;
+	int					title_top;
+	int					title_h;
 	double				title_side;
-	double				title_bottom;
+	int					title_bottom;
 
+	int					player_top;
 	int					player_left;
 	int					player_right;
 	int					player_w;
-	int					player_h;
+	double				player_h;
 	double				player_padding;
 	double				player_bottom;
 
@@ -260,8 +322,27 @@ typedef struct			s_center
 	double				toolbar_bottom;
 	double				s_title_h;
 	double				s_title_side;
-}						t_center;
 
+	double				toolbar_y;
+	
+	double				labscore_left;
+	double				labscore_width;
+	double				labscore_right;
+
+	double				score_width;
+	double				score_right;
+
+	double				download_side;
+	double				scrollbar_width;
+	double				scrollbar_buttons_height;
+
+	int					fight_top;
+	int					fight_bottom;
+	int					fight_left;
+	int					fight_right;
+	int					fight_height;
+	int					fight_width;
+}						t_center;
 
 typedef struct			s_slot
 {
@@ -276,15 +357,34 @@ typedef struct			s_positions
 	t_slot				upload_slot;
 }						t_positions;
 
-typedef struct			s_drag_container
+typedef enum			e_drag_enum
+{
+	DRAG_PLAYER,
+	DRAG_VSCROLLBAR
+}						t_drag_enum;
+
+typedef struct			s_drag_player
 {
 	t_player			*player;
 	t_button			*close;
 	t_player_source		source;
+}						t_drag_player;
+
+typedef union			s_drag_union
+{
+	t_vscrollbar		*vscrollbar;
+	t_drag_player		drag_player;
+}						t_drag_union;
+
+typedef struct			s_drag_container
+{
+	t_drag_union		drag_union;
+	t_drag_enum			drag_enum;
 	int					x;
 	int					y;
 	int					diff_x;
 	int					diff_y;
+	t_visu				*parent;
 }						t_drag_container;
 
 typedef struct			s_drop_container
@@ -297,6 +397,7 @@ typedef struct			s_event_manager
 {
 	Uint32				mouse_state;
 	char				enable_mouse_up;
+	t_button			*pressed_button;
 }						t_event_manager;
 
 typedef struct			s_color_manager
@@ -307,9 +408,23 @@ typedef struct			s_color_manager
 	char				b;
 }						t_color_manager;
 
-typedef struct			s_visu
+typedef enum			e_phase
+{
+	PHASE_INIT,
+	PHASE_PLAY,
+	PHASE_END
+}						t_phase;
+
+typedef struct			s_time_manager
+{
+	char				pause;
+	double				cycles_per_turn;
+}						t_time_manager;
+
+struct					s_visu
 {
 	char				active;
+	t_phase				phase;
 	t_sdl				sdl;
 	t_dim				dim;
 	t_center			center;
@@ -319,9 +434,12 @@ typedef struct			s_visu
 	t_positions			positions;
 	t_reactive			react;
 	t_framerate			framerate;
-}						t_visu;
+	t_button			buttons[NB_BUTTONS];
+	t_player_list		players_list[NB_SOURCES];
+	t_time_manager		time_manager;
+};
 
-int						ft_init_all_sdl(t_vm *vm, t_visu *v);
+int						ft_init_all_visu(t_vm *vm, t_visu *v);
 
 /*
 ** framerate functions
@@ -334,7 +452,7 @@ int						ft_process_events(t_vm *vm);
 int						ft_render(t_vm *vm, t_sdl *sdl);
 int						ft_render_memory(t_vm *vm);
 int						ft_render_players(t_vm *vm);
-int						ft_render_online(t_vm *vm);
+int						ft_render_init_online(t_vm *vm);
 int						ft_render_offline(t_vm *vm);
 t_color_manager			ft_get_color(int color);
 t_color_manager			ft_scale_color(t_color_manager color, double scale);
@@ -354,8 +472,92 @@ int						ft_is_on_button(t_ixy xy, t_button *button,
 							t_button **to_fill);
 int						ft_is_on_buttons(t_vm *vm, t_ixy xy, t_button **button);
 t_ixy					new_ixy(int x, int y);
-int						ft_render_button(SDL_Surface *to, t_button button);
-void					ft_delete_player(t_vm *vm, t_button *this, t_ixy xy);
+int						ft_render_button(t_vm *vm, t_button *button);
+int						ft_process_render_button(t_vm *vm, SDL_Rect rect,
+							SDL_Surface *surface, t_vscrollbar *vscrollbar);
+int						ft_delete_player(t_vm *vm, t_button *this, t_ixy xy);
 int						ft_get_player_color(t_vm *vm, t_player *player,
 							int initial_color, float value);
+void					ft_render_horizontal_line_dashboard(t_vm *vm, int y,
+							int col);
+int						ft_copy_str_to_surface(t_vm *vm, char *str,
+							SDL_Rect rect, t_ixy col_source);
+int						ft_get_vscrollbar_compressed_height(t_visu *v,
+							int nb_players);
+void					ft_init_players_list(t_visu *v);
+void					ft_init_vscrollbars_compressed_size(t_vm *vm,
+							t_visu *v);
+int						ft_blit_scaled_scrollbar(t_sdl *sdl, SDL_Surface *from,
+							SDL_Rect rect, t_vscrollbar v);
+int						ft_fill_rect_scrollbar(SDL_Surface *from, SDL_Rect *rct,
+							int color, t_vscrollbar vscrollbar);
+t_ixy					ft_get_vscrollbar_bar_height_y(t_vscrollbar vscrollbar);
+double					ft_get_vscrollbar_bar_height(t_vscrollbar vscrollbar);
+int						ft_to_print_scrollbar(t_vscrollbar vscrollbar);
+void					ft_update_scrollbar(t_vm *vm, t_vscrollbar *vscrollbar);
+int						get_vscrollbar(t_vm *vm, t_ixy mouse,
+							t_vscrollbar **vscrollbar);
+int						ft_get_scrolled_height(t_vscrollbar vscrollbar);
+void					ft_swing_scrollbar(t_vscrollbar *scrollbar, t_ixy xy);
+int						nothing_on_click(t_vm *vm, t_button *this, t_ixy xy);
+int						fight(t_vm *vm, t_button *this, t_ixy xy);
+void					nothing_on_press(t_vm *vm, t_button *this);
+void					ft_wheel_event(t_vm *vm, SDL_Event event);
+void					ft_update_download_buttons_client_rect(t_vm *vm);
+int						ft_render_download_button(t_vm *vm, t_button *this);
+int						ft_render_vscrollbars(t_vm *vm);
+void					ft_render_init_lines(t_vm *vm);
+int						ft_render_crosses(t_vm *vm);
+int						ft_render_phase(t_vm *vm);
+int						ft_is_in_scrollbar_focus(t_vscrollbar vscrollbar);
+void					ft_scroll_up(t_vm *vm, t_button *button);
+void					ft_scroll_down(t_vm *vm, t_button *button);
+void					ft_populate_drag_container_player(t_drag_container *dc,
+							t_player *player, t_player_source source);
+void					ft_populate_drag_container_vscrollbar(t_drag_container *dc,
+							t_vscrollbar *vscrollbar);
+void					ft_populate_drag_container_player_client_slot(
+							t_drag_container *dc, t_client_slot *client_slot,
+								t_xy player_pos, int scrolled_h);
+void					ft_populate_drag_container_player_slot(t_drag_container
+							*dc, t_player *player, t_slot *slot,
+								t_player_source source);
+void					ft_fill_drag_container(t_drag_container *dc, t_ixy xy);
+int						ft_is_on_scrollbars(t_vm *vm, t_ixy xy,
+							t_drag_container *dc);
+void					ft_copy(t_vm *vm, t_drop_container *dc);
+void					ft_place(t_vm *vm, t_drop_container *dc);
+void					ft_place_or_swap(t_vm *vm, t_drop_container *dc);
+int						ft_is_on_player_scrollbar(t_vm *vm, t_ixy xy, t_xy player_xy,
+							t_vscrollbar vscrollbar);
+int						ft_is_on_client_players(t_vm *vm, t_ixy xy,
+							t_drag_container *dc);
+SDL_Surface				*ft_load_image(char *str);
+TTF_Font				*ft_load_font(char *str, int quality);
+int						ft_init_atlas(t_vm *vm, t_sdl *sdl);
+void					ft_init_center(t_visu *v, t_center *c);
+SDL_Surface				*ft_init_font_surface_sdl(char *str, t_sdl sdl);
+int						ft_init_textures(t_visu *visu);
+int						ft_init_cursors(t_visu *v);
+void					ft_populate_upload_slot(t_vm *vm, t_visu *v);
+void					ft_populate_slots_positions(t_vm *vm, t_visu *v);
+void					ft_init_crosses(t_vm *vm);
+void					ft_init_client_slot_surface(t_vm *vm);
+void					ft_populate_closing_button(t_vm *vm, t_button *button,
+							t_player *player, t_ixy xy);
+int						ft_upload(t_vm *vm, t_button *this, t_ixy mouse);
+int						ft_render_upload_button(t_vm *vm, t_button *this);
+void					ft_init_buttons(t_vm *vm, t_visu *visu);
+void					ft_get_dimensions(t_visu *v);
+void					ft_init_sdl_to_null(t_visu *v);
+int						ft_init_sdl(t_visu *v);
+int						ft_is_in_rect(t_ixy xy, SDL_Rect rect);
+void					ft_mouse_down(t_vm *vm, SDL_Event event);
+void					ft_mouse_up(t_vm *vm, SDL_Event event);
+void					ft_mouse_motion(t_vm *vm, SDL_Event event);
+int						ft_process_button_pressed(t_vm *vm);
+void					ft_render_dashboard_separator(t_vm *vm);
+int						process(t_vm *vm);
+int						ft_render_all_process(t_vm *vm);
+int						start_fight(t_vm *vm);
 #endif

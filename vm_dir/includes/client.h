@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 18:26:19 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/14 19:18:54 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/16 19:05:37 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,16 @@
 # include <SDL2_net/SDL_net.h>
 # include "network.h"
 # include "player.h"
+# include "visu.h"
 
 typedef struct s_vm		t_vm;
+
+typedef struct			s_client_slot
+{
+	t_player			*player;
+	t_button			download;
+	char				downloaded;
+}						t_client_slot;
 
 typedef struct			s_client
 {
@@ -29,7 +37,7 @@ typedef struct			s_client
 	SDLNet_SocketSet	socket_set;
 	char				running;
 	char				buffer[MAX_TCP_PACKET];
-	t_list				*players;
+	t_list				*client_slots;
 	t_player			upload_player;
 	t_flag				flag;
 }						t_client;

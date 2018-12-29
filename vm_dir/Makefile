@@ -51,7 +51,15 @@ INS_NO_PREFIX =			get_val.c load_val.c\
 VISU_NO_PREFIX =		init_sdl.c visu.c events.c framerate.c render.c \
 						render_mem.c render_players.c ft_colors.c\
 						render_online.c drag.c drop.c\
-						cursor.c
+						cursor.c scrollbar.c scrollbar_tools.c\
+						render_scrollbar.c render_view.c render_line.c\
+						render_phase.c scroll_scrollbar.c init_scrollbar.c\
+						populate_drag_container.c is_on_scrollbar.c\
+						drop_actions.c is_droppable.c is_on_draggable_server.c\
+						load_tools.c atlas.c init_center.c init_textures.c\
+						init_slots.c init_buttons.c visu_tools.c\
+						render_buttons.c  buttons_actions.c init_all.c\
+						is_on_buttons.c mouse.c process.c
 
 
 INCLUDES_NO_PREFIX =	vm.h visu.h client.h
@@ -85,7 +93,7 @@ ifeq ($(DEBUG), 1)
 endif
 
 SDL2_FRAMEWORKS =	-framework SDL2 -framework SDL2_image \
-					-framework SDL2_mixer -framework SDL2_ttf\
+					-framework SDL2_mixer -framework SDL2_ttf \
 					-framework SDL2_net
 opti:
 	@make all -j
@@ -112,19 +120,19 @@ $(BINDIR)/$(NAME): $(OBJECTS)  $(LIBFT) $(LIBOP)
 	@$(CC) -o $@ $^ -F $(FRAMEWORKSDIR) $(SDL2_FRAMEWORKS) $(CFLAGS) $(LFLAGS)
 	@echo "$(OK_COLOR)$(NAME) linked with success !$(EOC)"
 
-$(OBJDIR)/%.o : $(SRCDIR)/%.c $(INCLUDES)
+$(OBJDIR)/%.o : $(SRCDIR)/%.c $(INCLUDES) $(LIBOP)
 	@mkdir -p $(OBJDIR)
 	@mkdir -p $(OBJDIR)/$(INSDIR)
 	@mkdir -p $(OBJDIR)/$(VISUDIR)
 #	@$(CC) -c $< -o $@ -F $(CFLAGS)
-	@$(CC) -c $< -o $@ -F $(FRAMEWORKSDIR) $(CFLAGS)
+	$(CC) -c $< -o $@ -F $(FRAMEWORKSDIR) $(CFLAGS)
 
 $(OBJDIR)/$(INSDIR)/%.o : $(SRCDIR)/$(INSDIR)/%.c $(INCLUDES)
 #	@$(CC) -c $< -o $@ -F $(CFLAGS)
-	@$(CC) -c $< -o $@ -F $(FRAMEWORKSDIR) $(CFLAGS)
+	$(CC) -c $< -o $@ -F $(FRAMEWORKSDIR) $(CFLAGS)
 
 $(OBJDIR)/$(VISUDIR)/%.o : $(SRCDIR)/$(VISUDIR)/%.c $(INCLUDES)
-	@$(CC) -c $< -o $@ -F $(FRAMEWORKSDIR) $(CFLAGS)
+	$(CC) -c $< -o $@ -F $(FRAMEWORKSDIR) $(CFLAGS)
 
 clean:
 	@make clean -C $(LIBOPDIR)
