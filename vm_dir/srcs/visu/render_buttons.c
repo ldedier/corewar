@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 21:43:09 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/19 22:19:27 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/30 20:40:25 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,16 @@ int		ft_render_upload_button(t_vm *vm, t_button *this)
 					vm->visu.sdl.images[UL_DISABLED], this->vscrollbar));
 }
 
+int		ft_render_trash_button(t_vm *vm, t_button *this)
+{
+	if (this->enabled)
+		return (ft_process_render_button(vm, this->rect,
+				vm->visu.sdl.images[TRASH], this->vscrollbar));
+	else
+		return (ft_process_render_button(vm, this->rect,
+				vm->visu.sdl.images[TRASH_DISABLED], this->vscrollbar));
+}
+
 int		ft_render_download_button(t_vm *vm, t_button *this)
 {
 	if (!this->button_union.client_slot->on_disk)
@@ -35,4 +45,14 @@ int		ft_render_download_button(t_vm *vm, t_button *this)
 	else
 		return (ft_process_render_button(vm, this->rect,
 					vm->visu.sdl.images[DL_DISABLED], this->vscrollbar));
+}
+
+int		ft_render_switch_button(t_vm *vm, t_button *this)
+{
+	if (vm->visu.local_type == LOCAL_LOCAL)
+		return (ft_process_render_button(vm, this->rect,
+					vm->visu.sdl.images[SWITCH_1], this->vscrollbar));
+	else
+		return (ft_process_render_button(vm, this->rect,
+					vm->visu.sdl.images[SWITCH_2], this->vscrollbar));
 }

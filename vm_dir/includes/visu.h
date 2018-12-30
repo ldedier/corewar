@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/21 19:51:30 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/30 21:31:24 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@
 
 # define DASHBOARD_X			1950
 # define TOP_DASHBOARD_HEIGHT	530
-# define TOP_DASHBOARD_FHEIGHT	60
-# define SPEC_SIDE				TOP_DASHBOARD_FHEIGHT / 2
+# define TOP_DASHBOARD_FHEIGHT	40
+# define SPEC_VBORDER			8
 
 # define FOOTER_HEIGHT			120
 
@@ -104,7 +104,7 @@
 # define RANK					7
 # define COREWAR				8
 
-# define NB_IMAGES				11
+# define NB_IMAGES				15
 
 # define CLOSE					0
 # define DL						1
@@ -117,6 +117,10 @@
 # define FIGHT					8
 # define UL_DISABLED			9
 # define DL_DISABLED			10
+# define TRASH					11
+# define TRASH_DISABLED			12
+# define SWITCH_1				13
+# define SWITCH_2				14
 
 
 # define NB_CURSORS				5
@@ -350,9 +354,12 @@ typedef struct			s_center
 	double				scrollbar_width;
 	double				scrollbar_buttons_height;
 
-	double				spec_side;
+	double				spec_h;
 	double				spec_left;
-	double				spec_top;
+	double				spec_vborder;
+
+	double				switch_w;
+	double				switch_left;
 
 	int					fight_top;
 	int					fight_bottom;
@@ -511,7 +518,7 @@ int						ft_copy_str_to_surface(t_vm *vm, char *str,
 							SDL_Rect rect, t_ixy col_source);
 int						ft_get_vscrollbar_compressed_height(t_visu *v,
 							int nb_players);
-void					ft_init_players_list(t_visu *v);
+void					ft_init_players_list(t_vm *vm, t_visu *v);
 void					ft_init_vscrollbars_compressed_size(t_vm *vm,
 							t_visu *v);
 int						ft_blit_scaled_scrollbar(t_sdl *sdl, SDL_Surface *from,
@@ -594,4 +601,6 @@ int						ft_render_all_process(t_vm *vm);
 int						start_fight(t_vm *vm);
 int						clean_arena(t_vm *vm, t_button *this, t_ixy xy);
 int						switch_local(t_vm *vm, t_button *this, t_ixy xy);
+int						ft_render_trash_button(t_vm *vm, t_button *this);
+int						ft_render_switch_button(t_vm *vm, t_button *this);
 #endif

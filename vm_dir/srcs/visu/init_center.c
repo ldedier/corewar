@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 15:02:55 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/19 21:02:34 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/30 21:18:32 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,11 @@ void	ft_init_center_fight(t_visu *visu, t_center *c)
 
 void	ft_init_center_spec(t_visu *visu, t_center *c)
 {
-	c->spec_side = SPEC_SIDE * visu->react.h_scale;
-	c->spec_left = (c->dashboard_mid_width - c->spec_side) / 2.0;
-	c->spec_top = (c->top_dashboard_fheight - c->spec_side) / 2.0;
+	c->spec_vborder = SPEC_VBORDER * visu->react.h_scale;
+	c->switch_w = (TOP_DASHBOARD_FHEIGHT - (2 * SPEC_VBORDER)) * 2 * visu->react.w_scale;
+	c->spec_h = c->top_dashboard_fheight - c->spec_vborder * 2;
+	c->spec_left = (c->dashboard_mid_width - c->spec_h) / 2.0;
+	c->switch_left = (c->dashboard_mid_width - c->switch_w) / 2.0;
 }
 
 void	ft_init_center(t_visu *visu, t_center *c)
@@ -117,7 +119,6 @@ void	ft_init_center(t_visu *visu, t_center *c)
 	c->mid_dashboard_height = visu->dim.height - c->top_dashboard_height -
 		c->footer_height - c->top_dashboard_fheight;
 	c->footer_y = visu->dim.height - c->footer_height;
-
 	ft_init_center_memory(visu, c);
 	ft_init_center_players(visu, c);
 	ft_init_center_online(visu, c);

@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 21:48:50 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/20 16:50:59 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/30 21:30:07 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int		ft_init_positions(t_vm *vm, t_visu *v)
 	v->react.w_scale = (double)v->dim.width / 2560.0;
 	v->react.h_scale = (double)v->dim.height / 1440.0;
 	ft_init_center(v, &(v->center));
-	ft_init_players_list(v);
+	ft_init_players_list(vm, v);
 	ft_init_vscrollbars_compressed_size(vm, v);
 	ft_populate_slots_positions(vm, v);
 	ft_init_buttons(vm, v);
@@ -88,7 +88,10 @@ int		ft_init_all_visu(t_vm *vm, t_visu *v)
 	SDL_SetCursor(v->sdl.cursor_packers[REGULAR].cursor);
 	v->sdl.current_cursor = REGULAR;
 	vm->visu.phase = PHASE_INIT;
-	vm->visu.local_type = LOCAL_LOCAL;
+	if (vm->nb_players)
+		vm->visu.local_type = LOCAL_LOCAL;
+	else
+		vm->visu.local_type = LOCAL_DOWNLOAD;
 	vm->cycle = 1;
 	return (0);
 }

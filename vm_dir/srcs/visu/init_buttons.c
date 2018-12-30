@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 21:28:15 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/20 18:56:31 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/30 21:10:39 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,16 +54,18 @@ void	ft_init_buttons_2(t_vm *vm, t_visu *visu)
 	vm->visu.sdl.images[FIGHT], &fight);
 
 	rect.x = visu->center.dashboard_x + visu->center.spec_left;
-	rect.y = visu->center.top_dashboard_height + visu->center.spec_top;
-	rect.h = visu->center.spec_side;
-	rect.w = visu->center.spec_side;
+	rect.y = visu->center.top_dashboard_height + visu->center.spec_vborder;
+	rect.h = visu->center.spec_h;
+	rect.w = visu->center.spec_h;
 	ft_init_button(&(visu->buttons[CLEAN_ARENA_BUTTON]), rect,
-	vm->visu.sdl.images[FIGHT], &clean_arena);
-
+	vm->visu.sdl.images[TRASH], &clean_arena);
+	visu->buttons[CLEAN_ARENA_BUTTON].render = ft_render_trash_button;
+	rect.w = visu->center.switch_w;
 	rect.x = visu->center.dashboard_x + visu->center.dashboard_mid_width +
-		visu->center.spec_left;
+		visu->center.switch_left;
 	ft_init_button(&(visu->buttons[SWITCH_LOCAL_BUTTON]), rect,
-	vm->visu.sdl.images[FIGHT], &switch_local);
+	vm->visu.sdl.images[SWITCH_1], &switch_local);
+	visu->buttons[SWITCH_LOCAL_BUTTON].render = ft_render_switch_button;
 }
 
 void	ft_init_buttons(t_vm *vm, t_visu *visu)

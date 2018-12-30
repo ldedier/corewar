@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 19:16:22 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/20 15:40:57 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/30 21:31:08 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	ft_init_vscrollbar(t_visu *v, t_ixy xy, int height, t_vscrollbar *vscrollba
 	ft_init_scrollbar_button(v, &vscrollbar->down_button, vscrollbar);
 }
 
-void	ft_init_players_list(t_visu *v)
+void	ft_init_players_list(t_vm *vm, t_visu *v)
 {
 	int		i;
 	t_ixy	xy;
@@ -69,7 +69,8 @@ void	ft_init_players_list(t_visu *v)
 	v->players_list[LOCAL].vscrollbar.pos_x = v->center.dashboard_mid_x;
 	ft_init_vscrollbar(v, xy, v->center.top_dashboard_height - xy.y,
 			&v->players_list[DOWNLOADS].vscrollbar);
-	v->players_list[DOWNLOADS].vscrollbar.relevant = 0;
+	v->players_list[LOCAL].vscrollbar.relevant = vm->nb_players;
+	v->players_list[DOWNLOADS].vscrollbar.relevant = !vm->nb_players;
 	v->players_list[DOWNLOADS].vscrollbar.pos_x = v->center.dashboard_mid_x;
 	v->players_list[UPLOAD].vscrollbar.relevant = 0;
 	xy.y = v->center.toolbar_y + v->center.player_h + v->center.toolbar_bottom;

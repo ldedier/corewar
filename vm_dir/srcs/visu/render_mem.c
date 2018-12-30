@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/11 17:08:36 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/21 14:20:33 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/30 19:29:18 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ SDL_Rect get_rect_from_pc(t_vm *vm, int pc)
 	res.h = vm->visu.center.glyph_height + vm->visu.center.y_diff;
 	res.x = vm->visu.center.left_margin + x * (vm->visu.center.glyph_width * 2
 			+ vm->visu.center.x_diff_byte + vm->visu.center.x_diff) -
-		vm->visu.center.x_diff / 2;
+		vm->visu.center.x_diff / 2.0;
 	res.y = vm->visu.center.top_margin + y * (vm->visu.center.glyph_height +
-			vm->visu.center.y_diff) - vm->visu.center.y_diff / 2;
+			vm->visu.center.y_diff) - vm->visu.center.y_diff / 2.0;
 	return (res);
 }
 

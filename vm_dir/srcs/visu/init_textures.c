@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 15:02:55 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/19 21:10:27 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/30 21:13:54 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,19 +50,31 @@ int		ft_init_textures_2(t_visu *visu)
 	if (!(visu->sdl.images[UL] = ft_load_image(PATH"/resources/upload.png")))
 		return (1);
 	if (!(visu->sdl.images[SORT_ALPHA] =
-				ft_load_image(PATH"/resources/alpha_sort.png")))
+			ft_load_image(PATH"/resources/alpha_sort.png")))
 		return (1);
 	if (!(visu->sdl.images[SORT_SCORE] =
-				ft_load_image(PATH"/resources/score_sort.png")))
+			ft_load_image(PATH"/resources/score_sort.png")))
 		return (1);
 	if (!(visu->sdl.images[SCROLL_BAR] =
-				ft_load_image(PATH"/resources/scroll_bar.png")))
+			ft_load_image(PATH"/resources/scroll_bar.png")))
 		return (1);
 	if (!(visu->sdl.images[SCROLL_DOWN] =
-				ft_load_image(PATH"/resources/scroll_down.png")))
+			ft_load_image(PATH"/resources/scroll_down.png")))
 		return (1);
 	if (!(visu->sdl.images[SCROLL_UP] =
-				ft_load_image(PATH"/resources/scroll_up.png")))
+			ft_load_image(PATH"/resources/scroll_up.png")))
+		return (1);
+	if (!(visu->sdl.images[TRASH] =
+			ft_load_image(PATH"/resources/trash.png")))
+		return (1);
+	if (!(visu->sdl.images[TRASH_DISABLED] =
+			ft_load_image(PATH"/resources/trash_disabled.png")))
+		return (1);
+	if (!(visu->sdl.images[SWITCH_2] =
+			ft_load_image(PATH"/resources/switch_1.png")))
+		return (1);
+	if (!(visu->sdl.images[SWITCH_1] =
+			ft_load_image(PATH"/resources/switch_2.png")))
 		return (1);
 	return (0);
 }

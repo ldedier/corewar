@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 21:45:31 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/21 19:34:01 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/30 20:47:34 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,14 @@ int		switch_local(t_vm *vm, t_button *this, t_ixy xy)
 	{
 		vm->visu.players_list[LOCAL].vscrollbar.relevant = 0;
 		vm->visu.players_list[DOWNLOADS].vscrollbar.relevant = 1;
+		vm->visu.players_list[DOWNLOADS].vscrollbar.state = 0;
 		vm->visu.local_type = LOCAL_DOWNLOAD;
 	}
 	else
 	{
 		vm->visu.players_list[DOWNLOADS].vscrollbar.relevant = 0;
 		vm->visu.players_list[LOCAL].vscrollbar.relevant = 1;
+		vm->visu.players_list[LOCAL].vscrollbar.state = 0;
 		vm->visu.local_type = LOCAL_LOCAL;
 	}
 	return (0);

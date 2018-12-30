@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 16:42:17 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/21 19:32:05 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/30 21:01:07 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void					init_vm(t_vm *vm, char **argv, char **env)
 	vm->client.active = 0;
 	vm->client.port = 0;
 	vm->visu.active = 0;
-	vm->nb = 0;
+	vm->nb = 1;
 //	vm->cycle = 0;
 	ft_bzero(vm->color, MAX_PL_COLOR);
 	ft_bzero(vm->arena, MEM_SIZE);
@@ -166,6 +166,14 @@ void	ft_set_numbers(t_player players[MAX_PLAYERS], t_player *player)
 	}
 }
 
+void		update_buttons(t_vm *vm)
+{
+	if (vm->nb_players)
+		vm->visu.buttons[CLEAN_ARENA_BUTTON].enabled = 1;
+	else
+		vm->visu.buttons[CLEAN_ARENA_BUTTON].enabled = 0;
+}
+
 /*
 **dispatch_players function sends each player to their respective starting
 **point in the arena and initializes processes for each player.
@@ -197,4 +205,5 @@ void		dispatch_players(t_vm *vm, t_player *player)
 			}
 		}
 	}
+	update_buttons(vm);
 }
