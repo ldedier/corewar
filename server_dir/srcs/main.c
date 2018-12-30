@@ -26,7 +26,7 @@ int main(int argc, char **argv)
 		return ft_error();
 	if (ft_init_server(argc, argv, &server))
 		return (1);
-	if (ft_init_db(&server))
+	if (ft_parse_player_folder(PATH"/cores", &server.players))
 		return (1);
 	ft_printf(GREEN"server successfuly deployed on port %d!\n\n"EOC,
 			server.port);

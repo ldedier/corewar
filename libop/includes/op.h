@@ -173,12 +173,12 @@ enum				e_mod_carry
 
 t_op							g_op_tab[NB_INSTRUCTIONS + 1];
 
-int							getval_mod(char *arena,  int index, int nb_bytes,int mod);
-
+int								getval_mod(char *arena,  int index, int nb_bytes,int mod);
 void							set_argval(t_parameter *arg, int index, int size);
 int								get_instruction(char *arena, t_instruction *ins, unsigned int i, int mod);
 int								store_arg(char *arena, t_instruction *ins, int i, int ocp);
 void							set_optab(t_op **tab);
 int								ft_encode_instructions(int fd, t_list *instructions);
-
+int								ft_parse_player_folder(char *folder_full_path,
+									t_list **players_list);
 #endif

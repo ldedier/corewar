@@ -15,6 +15,8 @@
 
 # include "op.h"
 # include "libft.h"
+# include <dirent.h>
+# include <sys/stat.h>
 # include <fcntl.h>
 
 # define FILE_TOO_BIG	"Size of the given file is too large to be handled"

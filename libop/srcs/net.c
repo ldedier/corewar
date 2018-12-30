@@ -1,35 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   network.h                                          :+:      :+:    :+:   */
+/*   net.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/05 16:55:50 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/07 01:16:22 by ldedier          ###   ########.fr       */
+/*   Created: 2018/12/29 17:10:58 by ldedier           #+#    #+#             */
+/*   Updated: 2018/12/29 17:10:58 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef NETWORK_H
-# define NETWORK_H
+#include "libft.h"
 
-# include <stdlib.h>
-# include "libft.h"
-# define MAX_TCP_PACKET		10000
-
-typedef int				t_nb_players;
-typedef char			t_player_number;
-
-typedef enum			e_flag
+size_t  ft_memcpy_ret(void *dest, void *src, size_t size)
 {
-	CONNECTION,
-	DISCONNECTION,
-	LOGGED,
-	SERVER_FULL,
-	GET_LIST,
-	GET_CORE
-}						t_flag;
-
-size_t					ft_memcpy_ret(void *dest, void *src, size_t size);
-
-#endif
+	ft_memcpy(dest, src, size);
+	return (size);
+}

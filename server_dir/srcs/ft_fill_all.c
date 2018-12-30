@@ -75,6 +75,10 @@ int		ft_send_all_cores(TCPsocket socket, t_server *server)
 		ptr = ptr->next;
 	}
 	if (ft_send_protected(socket, data, size))
+	{
+		free(data);
 		return (1);
+	}
+	free(data);
 	return (0);
 }

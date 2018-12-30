@@ -132,5 +132,6 @@ int			ft_parse_player(t_player *player)
 	player->score = -1;
 	player->relevant = 1;
 	player->color.value = NULL;
+//	player->num = 0;
 	return (0);
 }

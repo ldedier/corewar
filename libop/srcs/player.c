@@ -20,6 +20,7 @@ t_player *ft_new_player(char *name, t_name_len name_len, t_score score)
 		return (NULL);
 	ft_memcpy(res->name, name, name_len);
 	res->name[name_len] = '\0';
+	res->name_len = name_len;
 	res->score = score;
 	res->relevant = 1;
 	res->color.value = NULL;
