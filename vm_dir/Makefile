@@ -40,9 +40,9 @@ EOC = \033[0m
 
 SRCS_NO_PREFIX =		arena.c error.c flags.c main.c parse.c read.c \
 						tmp.c utils.c op.c play.c env.c \
-						client.c query_player.c bonus_flags.c net_tools.c \
+						bonus_flags.c net_tools.c \
 						test.c display.c display_player.c display_resize.c \
-						display_turn.c local_players.c
+						display_turn.c local_players.c 
 
 INS_NO_PREFIX =			get_val.c load_val.c\
 						live.c ld.c st.c add.c sub.c and.c or.c xor.c zjmp.c \
@@ -59,7 +59,8 @@ VISU_NO_PREFIX =		init_sdl.c visu.c events.c framerate.c render.c \
 						load_tools.c atlas.c init_center.c init_textures.c\
 						init_slots.c init_buttons.c visu_tools.c\
 						render_buttons.c  buttons_actions.c init_all.c\
-						is_on_buttons.c mouse.c process.c
+						is_on_buttons.c mouse.c process.c upload.c\
+						client.c query_player.c
 
 
 INCLUDES_NO_PREFIX =	vm.h visu.h client.h errors.h
