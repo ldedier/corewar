@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/30 22:45:44 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/31 16:32:21 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -604,4 +604,9 @@ int						switch_local(t_vm *vm, t_button *this, t_ixy xy);
 int						ft_render_trash_button(t_vm *vm, t_button *this);
 int						ft_render_switch_button(t_vm *vm, t_button *this);
 int						ft_process_upload(t_vm *vm, t_player player);
+int						ft_get_new_core(int nb_bytes, t_vm *vm);
+void					ft_update_vscrollbar_server_compressed_size(t_vm *vm,
+							t_visu *v);
+void					ft_update_vscrollbar_downloads_compressed_size(t_vm *vm,
+							t_visu *v);
 #endif

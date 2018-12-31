@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 21:45:31 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/30 22:59:14 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/31 14:45:33 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,10 @@ int		ft_upload(t_vm *vm, t_button *this, t_ixy mouse)
 	(void)this;
 	(void)mouse;
 
-	ft_process_upload(vm, vm->client.upload_player);
+	if (vm->client.upload_player.from_server)
+		ft_printf("can't upload a player coming from the server!\n");
+	else
+		ft_process_upload(vm, vm->client.upload_player);
 	vm->client.upload_player.relevant = 0;
 	vm->visu.positions.upload_slot.close.visible = 0;
 	this->enabled = 0;

@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 21:48:50 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/30 21:30:07 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/31 16:01:55 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,7 @@ int		ft_init_all_visu(t_vm *vm, t_visu *v)
 	v->drop_container.player = NULL;
 	v->drag_container.parent = v;
 	if (vm->client.active)
-	{
-		ft_init_client_slot_surface(vm);
 		ft_update_download_buttons_client_rect(vm);
-	}
 	ft_init_time_manager(v);
 	ft_init_crosses(vm);
 	SDL_SetCursor(v->sdl.cursor_packers[REGULAR].cursor);

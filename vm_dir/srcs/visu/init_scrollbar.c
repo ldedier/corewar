@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 19:16:22 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/30 21:31:08 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/31 16:32:10 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,20 @@ void	ft_init_players_list(t_vm *vm, t_visu *v)
 	v->players_list[SERVER].vscrollbar.pos_x = v->center.dashboard_x;
 }
 
+void	ft_update_vscrollbar_server_compressed_size(t_vm *vm, t_visu *v)
+{
+	v->players_list[SERVER].vscrollbar.compressed_height =
+		ft_get_vscrollbar_compressed_height(v,
+				ft_lstlength(vm->client.client_slots));
+}
+
+void	ft_update_vscrollbar_downloads_compressed_size(t_vm *vm, t_visu *v)
+{
+	v->players_list[DOWNLOADS].vscrollbar.compressed_height =
+			ft_get_vscrollbar_compressed_height(v,
+					ft_lstlength(vm->visu.downloaded_players));
+}
+
 void	ft_init_vscrollbars_compressed_size(t_vm *vm, t_visu *v)
 {
 	v->players_list[ARENA].vscrollbar.compressed_height =
@@ -86,10 +100,6 @@ void	ft_init_vscrollbars_compressed_size(t_vm *vm, t_visu *v)
 	v->players_list[LOCAL].vscrollbar.compressed_height =
 		ft_get_vscrollbar_compressed_height(v, vm->nb_players);
 	if (vm->client.active)
-		v->players_list[SERVER].vscrollbar.compressed_height =
-			ft_get_vscrollbar_compressed_height(v,
-					ft_lstlength(vm->client.client_slots));
-	v->players_list[DOWNLOADS].vscrollbar.compressed_height =
-			ft_get_vscrollbar_compressed_height(v,
-					ft_lstlength(vm->visu.downloaded_players));
+		ft_update_vscrollbar_server_compressed_size(vm, v);
+	ft_update_vscrollbar_downloads_compressed_size(vm, v);
 }

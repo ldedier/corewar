@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/30 22:25:06 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/31 00:04:25 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/31 16:40:08 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,15 @@
 
 int		ft_process_upload_result(t_vm *vm, int nb_bytes)
 {
-	(void)nb_bytes;
-	if ((t_flag)vm->client.buffer[0] == UPLOAD_SUCCESS)
-		ft_printf("ouai\n");
-	else if ((t_flag)vm->client.buffer[0] == UPLOAD_NAME_TAKEN)
+	t_flag flag;
+
+	if (nb_bytes < (int)sizeof(t_flag))
+		return (1);
+	ft_memcpy(&flag, vm->client.buffer, sizeof(t_flag));
+	if (flag == UPLOAD_NAME_TAKEN)
 		ft_printf("nope\n");
+	else if (flag == FLAG_NEW_CORE)
+		ft_get_new_core(nb_bytes, vm);
 	return (0);
 }
 
@@ -31,7 +35,7 @@ int		ft_receive_upload_result(t_vm *vm)
 		if (SDLNet_SocketReady(vm->client.socket))
 		{
 			if ((nb_bytes = SDLNet_TCP_Recv(vm->client.socket,
-				vm->client.buffer, MAX_TCP_PACKET)) <= 0)
+							vm->client.buffer, MAX_TCP_PACKET)) <= 0)
 				return (ft_net_error());
 			else
 				return (ft_process_upload_result(vm, nb_bytes));

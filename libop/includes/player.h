@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 22:25:36 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/18 17:35:56 by emuckens         ###   ########.fr       */
+/*   Updated: 2018/12/31 14:40:00 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 typedef int				t_name_len;
 typedef int				t_comment_len;
 typedef int				t_code_len;
+typedef int				t_file_len;
 typedef int				t_score;
 
 typedef struct		s_color
@@ -46,11 +47,12 @@ typedef struct      s_player
 	t_name_len		name_len;
 	t_code_len		algo_len;
 	t_score			score;
+	t_file_len		file_len;
 	int				header_size;
-	int				file_len;
 	int				num;
 	char			relevant;
 	char			*cor_name;
+	char			from_server;
 	t_color			color;
 }					t_player;
 

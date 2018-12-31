@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/04 15:20:42 by ldedier           #+#    #+#              #
-#    Updated: 2018/12/11 15:00:40 by ldedier          ###   ########.fr        #
+#    Updated: 2018/12/30 22:57:54 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ OK_COLOR = \x1b[32;01m
 EOC = \033[0m
 
 SRCS_NO_PREFIX =	main.c ft_process.c ft_fill_all.c tools.c ft_init.c\
-					ft_send_others.c
+					ft_send_others.c ft_send_core.c ft_receive_upload.c
 
 INCLUDES_NO_PREFIX = #server.h
 

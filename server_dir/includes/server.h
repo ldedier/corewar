@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 17:20:50 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/06 21:26:12 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/31 16:39:33 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,9 @@ int						ft_send_all_cores(TCPsocket socket, t_server *server);
 int						ft_send_rejection(TCPsocket temp);
 int						ft_send_deconnexion(TCPsocket socket,
 							t_player_number player_number);
+int						ft_send_core(t_server *server, int i, int nb_bytes);
+t_player				*get_player(t_server *server, char *name);
+int						ft_receive_upload(t_server *server, int i,
+							int nb_bytes);
+int						ft_get_player_size_all(t_player *player);
 #endif

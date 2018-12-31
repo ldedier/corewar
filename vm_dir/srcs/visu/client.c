@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:54:14 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/20 18:56:11 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/31 16:33:35 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int		ft_download(t_vm *vm, t_button *this, t_ixy xy)
 	return (0);
 }
 
-void	ft_populate_download_button(t_client_slot *client_slot,
+void	ft_populate_download_button(t_vm *vm, t_client_slot *client_slot,
 			t_button *button)
 {
 	button->visible = 1;
@@ -54,10 +54,12 @@ void	ft_populate_download_button(t_client_slot *client_slot,
 	button->button_union.client_slot = client_slot;
 	button->on_click = &ft_download;
 	button->on_press = &nothing_on_press;
+	button->surface = vm->visu.sdl.images[DL];
+	button->vscrollbar = &vm->visu.players_list[SERVER].vscrollbar;
 	button->render = &ft_render_download_button;
 }
 
-t_client_slot	*ft_new_client_slot(t_player *player)
+t_client_slot	*ft_new_client_slot(t_vm *vm, t_player *player)
 {
 	t_client_slot *slot;
 
@@ -66,7 +68,7 @@ t_client_slot	*ft_new_client_slot(t_player *player)
 	slot->player = player;
 	slot->downloaded = 0;
 	slot->on_disk = 0;
-	ft_populate_download_button(slot, &slot->download);
+	ft_populate_download_button(vm, slot, &slot->download);
 	return (slot);
 }
 
@@ -78,7 +80,7 @@ int		ft_add_new_client_slot(t_vm *vm, int i, t_name_len name_len,
 
 	if (!(player = ft_new_player(&(vm->client.buffer[i]), name_len, score)))
 		return (1);
-	if (!(slot = ft_new_client_slot(player)))
+	if (!(slot = ft_new_client_slot(vm, player)))
 	{
 		free(player);
 		return (1);
@@ -90,6 +92,7 @@ int		ft_add_new_client_slot(t_vm *vm, int i, t_name_len name_len,
 		return (1);
 	}
 	player->num = vm->nb;
+	player->from_server = 1;
 	return (0);
 }
 
@@ -166,6 +169,43 @@ int		ft_receive_connect_status(t_vm *vm)
 	return (1);
 }
 
+int		ft_get_new_core(int nb_bytes, t_vm *vm)
+{
+	t_score score;
+	t_name_len name_len;
+	int i;
+
+	i = sizeof(t_flag);
+	if (nb_bytes < (int)(sizeof(t_flag) + sizeof(t_score) + sizeof(t_name_len)))
+		return (1);
+	ft_memcpy_recv(&score, vm->client.buffer, &i, sizeof(t_score));
+	ft_memcpy_recv(&name_len, vm->client.buffer, &i, sizeof(t_name_len));
+	if (nb_bytes < i + name_len)
+		return (1);
+	ft_printf("%d %d\n", name_len, score);
+	if (ft_add_new_client_slot(vm, i, name_len, score))
+	{
+		ft_printf("olalala\n");
+		return (1);
+	}
+	else
+		ft_printf("OUAI C COOL\n");
+	ft_update_download_buttons_client_rect(vm);
+	ft_update_vscrollbar_server_compressed_size(vm, &(vm->visu));
+	return (0);
+}
+
+int		ft_process_event(int nb_bytes, t_vm *vm)
+{
+	t_flag flag;
+	if (nb_bytes < (int)sizeof(t_flag))
+		return (1);
+	ft_memcpy(&flag, vm->client.buffer, sizeof(t_flag));
+	if (flag == FLAG_NEW_CORE)
+		ft_get_new_core(nb_bytes, vm);
+	return (0);
+}
+
 int		ft_process_client_events(t_vm *vm)
 {
 	int nb_bytes;
@@ -182,7 +222,7 @@ int		ft_process_client_events(t_vm *vm)
 				vm->client.active = 0;
 			}
 			else
-				ft_printf("event\n");
+				ft_process_event(nb_bytes, vm);
 		}
 		else
 		{
