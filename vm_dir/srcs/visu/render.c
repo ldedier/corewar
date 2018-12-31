@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/09 14:02:56 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/20 16:00:27 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/31 19:38:02 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int		ft_render(t_vm *vm, t_sdl *sdl)
 	SDL_FillRect(sdl->w_surface, NULL, BACKGROUND_COL);
 	ft_render_dashboard_separator(vm);
 	if (ft_render_phase(vm))
+		return (1);
+	if (ft_render_notification(vm))
 		return (1);
 	sdl->texture = SDL_CreateTextureFromSurface(sdl->renderer, sdl->w_surface);
 	SDL_RenderCopy(sdl->renderer, sdl->texture, NULL, NULL);

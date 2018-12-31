@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/31 17:14:34 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/31 19:39:01 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -453,6 +453,11 @@ typedef struct			s_time_manager
 	double				cycles_per_turn;
 }						t_time_manager;
 
+typedef struct			s_notification
+{
+	char				*message;	
+}						t_notification;
+
 struct					s_visu
 {
 	char				active;
@@ -470,6 +475,7 @@ struct					s_visu
 	t_button			buttons[NB_BUTTONS];
 	t_player_list		players_list[NB_SOURCES];
 	t_list				*downloaded_players;
+	t_notification		notification;
 	t_time_manager		time_manager;
 };
 
@@ -610,4 +616,5 @@ void					ft_update_vscrollbar_server_compressed_size(t_vm *vm,
 void					ft_update_vscrollbar_downloads_compressed_size(t_vm *vm,
 							t_visu *v);
 int						ft_query_player_bin(t_vm *vm, t_client_slot *cs);
+int						ft_render_notification(t_vm *vm);
 #endif
