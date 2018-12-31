@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 17:20:50 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/31 16:39:33 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/31 17:59:39 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,6 @@ t_player				*get_player(t_server *server, char *name);
 int						ft_receive_upload(t_server *server, int i,
 							int nb_bytes);
 int						ft_get_player_size_all(t_player *player);
+int						ft_send_core_bin(t_server *server, int i, int nb_bytes);
+t_player				*get_core_from_query(t_server *server, int nb_bytes);
 #endif

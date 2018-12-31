@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/30 22:57:11 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/31 16:16:03 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/31 18:09:26 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,10 @@ int		ft_receive_upload(t_server *server, int client_index, int nb_bytes)
 	else
 	{
 		if (get_player(server, player->name))
+		{
+			ft_printf("OULOULOU\n");
 			return (ft_send_flag(server, client_index, UPLOAD_NAME_TAKEN));
+		}
 		else
 		{
 			//ft_process_player_score(server, player);

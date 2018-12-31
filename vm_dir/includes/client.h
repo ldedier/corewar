@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 18:26:19 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/16 19:05:37 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/31 18:02:30 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,5 @@ int						ft_net_error(void);
 int						ft_send_protected(TCPsocket socket, void *data,
 							size_t size);
 int						ft_process_client_events(t_vm *vm);
+int						ft_query_player_size(t_player *player);
 #endif

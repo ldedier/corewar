@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 17:50:39 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/31 14:24:26 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/31 17:40:19 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,11 +101,17 @@ t_player 	*get_player(t_server *server, char *name)
 
 int		ft_process_data(t_server *server, int i, int nb_bytes)
 {
-	(void)server;
+	t_flag flag;
+
 	ft_printf("on a recu !\n");
-	if ((t_flag)server->buffer[0] == GET_CORE)
+	if (nb_bytes < (int)sizeof(t_flag))
+		return (1);
+	ft_memcpy(&flag, server->buffer, sizeof(t_flag));
+	if (flag == GET_CORE)
 		return (ft_send_core(server, i, nb_bytes));
-	if ((t_flag)server->buffer[0] == FLAG_UPLOAD)
+	if (flag == GET_CORE_BIN)
+		return (ft_send_core_bin(server, i, nb_bytes));
+	if (flag == FLAG_UPLOAD)
 		return (ft_receive_upload(server, i, nb_bytes));
 	
 	return (0);

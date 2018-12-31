@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 16:55:50 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/31 16:39:40 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/31 17:03:23 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef enum			e_flag
 	SERVER_FULL,
 	GET_LIST,
 	GET_CORE,
+	GET_CORE_BIN,
 	FLAG_UPLOAD,
 	FLAG_DOWNLOAD,
 	UPLOAD_NAME_TAKEN,

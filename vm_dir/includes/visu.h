@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/31 16:32:21 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/31 17:14:34 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -609,4 +609,5 @@ void					ft_update_vscrollbar_server_compressed_size(t_vm *vm,
 							t_visu *v);
 void					ft_update_vscrollbar_downloads_compressed_size(t_vm *vm,
 							t_visu *v);
+int						ft_query_player_bin(t_vm *vm, t_client_slot *cs);
 #endif

@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/29 16:47:33 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/29 16:47:33 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/12/31 18:03:00 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int		ft_receive_player_info(t_vm *vm, t_client_slot *cs)
 		if (SDLNet_SocketReady(vm->client.socket))
 		{
 			if ((nb_bytes = SDLNet_TCP_Recv(vm->client.socket, vm->client.buffer,
-					MAX_TCP_PACKET)) <= 0)
+							MAX_TCP_PACKET)) <= 0)
 				return (ft_net_error());
 			else
 				return (ft_process_player_info(vm, cs, nb_bytes));
