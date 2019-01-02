@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 20:18:31 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/21 14:08:27 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/02 18:19:04 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int		ft_is_on_scrollbars(t_vm *vm, t_ixy xy, t_drag_container *dc)
 {
 	int i;
 
-	if (vm->visu.phase == PHASE_INIT)
+	if (vm->visu.phase == PHASE_INIT && vm->visu.notification.image_index == -1)
 	{
 		i = 0;
 		while (i < NB_SOURCES)

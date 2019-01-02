@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/31 18:00:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/31 18:04:55 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/02 18:47:26 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,13 @@ int		ft_process_player_bin_info(t_vm *vm, int nb_bytes)
 	if (ft_process_read_player(&(vm->client.buffer[i]),
 		player->file_len, player))
 		return (1);
-	ft_printf("%s\n", player->name);
 	if (ft_write_to_downloads(player))
 		return (1);
 	if (ft_add_to_list_ptr_back(&vm->visu.downloaded_players, player,
 			sizeof(t_player)))
 		return (1);
 	player->num = vm->nb;
+	player->from_server = 1;
 	ft_update_vscrollbar_downloads_compressed_size(vm, &(vm->visu));
 	return (0);
 }

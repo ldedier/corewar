@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 19:07:54 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/30 19:22:08 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/02 17:32:35 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int		ft_render_offline_buttons(t_vm *vm, t_button buttons[NB_BUTTONS])
 	int i;
 
 	i = NB_ONLINE_BUTTONS;
-	while (i < NB_BUTTONS)
+	while (i < NB_BUTTONS - 1)
 	{
 		if (buttons[i].render(vm, &buttons[i]))
 			return (1);

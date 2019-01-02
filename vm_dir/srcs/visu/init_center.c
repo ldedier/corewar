@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 15:02:55 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/30 21:18:32 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/02 15:23:20 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,11 @@ void	ft_init_center_spec(t_visu *visu, t_center *c)
 	c->spec_h = c->top_dashboard_fheight - c->spec_vborder * 2;
 	c->spec_left = (c->dashboard_mid_width - c->spec_h) / 2.0;
 	c->switch_left = (c->dashboard_mid_width - c->switch_w) / 2.0;
+
+	c->notif_panel_w = NOTIF_PANEL_W * visu->react.w_scale;
+	c->notif_panel_h = NOTIF_PANEL_H * visu->react.h_scale;
+	c->notif_panel_left = (visu->dim.width - c->notif_panel_w) / 2;
+	c->notif_panel_top = (visu->dim.height - c->notif_panel_h) / 2;
 }
 
 void	ft_init_center(t_visu *visu, t_center *c)

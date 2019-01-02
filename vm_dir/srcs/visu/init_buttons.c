@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 21:28:15 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/30 21:10:39 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/02 18:16:20 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,21 @@ void	ft_init_buttons_2(t_vm *vm, t_visu *visu)
 	ft_init_button(&(visu->buttons[CLEAN_ARENA_BUTTON]), rect,
 	vm->visu.sdl.images[TRASH], &clean_arena);
 	visu->buttons[CLEAN_ARENA_BUTTON].render = ft_render_trash_button;
+	visu->buttons[CLEAN_ARENA_BUTTON].enabled = vm->nb_players;
 	rect.w = visu->center.switch_w;
 	rect.x = visu->center.dashboard_x + visu->center.dashboard_mid_width +
 		visu->center.switch_left;
 	ft_init_button(&(visu->buttons[SWITCH_LOCAL_BUTTON]), rect,
 	vm->visu.sdl.images[SWITCH_1], &switch_local);
 	visu->buttons[SWITCH_LOCAL_BUTTON].render = ft_render_switch_button;
+
+	rect.x = visu->center.notif_panel_left + 3 * (visu->center.notif_panel_w) / 8.0;
+	rect.y = visu->center.notif_panel_top + (3.0 * visu->center.notif_panel_h) / 4.0 ;
+	rect.w = visu->center.notif_panel_w / 4.0;
+	rect.h = visu->center.notif_panel_h / 8.0;
+	ft_init_button(&(visu->buttons[OK_BUTTON]), rect,
+	vm->visu.sdl.images[OK], &ft_remove_notification);
+
 }
 
 void	ft_init_buttons(t_vm *vm, t_visu *visu)

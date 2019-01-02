@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 21:48:50 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/31 19:37:29 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/02 17:12:04 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,6 @@ int		ft_init_all_visu(t_vm *vm, t_visu *v)
 	else
 		vm->visu.local_type = LOCAL_DOWNLOAD;
 	vm->cycle = 1;
-	vm->visu.notification.message = NULL;
+	vm->visu.notification.image_index = -1;
 	return (0);
 }

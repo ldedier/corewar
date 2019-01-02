@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 19:07:08 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/21 14:09:10 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/02 18:18:35 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int		ft_is_on_draggable(t_vm *vm, t_ixy xy, t_drag_container *dc)
 {
 	int i;
 
-	if (vm->visu.phase == PHASE_INIT)
+	if (vm->visu.phase == PHASE_INIT && vm->visu.notification.image_index == -1)
 	{
 		i = 0;
 		ft_fill_drag_container(dc, xy);

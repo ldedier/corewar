@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/31 19:39:01 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/02 18:27:08 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@
 # define PLAYER_BORDER_BOTTOM	30
 
 # define PLAYER_HEIGHT			74
-
 # define PLAYER_INNER_BORDER	6
 # define CROSS_BORDER			PLAYER_INNER_BORDER * 3
 # define CROSS_IB				0
@@ -86,6 +85,8 @@
 # define X_DIFF_BYTE			0
 # define Y_DIFF					7
 
+# define NOTIF_PANEL_W			400
+# define NOTIF_PANEL_H			250
 
 # define MEM_COLS				64
 
@@ -104,7 +105,7 @@
 # define RANK					7
 # define COREWAR				8
 
-# define NB_IMAGES				15
+# define NB_IMAGES				18
 
 # define CLOSE					0
 # define DL						1
@@ -122,6 +123,9 @@
 # define SWITCH_1				13
 # define SWITCH_2				14
 
+# define NAME_TAKEN_NOTIF		15
+# define FROM_SERVER_NOTIF		16
+# define OK						17
 
 # define NB_CURSORS				5
 
@@ -130,7 +134,7 @@
 # define CLICK					2
 # define REGULAR				3
 
-# define NB_BUTTONS				6
+# define NB_BUTTONS				7
 
 # define UPLOAD_BUTTON			0
 # define ALPHA_SORT_BUTTON		1
@@ -141,6 +145,7 @@
 # define FIGHT_BUTTON			3
 # define SWITCH_LOCAL_BUTTON	4
 # define CLEAN_ARENA_BUTTON		5
+# define OK_BUTTON				6
 
 # define PLAYER_COL_BORDER		0x000000
 # define PLAYER_COL				0x222222
@@ -367,6 +372,11 @@ typedef struct			s_center
 	int					fight_right;
 	int					fight_height;
 	int					fight_width;
+
+	int					notif_panel_w;
+	int					notif_panel_h;
+	int					notif_panel_left;
+	int					notif_panel_top;
 }						t_center;
 
 typedef struct			s_slot
@@ -429,9 +439,9 @@ typedef struct			s_event_manager
 typedef struct			s_color_manager
 {
 	int					color;
-	char				r;
-	char				g;
-	char				b;
+	unsigned char		r;
+	unsigned char		g;
+	unsigned char		b;
 }						t_color_manager;
 
 typedef enum			e_phase
@@ -455,7 +465,7 @@ typedef struct			s_time_manager
 
 typedef struct			s_notification
 {
-	char				*message;	
+	int					image_index;
 }						t_notification;
 
 struct					s_visu
@@ -495,7 +505,9 @@ int						ft_render_players(t_vm *vm);
 int						ft_render_init_online(t_vm *vm);
 int						ft_render_offline(t_vm *vm);
 t_color_manager			ft_get_color(int color);
+t_color_manager			ft_get_color_sdl(int color);
 t_color_manager			ft_scale_color(t_color_manager color, double scale);
+t_color_manager			ft_scale_color_sdl(t_color_manager color, double scale);
 int						ft_render_player(t_vm *vm, t_player *player, t_xy xy,
 							t_player_source source);
 int						ft_render_dragged_player(t_vm *vm);
@@ -508,7 +520,7 @@ int						ft_is_on_droppable(t_vm *vm, t_ixy mouse,
 void					ft_drop_dragged_player(t_vm *vm, t_ixy xy);
 void					ft_update_cursor(t_vm *vm, t_ixy xy);
 void					ft_change_cursor(t_vm *vm, int index);
-int						ft_is_on_button(t_ixy xy, t_button *button,
+int						ft_is_on_button(t_vm *vm, t_ixy xy, t_button *button,
 							t_button **to_fill);
 int						ft_is_on_buttons(t_vm *vm, t_ixy xy, t_button **button);
 t_ixy					new_ixy(int x, int y);
@@ -617,4 +629,7 @@ void					ft_update_vscrollbar_downloads_compressed_size(t_vm *vm,
 							t_visu *v);
 int						ft_query_player_bin(t_vm *vm, t_client_slot *cs);
 int						ft_render_notification(t_vm *vm);
+void					ft_set_notification(t_vm *vm, int image_index);
+int						ft_remove_notification(t_vm *vm, t_button *button,
+							t_ixy xy);
 #endif

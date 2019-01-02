@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/30 22:25:06 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/31 16:40:08 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/02 18:35:01 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		ft_process_upload_result(t_vm *vm, int nb_bytes)
 		return (1);
 	ft_memcpy(&flag, vm->client.buffer, sizeof(t_flag));
 	if (flag == UPLOAD_NAME_TAKEN)
-		ft_printf("nope\n");
+		ft_set_notification(vm, NAME_TAKEN_NOTIF);
 	else if (flag == FLAG_NEW_CORE)
 		ft_get_new_core(nb_bytes, vm);
 	return (0);
@@ -35,7 +35,7 @@ int		ft_receive_upload_result(t_vm *vm)
 		if (SDLNet_SocketReady(vm->client.socket))
 		{
 			if ((nb_bytes = SDLNet_TCP_Recv(vm->client.socket,
-							vm->client.buffer, MAX_TCP_PACKET)) <= 0)
+					vm->client.buffer, MAX_TCP_PACKET)) <= 0)
 				return (ft_net_error());
 			else
 				return (ft_process_upload_result(vm, nb_bytes));
@@ -45,7 +45,7 @@ int		ft_receive_upload_result(t_vm *vm)
 	}
 	else
 	{
-		ft_printf("no response for server for too long\n");
+		ft_printf("no response from server for too long\n");
 		return (1);
 	}
 }
