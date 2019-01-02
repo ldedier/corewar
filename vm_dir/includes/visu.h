@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/02 18:27:08 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/02 22:01:36 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 
 # define INIT_MAX_PLAYERS		4
 # define INIT_CYCLES_PER_TURN	1
-# define GLYPH_W_H_RATIO		1
+# define GLYPH_W_H_RATIO		0.5
 
 # define FRAMERATE				60
 
@@ -87,6 +87,19 @@
 
 # define NOTIF_PANEL_W			400
 # define NOTIF_PANEL_H			250
+
+# define NB_ENTRIES				7
+
+# define STATE_TOP				40
+# define STATE_H				60
+# define STATE_BOTTOM			50
+# define ENTRY_H				30
+# define GAME_ENTRIES_H		 	700
+# define ENTRY_BOTTOM			30
+# define ENTRY_SPACE			30
+# define ENTRY_LEFT				20
+# define ENTRY_RIGHT			20
+# define ENTRY_SPACE			30
 
 # define MEM_COLS				64
 
@@ -377,6 +390,19 @@ typedef struct			s_center
 	int					notif_panel_h;
 	int					notif_panel_left;
 	int					notif_panel_top;
+
+	int					game_entries_h;
+	int					state_top;
+	int					state_h;
+	int					state_bottom;
+	int					entry_h;
+	int					entry_bottom;
+	int					entry_padding;
+	int					entry_left;
+	int					entry_space;
+	int					entry_max_w;
+	int					entry_value_max_w;
+	int					entry_right;
 }						t_center;
 
 typedef struct			s_slot
@@ -632,4 +658,16 @@ int						ft_render_notification(t_vm *vm);
 void					ft_set_notification(t_vm *vm, int image_index);
 int						ft_remove_notification(t_vm *vm, t_button *button,
 							t_ixy xy);
+int						ft_copy_str_to_surface_no_source(t_vm *vm, char *str,
+							SDL_Rect rect);
+int						ft_render_entry(t_vm *vm, char *entry, char *value,
+							int y);
+int						ft_render_cycles_per_second(t_vm *vm, int y);
+int						ft_render_cycle(t_vm *vm, int y);
+int						ft_render_cycle_to_die(t_vm *vm, int y);
+int						ft_render_cycle_delta(t_vm *vm, int y);
+int						ft_render_ctd_countdown(t_vm *vm, int y);
+int						ft_render_lives_current_period(t_vm *vm, int y);
+int						ft_render_checks(t_vm *vm, int y);
+int						process_cycle_all(t_vm *vm);
 #endif

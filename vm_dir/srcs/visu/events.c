@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/08 23:37:36 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/20 22:21:58 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/02 22:31:02 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@ void		ft_key_down(t_vm *vm, SDL_Keycode code)
 		else
 			vm->visu.time_manager.pause = !vm->visu.time_manager.pause;
 	}
+	else if (code == SDLK_RIGHT && vm->visu.time_manager.pause)
+	{
+		process_cycle_all(vm);
+	}
 }
 
 void		ft_key_up(t_vm *vm, SDL_Keycode code)
@@ -29,10 +33,30 @@ void		ft_key_up(t_vm *vm, SDL_Keycode code)
 	(void)code;
 }
 
+	
+void	ft_increment_cpt(t_vm *vm, int direction)
+{
+	if (vm->visu.time_manager.cycles_per_turn <= 4)
+		vm->visu.time_manager.cycles_per_turn =
+		ft_fmax(vm->visu.time_manager.cycles_per_turn +
+				(direction / 10.0), 0.01);
+	else if (vm->visu.time_manager.cycles_per_turn >= 5000)
+		vm->visu.time_manager.cycles_per_turn = ft_fmin(20000, 
+			vm->visu.time_manager.cycles_per_turn + direction * 1000);
+	else if(vm->visu.time_manager.cycles_per_turn >= 500)
+		vm->visu.time_manager.cycles_per_turn += direction * 100;
+	else
+		vm->visu.time_manager.cycles_per_turn += direction;
+}
+
 void		ft_process_keys(t_vm *vm, const Uint8 *keys)
 {
-	(void)vm;
-	(void)keys;
+	if (keys[SDL_SCANCODE_UP])
+	{
+		ft_increment_cpt(vm, 1);
+	}
+	if(keys[SDL_SCANCODE_DOWN])
+		ft_increment_cpt(vm, -1);
 }
 
 int			ft_process_events(t_vm *vm)
@@ -58,6 +82,7 @@ int			ft_process_events(t_vm *vm)
 			ft_mouse_motion(vm, event);
 	}
 	ft_process_button_pressed(vm);
+	if (vm->visu.phase == PHASE_PLAY)
 	ft_process_keys(vm, SDL_GetKeyboardState(NULL));
 //	ft_process(vm, SDL_GetMouseState(NULL));
 //	vm->visu.event_manager.mouse_state = SDL_GetMouseState(NULL, NULL);

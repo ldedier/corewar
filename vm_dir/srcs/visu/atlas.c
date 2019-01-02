@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 20:50:21 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/19 20:57:49 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/02 21:21:19 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ int		ft_init_atlas_color(t_sdl *sdl, int i, SDL_Color color)
 	char			str[2];
 
 	str[1] = '\0';
-	j = 33;
-	while (j < 126)
+	j = 32;
+	while (j <= 126)
 	{
 		str[0] = j;
 		if (!(tmp = TTF_RenderText_Solid(sdl->font, str, color)))

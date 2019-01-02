@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 15:02:55 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/02 15:23:20 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/02 21:39:39 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,22 @@ void	ft_init_center_spec(t_visu *visu, t_center *c)
 	c->notif_panel_h = NOTIF_PANEL_H * visu->react.h_scale;
 	c->notif_panel_left = (visu->dim.width - c->notif_panel_w) / 2;
 	c->notif_panel_top = (visu->dim.height - c->notif_panel_h) / 2;
+	
+	c->game_entries_h = GAME_ENTRIES_H * visu->react.h_scale;
+	c->state_top = STATE_TOP * visu->react.h_scale;
+	c->state_bottom = STATE_BOTTOM * visu->react.h_scale;
+	c->state_h = STATE_H * visu->react.h_scale;
+	c->entry_h = ENTRY_H * visu->react.h_scale;
+	c->entry_bottom = ENTRY_BOTTOM * visu->react.h_scale;
+	c->entry_padding = (c->game_entries_h - (c->state_top + c->state_h +
+		c->state_bottom + (NB_ENTRIES * c->entry_h)
+		+ c->entry_bottom)) / (double)(NB_ENTRIES - 1);
+	c->entry_left = ENTRY_LEFT * visu->react.w_scale;
+	c->entry_right = ENTRY_RIGHT * visu->react.w_scale;
+	c->entry_space = ENTRY_SPACE * visu->react.w_scale;
+	c->entry_max_w = 2 * c->dashboard_width / 3.0;
+	c->entry_value_max_w = c->dashboard_width - (c->entry_left +
+		c->entry_right + c->entry_space + c->entry_max_w);
 }
 
 void	ft_init_center(t_visu *visu, t_center *c)

@@ -6,11 +6,39 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/11 17:47:31 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/21 19:52:20 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/02 21:42:09 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
+
+int		ft_copy_str_to_surface_no_source(t_vm *vm, char *str,
+		SDL_Rect rect)
+{
+	int			i;
+	SDL_Rect	char_rect;
+	int			len;
+
+	char_rect.h = rect.h;
+	char_rect.y = rect.y;
+	char_rect.x = rect.x;
+	if (!(len = ft_strlen(str)))
+		return (0);
+	char_rect.w = ft_min(rect.w / len, rect.h * GLYPH_W_H_RATIO);
+	i = 0;
+	while (str[i])
+	{
+		if (SDL_BlitScaled(vm->visu.sdl.atlas[MAX_PL_COLOR]
+				[(int)str[i]].surface, NULL, 
+					vm->visu.sdl.w_surface, &char_rect) < 0)
+		{
+			return (ft_net_error());
+		}
+		char_rect.x += char_rect.w;
+		i++;
+	}
+	return (0);
+}
 
 int		ft_copy_str_to_surface(t_vm *vm, char *str,
 			SDL_Rect rect, t_ixy col_source)
