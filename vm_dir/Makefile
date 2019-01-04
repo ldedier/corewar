@@ -61,7 +61,12 @@ VISU_NO_PREFIX =		init_sdl.c visu.c events.c framerate.c render.c \
 						render_buttons.c  buttons_actions.c init_all.c\
 						is_on_buttons.c mouse.c process.c upload.c\
 						client.c query_player.c query_player_bin.c\
-						render_notification.c
+						render_notification.c render_play.c render_entries_1.c\
+						render_entries_2.c render_player_entries.c\
+						render_live_breakdown.c render_live_breakdown_hp.c\
+						render_play_footer.c
+
+
 
 INCLUDES_NO_PREFIX =	vm.h visu.h client.h errors.h
 

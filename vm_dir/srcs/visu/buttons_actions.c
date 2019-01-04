@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 21:45:31 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/02 17:46:48 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/04 00:19:05 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,30 @@ int		ft_delete_player(t_vm *vm, t_button *this, t_ixy xy)
 
 int		start_fight(t_vm *vm)
 {
+	t_ixy xy;
+
 	vm->visu.phase = PHASE_PLAY;
+	SDL_GetMouseState(&xy.x, &xy.y);
+	ft_update_cursor(vm, xy);
 	if (!init_processes(vm))
 		 return (1);
+	return (0);
+}
+
+int		go_back(t_vm *vm, t_button *this, t_ixy xy)
+{
+	(void)this;
+	vm->visu.phase = PHASE_INIT;
+	ft_update_cursor(vm, xy);
 	return (0);
 }
 
 int		fight(t_vm *vm, t_button *this, t_ixy xy)
 {
 	(void)this;
+	(void)xy;
 	if (start_fight(vm))
 		return (1);
-	ft_update_cursor(vm, xy);
 	return (0);
 }
 

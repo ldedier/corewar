@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/31 17:58:22 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/31 17:58:34 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/03 19:00:24 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,8 @@ int		ft_process_send_core_bin(t_server *server, t_player *player, int i)
 int		ft_send_core_bin(t_server *server, int i, int nb_bytes)
 {
 	t_player *player;
-	ft_printf("OUAI\n");
+
 	if (!(player = get_core_from_query(server, nb_bytes)))
 		return (1);
-	ft_printf("DIIICKK %s\n", player->name);
 	return (ft_process_send_core_bin(server, player, i));
 }

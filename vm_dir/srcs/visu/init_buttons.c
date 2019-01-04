@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 21:28:15 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/02 18:16:20 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/04 00:07:53 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	ft_populate_closing_button(t_vm *vm, t_button *button,
 	button->visible = 0;
 	button->enabled = 1;
 	button->vscrollbar = &vm->visu.players_list[ARENA].vscrollbar;
+	button->phase = PHASE_INIT;
 }
 
 void	ft_init_button(t_button *button, SDL_Rect rect, SDL_Surface *surface,
@@ -40,6 +41,7 @@ void	ft_init_button(t_button *button, SDL_Rect rect, SDL_Surface *surface,
 	button->visible = 1;
 	button->enabled = 1;
 	button->vscrollbar = NULL;
+	button->phase = PHASE_INIT;
 }
 
 void	ft_init_buttons_2(t_vm *vm, t_visu *visu)
@@ -74,7 +76,16 @@ void	ft_init_buttons_2(t_vm *vm, t_visu *visu)
 	rect.h = visu->center.notif_panel_h / 8.0;
 	ft_init_button(&(visu->buttons[OK_BUTTON]), rect,
 	vm->visu.sdl.images[OK], &ft_remove_notification);
-
+	visu->buttons[OK_BUTTON].visible = 0;
+	rect.x = visu->center.dashboard_x + visu->center.back_left; 
+	rect.y = visu->center.game_entries_h + visu->center.player_entries_h +
+		visu->center.winner_top + visu->center.winner_height +
+			visu->center.winner_bottom;
+	rect.w = visu->center.back_width;
+	rect.h = visu->center.back_height;
+	ft_init_button(&(visu->buttons[BACK_BUTTON]), rect,
+		vm->visu.sdl.images[BACK], &go_back);
+	visu->buttons[BACK_BUTTON].phase = PHASE_PLAY;
 }
 
 void	ft_init_buttons(t_vm *vm, t_visu *visu)

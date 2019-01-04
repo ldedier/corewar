@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/02 22:01:36 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/04 05:22:43 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,18 +92,56 @@
 
 # define STATE_TOP				40
 # define STATE_H				60
-# define STATE_BOTTOM			50
+# define STATE_BOTTOM			30
 # define ENTRY_H				30
-# define GAME_ENTRIES_H		 	700
-# define ENTRY_BOTTOM			30
+# define GAME_ENTRIES_H		 	425
+# define PLAY_FOOTER_H			180
+# define LIVE_BREAKDOWN_H		150
+
+# define NB_PLAYER_ENTRIES		2
+# define PLAYER_ENTRY_LEFT		50
+# define PLAYER_ENTRY_SPACE		20
+# define PLAYER_TITLE_HEIGHT	30
+# define PLAYER_ENTRY_HEIGHT	30
+# define PLAYER_TITLE_TOP		20
+# define PLAYER_TITLE_BOTTOM	20
+
+# define LIST_PLAYER_ENTRIES_B	20
+# define PLAYER_ENTRY_IPADDING	15
+
+# define ENTRY_BOTTOM			20
 # define ENTRY_SPACE			30
 # define ENTRY_LEFT				20
 # define ENTRY_RIGHT			20
 # define ENTRY_SPACE			30
 
+
+# define LIVE_BREAKDOWN_HP_TITLE_TOP	20
+# define LIVE_BREAKDOWN_HP_TITLE_BOTTOM	20
+
+# define LIVE_BREAKDOWN_HP_PLAYERS_H		30
+
+# define LIVE_BREAKDOWN_HP_PLAYERS_SIDE		40
+
+# define LIVE_BREAKDOWN_HP_PLAYERS_BOTTOM	20
+
+# define WINNER_HEIGHT			20
+# define WINNER_TOP				30
+# define WINNER_BOTTOM			60
+
+# define BACK_WIDTH				50
+# define BACK_HEIGHT			50
+
+# define LIVE_BREAKDOWN_TITLE_H		34
+# define LIVE_BREAKDOWN_TITLE_TOP	34
+
+# define LIVE_BREAKDOWN_BAR_H	30
+
 # define MEM_COLS				64
 
 # define NB_GLYPHS				256
+
+# define NB_FRAMES				5
 
 # define NB_TITLES				10
 
@@ -118,7 +156,7 @@
 # define RANK					7
 # define COREWAR				8
 
-# define NB_IMAGES				18
+# define NB_IMAGES				20
 
 # define CLOSE					0
 # define DL						1
@@ -140,6 +178,9 @@
 # define FROM_SERVER_NOTIF		16
 # define OK						17
 
+# define BREAKDOWN_BAR			18
+# define BACK					19
+
 # define NB_CURSORS				5
 
 # define GRAB					0
@@ -147,7 +188,7 @@
 # define CLICK					2
 # define REGULAR				3
 
-# define NB_BUTTONS				7
+# define NB_BUTTONS				8
 
 # define UPLOAD_BUTTON			0
 # define ALPHA_SORT_BUTTON		1
@@ -159,6 +200,7 @@
 # define SWITCH_LOCAL_BUTTON	4
 # define CLEAN_ARENA_BUTTON		5
 # define OK_BUTTON				6
+# define BACK_BUTTON			7
 
 # define PLAYER_COL_BORDER		0x000000
 # define PLAYER_COL				0x222222
@@ -214,6 +256,13 @@ typedef struct			s_ixy
 	int					y;
 }						t_ixy;
 
+typedef enum			e_phase
+{
+	PHASE_INIT,
+	PHASE_PLAY,
+	PHASE_END
+}						t_phase;
+
 typedef struct			s_button
 {
 	SDL_Rect			rect;
@@ -221,6 +270,7 @@ typedef struct			s_button
 	t_button_union		button_union;
 	char				visible;
 	char				enabled;
+	t_phase				phase;
 	int					(*on_click)(t_vm *, struct s_button *, t_ixy xy);
 	void				(*on_press)(t_vm *, struct s_button *);
 	int					(*render)(t_vm *, struct s_button *);
@@ -392,6 +442,22 @@ typedef struct			s_center
 	int					notif_panel_top;
 
 	int					game_entries_h;
+	int					play_footer_h;
+	int					player_entries_h;
+	int					list_player_entries_h;
+
+	int					player_entry_left;
+	int					player_entry_space;
+	double				player_title_height;
+	double				player_entry_height;
+	int					player_title_top;
+	int					player_title_bottom;
+	
+	int					player_entry_padding;
+	int					player_entry_ipadding;
+	int					list_player_entries_bottom;
+	
+	int					live_breakdown_h;
 	int					state_top;
 	int					state_h;
 	int					state_bottom;
@@ -403,6 +469,38 @@ typedef struct			s_center
 	int					entry_max_w;
 	int					entry_value_max_w;
 	int					entry_right;
+
+	int					live_breakdown_title_h;
+	int					live_breakdown_title_w;
+	int					live_breakdown_title_left;
+	int					live_breakdown_title_top;
+	int					live_breakdown_bar_w;
+	int					live_breakdown_bar_h;
+	int					live_breakdown_bar_left;
+	int					live_breakdown_bar_top;
+
+	int					live_breakdown_hp_y;
+	int					live_breakdown_hp_h;
+
+	int					live_breakdown_hp_anim_h;
+	int					live_breakdown_hp_anim_y;
+	
+	int					live_breakdown_hp_title_top;
+	int					live_breakdown_hp_title_bottom;
+	int					live_breakdown_hp_players_h;
+	int					live_breakdown_hp_players_bottom;
+	
+	int					live_breakdown_hp_players_side;
+
+	int					winner_height;
+	int					winner_top;
+	int					winner_bottom;
+	int					winner_left;
+	
+	int					back_width;
+	int					back_height;
+	int					back_left;
+
 }						t_center;
 
 typedef struct			s_slot
@@ -470,13 +568,6 @@ typedef struct			s_color_manager
 	unsigned char		b;
 }						t_color_manager;
 
-typedef enum			e_phase
-{
-	PHASE_INIT,
-	PHASE_PLAY,
-	PHASE_END
-}						t_phase;
-
 typedef enum			e_local_type
 {
 	LOCAL_LOCAL,
@@ -493,6 +584,15 @@ typedef struct			s_notification
 {
 	int					image_index;
 }						t_notification;
+
+typedef struct			s_hp_frame
+{
+	SDL_Surface			*background;
+	SDL_Surface			*harry_ray;
+	SDL_Surface			*voldemort_ray;
+	int					x_offset_harry;
+	int					x_offset_voldemort;
+}						t_hp_frame;
 
 struct					s_visu
 {
@@ -513,6 +613,7 @@ struct					s_visu
 	t_list				*downloaded_players;
 	t_notification		notification;
 	t_time_manager		time_manager;
+	t_hp_frame			frames[NB_FRAMES];
 };
 
 int						ft_init_all_visu(t_vm *vm, t_visu *v);
@@ -659,7 +760,7 @@ void					ft_set_notification(t_vm *vm, int image_index);
 int						ft_remove_notification(t_vm *vm, t_button *button,
 							t_ixy xy);
 int						ft_copy_str_to_surface_no_source(t_vm *vm, char *str,
-							SDL_Rect rect);
+							SDL_Rect rect, int color_index);
 int						ft_render_entry(t_vm *vm, char *entry, char *value,
 							int y);
 int						ft_render_cycles_per_second(t_vm *vm, int y);
@@ -670,4 +771,14 @@ int						ft_render_ctd_countdown(t_vm *vm, int y);
 int						ft_render_lives_current_period(t_vm *vm, int y);
 int						ft_render_checks(t_vm *vm, int y);
 int						process_cycle_all(t_vm *vm);
+int						ft_render_play(t_vm *vm);
+int						ft_render_entries(t_vm *vm);
+int						ft_render_player_entries(t_vm *vm);
+int						ft_render_last_live(t_vm *vm, t_player player, int y);
+int						ft_render_nb_process(t_vm *vm, t_player player, int y);
+int						ft_render_live_breakdown(t_vm *vm);
+int						ft_render_live_breakdown_hp(t_vm *vm);
+int						go_back(t_vm *vm, t_button *this, t_ixy xy);
+int						ft_render_play_footer(t_vm *vm);
+int						ft_render_live_breakdown_title(t_vm *vm, SDL_Rect rect);
 #endif

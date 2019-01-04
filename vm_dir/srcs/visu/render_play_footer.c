@@ -1,32 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   load_tools.c                                       :+:      :+:    :+:   */
+/*   render_play_footer.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/19 20:48:28 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/04 03:13:36 by ldedier          ###   ########.fr       */
+/*   Created: 2019/01/04 00:00:48 by ldedier           #+#    #+#             */
+/*   Updated: 2019/01/04 00:03:05 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-TTF_Font    *ft_load_font(char *str, int quality)
+int		ft_render_winner(t_vm *vm)
 {
-	TTF_Font *font;
-
-	font = TTF_OpenFont(str, quality);
-	if (font == NULL)
-		ft_net_error();
-	return (font);
+	(void)vm;
+	return (0);
 }
 
-SDL_Surface *ft_load_image(char *str)
+int		ft_render_play_footer(t_vm *vm)
 {
-	SDL_Surface *surface;
-
-	if (!(surface = IMG_Load(str)))
-		ft_net_error();
-	return (surface);
+	if (ft_render_winner(vm))
+		return (1);
+	if (ft_render_button(vm, &vm->visu.buttons[BACK_BUTTON]))
+		return (1);
+	return (0);
 }

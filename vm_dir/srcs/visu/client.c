@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:54:14 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/31 18:20:53 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/03 23:38:26 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	ft_populate_download_button(t_vm *vm, t_client_slot *client_slot,
 	button->surface = vm->visu.sdl.images[DL];
 	button->vscrollbar = &vm->visu.players_list[SERVER].vscrollbar;
 	button->render = &ft_render_download_button;
+	button->phase = PHASE_INIT;
 }
 
 t_client_slot	*ft_new_client_slot(t_vm *vm, t_player *player)

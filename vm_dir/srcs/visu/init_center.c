@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 15:02:55 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/02 21:39:39 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/04 05:17:41 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,78 @@ void	ft_init_center_spec(t_visu *visu, t_center *c)
 	c->entry_max_w = 2 * c->dashboard_width / 3.0;
 	c->entry_value_max_w = c->dashboard_width - (c->entry_left +
 		c->entry_right + c->entry_space + c->entry_max_w);
+	c->play_footer_h = PLAY_FOOTER_H * visu->react.h_scale;
+	c->player_entries_h = visu->dim.height -
+		(c->play_footer_h + c->game_entries_h);
+
+	c->live_breakdown_h = LIVE_BREAKDOWN_H * visu->react.h_scale;
+
+	c->list_player_entries_h = c->player_entries_h - c->live_breakdown_h;
+	c->player_entry_left = PLAYER_ENTRY_LEFT * visu->react.w_scale;
+	c->player_entry_space = PLAYER_ENTRY_SPACE * visu->react.w_scale;
+
+	c->player_entry_height = PLAYER_ENTRY_HEIGHT * visu->react.h_scale;
+	c->player_title_top = PLAYER_TITLE_TOP * visu->react.h_scale;
+	c->player_title_height = PLAYER_TITLE_HEIGHT * visu->react.h_scale;
+	c->player_title_bottom = PLAYER_TITLE_BOTTOM * visu->react.h_scale;
+	c->list_player_entries_bottom = LIST_PLAYER_ENTRIES_B * visu->react.h_scale;
+
+	c->player_entry_ipadding = PLAYER_ENTRY_IPADDING * visu->react.h_scale;
+
+	c->player_entry_padding = (c->list_player_entries_h - (c->player_title_top +
+		c->list_player_entries_bottom + INIT_MAX_PLAYERS *
+		(c->player_title_height + c->player_title_bottom) + (INIT_MAX_PLAYERS *
+			NB_PLAYER_ENTRIES * c->player_entry_height) + (INIT_MAX_PLAYERS *
+				(NB_PLAYER_ENTRIES - 1) * c->player_entry_ipadding)))
+					/ (double)(INIT_MAX_PLAYERS - 1);
+
+	c->live_breakdown_title_h = LIVE_BREAKDOWN_TITLE_H * visu->react.h_scale;
+	c->live_breakdown_title_w = c->dashboard_width - 2 * c->entry_left;
+	c->live_breakdown_title_top = LIVE_BREAKDOWN_TITLE_TOP * visu->react.h_scale;
+	c->live_breakdown_title_left = (c->dashboard_width -
+		c->live_breakdown_title_w) / 2.0;
+
+	c->live_breakdown_bar_w =  4 * c->dashboard_width / 5.0;
+	c->live_breakdown_bar_left = (c->dashboard_width -
+		c->live_breakdown_bar_w) / 2.0;
+	c->live_breakdown_bar_h = LIVE_BREAKDOWN_BAR_H * visu->react.h_scale;
+	c->live_breakdown_bar_top = (c->live_breakdown_h -
+		c->live_breakdown_bar_h) / 2.0 + c->live_breakdown_title_top;
+
+	c->winner_top = WINNER_HEIGHT * visu->react.h_scale;
+	c->winner_bottom = WINNER_BOTTOM * visu->react.h_scale;
+	c->winner_height = WINNER_HEIGHT * visu->react.h_scale;
+	c->winner_left = c->entry_left;
+
+	c->back_width = BACK_WIDTH * visu->react.w_scale;
+	c->back_height = BACK_HEIGHT * visu->react.h_scale;
+	c->back_left = (c->dashboard_width - c->back_width) / 2.0;
+
+	c->live_breakdown_hp_y = c->game_entries_h + c->player_title_top +
+		c->list_player_entries_bottom + 2 *
+		(c->player_title_height + c->player_title_bottom) + (2 *
+			NB_PLAYER_ENTRIES * c->player_entry_height) + (2 *
+				(NB_PLAYER_ENTRIES - 1) * c->player_entry_ipadding) +
+					c->player_entry_padding;
+	c->live_breakdown_hp_h = visu->dim.height - c->live_breakdown_hp_y -
+		c->play_footer_h;
+	c->live_breakdown_hp_title_top = LIVE_BREAKDOWN_HP_TITLE_TOP *
+		visu->react.h_scale;
+	c->live_breakdown_hp_title_bottom = LIVE_BREAKDOWN_HP_TITLE_BOTTOM *
+		visu->react.h_scale;
+	c->live_breakdown_hp_players_h = LIVE_BREAKDOWN_HP_PLAYERS_H *
+		visu->react.h_scale;
+	c->live_breakdown_hp_players_bottom = LIVE_BREAKDOWN_HP_PLAYERS_BOTTOM *
+		visu->react.h_scale;
+
+	c->live_breakdown_hp_anim_y = c->live_breakdown_hp_y +
+		c->live_breakdown_hp_title_top + c->live_breakdown_title_h + 
+			c->live_breakdown_hp_title_bottom + c->live_breakdown_hp_players_h +
+				c->live_breakdown_hp_players_bottom;
+	c->live_breakdown_hp_anim_h = c->game_entries_h + c->player_entries_h -
+		c->live_breakdown_hp_anim_y;
+	c->live_breakdown_hp_players_side = LIVE_BREAKDOWN_HP_PLAYERS_SIDE * 
+		visu->react.w_scale;
 }
 
 void	ft_init_center(t_visu *visu, t_center *c)

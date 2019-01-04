@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/20 16:58:11 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/04 03:18:37 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static void		reset_live_allprocesses(t_vm *vm)
 			vm->proc = (tmp == vm->proc) ? tmp->next : vm->proc;
 			ft_memdel((void **)&tmp->content);
 			ft_memdel((void **)&tmp);
-			--vm->nb_players;
+//			--vm->nb_players; // OLALALALALLALALALALALA
 		}
 		else if ((proc->live = 1))
 		{
@@ -171,7 +171,7 @@ void		process_cycle(t_vm *vm)
 		if (!vm->visu.active)
 			ft_printf("\n");
 		if (!players->next && change)
-					display_arena((unsigned char *)vm->arena);
+			display_arena((unsigned char *)vm->arena);
 		players = players->next;
 	}
 }
@@ -190,6 +190,7 @@ void		process_cycle(t_vm *vm)
 int		play(t_vm *vm)
 {
 	static int cycle = 1;
+
 	display(vm, 0, CYCLE_NBR);
 	while (!(cycle == vm->c_to_die && !handle_end_cycle(vm, &cycle)))
 	{

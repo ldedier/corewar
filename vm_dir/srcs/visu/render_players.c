@@ -6,14 +6,14 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/11 17:47:31 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/02 21:42:09 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/03 17:47:49 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
 int		ft_copy_str_to_surface_no_source(t_vm *vm, char *str,
-		SDL_Rect rect)
+		SDL_Rect rect, int color_index)
 {
 	int			i;
 	SDL_Rect	char_rect;
@@ -28,7 +28,7 @@ int		ft_copy_str_to_surface_no_source(t_vm *vm, char *str,
 	i = 0;
 	while (str[i])
 	{
-		if (SDL_BlitScaled(vm->visu.sdl.atlas[MAX_PL_COLOR]
+		if (SDL_BlitScaled(vm->visu.sdl.atlas[color_index]
 				[(int)str[i]].surface, NULL, 
 					vm->visu.sdl.w_surface, &char_rect) < 0)
 		{

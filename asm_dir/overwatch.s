@@ -26,7 +26,7 @@ pharah:
 	st		r1, 6
 	live	%0
 	fork	%:symmetra
-	st		r1, 6
+	st		r5, 6
 	live	%0
 	ld		%589824, r13				# r13 = 0x00090000 (0x00 zjmp %0)
 	ld		%8, r14

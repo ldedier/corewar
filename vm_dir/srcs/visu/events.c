@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/08 23:37:36 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/02 22:31:02 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/03 18:26:28 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	ft_increment_cpt(t_vm *vm, int direction)
 	if (vm->visu.time_manager.cycles_per_turn <= 4)
 		vm->visu.time_manager.cycles_per_turn =
 		ft_fmax(vm->visu.time_manager.cycles_per_turn +
-				(direction / 10.0), 0.01);
+				(direction / 10.0), 0.0166);
 	else if (vm->visu.time_manager.cycles_per_turn >= 5000)
 		vm->visu.time_manager.cycles_per_turn = ft_fmin(20000, 
 			vm->visu.time_manager.cycles_per_turn + direction * 1000);

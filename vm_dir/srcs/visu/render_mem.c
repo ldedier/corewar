@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/11 17:08:36 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/30 19:29:18 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/03 15:52:33 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,6 @@ int		ft_render_process(t_vm *vm, t_process *process)
 {
 	SDL_Rect rect;
 	t_color_manager c;
-
-//	ft_printf("ca va peter\n");
-//	ft_printf("%d", process->pc);
-//	ft_printf("\nca a peter\n");
 
 	vm->metarena[process->pc].process_color_index = process->player->color.index;
 	c = ft_get_color(*(int *)(process->player->color.value));

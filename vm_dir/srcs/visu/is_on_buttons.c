@@ -6,17 +6,17 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 21:54:50 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/02 18:27:32 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/04 00:04:40 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
 int			ft_is_in_scrolled_rect(t_ixy xy, SDL_Rect rect,
-				t_vscrollbar vscrollbar)
+		t_vscrollbar vscrollbar)
 {
 	if (xy.y > vscrollbar.pos.y &&
-		xy.y < vscrollbar.pos.y + vscrollbar.height)
+			xy.y < vscrollbar.pos.y + vscrollbar.height)
 	{
 		xy.y += ft_get_scrolled_height(vscrollbar);
 		return (ft_is_in_rect(xy, rect));
@@ -25,14 +25,15 @@ int			ft_is_in_scrolled_rect(t_ixy xy, SDL_Rect rect,
 }
 
 int			ft_is_on_button(t_vm *vm, t_ixy xy, t_button *button,
-				t_button **to_fill)
+		t_button **to_fill)
 {
 	if (!button->visible || !button->enabled ||
-		(vm->visu.notification.image_index != -1 &&
-		 button != &vm->visu.buttons[OK_BUTTON]))
+			button->phase != vm->visu.phase ||
+			(vm->visu.notification.image_index != -1 &&
+			 button != &vm->visu.buttons[OK_BUTTON]))
 		return (0);
 	if (button->vscrollbar == NULL ||
-		!ft_to_print_scrollbar(*button->vscrollbar))
+			!ft_to_print_scrollbar(*button->vscrollbar))
 	{
 		if (ft_is_in_rect(xy, button->rect))
 		{
@@ -86,26 +87,23 @@ int			ft_is_on_buttons(t_vm *vm, t_ixy xy, t_button **but)
 	int		i;
 	t_list	*ptr;
 
-	if (vm->visu.phase == PHASE_INIT)
+	if (ft_is_on_close(vm, xy, but))
+		return (1);
+	i = 0;
+	while (i < NB_BUTTONS)
 	{
-		if (ft_is_on_close(vm, xy, but))
+		if (ft_is_on_button(vm, xy, &(vm->visu.buttons[i]), but) &&
+				(vm->client.active || i >= FIGHT_BUTTON))
 			return (1);
-		i = 0;
-		while (i < NB_BUTTONS)
-		{
-			if (ft_is_on_button(vm, xy, &(vm->visu.buttons[i]), but) &&
-					(vm->client.active || i >= FIGHT_BUTTON))
-				return (1);
-			i++;
-		}
-		ptr = vm->client.client_slots;
-		while (ptr != NULL)
-		{
-			if (ft_is_on_button(vm, xy, &((t_client_slot *)(ptr->content))->download,
-						but))
-				return (1);
-			ptr = ptr->next;
-		}
+		i++;
+	}
+	ptr = vm->client.client_slots;
+	while (ptr != NULL)
+	{
+		if (ft_is_on_button(vm, xy, &((t_client_slot *)(ptr->content))->download,
+					but))
+			return (1);
+		ptr = ptr->next;
 	}
 	return (0);
 }

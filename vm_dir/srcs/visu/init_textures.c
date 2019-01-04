@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 15:02:55 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/02 17:07:25 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/04 03:13:48 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,65 @@ int		ft_init_textures_2(t_visu *visu)
 	if (!(visu->sdl.images[OK] =
 			ft_load_image(PATH"/resources/ok.png")))
 		return (1);
+	if (!(visu->sdl.images[BREAKDOWN_BAR] =
+			ft_load_image(PATH"/resources/breakdown_bar.png")))
+		return (1);
+	if (!(visu->sdl.images[BACK] =
+			ft_load_image(PATH"/resources/back.png")))
+		return (1);
+	return (0);
+}
+
+char	*get_prefixed_str(char *prefix, int i)
+{
+	char *str;
+	char *tmp;
+
+	if (!(tmp = ft_itoa(i)))
+		return (NULL);
+	if (!(str = ft_strjoin_3(prefix, tmp, ".png")))
+	{
+		free(tmp);
+		return (NULL);
+	}
+	return (str);
+}
+
+
+int		ft_init_hp_surface(t_visu *visu)
+{
+	int i;
+	char *str;
+
+	i = 0;
+	while (i < NB_FRAMES)
+	{
+		if (!(str = get_prefixed_str(PATH"/resources/background_", i + 1)))
+			return (1);
+		if (!(visu->frames[i].background = ft_load_image(str)))
+		{
+			free(str);
+			return (1);
+		}
+		free(str);
+		if (!(str = get_prefixed_str(PATH"/resources/voldemort_light_", i + 1)))
+			return (1);
+		if (!(visu->frames[i].voldemort_ray = ft_load_image(str)))
+		{
+			free(str);
+			return (1);
+		}
+		free(str);
+		if (!(str = get_prefixed_str(PATH"/resources/hp_light_", i + 1)))
+			return (1);
+		if (!(visu->frames[i].harry_ray = ft_load_image(str)))
+		{
+			free(str);
+			return (1);
+		}
+		free(str);
+		i++;
+	}
 	return (0);
 }
 
@@ -94,6 +153,11 @@ int		ft_init_textures(t_visu *visu)
 		return (1);
 	if (ft_init_textures_2(visu))
 		return (1);
+	if (ft_init_hp_surface(visu))
+	{
+		ft_printf("OLALALAb\n");
+		return (1);
+	}
 	if (!(visu->sdl.images[FIGHT] = ft_load_image(PATH"/resources/fight.png")))
 		return (1);
 	if (!(visu->sdl.images[UL_DISABLED] =
