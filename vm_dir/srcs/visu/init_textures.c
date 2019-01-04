@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 15:02:55 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/04 03:13:48 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/04 18:00:52 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,24 +126,46 @@ int		ft_init_hp_surface(t_visu *visu)
 			return (1);
 		}
 		free(str);
+		i++;
+	}
+	visu->react.anim_ratio = (visu->center.dashboard_width - 1) /
+		(double)visu->frames[0].background->w;
+	i = 0;
+	while(i < NB_FRAMES)
+	{
 		if (!(str = get_prefixed_str(PATH"/resources/voldemort_light_", i + 1)))
 			return (1);
-		if (!(visu->frames[i].voldemort_ray = ft_load_image(str)))
+		if (!(visu->frames[i].voldemort_ray.surface = ft_load_image(str)))
 		{
 			free(str);
 			return (1);
 		}
+		visu->frames[i].voldemort_ray.screen_width =
+			visu->frames[i].voldemort_ray.surface->w * visu->react.anim_ratio;
 		free(str);
 		if (!(str = get_prefixed_str(PATH"/resources/hp_light_", i + 1)))
 			return (1);
-		if (!(visu->frames[i].harry_ray = ft_load_image(str)))
+		if (!(visu->frames[i].harry_ray.surface = ft_load_image(str)))
 		{
 			free(str);
 			return (1);
 		}
+		visu->frames[i].harry_ray.screen_width =
+			visu->frames[i].harry_ray.surface->w * visu->react.anim_ratio;
 		free(str);
 		i++;
 	}
+	visu->frames[0].voldemort_ray.x_offset = 289 * visu->react.anim_ratio;
+	visu->frames[1].voldemort_ray.x_offset = 292 * visu->react.anim_ratio; 
+	visu->frames[2].voldemort_ray.x_offset = 292 * visu->react.anim_ratio; 
+	visu->frames[3].voldemort_ray.x_offset = 291 * visu->react.anim_ratio; 
+	visu->frames[4].voldemort_ray.x_offset = 292 * visu->react.anim_ratio; 
+
+	visu->frames[0].harry_ray.x_offset = 740 * visu->react.anim_ratio;
+	visu->frames[1].harry_ray.x_offset = 728 * visu->react.anim_ratio;
+	visu->frames[2].harry_ray.x_offset = 728 * visu->react.anim_ratio;
+	visu->frames[3].harry_ray.x_offset = 731 * visu->react.anim_ratio;
+	visu->frames[4].harry_ray.x_offset = 728 * visu->react.anim_ratio;
 	return (0);
 }
 
@@ -153,11 +175,6 @@ int		ft_init_textures(t_visu *visu)
 		return (1);
 	if (ft_init_textures_2(visu))
 		return (1);
-	if (ft_init_hp_surface(visu))
-	{
-		ft_printf("OLALALAb\n");
-		return (1);
-	}
 	if (!(visu->sdl.images[FIGHT] = ft_load_image(PATH"/resources/fight.png")))
 		return (1);
 	if (!(visu->sdl.images[UL_DISABLED] =

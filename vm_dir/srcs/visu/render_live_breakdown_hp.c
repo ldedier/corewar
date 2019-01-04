@@ -6,22 +6,88 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/03 21:25:21 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/04 05:24:44 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/04 21:18:21 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
+/*
+** return the player1 / player2 live ratio
+*/
+
+double	get_magic_ratio(int lives_player_1, int lives_player_2)
+{
+	if (!lives_player_1 && !lives_player_2)
+		return (0.5);
+	else
+		return ((double)lives_player_1 /
+			(double)(lives_player_1 + lives_player_2));
+}
+
+int		ft_moy(int val1, int val2)
+{
+	return ((val1 + val2) / 2);
+}
+
 int		ft_render_magic_fight(t_vm *vm)
 {
-	SDL_Rect bgrect;
+	SDL_Rect	rect;
+	double		ratio;
 
-	bgrect.x = vm->visu.center.dashboard_x + 1;
-	bgrect.w = vm->visu.center.dashboard_width - 1;
-	bgrect.y = vm->visu.center.live_breakdown_hp_anim_y;
-	bgrect.h = vm->visu.center.live_breakdown_hp_anim_h;
-	if (SDL_BlitScaled(vm->visu.frames[0].background, NULL,
-			vm->visu.sdl.w_surface, &bgrect))
+	rect.x = vm->visu.center.dashboard_x + 1;
+	rect.w = vm->visu.center.dashboard_width - 1;
+	rect.y = vm->visu.center.live_breakdown_hp_anim_y;
+	rect.h = vm->visu.center.live_breakdown_hp_anim_h;
+
+	static int nb_live_player_1 = 0;
+	static int nb_live_player_2 = 0;
+	static int i = 0;
+	static int val = 2;
+	static int pola = 0;
+
+	ratio = get_magic_ratio(nb_live_player_1, nb_live_player_2);
+	
+	if (i < exp(val))
+		i++;
+	else
+	{
+		i = 0;
+		pola = !pola;
+		val++;
+	}
+	if (pola)
+		nb_live_player_1++;
+	else
+		nb_live_player_2++;
+	if (SDL_BlitScaled(vm->visu.frames[vm->visu.animation_index].background,
+			NULL, vm->visu.sdl.w_surface, &rect))
+		return (1);
+
+	int	diff_x = (vm->visu.frames[vm->visu.animation_index].harry_ray.x_offset -
+		vm->visu.frames[vm->visu.animation_index].harry_ray.screen_width) - 
+		(vm->visu.frames[vm->visu.animation_index].
+		voldemort_ray.screen_width + vm->visu.frames[vm->visu.animation_index].
+		voldemort_ray.x_offset);
+
+	rect.x = vm->visu.center.dashboard_x + 1 +
+		vm->visu.frames[vm->visu.animation_index].voldemort_ray.x_offset;
+
+	int v_w_2 = ((vm->visu.frames[vm->visu.animation_index].
+		harry_ray.x_offset - vm->visu.frames[vm->visu.animation_index].
+		voldemort_ray.x_offset) * ratio);
+	
+	rect.w = v_w_2;
+	if (SDL_BlitScaled(vm->visu.frames[vm->visu.animation_index].
+				voldemort_ray.surface, NULL,
+			vm->visu.sdl.w_surface, &rect))
+		return (1);
+	rect.x = rect.x + rect.w + diff_x;
+	rect.w = vm->visu.center.dashboard_x + 1 +
+		vm->visu.frames[vm->visu.animation_index].harry_ray.x_offset - rect.x;
+	if (SDL_BlitScaled(vm->visu.frames[vm->visu.animation_index].
+				harry_ray.surface, NULL,
+			vm->visu.sdl.w_surface, &rect))
 		return (1);
 	return (0);
 }

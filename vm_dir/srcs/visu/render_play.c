@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 19:07:54 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/04 04:10:43 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/04 21:34:52 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ int		ft_render_dashboard(t_vm *vm)
 
 int		ft_render_play(t_vm *vm)
 {
+	static double anim_rest = 0;
+
 	if (ft_render_all_process(vm))
 		return (1);
 	if (ft_render_memory(vm))
@@ -72,5 +74,14 @@ int		ft_render_play(t_vm *vm)
 	ft_reset_metarena(vm);
 	if (ft_render_dashboard(vm))
 		return (1);
+	if (!vm->visu.time_manager.pause)
+	{
+		anim_rest += ft_fclamp(0.25,
+			vm->visu.time_manager.cycles_per_turn * 0.025, 1);
+		vm->visu.animation_index = (int)(vm->visu.animation_index + anim_rest)
+			% NB_FRAMES;
+		if (anim_rest > 1)
+			anim_rest -= (int)anim_rest;
+	}
 	return (0);
 }

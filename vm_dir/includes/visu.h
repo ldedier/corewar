@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/04 05:22:43 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/04 18:22:42 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@
 
 
 # define LIVE_BREAKDOWN_HP_TITLE_TOP	30
-# define LIVE_BREAKDOWN_HP_TITLE_BOTTOM	40
+# define LIVE_BREAKDOWN_HP_TITLE_BOTTOM	30
 
 # define LIVE_BREAKDOWN_HP_PLAYERS_H		30
 
@@ -501,7 +501,6 @@ typedef struct			s_center
 	int					back_width;
 	int					back_height;
 	int					back_left;
-
 }						t_center;
 
 typedef struct			s_slot
@@ -586,13 +585,19 @@ typedef struct			s_notification
 	int					image_index;
 }						t_notification;
 
+
+typedef struct			s_ray
+{
+	SDL_Surface			*surface;
+	int					screen_width;
+	int					x_offset;
+}						t_ray;
+
 typedef struct			s_hp_frame
 {
 	SDL_Surface			*background;
-	SDL_Surface			*harry_ray;
-	SDL_Surface			*voldemort_ray;
-	int					x_offset_harry;
-	int					x_offset_voldemort;
+	t_ray				harry_ray;
+	t_ray				voldemort_ray;
 }						t_hp_frame;
 
 struct					s_visu
@@ -615,6 +620,7 @@ struct					s_visu
 	t_notification		notification;
 	t_time_manager		time_manager;
 	t_hp_frame			frames[NB_FRAMES];
+	int					animation_index;
 };
 
 int						ft_init_all_visu(t_vm *vm, t_visu *v);
@@ -782,4 +788,5 @@ int						ft_render_live_breakdown_hp(t_vm *vm);
 int						go_back(t_vm *vm, t_button *this, t_ixy xy);
 int						ft_render_play_footer(t_vm *vm);
 int						ft_render_live_breakdown_title(t_vm *vm, SDL_Rect rect);
+int						ft_init_hp_surface(t_visu *visu);
 #endif
