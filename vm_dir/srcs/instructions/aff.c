@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   aff.c			                                    :+:      :+:    :+:   */
+/*   aff.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/03 20:22:56 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/04 13:24:26 by uboumedj         ###   ########.fr       */
+/*   Created: 2019/01/04 17:36:44 by uboumedj          #+#    #+#             */
+/*   Updated: 2019/01/04 17:37:59 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ static void		output_aff(t_process *proc)
 	proc->carry = 1;
 }
 
-int						ins_aff(t_vm *vm, t_process *proc, t_parameter arg[3])
+int				ins_aff(t_vm *vm, t_process *proc, t_parameter arg[3])
 {
 	char	*tmp;
 	int		i;
 	int		len;
-	exit(1);
+
 	if (!vm->dump)
 	{
 		if ((proc->reg[arg[0].value - 1]) % 256 == 0)
@@ -45,13 +45,13 @@ int						ins_aff(t_vm *vm, t_process *proc, t_parameter arg[3])
 		}
 		else
 		{
-				tmp = ft_memalloc((size_t)len + 2);
-				i = -1;
-				while (++i < len)
-					tmp[i] = proc->player->aff_buf[i];
-				tmp[i] = (proc->reg[arg[0].value - 1]) % 256;
-				free(proc->player->aff_buf);
-				proc->player->aff_buf = tmp;
+			tmp = ft_memalloc((size_t)len + 2);
+			i = -1;
+			while (++i < len)
+				tmp[i] = proc->player->aff_buf[i];
+			tmp[i] = (proc->reg[arg[0].value - 1]) % 256;
+			free(proc->player->aff_buf);
+			proc->player->aff_buf = tmp;
 		}
 	}
 	return (SUCCESS);

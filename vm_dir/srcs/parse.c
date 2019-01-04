@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 18:41:42 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/04 16:18:52 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/01/04 17:25:44 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ static void		check_name_comm(t_vm *vm, int i)
 
 /*
 **check_head_size static function is used to check the size given in the .cor's
-**header. If it doesn't match the real size of the instructions, the program will
-**output an error message and exit.
+**header. If it doesn't match the real size of the instructions, the program
+**will output an error message and exit.
 */
 
 static void		check_head_size(t_vm *vm, int i)

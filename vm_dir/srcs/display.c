@@ -6,12 +6,13 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 21:43:44 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/04 14:59:37 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/01/04 17:19:09 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
-void	display_live_player(t_vm *vm, int op_code)
+
+void		display_live_player(t_vm *vm, int op_code)
 {
 	t_process *proc;
 
@@ -22,13 +23,13 @@ void	display_live_player(t_vm *vm, int op_code)
 	}
 }
 
-void	display_ins_description(t_vm *vm, char *str, int opcode)
+void		display_ins_description(t_vm *vm, char *str, int opcode)
 {
 	ft_printf("%s >>> %*-s%s", COLF_CYAN, PAD_INS - 5, str, COLF_OFF);
 	display_live_player(vm, opcode);
 }
 
-void	display_register(t_process *proc)
+void		display_register(t_process *proc)
 {
 	int i;
 
@@ -38,8 +39,7 @@ void	display_register(t_process *proc)
 	ft_printf("\n");
 }
 
-
-void	display(t_vm *vm, t_process *proc, int type)
+void		display(t_vm *vm, t_process *proc, int type)
 {
 	static void (*display[NB_GAME_MSG])(t_vm *vm, t_process *proc) = {
 		&pl_pc, &pl_cycle, pl_live, &pl_death, &pl_victory,

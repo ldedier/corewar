@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                          :+:      :+:    :+:   */
+/*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:54:14 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/04 14:34:24 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/01/04 17:18:16 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-int		ft_init_client(t_client *client)
+int				ft_init_client(t_client *client)
 {
 	if (!(client->socket_set = SDLNet_AllocSocketSet(1)))
 		return (ft_net_error());
@@ -32,7 +32,7 @@ int		ft_init_client(t_client *client)
 	return (0);
 }
 
-int		ft_download(t_vm *vm, t_button *this, t_ixy xy)
+int				ft_download(t_vm *vm, t_button *this, t_ixy xy)
 {
 	(void)xy;
 	(void)vm;
@@ -44,7 +44,7 @@ int		ft_download(t_vm *vm, t_button *this, t_ixy xy)
 	return (0);
 }
 
-void	ft_populate_download_button(t_client_slot *client_slot,
+void			ft_populate_download_button(t_client_slot *client_slot,
 			t_button *button)
 {
 	button->visible = 1;
@@ -67,7 +67,7 @@ t_client_slot	*ft_new_client_slot(t_player *player)
 	return (slot);
 }
 
-int		ft_add_new_client_slot(t_client *client, int i, t_name_len name_len,
+int				ft_add_new_client_slot(t_client *client, int i, t_name_len name_len,
 		t_score score)
 {
 	t_client_slot	*slot;
@@ -89,7 +89,7 @@ int		ft_add_new_client_slot(t_client *client, int i, t_name_len name_len,
 	return (0);
 }
 
-int		ft_process_add_client_slots(int nb_bytes, t_client *client)
+int				ft_process_add_client_slots(int nb_bytes, t_client *client)
 {
 	t_nb_players	nb_players;
 	t_name_len		name_len;
@@ -116,7 +116,7 @@ int		ft_process_add_client_slots(int nb_bytes, t_client *client)
 	return (0);
 }
 
-int		ft_process_connect_status(int nb_bytes, t_client *client)
+int				ft_process_connect_status(int nb_bytes, t_client *client)
 {
 	if (nb_bytes < (int)sizeof(t_flag))
 		return (1);
@@ -142,7 +142,7 @@ int		ft_process_connect_status(int nb_bytes, t_client *client)
 	}
 }
 
-int		ft_receive_connect_status(t_client *client)
+int				ft_receive_connect_status(t_client *client)
 {
 	int nb_bytes;
 
@@ -162,7 +162,7 @@ int		ft_receive_connect_status(t_client *client)
 	return (1);
 }
 
-int		ft_process_client_events(t_vm *vm)
+int				ft_process_client_events(t_vm *vm)
 {
 	int nb_bytes;
 
@@ -183,12 +183,11 @@ int		ft_process_client_events(t_vm *vm)
 			printf("No response from the server for too long\n");
 			return (1);
 		}
-
 	}
 	return (0);
 }
 
-int		process_client(t_vm *vm)
+int				process_client(t_vm *vm)
 {
 	if (SDLNet_Init() == -1)
 		return (ft_net_error());

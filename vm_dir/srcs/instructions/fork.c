@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 20:22:56 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/13 18:31:39 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/04 17:40:37 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 /*
 ** Input: vm (for arena and player), proc (for register and pc),
-** arg for X arg, 
-** Returns 
+** arg for X arg
 */
 
 int		ins_fork(t_vm *vm, t_process *proc, t_parameter arg[3])

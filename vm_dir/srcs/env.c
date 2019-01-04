@@ -6,13 +6,13 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/14 18:19:03 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/04 14:36:09 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/01/04 17:24:07 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-static int	ft_strarrlen(char **str)
+static int		ft_strarrlen(char **str)
 {
 	int i;
 
@@ -27,14 +27,13 @@ static int	ft_strarrlen(char **str)
 	return (i);
 }
 
-
 /*
- ** Scan environment tab for a variable
- ** Input: variable as string
- ** Return : corresponding index if found, -1 otherwise
- */
+** Scan environment tab for a variable
+** Input: variable as string
+** Return : corresponding index if found, -1 otherwise
+*/
 
-int			get_envar_index(char ***env_var, char *var, int nb_envar)
+int				get_envar_index(char ***env_var, char *var, int nb_envar)
 {
 	int		index;
 
@@ -45,10 +44,10 @@ int			get_envar_index(char ***env_var, char *var, int nb_envar)
 }
 
 /*
- ** Split environment, store in char **tab by variable name
- ** Input: environment
- ** Return: 0 if malloc fail, total number of environment variables otherwise
- */
+** Split environment, store in char **tab by variable name
+** Input: environment
+** Return: 0 if malloc fail, total number of environment variables otherwise
+*/
 
 int				get_envar(char **env, char ****env_var)
 {

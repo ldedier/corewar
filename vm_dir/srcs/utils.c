@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 17:38:14 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/14 17:59:06 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/04 17:35:37 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int			mod(int val, int max)
 	return (val % max);
 }
 
-int		ft_pow(int n, int pow) // remove
+int			ft_pow(int n, int pow)
 {
 	int result;
 
@@ -32,7 +32,7 @@ int		ft_pow(int n, int pow) // remove
 	return (result);
 }
 
-t_process *get_proc_num(t_list *lst, int num)
+t_process	*get_proc_num(t_list *lst, int num)
 {
 	t_list	*tmp;
 
@@ -46,7 +46,7 @@ t_process *get_proc_num(t_list *lst, int num)
 	return (NULL);
 }
 
-t_process *get_proc_index(t_list *lst, int index)
+t_process	*get_proc_index(t_list *lst, int index)
 {
 	t_list	*tmp;
 
@@ -55,4 +55,3 @@ t_process *get_proc_index(t_list *lst, int index)
 		tmp = tmp->next;
 	return ((t_process *)(tmp->content));
 }
-

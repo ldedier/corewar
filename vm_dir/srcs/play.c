@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/04 16:31:04 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/01/04 17:33:20 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ static void			check_resize_cycle(t_vm *vm, int *cycle)
 		display(vm, 0, LIVES_TURN);
 		display(vm, 0, NEW_RESIZE);
 		vm->live.total_pl = 0;
-		vm->checks = MAX_CHECKS ;
+		vm->checks = MAX_CHECKS;
 		vm->c_to_die -= CYCLE_DELTA;
-		return;
+		return ;
 	}
 	vm->live.total_pl = 0;
 	display(vm, 0, AUTO_RESIZE);
@@ -51,10 +51,10 @@ static void			check_resize_cycle(t_vm *vm, int *cycle)
 
 static void		reset_live_allprocesses(t_vm *vm)
 {
-	int i;
-	t_list	*players;
-	t_process *proc;
-	t_list	*tmp;
+	int			i;
+	t_list		*players;
+	t_process	*proc;
+	t_list		*tmp;
 
 	display(vm, 0, CYCLE_END);
 	players = vm->proc;
@@ -95,8 +95,9 @@ static int		last_instruction_unresolved(t_vm *vm, t_process *proc)
 }
 
 /*
-** check if last instruction still running
-** else, if valid instruction at current position, launch it, adjust cycles, and display
+** checks if last instruction is still running
+** else, if there's a  valid instruction at current position launch it,
+** adjust cycles, and display
 ** else move on
 */
 
@@ -104,7 +105,7 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 {
 	t_instruction	ins;
 //	int				ret;
-	static int 	(*f_ins[NB_INSTRUCTIONS + 1])(t_vm *vm, t_process *proc, 
+	static int		(*f_ins[NB_INSTRUCTIONS + 1])(t_vm *vm, t_process *proc,
 			t_parameter arg[3]) = {NULL,
 		&ins_live, &ins_ld, &ins_st, &ins_add, &ins_sub, &ins_and, &ins_or,
 		&ins_xor, &ins_zjmp, &ins_ldi, &ins_sti, &ins_fork, &ins_lld, &ins_lldi,
@@ -112,13 +113,14 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 
 	if (last_instruction_unresolved(vm, proc))
 		return (0);
-	if ((proc->ins_cycle = get_instruction(vm->arena, &ins, proc->pc, MEM_SIZE)))
+	if ((proc->ins_cycle = get_instruction(vm->arena,
+					&ins, proc->pc, MEM_SIZE)))
 	{
 		f_ins[(int)ins.op.opcode](vm, proc, ins.params);
 		proc->cycle = g_op_tab[(int)ins.op.opcode - 1].nb_cycles;
 		display_ins_description(vm, ins.op.description, ins.op.opcode);
 		display(vm, proc, PL_CYCLE);
-		--proc->cycle; 
+		--proc->cycle;
 		return (1);
 	}
 	proc->ins_cycle = 1;
@@ -128,7 +130,7 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 }
 
 /*
-** If there's only 1 player or cycle_to_die = 0, displays winner and exits the game,
+** If there's only 1 player or cycle_to_die = 0, displays winner and exits game,
 ** else checks if cycle_to_die should change value
 */
 
@@ -137,7 +139,8 @@ int			handle_end_cycle(t_vm *vm, int *cycle)
 	reset_live_allprocesses(vm);
 	if (vm->nb_players <= 1 || !vm->c_to_die)
 	{
-		display(vm, get_proc_num(vm->proc, vm->live.last_pl->player->num), PL_VICTORY);
+		display(vm, get_proc_num(vm->proc, vm->live.last_pl->player->num),
+				PL_VICTORY);
 		return (0);
 	}
 	check_resize_cycle(vm, cycle);
@@ -145,7 +148,7 @@ int			handle_end_cycle(t_vm *vm, int *cycle)
 }
 
 /*
-**
+**process_cycle
 */
 
 void		process_cycle(t_vm *vm)
@@ -171,7 +174,7 @@ void		process_cycle(t_vm *vm)
 		if (!vm->visu.active)
 			ft_printf("\n");
 		if (!players->next && change)
-					display_arena((unsigned char *)vm->arena);
+			display_arena((unsigned char *)vm->arena);
 		players = players->next;
 	}
 }
@@ -179,20 +182,23 @@ void		process_cycle(t_vm *vm)
 /*
 ** Core of the game progression : continues until cycles to end = 0 or
 ** only 1 player left.
-** Each turn, it : 
-** - Checks if it's the end of a cycle
-** - Loops through all players:
-**		- moves forward according to latest instruction (or 1 if no valid instruction)
-**		- checks if there's a valid instruction
+** Each turn, it :
+** Checks if it's the end of a cycle
+** Loops through all players:
+**	- moves forward according to latest instruction or 1 if no valid instruction
+**	- checks if there's a valid instruction
 */
 
 int		play(t_vm *vm)
 {
-	static int cycle = 1;
+	static int cycle;
+
+	cycle = 1;
 	display(vm, 0, CYCLE_NBR);
 	while (!(cycle == vm->c_to_die && !handle_end_cycle(vm, &cycle)))
 	{
-		ft_printf("\n%scycle = %d | %s ", COLF_BGREY, cycle, MSG_CYCLES_REMAINING);
+		ft_printf("\n%scycle = %d | %s ", COLF_BGREY,
+				cycle, MSG_CYCLES_REMAINING);
 		ft_printf(" [ %d ] %s\n", CYCLE_TO_DIE - cycle, COLF_OFF);
 		process_cycle(vm);
 		++cycle;

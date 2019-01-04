@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   display_player.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/01/01 17:19:41 by emuckens          #+#    #+#             */
+/*   Updated: 2019/01/04 17:20:38 by uboumedj         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "vm.h"
 
 void	pl_death(t_vm *vm, t_process *proc)
@@ -15,7 +27,8 @@ void	pl_live(t_vm *vm, t_process *proc)
 void	pl_victory(t_vm *vm, t_process *proc)
 {
 	(void)vm;
-	ft_printf("%s %s %d [%s] \n", MSG_VICTORY, LABEL_PLAYER, proc->player->num, proc->player->name);
+	ft_printf("%s %s %d [%s] \n",
+			MSG_VICTORY, LABEL_PLAYER, proc->player->num, proc->player->name);
 }
 
 void	pl_cycle(t_vm *vm, t_process *proc)

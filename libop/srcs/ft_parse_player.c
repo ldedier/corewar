@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 18:41:42 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/04 16:22:21 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/01/04 16:52:49 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,33 +36,6 @@ static void		parse_name_and_comm(t_player *player)
 		n++;
 	}
 	player->comm[n] = 0;
-}
-
-/*
-**check_name_comm static function is used by the parse function to check the
-**name and comm arrays of the given player to make sure it contains no forbi-
-**den characters
-*/
-
-static int	check_name_comm(t_player *player)
-{
-	int		n;
-
-	n = 0;
-	while (player->name[n] != 0)
-	{
-		if (!(ft_strchr(OK_CHARS, player->name[n])))
-			return (ft_return_verbosed(INVALID_CHARS, 1));
-		n++;
-	}
-	n = 0;
-	while (player->comm[n] != 0)
-	{
-		if (!(ft_strchr(OK_CHARS, player->comm[n])))
-			return (ft_return_verbosed(INVALID_CHARS, 1));
-		n++;
-	}
-	return (0);
 }
 
 /*
@@ -124,8 +97,6 @@ static int		parse_instructions(t_player *player)
 int			ft_parse_player(t_player *player)
 {
 	parse_name_and_comm(player);
-	if (check_name_comm(player))
-		return (1);
 	if (parse_instructions(player))
 		return (1);
 	player->name_len = ft_strlen(player->name);
