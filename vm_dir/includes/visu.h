@@ -116,8 +116,8 @@
 # define ENTRY_SPACE			30
 
 
-# define LIVE_BREAKDOWN_HP_TITLE_TOP	20
-# define LIVE_BREAKDOWN_HP_TITLE_BOTTOM	20
+# define LIVE_BREAKDOWN_HP_TITLE_TOP	30
+# define LIVE_BREAKDOWN_HP_TITLE_BOTTOM	40
 
 # define LIVE_BREAKDOWN_HP_PLAYERS_H		30
 
@@ -347,6 +347,7 @@ typedef struct          s_reactive
 {
 	double              w_scale;
 	double              h_scale;
+	double				anim_ratio;
 }                       t_reactive;
 
 typedef struct          s_framerate

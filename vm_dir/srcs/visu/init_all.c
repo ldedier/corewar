@@ -34,6 +34,8 @@ int		ft_init_positions(t_vm *vm, t_visu *v)
 	v->react.w_scale = (double)v->dim.width / 2560.0;
 	v->react.h_scale = (double)v->dim.height / 1440.0;
 	ft_init_center(v, &(v->center));
+	v->react.anim_ratio = (v->center.dashboard_width - 1) / (double)v->frames[0].background->w;
+	printf("%d\n", v->frames[0].background->w);
 	ft_init_players_list(vm, v);
 	ft_init_vscrollbars_compressed_size(vm, v);
 	ft_populate_slots_positions(vm, v);
