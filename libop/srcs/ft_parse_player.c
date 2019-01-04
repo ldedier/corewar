@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 18:41:42 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/19 17:13:24 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/04 16:22:21 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,14 @@ static int	check_name_comm(t_player *player)
 	n = 0;
 	while (player->name[n] != 0)
 	{
-		if (!(ft_strchr(LABEL_CHARS, player->name[n])))
+		if (!(ft_strchr(OK_CHARS, player->name[n])))
 			return (ft_return_verbosed(INVALID_CHARS, 1));
 		n++;
 	}
 	n = 0;
 	while (player->comm[n] != 0)
 	{
-		if (!(ft_strchr(LABEL_CHARS, player->comm[n])))
+		if (!(ft_strchr(OK_CHARS, player->comm[n])))
 			return (ft_return_verbosed(INVALID_CHARS, 1));
 		n++;
 	}
@@ -66,8 +66,9 @@ static int	check_name_comm(t_player *player)
 }
 
 /*
-**check_head_size static function is used to
-**
+**check_head_size static function is used to check the size given in the .cor's
+**header. If it doesn't match the actual size of the instructions, it exits 
+**the program.
 */
 
 static void		check_head_size(t_player *player)
@@ -85,7 +86,7 @@ static void		check_head_size(t_player *player)
 }
 
 /*
-**instructions static function is used by the parse function to add
+**parse_instructions static function is used by the parse function to add
 **the [algo] part (the instructions) inside the player structure. It also
 **checks if the instructions part exceeds the max allowed size CHAMP_MAX_SIZE.
 */

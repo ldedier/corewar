@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/20 16:58:11 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/04 16:31:04 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void			check_resize_cycle(t_vm *vm, int *cycle)
 
 /*
 ** Upon reaching cycle end
-** Scan all players, checks if they have lived previous turn;
+** Scans all players, checks if they have lived previous turn;
 ** if so set live back to one, if not remove from process list;
 */
 
@@ -128,8 +128,8 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 }
 
 /*
-** if 1 player or cycle_to_die = 0, display winner and return 0 to exit game
-** else check if cycle_to_die should change value
+** If there's only 1 player or cycle_to_die = 0, displays winner and exits the game,
+** else checks if cycle_to_die should change value
 */
 
 int			handle_end_cycle(t_vm *vm, int *cycle)
@@ -177,15 +177,14 @@ void		process_cycle(t_vm *vm)
 }
 
 /*
-** Core of game progression | calls itself until cycles to end = 0 or only 1
-** player left
-** Each turn: 
-** Detect if end of cycle
-** Loop through players:
-**	- move forward amount of latest instruction (or 1 if no valid instruction)
-**	- check if valid instruction
+** Core of the game progression : continues until cycles to end = 0 or
+** only 1 player left.
+** Each turn, it : 
+** - Checks if it's the end of a cycle
+** - Loops through all players:
+**		- moves forward according to latest instruction (or 1 if no valid instruction)
+**		- checks if there's a valid instruction
 */
-
 
 int		play(t_vm *vm)
 {

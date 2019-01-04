@@ -6,14 +6,14 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 16:42:17 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/21 19:32:05 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/04 16:17:27 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
 /*
-** update the number of players currently in the arena
+** update_nb_players updates the number of players currently in the arena
 */
 
 void	update_nb_players(t_vm *vm)

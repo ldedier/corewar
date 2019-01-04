@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/14 18:19:03 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/14 18:35:05 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/04 14:36:09 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int			get_envar_index(char ***env_var, char *var, int nb_envar)
 /*
  ** Split environment, store in char **tab by variable name
  ** Input: environment
- ** Return: 0 if malloc faile, total number of environment variables otherwise
+ ** Return: 0 if malloc fail, total number of environment variables otherwise
  */
 
 int				get_envar(char **env, char ****env_var)

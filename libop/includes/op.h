@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 19:01:37 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/21 19:54:31 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/04 16:31:09 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 ** On part du principe qu'un int fait 32 bits. Est-ce vrai chez vous ?
 */
 # include "libft.h"
+# include "errors.h"
 
 # define E_IND					2
 # define E_REG					1
@@ -41,6 +42,7 @@
 # define DIRECT_CHAR			'%'
 # define SEPARATOR_CHAR			','
 # define LABEL_CHARS			"abcdefghijklmnopqrstuvwxyz_0123456789 "
+# define OK_CHARS				"abcdefghijklmnopqrstuvwxyz_0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZ./*-"
 # define NAME_CMD_STRING		".name"
 # define COMMENT_CMD_STRING		".comment"
 # define REG_NUMBER				16

@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 20:22:56 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/13 18:31:07 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/04 13:24:26 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int						ins_aff(t_vm *vm, t_process *proc, t_parameter arg[3])
 	char	*tmp;
 	int		i;
 	int		len;
+	exit(1);
 	if (!vm->dump)
 	{
 		if ((proc->reg[arg[0].value - 1]) % 256 == 0)
