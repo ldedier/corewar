@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/04 21:44:15 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/04 22:28:46 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static void		reset_live_allprocesses(t_vm *vm)
 			vm->proc = (tmp == vm->proc) ? tmp->next : vm->proc;
 			ft_memdel((void **)&tmp->content);
 			ft_memdel((void **)&tmp);
-			--vm->nb_players; // OLALALALALLALALALALALA 
+		//	--vm->nb_players; // OLALALALALLALALALALALA 
 		}
 		else if ((proc->live = 1))
 		{
