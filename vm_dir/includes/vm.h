@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/21 19:32:27 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/07 17:26:26 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct		s_process
 	int				live;
 	unsigned int	reg[REG_NUMBER];
 	int				pc;
-	int				ins_cycle;
+	int				ins_bytelen;
 	int				cycle;
 	unsigned char	carry;
 }					t_process;
@@ -41,19 +41,13 @@ typedef struct		s_metadata
 	char			process_color_index;
 }					t_metadata;
 
-typedef struct		s_live
-{
-	int				nb;
-	int				total_pl;
-	t_process		*last_pl;
-}					t_live;
-
 typedef struct		s_vm
 {
 	int				c_to_die;
 	int				checks;
 	int				win;
 	int				cycle;
+	int				total_cycle;
 	int				nb_players;
 	long long int	nb;
 	char			**files;
@@ -66,7 +60,8 @@ typedef struct		s_vm
 	t_player		player[MAX_PLAYERS];
 	t_player		local_player[MAX_PLAYERS];
 	t_list			*proc;
-	t_live			 live;
+	int				 live;
+	t_player		*winner;
 }					t_vm;
 
 enum				e_return
@@ -166,7 +161,7 @@ int					mod(int val, int max);
 int					ft_pow(int n, int pow); // remove?
 int					getval(t_vm *vm, t_process *proc, t_parameter arg);
 t_process		*get_proc_index(t_list *lst, int index);
-t_process		*get_proc_num(t_list *lst, int num);
+t_player		*get_player_num(t_list *lst, int num);
 
 // TEMP delete at end
 

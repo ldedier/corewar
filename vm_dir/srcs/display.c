@@ -6,19 +6,19 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 21:43:44 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/19 19:47:21 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/07 16:31:13 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 void	display_live_player(t_vm *vm, int op_code)
 {
-	t_process *proc;
+	t_player *player;
 
 	if (op_code == LIVE)
 	{
-		proc = get_proc_num(vm->proc, vm->live.last_pl->player->num);
-		display(vm, proc, LAST_LIVE);
+		player = get_player_num(vm->proc, vm->winner->num);
+		display(vm, NULL, LAST_LIVE);
 	}
 }
 
@@ -48,8 +48,8 @@ void	display(t_vm *vm, t_process *proc, int type)
 
 	if (vm->visu.active)
 		return ;
-	if (type < LIVES_TURN || type == TURN_PLAYER)
-		color_on_term(proc->player->color.index);
+//	if (type < LIVES_TURN || type == TURN_PLAYER)
+//		color_on_term(proc->player->color.index);
 	display[type](vm, proc);
 	color_off();
 }

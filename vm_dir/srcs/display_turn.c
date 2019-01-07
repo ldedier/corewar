@@ -3,7 +3,8 @@
 void	last_live(t_vm *vm, t_process *proc)
 {
 	(void)vm;
-	ft_printf(">>> %d [ %s ]", proc->player->num, proc->player->name);
+	(void)proc;
+//	ft_printf(">>> %d [ %s ]", proc->player->num, proc->player->name);
 }
 
 

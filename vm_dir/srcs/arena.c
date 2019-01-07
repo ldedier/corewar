@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 16:42:17 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/30 21:01:07 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/07 17:30:57 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,14 @@ void					init_vm(t_vm *vm, char **argv, char **env)
 	vm->win = 0;
 	vm->dump = 0;
 	vm->checks = MAX_CHECKS;
-	vm->live.nb = 0;
-	vm->live.total_pl = 0;
+	vm->live = 0;
 	vm->proc = NULL;
 	vm->client.active = 0;
 	vm->client.port = 0;
 	vm->visu.active = 0;
 	vm->nb = 1;
-//	vm->cycle = 0;
+	vm->total_cycle = 0;
+	vm->cycle = 0;
 	ft_bzero(vm->color, MAX_PL_COLOR);
 	ft_bzero(vm->arena, MEM_SIZE);
 	ft_strlcat(vm->color, init_color_ref(env), MAX_PL_COLOR);
@@ -93,7 +93,7 @@ int		init_processes(t_vm *vm)
 		if (vm->player[i].relevant && ++index && !add_process(vm, i, start))
 			return (0);
 	}
-	vm->live.last_pl = (t_process *)(vm->proc->content);
+	vm->winner = ((t_process *)(vm->proc->content))->player;
 	return (1);
 }
 
@@ -185,7 +185,7 @@ void		dispatch_players(t_vm *vm, t_player *player)
 	int			i;
 	int			j;
 	int			start;
-
+	
 	update_nb_players(vm);
 	ft_bzero(vm->arena, MEM_SIZE);
 	ft_bzero(vm->metarena, sizeof(vm->metarena));

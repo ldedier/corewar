@@ -3,7 +3,6 @@
 void	lives_turn(t_vm *vm, t_process *proc)
 {
 	(void)proc;
-	ft_printf("%s %d", MSG_NBR_LIVES_TURN, vm->live.total_pl);
 	ft_printf(" %s %d\n", MSG_RESIZE, vm->c_to_die);
 }
 

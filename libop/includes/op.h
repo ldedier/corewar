@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 19:01:37 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/21 19:54:31 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/07 16:48:43 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@
 # define CYCLE_TO_DIE			100 //anciennement 1536
 # define CYCLE_DELTA			50
 # define NBR_LIVE				21
-# define MAX_CHECKS				2 //anciennement 10
+# define MAX_CHECKS				1 //anciennement 10
 
 # define T_REG					1
 # define T_DIR					2
@@ -135,7 +135,6 @@ typedef struct					s_parameter
 	t_arg_type					type; //T_REG || T_IND || T_DIR || T_LAB
 	int							value;
 	int							dest_value;
-//	int							dest_index;
 	char						*label_name;
 	int							source_code_col;
 	int							nb_bytes;

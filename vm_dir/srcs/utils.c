@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 17:38:14 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/14 17:59:06 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/07 17:35:48 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,16 @@ int		ft_pow(int n, int pow) // remove
 	return (result);
 }
 
-t_process *get_proc_num(t_list *lst, int num)
+t_player *get_player_num(t_list *lst, int num)
 {
 	t_list	*tmp;
 
 	tmp = lst;
 	while (tmp)
 	{
+//		ft_printf("num = %d player num = %d\n", num, ((t_process *)tmp->content)->player->num);
 		if (((t_process *)(tmp->content))->player->num == num)
-			return ((t_process *)(tmp->content));
+			return (((t_process *)(tmp->content))->player);
 		tmp = tmp->next;
 	}
 	return (NULL);

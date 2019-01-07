@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 16:33:31 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/19 19:44:28 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/07 17:35:41 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,26 @@ int		getval_mod(char *arena, int index, int nb_bytes, int mod)
 int		getval_params(char *arena, t_instruction *ins, int i, int mod)
 {
 	int		j;
-//	t_parameter *param;
+	t_parameter *param;
 
 	j = -1;
 	while (++j < ins->op.nb_params)
 	{	
-//		param = &ins->params[j];
-		if ( !(ins->params[j].type & g_op_tab[ins->op.opcode - 1].arg_types[j]))
+//		ft_printf("opcode= %d j = %d params j type = %#x, goptab 0 = %d goptab 1 = %d goptab 2 = %d\n", ins->op.opcode, j, ins->params[j].type, g_op_tab[ins->op.opcode- 1].arg_types[0], g_op_tab[ins->op.opcode - 1].arg_types[1], g_op_tab[ins->op.opcode - 1].arg_types[2]);
+		param = &ins->params[j];
+		if (!(param->type & g_op_tab[ins->op.opcode - 1].arg_types[0])
+			&& !(param->type & g_op_tab[ins->op.opcode - 1].arg_types[1])
+			&& !(param->type & g_op_tab[ins->op.opcode - 1].arg_types[2]))
+		{
 			return (-1);
-		ins->params[j].value = getval_mod(arena, i, ins->params[j].nb_bytes, mod);
-		i += ins->params[j].nb_bytes;
-		if (ins->params[j].type == REG_CODE && ins->params[j].value >= REG_NUMBER)
+		}
+		param->value = getval_mod(arena, i, param->nb_bytes, mod);
+//		ft_printf("j = %d params[j].value = %d, type= %#x\n",j, ins->params[j].value, ins->params[j].type);
+		i += param->nb_bytes;
+		if (param->type == REG_CODE && param->value >= REG_NUMBER)
+		{
 			return (-1);
+		}
 	}
 	return (0);
 }
@@ -62,37 +70,28 @@ int		getval_params(char *arena, t_instruction *ins, int i, int mod)
 static int		is_valid_ocp(unsigned char hex, t_instruction *ins)
 {
 	static int		len[4] = {NA, E_REG, E_DIR, E_IND};
-	int				t;
 	int				arg;
 	t_parameter		*param;
 
-	arg = g_op_tab[ins->op.opcode - 1].nb_params;
+	arg = 3;
 	ft_bzero((void *)ins->params, sizeof(t_parameter) * 3);
 	if (hex & 3)
 		return (0);
-	while (--arg >= 0 && (t = -1))
+	while (--arg >= 0 )
 	{
-		while (++t < 3)
+		param = &ins->params[arg];
+		hex = hex >> 2;
+		if (arg >= g_op_tab[ins->op.opcode - 1].nb_params)
+			param->type = NA;
+		else
 		{
-			hex = hex >> 2;
-			param = &ins->params[arg];
-			if (g_op_tab[ins->op.opcode - 1].nb_params == 1)
-			{
-				param->type = g_op_tab[ins->op.opcode - 1].arg_types[0];
-				param->nb_bytes = len[(int)param->type];
-			}
-			if ((int)((hex & 3)))
-			{
-				param->type = hex & 3;
-				param->nb_bytes = len[hex & 3];
-				if ((hex & 3) == DIR_CODE
-					&& g_op_tab[ins->op.opcode - 1].describe_address == 1)
-						param->nb_bytes = 2;
-				break;
-			}
+//			ft_printf("hex = %#x, hex & 3 = %#x\n", hex, hex & 3);
+			param->type = (hex & 3);
+			param->nb_bytes = len[(int)param->type];
+//			ft_printf("type= %#x nb bytes= %d\n", param->type, param->nb_bytes);
+			if (param->type == DIR_CODE)
+				param->nb_bytes -= g_op_tab[ins->op.opcode- 1].describe_address * 2;
 		}
-		if (!ins->params[arg].nb_bytes)
-			return (0);
 	}
 	return (1);
 }
@@ -117,6 +116,7 @@ int				get_instruction(char *arena, t_instruction *ins, unsigned int i, int mod)
 	else
 		ft_memmove((void *)&ins->op, (void *)&g_op_tab[(int)hex - 1], sizeof(t_op));
 	++i;
+//	ft_printf("considering instruction # %d\n", hex);
 	if (ins->op.has_ocp == OCP_YES)
 	{
 		ins->ocp = (unsigned char)*(arena + (i % mod));
@@ -126,15 +126,19 @@ int				get_instruction(char *arena, t_instruction *ins, unsigned int i, int mod)
 			return (0);
 		}
 	}
-	ins->params[0].type = DIR_CODE;
-	ins->params[1].type = DIR_CODE;
-	ins->params[2].type = DIR_CODE;
+	else
+	{
+		ins->params[0].type = g_op_tab[ins->op.opcode - 1].arg_types[0];
+		ins->params[0].nb_bytes = 4 -2 * g_op_tab[ins->op.opcode - 1].describe_address;
+	}
+//	ft_printf("ocp is valid, = %#x\n", (unsigned char)ins->ocp);
 	if (getval_params(arena, ins, i + ins->op.has_ocp, mod) == -1)
 	{
 		ft_bzero((void *)ins, sizeof(*ins));
 		return (0);
 	}
 	len = ins->params[0].nb_bytes + ins->params[1].nb_bytes + ins->params[2].nb_bytes + ins->op.has_ocp + 1;
+//	ft_printf("instruction len = %d\n", len);
 	return (len);
 }
 
