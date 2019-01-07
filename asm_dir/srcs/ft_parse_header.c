@@ -14,7 +14,7 @@
 
 int	isprint(int c)
 {
-	return (c >= 33 && c <= 126);
+	return (c >= 33 && c <= 62 && c >= 64 && c <= 126);
 }
 
 int	ft_parse_line_header(char *str, t_env *env, int i, int fd)
