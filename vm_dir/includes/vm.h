@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/07 17:26:26 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/07 19:35:50 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void				init_local_players(t_vm *vm);
 
 void				display_ins_description(t_vm *vm, char *str, int opcode);
 void				display_live_player(t_vm *vm, int op_code);
-void				display_register(t_process *proc);
+void				display_registers(t_vm *vm);
 void				display(t_vm *vm, t_process *proc, int type);
 void				pl_death(t_vm *vm, t_process *proc);
 void				pl_live(t_vm *vm, t_process *proc);

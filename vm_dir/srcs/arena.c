@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 16:42:17 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/07 17:30:57 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/07 19:23:08 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ int		init_processes(t_vm *vm)
 		start = (MEM_SIZE / vm->nb_players) * (index - 1);
 		if (vm->player[i].relevant && ++index && !add_process(vm, i, start))
 			return (0);
+		vm->player[i].nb_proc = 1;
 	}
 	vm->winner = ((t_process *)(vm->proc->content))->player;
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/07 18:12:10 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/07 19:35:47 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static int		last_instruction_unresolved(t_vm *vm, t_process *proc)
 	(void)vm;
 	if (proc->cycle > 0 && ft_printf("%*s", PAD_INS, ""))
 	{
-//		display(vm, proc, PL_CYCLE);
+		display(vm, proc, PL_CYCLE);
 		--proc->cycle;
 		return (1);
 	}
@@ -121,7 +121,7 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 		proc->cycle = g_op_tab[(int)ins.op.opcode - 1].nb_cycles;
 		display_ins_description(vm, ins.op.description, ins.op.opcode);
 	display(vm, proc, PL_PC);
-//		display(vm, proc, PL_CYCLE);
+		display(vm, proc, PL_CYCLE);
 		--proc->cycle; 
 		return (1);
 	}
@@ -175,7 +175,7 @@ void		process_cycle(t_vm *vm)
 			ft_printf("player pc before bytelen = %d, bytelen = %d\n", proc->pc, proc->ins_bytelen);
 			proc->pc = (proc->pc + proc->ins_bytelen) % MEM_SIZE;
 			ft_printf("player pc = %d\n", proc->pc);
-			display_register(proc);
+//			display_registers(vm);
 			ft_printf("\n");
 		}
 		if (launch_instruction(vm, proc))

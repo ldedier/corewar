@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 22:25:36 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/07 16:33:47 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/07 19:21:31 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct      s_player
 	t_file_len		file_len;
 	int				live;
 	int				last_live_cycle;
+	int				nb_proc;
 	int				header_size;
 	int				num;
 	char			relevant;

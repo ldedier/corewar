@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 20:22:56 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/13 18:31:39 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/07 19:23:34 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,6 @@ int		ins_fork(t_vm *vm, t_process *proc, t_parameter arg[3])
 	(void)vm;
 	(void)proc;
 	(void)arg;
+	++proc->player->nb_proc;
 	return (SUCCESS);
 }
