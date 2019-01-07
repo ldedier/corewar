@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 21:43:44 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/07 16:31:13 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/07 18:12:23 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ void	display(t_vm *vm, t_process *proc, int type)
 
 	if (vm->visu.active)
 		return ;
-//	if (type < LIVES_TURN || type == TURN_PLAYER)
-//		color_on_term(proc->player->color.index);
+	if (vm->proc && (type < LIVES_TURN || type == TURN_PLAYER))
+		color_on_term(proc->player->color.index);
 	display[type](vm, proc);
 	color_off();
 }

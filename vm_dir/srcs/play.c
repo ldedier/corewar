@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/07 17:35:39 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/07 18:12:10 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,14 +110,17 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 		&ins_lfork, &ins_aff};
 
 	if (last_instruction_unresolved(vm, proc))
+	{
+	display(vm, proc, PL_PC);
 		return (0);
-//	ft_printf("ins bytelen = %d\n", proc->ins_bytelen);
+	}
 	if ((proc->ins_bytelen = get_instruction(vm->arena, &ins, proc->pc, MEM_SIZE)))
 	{
-//		ft_printf("new ins cycle = %d\n", proc->ins_bytelen);
+		ft_printf("new ins cycle = %d\n", proc->ins_bytelen);
 		f_ins[(int)ins.op.opcode](vm, proc, ins.params);
 		proc->cycle = g_op_tab[(int)ins.op.opcode - 1].nb_cycles;
 		display_ins_description(vm, ins.op.description, ins.op.opcode);
+	display(vm, proc, PL_PC);
 //		display(vm, proc, PL_CYCLE);
 		--proc->cycle; 
 		return (1);
@@ -159,27 +162,29 @@ void		process_cycle(t_vm *vm)
 {
 	t_list				*proc_lst;
 	t_process			*proc;
-//	int					change; // a supprimer avec l'affichage de l'arene
+	int					change; // a supprimer avec l'affichage de l'arene
 
 	proc_lst = vm->proc;
-//	change = 0; // idem;
+	change = 0; // idem;
 	while (proc_lst)
 	{
 		proc = ((t_process *)(proc_lst->content));
 		display(vm, proc, TURN_PLAYER);
 		if (!proc->cycle)
 		{
+			ft_printf("player pc before bytelen = %d, bytelen = %d\n", proc->pc, proc->ins_bytelen);
 			proc->pc = (proc->pc + proc->ins_bytelen) % MEM_SIZE;
+			ft_printf("player pc = %d\n", proc->pc);
 			display_register(proc);
 			ft_printf("\n");
 		}
-		launch_instruction(vm, proc);
-//			change = 1; // idem;
+		if (launch_instruction(vm, proc))
+			change = 1; // idem;
 //		ft_printf("proc live = %d\n", proc->live);
 		if (!vm->visu.active)
 			ft_printf("\n");
-//		if (!proc_lst->next && change) // idem
-//			display_arena((unsigned char *)vm->arena); // idem
+		if (!proc_lst->next && change) // idem
+			display_arena((unsigned char *)vm->arena); // idem
 		proc_lst = proc_lst->next;
 	}
 }
@@ -197,12 +202,12 @@ void		process_cycle(t_vm *vm)
 
 int		play(t_vm *vm)
 {
-//	display(vm, 0, CYCLE_NBR);
+	display(vm, 0, CYCLE_NBR);
 	while (++vm->cycle && !handle_end_cycle(vm, &vm->cycle))
 	{
 		++vm->total_cycle;
-//		ft_printf("\n%scycle = %d | %s ", COLF_BGREY, vm->cycle, MSG_CYCLES_REMAINING);
-//		ft_printf(" [ %d ] %s\n", vm->c_to_die - vm->cycle, COLF_OFF);
+		ft_printf("\n%scycle = %d | %s ", COLF_BGREY, vm->cycle, MSG_CYCLES_REMAINING);
+		ft_printf(" [ %d ] %s\n", vm->c_to_die - vm->cycle, COLF_OFF);
 		process_cycle(vm);
 	}
 	return (0);

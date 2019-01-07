@@ -9,7 +9,7 @@ l2:	ld	%666666,r2
 	st r4, 2000
 	sub r1, r1, r5
 	live %-2
-	zjmp %4
+	zjmp %-4
 #	ld 	%5,r3
 #	ld	%:l2,r4
 

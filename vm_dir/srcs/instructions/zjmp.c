@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 20:22:56 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/19 15:33:55 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/07 18:12:27 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@
 int		ins_zjmp(t_vm *vm, t_process *proc, t_parameter arg[3])
 {
 	getval_param_dest(vm, proc, &arg[0], 1);
+	ft_printf("dest val = %d dest val mod idxmod = %d pc = %d\n", arg[0].dest_value % MEM_SIZE, arg[0].dest_value % IDX_MOD, proc->pc);
 	if (proc->carry)
-		proc->pc += (arg[0].dest_value % IDX_MOD);
+	{
+		proc->pc = (proc->pc + (arg[0].dest_value)) % MEM_SIZE;
+	}
 	return (SUCCESS); // verifier si !carry = failure
 }
