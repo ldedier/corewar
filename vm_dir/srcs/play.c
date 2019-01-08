@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/08 18:25:32 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/08 18:33:35 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static int		kill_process(t_vm *vm, t_list *proc)
 
 /*
 ** Upon reaching cycle end
-** Scan all players, checks if they have lived previous turn;
+** Scans all players, checks if they have lived previous turn;
 ** if so set live back to one, if not remove from process list;
 */
 
@@ -110,15 +110,16 @@ static int		last_instruction_unresolved(t_vm *vm, t_process *proc)
 }
 
 /*
-** check if last instruction still running
-** else, if valid instruction at current position, launch it, adjust cycles, and display
+** checks if last instruction is still running
+** else, if there's a  valid instruction at current position launch it,
+** adjust cycles, and display
 ** else move on
 */
 
 static int		launch_instruction(t_vm *vm, t_process *proc)
 {
 	t_instruction	ins;
-	static int 	(*f_ins[NB_INSTRUCTIONS + 1])(t_vm *vm, t_process *proc, 
+	static int 	(*f_ins[NB_INSTRUCTIONS + 1])(t_vm *vm, t_process *proc,
 			t_parameter arg[3]) = {NULL,
 		&ins_live, &ins_ld, &ins_st, &ins_add, &ins_sub, &ins_and, &ins_or,
 		&ins_xor, &ins_zjmp, &ins_ldi, &ins_sti, &ins_fork, &ins_lld, &ins_lldi,
@@ -139,7 +140,7 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 		display_ins_description(vm, ins.op.description, ins.op.opcode);
 		display(vm, proc, PL_PC);
 		display(vm, proc, PL_CYCLE);
-		--proc->pending.cycles; 
+		--proc->pending.cycles;
 		return (1);
 	}
 	proc->pending.pc = 1;
@@ -149,8 +150,8 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 }
 
 /*
-** if 1 player or cycle_to_die = 0, display winner and return 0 to exit game
-** else check if cycle_to_die should change value
+** If there's only 1 player or cycle_to_die = 0, displays winner and exits game,
+** else checks if cycle_to_die should change value
 */
 
 int			handle_end_cycle(t_vm *vm, int *cycle)
@@ -192,7 +193,7 @@ void		execute_pending_action(t_vm *vm, t_list *proc_lst)
 //				ft_printf("intermediate val = %#x\n", val);
 				*(char *)(proc->pending.dest + index) = val >> ((3 - i) * 8);
 //				ft_printf("char = %#x\n", *(char *)(proc->pending.dest + index));
-				vm->metarena[index].altcolor = 1;
+				vm->metarena[index].alt_color = 1;
 			}
 		}
 		else if (proc->pending.dest)
@@ -205,7 +206,7 @@ void		execute_pending_action(t_vm *vm, t_list *proc_lst)
 }
 
 /*
-**
+**process_cycle
 */
 
 void		process_cycle(t_vm *vm)
@@ -231,15 +232,14 @@ void		process_cycle(t_vm *vm)
 }
 
 /*
-** Core of game progression | calls itself until cycles to end = 0 or only 1
-** player left
-** Each turn: 
-** Detect if end of cycle
-** Loop through players:
-**	- move forward amount of latest instruction (or 1 if no valid instruction)
-**	- check if valid instruction
+** Core of the game progression : continues until cycles to end = 0 or
+** only 1 player left.
+** Each turn, it :
+** Checks if it's the end of a cycle
+** Loops through all players:
+**	- moves forward according to latest instruction or 1 if no valid instruction
+**	- checks if there's a valid instruction
 */
-
 
 int		play(t_vm *vm)
 {

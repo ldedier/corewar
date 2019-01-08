@@ -14,8 +14,7 @@
 
 /*
 ** Input: vm (for arena and player), proc (for register and pc),
-** arg for X arg, 
-** Returns 
+** arg for X arg
 */
 
 int		ins_fork(t_vm *vm, t_process *proc, t_parameter arg[3])

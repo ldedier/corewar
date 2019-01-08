@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 18:41:42 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/18 20:27:25 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/04 17:25:44 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,22 +61,23 @@ static void		check_name_comm(t_vm *vm, int i)
 	n = 0;
 	while (name[n] != 0)
 	{
-		if (!(ft_strchr(LABEL_CHARS, name[n])))
+		if (!(ft_strchr(OK_CHARS, name[n])))
 			error_exit_msg(INVALID_CHARS);
 		n++;
 	}
 	n = 0;
 	while (comm[n] != 0)
 	{
-		if (!(ft_strchr(LABEL_CHARS, comm[n])))
+		if (!(ft_strchr(OK_CHARS, comm[n])))
 			error_exit_msg(INVALID_CHARS);
 		n++;
 	}
 }
 
 /*
-**check_head_size static function is used to
-**
+**check_head_size static function is used to check the size given in the .cor's
+**header. If it doesn't match the real size of the instructions, the program
+**will output an error message and exit.
 */
 
 static void		check_head_size(t_vm *vm, int i)
@@ -141,6 +142,7 @@ void			parse(t_vm *vm)
 	i = 0;
 	while (i < vm->nb_players)
 	{
+		ft_printf("-");
 		name_and_comm(vm, i);
 		check_name_comm(vm, i);
 		instructions(vm, i);

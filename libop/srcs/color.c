@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 20:42:40 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/21 17:27:53 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/04 15:57:44 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ char	*init_color_ref(char **env)
 			ft_strlcat(color_ref_index, env_var[(int)index][1], MAX_PL_COLOR);
 		else
 			ft_strlcat(color_ref_index, DEFAULT_COLORS, MAX_PL_COLOR);
-		ft_printf("print ref colors = %s\n", color_ref_index);
 		i = -1;
 		while (color_ref_index[++i])
 		{

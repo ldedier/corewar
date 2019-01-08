@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 22:30:17 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/30 23:49:57 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/04 15:03:19 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int		ft_process_read_player(char *data, int length, t_player *player)
 	if (!check_mgc(player))
 	{
 		ft_dprintf(2,
-			"file has wrong magic number and is therefore not readable\n");
+			"File has wrong magic number and is therefore not readable\n");
 		 return (1);
 	}
 	return (ft_parse_player(player));

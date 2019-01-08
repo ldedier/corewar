@@ -29,16 +29,12 @@ int		main(int argc, char **argv, char **env)
 	init_local_players(&vm);
 	if (vm.client.active)
 		return (process_client(&vm));
-	for (int i = 0; i < MAX_PLAYERS; ++i)
-		ft_printf("player %d name= %s\n", i, vm.player[i].name);
-//	ft_printf("player 2 starts at %d\n", all_process[0].pc);
-//	play(&vm, (t_process **)&all_process);
 	if (vm.visu.active)
 		return (process_visu(&vm));
 	if (!init_processes(&vm))
 		return (1);
 	play(&vm);
-	display_arena((unsigned char *)vm.arena);
+//	display_arena((unsigned char *)vm.arena);
 //	test(vm);
 	return (0);
 }

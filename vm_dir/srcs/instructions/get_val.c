@@ -25,7 +25,7 @@ static int	getval_ind(t_vm *vm, t_process *proc, int index, int mod)
 }
 
 static int	getval_reg(t_vm *vm, t_process *proc, int index, int mod)
-{	
+{
 //	ft_printf("reg | index = %d\n", index);
 	(void)vm;
 	(void)mod;

@@ -11,7 +11,8 @@
 /* ************************************************************************** */
 
 #include "vm.h"
-void	display_live_player(t_vm *vm, int op_code)
+
+void		display_live_player(t_vm *vm, int op_code)
 {
 	t_player *player;
 
@@ -22,7 +23,7 @@ void	display_live_player(t_vm *vm, int op_code)
 	}
 }
 
-void	display_ins_description(t_vm *vm, char *str, int opcode)
+void		display_ins_description(t_vm *vm, char *str, int opcode)
 {
 	ft_printf("%s >>> %*-s%s", COLF_CYAN, PAD_INS - 5, str, COLF_OFF);
 	display_live_player(vm, opcode);
@@ -46,8 +47,7 @@ void	display_registers(t_vm *vm)
 	}
 }
 
-
-void	display(t_vm *vm, t_process *proc, int type)
+void		display(t_vm *vm, t_process *proc, int type)
 {
 	static void (*display[NB_GAME_MSG])(t_vm *vm, t_process *proc) = {
 		&pl_pc, &pl_cycle, pl_live, &pl_death, &pl_victory,

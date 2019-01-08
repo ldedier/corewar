@@ -21,8 +21,7 @@
 int		ins_xor(t_vm *vm, t_process *proc, t_parameter arg[3])
 {
 	(void)vm;
-	if (arg[THIRD].value >= REG_NUMBER)
-		return (FAILURE); // verifier que c'est bien le cas
-	proc->reg[arg[THIRD].value] = arg[FIRST].value ^ arg[SECOND].value;
+	proc->reg[arg[2].value - 1] = arg[0].value ^ arg[1].value;
+	proc->carry = !(proc->reg[arg[2].value - 1]);
 	return (SUCCESS);
 }

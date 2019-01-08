@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 18:41:42 by uboumedj          #+#    #+#             */
-/*   Updated: 2018/12/31 14:40:36 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/04 16:52:49 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,35 +39,9 @@ static void		parse_name_and_comm(t_player *player)
 }
 
 /*
-**check_name_comm static function is used by the parse function to check the
-**name and comm arrays of the given player to make sure it contains no forbi-
-**den characters
-*/
-
-static int	check_name_comm(t_player *player)
-{
-	int		n;
-
-	n = 0;
-	while (player->name[n] != 0)
-	{
-		if (!(ft_strchr(LABEL_CHARS, player->name[n])))
-			return (ft_return_verbosed(INVALID_CHARS, 1));
-		n++;
-	}
-	n = 0;
-	while (player->comm[n] != 0)
-	{
-		if (!(ft_strchr(LABEL_CHARS, player->comm[n])))
-			return (ft_return_verbosed(INVALID_CHARS, 1));
-		n++;
-	}
-	return (0);
-}
-
-/*
-**check_head_size static function is used to
-**
+**check_head_size static function is used to check the size given in the .cor's
+**header. If it doesn't match the actual size of the instructions, it exits 
+**the program.
 */
 
 static void		check_head_size(t_player *player)
@@ -85,7 +59,7 @@ static void		check_head_size(t_player *player)
 }
 
 /*
-**instructions static function is used by the parse function to add
+**parse_instructions static function is used by the parse function to add
 **the [algo] part (the instructions) inside the player structure. It also
 **checks if the instructions part exceeds the max allowed size CHAMP_MAX_SIZE.
 */
@@ -123,8 +97,6 @@ static int		parse_instructions(t_player *player)
 int			ft_parse_player(t_player *player)
 {
 	parse_name_and_comm(player);
-	if (check_name_comm(player))
-		return (1);
 	if (parse_instructions(player))
 		return (1);
 	player->name_len = ft_strlen(player->name);
