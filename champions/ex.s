@@ -1,5 +1,5 @@
 .name "zork"
-.comment "just a basic living prog"
+.comment "justub r3, r2,a basic living prog"
 
 live: live %-2
 l2:	ld	%666666,r2
