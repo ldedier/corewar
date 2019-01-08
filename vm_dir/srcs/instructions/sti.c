@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 20:22:56 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/07 19:27:18 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/08 16:41:49 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,14 @@
 
 int		ins_sti(t_vm *vm, t_process *proc, t_parameter arg[3])
 {
-	(void)vm;
-	(void)proc;
-	(void)arg;
 	int dest;
 
 	getval_param_dest(vm, proc, &arg[0], 1);
 	getval_param_dest(vm, proc, &arg[1], 1);
 	getval_param_dest(vm, proc, &arg[2], 1);
-	ft_printf("arg0 val = %d dest val = %d\n", arg[0].value, arg[0].dest_value);
-	ft_printf("arg1 val = %d dest val = %d\n", arg[1].value, arg[1].dest_value);
-	ft_printf("arg2 val = %d dest val = %d\n", arg[2].value, arg[2].dest_value);
-	dest = (arg[1].value + arg[2].value) % IDX_MOD;
-	vm->arena[dest % MEM_SIZE] = arg[0].value;
-					return (SUCCESS);
+	dest = proc->pc + (arg[1].dest_value + arg[2].dest_value) % IDX_MOD;
+	proc->pending.dest = vm->arena;
+   	proc->pending.dest_index = dest;
+	proc->pending.value = arg[0].dest_value;
 	return (SUCCESS);
 }

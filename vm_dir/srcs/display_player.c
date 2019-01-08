@@ -22,7 +22,7 @@ void	pl_victory(t_vm *vm, t_process *proc)
 void	pl_cycle(t_vm *vm, t_process *proc)
 {
 	(void)vm;
-	ft_printf(".... %d", proc->cycle);
+	ft_printf(".... %d", proc->pending.cycles);
 }
 
 void	pl_pc(t_vm *vm, t_process *proc)

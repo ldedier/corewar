@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 19:01:37 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/07 18:32:05 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/07 20:02:11 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@
 # define NAME_CMD_STRING		".name"
 # define COMMENT_CMD_STRING		".comment"
 # define REG_NUMBER				16
-# define CYCLE_TO_DIE			100 //anciennement 1536
+# define CYCLE_TO_DIE			1536 //anciennement 1536
 # define CYCLE_DELTA			50
 # define NBR_LIVE				21
-# define MAX_CHECKS				1 //anciennement 10
+# define MAX_CHECKS				10 //anciennement 10
 
 # define T_REG					1
 # define T_DIR					2

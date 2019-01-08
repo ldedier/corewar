@@ -6,11 +6,12 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/09 20:29:58 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/07 17:35:50 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/08 15:20:10 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
+
 
 static void		load_arena(t_vm *vm, t_process *proc, t_parameter *arg, int val)
 {
@@ -24,6 +25,7 @@ static void		load_arena(t_vm *vm, t_process *proc, t_parameter *arg, int val)
 	{
 //		ft_printf("i = %d index = %d 0xff << machin = %#x & val = %#x\n", i, index + i, 0xFF << (8 * (3 - i)), val & (0xFF << (8 * (3 - i))));
 		vm->arena[(index + i) % MEM_SIZE] = (val & (0xFF << (8 * (3 - i)))) >> ((3 - i) * 8);
+		vm->metarena[(index + i) % MEM_SIZE].color_index = *(int *)proc->player->color.value;
 //		ft_printf("vm arena in %d = %d\n", (index + i) % MEM_SIZE, vm->arena[(index + i) % MEM_SIZE]);
 	}
 }
