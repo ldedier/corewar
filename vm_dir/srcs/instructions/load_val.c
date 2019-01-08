@@ -6,13 +6,13 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/09 20:29:58 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/08 15:20:10 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/08 17:57:01 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-
+/*
 static void		load_arena(t_vm *vm, t_process *proc, t_parameter *arg, int val)
 {
 	int 	i;
@@ -35,16 +35,21 @@ static void		load_reg(t_vm *vm, t_process *proc, t_parameter *arg, int val)
 //	ft_printf("load in reg, index = %d val = %d\n", arg->dest_value, val);
 	proc->reg[arg->value - 1] = val;
 //	ft_printf("check proc reg = %d\n", proc->reg[arg->value - 1]);
-	vm->metarena[arg->value - 1].color_index = proc->player->color.index;
 }
-
+*/
 void		loadval(t_vm *vm, t_process *proc, t_parameter *arg, int val)
 {
-	static void	(*f_data[NB_TYPES + 1])(t_vm *vm, t_process *proc, t_parameter *arg, int val) = {
-		NULL, &load_reg, &load_arena, &load_arena};
-
+//	static void	(*f_data[NB_TYPES + 1])(t_vm *vm, t_process *proc, t_parameter *arg, int val) = {
+//		NULL, &load_reg, &load_arena, &load_arena};
+	if (arg->type == 1)
+		proc->pending.dest = proc->reg;
+//		proc->reg[arg->value - 1] = val;
+	else if (arg->type > 1)
+		proc->pending.dest = vm->arena;
+	proc->pending.dest_index = arg->value - 1;
+	proc->pending.value = val;
 //	ft_printf("in load val, val = %d arg->type = %d\n", val, arg->type);
-	f_data[(int)arg->type](vm, proc, arg, val);
+//	f_data[(int)arg->type](vm, proc, arg, val);
 }
 
 

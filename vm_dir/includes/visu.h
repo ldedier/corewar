@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/07 18:56:08 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/08 18:11:34 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,6 +213,9 @@
 
 # define DROP_TOLERANCE_W		100
 # define DROP_TOLERANCE_H		30
+
+#define	MAX_FADE				60
+#define FADE_LEN				5
 
 typedef struct s_vm			t_vm;
 typedef struct s_visu		t_visu;
