@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 16:33:31 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/08 16:13:58 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/08 19:21:54 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int				get_instruction(char *arena, t_instruction *ins, unsigned int i, int mod)
 	else
 		ft_memmove((void *)&ins->op, (void *)&g_op_tab[(int)hex - 1], sizeof(t_op));
 	++i;
-//	ft_printf("considering instruction # %d\n", hex);
+	ft_printf("considering instruction # %d\n", hex);
 	if (ins->op.has_ocp == OCP_YES)
 	{
 		ins->ocp = (unsigned char)*(arena + (i % mod));
@@ -131,9 +131,9 @@ int				get_instruction(char *arena, t_instruction *ins, unsigned int i, int mod)
 	else
 	{
 		ins->params[0].type = g_op_tab[ins->op.opcode - 1].arg_types[0];
-		ins->params[0].nb_bytes = 4 -2 * g_op_tab[ins->op.opcode - 1].describe_address;
+		ins->params[0].nb_bytes = 4 - 2 * g_op_tab[ins->op.opcode - 1].describe_address;
 	}
-//	ft_printf("ocp is valid, = %#x\n", (unsigned char)ins->ocp);
+	ft_printf("ocp is valid, = %#x\n", (unsigned char)ins->ocp);
 	if (getval_params(arena, ins, i + ins->op.has_ocp, mod) == -1)
 	{
 		ft_bzero((void *)ins, sizeof(*ins));
