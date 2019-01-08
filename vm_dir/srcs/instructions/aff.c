@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/04 17:36:44 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/08 18:21:03 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/01/08 19:58:19 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,10 @@ int				ins_aff(t_vm *vm, t_process *proc, t_parameter arg[3])
 			output_aff(proc);
 		else
 		{
-			len = ft_strlen(proc->player->aff_buf);
+			if (proc->player->aff_buf) // if else moche d'emma
+				len = ft_strlen(proc->player->aff_buf);
+			else
+				len = 0;
 			if (!len)
 			{
 				proc->player->aff_buf = ft_memalloc(sizeof(char) + 1);

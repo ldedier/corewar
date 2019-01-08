@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 16:42:17 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/08 18:25:33 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/08 19:54:40 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ t_list			*add_process(t_vm *vm, int index, int start)
 
 	process = (t_process *)ft_memalloc(sizeof(t_process));
 	process->player = &vm->player[index];
+	process->player->aff_buf = NULL;
 	process->pc = start;
 	process->reg[0] = process->player->num;
 	if (ft_add_to_list_ptr(&vm->proc, (void *)process, sizeof(t_process)))
