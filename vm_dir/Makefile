@@ -68,7 +68,7 @@ VISU_NO_PREFIX =		init_sdl.c visu.c events.c framerate.c render.c \
 
 
 
-INCLUDES_NO_PREFIX =	vm.h visu.h client.h errors.h
+INCLUDES_NO_PREFIX =	vm.h visu.h client.h
 
 SOURCES = $(addprefix $(SRCDIR)/, $(SRCS_NO_PREFIX)) \
 		$(addprefix $(SRCDIR)/$(INSDIR)/, $(INS_NO_PREFIX))\

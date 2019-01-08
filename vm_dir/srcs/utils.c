@@ -17,7 +17,7 @@ int			mod(int val, int max)
 	return (val % max);
 }
 
-int		ft_pow(int n, int pow) // remove
+int			ft_pow(int n, int pow)
 {
 	int result;
 
@@ -47,7 +47,7 @@ t_player *get_player_num(t_list *lst, int num)
 	return (NULL);
 }
 
-t_process *get_proc_index(t_list *lst, int index)
+t_process	*get_proc_index(t_list *lst, int index)
 {
 	t_list	*tmp;
 
@@ -56,4 +56,3 @@ t_process *get_proc_index(t_list *lst, int index)
 		tmp = tmp->next;
 	return ((t_process *)(tmp->content));
 }
-

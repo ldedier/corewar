@@ -34,7 +34,7 @@ SRCS_NO_PREFIX =	op.c ft_is_of_extension.c ft_switch_extension.c\
 					player.c get_instruction.c color.c ft_parse_player_folder.c\
 					net.c
 
-INCLUDES_NO_PREFIX = op.h champion.h player.h network.h color.h
+INCLUDES_NO_PREFIX = op.h champion.h player.h network.h color.h errors.h
 
 SOURCES = $(addprefix $(SRCDIR)/, $(SRCS_NO_PREFIX))
 OBJECTS = $(addprefix $(OBJDIR)/, $(SRCS_NO_PREFIX:%.c=%.o))

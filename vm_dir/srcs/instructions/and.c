@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   and.c		                                        :+:      :+:    :+:   */
+/*   and.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/03 20:22:56 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/13 18:38:54 by emuckens         ###   ########.fr       */
+/*   Created: 2019/01/04 17:39:43 by uboumedj          #+#    #+#             */
+/*   Updated: 2019/01/04 17:39:51 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@
 int		ins_and(t_vm *vm, t_process *proc, t_parameter arg[3])
 {
 	(void)vm;
-	if (arg[THIRD].value >= REG_NUMBER)
-		return (FAILURE); // verifier que c'est bien le cas
-	proc->reg[arg[THIRD].value] = arg[FIRST].value & arg[SECOND].value;
+	proc->reg[arg[2].value - 1] = arg[0].value & arg[1].value;
+	proc->carry = !(proc->reg[arg[2].value - 1]);
 	return (SUCCESS);
 }

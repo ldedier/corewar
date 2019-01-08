@@ -13,10 +13,10 @@
 #include "vm.h"
 
 /*
-** update the number of players currently in the arena
+** update_nb_players updates the number of players currently in the arena
 */
 
-void	update_nb_players(t_vm *vm)
+void			update_nb_players(t_vm *vm)
 {
 	int i;
 	int res;
@@ -37,7 +37,7 @@ void	update_nb_players(t_vm *vm)
 **its parameters to their default value.
 */
 
-void					init_vm(t_vm *vm, char **argv, char **env)
+void			init_vm(t_vm *vm, char **argv, char **env)
 {
 	int i;
 
@@ -66,7 +66,7 @@ void					init_vm(t_vm *vm, char **argv, char **env)
 	}
 }
 
-t_list	*add_process(t_vm *vm, int index, int start) 
+t_list			*add_process(t_vm *vm, int index, int start)
 {
 	t_process	*process;
 
@@ -79,7 +79,7 @@ t_list	*add_process(t_vm *vm, int index, int start)
 	return (vm->proc);
 }
 
-int		init_processes(t_vm *vm)
+int				init_processes(t_vm *vm)
 {
 	int i;
 	int	index;
@@ -97,8 +97,12 @@ int		init_processes(t_vm *vm)
 	return (1);
 }
 
+/*
+**dispatch_players function sends each player to their respective starting
+**point in the arena and initializes processes for each player.
+*/
 
-void		dispatch_players_init(t_vm *vm)
+void			dispatch_players_init(t_vm *vm)
 {
 	int			index;
 	int			i;
@@ -125,7 +129,7 @@ void		dispatch_players_init(t_vm *vm)
 	}
 }
 
-int		ft_get_potential_num(int player_num)
+int				ft_get_potential_num(int player_num)
 {
 	if (player_num == INT_MAX)
 		return (INT_MIN);
@@ -134,35 +138,32 @@ int		ft_get_potential_num(int player_num)
 	return (0);
 }
 
-void	ft_set_numbers(t_player players[MAX_PLAYERS], t_player *player)
+void			ft_set_numbers(t_player players[MAX_PLAYERS], t_player *player)
 {
 	int i;
 	int j;
 	int found;
 
-	i = 0;
-	while (i < MAX_PLAYERS)
+	i = -1;
+	while (++i < MAX_PLAYERS)
 	{
 		if (players[i].relevant && player != &players[i])
 		{
 			player->num = ft_get_potential_num(players[i].num);
 			found = 1;
-			j = 0;
-			while (j < MAX_PLAYERS)
+			j = -1;
+			while (++j < MAX_PLAYERS)
 			{
-				if (i != j && players[j].relevant &&
-						&players[j] != player  &&
+				if (i != j && players[j].relevant && &players[j] != player &&
 						player->num == players[j].num)
 				{
 					found = 0;
-					break;
+					break ;
 				}
-				j++;
 			}
 			if (found)
 				return ;
 		}
-		i++;
 	}
 }
 
@@ -179,7 +180,7 @@ void		update_buttons(t_vm *vm)
 **point in the arena and initializes processes for each player.
 */
 
-void		dispatch_players(t_vm *vm, t_player *player)
+void			dispatch_players(t_vm *vm, t_player *player)
 {
 	int			index;
 	int			i;

@@ -13,7 +13,7 @@
 #include "../includes/vm.h"
 
 /*
-** if carry is ON, jumps pc to arena at address arg1
+** if carry is ON, jumps pc to arena at address # arg 1
 ** Input: vm (for arena and player), proc (for register and pc),
 ** arg for 1 arg
 */

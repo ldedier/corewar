@@ -29,7 +29,7 @@ static void			check_resize_cycle(t_vm *vm, int *cycle)
 //		display(vm, NULL, NEW_RESIZE);
 		vm->checks = MAX_CHECKS ;
 		vm->c_to_die -= CYCLE_DELTA;
-		return;
+		return ;
 	}
 //	display(vm, NULL, AUTO_RESIZE);
 	if (!--vm->checks)
@@ -43,7 +43,7 @@ static void			check_resize_cycle(t_vm *vm, int *cycle)
 
 /*
 ** Upon reaching cycle end
-** Scan all players, checks if they have lived previous turn;
+** Scans all players, checks if they have lived previous turn;
 ** if so set live back to one, if not remove from process list;
 */
 
@@ -95,8 +95,9 @@ static int		last_instruction_unresolved(t_vm *vm, t_process *proc)
 }
 
 /*
-** check if last instruction still running
-** else, if valid instruction at current position, launch it, adjust cycles, and display
+** checks if last instruction is still running
+** else, if there's a  valid instruction at current position launch it,
+** adjust cycles, and display
 ** else move on
 */
 
@@ -132,8 +133,8 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 }
 
 /*
-** if 1 player or cycle_to_die = 0, display winner and return 0 to exit game
-** else check if cycle_to_die should change value
+** If there's only 1 player or cycle_to_die = 0, displays winner and exits game,
+** else checks if cycle_to_die should change value
 */
 
 int			handle_end_cycle(t_vm *vm, int *cycle)
@@ -155,7 +156,7 @@ int			handle_end_cycle(t_vm *vm, int *cycle)
 }
 
 /*
-**
+**process_cycle
 */
 
 void		process_cycle(t_vm *vm)
@@ -190,15 +191,14 @@ void		process_cycle(t_vm *vm)
 }
 
 /*
-** Core of game progression | calls itself until cycles to end = 0 or only 1
-** player left
-** Each turn: 
-** Detect if end of cycle
-** Loop through players:
-**	- move forward amount of latest instruction (or 1 if no valid instruction)
-**	- check if valid instruction
+** Core of the game progression : continues until cycles to end = 0 or
+** only 1 player left.
+** Each turn, it :
+** Checks if it's the end of a cycle
+** Loops through all players:
+**	- moves forward according to latest instruction or 1 if no valid instruction
+**	- checks if there's a valid instruction
 */
-
 
 int		play(t_vm *vm)
 {
