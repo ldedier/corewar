@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/07 18:12:10 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/08 19:27:01 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 
 	if (last_instruction_unresolved(vm, proc))
 	{
-	display(vm, proc, PL_PC);
+		display(vm, proc, PL_PC);
 		return (0);
 	}
 	if ((proc->ins_bytelen = get_instruction(vm->arena, &ins, proc->pc, MEM_SIZE)))
@@ -121,7 +121,7 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 		f_ins[(int)ins.op.opcode](vm, proc, ins.params);
 		proc->cycle = g_op_tab[(int)ins.op.opcode - 1].nb_cycles;
 		display_ins_description(vm, ins.op.description, ins.op.opcode);
-	display(vm, proc, PL_PC);
+		display(vm, proc, PL_PC);
 //		display(vm, proc, PL_CYCLE);
 		--proc->cycle; 
 		return (1);

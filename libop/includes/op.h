@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 19:01:37 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/07 16:48:43 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/08 18:45:43 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@
 # define DIRECT_CHAR			'%'
 # define SEPARATOR_CHAR			','
 # define LABEL_CHARS			"abcdefghijklmnopqrstuvwxyz_0123456789 "
-# define OK_CHARS				"abcdefghijklmnopqrstuvwxyz_0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZ./*-"
 # define NAME_CMD_STRING		".name"
 # define COMMENT_CMD_STRING		".comment"
 # define REG_NUMBER				16
