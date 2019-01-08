@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/31 19:39:37 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/02 17:41:42 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/06 17:46:16 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,18 @@ void	ft_scale_color_surface(SDL_Surface *surface, double t)
 	}
 }
 
+void	ft_apply_color_filter(SDL_Surface *surface, int color)
+{
+	SDL_Surface *s;
+
+	s = SDL_CreateRGBSurface(0, surface->w, surface->h, 32, 0, 0, 0, 0);
+	SDL_FillRect(s, NULL, color);
+	SDL_SetSurfaceBlendMode(s, SDL_BLENDMODE_MOD);
+	SDL_BlitSurface(s, NULL, surface, NULL);
+	SDL_FreeSurface(s); 
+}
+
+
 int		ft_render_notification_panel(t_vm *vm, SDL_Rect notif_rect)
 {
 	SDL_BlitScaled(vm->visu.sdl.images[vm->visu.notification.image_index], NULL,
@@ -68,7 +80,7 @@ int		ft_render_notification(t_vm *vm)
 		rect.h = vm->visu.center.notif_panel_h;
 		rect.x = vm->visu.center.notif_panel_left;
 		rect.y = vm->visu.center.notif_panel_top;
-		ft_scale_color_surface(vm->visu.sdl.w_surface, 0.5);
+		ft_apply_color_filter(vm->visu.sdl.w_surface, 0x44777777);
 		ft_render_notification_panel(vm, rect);
 	}
 	return (0);
