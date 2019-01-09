@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/03 15:42:09 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/03 18:25:39 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/09 19:07:44 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int		ft_render_cycle(t_vm *vm, int y)
 {
 	char	*value;
 
-	if (!(value = ft_itoa(vm->cycle)))
+	if (!(value = ft_itoa(vm->total_cycle)))
 		return (1);
 	if (ft_render_entry(vm, "cycle", value, y))
 		return (1);
