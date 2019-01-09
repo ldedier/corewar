@@ -13,9 +13,12 @@
 #include "../includes/vm.h"
 
 /*
-** Input: vm (for arena and player), proc (for register and pc),
-** arg for X arg,
-** Returns
+** The aff instruction allows users to output characters to taunt other players.
+**
+** This version includes a bonus: instead of outputting the character every
+** time the instruction is called, it stores the character inside a string and
+** outputs the entire string when it's called with the value 0, thus allowing
+** players to output entire strings (much more useful).
 */
 
 static void		output_aff(t_process *proc)
@@ -44,10 +47,11 @@ int				ins_aff(t_vm *vm, t_process *proc, t_parameter arg[3])
 		else
 		{
 			i = 0;
-			while (proc->player->aff_buf[i])
+			while (proc->player->aff_buf[i] && i < MAX_AFF_LEN)
 				i++;
-			if (i >= MAX_AFF_LEN)
+			if (i == MAX_AFF_LEN)
 			{
+				proc->player->aff_buf[i] = 0;
 				output_aff(proc);
 				proc->player->aff_buf[0] = (proc->reg[arg[0].value - 1]) % 256;
 			}

@@ -45,36 +45,6 @@ static void		name_and_comm(t_vm *vm, int i)
 }
 
 /*
-**check_name_comm static function is used by the parse function to check the
-**name and comm arrays of the given player to make sure it contains no forbi-
-**den characters
-*/
-
-static void		check_name_comm(t_vm *vm, int i)
-{
-	char	*name;
-	char	*comm;
-	int		n;
-
-	name = vm->player[i].name;
-	comm = vm->player[i].comm;
-	n = 0;
-	while (name[n] != 0)
-	{
-		if (!(ft_strchr(OK_CHARS, name[n])))
-			error_exit_msg(INVALID_CHARS);
-		n++;
-	}
-	n = 0;
-	while (comm[n] != 0)
-	{
-		if (!(ft_strchr(OK_CHARS, comm[n])))
-			error_exit_msg(INVALID_CHARS);
-		n++;
-	}
-}
-
-/*
 **check_head_size static function is used to check the size given in the .cor's
 **header. If it doesn't match the real size of the instructions, the program
 **will output an error message and exit.
@@ -144,7 +114,6 @@ void			parse(t_vm *vm)
 	{
 		ft_printf("-");
 		name_and_comm(vm, i);
-		check_name_comm(vm, i);
 		instructions(vm, i);
 		i++;
 	}
