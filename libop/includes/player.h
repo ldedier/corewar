@@ -20,6 +20,7 @@
 # include <fcntl.h>
 
 # define TOT_SIZE (CHAMP_MAX_SIZE + PROG_NAME_LENGTH + COMMENT_LENGTH + 16)
+# define MAX_AFF_LEN 200
 
 typedef int				t_name_len;
 typedef int				t_comment_len;
@@ -53,7 +54,7 @@ typedef struct      s_player
 	char			*cor_name;
 	char			from_server;
 	t_color			color;
-	char			*aff_buf;
+	char			aff_buf[MAX_AFF_LEN + 1];
 }					t_player;
 
 int					ft_read_player(char *path, t_player *player);
