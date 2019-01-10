@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 19:07:54 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/03 15:47:50 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/09 19:08:35 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int		ft_render_ctd_countdown(t_vm *vm, int y)
 	char	*tmp2;
 	char	*value;
 
-	int val = 42; //NEED VARIABLE
+	int val = vm->cycle; //NEED VARIABLE
 	if (!(tmp = ft_itoa(val)))
 		return (1);
 	if (!(tmp2 = ft_itoa(vm->c_to_die)))
@@ -55,7 +55,7 @@ int		ft_render_ctd_countdown(t_vm *vm, int y)
 		free(tmp2);
 		return (1);
 	}
-	if (ft_render_entry(vm, "CTD countdown", value, y))
+	if (ft_render_entry(vm, "period progress", value, y))
 		return (1);
 	return (0);
 }
@@ -66,7 +66,7 @@ int		ft_render_lives_current_period(t_vm *vm, int y)
 	char	*tmp2;
 	char	*value;
 
-	int val = 42; //NEED VARIABLE
+	int val = vm->live; //NEED VARIABLE
 	if (!(tmp = ft_itoa(val)))
 		return (1);
 	if (!(tmp2 = ft_itoa(NBR_LIVE)))
@@ -93,7 +93,7 @@ int		ft_render_checks(t_vm *vm, int y)
 	char	*tmp2;
 	char	*value;
 
-	int val = vm->checks;
+	int val = MAX_CHECKS - vm->checks;
 	if (!(tmp = ft_itoa(val)))
 		return (1);
 	if (!(tmp2 = ft_itoa(MAX_CHECKS)))

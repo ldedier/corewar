@@ -57,12 +57,12 @@ void			init_vm(t_vm *vm, char **argv, char **env)
 	ft_bzero(vm->color, MAX_PL_COLOR);
 	ft_bzero(vm->arena, MEM_SIZE);
 	ft_strlcat(vm->color, init_color_ref(env), MAX_PL_COLOR);
-	i = 0;
-	while (i < MAX_PLAYERS)
+	i = -1;
+	while (++i < MAX_PLAYERS)
 	{
 		vm->player[i].relevant = 0;
 		vm->player[i].color.value = NULL;
-		i++;
+		ft_bzero(vm->player[i].aff_buf, MAX_AFF_LEN);
 	}
 }
 
@@ -72,7 +72,6 @@ t_list			*add_process(t_vm *vm, int index, int start)
 
 	process = (t_process *)ft_memalloc(sizeof(t_process));
 	process->player = &vm->player[index];
-	process->player->aff_buf = NULL;
 	process->pc = start;
 	process->reg[0] = process->player->num;
 	if (ft_add_to_list_ptr(&vm->proc, (void *)process, sizeof(t_process)))
@@ -188,7 +187,7 @@ void			dispatch_players(t_vm *vm, t_player *player)
 	int			i;
 	int			j;
 	int			start;
-	
+
 	update_nb_players(vm);
 	ft_bzero(vm->arena, MEM_SIZE);
 	ft_bzero(vm->metarena, sizeof(vm->metarena));

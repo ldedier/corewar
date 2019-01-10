@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 18:41:42 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/04 17:25:44 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/01/08 18:52:47 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,36 +42,6 @@ static void		name_and_comm(t_vm *vm, int i)
 		n++;
 	}
 	comm[n] = 0;
-}
-
-/*
-**check_name_comm static function is used by the parse function to check the
-**name and comm arrays of the given player to make sure it contains no forbi-
-**den characters
-*/
-
-static void		check_name_comm(t_vm *vm, int i)
-{
-	char	*name;
-	char	*comm;
-	int		n;
-
-	name = vm->player[i].name;
-	comm = vm->player[i].comm;
-	n = 0;
-	while (name[n] != 0)
-	{
-		if (!(ft_strchr(OK_CHARS, name[n])))
-			error_exit_msg(INVALID_CHARS);
-		n++;
-	}
-	n = 0;
-	while (comm[n] != 0)
-	{
-		if (!(ft_strchr(OK_CHARS, comm[n])))
-			error_exit_msg(INVALID_CHARS);
-		n++;
-	}
 }
 
 /*
@@ -144,7 +114,6 @@ void			parse(t_vm *vm)
 	{
 		ft_printf("-");
 		name_and_comm(vm, i);
-		check_name_comm(vm, i);
 		instructions(vm, i);
 		i++;
 	}

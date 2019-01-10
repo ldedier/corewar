@@ -1,16 +1,16 @@
 .name "zork"
-.comment "just a basic living prog"
+.comment "justub r3, r2,a basic living prog"
 
-live: live %-2
+live: live %-1		
 l2:	ld	%666666,r2
 	aff r2
 	ld %3, r3
-	sti r2, 1, 5
+	sti r2, 1, %5
 	sub r3, r2, r4
-#	st r2, 2000
-#	sub r1, r1, r5
-	add r5, r7, r7
-	zjmp %:live
+	st r4, 2000
+	sub r1, r1, r5
+	live %-2
+	zjmp %-4
 #	ld 	%5,r3
 #	ld	%:l2,r4
 

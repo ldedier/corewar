@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/08 18:24:34 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/10 19:20:38 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct		s_process
 	int				pc;
 	int				ins_bytelen;
 	int				cycle;
+	int				ins_cycle;
 	unsigned char	carry;
 }					t_process;
 
@@ -56,7 +57,7 @@ typedef struct		s_fade
 {
 	int				pc;
 	int				color;
-	int				fade;
+	int				value;
 }					t_fade;
 
 typedef struct		s_vm
@@ -193,10 +194,13 @@ void				test(t_vm vm);
 /*
 ** process visual loop and events
 */
+
 int					process_visu(t_vm *vm);
 
 /*
 ** client connection to scorewar
 */
+
 int					process_client(t_vm *vm);
+
 #endif

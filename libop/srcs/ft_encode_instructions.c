@@ -1,11 +1,12 @@
-
+/* ************************************************************************** */
+/*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_encode_cor.c                                    :+:      :+:    :+:   */
+/*   ft_encode_instructions.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/07 17:15:42 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/07 17:15:42 by ldedier          ###   ########.fr       */
+/*   Created: 2019/01/10 17:39:57 by ldedier           #+#    #+#             */
+/*   Updated: 2019/01/10 17:40:50 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +37,7 @@ static int		ft_encode_instruction(int fd, t_instruction *instruction)
 {
 	int i;
 
-	ft_dprintf(fd,"%s\t", instruction->op.instruction_name);
+	ft_dprintf(fd, "%s\t", instruction->op.instruction_name);
 	i = 0;
 	while (i < instruction->op.nb_params)
 	{
@@ -49,7 +50,7 @@ static int		ft_encode_instruction(int fd, t_instruction *instruction)
 	return (0);
 }
 
-int		ft_encode_instructions(int fd, t_list *instructions)
+int				ft_encode_instructions(int fd, t_list *instructions)
 {
 	t_list			*ptr;
 	t_instruction	*instruction;

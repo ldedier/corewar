@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/03 17:34:02 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/03 20:37:45 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/09 20:27:18 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 static int (*g_print_player_entry_value[NB_PLAYER_ENTRIES])
 	(t_vm *, t_player, int y) = {
 	ft_render_last_live,
-	ft_render_nb_process
+	ft_render_nb_process,
+	ft_render_nb_live
 };
 
 int		ft_render_player_entry(t_vm *vm, char *entry, char *value, int y)
@@ -48,7 +49,7 @@ int		ft_render_last_live(t_vm *vm, t_player player, int y)
 	char *value;
 
 	(void)player;
-	if (!(value = ft_itoa(42)))
+	if (!(value = ft_itoa(player.last_live_cycle)))
 		return (1);
 	if (ft_render_player_entry(vm, "last live", value, y))
 		return (1);
@@ -60,12 +61,25 @@ int		ft_render_nb_process(t_vm *vm, t_player player, int y)
 	char *value;
 
 	(void)player;
-	if (!(value = ft_itoa(42)))
+	if (!(value = ft_itoa(player.nb_proc)))
 		return (1);
 	if (ft_render_player_entry(vm, "nb process", value, y))
 		return (1);
 	return (0);
 }
+
+int		ft_render_nb_live(t_vm *vm, t_player player, int y)
+{
+	char *value;
+
+	(void)player;
+	if (!(value = ft_itoa(player.live)))
+		return (1);
+	if (ft_render_player_entry(vm, "lives received for current period", value, y))
+		return (1);
+	return (0);
+}
+
 int		ft_render_player_title(t_vm *vm, t_player player, int y)
 {
 	char		*tmp;

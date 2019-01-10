@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/29 16:47:33 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/31 18:03:00 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/10 01:10:47 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,19 @@ int		ft_process_player_info(t_vm *vm, t_client_slot *cs, int nb_bytes)
 {
 	int			i;
 	t_player	*player;
+	t_flag		flag;
 
 	player = cs->player;
 	(void)nb_bytes;
-	if ((t_flag)vm->client.buffer[0] != GET_CORE)
+	i = 0;
+	ft_memcpy_recv(&flag, vm->client.buffer, &i, sizeof(t_flag));
+	if (flag != GET_CORE)
 		return (1);
-	i = sizeof(t_flag);
-	player->comm_len = (t_comment_len)(vm->client.buffer[i]);
-	i += sizeof(t_comment_len);
-	ft_memcpy(player->comm, &vm->client.buffer[i], player->comm_len);
+	ft_memcpy_recv(&player->comm_len, vm->client.buffer, &i, sizeof(t_comment_len));
+	ft_memcpy_recv(&player->comm, vm->client.buffer, &i, player->comm_len);
 	player->comm[player->comm_len] = '\0';
-	i += player->comm_len;
-	player->algo_len = (t_code_len)vm->client.buffer[i];
-	i += sizeof(t_code_len);
-	ft_memcpy(player->algo, &vm->client.buffer[i], player->algo_len);
+	ft_memcpy_recv(&player->algo_len, vm->client.buffer, &i, sizeof(t_code_len));
+	ft_memcpy_recv(&player->algo, vm->client.buffer, &i, player->algo_len);
 	cs->downloaded = 1;
 	return (0);
 }

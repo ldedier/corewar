@@ -6,11 +6,19 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/11 17:47:31 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/03 17:47:49 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/10 00:52:04 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
+
+int		get_visible_char(char c)
+{
+	if (c >= ATLAS_MIN && c<= ATLAS_MAX)
+		return (c);
+	else
+		return ('?');
+}
 
 int		ft_copy_str_to_surface_no_source(t_vm *vm, char *str,
 		SDL_Rect rect, int color_index)
@@ -29,7 +37,7 @@ int		ft_copy_str_to_surface_no_source(t_vm *vm, char *str,
 	while (str[i])
 	{
 		if (SDL_BlitScaled(vm->visu.sdl.atlas[color_index]
-				[(int)str[i]].surface, NULL, 
+				[get_visible_char(str[i])].surface, NULL, 
 					vm->visu.sdl.w_surface, &char_rect) < 0)
 		{
 			return (ft_net_error());
@@ -59,13 +67,13 @@ int		ft_copy_str_to_surface(t_vm *vm, char *str,
 		if (col_source.y < NB_SOURCES)
 		{
 			if (ft_blit_scaled_scrollbar(&vm->visu.sdl,
-						vm->visu.sdl.atlas[col_source.x][(int)str[i]].surface,
+						vm->visu.sdl.atlas[col_source.x][get_visible_char(str[i])].surface,
 						char_rect, vm->visu.players_list[col_source.y].vscrollbar) < 0)
 				return (ft_net_error());
 		}
 		else
 		{
-			if (SDL_BlitScaled(vm->visu.sdl.atlas[col_source.x][(int)str[i]].surface, NULL,
+			if (SDL_BlitScaled(vm->visu.sdl.atlas[col_source.x][get_visible_char(str[i])].surface, NULL,
 						vm->visu.sdl.w_surface, &char_rect) < 0)
 				return (ft_net_error());
 		}

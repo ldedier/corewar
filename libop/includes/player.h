@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 22:25:36 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/08 18:00:32 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/10 16:03:00 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <fcntl.h>
 
 # define TOT_SIZE (CHAMP_MAX_SIZE + PROG_NAME_LENGTH + COMMENT_LENGTH + 16)
+# define MAX_AFF_LEN 200
 
 typedef int				t_name_len;
 typedef int				t_comment_len;
@@ -29,11 +30,11 @@ typedef int				t_score;
 
 typedef struct		s_color
 {
-	void 	*value;
-	int		index;
+	void			*value;
+	int				index;
 }					t_color;
 
-typedef struct      s_player
+typedef struct		s_player
 {
 	char			name[PROG_NAME_LENGTH + 1];
 	char			comm[COMMENT_LENGTH + 1];
@@ -53,7 +54,7 @@ typedef struct      s_player
 	char			*cor_name;
 	char			from_server;
 	t_color			color;
-	char			*aff_buf;
+	char			aff_buf[MAX_AFF_LEN + 1];
 }					t_player;
 
 int					ft_read_player(char *path, t_player *player);
@@ -64,4 +65,5 @@ t_player			*ft_new_player(char *name, t_name_len len, t_score score);
 int					ft_return_verbosed(char *str, int ret);
 void				ft_print_players(t_list *players);
 void				ft_print_player(t_player *player);
+
 #endif

@@ -6,13 +6,13 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 22:30:17 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/04 15:03:19 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/01/10 17:25:40 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "player.h"
 
-int		ft_return_verbosed(char *str, int ret)
+int			ft_return_verbosed(char *str, int ret)
 {
 	ft_dprintf(2, "%s\n", str);
 	return (ret);
@@ -58,7 +58,7 @@ static int	check_mgc(t_player *player)
 	return (mgc == COREWAR_EXEC_MAGIC);
 }
 
-int		ft_process_read_player(char *data, int length, t_player *player)
+int			ft_process_read_player(char *data, int length, t_player *player)
 {
 	ft_memcpy(player->bin, data, length);
 	player->file_len = length;
@@ -67,12 +67,12 @@ int		ft_process_read_player(char *data, int length, t_player *player)
 	{
 		ft_dprintf(2,
 			"File has wrong magic number and is therefore not readable\n");
-		 return (1);
+		return (1);
 	}
 	return (ft_parse_player(player));
 }
 
-int		ft_read_player(char *path, t_player *player)
+int			ft_read_player(char *path, t_player *player)
 {
 	int fd;
 	int ret;

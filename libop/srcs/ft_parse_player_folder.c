@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 20:43:24 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/06 22:15:42 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/10 17:34:22 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int		ft_parse_player_folder(char *folder_full_name, t_list **players_list)
 {
 	DIR				*dir;
 	struct dirent	*entry;
-	
+
 	*players_list = NULL;
 	if (!(dir = opendir(folder_full_name)))
 	{

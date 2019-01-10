@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 17:19:23 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/07 17:28:24 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/10 18:50:20 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int		main(int argc, char **argv, char **env)
 	if (!init_processes(&vm))
 		return (1);
 	play(&vm);
-//	display_arena((unsigned char *)vm.arena);
-//	test(vm);
+	//display_arena((unsigned char *)vm.arena);
+	//test(vm);
 	return (0);
 }

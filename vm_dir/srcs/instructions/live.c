@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   live.c		                                        :+:      :+:    :+:   */
+/*   live.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/03 20:22:56 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/08 18:25:35 by emuckens         ###   ########.fr       */
+/*   Created: 2019/01/10 17:10:34 by emuckens          #+#    #+#             */
+/*   Updated: 2019/01/10 17:52:48 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,12 @@ int		ins_live(t_vm *vm, t_process *proc, t_parameter arg[3])
 		player->live++;
 		player->last_live_cycle = vm->total_cycle;
 		vm->winner = player;
-		ft_printf("un processus dit que le joueur %d (%s) est en vie.\n", player->num, player->name);
+		ft_printf("Un processus dit que le joueur %d(%s) est en vie.\n",
+				player->num, player->name);
 		live = (t_fade *)ft_memalloc(sizeof(t_fade));
 		live->pc = proc->pc;
 		live->color = *(int *)proc->player->color.value;
-		live->fade = FADE_LEN;
+		live->value = FADE_LEN;
 		if (ft_add_to_list_ptr(&vm->live_ok, (void *)live, sizeof(t_fade)))
 			return (FAILURE);
 	}

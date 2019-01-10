@@ -6,34 +6,39 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/04 17:36:44 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/08 19:59:23 by emuckens         ###   ########.fr       */
+
+/*   Updated: 2019/01/10 15:59:44 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/vm.h"
 
 /*
-** Input: vm (for arena and player), proc (for register and pc),
-** arg for X arg,
-** Returns
+** The aff instruction allows users to output characters to taunt other players.
+**
+** This version includes a bonus: instead of outputting the character every
+** time the instruction is called, it stores the character inside a string and
+** outputs the entire string when it's called with the value 0, thus allowing
+** players to output entire strings (much more useful).
 */
 
 static void		output_aff(t_process *proc)
 {
+	int len;
+
 	if (proc->player->aff_buf[0])
 	{
-		ft_printf("Aff: [%s] (player %d).\n", proc->player->aff_buf,
-			proc->player->num);
-		free(proc->player->aff_buf);
+		ft_printf("Aff: [%s] by player [%s](%d).\n", proc->player->aff_buf,
+			proc->player->name, proc->player->num);
+		len = ft_strlen(proc->player->aff_buf);
+		ft_bzero(proc->player->aff_buf, (size_t)len);
 	}
 	proc->carry = 1;
 }
 
 int				ins_aff(t_vm *vm, t_process *proc, t_parameter arg[3])
 {
-	char	*tmp;
 	int		i;
-	int		len;
 
 	if (!vm->dump)
 	{
@@ -41,25 +46,20 @@ int				ins_aff(t_vm *vm, t_process *proc, t_parameter arg[3])
 			output_aff(proc);
 		else
 		{
-			if (proc->player->aff_buf) // if else moche d'emma
-				len = ft_strlen(proc->player->aff_buf);
-			else
-				len = 0;
-			if (!len)
+
+			i = 0;
+			while (proc->player->aff_buf[i] && i < MAX_AFF_LEN)
+				i++;
+			if (i == MAX_AFF_LEN)
 			{
-				proc->player->aff_buf = ft_memalloc(sizeof(char) + 1);
+				proc->player->aff_buf[i] = 0;
+				output_aff(proc);
 				proc->player->aff_buf[0] = (proc->reg[arg[0].value - 1]) % 256;
 			}
 			else
-			{
-				tmp = ft_memalloc((size_t)len + 2);
-				i = -1;
-				while (++i < len)
-					tmp[i] = proc->player->aff_buf[i];
-				tmp[i] = (proc->reg[arg[0].value - 1]) % 256;
-				free(proc->player->aff_buf);
-				proc->player->aff_buf = tmp;
-			}
+				proc->player->aff_buf[i] = (proc->reg[arg[0].value - 1]) % 256;
+			ft_printf("Character [%c] added to player %d's aff string",
+					(proc->reg[arg[0].value - 1]) % 256, proc->player->num);
 		}
 	}
 	return (SUCCESS);

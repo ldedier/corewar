@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/08 00:08:01 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/07 18:30:45 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/06 18:39:39 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ int		ft_encode_asm(int fd, t_env *e)
 	instructions = NULL;
 	i = 0;
 	while ((ret = get_instruction(e->player.algo, &instruction,
-			i, e->player.algo_len)) && i < e->player.algo_len)
+			i, e->player.algo_len) != -1) && i < e->player.algo_len)
 	{
 		if (ft_add_to_list_back(&instructions, &instruction,
-					sizeof(t_instruction)))
+			sizeof(t_instruction)))
 		{
 			ft_lstdel_value(&instructions);
 			return (1);
@@ -53,7 +53,7 @@ int		ft_encode_to_assembly(t_env *e)
 	int fd;
 
 	if ((fd = open(e->champ.assembly_name, O_RDWR | O_CREAT | O_TRUNC, 0644))
-			== -1)
+		== -1)
 	{
 		perror(e->champ.assembly_name);
 		return (1);
