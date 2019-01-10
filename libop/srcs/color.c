@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 20:42:40 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/04 15:57:44 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/01/10 00:38:16 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void		color_on_term(char index)
 
 int			get_color_sdl(char index)
 {
-	ft_printf("sdl color = %#x\n", *(int *)get_color_ptr(index));
+//	ft_printf("sdl color = %#x\n", *(int *)get_color_ptr(index));
 	return (*(int *)get_color_ptr(index));
 }
 
