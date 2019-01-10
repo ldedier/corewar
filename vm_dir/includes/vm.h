@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/09 23:38:25 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/10 17:53:28 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,10 +193,13 @@ void				test(t_vm vm);
 /*
 ** process visual loop and events
 */
+
 int					process_visu(t_vm *vm);
 
 /*
 ** client connection to scorewar
 */
+
 int					process_client(t_vm *vm);
+
 #endif

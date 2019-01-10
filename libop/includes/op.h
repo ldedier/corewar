@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 19:01:37 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/07 20:02:11 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/10 16:10:17 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 ** Toutes les tailles sont en octets.
 ** On part du principe qu'un int fait 32 bits. Est-ce vrai chez vous ?
 */
+
 # include "libft.h"
 # include "errors.h"
 
@@ -45,7 +46,7 @@
 # define NAME_CMD_STRING		".name"
 # define COMMENT_CMD_STRING		".comment"
 # define REG_NUMBER				16
-# define CYCLE_TO_DIE			1536 //anciennement 1536
+# define CYCLE_TO_DIE			50 //anciennement 1536
 # define CYCLE_DELTA			50
 # define NBR_LIVE				21
 # define MAX_CHECKS				10 //anciennement 10
@@ -60,22 +61,22 @@
 # define COREWAR_EXEC_MAGIC		0xea83f3
 # define NB_INSTRUCTIONS		16
 
-# define LIVE_STR			"alive"
-# define LD_STR				"load"
-# define ST_STR				"store"
-# define ADD_STR			"addition"
-# define SUB_STR			"soustraction"
-# define AND_STR			"et (and r1, r2, r3 r1&r2 -> r3"
-# define OR_STR				"ou (or r1, r2, r3 r1 | r2 -> r3"
-# define XOR_STR			"ou (xor r1, r2, r3 r1^r2 -> r3"
-# define ZJMP_STR			"jump if zero"
-# define LDI_STR			"load index"
-# define STI_STR			"store index"
-# define FORK_STR			"fork"
-# define LLD_STR			"long load"
-# define LLDI_STR			"long load index"
-# define LFORK_STR			"long fork"
-# define AFF_STR			"aff"
+# define LIVE_STR				"alive"
+# define LD_STR					"load"
+# define ST_STR					"store"
+# define ADD_STR				"addition"
+# define SUB_STR				"soustraction"
+# define AND_STR				"et (and r1, r2, r3 r1&r2 -> r3"
+# define OR_STR					"ou (or r1, r2, r3 r1 | r2 -> r3"
+# define XOR_STR				"ou (xor r1, r2, r3 r1^r2 -> r3"
+# define ZJMP_STR				"jump if zero"
+# define LDI_STR				"load index"
+# define STI_STR				"store index"
+# define FORK_STR				"fork"
+# define LLD_STR				"long load"
+# define LLDI_STR				"long load index"
+# define LFORK_STR				"long fork"
+# define AFF_STR				"aff"
 
 /*
 PAS DE PANIQUE JE VAIS VIRER TOUT CA NORMALEMENT
@@ -108,7 +109,7 @@ PAS DE PANIQUE JE VAIS VIRER TOUT CA NORMALEMENT
 # define AFF_ARG_TYPE			GET_ARGTYPE(R, 0)
 */
 
-typedef char	t_arg_type;
+typedef char					t_arg_type;
 
 typedef struct					s_op
 {
@@ -143,30 +144,30 @@ typedef struct					s_parameter
 
 typedef struct					s_instruction
 {
-	t_op			op;
-	t_parameter		params[3];
-	unsigned int	address;
-	int				nb_line;
-	char	ocp;
-	char			*source_code_line;
-}					t_instruction;
+	t_op						op;
+	t_parameter					params[3];
+	unsigned int				address;
+	int							nb_line;
+	char						ocp;
+	char						*source_code_line;
+}								t_instruction;
 
-enum				e_op
+enum							e_op
 {
 	NA, LIVE, LD, ST, ADD, SUB, AND, OR, XOR, ZJMP, LDI, STI, FORK, LLD, LLDI, LFORK, AFF
 };
 
-enum				e_nb_args
+enum							e_nb_args
 {
 	ZERO, ONE, TWO, THREE
 };
 
-enum				e_has_ocp
+enum							e_has_ocp
 {
 	OCP_NO, OCP_YES
 };
 
-enum				e_mod_carry
+enum							e_mod_carry
 {
 	CARRY_NO, CARRY_YES
 };
@@ -181,4 +182,5 @@ void							set_optab(t_op **tab);
 int								ft_encode_instructions(int fd, t_list *instructions);
 int								ft_parse_player_folder(char *folder_full_path,
 									t_list **players_list);
+
 #endif

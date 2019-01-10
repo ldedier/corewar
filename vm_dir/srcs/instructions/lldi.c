@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lldi.c		                                        :+:      :+:    :+:   */
+/*   lldi.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/03 20:22:56 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/13 18:33:57 by emuckens         ###   ########.fr       */
+/*   Created: 2019/01/10 17:15:28 by emuckens          #+#    #+#             */
+/*   Updated: 2019/01/10 17:15:43 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 /*
 ** Input: vm (for arena and player), proc (for register and pc),
-** arg for X arg, 
-** Returns 
+** arg for X arg,
+** Returns
 */
 
 int		ins_lldi(t_vm *vm, t_process *proc, t_parameter arg[3])

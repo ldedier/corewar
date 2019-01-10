@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 20:42:40 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/10 00:38:16 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/10 17:53:52 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ void		color_off(void)
 {
 	ft_printf("%s", COLF_OFF);
 }
-void	*get_color_ptr(char index)
+
+void		*get_color_ptr(char index)
 {
 	static t_color_type color[NB_COLORS] = {
 		{COL_BLACK, COLF_BLACK},
@@ -36,6 +37,7 @@ void	*get_color_ptr(char index)
 		{COL_BCYAN, COLF_BCYAN},
 		{COL_BGREY, COLF_BGREY},
 		{COL_OFF, COLF_OFF}};
+
 	return ((void *)&color[(int)index]);
 }
 
@@ -80,25 +82,27 @@ int			set_color(t_player *player, char *color_index_ref)
 	return (1);
 }
 
-char	*init_color_ref(char **env)
+char		*init_color_ref(char **env)
 {
-	char	***env_var;
+	char		***env_var;
 	static char	color_ref_index[MAX_PL_COLOR];
-	int	i;
-	int	nb_envar;
-	int index;
+	int			i;
+	int			nb_envar;
+	int			index;
 
 	if (!color_ref_index[1])
 	{
 		nb_envar = get_envar(env, &env_var);
-		if ((index = get_envar_index(env_var, COREWAR_VAR_NAME, nb_envar)) != -1)
+		if ((index = get_envar_index(env_var, COREWAR_VAR_NAME, nb_envar))
+																		!= -1)
 			ft_strlcat(color_ref_index, env_var[(int)index][1], MAX_PL_COLOR);
 		else
 			ft_strlcat(color_ref_index, DEFAULT_COLORS, MAX_PL_COLOR);
 		i = -1;
 		while (color_ref_index[++i])
 		{
-			color_ref_index[i] = (char)ft_strichr(COL_DESIGNATOR, color_ref_index[i]);
+			color_ref_index[i] = (char)ft_strichr(COL_DESIGNATOR,
+														color_ref_index[i]);
 		}
 	}
 	return (color_ref_index);
