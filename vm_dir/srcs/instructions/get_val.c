@@ -18,15 +18,15 @@ static int	getval_ind(t_vm *vm, t_process *proc, int index, int mod)
 	(void)mod;
 
 	(void)proc;
-//	ft_printf("indirect | index = %d mod = %d\n", index, mod);
+//ft_printf("indirect | index = %d mod = %d\n", index, mod);
 	val = getval_mod(vm->arena, index, DIR_SIZE, MEM_SIZE);
-//	ft_printf("val = %d\n", val);
+//ft_printf("val = %d\n", val);
 	return (val);
 }
 
 static int	getval_reg(t_vm *vm, t_process *proc, int index, int mod)
 {
-//	ft_printf("reg | index = %d\n", index);
+//ft_printf("reg | index = %d\n", index);
 	(void)vm;
 	(void)mod;
 	return (proc->reg[index - 1]);
@@ -34,7 +34,7 @@ static int	getval_reg(t_vm *vm, t_process *proc, int index, int mod)
 
 static int	getval_dir(t_vm *vm, t_process *proc, int val, int mod)
 {
-//	ft_printf("direct\n");
+//ft_printf("direct\n");
 	(void)vm;
 	(void)proc;
 	(void)mod;
