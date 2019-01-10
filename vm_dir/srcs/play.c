@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/08 19:27:01 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/01/10 17:06:42 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,7 +174,7 @@ int			handle_end_cycle(t_vm *vm, int *cycle)
 
 void		execute_pending_action(t_vm *vm, t_list *proc_lst)
 {
-	t_process *proc;
+	t_process	*proc;
 	int			index;
 	int			val;
 	int			i;
@@ -183,7 +183,8 @@ void		execute_pending_action(t_vm *vm, t_list *proc_lst)
 	if (!proc->pending.cycles)
 	{
 		proc->pc = (proc->pc + proc->pending.pc) % MEM_SIZE;
-//	ft_printf("value before splitting by bytes = %d dest index = %d\n", proc->pending.value, proc->pending.dest_index);
+//		ft_printf("value before splitting by bytes = %d dest index = %d\n",
+//			proc->pending.value, proc->pending.dest_index);
 		if (proc->pending.dest == vm->arena && (i = -1))
 		{
 			while (++i < 4)

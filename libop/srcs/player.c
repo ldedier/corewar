@@ -6,13 +6,13 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/08 14:56:45 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/04 15:09:27 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/01/10 17:24:26 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "player.h"
 
-t_player *ft_new_player(char *name, t_name_len name_len, t_score score)
+t_player	*ft_new_player(char *name, t_name_len name_len, t_score score)
 {
 	t_player *res;
 
@@ -29,13 +29,13 @@ t_player *ft_new_player(char *name, t_name_len name_len, t_score score)
 	return (res);
 }
 
-void	ft_print_player(t_player *player)
+void		ft_print_player(t_player *player)
 {
 	ft_printf("%s\n", player->name);
 	ft_printf("%d\n\n", player->score);
 }
 
-void	ft_print_players(t_list *players)
+void		ft_print_players(t_list *players)
 {
 	t_list		*ptr;
 	t_player	*player;

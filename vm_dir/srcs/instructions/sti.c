@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sti.c		                                        :+:      :+:    :+:   */
+/*   sti.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/03 20:22:56 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/08 16:41:49 by emuckens         ###   ########.fr       */
+/*   Created: 2019/01/10 17:18:28 by emuckens          #+#    #+#             */
+/*   Updated: 2019/01/10 17:18:43 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		ins_sti(t_vm *vm, t_process *proc, t_parameter arg[3])
 	getval_param_dest(vm, proc, &arg[2], 1);
 	dest = proc->pc + (arg[1].dest_value + arg[2].dest_value) % IDX_MOD;
 	proc->pending.dest = vm->arena;
-   	proc->pending.dest_index = dest;
+	proc->pending.dest_index = dest;
 	proc->pending.value = arg[0].dest_value;
 	return (SUCCESS);
 }

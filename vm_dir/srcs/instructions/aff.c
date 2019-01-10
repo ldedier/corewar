@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/04 17:36:44 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/09 18:52:05 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/01/10 15:59:44 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ static void		output_aff(t_process *proc)
 
 	if (proc->player->aff_buf[0])
 	{
-		ft_printf("Aff: [%s] (player %d).\n", proc->player->aff_buf,
-			proc->player->num);
+		ft_printf("Aff: [%s] by player [%s](%d).\n", proc->player->aff_buf,
+			proc->player->name, proc->player->num);
 		len = ft_strlen(proc->player->aff_buf);
 		ft_bzero(proc->player->aff_buf, (size_t)len);
 	}
@@ -56,6 +56,8 @@ int				ins_aff(t_vm *vm, t_process *proc, t_parameter arg[3])
 			}
 			else
 				proc->player->aff_buf[i] = (proc->reg[arg[0].value - 1]) % 256;
+			ft_printf("Character [%c] added to player %d's aff string",
+					(proc->reg[arg[0].value - 1]) % 256, proc->player->num);
 		}
 	}
 	return (SUCCESS);

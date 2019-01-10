@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 18:41:42 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/04 16:52:49 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/01/10 17:39:27 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 static void		parse_name_and_comm(t_player *player)
 {
 	int		n;
-	
+
 	n = 0;
 	while (n < PROG_NAME_LENGTH)
 	{
@@ -40,7 +40,7 @@ static void		parse_name_and_comm(t_player *player)
 
 /*
 **check_head_size static function is used to check the size given in the .cor's
-**header. If it doesn't match the actual size of the instructions, it exits 
+**header. If it doesn't match the actual size of the instructions, it exits
 **the program.
 */
 
@@ -71,7 +71,8 @@ static int		parse_instructions(t_player *player)
 	n = 0;
 	while (PROG_NAME_LENGTH + 16 + COMMENT_LENGTH + n < player->file_len)
 	{
-		player->algo[n] = player->bin[PROG_NAME_LENGTH + 16 + COMMENT_LENGTH + n];
+		player->algo[n] = player->bin[PROG_NAME_LENGTH + 16 +
+														COMMENT_LENGTH + n];
 		n++;
 	}
 	player->algo_len = n;
@@ -94,7 +95,7 @@ static int		parse_instructions(t_player *player)
 **containing the commentary, and the [algo] containing the instructions.
 */
 
-int			ft_parse_player(t_player *player)
+int				ft_parse_player(t_player *player)
 {
 	parse_name_and_comm(player);
 	if (parse_instructions(player))

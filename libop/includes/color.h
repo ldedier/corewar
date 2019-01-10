@@ -6,14 +6,14 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/22 15:55:47 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/21 17:28:08 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/10 17:46:07 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include <player.h>
-
 #ifndef COLOR_H
 # define COLOR_H
+
+# include <player.h>
 
 # define COL_DESIGNATOR		"brgwlmcyBRGWLMCYx"
 # define DEFAULT_COLORS		"xrclLmwM"
@@ -86,20 +86,19 @@ typedef struct		s_color_type
 	int		sdl;
 	char	term[STR_COLOR_LEN];
 }					t_color_type;
-/*
-enum				e_output
-{
-	TERM, SDL
-};
-*/
-int			set_color(t_player *player, char *color);
-void		color_on_term(char index);
-int			get_color_sdl(char index);
-void		color_off(void);
-void		*get_term_color(char index);
 
-int			get_envar(char **env, char ****env_var);
-int			get_envar_index(char ***env_var, char *var, int nb_envar);
-char		*init_color_ref(char **env);
+//enum				e_output
+//{
+//	TERM, SDL
+//};
+
+int					set_color(t_player *player, char *color);
+void				color_on_term(char index);
+int					get_color_sdl(char index);
+void				color_off(void);
+void				*get_term_color(char index);
+int					get_envar(char **env, char ****env_var);
+int					get_envar_index(char ***env_var, char *var, int nb_envar);
+char				*init_color_ref(char **env);
 
 #endif
