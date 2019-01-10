@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/08 18:24:34 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/09 23:38:25 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ typedef struct		s_fade
 {
 	int				pc;
 	int				color;
-	int				fade;
+	int				value;
 }					t_fade;
 
 typedef struct		s_vm

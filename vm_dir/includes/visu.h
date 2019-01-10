@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/08 18:11:34 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/10 00:47:40 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@
 # define INIT_MAX_PLAYERS		4
 # define INIT_CYCLES_PER_TURN	1
 # define GLYPH_W_H_RATIO		0.5
+
+# define ATLAS_MIN				32
+# define ATLAS_MAX				126
 
 # define FRAMERATE				60
 
@@ -98,16 +101,16 @@
 # define PLAY_FOOTER_H			180
 # define LIVE_BREAKDOWN_H		150
 
-# define NB_PLAYER_ENTRIES		2
+# define NB_PLAYER_ENTRIES		3
 # define PLAYER_ENTRY_LEFT		50
 # define PLAYER_ENTRY_SPACE		20
 # define PLAYER_TITLE_HEIGHT	30
-# define PLAYER_ENTRY_HEIGHT	30
+# define PLAYER_ENTRY_HEIGHT	25
 # define PLAYER_TITLE_TOP		20
 # define PLAYER_TITLE_BOTTOM	20
 
 # define LIST_PLAYER_ENTRIES_B	20
-# define PLAYER_ENTRY_IPADDING	15
+# define PLAYER_ENTRY_IPADDING	8
 
 # define ENTRY_BOTTOM			20
 # define ENTRY_SPACE			30
@@ -645,6 +648,7 @@ t_color_manager			ft_get_color(int color);
 t_color_manager			ft_get_color_sdl(int color);
 t_color_manager			ft_scale_color(t_color_manager color, double scale);
 t_color_manager			ft_scale_color_sdl(t_color_manager color, double scale);
+t_color_manager			ft_interpolate_color(int col1, int col2, double t);
 int						ft_render_player(t_vm *vm, t_player *player, t_xy xy,
 							t_player_source source);
 int						ft_render_dragged_player(t_vm *vm);
@@ -753,6 +757,8 @@ int						ft_process_button_pressed(t_vm *vm);
 void					ft_render_dashboard_separator(t_vm *vm);
 int						process(t_vm *vm);
 int						ft_render_all_process(t_vm *vm);
+int						ft_render_all_dead_process(t_vm *vm);
+int						ft_render_all_lives(t_vm *vm);
 int						start_fight(t_vm *vm);
 int						clean_arena(t_vm *vm, t_button *this, t_ixy xy);
 int						switch_local(t_vm *vm, t_button *this, t_ixy xy);
@@ -790,6 +796,7 @@ int						ft_render_live_breakdown(t_vm *vm);
 int						ft_render_live_breakdown_hp(t_vm *vm);
 int						go_back(t_vm *vm, t_button *this, t_ixy xy);
 int						ft_render_play_footer(t_vm *vm);
+int						ft_render_nb_live(t_vm *vm, t_player p, int y);
 int						ft_render_live_breakdown_title(t_vm *vm, SDL_Rect rect);
 int						ft_init_hp_surface(t_visu *visu);
 #endif

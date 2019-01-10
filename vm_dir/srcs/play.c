@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/08 18:33:35 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/09 23:39:48 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int		kill_process(t_vm *vm, t_list *proc)
 	killed_proc = (t_fade *)ft_memalloc(sizeof(t_fade));
 	killed_proc->pc = ((t_process *)proc->content)->pc;
 	killed_proc->color = *((int *)((t_process *)proc->content)->player->color.value);
-	killed_proc->fade = MAX_FADE;
+	killed_proc->value = MAX_FADE;
 	--((t_process *)proc->content)->player->nb_proc;
 	if (ft_add_to_list_ptr(&vm->killed_proc, (void *)killed_proc, sizeof(t_fade)))
 		return (-1);

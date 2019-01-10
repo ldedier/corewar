@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/03 21:25:21 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/04 21:18:21 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/09 20:08:43 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,31 @@ int		ft_moy(int val1, int val2)
 	return ((val1 + val2) / 2);
 }
 
+void	ft_get_player_lives(t_vm *vm, int *nb_live_player_1,
+			int *nb_live_player_2)
+{
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	while (i < MAX_PLAYERS)
+	{
+		if (vm->player[i].relevant)
+		{
+			if (!j)
+				*nb_live_player_1 = vm->player[i].live;
+			else
+			{
+				*nb_live_player_2 = vm->player[i].live;
+				return ;
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
 int		ft_render_magic_fight(t_vm *vm)
 {
 	SDL_Rect	rect;
@@ -40,26 +65,12 @@ int		ft_render_magic_fight(t_vm *vm)
 	rect.y = vm->visu.center.live_breakdown_hp_anim_y;
 	rect.h = vm->visu.center.live_breakdown_hp_anim_h;
 
-	static int nb_live_player_1 = 0;
-	static int nb_live_player_2 = 0;
-	static int i = 0;
-	static int val = 2;
-	static int pola = 0;
+	int nb_live_player_1;
+	int nb_live_player_2;
 
+	ft_get_player_lives(vm, &nb_live_player_1, &nb_live_player_2);
 	ratio = get_magic_ratio(nb_live_player_1, nb_live_player_2);
-	
-	if (i < exp(val))
-		i++;
-	else
-	{
-		i = 0;
-		pola = !pola;
-		val++;
-	}
-	if (pola)
-		nb_live_player_1++;
-	else
-		nb_live_player_2++;
+
 	if (SDL_BlitScaled(vm->visu.frames[vm->visu.animation_index].background,
 			NULL, vm->visu.sdl.w_surface, &rect))
 		return (1);

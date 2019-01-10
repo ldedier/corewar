@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/03 21:23:05 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/04 00:55:48 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/09 19:15:24 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int		ft_render_live_breakdown_bar(t_vm *vm)
 {
 	int		i;
-	int		total_lives;
 	double	from;
 	double	distance;
 
@@ -29,14 +28,13 @@ int		ft_render_live_breakdown_bar(t_vm *vm)
 	rect.y = vm->visu.center.game_entries_h +
 		vm->visu.center.list_player_entries_h +
 			vm->visu.center.live_breakdown_bar_top;
-	total_lives = 42;
 	while (i < MAX_PLAYERS)
 	{
 		if (vm->player[i].relevant)
 		{
 			rect.x = vm->visu.center.dashboard_x +
 				vm->visu.center.live_breakdown_bar_left + from;
-			distance = vm->visu.center.live_breakdown_bar_w * ((double)(42 / (double)vm->nb_players) / (double)total_lives);
+			distance = vm->visu.center.live_breakdown_bar_w * ((double)(vm->player[i].live / (double)vm->nb_players) / (double)vm->live);
 			rect.w = distance;
 			from += distance;
 			if (SDL_FillRect(vm->visu.sdl.w_surface, &rect, get_color_sdl(vm->player[i].color.index)))

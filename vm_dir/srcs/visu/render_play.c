@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 19:07:54 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/04 21:34:52 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/10 00:21:56 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,11 @@ int		ft_render_play(t_vm *vm)
 {
 	static double anim_rest = 0;
 
+	if (ft_render_all_dead_process(vm))
+		return (1);
 	if (ft_render_all_process(vm))
+		return (1);
+	if (ft_render_all_lives(vm))
 		return (1);
 	if (ft_render_memory(vm))
 		return (1);
