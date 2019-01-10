@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/04 17:36:44 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/09 18:52:05 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/09 18:52:05 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,6 @@ static void		output_aff(t_process *proc)
 {
 	int len;
 
-/*
-** srcs/instructions/aff.c:32:20: error: address of array 'proc->player->aff_buf' will always evaluate to 'true'
-*/
-//	if (proc->player->aff_buf && proc->player->aff_buf[0])
 	if (proc->player->aff_buf[0])
 	{
 		ft_printf("Aff: [%s] (player %d).\n", proc->player->aff_buf,
@@ -41,7 +37,6 @@ static void		output_aff(t_process *proc)
 
 int				ins_aff(t_vm *vm, t_process *proc, t_parameter arg[3])
 {
-//	char	*tmp;
 	int		i;
 
 	if (!vm->dump)
