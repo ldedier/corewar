@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 21:28:15 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/04 00:07:53 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/11 21:10:50 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,9 +105,9 @@ void	ft_init_buttons(t_vm *vm, t_visu *visu)
 	visu->buttons[UPLOAD_BUTTON].render = &ft_render_upload_button;
 	rect.x += visu->center.player_h + visu->center.toolbar_blank;
 	ft_init_button(&(visu->buttons[ALPHA_SORT_BUTTON]), rect,
-		vm->visu.sdl.images[SORT_ALPHA], &nothing_on_click);
+		vm->visu.sdl.images[SORT_ALPHA], &sort_alpha);
 	rect.x += visu->center.player_h + visu->center.sort_padding;
 	ft_init_button(&(visu->buttons[SCORE_SORT_BUTTON]), rect,
-		vm->visu.sdl.images[SORT_SCORE], &nothing_on_click);
+		vm->visu.sdl.images[SORT_SCORE], &sort_score);
 	ft_init_buttons_2(vm, visu);
 }

@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:54:14 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/03 23:38:26 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/11 21:17:17 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int		ft_download(t_vm *vm, t_button *this, t_ixy xy)
 	{
 		if (ft_query_player_bin(vm, this->button_union.client_slot))
 			return (1);
+		ft_lst_mergesort(&vm->visu.downloaded_players, &ft_sort_alpha, 0);
 	}
 	this->enabled = 0;
 	this->button_union.client_slot->on_disk = 1;
@@ -135,6 +136,7 @@ int		ft_process_connect_status(int nb_bytes, t_vm *vm)
 		ft_printf(
 				GREEN"successfully connected to server %s on port %d\n"EOC,
 				vm->client.server_address, vm->client.port);
+		ft_lst_mergesort(&vm->client.client_slots, &ft_sort_alpha_cs, 0);
 	//	ft_print_players(client->players);
 		return (0);
 	}

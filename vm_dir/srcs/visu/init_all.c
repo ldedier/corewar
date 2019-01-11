@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 21:48:50 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/04 18:01:13 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/11 21:06:15 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int		ft_init_all_visu(t_vm *vm, t_visu *v)
 		return (1);
 	if (ft_parse_player_folder(PATH"/downloads", &vm->visu.downloaded_players))
 		return (1);
+	ft_lst_mergesort(&vm->visu.downloaded_players, ft_sort_alpha, 0);
 	if (ft_init_positions(vm, v))
 		return (1);
 	if (ft_init_hp_surface(&vm->visu))
@@ -92,6 +93,7 @@ int		ft_init_all_visu(t_vm *vm, t_visu *v)
 	else
 		vm->visu.local_type = LOCAL_DOWNLOAD;
 	vm->cycle = 1;
+	v->sort_cs_func = &ft_sort_alpha_cs;
 	vm->visu.notification.image_index = -1;
 	vm->visu.animation_index = 0;
 	return (0);

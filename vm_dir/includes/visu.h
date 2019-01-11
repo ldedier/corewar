@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/11 19:59:18 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/11 21:13:31 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -607,10 +607,18 @@ typedef struct			s_hp_frame
 	t_ray				voldemort_ray;
 }						t_hp_frame;
 
+typedef enum			e_sort_type
+{
+	SORT_TYPE_ALPHA,
+	SORT_TYPE_SCORE
+}						t_sort_type;
+
 struct					s_visu
 {
 	char				active;
 	t_phase				phase;
+	int 				(*sort_cs_func)(void *, void *);
+	t_sort_type			sort_type;
 	t_local_type		local_type;
 	t_sdl				sdl;
 	t_dim				dim;
@@ -695,6 +703,10 @@ int						ft_get_scrolled_height(t_vscrollbar vscrollbar);
 void					ft_swing_scrollbar(t_vscrollbar *scrollbar, t_ixy xy);
 int						nothing_on_click(t_vm *vm, t_button *this, t_ixy xy);
 int						fight(t_vm *vm, t_button *this, t_ixy xy);
+
+int						sort_score(t_vm *vm, t_button *this, t_ixy xy);
+int						sort_alpha(t_vm *vm, t_button *this, t_ixy xy);
+
 void					nothing_on_press(t_vm *vm, t_button *this);
 void					ft_wheel_event(t_vm *vm, SDL_Event event);
 void					ft_update_download_buttons_client_rect(t_vm *vm);
@@ -801,4 +813,10 @@ int						ft_render_nb_live(t_vm *vm, t_player p, int y);
 int						ft_render_live_breakdown_title(t_vm *vm, SDL_Rect rect);
 int						ft_init_hp_surface(t_visu *visu);
 void					ft_copy_abbrev(char *abbrev, char *str);
+int						ft_sort_score(void *p1, void *p2);
+int						ft_sort_alpha(void *p1, void *p2);
+int						ft_sort_alpha_cs(void *p1, void *p2);
+int						ft_sort_score_cs(void *p1, void *p2);
+void					ft_sort_client_slots(t_vm *vm);
+
 #endif

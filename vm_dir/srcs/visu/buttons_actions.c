@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 21:45:31 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/11 18:18:04 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/11 21:14:34 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,24 @@ int		go_back(t_vm *vm, t_button *this, t_ixy xy)
 	(void)this;
 	vm->visu.phase = PHASE_INIT;
 	ft_update_cursor(vm, xy);
+	return (0);
+}
+
+
+int		sort_alpha(t_vm *vm, t_button *this, t_ixy xy)
+{
+	(void)this;
+	(void)xy;
+	vm->visu.sort_cs_func = &ft_sort_alpha_cs;
+	ft_sort_client_slots(vm);
+	return (0);
+}
+int		sort_score(t_vm *vm, t_button *this, t_ixy xy)
+{
+	(void)this;
+	(void)xy;
+	vm->visu.sort_cs_func = &ft_sort_score_cs;
+	ft_sort_client_slots(vm);
 	return (0);
 }
 
