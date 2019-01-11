@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:54:14 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/11 21:17:17 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/11 21:29:00 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,12 +187,8 @@ int		ft_get_new_core(int nb_bytes, t_vm *vm)
 		return (1);
 	ft_printf("%d %d\n", name_len, score);
 	if (ft_add_new_client_slot(vm, i, name_len, score))
-	{
-		ft_printf("olalala\n");
 		return (1);
-	}
-	else
-		ft_printf("OUAI C COOL\n");
+	ft_lst_mergesort(&vm->client.client_slots, vm->visu.sort_cs_func, vm->visu.inv_sort);
 	ft_update_download_buttons_client_rect(vm);
 	ft_update_vscrollbar_server_compressed_size(vm, &(vm->visu));
 	return (0);

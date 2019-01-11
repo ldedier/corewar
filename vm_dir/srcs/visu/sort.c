@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/11 20:35:18 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/11 21:13:09 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/11 21:29:55 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,5 @@ int			ft_sort_score_cs(void *client_slot_1, void *client_slot_2)
 
 void		ft_sort_client_slots(t_vm *vm)
 {
-	ft_lst_mergesort(&vm->client.client_slots, vm->visu.sort_cs_func, 0);
+	ft_lst_mergesort(&vm->client.client_slots, vm->visu.sort_cs_func, vm->visu.inv_sort);
 }

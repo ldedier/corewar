@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 21:45:31 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/11 21:14:34 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/11 21:27:17 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,13 @@ int		sort_alpha(t_vm *vm, t_button *this, t_ixy xy)
 {
 	(void)this;
 	(void)xy;
-	vm->visu.sort_cs_func = &ft_sort_alpha_cs;
+	if (vm->visu.sort_cs_func == &ft_sort_alpha_cs)
+		vm->visu.inv_sort = !vm->visu.inv_sort;
+	else
+	{
+		vm->visu.inv_sort = 0;
+		vm->visu.sort_cs_func = &ft_sort_alpha_cs;
+	}
 	ft_sort_client_slots(vm);
 	return (0);
 }
@@ -57,6 +63,13 @@ int		sort_score(t_vm *vm, t_button *this, t_ixy xy)
 {
 	(void)this;
 	(void)xy;
+	if (vm->visu.sort_cs_func == &ft_sort_score_cs)
+		vm->visu.inv_sort = !vm->visu.inv_sort;
+	else
+	{
+		vm->visu.inv_sort = 0;
+		vm->visu.sort_cs_func = &ft_sort_score_cs;
+	}
 	vm->visu.sort_cs_func = &ft_sort_score_cs;
 	ft_sort_client_slots(vm);
 	return (0);

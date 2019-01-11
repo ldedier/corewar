@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/11 21:13:31 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/11 21:26:25 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -618,6 +618,7 @@ struct					s_visu
 	char				active;
 	t_phase				phase;
 	int 				(*sort_cs_func)(void *, void *);
+	unsigned char		inv_sort;
 	t_sort_type			sort_type;
 	t_local_type		local_type;
 	t_sdl				sdl;
