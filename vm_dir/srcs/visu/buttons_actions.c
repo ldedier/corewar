@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 21:45:31 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/04 00:19:05 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/11 18:18:04 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,14 @@ int		start_fight(t_vm *vm)
 {
 	t_ixy xy;
 
-	vm->visu.phase = PHASE_PLAY;
-	SDL_GetMouseState(&xy.x, &xy.y);
-	ft_update_cursor(vm, xy);
-	if (!init_processes(vm))
-		 return (1);
+	if (vm->nb_players)
+	{
+		vm->visu.phase = PHASE_PLAY;
+		SDL_GetMouseState(&xy.x, &xy.y);
+		ft_update_cursor(vm, xy);
+		if (!init_processes(vm))
+			return (1);
+	}
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 20:06:08 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/08 18:29:18 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/11 18:43:21 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -819,9 +819,9 @@ int		ft_parse_asm(char *str, t_env *e)
 		ft_printf(":(\n");
 	else
 	{
-	//	ft_print_instructions(e->champ.instructions);
-	//	ft_print_labels(e->champ.labels);
-	//	ft_printf(":)\n");
+//		ft_print_instructions(e->champ.instructions);
+//		ft_print_labels(e->champ.labels);
+//		ft_printf(":)\n");
 	}
 	ft_encode_instructions(1, e->champ.instructions);
 	free(line);

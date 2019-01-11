@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/10 00:47:40 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/11 19:59:18 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # define INIT_MAX_PLAYERS		4
 # define INIT_CYCLES_PER_TURN	1
 # define GLYPH_W_H_RATIO		0.5
+# define ABBREV_LEN				8
 
 # define ATLAS_MIN				32
 # define ATLAS_MAX				126
@@ -799,4 +800,5 @@ int						ft_render_play_footer(t_vm *vm);
 int						ft_render_nb_live(t_vm *vm, t_player p, int y);
 int						ft_render_live_breakdown_title(t_vm *vm, SDL_Rect rect);
 int						ft_init_hp_surface(t_visu *visu);
+void					ft_copy_abbrev(char *abbrev, char *str);
 #endif

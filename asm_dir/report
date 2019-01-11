@@ -1,0 +1,1194 @@
+[31minstruction line 5:
+[0maddress: 0
+opcode: 0x03
+Octet de Codage des Parametres: 0x70 (01110000)
+parameter #1
+register: 1
+parameter #2
+indirect: (label): stock
+238
+
+[31minstruction line 6:
+[0maddress: 5
+opcode: 0x02
+Octet de Codage des Parametres: 0xffffff90 (11111111111111111111111110010000)
+parameter #1
+direct: 151068160
+parameter #2
+register: 1
+
+[31minstruction line 7:
+[0maddress: 12
+opcode: 0x03
+Octet de Codage des Parametres: 0x70 (01110000)
+parameter #1
+register: 1
+parameter #2
+indirect: (label): begin_coromp2
+-12
+
+[31minstruction line 8:
+[0maddress: 17
+opcode: 0x02
+Octet de Codage des Parametres: 0xffffff90 (11111111111111111111111110010000)
+parameter #1
+direct: 506
+parameter #2
+register: 2
+
+[31minstruction line 9:
+[0maddress: 24
+opcode: 0x02
+Octet de Codage des Parametres: 0xffffff90 (11111111111111111111111110010000)
+parameter #1
+direct: 100
+parameter #2
+register: 3
+
+[31minstruction line 10:
+[0maddress: 31
+opcode: 0x01
+parameter #1
+direct: 0
+
+[31minstruction line 11:
+[0maddress: 36
+opcode: 0x0c
+parameter #1
+direct: (label): corruption_second2
+75
+
+[31minstruction line 14:
+[0maddress: 39
+opcode: 0x02
+Octet de Codage des Parametres: 0xffffff90 (11111111111111111111111110010000)
+parameter #1
+direct: 34144757
+parameter #2
+register: 4
+
+[31minstruction line 15:
+[0maddress: 46
+opcode: 0x03
+Octet de Codage des Parametres: 0x50 (01010000)
+parameter #1
+register: 4
+parameter #2
+register: 5
+
+[31minstruction line 16:
+[0maddress: 50
+opcode: 0x02
+Octet de Codage des Parametres: 0xffffff90 (11111111111111111111111110010000)
+parameter #1
+direct: 50921567
+parameter #2
+register: 6
+
+[31minstruction line 17:
+[0maddress: 57
+opcode: 0x03
+Octet de Codage des Parametres: 0x50 (01010000)
+parameter #1
+register: 6
+parameter #2
+register: 7
+
+[31minstruction line 18:
+[0maddress: 61
+opcode: 0x03
+Octet de Codage des Parametres: 0x50 (01010000)
+parameter #1
+register: 6
+parameter #2
+register: 12
+
+[31minstruction line 19:
+[0maddress: 65
+opcode: 0x03
+Octet de Codage des Parametres: 0x50 (01010000)
+parameter #1
+register: 6
+parameter #2
+register: 13
+
+[31minstruction line 20:
+[0maddress: 69
+opcode: 0x03
+Octet de Codage des Parametres: 0x50 (01010000)
+parameter #1
+register: 6
+parameter #2
+register: 14
+
+[31minstruction line 21:
+[0maddress: 73
+opcode: 0x03
+Octet de Codage des Parametres: 0x50 (01010000)
+parameter #1
+register: 6
+parameter #2
+register: 15
+
+[31minstruction line 22:
+[0maddress: 77
+opcode: 0x03
+Octet de Codage des Parametres: 0x50 (01010000)
+parameter #1
+register: 4
+parameter #2
+register: 8
+
+[31minstruction line 23:
+[0maddress: 81
+opcode: 0x03
+Octet de Codage des Parametres: 0x50 (01010000)
+parameter #1
+register: 4
+parameter #2
+register: 9
+
+[31minstruction line 24:
+[0maddress: 85
+opcode: 0x03
+Octet de Codage des Parametres: 0x50 (01010000)
+parameter #1
+register: 4
+parameter #2
+register: 10
+
+[31minstruction line 25:
+[0maddress: 89
+opcode: 0x02
+Octet de Codage des Parametres: 0xffffff90 (11111111111111111111111110010000)
+parameter #1
+direct: 167685120
+parameter #2
+register: 11
+
+[31minstruction line 26:
+[0maddress: 96
+opcode: 0x02
+Octet de Codage des Parametres: 0xffffff90 (11111111111111111111111110010000)
+parameter #1
+direct: 4
+parameter #2
+register: 1
+
+[31minstruction line 27:
+[0maddress: 103
+opcode: 0x05
+Octet de Codage des Parametres: 0x54 (01010100)
+parameter #1
+register: 16
+parameter #2
+register: 16
+parameter #3
+register: 16
+
+[31minstruction line 28:
+[0maddress: 108
+opcode: 0x09
+parameter #1
+direct: (label): end2
+497
+
+[31minstruction line 31:
+[0maddress: 111
+opcode: 0x02
+Octet de Codage des Parametres: 0xffffff90 (11111111111111111111111110010000)
+parameter #1
+direct: 190055681
+parameter #2
+register: 4
+
+[31minstruction line 32:
+[0maddress: 118
+opcode: 0x02
+Octet de Codage des Parametres: 0xffffff90 (11111111111111111111111110010000)
+parameter #1
+direct: 190055937
+parameter #2
+register: 5
+
+[31minstruction line 33:
+[0maddress: 125
+opcode: 0x02
+Octet de Codage des Parametres: 0xffffff90 (11111111111111111111111110010000)
+parameter #1
+direct: 190057473
+parameter #2
+register: 6
+
+[31minstruction line 34:
+[0maddress: 132
+opcode: 0x02
+Octet de Codage des Parametres: 0xffffff90 (11111111111111111111111110010000)
+parameter #1
+direct: 190057729
+parameter #2
+register: 12
+
+[31minstruction line 35:
+[0maddress: 139
+opcode: 0x02
+Octet de Codage des Parametres: 0xffffff90 (11111111111111111111111110010000)
+parameter #1
+direct: 190057985
+parameter #2
+register: 13
+
+[31minstruction line 36:
+[0maddress: 146
+opcode: 0x02
+Octet de Codage des Parametres: 0xffffff90 (11111111111111111111111110010000)
+parameter #1
+direct: 190058241
+parameter #2
+register: 14
+
+[31minstruction line 37:
+[0maddress: 153
+opcode: 0x02
+Octet de Codage des Parametres: 0xffffff90 (11111111111111111111111110010000)
+parameter #1
+direct: 190056193
+parameter #2
+register: 15
+
+[31minstruction line 38:
+[0maddress: 160
+opcode: 0x02
+Octet de Codage des Parametres: 0xffffff90 (11111111111111111111111110010000)
+parameter #1
+direct: 190056449
+parameter #2
+register: 7
+
+[31minstruction line 39:
+[0maddress: 167
+opcode: 0x02
+Octet de Codage des Parametres: 0xffffff90 (11111111111111111111111110010000)
+parameter #1
+direct: 190056705
+parameter #2
+register: 8
+
+[31minstruction line 40:
+[0maddress: 174
+opcode: 0x02
+Octet de Codage des Parametres: 0xffffff90 (11111111111111111111111110010000)
+parameter #1
+direct: 190056961
+parameter #2
+register: 9
+
+[31minstruction line 41:
+[0maddress: 181
+opcode: 0x02
+Octet de Codage des Parametres: 0xffffff90 (11111111111111111111111110010000)
+parameter #1
+direct: 151087617
+parameter #2
+register: 10
+
+[31minstruction line 42:
+[0maddress: 188
+opcode: 0x02
+Octet de Codage des Parametres: 0xffffff90 (11111111111111111111111110010000)
+parameter #1
+direct: 151035392
+parameter #2
+register: 11
+
+[31minstruction line 43:
+[0maddress: 195
+opcode: 0x02
+Octet de Codage des Parametres: 0xffffff90 (11111111111111111111111110010000)
+parameter #1
+direct: 0
+parameter #2
+register: 1
+
+[31minstruction line 45:
+[0maddress: 202
+opcode: 0x09
+parameter #1
+direct: (label): end2
+403
+
+[31minstruction line 46:
+[0maddress: 205
+opcode: 0x01
+parameter #1
+direct: 0
+
+[31minstruction line 47:
+[0maddress: 210
+opcode: 0x01
+parameter #1
+direct: 0
+
+[31minstruction line 48:
+[0maddress: 215
+opcode: 0x01
+parameter #1
+direct: 0
+
+[31minstruction line 49:
+[0maddress: 220
+opcode: 0x01
+parameter #1
+direct: 0
+
+[31minstruction line 50:
+[0maddress: 225
+opcode: 0x01
+parameter #1
+direct: 0
+
+[31minstruction line 51:
+[0maddress: 230
+opcode: 0x01
+parameter #1
+direct: 0
+
+[31minstruction line 52:
+[0maddress: 235
+opcode: 0x10
+Octet de Codage des Parametres: 0x40 (01000000)
+parameter #1
+register: 2
+
+[31minstruction line 55:
+[0maddress: 238
+opcode: 0x10
+Octet de Codage des Parametres: 0x40 (01000000)
+parameter #1
+register: 2
+
+[31minstruction line 56:
+[0maddress: 241
+opcode: 0x01
+parameter #1
+direct: 0
+
+[31minstruction line 57:
+[0maddress: 246
+opcode: 0x01
+parameter #1
+direct: 0
+
+[31minstruction line 58:
+[0maddress: 251
+opcode: 0x01
+parameter #1
+direct: 0
+
+[31minstruction line 61:
+[0maddress: 256
+opcode: 0x09
+parameter #1
+direct: (label): atterissage
+30
+
+[31minstruction line 62:
+[0maddress: 259
+opcode: 0x10
+Octet de Codage des Parametres: 0x40 (01000000)
+parameter #1
+register: 2
+
+[31minstruction line 63:
+[0maddress: 262
+opcode: 0x10
+Octet de Codage des Parametres: 0x40 (01000000)
+parameter #1
+register: 2
+
+[31minstruction line 64:
+[0maddress: 265
+opcode: 0x10
+Octet de Codage des Parametres: 0x40 (01000000)
+parameter #1
+register: 2
+
+[31minstruction line 65:
+[0maddress: 268
+opcode: 0x10
+Octet de Codage des Parametres: 0x40 (01000000)
+parameter #1
+register: 2
+
+[31minstruction line 66:
+[0maddress: 271
+opcode: 0x01
+parameter #1
+direct: 0
+
+[31minstruction line 67:
+[0maddress: 276
+opcode: 0x01
+parameter #1
+direct: 0
+
+[31minstruction line 68:
+[0maddress: 281
+opcode: 0x01
+parameter #1
+direct: 0
+
+[31minstruction line 71:
+[0maddress: 286
+opcode: 0x02
+Octet de Codage des Parametres: 0xffffffd0 (11111111111111111111111111010000)
+parameter #1
+indirect: (label): stock
+-48
+parameter #2
+register: 5
+
+[31minstruction line 72:
+[0maddress: 291
+opcode: 0x03
+Octet de Codage des Parametres: 0x70 (01110000)
+parameter #1
+register: 5
+parameter #2
+indirect: 6
+
+[31minstruction line 75:
+[0maddress: 296
+opcode: 0x01
+parameter #1
+direct: 1
+
+[31minstruction line 76:
+[0maddress: 301
+opcode: 0x03
+Octet de Codage des Parametres: 0x70 (01110000)
+parameter #1
+register: 16
+parameter #2
+indirect: (label): begin_coromp2
+-301
+
+[31minstruction line 77:
+[0maddress: 306
+opcode: 0x02
+Octet de Codage des Parametres: 0xffffff90 (11111111111111111111111110010000)
+parameter #1
+direct: 0
+parameter #2
+register: 6
+
+[31minstruction line 78:
+[0maddress: 313
+opcode: 0x02
+Octet de Codage des Parametres: 0xffffff90 (11111111111111111111111110010000)
+parameter #1
+direct: 0
+parameter #2
+register: 7
+
+[31minstruction line 79:
+[0maddress: 320
+opcode: 0x02
+Octet de Codage des Parametres: 0xffffff90 (11111111111111111111111110010000)
+parameter #1
+direct: 0
+parameter #2
+register: 8
+
+[31minstruction line 80:
+[0maddress: 327
+opcode: 0x02
+Octet de Codage des Parametres: 0xffffff90 (11111111111111111111111110010000)
+parameter #1
+direct: 0
+parameter #2
+register: 11
+
+[31minstruction line 81:
+[0maddress: 334
+opcode: 0x02
+Octet de Codage des Parametres: 0xffffff90 (11111111111111111111111110010000)
+parameter #1
+direct: 0
+parameter #2
+register: 12
+
+[31minstruction line 82:
+[0maddress: 341
+opcode: 0x02
+Octet de Codage des Parametres: 0xffffff90 (11111111111111111111111110010000)
+parameter #1
+direct: 0
+parameter #2
+register: 13
+
+[31minstruction line 83:
+[0maddress: 348
+opcode: 0x02
+Octet de Codage des Parametres: 0xffffff90 (11111111111111111111111110010000)
+parameter #1
+direct: 0
+parameter #2
+register: 14
+
+[31minstruction line 84:
+[0maddress: 355
+opcode: 0x02
+Octet de Codage des Parametres: 0xffffff90 (11111111111111111111111110010000)
+parameter #1
+direct: 0
+parameter #2
+register: 15
+
+[31minstruction line 85:
+[0maddress: 362
+opcode: 0x06
+Octet de Codage des Parametres: 0x54 (01010100)
+parameter #1
+register: 1
+parameter #2
+register: 1
+parameter #3
+register: 16
+
+[31minstruction line 86:
+[0maddress: 367
+opcode: 0x09
+parameter #1
+direct: (label): part2
+42
+
+[31minstruction line 89:
+[0maddress: 370
+opcode: 0x0c
+parameter #1
+direct: (label): part3
+75
+
+[31minstruction line 90:
+[0maddress: 373
+opcode: 0x02
+Octet de Codage des Parametres: 0xffffff90 (11111111111111111111111110010000)
+parameter #1
+direct: 190055684
+parameter #2
+register: 5
+
+[31minstruction line 91:
+[0maddress: 380
+opcode: 0x02
+Octet de Codage des Parametres: 0xffffff90 (11111111111111111111111110010000)
+parameter #1
+direct: 190055684
+parameter #2
+register: 9
+
+[31minstruction line 92:
+[0maddress: 387
+opcode: 0x02
+Octet de Codage des Parametres: 0xffffff90 (11111111111111111111111110010000)
+parameter #1
+direct: 190056708
+parameter #2
+register: 10
+
+[31minstruction line 93:
+[0maddress: 394
+opcode: 0x02
+Octet de Codage des Parametres: 0xffffff90 (11111111111111111111111110010000)
+parameter #1
+direct: 10
+parameter #2
+register: 4
+
+[31minstruction line 94:
+[0maddress: 401
+opcode: 0x05
+Octet de Codage des Parametres: 0x54 (01010100)
+parameter #1
+register: 16
+parameter #2
+register: 16
+parameter #3
+register: 16
+
+[31minstruction line 95:
+[0maddress: 406
+opcode: 0x09
+parameter #1
+direct: (label): end
+110
+
+[31minstruction line 98:
+[0maddress: 409
+opcode: 0x0c
+parameter #1
+direct: (label): part4
+72
+
+[31minstruction line 99:
+[0maddress: 412
+opcode: 0x02
+Octet de Codage des Parametres: 0xffffff90 (11111111111111111111111110010000)
+parameter #1
+direct: 84149761
+parameter #2
+register: 5
+
+[31minstruction line 100:
+[0maddress: 419
+opcode: 0x02
+Octet de Codage des Parametres: 0xffffff90 (11111111111111111111111110010000)
+parameter #1
+direct: 151259145
+parameter #2
+register: 10
+
+[31minstruction line 101:
+[0maddress: 426
+opcode: 0x03
+Octet de Codage des Parametres: 0x50 (01010000)
+parameter #1
+register: 5
+parameter #2
+register: 9
+
+[31minstruction line 102:
+[0maddress: 430
+opcode: 0x02
+Octet de Codage des Parametres: 0xffffff90 (11111111111111111111111110010000)
+parameter #1
+direct: 12
+parameter #2
+register: 4
+
+[31minstruction line 103:
+[0maddress: 437
+opcode: 0x05
+Octet de Codage des Parametres: 0x54 (01010100)
+parameter #1
+register: 16
+parameter #2
+register: 16
+parameter #3
+register: 16
+
+[31minstruction line 104:
+[0maddress: 442
+opcode: 0x09
+parameter #1
+direct: (label): end
+74
+
+[31minstruction line 107:
+[0maddress: 445
+opcode: 0x02
+Octet de Codage des Parametres: 0xffffff90 (11111111111111111111111110010000)
+parameter #1
+direct: 0
+parameter #2
+register: 7
+
+[31minstruction line 108:
+[0maddress: 452
+opcode: 0x03
+Octet de Codage des Parametres: 0x50 (01010000)
+parameter #1
+register: 5
+parameter #2
+register: 9
+
+[31minstruction line 109:
+[0maddress: 456
+opcode: 0x02
+Octet de Codage des Parametres: 0xffffff90 (11111111111111111111111110010000)
+parameter #1
+direct: 32768000
+parameter #2
+register: 10
+
+[31minstruction line 110:
+[0maddress: 463
+opcode: 0x10
+Octet de Codage des Parametres: 0x40 (01000000)
+parameter #1
+register: 1
+
+[31minstruction line 111:
+[0maddress: 466
+opcode: 0x02
+Octet de Codage des Parametres: 0xffffff90 (11111111111111111111111110010000)
+parameter #1
+direct: 16
+parameter #2
+register: 4
+
+[31minstruction line 112:
+[0maddress: 473
+opcode: 0x05
+Octet de Codage des Parametres: 0x54 (01010100)
+parameter #1
+register: 16
+parameter #2
+register: 16
+parameter #3
+register: 16
+
+[31minstruction line 113:
+[0maddress: 478
+opcode: 0x09
+parameter #1
+direct: (label): end
+38
+
+[31minstruction line 116:
+[0maddress: 481
+opcode: 0x01
+parameter #1
+direct: 1
+
+[31minstruction line 117:
+[0maddress: 486
+opcode: 0x02
+Octet de Codage des Parametres: 0xffffff90 (11111111111111111111111110010000)
+parameter #1
+direct: 151587073
+parameter #2
+register: 5
+
+[31minstruction line 118:
+[0maddress: 493
+opcode: 0x03
+Octet de Codage des Parametres: 0x50 (01010000)
+parameter #1
+register: 5
+parameter #2
+register: 9
+
+[31minstruction line 119:
+[0maddress: 497
+opcode: 0x03
+Octet de Codage des Parametres: 0x50 (01010000)
+parameter #1
+register: 9
+parameter #2
+register: 10
+
+[31minstruction line 120:
+[0maddress: 501
+opcode: 0x02
+Octet de Codage des Parametres: 0xffffff90 (11111111111111111111111110010000)
+parameter #1
+direct: 511
+parameter #2
+register: 4
+
+[31minstruction line 121:
+[0maddress: 508
+opcode: 0x05
+Octet de Codage des Parametres: 0x54 (01010100)
+parameter #1
+register: 16
+parameter #2
+register: 16
+parameter #3
+register: 16
+
+[31minstruction line 122:
+[0maddress: 513
+opcode: 0x09
+parameter #1
+direct: (label): end
+3
+
+[31minstruction line 125:
+[0maddress: 516
+opcode: 0x02
+Octet de Codage des Parametres: 0xffffff90 (11111111111111111111111110010000)
+parameter #1
+direct: 495
+parameter #2
+register: 8
+
+[31minstruction line 126:
+[0maddress: 523
+opcode: 0x04
+Octet de Codage des Parametres: 0x54 (01010100)
+parameter #1
+register: 16
+parameter #2
+register: 16
+parameter #3
+register: 16
+
+[31minstruction line 127:
+[0maddress: 528
+opcode: 0x0b
+Octet de Codage des Parametres: 0x54 (01010100)
+parameter #1
+register: 10
+parameter #2
+register: 8
+parameter #3
+register: 4
+
+[31minstruction line 128:
+[0maddress: 533
+opcode: 0x09
+parameter #1
+direct: 500
+
+[31minstruction line 129:
+[0maddress: 536
+opcode: 0x10
+Octet de Codage des Parametres: 0x40 (01000000)
+parameter #1
+register: 4
+
+[31minstruction line 130:
+[0maddress: 539
+opcode: 0x10
+Octet de Codage des Parametres: 0x40 (01000000)
+parameter #1
+register: 4
+
+[31minstruction line 131:
+[0maddress: 542
+opcode: 0x10
+Octet de Codage des Parametres: 0x40 (01000000)
+parameter #1
+register: 4
+
+[31minstruction line 132:
+[0maddress: 545
+opcode: 0x01
+parameter #1
+direct: 0
+
+[31minstruction line 133:
+[0maddress: 550
+opcode: 0x01
+parameter #1
+direct: 0
+
+[31minstruction line 134:
+[0maddress: 555
+opcode: 0x01
+parameter #1
+direct: 0
+
+[31minstruction line 135:
+[0maddress: 560
+opcode: 0x01
+parameter #1
+direct: 0
+
+[31minstruction line 136:
+[0maddress: 565
+opcode: 0x01
+parameter #1
+direct: 0
+
+[31minstruction line 137:
+[0maddress: 570
+opcode: 0x01
+parameter #1
+direct: 0
+
+[31minstruction line 138:
+[0maddress: 575
+opcode: 0x01
+parameter #1
+direct: 0
+
+[31minstruction line 139:
+[0maddress: 580
+opcode: 0x01
+parameter #1
+direct: 0
+
+[31minstruction line 140:
+[0maddress: 585
+opcode: 0x01
+parameter #1
+direct: 0
+
+[31minstruction line 141:
+[0maddress: 590
+opcode: 0x01
+parameter #1
+direct: 0
+
+[31minstruction line 142:
+[0maddress: 595
+opcode: 0x01
+parameter #1
+direct: 0
+
+[31minstruction line 143:
+[0maddress: 600
+opcode: 0x01
+parameter #1
+direct: 0
+
+[31minstruction line 146:
+[0maddress: 605
+opcode: 0x0b
+Octet de Codage des Parametres: 0x58 (01011000)
+parameter #1
+register: 4
+parameter #2
+register: 1
+parameter #3
+direct: 505
+
+[31minstruction line 147:
+[0maddress: 611
+opcode: 0x09
+parameter #1
+direct: 499
+
+[36mbegin_coromp2
+[0m0
+
+[36mcorruption_first2
+[0m39
+
+[36mcorruption_second2
+[0m111
+
+[36mstock
+[0m238
+
+[36mrebond
+[0m256
+
+[36matterissage
+[0m286
+
+[36mllll
+[0m296
+
+[36mpart1
+[0m370
+
+[36mpart2
+[0m409
+
+[36mpart3
+[0m445
+
+[36mpart4
+[0m481
+
+[36mend
+[0m516
+
+[36mend2
+[0m605
+
+:)
+st	 r1, 238
+ld	 %151068160, r1
+st	 r1, -12
+ld	 %506, r2
+ld	 %100, r3
+live	 %0
+fork	 75
+ld	 %34144757, r4
+st	 r4, r5
+ld	 %50921567, r6
+st	 r6, r7
+st	 r6, r12
+st	 r6, r13
+st	 r6, r14
+st	 r6, r15
+st	 r4, r8
+st	 r4, r9
+st	 r4, r10
+ld	 %167685120, r11
+ld	 %4, r1
+sub	 r16, r16, r16
+zjmp	 497
+ld	 %190055681, r4
+ld	 %190055937, r5
+ld	 %190057473, r6
+ld	 %190057729, r12
+ld	 %190057985, r13
+ld	 %190058241, r14
+ld	 %190056193, r15
+ld	 %190056449, r7
+ld	 %190056705, r8
+ld	 %190056961, r9
+ld	 %151087617, r10
+ld	 %151035392, r11
+ld	 %0, r1
+zjmp	 403
+live	 %0
+live	 %0
+live	 %0
+live	 %0
+live	 %0
+live	 %0
+aff	 r2
+aff	 r2
+live	 %0
+live	 %0
+live	 %0
+zjmp	 30
+aff	 r2
+aff	 r2
+aff	 r2
+aff	 r2
+live	 %0
+live	 %0
+live	 %0
+ld	 -48, r5
+st	 r5, 6
+live	 %1
+st	 r16, -301
+ld	 %0, r6
+ld	 %0, r7
+ld	 %0, r8
+ld	 %0, r11
+ld	 %0, r12
+ld	 %0, r13
+ld	 %0, r14
+ld	 %0, r15
+and	 r1, r1, r16
+zjmp	 42
+fork	 75
+ld	 %190055684, r5
+ld	 %190055684, r9
+ld	 %190056708, r10
+ld	 %10, r4
+sub	 r16, r16, r16
+zjmp	 110
+fork	 72
+ld	 %84149761, r5
+ld	 %151259145, r10
+st	 r5, r9
+ld	 %12, r4
+sub	 r16, r16, r16
+zjmp	 74
+ld	 %0, r7
+st	 r5, r9
+ld	 %32768000, r10
+aff	 r1
+ld	 %16, r4
+sub	 r16, r16, r16
+zjmp	 38
+live	 %1
+ld	 %151587073, r5
+st	 r5, r9
+st	 r9, r10
+ld	 %511, r4
+sub	 r16, r16, r16
+zjmp	 3
+ld	 %495, r8
+add	 r16, r16, r16
+sti	 r10, r8, r4
+zjmp	 %500
+aff	 r4
+aff	 r4
+aff	 r4
+live	 %0
+live	 %0
+live	 %0
+live	 %0
+live	 %0
+live	 %0
+live	 %0
+live	 %0
+live	 %0
+live	 %0
+live	 %0
+live	 %0
+sti	 r4, r1, %505
+zjmp	 %499
+Ultima
+Je suis l'Alpha
+Je suis Le destructeur
+Je suis Omega
+Je suis La raison de ta peur
+
+Ta puissance est ma puissance
+Ton pouvoir est sans défence
+Ma seule crainte est ta faiblesse
+De mourrir d'une maladresse
+
+Les plus puissants combattants
+S'ront détruits d'un coup de dent
+Les plus vifs et combatifs
+S'ront finis d'un coup de griffe
+
+Je suis un puits sans fond
+Qui t'aspire dans ses tréfonds
+La plaie sanglante et cruelle
+Qui déchire tes organes frèles
+
+La haine pur qui se diffuse
+Sur ton code et le déturit
+Prétrifié comme la méduse
+Tu vivras son agonie
+
+un poison ronge ton âme
+L'obscurité noie tes flammes
+Une mort glacée se répends
+Le long d' tes veines et ton sang
+
+Mais déjà tu m'appartients
+Ton destin est dans mes mains
+Pleur de rage, pleur de douleur
+Noie tes larmes dans ton aigreur
+
+Que mes attaques te pénêtre
+A moi tu ne peux que te soumettre
+Qu' ma puissance abime ton etre
+Que j' te brise, petite soubrette
+
+Mon pouvoir aspire tes forces
+Aspire ton ame, et se renforce
+Ma présence est ta souffrance
+Ma raison d'etre ta défaite
+
+Imposer, gifler tes tactiques
+Abuser d' ton code heuristique
+Dénuder ton code d'ses méthodes
+Déchirer toutes tes ruses informes
+
+Contraindre ton code aux pires outrages
+Forcer, détruire tes stratégies
+Tromper, corrompre tes algorithmes
+Vicier, souiller tes procédés
+
+Jusqu'a mon souffle je suis letal
+Meme mon regard détruit ton âme
+T'emporte au vent comme une pétale
+Puis te consumme un vrai lance flammes
+
+Tu viens pour ton exécution
+Pas un combat une pendaison
+Pas un proces, une mise a mort
+Toi le taureau, moi l'matador
+
+A tout jamais le championnat
+Lesté de mon ADN, changera
+Inséminé dans l'corps de mes proies
+Etrange héritage sortira
+Nées du tréfond de tes abats
+
+Mais viens ici, entre mes griffes
+Entre mes cros, t'ecorcher vif
+Pour me repaitre de tes lambeaux
+Pour te détruire en quelques mots
+
+Abandonne tout idée osée,
+de m'échapper, de me défier
+car les roles sont deja figées.
+Je Suis le Prédateur, tu est Ma Proie
