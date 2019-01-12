@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 20:48:17 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/06 22:02:54 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/12 10:22:40 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,28 +52,37 @@ void	ft_add_player_data_all(void *content_player, char *data, int *size)
 	*size += ft_memcpy_ret(&(data[*size]), player->name, player->name_len);
 }
 
-int		ft_send_all_cores(TCPsocket socket, t_server *server)
+char	*ft_get_buffer_all_cores(t_server *server, t_flag flag, int *size)
 {
 	char			*data;
 	t_nb_players	nb_players;
 	int				total_size;
-	int				size;
 	t_list			*ptr;
 
-	server->flag = GET_LIST;
+	server->flag = flag;
 	total_size = ft_get_data_size_all(server);
 	nb_players = ft_lstlength(server->players);
 	if (!(data = (char *)(malloc(total_size))))
-		return (1);
-	size = 0;
-	size += ft_memcpy_ret(&(data[size]), &(server->flag), sizeof(server->flag));
-	size += ft_memcpy_ret(&(data[size]), &(nb_players), sizeof(nb_players));
+		return (NULL);
+	*size = 0;
+	*size += ft_memcpy_ret(&(data[*size]), &(server->flag), sizeof(server->flag));
+	*size += ft_memcpy_ret(&(data[*size]), &(nb_players), sizeof(nb_players));
 	ptr = server->players;
 	while (ptr != NULL)
 	{
-		ft_add_player_data_all(ptr->content, data, &size);
+		ft_add_player_data_all(ptr->content, data, size);
 		ptr = ptr->next;
 	}
+	return (data);
+}
+
+int		ft_send_all_cores(TCPsocket socket, t_server *server, t_flag flag)
+{
+	char			*data;
+	int				size;
+
+	if (!(data = ft_get_buffer_all_cores(server, flag, &size)))
+		return (1);
 	if (ft_send_protected(socket, data, size))
 	{
 		free(data);

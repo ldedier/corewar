@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/11 21:26:25 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/12 11:30:28 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,10 @@
 # define TOOLBAR_BOTTOM			30
 
 
-# define LABSCORE_LEFT			30
-# define LABSCORE_WIDTH			120
+# define LABSCORE_LEFT			20
+# define LABSCORE_WIDTH			90
 # define LABSCORE_RIGHT			20
-# define SCORE_WIDTH			50
+# define SCORE_WIDTH			100
 # define SCORE_RIGHT			20
 
 # define SCROLLBAR_WIDTH		25
@@ -779,7 +779,7 @@ int						switch_local(t_vm *vm, t_button *this, t_ixy xy);
 int						ft_render_trash_button(t_vm *vm, t_button *this);
 int						ft_render_switch_button(t_vm *vm, t_button *this);
 int						ft_process_upload(t_vm *vm, t_player player);
-int						ft_get_new_core(int nb_bytes, t_vm *vm);
+int						ft_get_new_cores(int nb_bytes, t_vm *vm);
 void					ft_update_vscrollbar_server_compressed_size(t_vm *vm,
 							t_visu *v);
 void					ft_update_vscrollbar_downloads_compressed_size(t_vm *vm,
@@ -819,5 +819,5 @@ int						ft_sort_alpha(void *p1, void *p2);
 int						ft_sort_alpha_cs(void *p1, void *p2);
 int						ft_sort_score_cs(void *p1, void *p2);
 void					ft_sort_client_slots(t_vm *vm);
-
+int						ft_copied_char_surface_w(SDL_Rect rect, int len);
 #endif

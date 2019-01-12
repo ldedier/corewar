@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 16:55:50 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/31 17:03:23 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/12 10:09:39 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ typedef enum			e_flag
 	FLAG_UPLOAD,
 	FLAG_DOWNLOAD,
 	UPLOAD_NAME_TAKEN,
-	FLAG_NEW_CORE
+	FLAG_NEW_CORE,
+	FLAG_NEW_CORES
 }						t_flag;
 
 size_t					ft_memcpy_ret(void *dest, void *src, size_t size);

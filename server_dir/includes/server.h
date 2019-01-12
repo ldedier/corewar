@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 17:20:50 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/31 17:59:39 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/12 10:26:31 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int						ft_error(void);
 int						ft_send_protected(TCPsocket socket, void *data,
 							size_t size);
 size_t					ft_memcpy_ret(void *dest, void *src, size_t size);
-int						ft_send_all_cores(TCPsocket socket, t_server *server);
+int						ft_send_all_cores(TCPsocket socket, t_server *server, t_flag flag);
 int						ft_send_rejection(TCPsocket temp);
 int						ft_send_deconnexion(TCPsocket socket,
 							t_player_number player_number);
@@ -66,4 +66,5 @@ int						ft_receive_upload(t_server *server, int i,
 int						ft_get_player_size_all(t_player *player);
 int						ft_send_core_bin(t_server *server, int i, int nb_bytes);
 t_player				*get_core_from_query(t_server *server, int nb_bytes);
+char					*ft_get_buffer_all_cores(t_server *server, t_flag flag, int *size);
 #endif

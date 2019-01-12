@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/03 21:25:21 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/09 20:08:43 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/12 11:39:17 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ int		ft_render_live_breakdown_players(t_vm *vm)
 	int			i;
 	int			nb;
 	SDL_Rect	rect;
+	char        abbrev[ABBREV_LEN + 2];
 
 	rect.x = vm->visu.center.dashboard_x +
 		vm->visu.center.live_breakdown_hp_players_side;
@@ -123,7 +124,8 @@ int		ft_render_live_breakdown_players(t_vm *vm)
 	{
 		if (vm->player[i].relevant)
 		{
-			if (ft_copy_str_to_surface_no_source(vm, vm->player[i].name, rect,
+			ft_copy_abbrev(abbrev, vm->player[i].name);
+			if (ft_copy_str_to_surface_no_source(vm, abbrev, rect,
 					vm->player[i].color.index))
 				return (1);
 			rect.x += rect.w + vm->visu.center.live_breakdown_hp_players_side;
