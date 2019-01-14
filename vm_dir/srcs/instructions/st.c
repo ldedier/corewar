@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 20:22:56 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/14 18:11:36 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/01/14 21:48:42 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 
 int		ins_st(t_vm *vm, t_process *proc, t_parameter arg[3])
 {
+	ft_printf("INS ST\n");
 	getval_param_dest(vm, proc, &arg[0], 1);
 	arg[1].value %= IDX_MOD;
 	loadval(vm, proc, &arg[1], arg[0].dest_value);

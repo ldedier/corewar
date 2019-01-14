@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/10 17:53:28 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/01/10 19:20:38 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct		s_process
 	int				pc;
 	int				ins_bytelen;
 	int				cycle;
+	int				ins_cycle;
 	unsigned char	carry;
 }					t_process;
 

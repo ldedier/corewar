@@ -36,7 +36,9 @@ EOC = \033[0m
 
 SRCS_NO_PREFIX		= main.c ft_init.c ft_parse.c ft_parse_header.c\
 					  ft_log_tools.c ft_debug.c ft_free.c ft_encode.c ft_parse_comment.c\
-						ft_parse_name.c
+						ft_parse_name.c ft_parse_tools00.c ft_init_parser.c ft_process_parse.c\
+						ft_parse_suite.c ft_parse_label.c ft_parse_log.c ft_process_parse_suite.c\
+						ft_parse_tools01.c
 
 INCLUDES_NO_PREFIX	= asm.h
 

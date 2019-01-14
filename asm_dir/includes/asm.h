@@ -64,7 +64,45 @@ int					ft_parse_line_header(char *str, t_env *env, int c, int fd);
 int					ft_parse_line_source_code(char *str, t_env *e);
 char				**read_file(char **argv);
 int					read_name_file(char *argv, t_env *env);
-
+char				*ft_refine_line(char *str);
+int					ft_parse_line_source_code(char *str, t_env *e);
+int					ft_parse_label(char *str, t_env *e);
+int					ft_is_only_label(char *str);
+int					ft_add_new_label(char *str, int length, t_env *e);
+int					ft_parse_instruction(char *str, t_env *e);
+t_label			*ft_get_label(t_list *labels, char *label_name);
+t_label			*ft_new_label(char *name, int address);
+int					ft_parse_opcode(char *str, int start, t_env *e);
+int					ft_populate_from_opcode(char *str, int start, int i, t_env *e);
+int					ft_parse_params(char *str, int i, t_env *e);
+int					ft_process_parse_params(char **params_split, t_env *e);
+void				ft_update_co(char *str, t_env *e);
+int					ft_parse_param(char *str, int index, t_env *e);
+int					ft_process_parse_param(char *param, int index, int offset, t_env *e);
+int					ft_process_parse_direct(char *str, int index, int offset, t_env *e);
+int					ft_process_parse_indirect(char *str, int index, int offset, t_env *e);
+int					ft_process_parse_direct_value(char *str, int index, int offset, t_env *e);
+int					ft_process_parse_indirect_value(char *str, int index, int offset, t_env *e);
+int					ft_process_parse_label(char *str, int index, int offset, t_env *e);
+int					ft_nb_params_coherent(char *str, t_env *e);
+int					ft_process_parse_register(char *str, int index, int offset, t_env *e);
+int					ft_log_custom_wrong_param_type(char *arg_type, int index, int offset,
+			t_env *e);
+int					ft_log_custom_nb_params_error(int offset, t_env *e);
+int					ft_process_populate_from_opcode(char *opcode_str, t_env *e);
+int					ft_describe_label(char *str, int n, t_env *e);
+char				*ft_get_str(char **line);
+unsigned int ft_patoui(char **str);
+int     		ft_is_atouiable(char *s);
+t_instruction	*ft_add_new_instruction(t_env *e);
+int					ft_init_instruction(t_instruction *instruction, t_env *e);
+void				ft_init_parameter(t_parameter *parameter);
+void				ft_reset_parser(t_parser *parser, char *str);
+int					ft_is_relevant(char *str);
+int					ft_addco(char c, t_env *e);
+int		ft_fill_instructions_labels_values(t_env *e);
+int		ft_process_fill_instruction_label_value(t_instruction *instruction,
+		int index, t_list *labels);
 /*
 ** encode the .cor file with the instructions list
 */

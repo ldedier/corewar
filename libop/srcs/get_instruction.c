@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 16:33:31 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/10 17:33:39 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/01/10 19:20:36 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ static int	is_valid_ocp(unsigned char hex, t_instruction *ins)
 ** Checks validity of instruction at i (op, ocp, args), stores op and ocp
 ** in instruction structure
 ** Return 0 if instruction is invalid (length of instruction if valid)
-** Input: memory string, int starting point (i), struct. to store instruction, 
+** Input: memory string, int starting point (i), struct. to store instruction,
 ** int size beyond which index circles back
 */
 
@@ -149,4 +149,3 @@ int			get_instruction(char *arena, t_instruction *ins,
 //	ft_printf("instruction len = %d\n", len);
 	return (len);
 }
-

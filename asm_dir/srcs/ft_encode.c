@@ -96,7 +96,7 @@ void	ft_process_encoding(int fd, t_env *e)
 {
 	t_list *ptr;
 	t_instruction *instruction;
-	
+
 	ft_encode_header(fd, e);
 	ptr = e->champ.instructions;
 	while (ptr != NULL)
@@ -111,7 +111,7 @@ int		ft_encode_to_cor(char *filename, t_env *e)
 {
 	int fd;
 	int script;
-	
+
 	script = 0;
 	if (script)
 		filename = ft_strdup("mycor");
