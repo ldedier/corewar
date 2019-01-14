@@ -74,6 +74,7 @@ static int	get_comment_other_line(t_env *env, int fd, int i, int j)
 		i++;
 	if (env->champ.header.comment[i - 1] == '"')
 		env->champ.header.comment[i - 1] = '\0';
+	env->champ.header.comment[i] = '\0';
 	free(tmp);
 	return (0);
 }
