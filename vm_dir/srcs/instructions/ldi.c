@@ -13,10 +13,10 @@
 #include "../includes/vm.h"
 
 /*
-** add arg1 and arg2.values, load arena content at the address off the sum into
-** register # arg3
-** Input: vm (for arena and player), pl for process index,
-** arg for 3 arg, two first necessarily INDEXES
+** [ldi] instruction loads content from arena at adress [arg 1] + [arg 2]
+** then stores it in register [arg 3]
+**
+** Takes 3 arguments, first two necessarily INDEXES
 */
 
 int		ins_ldi(t_vm *vm, t_process *proc, t_parameter arg[3])

@@ -12,6 +12,13 @@
 
 #include "../includes/vm.h"
 
+/*
+** [live] instruction declares the player whose number is [arg 1] alive.
+**
+** Takes 1 argument: the player's number. Undetermined behaviour if [arg 1]
+** isn't a known player number.
+*/
+
 int		ins_live(t_vm *vm, t_process *proc, t_parameter arg[3])
 {
 	t_player	*player;
@@ -26,7 +33,7 @@ int		ins_live(t_vm *vm, t_process *proc, t_parameter arg[3])
 		player->live++;
 		player->last_live_cycle = vm->total_cycle;
 		vm->winner = player;
-		ft_printf("Un processus dit que le joueur %d(%s) est en vie.\n",
+		ft_printf("A process declares the player %d(%s) alive.\n",
 				player->num, player->name);
 		live = (t_fade *)ft_memalloc(sizeof(t_fade));
 		live->pc = proc->pc;

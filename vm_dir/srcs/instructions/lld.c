@@ -13,21 +13,16 @@
 #include "../includes/vm.h"
 
 /*
-** Input: vm (for arena and player), proc (for register and pc),
-** arg for X args, 
-** Returns 
+** [lld] instruction loads the value from the first argument to the register
+** from second argument, without the IDX_MOD distance restriction.
+**
+** Takes two arguments, the second one is necessarily a REGISTER
 */
 
 int		ins_lld(t_vm *vm, t_process *proc, t_parameter arg[3])
 {
-	(void)proc;
-	(void)vm;
-	(void)arg;
-//	int	reg_ind;
-//	int	ar_ind;
-	
-//	reg_ind = arg[SECOND].value;
-//	ar_ind = getval(vm, proc, arg[FIRST]) + proc->pc;
-//	proc->reg[reg_ind] = vm->arena[ar_ind % MEM_SIZE];
+	getval_param_dest(vm, proc, &arg[0], 0);
+	loadval(vm, proc, &arg[1], arg[0].dest_value);
+	proc->carry = !arg[0].dest_value;
 	return (SUCCESS);
 }

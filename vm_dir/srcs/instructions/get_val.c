@@ -19,6 +19,8 @@ static int	getval_ind(t_vm *vm, t_process *proc, int index, int mod)
 	(void)mod;
 	(void)proc;
 	//ft_printf("indirect | index = %d mod = %d\n", index, mod);
+	if (mod == IDX_MOD)
+		index %= IDX_MOD;
 	val = getval_mod(vm->arena, index, DIR_SIZE, MEM_SIZE);
 	//ft_printf("val = %d\n", val);
 	return (val);

@@ -13,10 +13,11 @@
 #include "../includes/vm.h"
 
 /*
-** The aff instruction allows users to output characters to taunt other players.
+** [aff] instruction allows users to output characters to taunt other players
+** by printing the character given by [arg 1] (% 256).
 **
 ** This version includes a bonus: instead of outputting the character every
-** time the instruction is called, it stores the character inside a string and
+** time [aff] is called, it stores the character inside a string and
 ** outputs the entire string when it's called with the value 0, thus allowing
 ** players to output entire strings (much more useful).
 */

@@ -56,3 +56,11 @@ t_process	*get_proc_index(t_list *lst, int index)
 		tmp = tmp->next;
 	return ((t_process *)(tmp->content));
 }
+
+int				is_reg(int num)
+{
+	if (num >= 1 && num <= 16)
+		return (1);
+	else
+		return (0);
+}

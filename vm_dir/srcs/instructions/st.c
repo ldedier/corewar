@@ -13,9 +13,10 @@
 #include "../includes/vm.h"
 
 /*
-** Loads value from register # 1st arg to arena at 2nd arg address
-** Input: vm (for arena and player), proc (for register and pc),
-** arg : for 2 arg, 1st one necessarily a REGISTER
+** [st] instruction loads value from register [arg 1] to the arena at the
+** address [arg 2].
+**
+** Takes 2 arguments : first one necessarily a REGISTER
 */
 
 int		ins_st(t_vm *vm, t_process *proc, t_parameter arg[3])
