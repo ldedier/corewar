@@ -47,17 +47,22 @@ static int	check_after_comment(char *tmp, int i, t_env *env)
 	return (0);
 }
 
-static int	get_comment_other_line(t_env *env, int fd, int i, int j)
+static void check_comment_exist(t_env *env, int j)
 {
-	char	*tmp;
-
-	tmp = NULL;
 	if (env->champ.header.comment[j])
 	{
 		while (env->champ.header.comment[j] != '\0')
 			j++;
 		env->champ.header.comment[j] = '\n';
 	}
+}
+
+static int	get_comment_other_line(t_env *env, int fd, int i)
+{
+	char	*tmp;
+
+	tmp = NULL;
+	check_comment_exist(env, 0);
 	while (get_next_line(fd, &tmp))
 	{
 		if (ft_strlen(tmp) + ft_strlen(env->champ.header.comment) > COMMENT_LENGTH)
@@ -83,7 +88,7 @@ static int	read_comment_continue(char *line, int i, t_env *env, int fd)
 {
 	if (line[i] == '\0')
 	{
-		if (get_comment_other_line(env, fd, 0, 0) == 1)
+		if (get_comment_other_line(env, fd, 0) == 1)
 			return (1);
 		i++;
 	}
