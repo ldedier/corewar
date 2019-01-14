@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 17:17:30 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/10 17:17:37 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/01/14 17:15:11 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		ins_or(t_vm *vm, t_process *proc, t_parameter arg[3])
 {
 	int		res;
 
-	if (!is_reg(arg[2]))
+	if (!is_reg(arg[2].value))
 		return (FAILURE);
 	getval_param_dest(vm, proc, &arg[0], IDX_MOD);
 	getval_param_dest(vm, proc, &arg[1], IDX_MOD);

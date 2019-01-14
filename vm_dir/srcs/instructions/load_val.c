@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/09 20:29:58 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/10 17:17:09 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/01/14 19:15:39 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void		loadval(t_vm *vm, t_process *proc, t_parameter *arg, int val)
 {
 //	static void	(*f_data[NB_TYPES + 1])(t_vm *vm, t_process *proc, t_parameter *arg, int val) = {
 //		NULL, &load_reg, &load_arena, &load_arena};
+
 	if (arg->type == 1)
 		proc->pending.dest = proc->reg;
 //		proc->reg[arg->value - 1] = val;
