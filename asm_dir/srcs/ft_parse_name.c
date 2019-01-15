@@ -37,7 +37,7 @@ static int	read_name_continue(char *line, int i, t_env *env)
 	if (line[i + 1] != '\0')
 		while (line[++i] || line[i] == ' ' || line[i] == '\t')
 			if (isprint(line[i]))
-				return (ft_log_error("Syntax error token AFTER NAME", i, env));
+				return (ft_log_error("Syntax error token AFTER NAME", i - 2, env));
 	if (ft_strlen(env->champ.header.prog_name) > PROG_NAME_LENGTH)
 		return (ft_log_error_no_line("Name too long (Max length 128)", env));
 	return (0);
