@@ -6,7 +6,7 @@
 /*   By: cammapou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 13:41:10 by cammapou          #+#    #+#             */
-/*   Updated: 2019/01/15 17:18:23 by cammapou         ###   ########.fr       */
+/*   Updated: 2019/01/15 22:24:48 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ static int	read_comment_continue(char *line, int i, t_env *env, int fd)
 	}
 	if (ft_strlen(env->champ.header.comment) > COMMENT_LENGTH)
 		ft_log_error_no_line("Champion name too long (Max length 2048)", env);
-	printf("%s\n", env->champ.header.comment);
+//	printf("%s\n", env->champ.header.comment);
 	env->parser.parsed_comment = 1;
 	return (0);
 }

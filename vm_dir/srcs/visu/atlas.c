@@ -6,11 +6,12 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 20:50:21 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/10 00:46:54 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/15 15:41:41 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
+#include <pthread.h>
 
 void	ft_populate_sdl_color_from_int(int color, SDL_Color *sdl_color)
 {
@@ -47,15 +48,19 @@ int		ft_init_atlas(t_vm *vm, t_sdl *sdl)
 {
 	int				i;
 	SDL_Color		color;
+	//p_thread_t		threads[MAX_PL_COLOR];
 
 	i = 0;
+//	ft_printf("OUAI %u\n", SDL_GetTicks());
 	while (i < MAX_PL_COLOR)
 	{
+	//	threads[]
 		ft_populate_sdl_color_from_int(get_color_sdl(vm->color[i]), &color);
 		if (ft_init_atlas_color(sdl, i, color))
 			return (1);
 		i++;
 	}
+//	ft_printf("OUAI %u\n", SDL_GetTicks());
 	if (ft_init_atlas_color(sdl, i, vm->visu.sdl.color))
 		return (1);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/11 17:47:31 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/10 00:52:04 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/11 19:57:57 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,12 @@ int		get_visible_char(char c)
 		return (c);
 	else
 		return ('?');
+}
+
+
+int		ft_copied_char_surface_w(SDL_Rect rect, int len)
+{
+	return (ft_min(rect.w / len, rect.h * GLYPH_W_H_RATIO));
 }
 
 int		ft_copy_str_to_surface_no_source(t_vm *vm, char *str,
@@ -32,7 +38,7 @@ int		ft_copy_str_to_surface_no_source(t_vm *vm, char *str,
 	char_rect.x = rect.x;
 	if (!(len = ft_strlen(str)))
 		return (0);
-	char_rect.w = ft_min(rect.w / len, rect.h * GLYPH_W_H_RATIO);
+	char_rect.w = ft_copied_char_surface_w(rect, len);
 	i = 0;
 	while (str[i])
 	{
@@ -60,7 +66,7 @@ int		ft_copy_str_to_surface(t_vm *vm, char *str,
 	char_rect.x = rect.x;
 	if (!(len = ft_strlen(str)))
 		return (0);
-	char_rect.w = ft_min(rect.w / len, len * rect.h * GLYPH_W_H_RATIO);
+	char_rect.w = ft_copied_char_surface_w(rect, len);
 	i = 0;
 	while (str[i])
 	{
@@ -128,11 +134,30 @@ int		ft_get_player_color(t_vm *vm, t_player *player, int initial_color,
 		return (ft_scale_color(c, value).color);
 	}
 }
+
+void	ft_copy_abbrev(char *abbrev, char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i] && i < ABBREV_LEN)
+	{
+		abbrev[i] = str[i];
+		i++;
+	}
+	if (i > 0 && ft_isseparator(str[i - 1]))
+		i--;
+	if (str[i])
+		abbrev[i++] = '.';
+	abbrev[i] = '\0';
+}
+
 void	ft_render_inner_name_value(t_vm *vm, SDL_Rect inner_rect,
 		t_player *player, t_player_source source)
 {
 	SDL_Rect	name_rect;
 	t_ixy		col_source;
+	char 		abbrev[ABBREV_LEN + 2];
 
 	name_rect.w = 3 * inner_rect.w / 8;
 	name_rect.h = inner_rect.h / 3;
@@ -143,7 +168,8 @@ void	ft_render_inner_name_value(t_vm *vm, SDL_Rect inner_rect,
 		col_source.x = player->color.index;
 	else
 		col_source.x = MAX_PL_COLOR;
-	ft_copy_str_to_surface(vm, player->name, name_rect, col_source);
+	ft_copy_abbrev(abbrev, player->name);
+	ft_copy_str_to_surface(vm, abbrev, name_rect, col_source);
 }
 
 void	ft_render_inner_name(t_vm *vm, SDL_Rect inner_rect, t_player *player,
@@ -200,17 +226,23 @@ void	ft_render_inner_name_full(t_vm *vm, SDL_Rect player_rect, t_player *player,
 {
 	SDL_Rect	name_rect;
 	t_ixy		col_source;
+	char 		abbrev[ABBREV_LEN + 2];
+	int			len;
+	int			abbrev_len;
 
 	name_rect.w = player_rect.w / 2;
 	name_rect.h = player_rect.h / 2;
-	name_rect.x = player_rect.x + player_rect.w / 4;
 	name_rect.y = player_rect.y + player_rect.h / 4;
 	col_source.y = source;// % NB_SOURCES;
 	if (source % NB_SOURCES == ARENA)
 		col_source.x = player->color.index;
 	else
 		col_source.x = MAX_PL_COLOR;
-	ft_copy_str_to_surface(vm, player->name, name_rect, col_source);
+	ft_copy_abbrev(abbrev, player->name);
+	abbrev_len = ft_strlen(abbrev);
+	len = ft_copied_char_surface_w(name_rect, abbrev_len) * abbrev_len;
+	name_rect.x = player_rect.x + (player_rect.w - len) / 2.0;
+	ft_copy_str_to_surface(vm, abbrev, name_rect, col_source);
 }
 
 void	ft_render_inner_player(t_vm *vm, SDL_Rect player_rect, t_player *player,

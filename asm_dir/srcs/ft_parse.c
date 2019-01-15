@@ -6,7 +6,8 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 20:06:08 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/15 17:41:04 by cammapou         ###   ########.fr       */
+/*   Updated: 2019/01/15 23:01:08 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/15 19:42:03 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +40,6 @@ int	ft_nb_words(char const *s)
 	return (res);
 }
 */
-
 int			ft_populate_from_opcode(char *str, int start, int i, t_env *e)
 {
 	char	*opcode_str;
@@ -129,15 +129,15 @@ int			ft_parse_asm(char *str, t_env *e)
 		}
 		free(line);
 	}
-	if (ft_fill_instructions_labels_values(e))
+	if (!e->parser.parsed_name || !e->parser.parsed_comment ||
+			ft_fill_instructions_labels_values(e))
 		ft_printf(":(\n");
 	else
 	{
-	//	ft_print_instructions(e->champ.instructions);
-	//	ft_print_labels(e->champ.labels);
-	//	ft_printf(":)\n");
+		ft_print_instructions(e->champ.instructions);
+		ft_print_labels(e->champ.labels);
+		ft_printf(":)\n");
 	}
-	ft_encode_instructions(1, e->champ.instructions);
 	free(line);
 	close(e->parser.fd);
 	return (0);

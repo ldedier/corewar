@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 22:25:36 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/10 16:03:00 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/01/15 22:23:36 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PLAYER_H
 
 # include "op.h"
+# include "network.h"
 # include "libft.h"
 # include <dirent.h>
 # include <sys/stat.h>
@@ -55,6 +56,8 @@ typedef struct		s_player
 	char			from_server;
 	t_color			color;
 	char			aff_buf[MAX_AFF_LEN + 1];
+	int				nb_victories;
+	t_list			*beaten_players;
 }					t_player;
 
 int					ft_read_player(char *path, t_player *player);

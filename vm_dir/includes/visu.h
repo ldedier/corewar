@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/10 00:47:40 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/15 21:23:14 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,7 @@
 # define INIT_MAX_PLAYERS		4
 # define INIT_CYCLES_PER_TURN	1
 # define GLYPH_W_H_RATIO		0.5
-
-# define ATLAS_MIN				32
-# define ATLAS_MAX				126
+# define ABBREV_LEN				8
 
 # define FRAMERATE				60
 
@@ -75,10 +73,10 @@
 # define TOOLBAR_BOTTOM			30
 
 
-# define LABSCORE_LEFT			30
-# define LABSCORE_WIDTH			120
+# define LABSCORE_LEFT			20
+# define LABSCORE_WIDTH			90
 # define LABSCORE_RIGHT			20
-# define SCORE_WIDTH			50
+# define SCORE_WIDTH			100
 # define SCORE_RIGHT			20
 
 # define SCROLLBAR_WIDTH		25
@@ -159,7 +157,7 @@
 # define RANK					7
 # define COREWAR				8
 
-# define NB_IMAGES				20
+# define NB_IMAGES				22
 
 # define CLOSE					0
 # define DL						1
@@ -176,13 +174,13 @@
 # define TRASH_DISABLED			12
 # define SWITCH_1				13
 # define SWITCH_2				14
-
 # define NAME_TAKEN_NOTIF		15
 # define FROM_SERVER_NOTIF		16
-# define OK						17
-
-# define BREAKDOWN_BAR			18
-# define BACK					19
+# define NAME_INVALID_NOTIF		17
+# define LOST_CONNEXION_NOTIF	18
+# define OK						19
+# define BREAKDOWN_BAR			20
+# define BACK					21
 
 # define NB_CURSORS				5
 
@@ -606,10 +604,19 @@ typedef struct			s_hp_frame
 	t_ray				voldemort_ray;
 }						t_hp_frame;
 
+typedef enum			e_sort_type
+{
+	SORT_TYPE_ALPHA,
+	SORT_TYPE_SCORE
+}						t_sort_type;
+
 struct					s_visu
 {
 	char				active;
 	t_phase				phase;
+	int 				(*sort_cs_func)(void *, void *);
+	unsigned char		inv_sort;
+	t_sort_type			sort_type;
 	t_local_type		local_type;
 	t_sdl				sdl;
 	t_dim				dim;
@@ -694,6 +701,10 @@ int						ft_get_scrolled_height(t_vscrollbar vscrollbar);
 void					ft_swing_scrollbar(t_vscrollbar *scrollbar, t_ixy xy);
 int						nothing_on_click(t_vm *vm, t_button *this, t_ixy xy);
 int						fight(t_vm *vm, t_button *this, t_ixy xy);
+
+int						sort_score(t_vm *vm, t_button *this, t_ixy xy);
+int						sort_alpha(t_vm *vm, t_button *this, t_ixy xy);
+
 void					nothing_on_press(t_vm *vm, t_button *this);
 void					ft_wheel_event(t_vm *vm, SDL_Event event);
 void					ft_update_download_buttons_client_rect(t_vm *vm);
@@ -765,7 +776,7 @@ int						switch_local(t_vm *vm, t_button *this, t_ixy xy);
 int						ft_render_trash_button(t_vm *vm, t_button *this);
 int						ft_render_switch_button(t_vm *vm, t_button *this);
 int						ft_process_upload(t_vm *vm, t_player player);
-int						ft_get_new_core(int nb_bytes, t_vm *vm);
+int						ft_get_new_cores(int nb_bytes, t_vm *vm);
 void					ft_update_vscrollbar_server_compressed_size(t_vm *vm,
 							t_visu *v);
 void					ft_update_vscrollbar_downloads_compressed_size(t_vm *vm,
@@ -799,4 +810,11 @@ int						ft_render_play_footer(t_vm *vm);
 int						ft_render_nb_live(t_vm *vm, t_player p, int y);
 int						ft_render_live_breakdown_title(t_vm *vm, SDL_Rect rect);
 int						ft_init_hp_surface(t_visu *visu);
+void					ft_copy_abbrev(char *abbrev, char *str);
+int						ft_sort_score(void *p1, void *p2);
+int						ft_sort_alpha(void *p1, void *p2);
+int						ft_sort_alpha_cs(void *p1, void *p2);
+int						ft_sort_score_cs(void *p1, void *p2);
+void					ft_sort_client_slots(t_vm *vm);
+int						ft_copied_char_surface_w(SDL_Rect rect, int len);
 #endif

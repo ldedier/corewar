@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/06 18:21:30 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/18 19:32:22 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/11 20:57:00 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ char				*ft_strrchr(char const *s, int c);
 char				*ft_strstr(char const *haystack, char const *needle);
 char				*ft_strnstr(char const *hay, char const *ndle, size_t n);
 int					ft_strcmp(char const *s1, char const *s2);
+int					ft_strcmp_no_case(char const *s1, char const *s2);
 int					ft_strncmp(char const *s1, char const *s2, size_t n);
 int					ft_atoi(char const *s);
 int					ft_isalpha(int c);

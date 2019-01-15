@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 15:05:42 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/19 19:04:04 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/12 11:29:49 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,15 +120,20 @@ int			ft_render_client_score(t_vm *vm, int x, int y, t_client_slot *slot)
 	char		*str;
 	SDL_Rect	rect;
 	t_ixy		col_source;
+	int			copied_len;
+	int			len;
 
 	rect.x = x;
-	rect.y = y;
+	rect.y = y + 7;
 	rect.w = vm->visu.center.score_width;
 	rect.h = vm->visu.center.player_h;
 	if (!(str = ft_itoa(slot->player->score)))
 		return (1);
 	col_source.x = MAX_PL_COLOR;
 	col_source.y = SERVER;
+	len = ft_strlen(str);
+	copied_len = ft_copied_char_surface_w(rect, len) * len;
+	rect.x += (rect.w - copied_len) / 2.0;
 	if (ft_copy_str_to_surface(vm, str, rect, col_source))
 		return (1);
 	return (0);
