@@ -92,13 +92,16 @@ static int	read_comment_continue(char *line, int i, t_env *env, int fd)
 			return (1);
 		i++;
 	}
-	line++;
 	i += 1;
-	while (line[i] || line[i] == '\t' || line[i] == ' ')
+	if (line[i] == '"')
 	{
-		if (isprint(line[i]))
-			return (ft_log_error("Syntax error AFTER COMMENT", i + 1, env));
-		i++;
+		i += 1;
+		while (line[i] || line[i] == '\t' || line[i] == ' ')
+		{
+			if (isprint(line[i]))
+				return (ft_log_error("Syntax error AFTER COMMENT", i - 2, env));
+			i++;
+		}
 	}
 	if (ft_strlen(env->champ.header.comment) > COMMENT_LENGTH)
 		ft_log_error_no_line("Champion name too long (Max length 2048)", env);
