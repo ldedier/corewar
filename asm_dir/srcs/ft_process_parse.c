@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_process_parse.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cammapou <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/01/15 17:30:46 by cammapou          #+#    #+#             */
+/*   Updated: 2019/01/15 17:32:33 by cammapou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "asm.h"
 
 int		ft_process_parse_params(char **params_split, t_env *e)
 {
-	int i;
-	int save;
+	int		i;
+	int		save;
 
 	i = 0;
 	while (params_split[i])
@@ -25,7 +37,7 @@ int		ft_process_parse_params(char **params_split, t_env *e)
 
 int		ft_process_populate_from_opcode(char *opcode_str, t_env *e)
 {
-	int i;
+	int		i;
 
 	i = 0;
 	while (i < NB_INSTRUCTIONS)
@@ -44,9 +56,9 @@ int		ft_process_populate_from_opcode(char *opcode_str, t_env *e)
 
 int		ft_process_parse_indirect_value(char *str, int index, int offset, t_env *e)
 {
-	int ret;
-	char *str2;
-	int i;
+	int		ret;
+	char	*str2;
+	int		i;
 
 	i = 0;
 	str2 = str;
@@ -69,15 +81,15 @@ int		ft_process_parse_indirect_value(char *str, int index, int offset, t_env *e)
 
 int		ft_process_parse_direct_value(char *str, int index, int offset, t_env *e)
 {
-	int ret;
-	char *str2;
-	int i;
+	int		ret;
+	char	*str2;
+	int		i;
 
 	i = 0;
 	str2 = str;
 	if (str[0] == '\0')
 		return (ft_log_error(LEXICAL_ERROR, offset, e));
-	else if(!ft_is_atouiable(str))
+	else if (!ft_is_atouiable(str))
 		return (ft_log_error(LEXICAL_ERROR, offset + 1, e));
 	ret = ft_patoui(&str);
 	if (str == str2)

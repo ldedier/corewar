@@ -6,20 +6,20 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 00:59:48 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/06 18:11:25 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/15 17:04:41 by cammapou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-int		ft_write(int fd, int value, int size)
+int			ft_write(int fd, int value, int size)
 {
-	char	bytes[4]; //check si max (E_SIZE) > 4 !
+	char	bytes[4];
 	char	tmp;
-	int i;
+	int		i;
 
 	i = 0;
-	while	(i < size)
+	while (i < size)
 	{
 		bytes[i] = (value >> (8 * i)) & 0xff;
 		i++;
@@ -35,7 +35,7 @@ int		ft_write(int fd, int value, int size)
 	return (write(fd, bytes, size));
 }
 
-void	ft_add_padding(int fd, int total_bytes)
+void		ft_add_padding(int fd, int total_bytes)
 {
 	int		i;
 	char	c;
@@ -49,7 +49,7 @@ void	ft_add_padding(int fd, int total_bytes)
 	}
 }
 
-void	ft_encode_header(int fd, t_env *e)
+void		ft_encode_header(int fd, t_env *e)
 {
 	int total;
 
@@ -62,7 +62,7 @@ void	ft_encode_header(int fd, t_env *e)
 	ft_add_padding(fd, total);
 }
 
-void	ft_encode_param(int fd, t_instruction *instruction, int index)
+void		ft_encode_param(int fd, t_instruction *instruction, int index)
 {
 	if (instruction->params[index].type & T_REG)
 		ft_write(fd, instruction->params[index].value, E_REG);
@@ -77,7 +77,7 @@ void	ft_encode_param(int fd, t_instruction *instruction, int index)
 	}
 }
 
-void	ft_encode_instruction(int fd, t_instruction *instruction)
+void		ft_encode_instruction(int fd, t_instruction *instruction)
 {
 	int i;
 
@@ -92,10 +92,10 @@ void	ft_encode_instruction(int fd, t_instruction *instruction)
 	}
 }
 
-void	ft_process_encoding(int fd, t_env *e)
+void		ft_process_encoding(int fd, t_env *e)
 {
-	t_list *ptr;
-	t_instruction *instruction;
+	t_list			*ptr;
+	t_instruction	*instruction;
 
 	ft_encode_header(fd, e);
 	ptr = e->champ.instructions;
@@ -107,7 +107,7 @@ void	ft_process_encoding(int fd, t_env *e)
 	}
 }
 
-int		ft_encode_to_cor(char *filename, t_env *e)
+int			ft_encode_to_cor(char *filename, t_env *e)
 {
 	int fd;
 	int script;

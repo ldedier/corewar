@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_process_parse_suite.c                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cammapou <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/01/15 17:32:49 by cammapou          #+#    #+#             */
+/*   Updated: 2019/01/15 17:35:11 by cammapou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "asm.h"
 
 int		ft_process_parse_direct(char *str, int index, int offset, t_env *e)
@@ -27,7 +39,6 @@ int		ft_process_parse_param(char *param, int index, int offset, t_env *e)
 	(void)param;
 	(void)index;
 	(void)e;
-
 	if (param[0] == REGISTER_CHAR)
 		return (ft_process_parse_register(&(param[1]), index, 1, e));
 	else if (ft_isdigit(param[0]) || param[0] == '-' || param[0] == LABEL_CHAR)
@@ -35,15 +46,16 @@ int		ft_process_parse_param(char *param, int index, int offset, t_env *e)
 	else if (param[0] == DIRECT_CHAR)
 		return (ft_process_parse_direct(&(param[1]), index, 1, e));
 	else
-		return ft_log_error(LEXICAL_ERROR, offset, e);
+		return (ft_log_error(LEXICAL_ERROR, offset, e);
 	return (0);
 }
 
 int		ft_process_parse_register(char *str, int index, int offset, t_env *e)
 {
-	int ret;
-	char *str2;
-	int i;
+	int		ret;
+	char	*str2;
+	int		i;
+	
 	e->champ.header.prog_size += E_REG;
 	e->parser.current_instruction->params[index].nb_bytes = E_REG;
 	e->parser.current_instruction->ocp |= (REG_CODE << (6 - (2 * index)));
@@ -53,7 +65,7 @@ int		ft_process_parse_register(char *str, int index, int offset, t_env *e)
 		return (ft_log_custom_wrong_param_type("register", index, 0, e));
 	if (str[0] == '\0')
 		return (ft_log_error(LEXICAL_ERROR, offset, e));
-	else if(!ft_is_atouiable(str))
+	else if (!ft_is_atouiable(str))
 		return (ft_log_error(LEXICAL_ERROR, offset + 1, e));
 	ret = ft_patoui(&str);
 	if (str == str2)
@@ -71,8 +83,8 @@ int		ft_process_parse_register(char *str, int index, int offset, t_env *e)
 
 int		ft_process_parse_label(char *str, int index, int offset, t_env *e)
 {
-	char *label_name;
-	int i;
+	char	*label_name;
+	int		i;
 
 	if (!(label_name = ft_get_str(&str)))
 		ft_log_error(MALLOC_ERROR, offset, e);

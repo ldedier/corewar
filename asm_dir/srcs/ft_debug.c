@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/01 16:53:52 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/03 00:12:14 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/15 17:00:28 by cammapou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	ft_print_param(t_parameter param, int index)
 		}
 		ft_printf("%d\n", param.value);
 	}
-
 	else if (param.type & T_REG)
 	{
 		ft_printf("register: ");
@@ -46,7 +45,7 @@ void	ft_print_param(t_parameter param, int index)
 
 void	ft_print_op(t_op op)
 {
-	ft_printf("opcode: %#04x\n",  op.opcode);
+	ft_printf("opcode: %#04x\n", op.opcode);
 }
 
 void	ft_print_instruction(t_instruction *instruction)
@@ -60,7 +59,6 @@ void	ft_print_instruction(t_instruction *instruction)
 	if (instruction->op.has_ocp)
 		ft_printf("Octet de Codage des Parametres: %#04x (%08b)\n", instruction->ocp,
 		instruction->ocp);
-
 	while (i < instruction->op.nb_params)
 	{
 		ft_print_param(instruction->params[i], i + 1);
@@ -101,5 +99,4 @@ void	ft_print_labels(t_list *labels)
 		ft_print_label(label);
 		ptr = ptr->next;
 	}
-
 }

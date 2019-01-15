@@ -6,15 +6,15 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 22:00:06 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/03 00:09:13 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/15 17:10:33 by cammapou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-int		ft_log_error(char *str, int column, t_env *e)
+int			ft_log_error(char *str, int column, t_env *e)
 {
-	int col_true;
+	int 	col_true;
 
 	col_true = column + e->parser.column_offset;
 	if (e->parser.nb_errors < MAX_ERRORS_DISPLAYED)
@@ -35,7 +35,7 @@ int		ft_log_error(char *str, int column, t_env *e)
 	return (1);
 }
 
-int		ft_log_no_label_error(t_instruction *instruction, int index, t_env *e)
+int			ft_log_no_label_error(t_instruction *instruction, int index, t_env *e)
 {
 	if (e->parser.nb_errors < MAX_ERRORS_DISPLAYED)
 	{
@@ -57,7 +57,7 @@ int		ft_log_no_label_error(t_instruction *instruction, int index, t_env *e)
 	return (1);
 }
 
-int		ft_log_error_no_line(char *str, t_env *e)
+int			ft_log_error_no_line(char *str, t_env *e)
 {
 	if (e->parser.nb_errors < MAX_ERRORS_DISPLAYED)
 	{
@@ -74,9 +74,9 @@ int		ft_log_error_no_line(char *str, t_env *e)
 	return (1);
 }
 
-int		ft_log_warning(char *str, int column, t_env *e)
+int			ft_log_warning(char *str, int column, t_env *e)
 {
-	int col_true;
+	int 	col_true;
 
 	col_true = column + e->parser.column_offset;
 	ft_printf("%s%s:%d:%d: %swarning: %s%s%s\n", BOLD WHITE,

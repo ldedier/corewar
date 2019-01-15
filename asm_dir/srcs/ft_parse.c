@@ -6,11 +6,12 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 20:06:08 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/08 18:29:18 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/15 17:14:44 by cammapou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
+
 /*
 int	ft_nb_words(char const *s)
 {
@@ -39,9 +40,9 @@ int	ft_nb_words(char const *s)
 }
 */
 
-int		ft_populate_from_opcode(char *str, int start, int i, t_env *e)
+int			ft_populate_from_opcode(char *str, int start, int i, t_env *e)
 {
-	char *opcode_str;
+	char	*opcode_str;
 
 	if (!(opcode_str = ft_strndup(&(str[start]), i - start)))
 		return (ft_log_error(MALLOC_ERROR, 0, e));
@@ -54,11 +55,11 @@ int		ft_populate_from_opcode(char *str, int start, int i, t_env *e)
 	return (ft_parse_params(str, i, e));
 }
 
-int		ft_parse_params(char *str, int i, t_env *e)
+int			ft_parse_params(char *str, int i, t_env *e)
 {
-	char **params_split;
-	int start;
-	int save;
+	char	**params_split;
+	int		start;
+	int		save;
 
 	save = e->parser.column_offset;
 	start = i;
@@ -68,7 +69,7 @@ int		ft_parse_params(char *str, int i, t_env *e)
 	{
 		e->parser.column_offset = save;
 		return (ft_log_error(NO_PARAMETERS, -
-					ft_strlen(e->parser.current_instruction->op.instruction_name), e));
+			ft_strlen(e->parser.current_instruction->op.instruction_name), e));
 	}
 	if (!(params_split = ft_strsplit(&(str[start]), SEPARATOR_CHAR)))
 		return (ft_log_error(MALLOC_ERROR, 0, e));
@@ -77,10 +78,10 @@ int		ft_parse_params(char *str, int i, t_env *e)
 	return (ft_process_parse_params(params_split, e));
 }
 
-int		ft_parse_line(char *str, t_env *e, int fd)
+int			ft_parse_line(char *str, t_env *e, int fd)
 {
-	char *refined;
-	int ret;
+	char	*refined;
+	int		ret;
 
 	if (!(refined = ft_refine_line(str)))
 		return (ft_log_error_no_line(MALLOC_ERROR, e));
@@ -98,12 +99,12 @@ int		ft_parse_line(char *str, t_env *e, int fd)
 	return (ret);
 }
 
-int		ft_parse_asm(char *str, t_env *e)
+int			ft_parse_asm(char *str, t_env *e)
 {
-	char *line;
-	int ret;
+	char	*line;
+	int		ret;
 
-	if ((e->parser.fd = open(str , O_RDONLY)) == -1)
+	if ((e->parser.fd = open(str, O_RDONLY)) == -1)
 	{
 		perror(str);
 		return (1);
@@ -111,9 +112,9 @@ int		ft_parse_asm(char *str, t_env *e)
 	else if ((ret = ft_switch_extension(str, ".s", ".cor", &(e->champ.cor_name))))
 	{
 		if (ret == -1)
-			return ft_log_error_no_line(MALLOC_ERROR, e);
+			return (ft_log_error_no_line(MALLOC_ERROR, e);
 		else
-			return ft_log_error_no_line("File must be of extension \'.s\'", e);
+			return (ft_log_error_no_line("File must be of extension \'.s\'", e);
 	}
 	while (get_next_line(e->parser.fd, &line))
 	{

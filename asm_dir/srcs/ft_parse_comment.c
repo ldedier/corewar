@@ -6,7 +6,7 @@
 /*   By: cammapou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 13:41:10 by cammapou          #+#    #+#             */
-/*   Updated: 2018/12/19 13:48:11 by cammapou         ###   ########.fr       */
+/*   Updated: 2019/01/15 17:18:23 by cammapou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	check_after_comment(char *tmp, int i, t_env *env)
 	return (0);
 }
 
-static void check_comment_exist(t_env *env, int j)
+static void	check_comment_exist(t_env *env, int j)
 {
 	if (env->champ.header.comment[j])
 	{
@@ -109,7 +109,7 @@ static int	read_comment_continue(char *line, int i, t_env *env, int fd)
 
 int			read_comment(char *line, t_env *env, int fd, int i)
 {
-	int j;
+	int		j;
 
 	j = 0;
 	if (env->champ.header.comment[j])

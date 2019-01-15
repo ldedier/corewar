@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 00:35:48 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/03 01:12:16 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/15 17:06:45 by cammapou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,11 @@ void	ft_free_label_tlst(void *label, size_t dummy)
 void	ft_free_instruction_tlst(void *instruction, size_t dummy)
 {
 //	t_instruction *i;
-
 	(void)dummy;
 //	i = instruction;
 	ft_free_instruction(instruction);
 }
+
 void	ft_free_all(t_env *e)
 {
 	free(e->champ.cor_name);
