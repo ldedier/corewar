@@ -13,9 +13,10 @@
 #include "../includes/vm.h"
 
 /*
-** Input: vm (for arena and player), proc (for register and pc),
-** arg for X arg,
-** Returns
+** [lldi] instruction loads content from arena at adress [arg 1] + [arg 2],
+** without the IDX_MOD distance restriction, then stores it in register [arg 3]
+**
+** Takes 3 arguments, first two necessarily INDEXES
 */
 
 int		ins_lldi(t_vm *vm, t_process *proc, t_parameter arg[3])

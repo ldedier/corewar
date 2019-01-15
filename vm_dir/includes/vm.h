@@ -183,6 +183,7 @@ int					ft_pow(int n, int pow); // remove?
 int					getval(t_vm *vm, t_process *proc, t_parameter arg);
 t_process		*get_proc_index(t_list *lst, int index);
 t_player		*get_player_num(t_list *lst, int num);
+int					is_reg(int num);
 
 // TEMP delete at end
 

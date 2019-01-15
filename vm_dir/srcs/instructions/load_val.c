@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/09 20:29:58 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/10 17:17:09 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/01/15 17:16:58 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,18 @@ void		loadval(t_vm *vm, t_process *proc, t_parameter *arg, int val)
 {
 //	static void	(*f_data[NB_TYPES + 1])(t_vm *vm, t_process *proc, t_parameter *arg, int val) = {
 //		NULL, &load_reg, &load_arena, &load_arena};
+
 	if (arg->type == 1)
+	{
 		proc->pending.dest = proc->reg;
+		proc->pending.dest_index = arg->value - 1;
 //		proc->reg[arg->value - 1] = val;
+	}
 	else if (arg->type > 1)
+	{
 		proc->pending.dest = vm->arena;
-	proc->pending.dest_index = arg->value - 1;
+		proc->pending.dest_index = arg->value + proc->pc;
+	}
 	proc->pending.value = val;
 //	ft_printf("in load val, val = %d arg->type = %d\n", val, arg->type);
 //	f_data[(int)arg->type](vm, proc, arg, val);

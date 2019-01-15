@@ -13,9 +13,9 @@
 #include "../includes/vm.h"
 
 /*
-** if carry is ON, jumps pc to arena at address # arg 1
-** Input: vm (for arena and player), proc (for register and pc),
-** arg for 1 arg
+** [zjmp] instruction jumps PC to address [arg 1] if carry is ON (value = 1)
+**
+** Takes 1 argument: the address.
 */
 
 int		ins_zjmp(t_vm *vm, t_process *proc, t_parameter arg[3])

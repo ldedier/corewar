@@ -6,18 +6,18 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/04 17:36:44 by uboumedj          #+#    #+#             */
-
-/*   Updated: 2019/01/10 15:59:44 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/01/15 15:48:31 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/vm.h"
 
 /*
-** The aff instruction allows users to output characters to taunt other players.
+** [aff] instruction allows users to output characters to taunt other players
+** by printing the character given by [arg 1] (% 256).
 **
 ** This version includes a bonus: instead of outputting the character every
-** time the instruction is called, it stores the character inside a string and
+** time [aff] is called, it stores the character inside a string and
 ** outputs the entire string when it's called with the value 0, thus allowing
 ** players to output entire strings (much more useful).
 */
@@ -46,7 +46,6 @@ int				ins_aff(t_vm *vm, t_process *proc, t_parameter arg[3])
 			output_aff(proc);
 		else
 		{
-
 			i = 0;
 			while (proc->player->aff_buf[i] && i < MAX_AFF_LEN)
 				i++;
