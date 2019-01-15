@@ -14,19 +14,16 @@
 
 int			check_name(char *str, t_env *env)
 {
-	char *name;
+	int i;
 
-	name = NULL;
 	if (str[0] == '.')
 	{
-		if (!(name = ft_strndup(str, ft_strlen(NAME_CMD_STRING))))
-			return (1);
-		if (ft_strcmp(name, NAME_CMD_STRING) != 0)
+		i = ft_strlen(NAME_CMD_STRING);
+		if (isprint(str[i]) == 1)
 			return (ft_log_error_no_line("Lexical error NAME", env));
 	}
 	else if (str[0] != '.')
-		return (ft_log_error("Lexical error BEFORE NAME", 0, env));
-	free(name);
+		return (ft_log_error_no_line("Lexical error NAME", env));
 	return (0);
 }
 
@@ -47,11 +44,11 @@ int			read_name(char *line, t_env *env, int i, int j)
 {
 	if (env->champ.header.prog_name[j])
 		return (ft_log_error("Syntax error at token COMMAND_NAME", 0, env));
-	i += ft_strlen(NAME_CMD_STRING);
+	i = ft_strlen(NAME_CMD_STRING);
 	while (line[++i] == ' ' || line[i] == '\t')
 		;
 	if (line[i] != '"')
-		return (ft_log_error("Lexical error", i - 1, env));
+		return (ft_log_error("Lexical error", i, env));
 	while (line[i++])
 	{
 		env->champ.header.prog_name[j] = line[i];

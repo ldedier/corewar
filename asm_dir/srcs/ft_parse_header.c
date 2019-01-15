@@ -23,7 +23,7 @@ int	ft_parse_line_header(char *str, t_env *env, int i, int fd)
 {
 	if (ft_strstr(str, NAME_CMD_STRING))
 	{
-		if (check_name(str, env))
+		if (check_name(str, env) == 1)
 			return (1);
 		if (read_name(str, env, i, 0) == 1)
 			return (1);
