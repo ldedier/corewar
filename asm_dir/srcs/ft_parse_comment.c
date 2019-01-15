@@ -39,8 +39,6 @@ static int	check_after_comment(char *tmp, int i, t_env *env)
 			return (ft_log_error_no_line("Syntax error AFTER COMMENT", env));
 		i++;
 	}
-	if (ft_strlen(env->champ.header.prog_name) > COMMENT_LENGTH)
-		ft_log_error_no_line("Champion comment too long (Max length 2048)", env);
 	return (0);
 }
 
