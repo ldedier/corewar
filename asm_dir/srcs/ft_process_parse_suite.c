@@ -6,7 +6,7 @@
 /*   By: cammapou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 17:32:49 by cammapou          #+#    #+#             */
-/*   Updated: 2019/01/15 17:35:11 by cammapou         ###   ########.fr       */
+/*   Updated: 2019/01/15 17:40:25 by cammapou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int		ft_process_parse_param(char *param, int index, int offset, t_env *e)
 	else if (param[0] == DIRECT_CHAR)
 		return (ft_process_parse_direct(&(param[1]), index, 1, e));
 	else
-		return (ft_log_error(LEXICAL_ERROR, offset, e);
+		return (ft_log_error(LEXICAL_ERROR, offset, e));
 	return (0);
 }
 

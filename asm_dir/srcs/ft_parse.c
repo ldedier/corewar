@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 20:06:08 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/15 17:14:44 by cammapou         ###   ########.fr       */
+/*   Updated: 2019/01/15 17:41:04 by cammapou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,9 +112,9 @@ int			ft_parse_asm(char *str, t_env *e)
 	else if ((ret = ft_switch_extension(str, ".s", ".cor", &(e->champ.cor_name))))
 	{
 		if (ret == -1)
-			return (ft_log_error_no_line(MALLOC_ERROR, e);
+			return (ft_log_error_no_line(MALLOC_ERROR, e));
 		else
-			return (ft_log_error_no_line("File must be of extension \'.s\'", e);
+			return (ft_log_error_no_line("File must be of extension \'.s\'", e));
 	}
 	while (get_next_line(e->parser.fd, &line))
 	{
