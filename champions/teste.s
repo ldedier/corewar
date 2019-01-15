@@ -1,7 +1,7 @@
 .name			"ah"
 .comment		"Hmmm"
 
-ld 0,r2
-and r2,%12,r3
-ld %2147483647,r4
-st r2,2
+ld %-666663,r4
+ld %2000,r2
+st r4,2000
+ldi %2000,%-5,r2

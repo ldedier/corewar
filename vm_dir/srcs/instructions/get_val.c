@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/09 20:00:32 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/10 17:14:59 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/01/15 18:07:05 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,15 @@ static int	getval_ind(t_vm *vm, t_process *proc, int index, int mod)
 {
 	int	val;
 
-	(void)mod;
 	(void)proc;
-	//ft_printf("indirect | index = %d mod = %d\n", index, mod);
 	if (mod == IDX_MOD)
 		index %= IDX_MOD;
 	val = getval_mod(vm->arena, index, DIR_SIZE, MEM_SIZE);
-	//ft_printf("val = %d\n", val);
 	return (val);
 }
 
 static int	getval_reg(t_vm *vm, t_process *proc, int index, int mod)
 {
-	//ft_printf("reg | index = %d\n", index);
 	(void)vm;
 	(void)mod;
 	return (proc->reg[index - 1]);
@@ -36,7 +32,6 @@ static int	getval_reg(t_vm *vm, t_process *proc, int index, int mod)
 
 static int	getval_dir(t_vm *vm, t_process *proc, int val, int mod)
 {
-	//ft_printf("direct\n");
 	(void)vm;
 	(void)proc;
 	(void)mod;

@@ -6,8 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/04 17:36:44 by uboumedj          #+#    #+#             */
-
-/*   Updated: 2019/01/10 15:59:44 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/01/15 15:48:31 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +46,6 @@ int				ins_aff(t_vm *vm, t_process *proc, t_parameter arg[3])
 			output_aff(proc);
 		else
 		{
-
 			i = 0;
 			while (proc->player->aff_buf[i] && i < MAX_AFF_LEN)
 				i++;
