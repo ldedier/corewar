@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 21:45:31 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/12 11:42:25 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/15 21:12:03 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,8 @@ int		ft_upload(t_vm *vm, t_button *this, t_ixy mouse)
 
 	if (vm->client.upload_player.from_server)
 		ft_set_notification(vm, FROM_SERVER_NOTIF);
+	else if (out_of_atlas_range(vm->client.upload_player.name))
+		ft_set_notification(vm, NAME_INVALID_NOTIF);
 	else
 		ft_process_upload(vm, vm->client.upload_player);
 	vm->client.upload_player.relevant = 0;

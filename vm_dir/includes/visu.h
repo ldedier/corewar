@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/15 17:53:04 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/15 21:23:14 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@
 # define RANK					7
 # define COREWAR				8
 
-# define NB_IMAGES				20
+# define NB_IMAGES				22
 
 # define CLOSE					0
 # define DL						1
@@ -174,13 +174,13 @@
 # define TRASH_DISABLED			12
 # define SWITCH_1				13
 # define SWITCH_2				14
-
 # define NAME_TAKEN_NOTIF		15
 # define FROM_SERVER_NOTIF		16
-# define OK						17
-
-# define BREAKDOWN_BAR			18
-# define BACK					19
+# define NAME_INVALID_NOTIF		17
+# define LOST_CONNEXION_NOTIF	18
+# define OK						19
+# define BREAKDOWN_BAR			20
+# define BACK					21
 
 # define NB_CURSORS				5
 

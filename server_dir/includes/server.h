@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 17:20:50 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/15 14:56:38 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/15 22:10:32 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,6 @@ int						ft_send_core_bin(t_server *server, int i, int nb_bytes);
 t_player				*get_core_from_query(t_server *server, int nb_bytes);
 char					*ft_get_buffer_all_cores(t_server *server, t_flag flag, int *size);
 int						ft_attribute_scores_init(t_server *server);
+void					ft_process_score(t_server *server);
+int						fight_cores(t_player *player1, t_player *player2, t_player **winner);
 #endif

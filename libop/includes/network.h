@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 16:55:50 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/15 17:54:28 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/15 21:11:07 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 # define ATLAS_MIN			32
 # define ATLAS_MAX			126
+
 typedef int				t_nb_players;
 typedef char			t_player_number;
 
@@ -42,4 +43,5 @@ typedef enum			e_flag
 size_t					ft_memcpy_ret(void *dest, void *src, size_t size);
 void					ft_memcpy_recv(void *dest, void *src, int *index,
 							size_t size);
+int						out_of_atlas_range(char *str);
 #endif

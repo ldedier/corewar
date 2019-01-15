@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/30 22:25:06 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/12 09:55:46 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/15 20:34:56 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int		ft_process_upload_result(t_vm *vm, int nb_bytes)
 	ft_memcpy(&flag, vm->client.buffer, sizeof(t_flag));
 	if (flag == UPLOAD_NAME_TAKEN)
 		ft_set_notification(vm, NAME_TAKEN_NOTIF);
+	if (flag == UPLOAD_NAME_INVALID)
+		ft_set_notification(vm, NAME_INVALID_NOTIF);
 	else if (flag == FLAG_NEW_CORES)
 		ft_get_new_cores(nb_bytes, vm);
 	return (0);

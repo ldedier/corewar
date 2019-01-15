@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/11 20:35:18 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/11 21:29:55 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/15 21:26:01 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int			ft_sort_score(void *p1, void *p2)
 
 	player1 = (t_player *)p1;
 	player2 = (t_player *)p2;
-	if ((ret = player1->score - player2->score))
+	if ((ret = player2->score - player1->score))
 		return (ret);
 	return (ft_strcmp_no_case(player1->name, player2->name));
 }
@@ -59,7 +59,7 @@ int			ft_sort_score_cs(void *client_slot_1, void *client_slot_2)
 
 	cs1 = (t_client_slot *)client_slot_1;
 	cs2 = (t_client_slot *)client_slot_2;
-	if ((ret = cs1->player->score - cs2->player->score))
+	if ((ret = cs2->player->score - cs1->player->score))
 		return (ret);
 	return (ft_strcmp_no_case(cs1->player->name, cs2->player->name));
 }

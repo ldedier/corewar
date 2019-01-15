@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 22:25:36 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/15 14:23:29 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/15 21:10:27 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PLAYER_H
 
 # include "op.h"
+# include "network.h"
 # include "libft.h"
 # include <dirent.h>
 # include <sys/stat.h>

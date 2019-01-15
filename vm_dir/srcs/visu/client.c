@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:54:14 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/12 10:39:11 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/15 21:06:23 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -275,6 +275,8 @@ int		ft_process_client_events(t_vm *vm)
 			{
 				ft_printf("lost connection with the server.\n");
 				vm->client.active = 0;
+				vm->visu.players_list[SERVER].vscrollbar.relevant = 0;
+				ft_set_notification(vm, LOST_CONNEXION_NOTIF);
 			}
 			else
 				ft_process_event(nb_bytes, vm);

@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/30 22:57:11 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/15 18:22:37 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/15 22:11:28 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,33 +71,24 @@ int		ft_process_player_scores(t_server *server, t_player *uploaded_player)
 {
 	t_list		*ptr;
 	t_player	*player;
+	t_player	*winner;
 	int			i;
 
-	(void)uploaded_player;
 	ptr = server->players;
 	i = 1;
 	while (ptr != NULL)
 	{
 		player = (t_player *)ptr->content;
-		player->score = random() % 8412315;
-//		player->score = i;
-		ptr = ptr->next;
-		i *= 10;
-	}
-	return (0);
-}
-
-int		out_of_atlas_range(char *str)
-{
-	int i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] < ATLAS_MIN || str[i] > ATLAS_MAX)
+		if (fight_cores(player, uploaded_player, &winner))
 			return (1);
-		i++;
+		winner->nb_victories++;
+		if (ft_add_to_list_ptr(&winner->beaten_players,
+				uploaded_player == winner ? player : uploaded_player,
+					sizeof(t_player)))
+			return (1);
+		ptr = ptr->next;
 	}
+	ft_process_score(server);
 	return (0);
 }
 
@@ -121,19 +112,16 @@ int		ft_receive_upload(t_server *server, int client_index, int nb_bytes)
 	if (ret)
 		return (1);
 	else if (out_of_atlas_range(player->name))
-	{
-		if (ft_send_flag(t_server *server, int client_index, t_flag flag))
-		return (1);
-	}
+	   return (ft_send_flag(server, client_index, UPLOAD_NAME_INVALID));
 	else
 	{
 		if (get_player(server, player->name))
 			return (ft_send_flag(server, client_index, UPLOAD_NAME_TAKEN));
 		else
 		{
+			ft_process_player_scores(server, player);
 			if (ft_add_to_list_ptr_back(&(server->players), player, sizeof(t_player)))
 				return (1);
-	//		ft_process_player_scores(server, player);
 			ft_process_send_new_players_to_all(server);
 			ft_add_player_persistency(player);
 		}

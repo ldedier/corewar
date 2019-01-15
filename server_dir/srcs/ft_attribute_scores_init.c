@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 14:46:58 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/15 15:19:08 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/15 22:08:28 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,19 +53,18 @@ int		add_to_score(t_player *beaten_player)
 	return (1 + beaten_player->nb_victories);
 }
 
-int		ft_attribute_scores_init(t_server *server)
+void	ft_process_score(t_server *server)
 {
 	t_list		*ptr;
 	t_list		*beaten_ptr;
 	t_player	*beaten;
 	t_player	*player;
 
-	if (ft_blood_bath(server))
-		return (1);
 	ptr = server->players;
 	while (ptr != NULL)
 	{
 		player = (t_player *)ptr->content;
+		player->score = 0;
 		beaten_ptr = player->beaten_players;
 		while (beaten_ptr != NULL)
 		{
@@ -75,5 +74,12 @@ int		ft_attribute_scores_init(t_server *server)
 		}
 		ptr = ptr->next;
 	}
+}
+
+int		ft_attribute_scores_init(t_server *server)
+{
+	if (ft_blood_bath(server))
+		return (1);
+	ft_process_score(server);
 	return (0);
 }

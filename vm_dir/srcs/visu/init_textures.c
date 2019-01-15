@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 15:02:55 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/04 18:00:52 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/15 20:51:14 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,12 @@ int		ft_init_textures_2(t_visu *visu)
 		return (1);
 	if (!(visu->sdl.images[FROM_SERVER_NOTIF] =
 			ft_load_image(PATH"/resources/upload_server.png")))
+		return (1);
+	if (!(visu->sdl.images[NAME_INVALID_NOTIF] =
+			ft_load_image(PATH"/resources/invalid_name.png")))
+		return (1);
+	if (!(visu->sdl.images[LOST_CONNEXION_NOTIF] =
+			ft_load_image(PATH"/resources/lost_connexion.png")))
 		return (1);
 	if (!(visu->sdl.images[OK] =
 			ft_load_image(PATH"/resources/ok.png")))
