@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/12 11:30:28 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/15 17:53:04 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,6 @@
 # define INIT_CYCLES_PER_TURN	1
 # define GLYPH_W_H_RATIO		0.5
 # define ABBREV_LEN				8
-
-# define ATLAS_MIN				32
-# define ATLAS_MAX				126
 
 # define FRAMERATE				60
 

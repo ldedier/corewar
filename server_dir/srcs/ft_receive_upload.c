@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/30 22:57:11 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/15 14:32:24 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/15 18:22:37 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,20 @@ int		ft_process_player_scores(t_server *server, t_player *uploaded_player)
 	return (0);
 }
 
+int		out_of_atlas_range(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] < ATLAS_MIN || str[i] > ATLAS_MAX)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 int		ft_receive_upload(t_server *server, int client_index, int nb_bytes)
 {
 	t_player	*player;
@@ -100,14 +114,15 @@ int		ft_receive_upload(t_server *server, int client_index, int nb_bytes)
 	i = sizeof(t_flag);
 	ft_memcpy_recv(&player->file_len, server->buffer, &i, sizeof(t_file_len));
 	if (nb_bytes < (int)(i + player->file_len))
-	{
 		return (1);
-	}
 	if (player->file_len > TOT_SIZE)
 		return (1);
 	ret = ft_process_read_player(&(server->buffer[i]), player->file_len, player);
 	if (ret)
+		return (1);
+	else if (out_of_atlas_range(player->name))
 	{
+		if (ft_send_flag(t_server *server, int client_index, t_flag flag))
 		return (1);
 	}
 	else

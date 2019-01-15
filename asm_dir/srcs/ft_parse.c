@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 20:06:08 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/11 18:43:21 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/15 19:42:03 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -311,11 +311,12 @@ int		ft_nb_params_coherent(char *str, t_env *e)
 	}
 }
 
-int		ft_process_parse_register(char *str, int index, int offset, t_env *e)
+int		ft_process_parse_register(char *str, int index, t_env *e)
 {
 	int ret;
 	char *str2;
 	int i;
+
 	e->champ.header.prog_size += E_REG;
 	e->parser.current_instruction->params[index].nb_bytes = E_REG;
 	e->parser.current_instruction->ocp |= (REG_CODE << (6 - (2 * index)));
@@ -324,20 +325,20 @@ int		ft_process_parse_register(char *str, int index, int offset, t_env *e)
 	if (!(T_REG & e->parser.current_instruction->op.arg_types[index]))
 		return (ft_log_custom_wrong_param_type("register", index, 0, e));
 	if (str[0] == '\0')
-		return (ft_log_error(LEXICAL_ERROR, offset, e));
-	else if(!ft_is_atouiable(str))
-		return (ft_log_error(LEXICAL_ERROR, offset + 1, e));
+		return (ft_log_error(LEXICAL_ERROR, 0, e));
+	else if (!ft_is_atouiable(str))
+		return (ft_log_error(LEXICAL_ERROR, 1, e));
 	ret = ft_patoui(&str);
 	if (str == str2)
-		return (ft_log_error(LEXICAL_ERROR, offset, e));
+		return (ft_log_error(LEXICAL_ERROR, 0, e));
 	if (ret <= 0 || ret > REG_NUMBER)
-		return (ft_log_error(INVALID_REG_NUMBER, offset, e));
+		return (ft_log_error(INVALID_REG_NUMBER, 1, e));
 	e->parser.current_instruction->params[index].type = T_REG;
 	e->parser.current_instruction->params[index].value = ret;
 	while (ft_isseparator(str[i]) && ft_addco(str[i], e))
 		i++;
 	if (str[i])
-		return (ft_log_error(LEXICAL_ERROR, 0, e));
+		return (ft_log_error(LEXICAL_ERROR, i, e));
 	return (0);
 }
 
@@ -371,17 +372,17 @@ int		ft_process_parse_indirect_value(char *str, int index, int offset, t_env *e)
 	if (str[0] == '\0')
 		return (ft_log_error(LEXICAL_ERROR, offset, e));
 	else if (!ft_is_atouiable(str))
-		return (ft_log_error(LEXICAL_ERROR, offset + 1, e));
+		return (ft_log_error(LEXICAL_ERROR, offset, e));
 	ret = ft_patoui(&str);
 	if (str == str2)
 		return (ft_log_error(LEXICAL_ERROR, offset, e));
-	//if (ret < 0 || ret > REG_NUMBER)
-	//	return (ft_log_error(INVALID_IND_NUMBER, offset + 1, e));
+	// if (ret < 0 || ret > REG_NUMBER)
+	//		return (ft_log_error(INVALID_IND_NUMBER, offset + 1, e));
 	e->parser.current_instruction->params[index].value = ret;
 	while (ft_isseparator(str[i]) && ft_addco(str[i], e))
 		i++;
 	if (str[i])
-		return (ft_log_error(LEXICAL_ERROR, 0, e));
+		return (ft_log_error(LEXICAL_ERROR, offset, e));
 	return (0);
 }
 
@@ -406,11 +407,11 @@ int		ft_process_parse_direct_value(char *str, int index, int offset, t_env *e)
 	while (ft_isseparator(str[i]) && ft_addco(str[i], e))
 		i++;
 	if (str[i])
-		return (ft_log_error(LEXICAL_ERROR, 0, e));
+		return (ft_log_error(LEXICAL_ERROR, offset + 1, e));
 	return (0);
 }
 
-int		ft_process_parse_indirect(char *str, int index, int offset, t_env *e)
+int		ft_process_parse_indirect(char *str, int index, t_env *e)
 {
 	e->champ.header.prog_size += E_IND;
 	e->parser.current_instruction->params[index].nb_bytes = E_IND;
@@ -419,12 +420,12 @@ int		ft_process_parse_indirect(char *str, int index, int offset, t_env *e)
 		return (ft_log_custom_wrong_param_type("indirect", index, 0, e));
 	e->parser.current_instruction->params[index].type |= T_IND;
 	if (str[0] == LABEL_CHAR)
-		return (ft_process_parse_label(&(str[1]), index, offset + 1, e));
+		return (ft_process_parse_label(&(str[1]), index, 1, e));
 	else
-		return (ft_process_parse_indirect_value(str, index, offset, e));
+		return (ft_process_parse_indirect_value(str, index, 0, e));
 }
 
-int		ft_process_parse_direct(char *str, int index, int offset, t_env *e)
+int		ft_process_parse_direct(char *str, int index, t_env *e)
 {
 	if (e->parser.current_instruction->op.describe_address)
 	{
@@ -441,25 +442,21 @@ int		ft_process_parse_direct(char *str, int index, int offset, t_env *e)
 		return (ft_log_custom_wrong_param_type("direct", index, 0, e));
 	e->parser.current_instruction->params[index].type |= T_DIR;
 	if (str[0] == LABEL_CHAR)
-		return (ft_process_parse_label(&(str[1]), index, offset + 1, e));
+		return (ft_process_parse_label(&(str[1]), index, 1, e));
 	else
-		return (ft_process_parse_direct_value(str, index, offset, e));
+		return (ft_process_parse_direct_value(str, index, 0, e));
 }
 
-int		ft_process_parse_param(char *param, int index, int offset, t_env *e)
+int		ft_process_parse_param(char *param, int index, t_env *e)
 {
-	(void)param;
-	(void)index;
-	(void)e;
-
 	if (param[0] == REGISTER_CHAR)
-		return (ft_process_parse_register(&(param[1]), index, 1, e));
+		return (ft_process_parse_register(&(param[1]), index, e));
 	else if (ft_isdigit(param[0]) || param[0] == '-' || param[0] == LABEL_CHAR)
-		return (ft_process_parse_indirect(param, index, 0, e));
+		return (ft_process_parse_indirect(param, index, e));
 	else if (param[0] == DIRECT_CHAR)
-		return (ft_process_parse_direct(&(param[1]), index, 1, e));
+		return (ft_process_parse_direct(&(param[1]), index, e));
 	else
-		return ft_log_error(LEXICAL_ERROR, offset, e);
+		return ft_log_error(LEXICAL_ERROR, 0, e);
 	return (0);
 }
 
@@ -471,7 +468,7 @@ int		ft_parse_param(char *str, int index, t_env *e)
 	i = 0;
 	while (ft_isseparator(str[i]) && ft_addco(str[i], e))
 		i++;
-	ret = ft_process_parse_param(&(str[i]), index, i, e);
+	ret = ft_process_parse_param(&(str[i]), index, e);
 	if (e->champ.header.prog_size > CHAMP_MAX_SIZE)
 		return (ft_log_error(TOO_BIG_CHAMP, 0, e));
 	return (ret);
@@ -815,15 +812,15 @@ int		ft_parse_asm(char *str, t_env *e)
 		}
 		free(line);
 	}
-	if (ft_fill_instructions_labels_values(e))
+	if (!e->parser.parsed_name || !e->parser.parsed_comment ||
+			ft_fill_instructions_labels_values(e))
 		ft_printf(":(\n");
 	else
 	{
-//		ft_print_instructions(e->champ.instructions);
-//		ft_print_labels(e->champ.labels);
-//		ft_printf(":)\n");
+		ft_print_instructions(e->champ.instructions);
+		ft_print_labels(e->champ.labels);
+		ft_printf(":)\n");
 	}
-	ft_encode_instructions(1, e->champ.instructions);
 	free(line);
 	close(e->parser.fd);
 	return (0);
