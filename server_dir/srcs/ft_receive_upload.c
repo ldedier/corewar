@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/30 22:57:11 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/12 11:31:27 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/15 14:32:24 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,12 +100,16 @@ int		ft_receive_upload(t_server *server, int client_index, int nb_bytes)
 	i = sizeof(t_flag);
 	ft_memcpy_recv(&player->file_len, server->buffer, &i, sizeof(t_file_len));
 	if (nb_bytes < (int)(i + player->file_len))
+	{
 		return (1);
-	if (player->file_len >= TOT_SIZE)
+	}
+	if (player->file_len > TOT_SIZE)
 		return (1);
 	ret = ft_process_read_player(&(server->buffer[i]), player->file_len, player);
 	if (ret)
+	{
 		return (1);
+	}
 	else
 	{
 		if (get_player(server, player->name))
@@ -114,7 +118,7 @@ int		ft_receive_upload(t_server *server, int client_index, int nb_bytes)
 		{
 			if (ft_add_to_list_ptr_back(&(server->players), player, sizeof(t_player)))
 				return (1);
-			ft_process_player_scores(server, player);
+	//		ft_process_player_scores(server, player);
 			ft_process_send_new_players_to_all(server);
 			ft_add_player_persistency(player);
 		}

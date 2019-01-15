@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 18:41:42 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/04 16:52:49 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/01/15 15:12:56 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,9 +101,11 @@ int			ft_parse_player(t_player *player)
 		return (1);
 	player->name_len = ft_strlen(player->name);
 	player->comm_len = ft_strlen(player->comm);
-	player->score = -1;
+	player->score = 0;
 	player->relevant = 1;
 	player->color.value = NULL;
 	player->from_server = 0;
+	player->beaten_players = NULL;
+	player->nb_victories = 0;
 	return (0);
 }

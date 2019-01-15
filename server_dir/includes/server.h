@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 17:20:50 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/12 10:26:31 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/15 14:56:38 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,5 @@ int						ft_get_player_size_all(t_player *player);
 int						ft_send_core_bin(t_server *server, int i, int nb_bytes);
 t_player				*get_core_from_query(t_server *server, int nb_bytes);
 char					*ft_get_buffer_all_cores(t_server *server, t_flag flag, int *size);
+int						ft_attribute_scores_init(t_server *server);
 #endif

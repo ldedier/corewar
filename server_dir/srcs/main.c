@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 17:21:44 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/06 20:43:17 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/15 15:02:00 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int main(int argc, char **argv)
 	if (ft_init_server(argc, argv, &server))
 		return (1);
 	if (ft_parse_player_folder(PATH"/cores", &server.players))
+		return (1);
+	if (ft_attribute_scores_init(&server))
 		return (1);
 	ft_printf(GREEN"server successfuly deployed on port %d!\n\n"EOC,
 			server.port);
