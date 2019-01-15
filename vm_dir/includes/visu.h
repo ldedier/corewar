@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/12 11:30:28 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/15 17:32:59 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include "player.h"
 # include "color.h"
 # include "op.h"
+# include <pthread.h>
 
 # define INIT_MAX_PLAYERS		4
 # define INIT_CYCLES_PER_TURN	1
@@ -612,6 +613,19 @@ typedef enum			e_sort_type
 	SORT_TYPE_ALPHA,
 	SORT_TYPE_SCORE
 }						t_sort_type;
+
+typedef struct			s_thvar
+{
+//	t_sdl				*sdl;
+//	int					index;
+	SDL_Color			color;
+	TTF_Font			*font;
+	SDL_Surface			*surface;
+	SDL_PixelFormat		format;
+	t_atlas_char        *atlas;
+	pthread_mutex_t		*mutex;
+	char				state;
+}						t_thvar;
 
 struct					s_visu
 {
