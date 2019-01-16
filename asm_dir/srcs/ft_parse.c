@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 20:06:08 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/16 14:46:38 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/16 16:58:11 by ldedier          ###   ########.fr       */
 /*   Updated: 2019/01/15 19:42:03 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -126,16 +126,20 @@ int			ft_parse_asm(char *str, t_env *e)
 		}
 		free(line);
 	}
-	if (!e->parser.parsed_name || !e->parser.parsed_comment ||
-			ft_fill_instructions_labels_values(e))
-		ft_printf(":(\n");
+	free(line);
+	if (!e->parser.parsed_name)
+	   return (ft_log_error_no_line("no name found", e));
+	else if (!e->parser.parsed_comment)
+	   return (ft_log_error_no_line("no comment found", e));
+	else if (ft_fill_instructions_labels_values(e))
+		return (1);
 	else
 	{
-		ft_print_instructions(e->champ.instructions);
-		ft_print_labels(e->champ.labels);
-		ft_printf(":)\n");
+	//	ft_print_instructions(e->champ.instructions);
+	//	ft_print_labels(e->champ.labels);
+	//	ft_printf(":)\n");
+		return (0);
 	}
-	free(line);
 	close(e->parser.fd);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/08 00:08:01 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/12 15:48:25 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/16 16:31:18 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ int		ft_encode_asm(int fd, t_env *e)
 
 	instructions = NULL;
 	i = 0;
-	while ((ret = get_instruction(e->player.algo, &instruction,
-			i, e->player.algo_len) != -1) && i < e->player.algo_len)
+	while (((ret = get_instruction(e->player.algo, &instruction,
+			i, e->player.algo_len)) != -1) && i < e->player.algo_len)
 	{
 		if (ft_add_to_list_back(&instructions, &instruction,
 			sizeof(t_instruction)))
@@ -58,7 +58,11 @@ int		ft_encode_to_assembly(t_env *e)
 		perror(e->champ.assembly_name);
 		return (1);
 	}
-	fd = 1;
-	ft_encode_asm(fd, e);
+//	fd = 1;
+	if (ft_encode_asm(fd, e))
+		ft_printf("%s is wrongly encoded and could not be decompiled\n", e->champ.cor_name);
+	else
+		ft_printf("successfully decompiled %s at %s\n", e->champ.cor_name, e->champ.assembly_name);
+
 	return (0);
 }
