@@ -21,8 +21,16 @@
 
 int		ins_lldi(t_vm *vm, t_process *proc, t_parameter arg[3])
 {
-	(void)vm;
-	(void)proc;
-	(void)arg;
+	int		ind;
+	int		val;
+
+	if (!is_reg(arg[2].value))
+		return (FAILURE);
+	getval_param_dest(vm, proc, &arg[0], 0);
+	getval_param_dest(vm, proc, &arg[1], 0);
+	ind = proc->pc + (arg[0].dest_value + arg[1].dest_value);
+	val = getval_mod(vm->arena, ind, DIR_SIZE, MEM_SIZE);
+	loadval(vm, proc, &arg[2], val);
+	proc->carry = !val;
 	return (SUCCESS);
 }

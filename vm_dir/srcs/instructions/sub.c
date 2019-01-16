@@ -25,8 +25,7 @@ int		ins_sub(t_vm *vm, t_process *proc, t_parameter arg[3])
 	int	sub;
 
 	(void)vm;
-	if (!is_reg(arg[0].value) || !is_reg(arg[1].value)
-			|| !is_reg(arg[2].value))
+	if (!is_reg(arg[0].value) || !is_reg(arg[1].value) || !is_reg(arg[2].value))
 		return (FAILURE);
 	sub = proc->reg[arg[0].value - 1] - proc->reg[arg[1].value - 1];
 	proc->reg[arg[2].value - 1] = sub;

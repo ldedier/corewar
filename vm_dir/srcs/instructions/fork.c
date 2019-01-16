@@ -21,9 +21,17 @@
 
 int		ins_fork(t_vm *vm, t_process *proc, t_parameter arg[3])
 {
-	(void)vm;
-	(void)proc;
-	(void)arg;
+	t_process	*new_proc;
+	int				i;
+
+	new_proc = (t_process *)ft_memalloc(sizeof(t_process));
+	new_proc->player = proc->player;
+	new_proc->pc = (proc->pc + arg[0].value % IDX_MOD) % MEM_SIZE;
+	i = -1;
+	while (++i < 16)
+		new_proc->reg[i] = proc->reg[i];
+	if (ft_add_to_list_ptr(&vm->proc, (void *)process, sizeof(t_process)))
+		return (FAILURE);
 	++proc->player->nb_proc;
 	return (SUCCESS);
 }
