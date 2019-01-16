@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/01 16:10:09 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/03 13:39:01 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/15 17:07:18 by cammapou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,6 @@ void	ft_init_parser(t_parser *parser)
 
 void	ft_init_env(t_env *e, char *filename)
 {
-		ft_init_champion(&(e->champ), filename);
-		ft_init_parser(&(e->parser));
+	ft_init_champion(&(e->champ), filename);
+	ft_init_parser(&(e->parser));
 }

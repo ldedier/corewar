@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 16:49:37 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/03 23:35:54 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/15 23:10:55 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,14 @@ int					ft_parse_params(char *str, int i, t_env *e);
 int					ft_process_parse_params(char **params_split, t_env *e);
 void				ft_update_co(char *str, t_env *e);
 int					ft_parse_param(char *str, int index, t_env *e);
-int					ft_process_parse_param(char *param, int index, int offset, t_env *e);
-int					ft_process_parse_direct(char *str, int index, int offset, t_env *e);
-int					ft_process_parse_indirect(char *str, int index, int offset, t_env *e);
+int					ft_process_parse_param(char *param, int index, t_env *e);
+int					ft_process_parse_direct(char *str, int index, t_env *e);
+int					ft_process_parse_indirect(char *str, int index, t_env *e);
 int					ft_process_parse_direct_value(char *str, int index, int offset, t_env *e);
 int					ft_process_parse_indirect_value(char *str, int index, int offset, t_env *e);
 int					ft_process_parse_label(char *str, int index, int offset, t_env *e);
 int					ft_nb_params_coherent(char *str, t_env *e);
-int					ft_process_parse_register(char *str, int index, int offset, t_env *e);
+int					ft_process_parse_register(char *str, int index, t_env *e);
 int					ft_log_custom_wrong_param_type(char *arg_type, int index, int offset,
 			t_env *e);
 int					ft_log_custom_nb_params_error(int offset, t_env *e);

@@ -1,18 +1,30 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_parse_tools00.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cammapou <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/01/15 17:24:03 by cammapou          #+#    #+#             */
+/*   Updated: 2019/01/15 17:25:36 by cammapou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "asm.h"
 
 void	ft_update_co(char *str, t_env *e)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i] && ft_addco(str[i], e))
 		i++;
 }
 
-char			*ft_get_str(char **line)
+char		*ft_get_str(char **line)
 {
-	int         i;
-	char        *str;
+	int		i;
+	char	*str;
 
 	str = *line;
 	i = 0;
@@ -25,7 +37,7 @@ char			*ft_get_str(char **line)
 
 int		ft_is_relevant(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i] && ft_isseparator(str[i]))
@@ -37,7 +49,7 @@ int		ft_is_relevant(char *str)
 
 char	*ft_refine_line(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i] && str[i] != COMMENT_CHAR && str[i] != ';')
@@ -47,8 +59,8 @@ char	*ft_refine_line(char *str)
 
 int		ft_is_only_label(char *str)
 {
-	int start;
-	int i;
+	int	start;
+	int	i;
 
 	start = 0;
 	while (ft_isseparator(str[start]))

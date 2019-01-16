@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_parse_tools01.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cammapou <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/01/15 17:26:08 by cammapou          #+#    #+#             */
+/*   Updated: 2019/01/15 23:53:20 by ldedier          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "asm.h"
 
 int		ft_nb_params_coherent(char *str, t_env *e)
 {
-	int i;
-	int nb_params;
+	int	i;
+	int	nb_params;
 
 	nb_params = 1;
 	i = 0;
@@ -58,14 +70,14 @@ int		ft_addco(char c, t_env *e)
 	}
 	else
 		e->parser.column_offset++;
-	return  (1);
+	return (1);
 }
 
-int     ft_is_atouiable(char *s)
+int		ft_is_atouiable(char *s)
 {
-	long    res;
-	int     start;
-	int     i;
+	long	res;
+	int		start;
+	int		i;
 
 	res = 0;
 	start = 0;

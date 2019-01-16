@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 21:45:31 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/04 00:19:05 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/15 21:12:03 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,14 @@ int		start_fight(t_vm *vm)
 {
 	t_ixy xy;
 
-	vm->visu.phase = PHASE_PLAY;
-	SDL_GetMouseState(&xy.x, &xy.y);
-	ft_update_cursor(vm, xy);
-	if (!init_processes(vm))
-		 return (1);
+	if (vm->nb_players)
+	{
+		vm->visu.phase = PHASE_PLAY;
+		SDL_GetMouseState(&xy.x, &xy.y);
+		ft_update_cursor(vm, xy);
+		if (!init_processes(vm))
+			return (1);
+	}
 	return (0);
 }
 
@@ -38,6 +41,39 @@ int		go_back(t_vm *vm, t_button *this, t_ixy xy)
 	(void)this;
 	vm->visu.phase = PHASE_INIT;
 	ft_update_cursor(vm, xy);
+	return (0);
+}
+
+
+int		sort_alpha(t_vm *vm, t_button *this, t_ixy xy)
+{
+	(void)this;
+	(void)xy;
+	if (vm->visu.sort_cs_func == &ft_sort_alpha_cs)
+		vm->visu.inv_sort = !vm->visu.inv_sort;
+	else
+	{
+		vm->visu.inv_sort = 0;
+		vm->visu.sort_cs_func = &ft_sort_alpha_cs;
+	}
+	vm->visu.players_list[SERVER].vscrollbar.state = 0;
+	ft_sort_client_slots(vm);
+	return (0);
+}
+int		sort_score(t_vm *vm, t_button *this, t_ixy xy)
+{
+	(void)this;
+	(void)xy;
+	if (vm->visu.sort_cs_func == &ft_sort_score_cs)
+		vm->visu.inv_sort = !vm->visu.inv_sort;
+	else
+	{
+		vm->visu.inv_sort = 0;
+		vm->visu.sort_cs_func = &ft_sort_score_cs;
+	}
+	vm->visu.sort_cs_func = &ft_sort_score_cs;
+	vm->visu.players_list[SERVER].vscrollbar.state = 0;
+	ft_sort_client_slots(vm);
 	return (0);
 }
 
@@ -109,6 +145,8 @@ int		ft_upload(t_vm *vm, t_button *this, t_ixy mouse)
 
 	if (vm->client.upload_player.from_server)
 		ft_set_notification(vm, FROM_SERVER_NOTIF);
+	else if (out_of_atlas_range(vm->client.upload_player.name))
+		ft_set_notification(vm, NAME_INVALID_NOTIF);
 	else
 		ft_process_upload(vm, vm->client.upload_player);
 	vm->client.upload_player.relevant = 0;

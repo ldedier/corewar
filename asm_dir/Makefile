@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/21 13:40:59 by ldedier           #+#    #+#              #
-#    Updated: 2018/12/03 22:18:05 by ldedier          ###   ########.fr        #
+#    Updated: 2019/01/15 22:45:42 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,11 +34,12 @@ LIBOP = $(LIBOPDIR)/libop.a
 OK_COLOR = \x1b[32;01m
 EOC = \033[0m
 
-SRCS_NO_PREFIX		= main.c ft_init.c ft_parse.c ft_parse_header.c\
-					  ft_log_tools.c ft_debug.c ft_free.c ft_encode.c ft_parse_comment.c\
-						ft_parse_name.c ft_parse_tools00.c ft_init_parser.c ft_process_parse.c\
-						ft_parse_suite.c ft_parse_label.c ft_parse_log.c ft_process_parse_suite.c\
-						ft_parse_tools01.c
+SRCS_NO_PREFIX		=	main.c ft_init.c ft_parse_header.c\
+					 	ft_log_tools.c ft_debug.c ft_free.c ft_encode.c\
+						ft_parse_comment.c ft_parse_name.c ft_parse_tools00.c\
+						ft_init_parser.c ft_process_parse.c ft_parse_suite.c\
+						ft_parse_label.c ft_parse_log.c\
+						ft_process_parse_suite.c ft_parse_tools01.c ft_parse.c
 
 INCLUDES_NO_PREFIX	= asm.h
 

@@ -64,7 +64,7 @@ VISU_NO_PREFIX =		init_sdl.c visu.c events.c framerate.c render.c \
 						render_notification.c render_play.c render_entries_1.c\
 						render_entries_2.c render_player_entries.c\
 						render_live_breakdown.c render_live_breakdown_hp.c\
-						render_play_footer.c
+						render_play_footer.c sort.c
 
 
 

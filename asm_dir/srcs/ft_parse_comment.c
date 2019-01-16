@@ -6,7 +6,7 @@
 /*   By: cammapou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 13:41:10 by cammapou          #+#    #+#             */
-/*   Updated: 2018/12/19 13:48:11 by cammapou         ###   ########.fr       */
+/*   Updated: 2019/01/15 22:24:48 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,16 @@
 
 int			check_comment(char *str, t_env *env)
 {
-	char *comment;
+	int i;
 
-	comment = NULL;
 	if (str[0] == '.')
 	{
-		if (!(comment = ft_strndup(str, ft_strlen(COMMENT_CMD_STRING))))
-			return (1);
-		if (ft_strcmp(comment, COMMENT_CMD_STRING) != 0)
+		i = ft_strlen(COMMENT_CMD_STRING);
+		if (isprint(str[i]) == 1)
 			return (ft_log_error_no_line("Lexical error COMMENT", env));
 	}
 	else if (str[0] != '.')
-		return (ft_log_error("Lexical error BEFORE COMMENT", 0, env));
-	free(comment);
+		return (ft_log_error_no_line("Lexical error COMMENT", env));
 	return (0);
 }
 
@@ -42,12 +39,10 @@ static int	check_after_comment(char *tmp, int i, t_env *env)
 			return (ft_log_error_no_line("Syntax error AFTER COMMENT", env));
 		i++;
 	}
-	if (ft_strlen(env->champ.header.prog_name) > PROG_NAME_LENGTH)
-		ft_log_error_no_line("Champion name too long (Max length 128)", env);
 	return (0);
 }
 
-static void check_comment_exist(t_env *env, int j)
+static void	check_comment_exist(t_env *env, int j)
 {
 	if (env->champ.header.comment[j])
 	{
@@ -92,33 +87,36 @@ static int	read_comment_continue(char *line, int i, t_env *env, int fd)
 			return (1);
 		i++;
 	}
-	line++;
 	i += 1;
-	while (line[i] || line[i] == '\t' || line[i] == ' ')
+	if (line[i] == '"')
 	{
-		if (isprint(line[i]))
-			return (ft_log_error("Syntax error AFTER COMMENT", i + 1, env));
-		i++;
+		i += 1;
+		while (line[i] || line[i] == '\t' || line[i] == ' ')
+		{
+			if (isprint(line[i]))
+				return (ft_log_error("Syntax error AFTER COMMENT", i - 2, env));
+			i++;
+		}
 	}
 	if (ft_strlen(env->champ.header.comment) > COMMENT_LENGTH)
 		ft_log_error_no_line("Champion name too long (Max length 2048)", env);
-	printf("%s\n", env->champ.header.comment);
+//	printf("%s\n", env->champ.header.comment);
 	env->parser.parsed_comment = 1;
 	return (0);
 }
 
 int			read_comment(char *line, t_env *env, int fd, int i)
 {
-	int j;
+	int		j;
 
 	j = 0;
 	if (env->champ.header.comment[j])
 		return (ft_log_error("Syntax error COMMAND_COMMENT", 0, env));
-	i += ft_strlen(COMMENT_CMD_STRING);
+	i = ft_strlen(COMMENT_CMD_STRING);
 	while (line[++i] == ' ' || line[i] == '\t')
 		;
 	if (line[i] != '"')
-		return (ft_log_error("Lexical error", i - 1, env));
+		return (ft_log_error("Lexical error", i, env));
 	while (line[i] && line[i + 1] != '"')
 		env->champ.header.comment[j++] = line[++i];
 	env->champ.header.comment[j] = '\0';

@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_init_parser.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cammapou <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/01/15 17:07:52 by cammapou          #+#    #+#             */
+/*   Updated: 2019/01/15 17:08:55 by cammapou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "asm.h"
 
-void	ft_reset_parser(t_parser *parser, char *str)
+void		ft_reset_parser(t_parser *parser, char *str)
 {
 	parser->nb_args_parsed = 0;
 	parser->current_line = str;
@@ -17,7 +29,7 @@ void		ft_init_parameter(t_parameter *parameter)
 
 int			ft_init_instruction(t_instruction *instruction, t_env *e)
 {
-	int i;
+	int		i;
 
 	instruction->address = e->champ.header.prog_size;
 	instruction->nb_line = e->parser.nb_line;
@@ -33,7 +45,7 @@ int			ft_init_instruction(t_instruction *instruction, t_env *e)
 	return (0);
 }
 
-int		ft_set_parser_co(int save, t_env *e, int ret)
+int			ft_set_parser_co(int save, t_env *e, int ret)
 {
 	(void)save;
 	(void)e;

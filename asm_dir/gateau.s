@@ -35,7 +35,7 @@ boucle2:
 	zjmp	%:boucle2
 
 aff:
-	ld		%71,r1
+	ld		%71, r1
 	aff		r1
 	ld		%82, r1
 	aff		r1

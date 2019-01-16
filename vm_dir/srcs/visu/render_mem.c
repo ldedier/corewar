@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/11 17:08:36 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/10 00:24:57 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/12 15:43:03 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int		ft_render_process(t_vm *vm, t_process *process)
 		rect.y++;
 		rect.w -= 2;
 		rect.h -= 2;
-		ft_draw_rect_surface(vm->visu.sdl.w_surface, rect, 0x000000);
+		ft_draw_rect_surface(vm->visu.sdl.w_surface, rect, 0xffffff);
 	}
 	return (0);
 }

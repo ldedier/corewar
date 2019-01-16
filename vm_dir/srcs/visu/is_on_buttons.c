@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 21:54:50 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/04 00:04:40 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/15 21:20:06 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,13 +97,16 @@ int			ft_is_on_buttons(t_vm *vm, t_ixy xy, t_button **but)
 			return (1);
 		i++;
 	}
-	ptr = vm->client.client_slots;
-	while (ptr != NULL)
+	if (vm->client.active)
 	{
-		if (ft_is_on_button(vm, xy, &((t_client_slot *)(ptr->content))->download,
-					but))
-			return (1);
-		ptr = ptr->next;
+		ptr = vm->client.client_slots;
+		while (ptr != NULL)
+		{
+			if (ft_is_on_button(vm, xy, &((t_client_slot *)(ptr->content))->download,
+						but))
+				return (1);
+			ptr = ptr->next;
+		}
 	}
 	return (0);
 }

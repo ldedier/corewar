@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_parse_label.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cammapou <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/01/15 17:18:58 by cammapou          #+#    #+#             */
+/*   Updated: 2019/01/15 17:22:09 by cammapou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "asm.h"
 
 int		ft_describe_label(char *str, int n, t_env *e)
 {
-	int i;
+	int		i;
 
 	i = 0;
 	if (n == 0)
@@ -49,7 +61,6 @@ int		ft_fill_instructions_labels_values(t_env *e)
 	return (0);
 }
 
-
 t_label		*ft_new_label(char *name, int address)
 {
 	t_label	*label;
@@ -61,10 +72,10 @@ t_label		*ft_new_label(char *name, int address)
 	return (label);
 }
 
-t_label	*ft_get_label(t_list *labels, char *label_name)
+t_label		*ft_get_label(t_list *labels, char *label_name)
 {
-	t_list *ptr;
-	t_label *label;
+	t_list	*ptr;
+	t_label	*label;
 
 	ptr = labels;
 	while (ptr != NULL)
@@ -77,7 +88,7 @@ t_label	*ft_get_label(t_list *labels, char *label_name)
 	return (NULL);
 }
 
-int		ft_add_new_label(char *str, int length, t_env *e)
+int			ft_add_new_label(char *str, int length, t_env *e)
 {
 	t_label	*label;
 	char	*label_name;
