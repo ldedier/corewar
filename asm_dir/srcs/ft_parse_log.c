@@ -6,13 +6,13 @@
 /*   By: cammapou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 17:22:41 by cammapou          #+#    #+#             */
-/*   Updated: 2019/01/15 17:22:47 by cammapou         ###   ########.fr       */
+/*   Updated: 2019/01/16 14:49:03 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-int		ft_log_custom_nb_params_error(int offset, t_env *e)
+int		ft_log_custom_nb_params_error(t_env *e)
 {
 	char *str;
 	char *nb_instructions;
@@ -37,7 +37,7 @@ int		ft_log_custom_nb_params_error(int offset, t_env *e)
 					e->parser.current_instruction->op.nb_params == 1 ?
 					" argument !" : " arguments !")))
 		return (ft_log_error(MALLOC_ERROR, 0, e));
-	return (ft_log_error(str, offset, e));
+	return (ft_log_error(str, 0, e));
 }
 
 int		ft_log_custom_wrong_param_type(char *arg_type, int index, int offset,

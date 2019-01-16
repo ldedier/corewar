@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 16:49:37 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/15 23:10:55 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/16 14:57:18 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # define TAB_SIZE				8
 # define MALLOC_ERROR			"could not execute malloc instruction"
 # define LEXICAL_ERROR			"lexical error"
+# define EXCESSIVE_VALUE		"excessive value given (up to 4294967295)"
 # define UNKNOWN_INSTRUCTION	"unknown instruction"
 # define EXISTS_LABEL			"label name already defined"
 # define NO_PARAMETERS			"no parameter given for this instruction"
@@ -88,7 +89,7 @@ int					ft_nb_params_coherent(char *str, t_env *e);
 int					ft_process_parse_register(char *str, int index, t_env *e);
 int					ft_log_custom_wrong_param_type(char *arg_type, int index, int offset,
 			t_env *e);
-int					ft_log_custom_nb_params_error(int offset, t_env *e);
+int					ft_log_custom_nb_params_error(t_env *e);
 int					ft_process_populate_from_opcode(char *opcode_str, t_env *e);
 int					ft_describe_label(char *str, int n, t_env *e);
 char				*ft_get_str(char **line);

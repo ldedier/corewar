@@ -6,7 +6,7 @@
 /*   By: cammapou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 17:30:46 by cammapou          #+#    #+#             */
-/*   Updated: 2019/01/16 00:09:37 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/16 14:48:38 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int		ft_process_parse_indirect_value(char *str, int index, int offset, t_env *e)
 	if (str[0] == '\0')
 		return (ft_log_error(LEXICAL_ERROR, offset, e));
 	else if (!ft_is_atouiable(str))
-		return (ft_log_error(LEXICAL_ERROR, offset, e));
+		return (ft_log_error(EXCESSIVE_VALUE, offset, e));
 	ret = ft_patoui(&str);
 	if (str == str2)
 		return (ft_log_error(LEXICAL_ERROR, offset, e));
@@ -91,13 +91,14 @@ int		ft_process_parse_direct_value(char *str, int index, int offset, t_env *e)
 	if (str[0] == '\0')
 		return (ft_log_error(LEXICAL_ERROR, offset, e));
 	else if (!ft_is_atouiable(str))
-		return (ft_log_error(LEXICAL_ERROR, offset + 1, e));
+		return (ft_log_error(EXCESSIVE_VALUE, offset + 1, e));
 	ret = ft_patoui(&str);
 	if (str == str2)
 		return (ft_log_error(LEXICAL_ERROR, offset, e));
 	//	if (ret < 0 || ret > REG_NUMBER)
 	//		return (ft_log_error(INVALID_IND_NUMBER, offset + 1, e));
 	e->parser.current_instruction->params[index].value = ret;
+	e->parser.column_offset += str - str2 + 1;
 	while (ft_isseparator(str[i]) && ft_addco(str[i], e))
 		i++;
 	if (str[i])

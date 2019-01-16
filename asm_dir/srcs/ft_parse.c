@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 20:06:08 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/15 23:01:08 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/16 14:46:38 by ldedier          ###   ########.fr       */
 /*   Updated: 2019/01/15 19:42:03 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -58,23 +58,20 @@ int			ft_populate_from_opcode(char *str, int start, int i, t_env *e)
 int			ft_parse_params(char *str, int i, t_env *e)
 {
 	char	**params_split;
-	int		start;
 	int		save;
 
 	save = e->parser.column_offset;
-	start = i;
-	while (str[start] && ft_isseparator(str[start]) && ft_addco(str[start], e))
-		start++;
-	if (!str[start])
+	if (!str[i])
 	{
 		e->parser.column_offset = save;
 		return (ft_log_error(NO_PARAMETERS, -
 			ft_strlen(e->parser.current_instruction->op.instruction_name), e));
 	}
-	if (!(params_split = ft_strsplit(&(str[start]), SEPARATOR_CHAR)))
+	if (!(params_split = ft_strsplit(&(str[i]), SEPARATOR_CHAR)))
 		return (ft_log_error(MALLOC_ERROR, 0, e));
-	if (!(ft_nb_params_coherent(&(str[start]), e)))
+	if (!(ft_nb_params_coherent(&(str[i]), e)))
 		return (1);
+	e->parser.column_offset = save;
 	return (ft_process_parse_params(params_split, e));
 }
 
