@@ -6,40 +6,12 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 20:06:08 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/16 16:58:11 by ldedier          ###   ########.fr       */
-/*   Updated: 2019/01/15 19:42:03 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/16 17:43:44 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-/*
-int	ft_nb_words(char const *s)
-{
-	int res;
-	int parseword;
-	int i;
-
-	res = 0;
-	parseword = 0;
-	i = 0;
-	while (s[i])
-	{
-		if (!ft_isseparator(s[i]) && !parseword)
-		{
-			res++;
-			parseword = 1;
-		}
-		else
-		{
-			if (ft_isseparator(s[i]) && parseword)
-				parseword = 0;
-		}
-		i++;
-	}
-	return (res);
-}
-*/
 int			ft_populate_from_opcode(char *str, int start, int i, t_env *e)
 {
 	char	*opcode_str;
@@ -70,7 +42,10 @@ int			ft_parse_params(char *str, int i, t_env *e)
 	if (!(params_split = ft_strsplit(&(str[i]), SEPARATOR_CHAR)))
 		return (ft_log_error(MALLOC_ERROR, 0, e));
 	if (!(ft_nb_params_coherent(&(str[i]), e)))
+	{
+		ft_free_split(params_split);
 		return (1);
+	}
 	e->parser.column_offset = save;
 	return (ft_process_parse_params(params_split, e));
 }
@@ -120,7 +95,7 @@ int			ft_parse_asm(char *str, t_env *e)
 		{
 			if (ft_parse_line(line, e, e->parser.fd) == 1)
 			{
-				ft_lstdel_value(&(e->champ.instructions));
+				free(line);
 				return (1);
 			}
 		}

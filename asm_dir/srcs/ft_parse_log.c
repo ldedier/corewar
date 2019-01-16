@@ -6,7 +6,7 @@
 /*   By: cammapou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 17:22:41 by cammapou          #+#    #+#             */
-/*   Updated: 2019/01/16 14:49:03 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/16 17:46:41 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,9 @@ int		ft_log_custom_nb_params_error(t_env *e)
 					e->parser.current_instruction->op.nb_params == 1 ?
 					" argument !" : " arguments !")))
 		return (ft_log_error(MALLOC_ERROR, 0, e));
-	return (ft_log_error(str, 0, e));
+	ft_log_error(str, 0, e);
+	free(str);
+	return (1);
 }
 
 int		ft_log_custom_wrong_param_type(char *arg_type, int index, int offset,
@@ -65,5 +67,7 @@ int		ft_log_custom_wrong_param_type(char *arg_type, int index, int offset,
 		return (ft_log_error(MALLOC_ERROR, 0, e));
 	if (!(str = ft_strjoin_free(str, arg_type)))
 		return (ft_log_error(MALLOC_ERROR, 0, e));
-	return (ft_log_error(str, offset, e));
+	ft_log_error(str, offset, e);
+	free(str);
+	return (1);
 }
