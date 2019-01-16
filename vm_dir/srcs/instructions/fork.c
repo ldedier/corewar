@@ -30,7 +30,7 @@ int		ins_fork(t_vm *vm, t_process *proc, t_parameter arg[3])
 	i = -1;
 	while (++i < 16)
 		new_proc->reg[i] = proc->reg[i];
-	if (ft_add_to_list_ptr(&vm->proc, (void *)process, sizeof(t_process)))
+	if (ft_add_to_list_ptr(&vm->proc, (void *)new_proc, sizeof(t_process)))
 		return (FAILURE);
 	++proc->player->nb_proc;
 	return (SUCCESS);
