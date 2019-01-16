@@ -98,6 +98,7 @@ int		ft_process_parse_direct_value(char *str, int index, int offset, t_env *e)
 	//	if (ret < 0 || ret > REG_NUMBER)
 	//		return (ft_log_error(INVALID_IND_NUMBER, offset + 1, e));
 	e->parser.current_instruction->params[index].value = ret;
+	e->parser.column_offset += str - str2 + 1;
 	while (ft_isseparator(str[i]) && ft_addco(str[i], e))
 		i++;
 	if (str[i])

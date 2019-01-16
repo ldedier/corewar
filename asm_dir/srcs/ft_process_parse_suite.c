@@ -29,9 +29,9 @@ int		ft_process_parse_direct(char *str, int index, t_env *e)
 		return (ft_log_custom_wrong_param_type("direct", index, 0, e));
 	e->parser.current_instruction->params[index].type |= T_DIR;
 	if (str[0] == LABEL_CHAR)
-		return (ft_process_parse_label(&(str[1]), index, 1, e));
+		return (ft_process_parse_label(&(str[1]), index, 2, e));
 	else
-		return (ft_process_parse_direct_value(str, index, 0, e));
+		return (ft_process_parse_direct_value(str, index, 1, e));
 }
 
 int		ft_process_parse_param(char *param, int index, t_env *e)
@@ -91,10 +91,11 @@ int		ft_process_parse_label(char *str, int index, int offset, t_env *e)
 	e->parser.current_instruction->params[index].label_name = label_name;
 	e->parser.current_instruction->params[index].type |= T_LAB;
 	i = 0;
+	e->parser.column_offset += ft_strlen(label_name) + offset;
 	while (ft_isseparator(str[i]) && ft_addco(str[i], e))
 		i++;
 	if (str[i])
-		return (ft_log_error(LEXICAL_ERROR, ft_strlen(label_name) + offset, e));
+		return (ft_log_error(LEXICAL_ERROR, 0, e));
 	return (0);
 }
 
