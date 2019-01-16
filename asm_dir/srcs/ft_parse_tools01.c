@@ -6,7 +6,7 @@
 /*   By: cammapou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 17:26:08 by cammapou          #+#    #+#             */
-/*   Updated: 2019/01/15 23:53:20 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/16 14:59:10 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ int		ft_nb_params_coherent(char *str, t_env *e)
 
 	nb_params = 1;
 	i = 0;
-	while (str[i])
+	while (str[i] && ft_addco(str[i], e))
 	{
 		i++;
 		if (str[i] == SEPARATOR_CHAR)
 		{
 			if (++nb_params > e->parser.current_instruction->op.nb_params)
 			{
-				ft_log_custom_nb_params_error(i, e);
+				ft_log_custom_nb_params_error(e);
 				return (0);
 			}
 		}
@@ -35,7 +35,7 @@ int		ft_nb_params_coherent(char *str, t_env *e)
 		return (1);
 	else
 	{
-		ft_log_custom_nb_params_error(i, e);
+		ft_log_custom_nb_params_error(e);
 		return (0);
 	}
 }

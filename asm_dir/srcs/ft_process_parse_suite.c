@@ -6,7 +6,7 @@
 /*   By: cammapou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 17:32:49 by cammapou          #+#    #+#             */
-/*   Updated: 2019/01/16 00:09:40 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/16 14:48:58 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int		ft_process_parse_register(char *str, int index, t_env *e)
 	if (str[0] == '\0')
 		return (ft_log_error(LEXICAL_ERROR, 0, e));
 	else if (!ft_is_atouiable(str))
-		return (ft_log_error(LEXICAL_ERROR, 1, e));
+		return (ft_log_error(EXCESSIVE_VALUE, 1, e));
 	ret = ft_patoui(&str);
 	if (str == str2)
 		return (ft_log_error(LEXICAL_ERROR, 0, e));
