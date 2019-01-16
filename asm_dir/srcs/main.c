@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:44:16 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/16 17:35:42 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/16 18:06:41 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void __attribute__((destructor)) end();
 
 void    end(void) //permet de mieux checker les leaks !
 {
-	ft_printf("destructor loop\n");
-	while(1);
+//	ft_printf("destructor loop\n");
+//	while(1);
 }
 
 int ft_print_usage(char *progname)

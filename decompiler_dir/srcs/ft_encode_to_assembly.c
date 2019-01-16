@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/08 00:08:01 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/16 16:31:18 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/16 18:05:18 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int		ft_encode_asm(int fd, t_env *e)
 			ft_lstdel_value(&instructions);
 			return (1);
 		}
+		ft_printf("%d %s\n", i, instruction.op.instruction_name);
 		i += ret;
 	}
 	if (i != e->player.algo_len)
