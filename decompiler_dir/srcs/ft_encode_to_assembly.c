@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/08 00:08:01 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/17 15:34:20 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/17 15:44:46 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		ft_encode_asm(int fd, t_env *e)
 		instruction.label = NULL;
 		if (ft_add_to_list_back(&e->champ.instructions, &instruction,
 			sizeof(t_instruction)))
-			return (1);
+			return (-1);
 		i += ret;
 	}
 	if (i != e->player.algo_len)
@@ -40,20 +40,20 @@ int		ft_process_encode_asm(int fd, t_env *e)
 {
 	if (e->create_labels)
 	{
-		if (ft_process_asm_labels(e))
-			return (1);
+		ft_process_asm_labels(e);
 		if (ft_attribute_asm_labels(e))
-			return (1);
+			return (-1);
 	}
 	ft_dprintf(fd, ".name \"%s\"\n", e->player.name);
 	ft_dprintf(fd, ".comment \"%s\"\n\n", e->player.comm);
-	return (ft_encode_instructions(fd,
-			e->champ.instructions, e->create_labels));
+	ft_encode_instructions(fd, e->champ.instructions, e->create_labels);
+	return (0);
 }
 
 int		ft_encode_to_assembly(t_env *e)
 {
 	int fd;
+	int ret;
 
 	if ((fd = open(e->champ.assembly_name, O_RDWR | O_CREAT | O_TRUNC, 0644))
 		== -1)
@@ -61,16 +61,21 @@ int		ft_encode_to_assembly(t_env *e)
 		perror(e->champ.assembly_name);
 		return (1);
 	}
-	if (ft_encode_asm(fd, e))
+	if ((ret = ft_encode_asm(fd, e)))
 	{
-		ft_printf("%s is wrongly encoded and could not be decompiled\n",
-				e->champ.cor_name);
-		return (0);
+		if (ret == 1)
+		{
+			ft_printf("%s is wrongly encoded and could not be decompiled\n",
+					e->champ.cor_name);
+			return (1);
+		}
+		else
+			return (ft_return_verbosed("malloc error", 1));
 	}
 	else
 	{
 		ft_printf("successfully decompiled %s at %s\n",
 				e->champ.cor_name, e->champ.assembly_name);
-		return (1);
+		return (0);
 	}
 }
