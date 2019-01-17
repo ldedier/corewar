@@ -13,8 +13,8 @@
 #include "vm.h"
 
 /*
-**read_files function reads each given file and stores their content inside
-**the respective [bin] components of each player's structure.
+** read_files function reads each given file and stores their content inside
+** their respective [bin] components in each player's structure.
 */
 
 int		read_files(t_vm *vm)

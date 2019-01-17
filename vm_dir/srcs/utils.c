@@ -39,7 +39,6 @@ t_player *get_player_num(t_list *lst, int num)
 	tmp = lst;
 	while (tmp)
 	{
-//		ft_printf("num = %d player num = %d\n", num, ((t_process *)tmp->content)->player->num);
 		if (((t_process *)(tmp->content))->player->num == num)
 			return (((t_process *)(tmp->content))->player);
 		tmp = tmp->next;
@@ -57,10 +56,11 @@ t_process	*get_proc_index(t_list *lst, int index)
 	return ((t_process *)(tmp->content));
 }
 
+/*
+** is_reg function tests if the given number is a valid registry number
+*/
+
 int				is_reg(int num)
 {
-	if (num >= 1 && num <= 16)
-		return (1);
-	else
-		return (0);
+	return (num >= 1 && num <= REG_NUMBER);
 }

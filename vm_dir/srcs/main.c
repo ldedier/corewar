@@ -34,7 +34,5 @@ int		main(int argc, char **argv, char **env)
 	if (!init_processes(&vm))
 		return (1);
 	play(&vm);
-	//display_arena((unsigned char *)vm.arena);
-	//test(vm);
 	return (0);
 }

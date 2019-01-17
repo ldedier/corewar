@@ -15,9 +15,9 @@
 #include <stdlib.h>
 
 /*
-** Check conditions to resize cycle: more lives than NBR_LIVE or MAX_CHECKS
+** Checks conditions to resize cycle: more lives than NBR_LIVE or MAX_CHECKS
 ** ends of cycles since last resize
-** display and set variables accordingly
+** Displays and sets variables accordingly
 */
 
 static void			check_resize_cycle(t_vm *vm, int *cycle)
@@ -62,9 +62,9 @@ static int		kill_process(t_vm *vm, t_list *proc)
 }
 
 /*
-** Upon reaching cycle end
-** Scans all players, checks if they have lived previous turn;
-** if so set live back to one, if not remove from process list;
+** Upon reaching cycle end, scans all players, checks if they have lived during
+** previous turn. If so, sets live back to one; if not, remove from the list
+** of all processes.
 */
 
 static int		reset_live_allprocesses(t_vm *vm)
@@ -91,7 +91,7 @@ static int		reset_live_allprocesses(t_vm *vm)
 }
 
 /*
-** Checks if latest instruction is still ongoing (via proc->cycle) and display
+** checks if latest instruction is still ongoing (via proc->cycle) and displays
 */
 
 static int		last_instruction_unresolved(t_vm *vm, t_process *proc)
@@ -136,7 +136,7 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 	if ((proc->ins_bytelen))
 	{
 		proc->pending.pc = proc->ins_bytelen;
-//		ft_printf("future pc %d squares away\n", proc->pending.pc);
+//	ft_printf("future pc %d squares away\n", proc->pending.pc);
 		f_ins[(int)ins.op.opcode](vm, proc, ins.params);
 		proc->pending.cycles = g_op_tab[(int)ins.op.opcode - 1].nb_cycles;
 		display_ins_description(vm, ins.op.description, ins.op.opcode);
@@ -208,7 +208,7 @@ void		execute_pending_action(t_vm *vm, t_list *proc_lst)
 }
 
 /*
-**process_cycle
+** process_cycle
 */
 
 void		process_cycle(t_vm *vm)

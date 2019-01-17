@@ -42,7 +42,7 @@ SRCS_NO_PREFIX =		arena.c error.c flags.c main.c parse.c read.c \
 						tmp.c utils.c op.c play.c env.c \
 						bonus_flags.c net_tools.c \
 						test.c display.c display_player.c display_resize.c \
-						display_turn.c local_players.c 
+						display_turn.c local_players.c init_vm.c
 
 INS_NO_PREFIX =			get_val.c load_val.c\
 						live.c ld.c st.c add.c sub.c and.c or.c xor.c zjmp.c \

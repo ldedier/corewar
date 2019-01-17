@@ -16,8 +16,8 @@
 ** [aff] instruction allows users to output characters to taunt other players
 ** by printing the character given by [arg 1] (% 256).
 **
-** This version includes a bonus: instead of outputting the character every
-** time [aff] is called, it stores the character inside a string and
+** This version includes a bonus: instead of only outputting the character
+** every time [aff] is called, it stores the character inside a string and
 ** outputs the entire string when it's called with the value 0, thus allowing
 ** players to output entire strings (much more useful).
 */
@@ -57,7 +57,7 @@ int				ins_aff(t_vm *vm, t_process *proc, t_parameter arg[3])
 			}
 			else
 				proc->player->aff_buf[i] = (proc->reg[arg[0].value - 1]) % 256;
-			ft_printf("Character [%c] added to player %d's aff string",
+			ft_printf("Aff: Character [%c] added to player %d's aff string",
 					(proc->reg[arg[0].value - 1]) % 256, proc->player->num);
 		}
 	}

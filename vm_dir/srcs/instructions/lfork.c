@@ -28,6 +28,7 @@ int		ins_lfork(t_vm *vm, t_process *proc, t_parameter arg[3])
 	new_proc = (t_process *)ft_memalloc(sizeof(t_process));
 	new_proc->player = proc->player;
 	new_proc->pc = (proc->pc + arg[0].value) % MEM_SIZE;
+	new_proc->carry = proc->carry;
 	i = -1;
 	while (++i < 16)
 		new_proc->reg[i] = proc->reg[i];
