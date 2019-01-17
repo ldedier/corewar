@@ -46,6 +46,11 @@ t_player *get_player_num(t_list *lst, int num)
 	return (NULL);
 }
 
+/*
+** get_proc_index function is used to get the wanted process' index in the list
+** of all processes.
+*/
+
 t_process	*get_proc_index(t_list *lst, int index)
 {
 	t_list	*tmp;
