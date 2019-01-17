@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 19:07:54 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/09 19:08:35 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/17 16:29:34 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ int		ft_render_ctd_countdown(t_vm *vm, int y)
 		free(tmp2);
 		return (1);
 	}
+	free(tmp);
+	free(tmp2);
 	if (ft_render_entry(vm, "period progress", value, y))
 		return (1);
 	return (0);
@@ -107,6 +109,8 @@ int		ft_render_checks(t_vm *vm, int y)
 		free(tmp2);
 		return (1);
 	}
+	free(tmp);
+	free(tmp2);
 	if (ft_render_entry(vm, "number of checks", value, y))
 		return (1);
 	return (0);

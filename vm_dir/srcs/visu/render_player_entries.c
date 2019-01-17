@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/03 17:34:02 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/11 19:34:00 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/17 16:31:21 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,8 @@ int		ft_render_player_title(t_vm *vm, t_player player, int y)
 		free(tmp);
 		return (1);
 	}
+	free(tmp);
 	ft_copy_str_to_surface_no_source(vm, str, rect, player.color.index);
-//	ft_copy_str_to_surface_no_source(vm, str, rect, MAX_PL_COLOR);
 	free(str);
 	rect.x = rect.x + rect.w + vm->visu.center.entry_space;
 	rect.w = vm->visu.center.entry_value_max_w;

@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 15:02:55 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/15 20:51:14 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/17 16:46:21 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ char	*get_prefixed_str(char *prefix, int i)
 		free(tmp);
 		return (NULL);
 	}
+	free(tmp);
 	return (str);
 }
 

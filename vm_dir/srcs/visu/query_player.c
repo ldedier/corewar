@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/29 16:47:33 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/10 01:10:47 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/17 17:00:13 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,10 @@ int     ft_query_player(t_vm *vm, t_client_slot *cs)
 	size += ft_memcpy_ret(&(data[size]), &(cs->player->name_len), sizeof(t_name_len));
 	size += ft_memcpy_ret(&(data[size]), &(cs->player->name), cs->player->name_len);
 	if (ft_send_protected(vm->client.socket, data, size))
+	{
+		free(data);
 		return (1);
+	}
+	free(data);
 	return (ft_receive_player_info(vm, cs));
 }

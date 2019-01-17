@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/30 22:50:09 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/31 17:59:01 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/17 16:15:50 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ t_player *get_core_from_query(t_server *server, int nb_bytes)
 		return (NULL);
 	if (!(player = get_player(server, name)))
 	{
-		ft_putendl(name);
 		free(name);
 		return (NULL);
 	}
+	free(name);
 	return (player);
 }
 

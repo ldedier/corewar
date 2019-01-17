@@ -6,11 +6,16 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/30 22:57:11 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/15 22:11:28 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/17 16:20:50 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "server.h"
+
+void	ft_free_player(t_player *player)
+{
+	free(player);
+}
 
 int		ft_send_flag(t_server *server, int client_index, t_flag flag)
 {
@@ -21,7 +26,11 @@ int		ft_send_flag(t_server *server, int client_index, t_flag flag)
 	ft_memcpy(data, &flag, sizeof(t_flag));
 	if (ft_send_protected(server->client_sockets[client_index].socket,
 				data, sizeof(t_flag)))
+	{
+		free(data);
 		return (1);
+	}
+	free(data);
 	return (0);
 }
 
@@ -32,7 +41,6 @@ int		ft_add_player_persistency(t_player *player)
 	char *filename;
 	if (!(filename = ft_strjoin_3(PATH"/cores/", player->name, ".cor")))
 		return (1);
-	ft_printf("%s\n", filename);
 	if ((fd = open(filename, O_RDWR | O_CREAT | O_TRUNC, 0644)) == -1)
 	{
 		perror(filename);
@@ -116,7 +124,10 @@ int		ft_receive_upload(t_server *server, int client_index, int nb_bytes)
 	else
 	{
 		if (get_player(server, player->name))
+		{
+			ft_free_player(player);
 			return (ft_send_flag(server, client_index, UPLOAD_NAME_TAKEN));
+		}
 		else
 		{
 			ft_process_player_scores(server, player);

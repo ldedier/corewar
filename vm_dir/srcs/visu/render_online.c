@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 15:05:42 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/12 11:29:49 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/17 16:27:23 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,11 @@ int			ft_render_client_score(t_vm *vm, int x, int y, t_client_slot *slot)
 	copied_len = ft_copied_char_surface_w(rect, len) * len;
 	rect.x += (rect.w - copied_len) / 2.0;
 	if (ft_copy_str_to_surface(vm, str, rect, col_source))
+	{
+		free(str);
 		return (1);
+	}
+	free(str);
 	return (0);
 }
 

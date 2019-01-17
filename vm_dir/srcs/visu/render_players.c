@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/11 17:47:31 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/11 19:57:57 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/17 16:37:51 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,7 @@ void	ft_render_inner_name(t_vm *vm, SDL_Rect inner_rect, t_player *player,
 	ft_render_inner_name_value(vm, inner_rect, player, source);
 }
 
-void	ft_render_inner_number_value(t_vm *vm, SDL_Rect inner_rect, t_player *player,
+int		ft_render_inner_number_value(t_vm *vm, SDL_Rect inner_rect, t_player *player,
 		t_player_source source)
 {
 	SDL_Rect	name_rect;
@@ -201,11 +201,14 @@ void	ft_render_inner_number_value(t_vm *vm, SDL_Rect inner_rect, t_player *playe
 	name_rect.y = inner_rect.y +  7 * inner_rect.h / 12;
 	col_source.y = source;
 	col_source.x = MAX_PL_COLOR;
-	number_to_str = ft_itoa(player->num);
+	if (!(number_to_str = ft_itoa(player->num)))
+		return (1);
 	ft_copy_str_to_surface(vm, number_to_str, name_rect, col_source);
+	free(number_to_str);
+	return (0);
 }
 
-void	ft_render_inner_number(t_vm *vm, SDL_Rect inner_rect, t_player *player,
+int		ft_render_inner_number(t_vm *vm, SDL_Rect inner_rect, t_player *player,
 		t_player_source source)
 {
 	SDL_Rect	name_rect;
@@ -218,7 +221,9 @@ void	ft_render_inner_number(t_vm *vm, SDL_Rect inner_rect, t_player *player,
 	col_source.y = source;
 	col_source.x = MAX_PL_COLOR;
 	ft_copy_str_to_surface(vm, "number", name_rect, col_source);
-	ft_render_inner_number_value(vm, inner_rect, player, source);
+	if (ft_render_inner_number_value(vm, inner_rect, player, source))
+		return (1);
+	return (0);
 }
 
 void	ft_render_inner_name_full(t_vm *vm, SDL_Rect player_rect, t_player *player,
@@ -245,7 +250,7 @@ void	ft_render_inner_name_full(t_vm *vm, SDL_Rect player_rect, t_player *player,
 	ft_copy_str_to_surface(vm, abbrev, name_rect, col_source);
 }
 
-void	ft_render_inner_player(t_vm *vm, SDL_Rect player_rect, t_player *player,
+int		ft_render_inner_player(t_vm *vm, SDL_Rect player_rect, t_player *player,
 		t_player_source source)
 {
 	SDL_Rect	inner_rect;
@@ -264,13 +269,15 @@ void	ft_render_inner_player(t_vm *vm, SDL_Rect player_rect, t_player *player,
 	if (source % NB_SOURCES == ARENA)
 	{
 		ft_render_inner_name(vm, inner_rect, player, source);
-		ft_render_inner_number(vm, inner_rect, player, source);
+		if (ft_render_inner_number(vm, inner_rect, player, source))
+			return (1);
 	}
 	else
 		ft_render_inner_name_full(vm, player_rect, player, source);
+	return (0);
 }
 
-void	ft_render_relevant_player(t_vm *vm, t_player *player,
+int		ft_render_relevant_player(t_vm *vm, t_player *player,
 			t_xy xy, t_player_source source)
 {
 	SDL_Rect rect;
@@ -284,7 +291,9 @@ void	ft_render_relevant_player(t_vm *vm, t_player *player,
 	else
 		ft_fill_rect_scrollbar(vm->visu.sdl.w_surface, &rect, PLAYER_COL_BORDER,
 			vm->visu.players_list[source].vscrollbar);
-	ft_render_inner_player(vm, rect, player, source);
+	if (ft_render_inner_player(vm, rect, player, source))
+		return (1);
+	return (0);
 }
 
 int		ft_render_player(t_vm *vm, t_player *player, t_xy xy,
@@ -296,7 +305,10 @@ int		ft_render_player(t_vm *vm, t_player *player, t_xy xy,
 		source == LOCAL || source == SERVER ||
 			(vm->visu.drag_container.drag_enum != DRAG_PLAYER ||
 			vm->visu.drag_container.drag_union.drag_player.player != player)))
-		ft_render_relevant_player(vm, player, xy, source);
+	{
+		if (ft_render_relevant_player(vm, player, xy, source))
+			return (1);
+	}
 	else if (source != LOCAL)
 	{
 		rect.x = xy.x;
