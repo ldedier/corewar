@@ -27,14 +27,14 @@ pharah:
 	fork 	 	 	 	 	%:symmetra    	
 	st		r5, 6
 	live	%0
-	ld  			%583824			    , r4294967295         	# r13 = 0x00090000 (0x00 zjmp %0)
+	ld  			%583824			    ,r4     	# r13 = 0x00090000 (0x00 zjmp %0)
 	ld		%8, r14
 	ld		%-511, r15
 	ld		%0, r16
 	zjmp	%:payload
 payload:
 	ld		%190057742, r11				# r11 = 0x0b540d0e (sti r13 r14 ..)
-	ld		%269090402, r12				# r12 = 0x1009fe62 (.. r16 zjmp -414)
+	ld		%269090402, r16	# r12 = 0x1009fe62 (.. r16 zjmp -414)
 	ld		%0, r16
 	st		r11, -501 #-491
 	st		r12, -502 #-492
@@ -145,7 +145,7 @@ torbjorn:
 	st		r16, 511
 	ld		%4278415363, r16			# r16 = 0xff037003 (.. 0xff st r3 ..)
 	st		r16, 503
-	ld		%33424240, r16				# r16 = 0x01fe0370 (.. 0x01fe st ..)
+	ld		%33424240, r16			# r16 = 0x01fe0370 (.. 0x01fe st ..)
 	st		r16, 495
 	ld		%16907523, r16				# r16 = 0x0101fd03 (.. r1 0x01fd st..)
 	st		r16, 487
