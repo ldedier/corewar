@@ -6,17 +6,24 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 15:50:17 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/17 01:26:30 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/17 15:35:50 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "decompiler.h"
 
+void	ft_init_champ(t_env *e, int argc, char **argv)
+{
+	e->champ.cor_name = argv[argc - 1];
+	e->champ.assembly_name = NULL;
+	e->champ.instructions = NULL;
+}
+
 int		ft_init_env(t_env *e, int argc, char **argv)
 {
 	int ret;
 
-	e->champ.cor_name = argv[argc - 1];
+	ft_init_champ(e, argc, argv);
 	e->create_labels = 0;
 	if (argc == 3)
 	{

@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:52:19 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/17 01:26:19 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/17 15:31:50 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,10 @@ int					ft_init_env(t_env *e, int argc, char **argv);
 int					ft_parse_cor(char *filename, t_env *e);
 int					get_next_chunk(int fd, t_chunk *chunk);
 int					ft_encode_to_assembly(t_env *e);
-int					ft_process_encode_asm(int fd, t_list *instructions,
-						t_env *e);
+int					ft_process_encode_asm(int fd, t_env *e);
+void				ft_free_all(t_env *e);
+int					ft_attribute_asm_labels(t_env *e);
+int					ft_attribute_label(t_instruction *instruction,
+						int nb_instr);
+int					ft_process_asm_labels(t_env *e);
 #endif
