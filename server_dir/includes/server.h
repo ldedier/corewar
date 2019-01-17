@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 17:20:50 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/15 22:10:32 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/17 17:54:09 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ int						ft_error(void);
 int						ft_send_protected(TCPsocket socket, void *data,
 							size_t size);
 size_t					ft_memcpy_ret(void *dest, void *src, size_t size);
-int						ft_send_all_cores(TCPsocket socket, t_server *server, t_flag flag);
+int						ft_send_all_cores(TCPsocket socket, t_server *server,
+							t_flag flag);
 int						ft_send_rejection(TCPsocket temp);
 int						ft_send_deconnexion(TCPsocket socket,
 							t_player_number player_number);
@@ -66,8 +67,14 @@ int						ft_receive_upload(t_server *server, int i,
 int						ft_get_player_size_all(t_player *player);
 int						ft_send_core_bin(t_server *server, int i, int nb_bytes);
 t_player				*get_core_from_query(t_server *server, int nb_bytes);
-char					*ft_get_buffer_all_cores(t_server *server, t_flag flag, int *size);
+char					*ft_get_buffer_all_cores(t_server *server, t_flag flag,
+							int *size);
 int						ft_attribute_scores_init(t_server *server);
 void					ft_process_score(t_server *server);
-int						fight_cores(t_player *player1, t_player *player2, t_player **winner);
+int						ft_send_flag(t_server *server, int client_index,
+							t_flag flag);
+int						fight_cores(t_player *player1, t_player *player2,
+							t_player **winner);
+int						ft_attempt_connection(t_server *server);
+int						ft_disconnect_player(t_server *server, int i);
 #endif

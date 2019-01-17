@@ -6,39 +6,17 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/30 22:57:11 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/17 16:20:50 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/17 17:24:29 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "server.h"
 
-void	ft_free_player(t_player *player)
-{
-	free(player);
-}
-
-int		ft_send_flag(t_server *server, int client_index, t_flag flag)
-{
-	char *data;
-
-	if (!(data = malloc(sizeof(t_flag))))
-		return (1);
-	ft_memcpy(data, &flag, sizeof(t_flag));
-	if (ft_send_protected(server->client_sockets[client_index].socket,
-				data, sizeof(t_flag)))
-	{
-		free(data);
-		return (1);
-	}
-	free(data);
-	return (0);
-}
-
 int		ft_add_player_persistency(t_player *player)
 {
-	int fd;
+	int		fd;
+	char	*filename;
 
-	char *filename;
 	if (!(filename = ft_strjoin_3(PATH"/cores/", player->name, ".cor")))
 		return (1);
 	if ((fd = open(filename, O_RDWR | O_CREAT | O_TRUNC, 0644)) == -1)
@@ -100,6 +78,26 @@ int		ft_process_player_scores(t_server *server, t_player *uploaded_player)
 	return (0);
 }
 
+int		ft_process_uploaded_player(t_server *server,
+		t_player *player, int client_index)
+{
+	if (get_player(server, player->name))
+	{
+		free(player);
+		return (ft_send_flag(server, client_index, UPLOAD_NAME_TAKEN));
+	}
+	else
+	{
+		ft_process_player_scores(server, player);
+		if (ft_add_to_list_ptr_back(&(server->players),
+					player, sizeof(t_player)))
+			return (1);
+		ft_process_send_new_players_to_all(server);
+		ft_add_player_persistency(player);
+	}
+	return (0);
+}
+
 int		ft_receive_upload(t_server *server, int client_index, int nb_bytes)
 {
 	t_player	*player;
@@ -116,26 +114,12 @@ int		ft_receive_upload(t_server *server, int client_index, int nb_bytes)
 		return (1);
 	if (player->file_len > TOT_SIZE)
 		return (1);
-	ret = ft_process_read_player(&(server->buffer[i]), player->file_len, player);
+	ret = ft_process_read_player(&(server->buffer[i]),
+			player->file_len, player);
 	if (ret)
 		return (1);
 	else if (out_of_atlas_range(player->name))
-	   return (ft_send_flag(server, client_index, UPLOAD_NAME_INVALID));
+		return (ft_send_flag(server, client_index, UPLOAD_NAME_INVALID));
 	else
-	{
-		if (get_player(server, player->name))
-		{
-			ft_free_player(player);
-			return (ft_send_flag(server, client_index, UPLOAD_NAME_TAKEN));
-		}
-		else
-		{
-			ft_process_player_scores(server, player);
-			if (ft_add_to_list_ptr_back(&(server->players), player, sizeof(t_player)))
-				return (1);
-			ft_process_send_new_players_to_all(server);
-			ft_add_player_persistency(player);
-		}
-	}
-	return (0);
+		return (ft_process_uploaded_player(server, player, client_index));
 }
