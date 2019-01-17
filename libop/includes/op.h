@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 19:01:37 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/15 22:23:46 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/17 01:27:07 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ PAS DE PANIQUE JE VAIS VIRER TOUT CA NORMALEMENT
 */
 
 typedef char					t_arg_type;
+typedef struct					s_instruction t_instruction;
 
 typedef struct					s_op
 {
@@ -140,9 +141,10 @@ typedef struct					s_parameter
 	char						*label_name;
 	int							source_code_col;
 	int							nb_bytes;
+	t_instruction				*labeled_to;
 }								t_parameter;
 
-typedef struct					s_instruction
+struct							s_instruction
 {
 	t_op						op;
 	t_parameter					params[3];
@@ -150,7 +152,9 @@ typedef struct					s_instruction
 	int							nb_line;
 	char						ocp;
 	char						*source_code_line;
-}								t_instruction;
+	char						*label;
+	char						is_labeled;
+};
 
 enum							e_op
 {
@@ -179,7 +183,7 @@ void							set_argval(t_parameter *arg, int index, int size);
 int								get_instruction(char *arena, t_instruction *ins, unsigned int i, int mod);
 int								store_arg(char *arena, t_instruction *ins, int i, int ocp);
 void							set_optab(t_op **tab);
-int								ft_encode_instructions(int fd, t_list *instructions);
+int								ft_encode_instructions(int fd, t_list *instructions, char create_label);
 int								ft_parse_player_folder(char *folder_full_path,
 									t_list **players_list);
 

@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/01 16:10:09 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/15 17:07:18 by cammapou         ###   ########.fr       */
+/*   Updated: 2019/01/17 01:11:08 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	ft_init_champion(t_champion *champ, char *filename)
 {
 	champ->assembly_name = filename;
+	champ->cor_name = NULL;
 	champ->instructions = NULL;
 	champ->labels = NULL;
 	champ->header.magic = COREWAR_EXEC_MAGIC;

@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/21 13:40:59 by ldedier           #+#    #+#              #
-#    Updated: 2018/12/03 22:21:34 by ldedier          ###   ########.fr        #
+#    Updated: 2019/01/16 18:20:28 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,7 +64,8 @@ optilibcomp:
 libcomp:
 	@make $(BINDIR)/$(NAME)
 
-all: $(LIBFT) $(LIBOP)
+all:
+	@make -C $(LIBOPDIR) opti
 	@make $(BINDIR)/$(NAME)
 
 debug:
