@@ -30,6 +30,6 @@ int		ins_and(t_vm *vm, t_process *proc, t_parameter arg[3])
 	getval_param_dest(vm, proc, &arg[1], IDX_MOD);
 	res = arg[0].dest_value & arg[1].dest_value;
 	loadval(vm, proc, &arg[2], res);
-	proc->carry = res ? 0 : 1;
+	proc->carry = !res;
 	return (SUCCESS);
 }

@@ -21,10 +21,7 @@
 int		ins_zjmp(t_vm *vm, t_process *proc, t_parameter arg[3])
 {
 	getval_param_dest(vm, proc, &arg[0], 1);
-	ft_printf("dest val = %d pc = %d\n", arg[0].dest_value % MEM_SIZE, proc->pc);
 	if (proc->carry)
-	{
-		proc->pending.pc = (arg[0].dest_value);
-	}
+		proc->pending.pc = arg[0].dest_value;
 	return (SUCCESS);
 }
