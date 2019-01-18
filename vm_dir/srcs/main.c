@@ -6,11 +6,21 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 17:19:23 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/10 18:50:20 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/18 18:01:08 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
+
+/*
+void __attribute__((destructor)) end();
+
+void    end(void) //permet de mieux checker les leaks !
+{
+	ft_printf("destructor loop\n");
+	while(1);
+}
+*/
 
 int		main(int argc, char **argv, char **env)
 {

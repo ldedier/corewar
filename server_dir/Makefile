@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/04 15:20:42 by ldedier           #+#    #+#              #
-#    Updated: 2019/01/15 14:59:12 by ldedier          ###   ########.fr        #
+#    Updated: 2019/01/17 17:49:49 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,8 @@ EOC = \033[0m
 
 SRCS_NO_PREFIX =	main.c ft_process.c ft_fill_all.c tools.c ft_init.c\
 					ft_send_others.c ft_send_core.c ft_receive_upload.c\
-					ft_send_core_bin.c ft_attribute_scores_init.c
+					ft_send_core_bin.c ft_attribute_scores_init.c\
+					ft_process_players.c
 
 INCLUDES_NO_PREFIX = #server.h
 

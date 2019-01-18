@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/08 00:08:01 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/17 15:44:46 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/18 00:32:05 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,18 +64,14 @@ int		ft_encode_to_assembly(t_env *e)
 	if ((ret = ft_encode_asm(fd, e)))
 	{
 		if (ret == 1)
-		{
 			ft_printf("%s is wrongly encoded and could not be decompiled\n",
 					e->champ.cor_name);
-			return (1);
-		}
 		else
 			return (ft_return_verbosed("malloc error", 1));
 	}
 	else
-	{
 		ft_printf("successfully decompiled %s at %s\n",
 				e->champ.cor_name, e->champ.assembly_name);
-		return (0);
-	}
+	ret = close(fd);
+	return (ret);
 }

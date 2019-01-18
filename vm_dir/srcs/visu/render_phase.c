@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 19:07:54 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/09 23:07:30 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/18 23:26:24 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		ft_render_init_offline(t_vm *vm)
 {
-	(void) vm;
+	(void)vm;
 	return (0);
 }
 

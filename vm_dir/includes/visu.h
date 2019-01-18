@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/18 19:54:31 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/01/19 00:51:38 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,12 +143,6 @@
 # define NB_FRAMES				5
 
 # define NB_TITLES				10
-
-/*
-**								0 = ARENA
-**								1 = LOCAL
-**								2 = DOWNLOADS
-*/
 
 # define SCOREWAR				3
 # define UPLOAD_HERE			4
@@ -331,6 +325,7 @@ typedef struct			s_sdl
 	SDL_Renderer		*renderer;
 	SDL_Surface			*w_surface;
 	SDL_Surface			*surface;
+	SDL_Surface			*from;
 	SDL_Texture			*texture;
 	SDL_Color			color;
 	SDL_Surface			*images[NB_IMAGES];
@@ -534,7 +529,7 @@ typedef struct			s_drag_player
 	t_player_source		source;
 }						t_drag_player;
 
-typedef union			s_drag_union
+typedef union			u_drag_union
 {
 	t_vscrollbar		*vscrollbar;
 	t_drag_player		drag_player;
@@ -717,8 +712,8 @@ void					ft_scroll_up(t_vm *vm, t_button *button);
 void					ft_scroll_down(t_vm *vm, t_button *button);
 void					ft_populate_drag_container_player(t_drag_container *dc,
 							t_player *player, t_player_source source);
-void					ft_populate_drag_container_vscrollbar(t_drag_container *dc,
-							t_vscrollbar *vscrollbar);
+void					ft_populate_drag_container_vscrollbar(t_drag_container
+							*dc, t_vscrollbar *vscrollbar);
 void					ft_populate_drag_container_player_client_slot(
 							t_drag_container *dc, t_client_slot *client_slot,
 								t_xy player_pos, int scrolled_h);
@@ -816,4 +811,54 @@ int						ft_sort_alpha_cs(void *p1, void *p2);
 int						ft_sort_score_cs(void *p1, void *p2);
 void					ft_sort_client_slots(t_vm *vm);
 int						ft_copied_char_surface_w(SDL_Rect rect, int len);
+void					ft_render_inner_name_value(t_vm *vm,
+							SDL_Rect inner_rect, t_player *player,
+								t_player_source source);
+int						ft_render_inner_player(t_vm *vm, SDL_Rect player_rect,
+							t_player *player, t_player_source source);
+void					ft_render_inner_name(t_vm *vm, SDL_Rect inner_rect,
+							t_player *player, t_player_source source);
+void					ft_free_all_visu(t_visu *v);
+int						ft_render_inner_number(t_vm *vm, SDL_Rect inner_rect,
+							t_player *player, t_player_source source);
+void					ft_render_inner_name_full(t_vm *vm,
+							SDL_Rect player_rect, t_player *player,
+								t_player_source source);
+int						ft_get_player_color_no_drag(t_vm *vm, t_player *player,
+							int initial_color, float value);
+int						ft_get_player_color(t_vm *vm, t_player *player,
+							int initial_color, float value);
+int						ft_render_title(t_vm *vm, int title_index, double x,
+							double y);
+int						ft_render_closing_cross(t_vm *vm, t_xy xy);
+int						ft_render_player_entry(t_vm *vm, char *entry,
+							char *value, int y);
+void					ft_free_font(TTF_Font *font);
+void					ft_free_surfaces(t_visu *v);
+void					ft_free_atlas(t_visu *v);
+void					ft_free_cursors(t_visu *v);
+void					ft_init_center_memory(t_visu *visu, t_center *c);
+void					ft_init_center_entries(t_visu *visu, t_center *c);
+void					ft_init_center_player_entries(t_visu *visu,
+							t_center *c);
+void					ft_init_center_live_breakdown(t_visu *visu,
+							t_center *c);
+void					ft_init_center_hp(t_visu *visu, t_center *c);
+void					ft_init_center_footer(t_visu *visu, t_center *c);
+void					ft_init_center_spec(t_visu *visu, t_center *c);
+void					ft_init_center_fight(t_visu *visu, t_center *c);
+void					ft_init_center_online(t_visu *visu, t_center *c);
+void					ft_init_center_players(t_visu *visu, t_center *c);
+double					get_magic_ratio(int lives_player_1, int lives_player_2);
+void					ft_get_player_lives(t_vm *vm, int *nb_live_player_1,
+							int *nb_live_player_2);
+int						ft_render_button(t_vm *vm, t_button *button);
+int						ft_render_server_title(t_vm *vm, double y);
+int						ft_render_toolbar(t_vm *vm, double y);
+int						ft_render_client_slot(t_vm *vm,
+							t_client_slot *slot, int y);
+SDL_Rect				get_rect_from_pc(t_vm *vm, int pc);
+int						ft_render_all_dead_process(t_vm *vm);
+void					ft_draw_rect_surface(SDL_Surface *surface,
+							SDL_Rect rect, int color);
 #endif

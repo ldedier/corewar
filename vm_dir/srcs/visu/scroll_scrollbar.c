@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 19:10:55 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/19 19:11:13 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/18 23:39:13 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_scroll_scrollbar(t_vscrollbar *vscrollbar, double value)
 {
 	vscrollbar->state = ft_fclamp(0,
 			vscrollbar->state - value *
-			(double) vscrollbar->height / (double)vscrollbar->compressed_height,
+			(double)vscrollbar->height / (double)vscrollbar->compressed_height,
 			1);
 }
 
@@ -34,8 +34,8 @@ void	ft_scroll_down(t_vm *vm, t_button *button)
 
 void	ft_wheel_event(t_vm *vm, SDL_Event event)
 {
-	int i;
-	t_ixy xy;
+	int		i;
+	t_ixy	xy;
 
 	i = 0;
 	while (i < NB_SOURCES)

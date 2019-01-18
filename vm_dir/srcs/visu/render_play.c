@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 19:07:54 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/10 00:21:56 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/18 23:27:19 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,10 @@ void	ft_reset_metarena(t_vm *vm)
 
 void	ft_render_play_lines(t_vm *vm)
 {
-	 ft_render_horizontal_line_dashboard(vm, vm->visu.center.game_entries_h,
+	ft_render_horizontal_line_dashboard(vm, vm->visu.center.game_entries_h,
 		LINE_COL);
-	 ft_render_horizontal_line_dashboard(vm, vm->visu.center.game_entries_h +
+	ft_render_horizontal_line_dashboard(vm, vm->visu.center.game_entries_h +
 			vm->visu.center.player_entries_h, LINE_COL);
-	
 	if (vm->nb_players != 2)
 		ft_render_horizontal_line_dashboard(vm, vm->visu.center.game_entries_h +
 			vm->visu.center.list_player_entries_h, LINE_COL);
@@ -49,7 +48,7 @@ int		ft_render_dashboard(t_vm *vm)
 	if (ft_render_player_entries(vm))
 		return (1);
 	if (vm->nb_players != 2)
-	{	
+	{
 		if (ft_render_live_breakdown(vm))
 			return (1);
 	}

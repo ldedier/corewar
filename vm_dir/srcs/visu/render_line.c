@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 19:04:57 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/20 15:59:54 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/18 22:04:14 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	ft_render_dashboard_separator(t_vm *vm)
 
 	i = 0;
 	pix = (int *)vm->visu.sdl.w_surface->pixels;
-
 	while (i < vm->visu.sdl.w_surface->h)
 	{
 		pix[(int)(i * vm->visu.sdl.w_surface->w +
@@ -50,7 +49,7 @@ void	ft_render_init_lines(t_vm *vm)
 	i = 0;
 	pix = (int *)vm->visu.sdl.w_surface->pixels;
 	ft_render_horizontal_line_dashboard(vm,
-			vm->visu.center.title_h +vm->visu.center.title_top +
+			vm->visu.center.title_h + vm->visu.center.title_top +
 			vm->visu.center.title_bottom - 1, LINE_COL_DARKER);
 	ft_render_horizontal_line_dashboard(vm,
 		vm->visu.center.top_dashboard_height, LINE_COL);

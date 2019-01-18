@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 18:59:18 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/19 19:00:09 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/18 23:28:00 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int		ft_render_scrollbar_bar(t_vm *vm, t_vscrollbar vscrollbar)
 {
-	SDL_Rect rect;
-	t_ixy height_y;
+	SDL_Rect	rect;
+	t_ixy		height_y;
 
 	rect.x = vscrollbar.pos.x;
 	rect.w = vscrollbar.bar_width;

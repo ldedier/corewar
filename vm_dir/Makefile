@@ -13,7 +13,7 @@
 
 NAME	= corewar
 
-CC      = gcc -g
+CC      = gcc -g3
 
 PWD = $(shell pwd)
 
@@ -58,14 +58,23 @@ VISU_NO_PREFIX =		init_sdl.c visu.c events.c framerate.c render.c \
 						drop_actions.c is_droppable.c is_on_draggable_server.c\
 						load_tools.c atlas.c init_center.c init_textures.c\
 						init_slots.c init_buttons.c visu_tools.c\
-						render_buttons.c  buttons_actions.c init_all.c\
+						render_buttons.c buttons_actions.c init_all.c\
 						is_on_buttons.c mouse.c process.c upload.c\
 						client.c query_player.c query_player_bin.c\
 						render_notification.c render_play.c render_entries_1.c\
 						render_entries_2.c render_player_entries.c\
 						render_live_breakdown.c render_live_breakdown_hp.c\
-						render_play_footer.c sort.c
-
+						render_play_footer.c sort.c free_all_visu.c\
+						client_events.c client_slot.c client_slot_add.c\
+						download.c client_status.c copy_str_to_surface.c\
+						render_inner_player.c render_player_tools.c\
+						render_players_2.c render_player_entries_funcs.c\
+						buttons_actions_client.c buttons_actions_2.c\
+						free_all_visu_2.c init_center_play.c init_center_2.c\
+						update_scrollbar.c init_textures_hp.c\
+						render_live_breakdown_hp_tools.c render_online_top.c\
+						render_online_2.c render_live.c render_fade.c\
+						render_activity.c client_get_new_cores.c
 
 
 INCLUDES_NO_PREFIX =	vm.h visu.h client.h

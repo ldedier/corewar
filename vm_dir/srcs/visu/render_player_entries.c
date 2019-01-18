@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/03 17:34:02 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/17 16:31:21 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/18 19:48:52 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int		ft_render_player_entry(t_vm *vm, char *entry, char *value, int y)
 		free(value);
 		return (1);
 	}
-	rect.x = vm->visu.center.dashboard_x + vm->visu.center.entry_left + 
+	rect.x = vm->visu.center.dashboard_x + vm->visu.center.entry_left +
 		rect.w + vm->visu.center.entry_space;
 	rect.w = vm->visu.center.entry_value_max_w;
 	if (ft_copy_str_to_surface_no_source(vm, value, rect, MAX_PL_COLOR))
@@ -41,42 +41,6 @@ int		ft_render_player_entry(t_vm *vm, char *entry, char *value, int y)
 		return (1);
 	}
 	free(value);
-	return (0);
-}
-
-int		ft_render_last_live(t_vm *vm, t_player player, int y)
-{
-	char *value;
-
-	(void)player;
-	if (!(value = ft_itoa(player.last_live_cycle)))
-		return (1);
-	if (ft_render_player_entry(vm, "last live", value, y))
-		return (1);
-	return (0);
-}
-
-int		ft_render_nb_process(t_vm *vm, t_player player, int y)
-{
-	char *value;
-
-	(void)player;
-	if (!(value = ft_itoa(player.nb_proc)))
-		return (1);
-	if (ft_render_player_entry(vm, "nb process", value, y))
-		return (1);
-	return (0);
-}
-
-int		ft_render_nb_live(t_vm *vm, t_player player, int y)
-{
-	char *value;
-
-	(void)player;
-	if (!(value = ft_itoa(player.live)))
-		return (1);
-	if (ft_render_player_entry(vm, "lives received for current period", value, y))
-		return (1);
 	return (0);
 }
 
@@ -91,7 +55,6 @@ int		ft_render_player_title(t_vm *vm, t_player player, int y)
 	rect.y = y;
 	rect.w = vm->visu.center.entry_max_w;
 	rect.h = vm->visu.center.player_title_height;
-
 	if (!(tmp = ft_itoa(player.num)))
 		return (1);
 	if (!(str = ft_strjoin("Player ", tmp)))
@@ -125,7 +88,6 @@ int		ft_render_player_entry_bloc(t_vm *vm, t_player player, int *y)
 		i++;
 		if (i < NB_PLAYER_ENTRIES)
 			*y += vm->visu.center.player_entry_ipadding;
-
 	}
 	return (0);
 }

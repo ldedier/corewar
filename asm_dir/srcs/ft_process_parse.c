@@ -6,7 +6,7 @@
 /*   By: cammapou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 17:30:46 by cammapou          #+#    #+#             */
-/*   Updated: 2019/01/16 17:44:26 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/18 00:20:27 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int		ft_process_parse_indirect_value(char *str, int index, int offset, t_env *e)
 	i = 0;
 	str2 = str;
 	if (str[0] == '\0')
-		return (ft_log_error(LEXICAL_ERROR, offset, e));
+		return (ft_log_error(LEXICAL_ERROR, 0, e));
 	else if (!ft_is_atouiable(str))
 		return (ft_log_error(EXCESSIVE_VALUE, offset, e));
 	ret = ft_patoui(&str);
@@ -89,9 +89,9 @@ int		ft_process_parse_direct_value(char *str, int index, int offset, t_env *e)
 	i = 0;
 	str2 = str;
 	if (str[0] == '\0')
-		return (ft_log_error(LEXICAL_ERROR, offset, e));
+		return (ft_log_error(LEXICAL_ERROR, 0, e));
 	else if (!ft_is_atouiable(str))
-		return (ft_log_error(EXCESSIVE_VALUE, offset + 1, e));
+		return (ft_log_error(EXCESSIVE_VALUE, offset, e));
 	ret = ft_patoui(&str);
 	if (str == str2)
 		return (ft_log_error(LEXICAL_ERROR, offset, e));

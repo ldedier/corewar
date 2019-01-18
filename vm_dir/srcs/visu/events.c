@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/08 23:37:36 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/07 19:29:46 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/18 20:11:23 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,16 @@ void		ft_key_up(t_vm *vm, SDL_Keycode code)
 	(void)code;
 }
 
-	
-void	ft_increment_cpt(t_vm *vm, int direction)
+void		ft_increment_cpt(t_vm *vm, int direction)
 {
 	if (vm->visu.time_manager.cycles_per_turn <= 4)
 		vm->visu.time_manager.cycles_per_turn =
 		ft_fmax(vm->visu.time_manager.cycles_per_turn +
 				(direction / 10.0), 0.0166);
 	else if (vm->visu.time_manager.cycles_per_turn >= 5000)
-		vm->visu.time_manager.cycles_per_turn = ft_fmin(20000, 
+		vm->visu.time_manager.cycles_per_turn = ft_fmin(20000,
 			vm->visu.time_manager.cycles_per_turn + direction * 1000);
-	else if(vm->visu.time_manager.cycles_per_turn >= 500)
+	else if (vm->visu.time_manager.cycles_per_turn >= 500)
 		vm->visu.time_manager.cycles_per_turn += direction * 100;
 	else
 		vm->visu.time_manager.cycles_per_turn += direction;
@@ -55,7 +54,7 @@ void		ft_process_keys(t_vm *vm, const Uint8 *keys)
 	{
 		ft_increment_cpt(vm, 1);
 	}
-	if(keys[SDL_SCANCODE_DOWN])
+	if (keys[SDL_SCANCODE_DOWN])
 		ft_increment_cpt(vm, -1);
 //	if (keys[SDLK_KP_6] && vm->visu.time_manager.pause)
 //		process_cycle_all(vm);
@@ -63,16 +62,17 @@ void		ft_process_keys(t_vm *vm, const Uint8 *keys)
 
 int			ft_process_events(t_vm *vm)
 {
-	SDL_Event   event;
+	SDL_Event	event;
+
 	while (SDL_PollEvent(&event))
 	{
 		if (event.type == SDL_QUIT ||
 				(event.type == SDL_KEYDOWN &&
-				 event.key.keysym.sym == SDLK_ESCAPE))
+					event.key.keysym.sym == SDLK_ESCAPE))
 			vm->visu.active = 0;
 		else if (event.type == SDL_KEYDOWN && !event.key.repeat)
 			ft_key_down(vm, event.key.keysym.sym);
-		else if(event.type == SDL_KEYUP)
+		else if (event.type == SDL_KEYUP)
 			ft_key_up(vm, event.key.keysym.sym);
 		else if (event.type == SDL_MOUSEBUTTONDOWN)
 			ft_mouse_down(vm, event);
@@ -85,8 +85,6 @@ int			ft_process_events(t_vm *vm)
 	}
 	ft_process_button_pressed(vm);
 	if (vm->visu.phase == PHASE_PLAY)
-	ft_process_keys(vm, SDL_GetKeyboardState(NULL));
-//	ft_process(vm, SDL_GetMouseState(NULL));
-//	vm->visu.event_manager.mouse_state = SDL_GetMouseState(NULL, NULL);
+		ft_process_keys(vm, SDL_GetKeyboardState(NULL));
 	return (0);
 }
