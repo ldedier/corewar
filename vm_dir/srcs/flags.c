@@ -13,8 +13,8 @@
 #include "vm.h"
 
 /*
-**dump_nb_cycles function is called when the -dump flag is used and stores the
-**value given by the user in the [dump] component of the [t_vm] structure.
+** dump_nb_cycles function is called when the -dump flag is used and stores the
+** value given by the user in the [dump] component of the [t_vm] structure.
 */
 
 static void	dump_nb_cycles(t_vm *vm, int argc, char **argv, int *cur)
@@ -40,8 +40,8 @@ static void	dump_nb_cycles(t_vm *vm, int argc, char **argv, int *cur)
 }
 
 /*
-**add_player_n function adds a player to the list of contestants WITH a number
-**specified with the [-n] flag.
+** add_player_n function adds a player to the list of contestants WITH a number
+** specified with the [-n] flag.
 */
 
 static void	add_player_n(t_vm *vm, int argc, char **argv, int *cur)
@@ -73,8 +73,8 @@ static void	add_player_n(t_vm *vm, int argc, char **argv, int *cur)
 }
 
 /*
-**add_player_2 function is used by add_player function to determine which
-**smallest unused number it can assign to the current player.
+** add_player_2 function is used by add_player function to determine which
+** smallest unused number it can assign to the current player.
 */
 
 static int	add_player_2(t_vm *vm, int min)
@@ -96,8 +96,8 @@ static int	add_player_2(t_vm *vm, int min)
 }
 
 /*
-**add_player function adds a player to the list of contestants WITHOUT a
-**number specified with the [-n] flag.
+** add_player function adds a player to the list of contestants WITHOUT a
+** number specified with the [-n] flag.
 */
 
 static void	add_player(t_vm *vm, char **argv, int *cur, int nb_pl)
@@ -126,9 +126,9 @@ static void	add_player(t_vm *vm, char **argv, int *cur, int nb_pl)
 }
 
 /*
-**flags function parses ./corewar 's arguments to check if there are any flags
-**such as [-dump nbr-cycles] or [-n number], and then assigns a number to
-**each player.
+** flags function parses ./corewar 's arguments to check if there are any flags
+** such as [-dump nbr-cycles] or [-n number], and then assigns a number to
+** each player.
 */
 
 void		flags(t_vm *vm, int argc, char **argv)

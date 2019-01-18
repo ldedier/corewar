@@ -6,16 +6,16 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 18:41:42 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/08 18:52:47 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/01/18 19:39:33 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
 /*
-**name_and_comm static function is used by the parse function to save
-**the name and the comment of given files into their respective arrays in each
-**player's structure: player[x].name and player[x].comm
+** name_and_comm static function is used by the parse function to save
+** the name and the comment of given files into their respective arrays in each
+** player's structure: player[x].name and player[x].comm
 */
 
 static void		name_and_comm(t_vm *vm, int i)
@@ -45,9 +45,9 @@ static void		name_and_comm(t_vm *vm, int i)
 }
 
 /*
-**check_head_size static function is used to check the size given in the .cor's
-**header. If it doesn't match the real size of the instructions, the program
-**will output an error message and exit.
+** check_head_size static function checks the size given in the .cor's
+** header. If it doesn't match the real size of the instructions, the program
+** will output an error message and exit.
 */
 
 static void		check_head_size(t_vm *vm, int i)
@@ -67,9 +67,9 @@ static void		check_head_size(t_vm *vm, int i)
 }
 
 /*
-**instructions static function is used by the parse function to add the [algo]
-**part (the instructions) inside the player structure. It also checks if the
-**instructions part exceeds the max allowed size CHAMP_MAX_SIZE.
+** instructions static function is used by the parse function to add the [algo]
+** part (the instructions) inside the player structure. It also checks if the
+** instructions part exceeds the max allowed size CHAMP_MAX_SIZE.
 */
 
 static void		instructions(t_vm *vm, int i)
@@ -100,9 +100,9 @@ static void		instructions(t_vm *vm, int i)
 }
 
 /*
-**parse function tries to parse each player's binary data to retrieve their
-**information, i.e the [name], which is the name of the champion, the [comm],
-**containing the commentary, and the [algo] containing the instructions.
+** parse function tries to parse each player's binary data to retrieve their
+** information, i.e the [name], which is the name of the champion, the [comm],
+** containing the commentary, and the [algo] containing the instructions.
 */
 
 void			parse(t_vm *vm)
@@ -117,4 +117,23 @@ void			parse(t_vm *vm)
 		instructions(vm, i);
 		i++;
 	}
+}
+
+/*
+** read_files function reads each given file and stores their content inside
+** their respective [bin] components in each player's structure.
+*/
+
+int				read_files(t_vm *vm)
+{
+	int		i;
+
+	i = 0;
+	while (i < vm->nb_players)
+	{
+		if (ft_read_player(vm->player[i].cor_name, &(vm->player[i])))
+			return (1);
+		i++;
+	}
+	return (0);
 }

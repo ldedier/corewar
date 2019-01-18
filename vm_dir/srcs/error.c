@@ -12,15 +12,9 @@
 
 #include "vm.h"
 
-void		ft_error_exit(const char *str)
-{
-	ft_dprintf(2, "%s\n", str);
-	exit(1);
-}
-
 /*
-**error_exit_mgc function outputs an error message if a file is given with
-**the wrong magic number at the beginning, then exits the program.
+** error_exit_mgc function outputs an error message if a file is given with
+** the wrong magic number at the beginning, then exits the program.
 */
 
 void		error_exit_mgc(char *name)
@@ -32,8 +26,8 @@ void		error_exit_mgc(char *name)
 }
 
 /*
-**error_exit_msg function outputs the error message specified in error.h used
-**during its call, then exits the program.
+** error_exit_msg and ft_error_exit functions output the error message
+** specified in error.h used during its call, then exits the program.
 */
 
 void		error_exit_msg(const char *str)
@@ -42,9 +36,15 @@ void		error_exit_msg(const char *str)
 	exit(1);
 }
 
+void		ft_error_exit(const char *str)
+{
+	ft_dprintf(2, "%s\n", str);
+	exit(1);
+}
+
 /*
-**check_type function checks the extension of the files ./corewar received
-**and sends an error if the type doesn't match a .cor file.
+** check_type function checks the extension of the files ./corewar received
+** and sends an error if the type doesn't match a .cor file.
 */
 
 int			check_type(int ac, char **av)
@@ -70,8 +70,8 @@ int			check_type(int ac, char **av)
 }
 
 /*
-**check_header function checks the op.h header file's global variables for any
-**illogical declarations.
+** check_header function checks the op.h header file's global variables for any
+** illogical declarations.
 */
 
 void		check_header(void)

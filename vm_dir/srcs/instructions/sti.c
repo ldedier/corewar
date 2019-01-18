@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 17:18:28 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/15 17:43:48 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/01/18 19:09:30 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,5 @@ int		ins_sti(t_vm *vm, t_process *proc, t_parameter arg[3])
 	proc->pending.dest = vm->arena;
 	proc->pending.dest_index = dest;
 	proc->pending.value = arg[0].dest_value;
-	proc->carry = !arg[0].dest_value;
 	return (SUCCESS);
 }

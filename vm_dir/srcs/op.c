@@ -6,16 +6,15 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 18:25:33 by emuckens          #+#    #+#             */
-/*   Updated: 2018/12/05 15:28:42 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/18 19:39:00 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-void		set_optab(t_op	*op[17])
+void		set_optab(t_op *op[17])
 {
-
-	static t_op    op_tab[17] =
+	static t_op		op_tab[17] =
 	{
 		{"live", 1, {T_DIR}, 1, 10, "alive", 0, 0},
 		{"ld", 2, {T_DIR | T_IND, T_REG}, 2, 5, "load", 1, 0},
@@ -41,6 +40,6 @@ void		set_optab(t_op	*op[17])
 		{"aff", 1, {T_REG}, 16, 2, "aff", 1, 0},
 		{0, 0, {0}, 0, 0, 0, 0, 0}
 	};
-	ft_memmove(op, op_tab, sizeof(op_tab));
 
+	ft_memmove(op, op_tab, sizeof(op_tab));
 }

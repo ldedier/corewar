@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/15 16:49:40 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/01/18 19:43:06 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 #include <stdlib.h>
 
 /*
-** Check conditions to resize cycle: more lives than NBR_LIVE or MAX_CHECKS
+** Checks conditions to resize cycle: more lives than NBR_LIVE or MAX_CHECKS
 ** ends of cycles since last resize
-** display and set variables accordingly
+** Displays and sets variables accordingly
 */
 
 static void			check_resize_cycle(t_vm *vm, int *cycle)
@@ -29,7 +29,7 @@ static void			check_resize_cycle(t_vm *vm, int *cycle)
 //	display(vm, NULL, NEW_RESIZE);
 		vm->checks = MAX_CHECKS;
 		vm->c_to_die -= CYCLE_DELTA < vm->c_to_die ? CYCLE_DELTA : vm->c_to_die;
-		return;
+		return ;
 	}
 //display(vm, NULL, AUTO_RESIZE);
 	if (!--vm->checks)
@@ -50,10 +50,12 @@ static int		kill_process(t_vm *vm, t_list *proc)
 	display(vm, (t_process *)proc->content, PL_DEATH);
 	killed_proc = (t_fade *)ft_memalloc(sizeof(t_fade));
 	killed_proc->pc = ((t_process *)proc->content)->pc;
-	killed_proc->color = *((int *)((t_process *)proc->content)->player->color.value);
+	killed_proc->color =
+					*((int *)((t_process *)proc->content)->player->color.value);
 	killed_proc->value = MAX_FADE;
 	--((t_process *)proc->content)->player->nb_proc;
-	if (ft_add_to_list_ptr(&vm->killed_proc, (void *)killed_proc, sizeof(t_fade)))
+	if (ft_add_to_list_ptr(&vm->killed_proc,
+										(void *)killed_proc, sizeof(t_fade)))
 		return (-1);
 	vm->proc = (tmp == vm->proc) ? tmp->next : vm->proc;
 	ft_memdel((void **)&tmp->content);
@@ -62,15 +64,15 @@ static int		kill_process(t_vm *vm, t_list *proc)
 }
 
 /*
-** Upon reaching cycle end
-** Scans all players, checks if they have lived previous turn;
-** if so set live back to one, if not remove from process list;
+** Upon reaching cycle end, scans all players, checks if they have lived during
+** previous turn. If so, sets live back to one; if not, remove from the list
+** of all processes.
 */
 
 static int		reset_live_allprocesses(t_vm *vm)
 {
 	t_list		*proc_lst;
-	t_process *proc;
+	t_process	*proc;
 
 	display(vm, NULL, CYCLE_END);
 	proc_lst = vm->proc;
@@ -91,7 +93,7 @@ static int		reset_live_allprocesses(t_vm *vm)
 }
 
 /*
-** Checks if latest instruction is still ongoing (via proc->cycle) and display
+** checks if latest instruction is still ongoing (via proc->cycle) and displays
 */
 
 static int		last_instruction_unresolved(t_vm *vm, t_process *proc)
@@ -105,21 +107,19 @@ static int		last_instruction_unresolved(t_vm *vm, t_process *proc)
 		--pending->cycles;
 		return (1);
 	}
-//ft_printf("last instruction resolved! current pc = %d ins bytelen = %d\n", proc->pc, proc->ins_bytelen);
 	return (0);
 }
 
 /*
-** checks if last instruction is still running
-** else, if there's a  valid instruction at current position launch it,
-** adjust cycles, and display
-** else move on
+** Checks if last instruction is still running.
+** Else, if there's a valid instruction at the current position, launches it,
+** adjusts cycles, and displays. If not, moves on.
 */
 
 static int		launch_instruction(t_vm *vm, t_process *proc)
 {
 	t_instruction	ins;
-	static int 	(*f_ins[NB_INSTRUCTIONS + 1])(t_vm *vm, t_process *proc,
+	static int		(*f_ins[NB_INSTRUCTIONS + 1])(t_vm *vm, t_process *proc,
 			t_parameter arg[3]) = {NULL,
 		&ins_live, &ins_ld, &ins_st, &ins_add, &ins_sub, &ins_and, &ins_or,
 		&ins_xor, &ins_zjmp, &ins_ldi, &ins_sti, &ins_fork, &ins_lld, &ins_lldi,
@@ -127,16 +127,13 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 
 	if (last_instruction_unresolved(vm, proc))
 	{
-//		ft_printf("last instruction unresolved\n");
 		display(vm, proc, PL_PC);
 		return (0);
 	}
 	proc->ins_bytelen = get_instruction(vm->arena, &ins, proc->pc, MEM_SIZE);
-//	ft_printf("bytelen = %d\n", proc->ins_bytelen);
 	if ((proc->ins_bytelen))
 	{
 		proc->pending.pc = proc->ins_bytelen;
-//		ft_printf("future pc %d squares away\n", proc->pending.pc);
 		f_ins[(int)ins.op.opcode](vm, proc, ins.params);
 		proc->pending.cycles = g_op_tab[(int)ins.op.opcode - 1].nb_cycles;
 		display_ins_description(vm, ins.op.description, ins.op.opcode);
@@ -158,12 +155,11 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 
 int			handle_end_cycle(t_vm *vm, int *cycle)
 {
-//t_player *player;
-
+//	t_player *player;
 	if (*cycle < vm->c_to_die)
 		return (0);
 	reset_live_allprocesses(vm);
-//player = get_player_num(vm->proc, vm->live.winner->num);
+//	player = get_player_num(vm->proc, vm->live.winner->num);
 	if (!vm->proc)
 	{
 		display(vm, NULL, PL_VICTORY);
@@ -185,9 +181,6 @@ void		execute_pending_action(t_vm *vm, t_list *proc_lst)
 	if (!proc->pending.cycles)
 	{
 		proc->pc = (proc->pc + proc->pending.pc) % MEM_SIZE;
-		ft_printf("dest = %d\n", proc->pending.dest);
-//		ft_printf("value before splitting by bytes = %d dest index = %d\n",
-//			proc->pending.value, proc->pending.dest_index);
 		if (proc->pending.dest == vm->arena && (i = -1))
 		{
 			while (++i < 4)
@@ -195,20 +188,18 @@ void		execute_pending_action(t_vm *vm, t_list *proc_lst)
 				index = (proc->pending.dest_index + i) % MEM_SIZE;
 				val = proc->pending.value & (0xFF << ((3 - i) * 8));
 				*(char *)(proc->pending.dest + index) = val >> ((3 - i) * 8);
-				vm->metarena[index].alt_color = 1;
+				vm->metarena[index].color_index = proc->player->color.index;
 			}
 		}
 		else if (proc->pending.dest)
 			proc->reg[proc->pending.dest_index] = proc->pending.value;
 		//IMPORTANT verif comportement si reg a modifier a index % MEMSIZE < 16
 		proc->pending.dest = NULL;
-		ft_printf("player pc = %d\n", proc->pc);//
-		ft_printf("\n");//
 	}
 }
 
 /*
-**process_cycle
+** process_cycle
 */
 
 void		process_cycle(t_vm *vm)
@@ -227,17 +218,14 @@ void		process_cycle(t_vm *vm)
 	++vm->total_cycle;
 	while (proc_lst)
 	{
-		ft_printf("before pending acttion (begin while) proc dest = %d | arena = %d reg = %d\n", ((t_process *)proc_lst->content)->pending.dest, vm->arena, ((t_process *)proc_lst->content)->reg);
 		display(vm, (t_process *)proc_lst->content, TURN_PLAYER);
-		ft_printf("after display (begin while) proc dest = %d | arena = %d reg = %d\n", ((t_process *)proc_lst->content)->pending.dest, vm->arena, ((t_process *)proc_lst->content)->reg);
 		execute_pending_action(vm, proc_lst);
 		display_registers(vm);
 		if (launch_instruction(vm, (t_process *)proc_lst->content))
 			change = 1; // idem;
-		ft_printf("after instruction proc dest = %d\n", ((t_process *)proc_lst->content)->pending.dest);
 		if (!vm->visu.active)
 			ft_printf("\n");
-		if (!proc_lst->next && change) // idem
+		if (!proc_lst->next && change)
 			display_arena((unsigned char *)vm->arena); // idem
 		proc_lst = proc_lst->next;
 	}
@@ -256,7 +244,7 @@ void		process_cycle(t_vm *vm)
 int		play(t_vm *vm)
 {
 	display(vm, 0, CYCLE_NBR);
-	while (++vm->cycle  && !handle_end_cycle(vm, &vm->cycle))
+	while (++vm->cycle && !handle_end_cycle(vm, &vm->cycle))
 	{
 		++vm->total_cycle;
 		ft_printf("\n%scycle = %d | %s ", COLF_BGREY, vm->cycle,

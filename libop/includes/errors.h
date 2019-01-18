@@ -28,9 +28,11 @@
 # define WRG_P_NUM "Trying to assign a player number already taken"
 # define FILE_ISSUE "Issue while handling file"
 # define MAX_P_NUM "Number of players exceeded max amount"
-# define INVALID_PORT	"invalid port for the corehub server"
-# define INSUF_INFO_CH	"port and address of the corehub server are needed"
+# define INVALID_PORT	"Invalid port for the corehub server"
+# define INSUF_INFO_CH	"Port and address of the corehub server are needed"
 # define ERR_HEADER "Header global error"
+# define RD_ERROR "Error while reading file"
+# define INIT_PROC_ERROR "Error while initializing player's process"
 
 /*
 ** PLAYER MESSAGES

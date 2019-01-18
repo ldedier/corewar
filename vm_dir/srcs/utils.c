@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 17:38:14 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/07 20:18:35 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/18 19:40:07 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,24 @@ int			ft_pow(int n, int pow)
 	return (result);
 }
 
-t_player *get_player_num(t_list *lst, int num)
+t_player	*get_player_num(t_list *lst, int num)
 {
 	t_list	*tmp;
 
 	tmp = lst;
 	while (tmp)
 	{
-//		ft_printf("num = %d player num = %d\n", num, ((t_process *)tmp->content)->player->num);
 		if (((t_process *)(tmp->content))->player->num == num)
 			return (((t_process *)(tmp->content))->player);
 		tmp = tmp->next;
 	}
 	return (NULL);
 }
+
+/*
+** get_proc_index function is used to get the wanted process' index in the list
+** of all processes.
+*/
 
 t_process	*get_proc_index(t_list *lst, int index)
 {
@@ -57,10 +61,11 @@ t_process	*get_proc_index(t_list *lst, int index)
 	return ((t_process *)(tmp->content));
 }
 
-int				is_reg(int num)
+/*
+** is_reg function tests if the given number is a valid registry number
+*/
+
+int			is_reg(int num)
 {
-	if (num >= 1 && num <= 16)
-		return (1);
-	else
-		return (0);
+	return (num >= 1 && num <= REG_NUMBER);
 }

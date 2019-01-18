@@ -24,7 +24,7 @@ int		main(int argc, char **argv, char **env)
 	init_vm(&vm, argv, env);
 	flags(&vm, argc, argv);
 	if (read_files(&vm))
-		return (1);
+		error_exit_msg(RD_ERROR);
 	dispatch_players_init(&vm);
 	init_local_players(&vm);
 	if (vm.client.active)
@@ -32,9 +32,7 @@ int		main(int argc, char **argv, char **env)
 	if (vm.visu.active)
 		return (process_visu(&vm));
 	if (!init_processes(&vm))
-		return (1);
+		error_exit_msg(INIT_PROC_ERROR);
 	play(&vm);
-	//display_arena((unsigned char *)vm.arena);
-	//test(vm);
 	return (0);
 }
