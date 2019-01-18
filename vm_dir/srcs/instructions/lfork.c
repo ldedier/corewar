@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 17:09:32 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/10 17:10:10 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/01/18 19:28:57 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 int		ins_lfork(t_vm *vm, t_process *proc, t_parameter arg[3])
 {
 	t_process	*new_proc;
-	int				i;
+	int			i;
 
 	new_proc = (t_process *)ft_memalloc(sizeof(t_process));
 	new_proc->player = proc->player;

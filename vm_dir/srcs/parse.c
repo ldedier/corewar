@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 18:41:42 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/08 18:52:47 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/01/18 19:39:33 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ void			parse(t_vm *vm)
 ** their respective [bin] components in each player's structure.
 */
 
-int		read_files(t_vm *vm)
+int				read_files(t_vm *vm)
 {
 	int		i;
 

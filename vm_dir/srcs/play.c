@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/15 16:49:40 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/01/18 19:43:06 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void			check_resize_cycle(t_vm *vm, int *cycle)
 //	display(vm, NULL, NEW_RESIZE);
 		vm->checks = MAX_CHECKS;
 		vm->c_to_die -= CYCLE_DELTA < vm->c_to_die ? CYCLE_DELTA : vm->c_to_die;
-		return;
+		return ;
 	}
 //display(vm, NULL, AUTO_RESIZE);
 	if (!--vm->checks)
@@ -51,10 +51,11 @@ static int		kill_process(t_vm *vm, t_list *proc)
 	killed_proc = (t_fade *)ft_memalloc(sizeof(t_fade));
 	killed_proc->pc = ((t_process *)proc->content)->pc;
 	killed_proc->color =
-									*((int *)((t_process *)proc->content)->player->color.value);
+					*((int *)((t_process *)proc->content)->player->color.value);
 	killed_proc->value = MAX_FADE;
 	--((t_process *)proc->content)->player->nb_proc;
-	if (ft_add_to_list_ptr(&vm->killed_proc, (void *)killed_proc, sizeof(t_fade)))
+	if (ft_add_to_list_ptr(&vm->killed_proc,
+										(void *)killed_proc, sizeof(t_fade)))
 		return (-1);
 	vm->proc = (tmp == vm->proc) ? tmp->next : vm->proc;
 	ft_memdel((void **)&tmp->content);
@@ -71,7 +72,7 @@ static int		kill_process(t_vm *vm, t_list *proc)
 static int		reset_live_allprocesses(t_vm *vm)
 {
 	t_list		*proc_lst;
-	t_process *proc;
+	t_process	*proc;
 
 	display(vm, NULL, CYCLE_END);
 	proc_lst = vm->proc;
@@ -118,7 +119,7 @@ static int		last_instruction_unresolved(t_vm *vm, t_process *proc)
 static int		launch_instruction(t_vm *vm, t_process *proc)
 {
 	t_instruction	ins;
-	static int 	(*f_ins[NB_INSTRUCTIONS + 1])(t_vm *vm, t_process *proc,
+	static int		(*f_ins[NB_INSTRUCTIONS + 1])(t_vm *vm, t_process *proc,
 			t_parameter arg[3]) = {NULL,
 		&ins_live, &ins_ld, &ins_st, &ins_add, &ins_sub, &ins_and, &ins_or,
 		&ins_xor, &ins_zjmp, &ins_ldi, &ins_sti, &ins_fork, &ins_lld, &ins_lldi,
@@ -154,12 +155,11 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 
 int			handle_end_cycle(t_vm *vm, int *cycle)
 {
-//t_player *player;
-
+//	t_player *player;
 	if (*cycle < vm->c_to_die)
 		return (0);
 	reset_live_allprocesses(vm);
-//player = get_player_num(vm->proc, vm->live.winner->num);
+//	player = get_player_num(vm->proc, vm->live.winner->num);
 	if (!vm->proc)
 	{
 		display(vm, NULL, PL_VICTORY);
@@ -225,7 +225,7 @@ void		process_cycle(t_vm *vm)
 			change = 1; // idem;
 		if (!vm->visu.active)
 			ft_printf("\n");
-		if (!proc_lst->next && change) // idem
+		if (!proc_lst->next && change)
 			display_arena((unsigned char *)vm->arena); // idem
 		proc_lst = proc_lst->next;
 	}
@@ -244,7 +244,7 @@ void		process_cycle(t_vm *vm)
 int		play(t_vm *vm)
 {
 	display(vm, 0, CYCLE_NBR);
-	while (++vm->cycle  && !handle_end_cycle(vm, &vm->cycle))
+	while (++vm->cycle && !handle_end_cycle(vm, &vm->cycle))
 	{
 		++vm->total_cycle;
 		ft_printf("\n%scycle = %d | %s ", COLF_BGREY, vm->cycle,

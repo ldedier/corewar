@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   st.c		                                        :+:      :+:    :+:   */
+/*   st.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/03 20:22:56 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/15 17:43:15 by uboumedj         ###   ########.fr       */
+/*   Created: 2019/01/18 19:29:10 by uboumedj          #+#    #+#             */
+/*   Updated: 2019/01/18 19:29:11 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,5 @@ int		ins_st(t_vm *vm, t_process *proc, t_parameter arg[3])
 	getval_param_dest(vm, proc, &arg[0], 1);
 	arg[1].value %= IDX_MOD;
 	loadval(vm, proc, &arg[1], arg[0].dest_value);
-	proc->carry = !(arg[0].dest_value);
 	return (SUCCESS);
 }

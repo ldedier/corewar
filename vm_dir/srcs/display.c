@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 21:43:44 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/07 19:35:49 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/18 19:35:09 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ void		display_ins_description(t_vm *vm, char *str, int opcode)
 	display_live_player(vm, opcode);
 }
 
-void	display_registers(t_vm *vm)
+void		display_registers(t_vm *vm)
 {
-	int i;
-	t_list *proc;
+	int		i;
+	t_list	*proc;
 
 	proc = vm->proc;
 	ft_printf("*** DISPLAY REGISTERS ***\n\n");
@@ -41,7 +41,8 @@ void	display_registers(t_vm *vm)
 		i = -1;
 		ft_printf("Process in %d\n", ((t_process *)proc->content)->pc);
 		while (++i < REG_NUMBER)
-			ft_printf("R%d: %d | ", i + 1, ((t_process *)proc->content)->reg[i]);
+			ft_printf("R%d: %d | ", i + 1,
+									((t_process *)proc->content)->reg[i]);
 		ft_printf("\n\n");
 		proc = proc->next;
 	}

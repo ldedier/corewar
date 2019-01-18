@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 17:38:14 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/07 20:18:35 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/18 19:40:07 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int			ft_pow(int n, int pow)
 	return (result);
 }
 
-t_player *get_player_num(t_list *lst, int num)
+t_player	*get_player_num(t_list *lst, int num)
 {
 	t_list	*tmp;
 
@@ -65,7 +65,7 @@ t_process	*get_proc_index(t_list *lst, int index)
 ** is_reg function tests if the given number is a valid registry number
 */
 
-int				is_reg(int num)
+int			is_reg(int num)
 {
 	return (num >= 1 && num <= REG_NUMBER);
 }

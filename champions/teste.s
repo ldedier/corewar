@@ -1,7 +1,11 @@
 .name			"ah"
 .comment		"Hmmm"
 
-ld %-666663,r4
-ld %2000,r2
-st r4,2000
-ldi %2000,%-5,r2
+ld %0, r3
+zjmp %:here
+
+there:	live %42;
+
+here:	sti r1,%:there,%1
+		zjmp %:there
+ 

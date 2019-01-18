@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/10 19:20:38 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/18 19:47:16 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ typedef struct		s_vm
 	t_list			*proc;
 	t_list			*killed_proc;
 	t_list			*live_ok;
-	int				 live;
+	int				live;
 	t_player		*winner;
 }					t_vm;
 
@@ -108,10 +108,13 @@ void				error_exit_mgc(char *name);
 void				parse(t_vm *vm);
 void				dispatch_players(t_vm *vm, t_player *player);
 void				dispatch_players_init(t_vm *vm);
-
-
 int					init_processes(t_vm *vm);
 void				init_local_players(t_vm *vm);
+void				update_nb_players(t_vm *vm);
+int					ft_get_potential_num(int player_num);
+void				ft_set_numbers(t_player players[MAX_PLAYERS],
+															t_player *player);
+void				update_buttons(t_vm *vm);
 
 /*
 ** DISPLAY
@@ -125,7 +128,7 @@ void				pl_death(t_vm *vm, t_process *proc);
 void				pl_live(t_vm *vm, t_process *proc);
 void				pl_victory(t_vm *vm, t_process *proc);
 void				pl_cycle(t_vm *vm, t_process *proc);
-void				pl_pc(t_vm * vm, t_process *proc);
+void				pl_pc(t_vm *vm, t_process *proc);
 void				lives_turn(t_vm *vm, t_process *proc);
 void				cycles_to_autoresize(t_vm *vm, t_process *proc);
 void				resize(t_vm *vm, t_process *proc);
@@ -145,10 +148,11 @@ int					get_envar(char **env, char ****envvar);
 ** INSTRUCTIONS
 */
 
-void				getval_param_dest(t_vm *vm, t_process *proc, t_parameter *arg, int mod);
-void				loadval(t_vm *vm, t_process *proc, t_parameter *arg, int val);
+void				getval_param_dest(t_vm *vm, t_process *proc,
+												t_parameter *arg, int mod);
+void				loadval(t_vm *vm, t_process *proc,
+												t_parameter *arg, int val);
 void				set_argval(t_parameter *arg, int index, int size);
-
 int					ins_live(t_vm *vm, t_process *proc, t_parameter arg[3]);
 int					ins_ld(t_vm *vm, t_process *proc, t_parameter arg[3]);
 int					ins_st(t_vm *vm, t_process *proc, t_parameter arg[3]);
@@ -179,15 +183,17 @@ int					play(t_vm *vm);
 */
 
 int					mod(int val, int max);
-int					ft_pow(int n, int pow); // remove?
+int					ft_pow(int n, int pow);
 int					getval(t_vm *vm, t_process *proc, t_parameter arg);
-t_process		*get_proc_index(t_list *lst, int index);
-t_player		*get_player_num(t_list *lst, int num);
+t_process			*get_proc_index(t_list *lst, int index);
+t_player			*get_player_num(t_list *lst, int num);
 int					is_reg(int num);
 
-// TEMP delete at end
+/*
+** TEMP delete at end
+*/
 
-void				display_arena(unsigned char *arena); //tmp for test and debug
+void				display_arena(unsigned char *arena);
 void				test_ins(t_vm *vm);
 void				set_processes(t_vm *vm, t_process **proc);
 void				test(t_vm vm);

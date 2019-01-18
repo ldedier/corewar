@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/01 17:19:41 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/04 17:20:38 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/01/18 19:36:19 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void	pl_death(t_vm *vm, t_process *proc)
 {
 	(void)vm;
-	ft_printf("Process belonging to %d (%s)  %s\n", proc->player->num,
-																								proc->player->name, MSG_DEATH);
+	ft_printf("Process belonging to %d (%s)  %s\n",
+							proc->player->num, proc->player->name, MSG_DEATH);
 }
 
 void	pl_live(t_vm *vm, t_process *proc)
@@ -29,8 +29,8 @@ void	pl_victory(t_vm *vm, t_process *proc)
 {
 	(void)vm;
 	(void)proc;
-	ft_printf("%s %s %d [%s] \n", MSG_VICTORY, LABEL_PLAYER, vm->winner->num,
-																								vm->winner->name);
+	ft_printf("%s %s %d [%s] \n", MSG_VICTORY, LABEL_PLAYER,
+										vm->winner->num, vm->winner->name);
 }
 
 void	pl_cycle(t_vm *vm, t_process *proc)

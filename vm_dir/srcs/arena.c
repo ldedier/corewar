@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 16:42:17 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/08 19:59:20 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/18 19:34:21 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void			ft_set_numbers(t_player players[MAX_PLAYERS], t_player *player)
 	}
 }
 
-void		update_buttons(t_vm *vm)
+void			update_buttons(t_vm *vm)
 {
 	if (vm->nb_players)
 		vm->visu.buttons[CLEAN_ARENA_BUTTON].enabled = 1;

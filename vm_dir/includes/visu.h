@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/15 21:23:14 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/18 19:54:31 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@
 # define SORT_SCORE_RIGHT		PLAYER_BORDER_LEFT / 2
 # define TOOLBAR_BOTTOM			30
 
-
 # define LABSCORE_LEFT			20
 # define LABSCORE_WIDTH			90
 # define LABSCORE_RIGHT			20
@@ -116,7 +115,6 @@
 # define ENTRY_RIGHT			20
 # define ENTRY_SPACE			30
 
-
 # define LIVE_BREAKDOWN_HP_TITLE_TOP	30
 # define LIVE_BREAKDOWN_HP_TITLE_BOTTOM	30
 
@@ -146,9 +144,11 @@
 
 # define NB_TITLES				10
 
-//								0 = ARENA
-//								1 = LOCAL
-//								2 = DOWNLOADS
+/*
+**								0 = ARENA
+**								1 = LOCAL
+**								2 = DOWNLOADS
+*/
 
 # define SCOREWAR				3
 # define UPLOAD_HERE			4
@@ -215,12 +215,12 @@
 # define DROP_TOLERANCE_W		100
 # define DROP_TOLERANCE_H		30
 
-#define	MAX_FADE				60
-#define FADE_LEN				5
+# define MAX_FADE				60
+# define FADE_LEN				5
 
-typedef struct s_vm			t_vm;
-typedef struct s_visu		t_visu;
-typedef struct s_vscrollbar	t_vscrollbar;
+typedef struct s_vm				t_vm;
+typedef struct s_visu			t_visu;
+typedef struct s_vscrollbar		t_vscrollbar;
 typedef struct s_client_slot	t_client_slot;
 
 typedef struct			s_atlas_char
@@ -324,7 +324,7 @@ typedef struct			s_player_list
 	t_vscrollbar		vscrollbar;
 }						t_player_list;
 
-typedef struct          s_sdl
+typedef struct			s_sdl
 {
 	SDL_Rect			screen;
 	SDL_Window			*window;
@@ -347,21 +347,21 @@ typedef struct			s_dim
 	int					height;
 }						t_dim;
 
-typedef struct          s_reactive
+typedef struct			s_reactive
 {
-	double              w_scale;
-	double              h_scale;
+	double				w_scale;
+	double				h_scale;
 	double				anim_ratio;
-}                       t_reactive;
+}						t_reactive;
 
-typedef struct          s_framerate
+typedef struct			s_framerate
 {
 	Uint64				current;
 	Uint64				previous;
 	double				delta;
 	int					fps_counter;
 	Uint32				ms_counter;
-}                       t_framerate;
+}						t_framerate;
 
 typedef struct			s_center
 {
@@ -457,11 +457,11 @@ typedef struct			s_center
 	double				player_entry_height;
 	int					player_title_top;
 	int					player_title_bottom;
-	
+
 	int					player_entry_padding;
 	int					player_entry_ipadding;
 	int					list_player_entries_bottom;
-	
+
 	int					live_breakdown_h;
 	int					state_top;
 	int					state_h;
@@ -489,19 +489,19 @@ typedef struct			s_center
 
 	int					live_breakdown_hp_anim_h;
 	int					live_breakdown_hp_anim_y;
-	
+
 	int					live_breakdown_hp_title_top;
 	int					live_breakdown_hp_title_bottom;
 	int					live_breakdown_hp_players_h;
 	int					live_breakdown_hp_players_bottom;
-	
+
 	int					live_breakdown_hp_players_side;
 
 	int					winner_height;
 	int					winner_top;
 	int					winner_bottom;
 	int					winner_left;
-	
+
 	int					back_width;
 	int					back_height;
 	int					back_left;
@@ -589,7 +589,6 @@ typedef struct			s_notification
 	int					image_index;
 }						t_notification;
 
-
 typedef struct			s_ray
 {
 	SDL_Surface			*surface;
@@ -614,7 +613,7 @@ struct					s_visu
 {
 	char				active;
 	t_phase				phase;
-	int 				(*sort_cs_func)(void *, void *);
+	int					(*sort_cs_func)(void *, void *);
 	unsigned char		inv_sort;
 	t_sort_type			sort_type;
 	t_local_type		local_type;
@@ -735,8 +734,8 @@ int						ft_is_on_scrollbars(t_vm *vm, t_ixy xy,
 void					ft_copy(t_vm *vm, t_drop_container *dc);
 void					ft_place(t_vm *vm, t_drop_container *dc);
 void					ft_place_or_swap(t_vm *vm, t_drop_container *dc);
-int						ft_is_on_player_scrollbar(t_vm *vm, t_ixy xy, t_xy player_xy,
-							t_vscrollbar vscrollbar);
+int						ft_is_on_player_scrollbar(t_vm *vm, t_ixy xy,
+							t_xy player_xy, t_vscrollbar vscrollbar);
 int						ft_is_on_client_players(t_vm *vm, t_ixy xy,
 							t_drag_container *dc);
 int						ft_is_on_download_players(t_vm *vm, t_ixy xy,
