@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/15 16:49:40 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/01/18 14:35:45 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,11 @@ static void			check_resize_cycle(t_vm *vm, int *cycle)
 static int		kill_process(t_vm *vm, t_list *proc)
 {
 	t_list	*tmp;
+	t_list	*tmp2;
 	t_fade	*killed_proc;
 
 	tmp = proc;
+	tmp2 = vm->proc;
 	display(vm, (t_process *)proc->content, PL_DEATH);
 	killed_proc = (t_fade *)ft_memalloc(sizeof(t_fade));
 	killed_proc->pc = ((t_process *)proc->content)->pc;
@@ -55,6 +57,9 @@ static int		kill_process(t_vm *vm, t_list *proc)
 	--((t_process *)proc->content)->player->nb_proc;
 	if (ft_add_to_list_ptr(&vm->killed_proc, (void *)killed_proc, sizeof(t_fade)))
 		return (-1);
+	while (tmp2 && proc && tmp2->next &&  tmp2->next != proc)
+		tmp2 = tmp2->next;
+	tmp2->next = proc->next ? proc->next : NULL;
 	vm->proc = (tmp == vm->proc) ? tmp->next : vm->proc;
 	ft_memdel((void **)&tmp->content);
 	ft_memdel((void **)&tmp);
