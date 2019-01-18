@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/15 21:23:14 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/18 20:49:39 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -817,4 +817,42 @@ int						ft_sort_alpha_cs(void *p1, void *p2);
 int						ft_sort_score_cs(void *p1, void *p2);
 void					ft_sort_client_slots(t_vm *vm);
 int						ft_copied_char_surface_w(SDL_Rect rect, int len);
+void					ft_render_inner_name_value(t_vm *vm,
+							SDL_Rect inner_rect, t_player *player,
+								t_player_source source);
+int						ft_render_inner_player(t_vm *vm, SDL_Rect player_rect,
+							t_player *player, t_player_source source);
+void					ft_render_inner_name(t_vm *vm, SDL_Rect inner_rect,
+							t_player *player, t_player_source source);
+void					ft_free_all_visu(t_visu *v);
+int						ft_render_inner_number(t_vm *vm, SDL_Rect inner_rect,
+							t_player *player, t_player_source source);
+void					ft_render_inner_name_full(t_vm *vm,
+							SDL_Rect player_rect, t_player *player,
+								t_player_source source);
+int						ft_get_player_color_no_drag(t_vm *vm, t_player *player,
+							int initial_color, float value);
+int						ft_get_player_color(t_vm *vm, t_player *player,
+							int initial_color, float value);
+int						ft_render_title(t_vm *vm, int title_index, double x,
+							double y);
+int						ft_render_closing_cross(t_vm *vm, t_xy xy);
+int						ft_render_player_entry(t_vm *vm, char *entry,
+							char *value, int y);
+void					ft_free_font(TTF_Font *font);
+void					ft_free_surfaces(t_visu *v);
+void					ft_free_atlas(t_visu *v);
+void					ft_free_cursors(t_visu *v);
+void					ft_init_center_memory(t_visu *visu, t_center *c);
+void 					ft_init_center_entries(t_visu *visu, t_center *c);
+void					ft_init_center_player_entries(t_visu *visu,
+							t_center *c);
+void					ft_init_center_live_breakdown(t_visu *visu,
+							t_center *c);
+void					ft_init_center_hp(t_visu *visu, t_center *c);
+void					ft_init_center_footer(t_visu *visu, t_center *c);
+void					ft_init_center_spec(t_visu *visu, t_center *c);
+void					ft_init_center_fight(t_visu *visu, t_center *c);
+void					ft_init_center_online(t_visu *visu, t_center *c);
+void					ft_init_center_players(t_visu *visu, t_center *c);
 #endif

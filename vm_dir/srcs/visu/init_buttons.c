@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 21:28:15 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/11 21:10:50 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/18 20:20:29 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,40 @@ void	ft_init_button(t_button *button, SDL_Rect rect, SDL_Surface *surface,
 	button->phase = PHASE_INIT;
 }
 
+void	ft_init_buttons_3(t_vm *vm, t_visu *visu)
+{
+	SDL_Rect	rect;
+
+	rect.x = visu->center.notif_panel_left +
+		3 * (visu->center.notif_panel_w) / 8.0;
+	rect.y = visu->center.notif_panel_top +
+		(3.0 * visu->center.notif_panel_h) / 4.0;
+	rect.w = visu->center.notif_panel_w / 4.0;
+	rect.h = visu->center.notif_panel_h / 8.0;
+	ft_init_button(&(visu->buttons[OK_BUTTON]), rect,
+	vm->visu.sdl.images[OK], &ft_remove_notification);
+	visu->buttons[OK_BUTTON].visible = 0;
+	rect.x = visu->center.dashboard_x + visu->center.back_left;
+	rect.y = visu->center.game_entries_h + visu->center.player_entries_h +
+		visu->center.winner_top + visu->center.winner_height +
+			visu->center.winner_bottom;
+	rect.w = visu->center.back_width;
+	rect.h = visu->center.back_height;
+	ft_init_button(&(visu->buttons[BACK_BUTTON]), rect,
+		vm->visu.sdl.images[BACK], &go_back);
+	visu->buttons[BACK_BUTTON].phase = PHASE_PLAY;
+}
+
 void	ft_init_buttons_2(t_vm *vm, t_visu *visu)
 {
 	SDL_Rect	rect;
 
 	rect.x = visu->center.dashboard_x + visu->center.fight_left;
-	rect.y = visu->center.footer_y + visu->center.fight_top;; 
+	rect.y = visu->center.footer_y + visu->center.fight_top;
 	rect.h = visu->center.fight_height;
 	rect.w = visu->center.fight_width;
 	ft_init_button(&(visu->buttons[FIGHT_BUTTON]), rect,
 	vm->visu.sdl.images[FIGHT], &fight);
-
 	rect.x = visu->center.dashboard_x + visu->center.spec_left;
 	rect.y = visu->center.top_dashboard_height + visu->center.spec_vborder;
 	rect.h = visu->center.spec_h;
@@ -69,23 +92,7 @@ void	ft_init_buttons_2(t_vm *vm, t_visu *visu)
 	ft_init_button(&(visu->buttons[SWITCH_LOCAL_BUTTON]), rect,
 	vm->visu.sdl.images[SWITCH_1], &switch_local);
 	visu->buttons[SWITCH_LOCAL_BUTTON].render = ft_render_switch_button;
-
-	rect.x = visu->center.notif_panel_left + 3 * (visu->center.notif_panel_w) / 8.0;
-	rect.y = visu->center.notif_panel_top + (3.0 * visu->center.notif_panel_h) / 4.0 ;
-	rect.w = visu->center.notif_panel_w / 4.0;
-	rect.h = visu->center.notif_panel_h / 8.0;
-	ft_init_button(&(visu->buttons[OK_BUTTON]), rect,
-	vm->visu.sdl.images[OK], &ft_remove_notification);
-	visu->buttons[OK_BUTTON].visible = 0;
-	rect.x = visu->center.dashboard_x + visu->center.back_left; 
-	rect.y = visu->center.game_entries_h + visu->center.player_entries_h +
-		visu->center.winner_top + visu->center.winner_height +
-			visu->center.winner_bottom;
-	rect.w = visu->center.back_width;
-	rect.h = visu->center.back_height;
-	ft_init_button(&(visu->buttons[BACK_BUTTON]), rect,
-		vm->visu.sdl.images[BACK], &go_back);
-	visu->buttons[BACK_BUTTON].phase = PHASE_PLAY;
+	ft_init_buttons_3(vm, visu);
 }
 
 void	ft_init_buttons(t_vm *vm, t_visu *visu)
@@ -96,9 +103,9 @@ void	ft_init_buttons(t_vm *vm, t_visu *visu)
 	rect.h = visu->center.player_h;
 	rect.x = visu->center.dashboard_x + visu->center.upload_left +
 		visu->center.player_w + visu->center.upload_right;
-	rect.y =  visu->center.top_dashboard_height +
+	rect.y = visu->center.top_dashboard_height +
 		visu->center.top_dashboard_fheight + visu->center.s_title_h +
-		visu->center.title_bottom + visu->center.title_top;
+			visu->center.title_bottom + visu->center.title_top;
 	ft_init_button(&(visu->buttons[UPLOAD_BUTTON]), rect,
 		vm->visu.sdl.images[UL], &ft_upload);
 	visu->buttons[UPLOAD_BUTTON].enabled = 0;

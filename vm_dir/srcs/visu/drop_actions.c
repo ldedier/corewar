@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 20:22:52 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/21 19:42:14 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/18 20:08:04 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,20 @@ void	ft_remove_color_player(t_vm *vm, t_player *player)
 
 void	ft_swap(t_vm *vm, t_drop_container *dc, t_player dragged_on_player)
 {
-	*(vm->visu.drag_container.drag_union.drag_player.player) = dragged_on_player;
+	*(vm->visu.drag_container.drag_union.drag_player.player) =
+		dragged_on_player;
 	if (vm->visu.drag_container.drag_union.drag_player.close)
 		vm->visu.drag_container.drag_union.drag_player.close->visible = 1;
-	if (dc->player == &vm->client.upload_player) //on drop dans upload
+	if (dc->player == &vm->client.upload_player)
 		ft_remove_color_player(vm, dc->player);
-	if (vm->visu.drag_container.drag_union.drag_player.source == UPLOAD) //on drop depuis upload
-		ft_remove_color_player(vm, vm->visu.drag_container.drag_union.drag_player.player);
+	if (vm->visu.drag_container.drag_union.drag_player.source == UPLOAD)
+		ft_remove_color_player(vm, vm->visu.drag_container.
+				drag_union.drag_player.player);
 }
 
 void	ft_place(t_vm *vm, t_drop_container *dc)
 {
-	if (dc->player == &vm->client.upload_player) //on place dans upload
+	if (dc->player == &vm->client.upload_player)
 		ft_remove_color_player(vm, dc->player);
 	vm->visu.drag_container.drag_union.drag_player.player->relevant = 0;
 	vm->visu.drag_container.drag_union.drag_player.player->color.value = NULL;
@@ -59,7 +61,7 @@ void	ft_copy(t_vm *vm, t_drop_container *dc)
 	int tmp;
 	int rel;
 
-	if (dc->player == &vm->client.upload_player) //usefull si copie from arena
+	if (dc->player == &vm->client.upload_player)
 		dc->player->color.value = NULL;
 	rel = dc->player->relevant;
 	dc->player->relevant = 0;
@@ -67,13 +69,15 @@ void	ft_copy(t_vm *vm, t_drop_container *dc)
 	if (rel)
 	{
 		tmp = dc->player->num;
-		*(dc->player) = *(vm->visu.drag_container.drag_union.drag_player.player);
+		*(dc->player) = *(vm->visu.drag_container.
+				drag_union.drag_player.player);
 		dc->player->num = tmp;
 		dispatch_players(vm, dc->player);
 	}
 	else
 	{
-		*(dc->player) = *(vm->visu.drag_container.drag_union.drag_player.player);
+		*(dc->player) = *(vm->visu.drag_container.
+				drag_union.drag_player.player);
 		dispatch_players(vm, NULL);
 	}
 	dc->close->visible = 1;

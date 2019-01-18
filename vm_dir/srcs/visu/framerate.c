@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/26 15:15:58 by ldedier           #+#    #+#             */
-/*   Updated: 2018/08/26 15:15:58 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/18 20:11:52 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void	ft_print_fps(t_framerate *framerate)
 	if (SDL_GetTicks() - framerate->ms_counter > 1000)
 	{
 		framerate->ms_counter = SDL_GetTicks();
-		printf("fps : %d (%d)\n", ft_min(60, framerate->fps_counter), framerate->fps_counter);
-		//printf("fps : %d\n", framerate->fps_counter);
+		printf("fps : %d (%d)\n",
+			ft_min(60, framerate->fps_counter), framerate->fps_counter);
 		framerate->fps_counter = 0;
 	}
 }

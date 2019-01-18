@@ -6,36 +6,11 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 15:02:55 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/30 19:38:46 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/18 20:56:52 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
-
-void	ft_init_sdl_to_null(t_visu *v)
-{
-	int i;
-	int j;
-
-	v->sdl.window = NULL;
-	v->sdl.renderer = NULL;
-	v->sdl.w_surface = NULL;
-	v->sdl.font = NULL;
-	i = 0;
-	while (i < MAX_PL_COLOR)
-	{
-		j = 0;
-		while (j < NB_GLYPHS)
-		{
-			v->sdl.atlas[i][j].surface = NULL;
-			j++;
-		}
-		i++;
-	}
-	i = 0;
-	while (i < NB_TITLES)
-		v->sdl.titles[i++] = NULL;
-}
 
 int		ft_init_sdl_2(t_visu *v)
 {
@@ -48,9 +23,6 @@ int		ft_init_sdl_2(t_visu *v)
 		return (1);
 	if (!(v->sdl.w_surface = SDL_CreateRGBSurface(0,
 					v->dim.width, v->dim.height, 32, 0, 0, 0, 0)))
-		return (1);
-	if (!(v->sdl.surface = SDL_CreateRGBSurface(0,
-				v->dim.width, v->dim.height, 32, 0, 0, 0, 0)))
 		return (1);
 	return (0);
 }
@@ -67,8 +39,9 @@ int		ft_init_sdl(t_visu *v)
 	v->sdl.screen.w = v->dim.width;
 	v->sdl.screen.h = v->dim.height;
 	if (!(v->sdl.window = SDL_CreateWindow("corewar visu",
-					v->sdl.screen.x, v->sdl.screen.y, v->sdl.screen.w, v->sdl.screen.h,
-					SDL_WINDOW_FULLSCREEN_DESKTOP)))
+					v->sdl.screen.x, v->sdl.screen.y,
+						v->sdl.screen.w, v->sdl.screen.h,
+							SDL_WINDOW_FULLSCREEN_DESKTOP)))
 		return (1);
 	if (ft_init_sdl_2(v))
 		return (1);

@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 20:30:19 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/21 14:06:44 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/18 21:40:07 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int		ft_is_droppable(t_vm *vm, t_ixy mouse, t_xy xy)
 {
 	return (ft_fabs((mouse.x - vm->visu.drag_container.diff_x) -
-				xy.x) < (vm->visu.center.player_w) && 
+				xy.x) < (vm->visu.center.player_w) &&
 					ft_fabs((mouse.y - vm->visu.drag_container.diff_y) -
 						xy.y) < (ft_max(vm->visu.center.player_padding,
 								vm->visu.center.player_h)));
@@ -42,8 +42,9 @@ int		ft_is_on_upload_slot_drop(t_vm *vm, t_ixy mouse, t_drop_container *dc)
 {
 	if (vm->client.active &&
 		vm->visu.drag_container.drag_union.drag_player.source != SERVER &&
-			ft_is_droppable_scrollbar(vm, mouse, vm->visu.positions.upload_slot.player,
-				vm->visu.players_list[UPLOAD].vscrollbar))
+			ft_is_droppable_scrollbar(vm, mouse,
+				vm->visu.positions.upload_slot.player,
+					vm->visu.players_list[UPLOAD].vscrollbar))
 	{
 		dc->player = &(vm->client.upload_player);
 		dc->close = &(vm->visu.positions.upload_slot.close);
@@ -56,7 +57,7 @@ int		ft_is_on_droppable(t_vm *vm, t_ixy mouse, t_drop_container *dc)
 {
 	int i;
 
-	if (vm->visu.phase == PHASE_INIT && 
+	if (vm->visu.phase == PHASE_INIT &&
 		vm->visu.drag_container.drag_union.drag_player.player != NULL)
 	{
 		i = 0;
