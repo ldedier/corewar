@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 21:43:44 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/18 14:35:43 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/18 18:09:19 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void		display_live_player(t_vm *vm, int op_code)
 {
 	t_player *player;
 
+//	ft_printf("display live\n");
 	if (op_code == LIVE)
 	{
 		player = get_player_num(vm->proc, vm->winner->num);
@@ -25,8 +26,10 @@ void		display_live_player(t_vm *vm, int op_code)
 
 void		display_ins_description(t_vm *vm, char *str, int opcode)
 {
+//	ft_printf("COUCOU description\n");
 	ft_printf("%s >>> %*-s%s", COLF_CYAN, PAD_INS - 5, str, COLF_OFF);
 	display_live_player(vm, opcode);
+//	ft_printf("COUCOU description end\n");
 }
 
 void	display_registers(t_vm *vm)
@@ -36,15 +39,13 @@ void	display_registers(t_vm *vm)
 
 	proc = vm->proc;
 	ft_printf("*** DISPLAY REGISTERS ***\n\n");
+//	ft_printf("proc = %d\n", proc);
 	while (proc && proc->content)
 	{
 		i = -1;
 //		ft_printf("Process in %d\n", ((t_process *)proc->content)->pc);
 		while (++i < REG_NUMBER && proc->content)
-		{
-			ft_printf("coucou i = %d\n", i);
 			ft_printf("R%d: %d | ", i + 1, ((t_process *)proc->content)->reg[i]);
-		}
 		ft_printf("\n\n");
 		proc = proc->next;
 	}

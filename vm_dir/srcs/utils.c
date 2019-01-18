@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 17:38:14 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/07 20:18:35 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/18 17:50:12 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_player *get_player_num(t_list *lst, int num)
 	tmp = lst;
 	while (tmp)
 	{
-//		ft_printf("num = %d player num = %d\n", num, ((t_process *)tmp->content)->player->num);
+		ft_printf("num = %d player num = %d\n", num, ((t_process *)tmp->content)->player->num);
 		if (((t_process *)(tmp->content))->player->num == num)
 			return (((t_process *)(tmp->content))->player);
 		tmp = tmp->next;

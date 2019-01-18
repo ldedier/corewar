@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 16:42:17 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/08 19:59:20 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/18 16:01:24 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void			init_vm(t_vm *vm, char **argv, char **env)
 	{
 		vm->player[i].relevant = 0;
 		vm->player[i].color.value = NULL;
+		vm->player[i].last_live_cycle = 0;
 		ft_bzero(vm->player[i].aff_buf, MAX_AFF_LEN);
 	}
 }
@@ -76,6 +77,9 @@ t_list			*add_process(t_vm *vm, int index, int start)
 	process->reg[0] = process->player->num;
 	if (ft_add_to_list_ptr(&vm->proc, (void *)process, sizeof(t_process)))
 		return (NULL);
+	ft_printf("vm->proc = %d vm->proc->next = %d\n", vm->proc, vm->proc->next);
+	if (vm->proc->next)
+		ft_printf("vm->proc->next->next = %d\n", vm->proc->next->next);
 	return (vm->proc);
 }
 

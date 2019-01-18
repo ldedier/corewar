@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/10 19:20:38 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/18 16:45:17 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 
 typedef struct		s_pending
 {
+	t_instruction	*ins;
 	void			*dest;
 	int				dest_index;
 	int				value;

@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 17:10:34 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/10 17:52:48 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/01/18 18:09:05 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int		ins_live(t_vm *vm, t_process *proc, t_parameter arg[3])
 	t_player	*player;
 	t_fade		*live;
 
+	ft_printf("LIVE! total cycle = %d arg[0] = %d\n", vm->total_cycle, arg[0]);
 	getval_param_dest(vm, proc, &arg[0], 1);
 	proc->live = 1;
 	++vm->live;
@@ -32,6 +33,7 @@ int		ins_live(t_vm *vm, t_process *proc, t_parameter arg[3])
 	{
 		player->live++;
 		player->last_live_cycle = vm->total_cycle;
+		ft_printf("last live cycle = %d\n", player->last_live_cycle);
 		vm->winner = player;
 		ft_printf("A process declares the player %d(%s) alive.\n",
 				player->num, player->name);
