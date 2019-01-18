@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 16:21:43 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/18 17:45:53 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/18 23:41:33 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ int		process_visu(t_vm *vm)
 			ft_free_all_visu(&(vm->visu));
 		ft_process_delta(&(vm->visu.framerate));
 		ft_print_fps(&(vm->visu.framerate));
-		SDL_Delay(ft_fmax(0, (1000 / (double)FRAMERATE) - (vm->visu.framerate.delta)));
+		SDL_Delay(ft_fmax(0, (1000 / (double)FRAMERATE) -
+				(vm->visu.framerate.delta)));
 	}
 	ft_free_all_visu(&(vm->visu));
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/18 20:49:39 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/19 00:11:14 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@
 # define SORT_SCORE_RIGHT		PLAYER_BORDER_LEFT / 2
 # define TOOLBAR_BOTTOM			30
 
-
 # define LABSCORE_LEFT			20
 # define LABSCORE_WIDTH			90
 # define LABSCORE_RIGHT			20
@@ -116,7 +115,6 @@
 # define ENTRY_RIGHT			20
 # define ENTRY_SPACE			30
 
-
 # define LIVE_BREAKDOWN_HP_TITLE_TOP	30
 # define LIVE_BREAKDOWN_HP_TITLE_BOTTOM	30
 
@@ -145,10 +143,6 @@
 # define NB_FRAMES				5
 
 # define NB_TITLES				10
-
-//								0 = ARENA
-//								1 = LOCAL
-//								2 = DOWNLOADS
 
 # define SCOREWAR				3
 # define UPLOAD_HERE			4
@@ -215,8 +209,8 @@
 # define DROP_TOLERANCE_W		100
 # define DROP_TOLERANCE_H		30
 
-#define	MAX_FADE				60
-#define FADE_LEN				5
+# define MAX_FADE				60
+# define FADE_LEN				5
 
 typedef struct s_vm			t_vm;
 typedef struct s_visu		t_visu;
@@ -324,13 +318,14 @@ typedef struct			s_player_list
 	t_vscrollbar		vscrollbar;
 }						t_player_list;
 
-typedef struct          s_sdl
+typedef struct			s_sdl
 {
 	SDL_Rect			screen;
 	SDL_Window			*window;
 	SDL_Renderer		*renderer;
 	SDL_Surface			*w_surface;
 	SDL_Surface			*surface;
+	SDL_Surface			*from;
 	SDL_Texture			*texture;
 	SDL_Color			color;
 	SDL_Surface			*images[NB_IMAGES];
@@ -347,21 +342,21 @@ typedef struct			s_dim
 	int					height;
 }						t_dim;
 
-typedef struct          s_reactive
+typedef struct			s_reactive
 {
-	double              w_scale;
-	double              h_scale;
+	double				w_scale;
+	double				h_scale;
 	double				anim_ratio;
-}                       t_reactive;
+}						t_reactive;
 
-typedef struct          s_framerate
+typedef struct			s_framerate
 {
 	Uint64				current;
 	Uint64				previous;
 	double				delta;
 	int					fps_counter;
 	Uint32				ms_counter;
-}                       t_framerate;
+}						t_framerate;
 
 typedef struct			s_center
 {
@@ -457,11 +452,11 @@ typedef struct			s_center
 	double				player_entry_height;
 	int					player_title_top;
 	int					player_title_bottom;
-	
+
 	int					player_entry_padding;
 	int					player_entry_ipadding;
 	int					list_player_entries_bottom;
-	
+
 	int					live_breakdown_h;
 	int					state_top;
 	int					state_h;
@@ -489,19 +484,19 @@ typedef struct			s_center
 
 	int					live_breakdown_hp_anim_h;
 	int					live_breakdown_hp_anim_y;
-	
+
 	int					live_breakdown_hp_title_top;
 	int					live_breakdown_hp_title_bottom;
 	int					live_breakdown_hp_players_h;
 	int					live_breakdown_hp_players_bottom;
-	
+
 	int					live_breakdown_hp_players_side;
 
 	int					winner_height;
 	int					winner_top;
 	int					winner_bottom;
 	int					winner_left;
-	
+
 	int					back_width;
 	int					back_height;
 	int					back_left;
@@ -534,7 +529,7 @@ typedef struct			s_drag_player
 	t_player_source		source;
 }						t_drag_player;
 
-typedef union			s_drag_union
+typedef union			u_drag_union
 {
 	t_vscrollbar		*vscrollbar;
 	t_drag_player		drag_player;
@@ -589,7 +584,6 @@ typedef struct			s_notification
 	int					image_index;
 }						t_notification;
 
-
 typedef struct			s_ray
 {
 	SDL_Surface			*surface;
@@ -614,7 +608,7 @@ struct					s_visu
 {
 	char				active;
 	t_phase				phase;
-	int 				(*sort_cs_func)(void *, void *);
+	int					(*sort_cs_func)(void *, void *);
 	unsigned char		inv_sort;
 	t_sort_type			sort_type;
 	t_local_type		local_type;
@@ -718,8 +712,8 @@ void					ft_scroll_up(t_vm *vm, t_button *button);
 void					ft_scroll_down(t_vm *vm, t_button *button);
 void					ft_populate_drag_container_player(t_drag_container *dc,
 							t_player *player, t_player_source source);
-void					ft_populate_drag_container_vscrollbar(t_drag_container *dc,
-							t_vscrollbar *vscrollbar);
+void					ft_populate_drag_container_vscrollbar(t_drag_container
+							*dc, t_vscrollbar *vscrollbar);
 void					ft_populate_drag_container_player_client_slot(
 							t_drag_container *dc, t_client_slot *client_slot,
 								t_xy player_pos, int scrolled_h);
@@ -735,8 +729,8 @@ int						ft_is_on_scrollbars(t_vm *vm, t_ixy xy,
 void					ft_copy(t_vm *vm, t_drop_container *dc);
 void					ft_place(t_vm *vm, t_drop_container *dc);
 void					ft_place_or_swap(t_vm *vm, t_drop_container *dc);
-int						ft_is_on_player_scrollbar(t_vm *vm, t_ixy xy, t_xy player_xy,
-							t_vscrollbar vscrollbar);
+int						ft_is_on_player_scrollbar(t_vm *vm, t_ixy xy,
+							t_xy player_xy, t_vscrollbar vscrollbar);
 int						ft_is_on_client_players(t_vm *vm, t_ixy xy,
 							t_drag_container *dc);
 int						ft_is_on_download_players(t_vm *vm, t_ixy xy,
@@ -844,7 +838,7 @@ void					ft_free_surfaces(t_visu *v);
 void					ft_free_atlas(t_visu *v);
 void					ft_free_cursors(t_visu *v);
 void					ft_init_center_memory(t_visu *visu, t_center *c);
-void 					ft_init_center_entries(t_visu *visu, t_center *c);
+void					ft_init_center_entries(t_visu *visu, t_center *c);
 void					ft_init_center_player_entries(t_visu *visu,
 							t_center *c);
 void					ft_init_center_live_breakdown(t_visu *visu,
@@ -855,4 +849,16 @@ void					ft_init_center_spec(t_visu *visu, t_center *c);
 void					ft_init_center_fight(t_visu *visu, t_center *c);
 void					ft_init_center_online(t_visu *visu, t_center *c);
 void					ft_init_center_players(t_visu *visu, t_center *c);
+double					get_magic_ratio(int lives_player_1, int lives_player_2);
+void					ft_get_player_lives(t_vm *vm, int *nb_live_player_1,
+							int *nb_live_player_2);
+int						ft_render_button(t_vm *vm, t_button *button);
+int						ft_render_server_title(t_vm *vm, double y);
+int						ft_render_toolbar(t_vm *vm, double y);
+int						ft_render_client_slot(t_vm *vm,
+							t_client_slot *slot, int y);
+SDL_Rect				get_rect_from_pc(t_vm *vm, int pc);
+int						ft_render_all_dead_process(t_vm *vm);
+void					ft_draw_rect_surface(SDL_Surface *surface,
+							SDL_Rect rect, int color);
 #endif

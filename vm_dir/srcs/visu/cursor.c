@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 19:11:34 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/18 21:20:33 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/19 00:44:53 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void		ft_update_cursor(t_vm *vm, t_ixy xy)
 		ft_change_cursor(vm, REGULAR);
 }
 
-int		ft_populate_cursor(t_cursor_packer *cp, char *str, int hot_x, int hot_y)
+int			ft_populate_cursor(t_cursor_packer *cp, char *str,
+				int hot_x, int hot_y)
 {
 	if (!(cp->surface = ft_load_image(str)))
 		return (1);
@@ -45,7 +46,7 @@ int		ft_populate_cursor(t_cursor_packer *cp, char *str, int hot_x, int hot_y)
 	return (0);
 }
 
-int		ft_init_cursors(t_visu *v)
+int			ft_init_cursors(t_visu *v)
 {
 	if (ft_populate_cursor(&(v->sdl.cursor_packers[GRAB]),
 				PATH"/resources/grab.png", 7, 3))

@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 21:40:23 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/19 21:56:18 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/18 23:42:25 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void		ft_get_dimensions(t_visu *v)
 	v->dim.height = dm.h;
 }
 
-SDL_Surface *ft_init_font_surface(char *str, TTF_Font *font, SDL_Color color,
+SDL_Surface	*ft_init_font_surface(char *str, TTF_Font *font, SDL_Color color,
 		SDL_Surface *to_blit_surface)
 {
 	SDL_Surface *res;
@@ -38,7 +38,7 @@ SDL_Surface *ft_init_font_surface(char *str, TTF_Font *font, SDL_Color color,
 	return (res);
 }
 
-SDL_Surface *ft_init_font_surface_sdl(char *str, t_sdl sdl)
+SDL_Surface	*ft_init_font_surface_sdl(char *str, t_sdl sdl)
 {
 	return (ft_init_font_surface(str, sdl.font, sdl.color, sdl.w_surface));
 }
@@ -51,6 +51,7 @@ t_ixy		new_ixy(int x, int y)
 	res.y = y;
 	return (res);
 }
+
 int			ft_is_in_rect(t_ixy xy, SDL_Rect rect)
 {
 	return (xy.x > rect.x && xy.x < rect.x + rect.w &&

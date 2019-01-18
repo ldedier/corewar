@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 18:17:42 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/18 18:19:26 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/19 00:29:52 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,34 +29,6 @@ int		ft_init_client(t_client *client)
 		return (ft_net_error());
 	client->client_slots = NULL;
 	client->upload_player.relevant = 0;
-	return (0);
-}
-
-int		ft_get_new_cores(int nb_bytes, t_vm *vm)
-{
-	t_nb_players	nb_players;
-	t_name_len		name_len;
-	t_score			score;
-	t_nb_players	player_iter;
-	int				i;
-
-	(void)nb_bytes; //olalala
-	i = sizeof(t_flag);
-	ft_memcpy_recv(&nb_players, vm->client.buffer, &i, sizeof(t_nb_players));
-	player_iter = 0;
-	while (player_iter < nb_players)
-	{
-		ft_memcpy_recv(&score, vm->client.buffer, &i, sizeof(t_score));
-		ft_memcpy_recv(&name_len, vm->client.buffer, &i, sizeof(t_name_len));
-		if (ft_process_new_client_slot(vm, i, name_len, score))
-			return (1);
-		i += name_len;
-		player_iter++;
-	}
-	ft_lst_mergesort(&vm->client.client_slots,
-		vm->visu.sort_cs_func, vm->visu.inv_sort);
-	ft_update_download_buttons_client_rect(vm);
-	ft_update_vscrollbar_server_compressed_size(vm, &(vm->visu));
 	return (0);
 }
 

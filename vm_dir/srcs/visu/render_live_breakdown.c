@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/03 21:23:05 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/09 19:15:24 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/18 22:10:27 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 int		ft_render_live_breakdown_bar(t_vm *vm)
 {
-	int		i;
-	double	from;
-	double	distance;
+	int			i;
+	double		from;
+	double		distance;
+	SDL_Rect	rect;
 
 	i = 0;
 	from = 0;
-	SDL_Rect rect;
 	rect.x = vm->visu.center.dashboard_x +
 		vm->visu.center.live_breakdown_bar_left;
 	rect.w = vm->visu.center.live_breakdown_bar_w;
