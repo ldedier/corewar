@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/19 17:11:51 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/19 20:58:58 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,9 @@ static int		reset_live_allprocesses(t_vm *vm)
 			proc->live = 0;
 			proc->player->live = 0;
 		}
-		vm->winner = proc->player;
 		proc_lst = proc_lst->next;
 	}
+	vm->live = 0;
 	return (0);
 }
 
@@ -146,7 +146,7 @@ void		execute_pending_action(t_vm *vm, t_process *proc)
 				index = (proc->pending.dest_index + i) % MEM_SIZE;
 				val = proc->pending.value & (0xFF << ((3 - i) * 8));
 				*(char *)(proc->pending.dest + index) = val >> ((3 - i) * 8);
-				vm->metarena[index].alt_color = 1;
+			//	vm->metarena[index].alt_color = 1;
 			}
 		}
 		else if (proc->pending.dest)

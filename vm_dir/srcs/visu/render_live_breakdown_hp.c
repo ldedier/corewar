@@ -6,13 +6,13 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/03 21:25:21 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/18 22:27:37 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/19 22:38:38 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-int		ft_render_magic_voldemort(t_vm *vm, SDL_Rect *rect)
+int		ft_render_magic_voldemort(t_vm *vm, SDL_Rect *rect, int *w)
 {
 	double		ratio;
 	int			nb_live_player_1;
@@ -23,7 +23,7 @@ int		ft_render_magic_voldemort(t_vm *vm, SDL_Rect *rect)
 	rect->y = vm->visu.center.live_breakdown_hp_anim_y;
 	rect->h = vm->visu.center.live_breakdown_hp_anim_h;
 	ft_get_player_lives(vm, &nb_live_player_1, &nb_live_player_2);
-	ratio = get_magic_ratio(nb_live_player_1, nb_live_player_2);
+	ratio = get_magic_ratio(vm, nb_live_player_1, nb_live_player_2);
 	if (SDL_BlitScaled(vm->visu.frames[vm->visu.animation_index].background,
 			NULL, vm->visu.sdl.w_surface, rect))
 		return (1);
@@ -32,6 +32,7 @@ int		ft_render_magic_voldemort(t_vm *vm, SDL_Rect *rect)
 	rect->w = ((vm->visu.frames[vm->visu.animation_index].
 		harry_ray.x_offset - vm->visu.frames[vm->visu.animation_index].
 		voldemort_ray.x_offset) * ratio);
+	*w = rect->w;
 	if (SDL_BlitScaled(vm->visu.frames[vm->visu.animation_index].
 				voldemort_ray.surface, NULL,
 			vm->visu.sdl.w_surface, rect))
@@ -42,10 +43,11 @@ int		ft_render_magic_voldemort(t_vm *vm, SDL_Rect *rect)
 int		ft_render_magic_fight(t_vm *vm)
 {
 	SDL_Rect	rect;
+	int w;
 
-	if (ft_render_magic_voldemort(vm, &rect))
+	if (ft_render_magic_voldemort(vm, &rect, &w))
 		return (1);
-	rect.x = rect.x + rect.w + (vm->visu.frames[vm->visu.animation_index].
+	rect.x = rect.x + w + (vm->visu.frames[vm->visu.animation_index].
 		harry_ray.x_offset - vm->visu.frames[vm->visu.animation_index].
 		harry_ray.screen_width) - (vm->visu.frames[vm->visu.animation_index].
 		voldemort_ray.screen_width + vm->visu.frames[vm->visu.animation_index].

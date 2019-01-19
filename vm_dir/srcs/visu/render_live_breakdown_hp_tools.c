@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 22:26:38 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/18 22:27:23 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/19 22:37:39 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,28 @@
 ** return the player1 / player2 live ratio
 */
 
-double	get_magic_ratio(int lives_player_1, int lives_player_2)
+double	get_magic_ratio(t_vm *vm, int lives_player_1, int lives_player_2)
 {
-	if (!lives_player_1 && !lives_player_2)
+	int		i;
+	int		nb;
+
+	nb = 0;
+	if (vm->proc == NULL)
+	{
+		i = 0;
+		while (i < MAX_PLAYERS)
+		{
+			if (vm->player[i].relevant)
+			{
+				if (vm->winner == &vm->player[i])
+					return (nb == 0 ? 1.30 : -0.30);
+				nb++;
+			}
+			i++;
+		}
+		return (0.5);
+	}
+	else if (!lives_player_1 && !lives_player_2)
 		return (0.5);
 	else
 		return ((double)lives_player_1 /

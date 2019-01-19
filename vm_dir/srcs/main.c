@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 17:19:23 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/18 18:01:08 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/19 21:54:15 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@ int		main(int argc, char **argv, char **env)
 {
 	t_vm	vm;
 
+	printf("%zu\n", sizeof(t_vm));
+	printf("%zu\n", sizeof(t_visu));
+	printf("%zu\n", sizeof(t_client));
 	if (argc <= 1)
 		error_exit_msg(USAGE);
 	if (!check_type(argc, argv))

@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/19 00:51:38 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/19 21:41:33 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,9 +124,9 @@
 
 # define LIVE_BREAKDOWN_HP_PLAYERS_BOTTOM	20
 
-# define WINNER_HEIGHT			20
-# define WINNER_TOP				30
-# define WINNER_BOTTOM			60
+# define WINNER_HEIGHT			30
+# define WINNER_TOP				40
+# define WINNER_BOTTOM			30
 
 # define BACK_WIDTH				50
 # define BACK_HEIGHT			50
@@ -493,6 +493,7 @@ typedef struct			s_center
 	int					live_breakdown_hp_players_side;
 
 	int					winner_height;
+	int					winner_width;
 	int					winner_top;
 	int					winner_bottom;
 	int					winner_left;
@@ -849,7 +850,8 @@ void					ft_init_center_spec(t_visu *visu, t_center *c);
 void					ft_init_center_fight(t_visu *visu, t_center *c);
 void					ft_init_center_online(t_visu *visu, t_center *c);
 void					ft_init_center_players(t_visu *visu, t_center *c);
-double					get_magic_ratio(int lives_player_1, int lives_player_2);
+double					get_magic_ratio(t_vm *vm,
+							int lives_player_1, int lives_player_2);
 void					ft_get_player_lives(t_vm *vm, int *nb_live_player_1,
 							int *nb_live_player_2);
 int						ft_render_button(t_vm *vm, t_button *button);
