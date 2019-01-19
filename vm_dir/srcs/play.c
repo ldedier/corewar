@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/15 16:49:40 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/01/19 16:41:17 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,11 @@ static void			check_resize_cycle(t_vm *vm, int *cycle)
 static int		kill_process(t_vm *vm, t_list *proc)
 {
 	t_list	*tmp;
+	t_list	*tmp2;
 	t_fade	*killed_proc;
 
 	tmp = proc;
+	tmp2 = vm->proc;
 	display(vm, (t_process *)proc->content, PL_DEATH);
 	killed_proc = (t_fade *)ft_memalloc(sizeof(t_fade));
 	killed_proc->pc = ((t_process *)proc->content)->pc;
@@ -55,7 +57,13 @@ static int		kill_process(t_vm *vm, t_list *proc)
 	--((t_process *)proc->content)->player->nb_proc;
 	if (ft_add_to_list_ptr(&vm->killed_proc, (void *)killed_proc, sizeof(t_fade)))
 		return (-1);
-	vm->proc = (tmp == vm->proc) ? tmp->next : vm->proc;
+	while (tmp2 && /*proc &&*/ tmp2->next && tmp2->next != proc)
+			tmp2 = tmp2->next;
+	tmp2 = proc->next; // ? proc->next : NULL;
+	if (proc == vm->proc && !proc->next)
+		vm->proc = NULL;
+	else
+		vm->proc = (proc == vm->proc) ? tmp->next : vm->proc;
 	ft_memdel((void **)&tmp->content);
 	ft_memdel((void **)&tmp);
 	return (0);
@@ -76,16 +84,22 @@ static int		reset_live_allprocesses(t_vm *vm)
 	proc_lst = vm->proc;
 	while (proc_lst && (proc = ((t_process *)proc_lst->content)))
 	{
+		ft_printf("proc live = %d\n", proc->live);
 		if (!proc->live)
 		{
+			ft_printf("kill process");
 			if (kill_process(vm, proc_lst) == -1)
 				return (-1);
-			proc_lst = proc_lst->next;
-			return (0);
+
+//			return (0);
+		}
+		else
+		{
+			proc->live = 0;
+			proc->player->live = 0;
 		}
 		vm->winner = proc->player;
 		proc_lst = proc_lst->next;
-		proc->live = 0;
 	}
 	return (0);
 }
@@ -99,93 +113,30 @@ static int		last_instruction_unresolved(t_vm *vm, t_process *proc)
 	t_pending *pending;
 
 	pending = ((t_pending *)&proc->pending);
+//	if (pending)
+		--pending->cycles;
 	if (pending->cycles > 0 && ft_printf("%*s", PAD_INS, ""))
 	{
+		ft_printf("pending cycles = %d\n", pending->cycles);
 		display(vm, proc, PL_CYCLE);
-		--pending->cycles;
-		return (1);
-	}
-//ft_printf("last instruction resolved! current pc = %d ins bytelen = %d\n", proc->pc, proc->ins_bytelen);
-	return (0);
-}
-
-/*
-** checks if last instruction is still running
-** else, if there's a  valid instruction at current position launch it,
-** adjust cycles, and display
-** else move on
-*/
-
-static int		launch_instruction(t_vm *vm, t_process *proc)
-{
-	t_instruction	ins;
-	static int 	(*f_ins[NB_INSTRUCTIONS + 1])(t_vm *vm, t_process *proc,
-			t_parameter arg[3]) = {NULL,
-		&ins_live, &ins_ld, &ins_st, &ins_add, &ins_sub, &ins_and, &ins_or,
-		&ins_xor, &ins_zjmp, &ins_ldi, &ins_sti, &ins_fork, &ins_lld, &ins_lldi,
-		&ins_lfork, &ins_aff};
-
-	if (last_instruction_unresolved(vm, proc))
-	{
-//		ft_printf("last instruction unresolved\n");
 		display(vm, proc, PL_PC);
-		return (0);
-	}
-	proc->ins_bytelen = get_instruction(vm->arena, &ins, proc->pc, MEM_SIZE);
-//	ft_printf("bytelen = %d\n", proc->ins_bytelen);
-	if ((proc->ins_bytelen))
-	{
-		proc->pending.pc = proc->ins_bytelen;
-//		ft_printf("future pc %d squares away\n", proc->pending.pc);
-		f_ins[(int)ins.op.opcode](vm, proc, ins.params);
-		proc->pending.cycles = g_op_tab[(int)ins.op.opcode - 1].nb_cycles;
-		display_ins_description(vm, ins.op.description, ins.op.opcode);
-		display(vm, proc, PL_PC);
-		display(vm, proc, PL_CYCLE);
-		--proc->pending.cycles;
 		return (1);
 	}
-	proc->pending.pc = 1;
-	display(vm, proc, MOVE_ONE);
-	display(vm, proc, PL_PC);
 	return (0);
 }
 
-/*
-** If there's only 1 player or cycle_to_die = 0, displays winner and exits game,
-** else checks if cycle_to_die should change value
-*/
-
-int			handle_end_cycle(t_vm *vm, int *cycle)
+void		execute_pending_action(t_vm *vm, t_process *proc)
 {
-//t_player *player;
-
-	if (*cycle < vm->c_to_die)
-		return (0);
-	reset_live_allprocesses(vm);
-//player = get_player_num(vm->proc, vm->live.winner->num);
-	if (!vm->proc)
-	{
-		display(vm, NULL, PL_VICTORY);
-		return (1);
-	}
-	*cycle = 0;
-	check_resize_cycle(vm, cycle);
-	return (0);
-}
-
-void		execute_pending_action(t_vm *vm, t_list *proc_lst)
-{
-	t_process	*proc;
+//	t_process	*proc;
 	int			index;
 	int			val;
 	int			i;
 
-	proc = (t_process *)proc_lst->content;
-	if (!proc->pending.cycles)
+//	proc = (t_process *)proc_lst->content;
+	if (proc->pending.cycles == 0)
 	{
-		proc->pc = (proc->pc + proc->pending.pc) % MEM_SIZE;
-		ft_printf("dest = %d\n", proc->pending.dest);
+		proc->pc = (proc->pc + proc->pending.pc - 1) % MEM_SIZE;
+//		ft_printf("dest = %d\n", proc->pending.dest);
 //		ft_printf("value before splitting by bytes = %d dest index = %d\n",
 //			proc->pending.value, proc->pending.dest_index);
 		if (proc->pending.dest == vm->arena && (i = -1))
@@ -204,9 +155,77 @@ void		execute_pending_action(t_vm *vm, t_list *proc_lst)
 		proc->pending.dest = NULL;
 		ft_printf("player pc = %d\n", proc->pc);//
 		ft_printf("\n");//
+		ft_bzero((void *)&proc->pending.ins, sizeof(proc->pending.ins));
+
 	}
 }
 
+
+
+
+/*
+** checks if last instruction is still running
+** else, if there's a  valid instruction at current position launch it,
+** adjust cycles, and display
+** else move on
+*/
+
+static int		launch_instruction(t_vm *vm, t_process *proc)
+{
+	static int 	(*f_ins[NB_INSTRUCTIONS + 1])(t_vm *vm, t_process *proc,
+			t_parameter arg[3]) = {NULL,
+		&ins_live, &ins_ld, &ins_st, &ins_add, &ins_sub, &ins_and, &ins_or,
+		&ins_xor, &ins_zjmp, &ins_ldi, &ins_sti, &ins_fork, &ins_lld, &ins_lldi,
+		&ins_lfork, &ins_aff};
+	ft_printf("LAUNCH INSTRUCTION\n");
+
+	if (last_instruction_unresolved(vm, proc))
+		return (0);
+	if (proc->pending.ins.op.opcode)
+	{
+		f_ins[(int)proc->pending.ins.op.opcode](vm, proc, proc->pending.ins.params);
+		display_ins_description(vm, proc->pending.ins.op.description, proc->pending.ins.op.opcode);
+		execute_pending_action(vm, proc);
+		return (0);
+	}
+	proc->ins_bytelen = get_instruction(vm->arena, &proc->pending.ins, proc->pc, MEM_SIZE);
+	if ((proc->ins_bytelen))
+	{
+		proc->pending.pc = proc->ins_bytelen;
+		proc->pending.cycles = g_op_tab[(int)proc->pending.ins.op.opcode - 1].nb_cycles;
+//		display(vm, proc, PL_PC);
+//		display(vm, proc, PL_CYCLE);
+		return (1);
+	}
+		proc->pc += 1;
+//	display(vm, proc, MOVE_ONE);
+//	display(vm, proc, PL_PC);
+	return (0);
+}
+
+/*
+** If there's only 1 player or cycle_to_die = 0, displays winner and exits game,
+** else checks if cycle_to_die should change value
+*/
+/*
+int			handle_end_cycle(t_vm *vm, int *cycle)
+{
+//t_player *player;
+
+	if (*cycle < vm->c_to_die)
+		return (0);
+	reset_live_allprocesses(vm);
+//player = get_player_num(vm->proc, vm->live.winner->num);
+	if (!vm->proc)
+	{
+		display(vm, NULL, PL_VICTORY);
+		return (1);
+	}
+	*cycle = 0;
+	check_resize_cycle(vm, cycle);
+	return (0);
+}
+*/
 /*
 **process_cycle
 */
@@ -214,33 +233,25 @@ void		execute_pending_action(t_vm *vm, t_list *proc_lst)
 void		process_cycle(t_vm *vm)
 {
 	t_list				*proc_lst;
-	int					change; // a supprimer avec l'affichage de l'arene
 
-	proc_lst = vm->proc;
-	change = 0; // idem;
 	if (vm->cycle >= CYCLE_TO_DIE)
 	{
 		reset_live_allprocesses(vm);
 		check_resize_cycle(vm, &vm->cycle);
-		vm->cycle = 0;
+		vm->cycle = 1;
 	}
-	++vm->total_cycle;
+	proc_lst = vm->proc;
 	while (proc_lst)
 	{
-		ft_printf("before pending acttion (begin while) proc dest = %d | arena = %d reg = %d\n", ((t_process *)proc_lst->content)->pending.dest, vm->arena, ((t_process *)proc_lst->content)->reg);
 		display(vm, (t_process *)proc_lst->content, TURN_PLAYER);
-		ft_printf("after display (begin while) proc dest = %d | arena = %d reg = %d\n", ((t_process *)proc_lst->content)->pending.dest, vm->arena, ((t_process *)proc_lst->content)->reg);
-		execute_pending_action(vm, proc_lst);
-		display_registers(vm);
-		if (launch_instruction(vm, (t_process *)proc_lst->content))
-			change = 1; // idem;
-		ft_printf("after instruction proc dest = %d\n", ((t_process *)proc_lst->content)->pending.dest);
+		launch_instruction(vm, (t_process *)proc_lst->content);
 		if (!vm->visu.active)
 			ft_printf("\n");
-		if (!proc_lst->next && change) // idem
-			display_arena((unsigned char *)vm->arena); // idem
 		proc_lst = proc_lst->next;
 	}
+	++vm->cycle;
+	ft_printf("vm cycle = %d\n", vm->cycle);
+	++vm->total_cycle;
 }
 
 /*
@@ -256,9 +267,9 @@ void		process_cycle(t_vm *vm)
 int		play(t_vm *vm)
 {
 	display(vm, 0, CYCLE_NBR);
-	while (++vm->cycle  && !handle_end_cycle(vm, &vm->cycle))
+	while (vm->proc)
 	{
-		++vm->total_cycle;
+		ft_printf("CYCLE = %d TOTAL CYCLE = %d\n", vm->cycle, vm->total_cycle);
 		ft_printf("\n%scycle = %d | %s ", COLF_BGREY, vm->cycle,
 			MSG_CYCLES_REMAINING);
 		ft_printf(" [ %d ] %s\n", vm->c_to_die - vm->cycle, COLF_OFF);

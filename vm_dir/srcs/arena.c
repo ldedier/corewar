@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 16:42:17 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/08 19:59:20 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/19 16:38:24 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ void			init_vm(t_vm *vm, char **argv, char **env)
 	vm->client.port = 0;
 	vm->visu.active = 0;
 	vm->nb = 1;
-	vm->total_cycle = 0;
-	vm->cycle = 0;
+	vm->total_cycle = 1;
+	vm->cycle = 1;
 	ft_bzero(vm->color, MAX_PL_COLOR);
 	ft_bzero(vm->arena, MEM_SIZE);
 	ft_strlcat(vm->color, init_color_ref(env), MAX_PL_COLOR);
@@ -62,6 +62,7 @@ void			init_vm(t_vm *vm, char **argv, char **env)
 	{
 		vm->player[i].relevant = 0;
 		vm->player[i].color.value = NULL;
+		vm->player[i].last_live_cycle = 0;
 		ft_bzero(vm->player[i].aff_buf, MAX_AFF_LEN);
 	}
 }

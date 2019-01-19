@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 17:10:34 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/10 17:52:48 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/01/19 14:24:34 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int		ins_live(t_vm *vm, t_process *proc, t_parameter arg[3])
 	proc->live = 1;
 	++vm->live;
 	player = get_player_num(vm->proc, arg[0].value);
+	ft_printf("player = %d player last live cycle = %d\n", player, vm->total_cycle);
 	if (player)
 	{
 		player->live++;
