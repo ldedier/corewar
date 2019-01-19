@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 21:48:50 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/15 15:24:57 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/18 20:19:10 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,10 @@ int		ft_init_positions(t_vm *vm, t_visu *v)
 	return (0);
 }
 
-void	ft_init_time_manager(t_visu *visu)
-{
-	visu->time_manager.pause = 0;
-	visu->time_manager.cycles_per_turn = INIT_CYCLES_PER_TURN;
-}
-
 void	set_number_downloaded_players(t_vm *vm)
 {
-	t_list *ptr;
-	t_player *player;
+	t_list		*ptr;
+	t_player	*player;
 
 	ptr = vm->visu.downloaded_players;
 	while (ptr != NULL)
@@ -61,20 +55,8 @@ void	set_number_downloaded_players(t_vm *vm)
 	}
 }
 
-int		ft_init_all_visu(t_vm *vm, t_visu *v)
+void	ft_init_others(t_vm *vm, t_visu *v)
 {
-	ft_init_sdl_to_null(v);
-	if (ft_init_sdl(v))
-		return (1);
-	if (ft_init_sdl_utils(vm, v))
-		return (1);
-	if (ft_parse_player_folder(PATH"/downloads", &vm->visu.downloaded_players))
-		return (1);
-	ft_lst_mergesort(&vm->visu.downloaded_players, ft_sort_alpha, 0);
-	if (ft_init_positions(vm, v))
-		return (1);
-	if (ft_init_hp_surface(&vm->visu))
-		return (1);
 	set_number_downloaded_players(vm);
 	v->event_manager.enable_mouse_up = 1;
 	v->event_manager.pressed_button = NULL;
@@ -83,7 +65,8 @@ int		ft_init_all_visu(t_vm *vm, t_visu *v)
 	v->drag_container.parent = v;
 	if (vm->client.active)
 		ft_update_download_buttons_client_rect(vm);
-	ft_init_time_manager(v);
+	v->time_manager.pause = 0;
+	v->time_manager.cycles_per_turn = INIT_CYCLES_PER_TURN;
 	ft_init_crosses(vm);
 	SDL_SetCursor(v->sdl.cursor_packers[REGULAR].cursor);
 	v->sdl.current_cursor = REGULAR;
@@ -97,5 +80,23 @@ int		ft_init_all_visu(t_vm *vm, t_visu *v)
 	v->inv_sort = 0;
 	vm->visu.notification.image_index = -1;
 	vm->visu.animation_index = 0;
+}
+
+int		ft_init_all_visu(t_vm *vm, t_visu *v)
+{
+	ft_bzero(v, sizeof(t_visu));
+	v->active = 1;
+	if (ft_init_sdl(v))
+		return (1);
+	if (ft_init_sdl_utils(vm, v))
+		return (1);
+	if (ft_parse_player_folder(PATH"/downloads", &vm->visu.downloaded_players))
+		return (1);
+	ft_lst_mergesort(&vm->visu.downloaded_players, ft_sort_alpha, 0);
+	if (ft_init_positions(vm, v))
+		return (1);
+	if (ft_init_hp_surface(&vm->visu))
+		return (1);
+	ft_init_others(vm, v);
 	return (0);
 }

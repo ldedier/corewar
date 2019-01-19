@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/21 13:40:59 by ldedier           #+#    #+#              #
-#    Updated: 2018/12/03 22:21:34 by ldedier          ###   ########.fr        #
+#    Updated: 2019/01/17 15:30:43 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,8 @@ LIBOP = $(LIBOPDIR)/libop.a
 OK_COLOR = \x1b[32;01m
 EOC = \033[0m
 
-SRCS_NO_PREFIX		= main.c ft_init.c ft_encode_to_assembly.c
+SRCS_NO_PREFIX		= main.c ft_init.c ft_encode_to_assembly.c ft_free_all.c\
+					  ft_process_labels.c
 
 INCLUDES_NO_PREFIX	= decompiler.h
 
@@ -64,7 +65,8 @@ optilibcomp:
 libcomp:
 	@make $(BINDIR)/$(NAME)
 
-all: $(LIBFT) $(LIBOP)
+all:
+	@make -C $(LIBOPDIR) opti
 	@make $(BINDIR)/$(NAME)
 
 debug:

@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/03 15:42:09 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/09 19:07:44 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/18 22:01:34 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,9 @@ int		ft_render_cycle(t_vm *vm, int y)
 
 int		ft_render_entries(t_vm *vm)
 {
-	SDL_Rect rect;
-	int y;
-	int i;
+	SDL_Rect	rect;
+	int			y;
+	int			i;
 
 	rect.x = vm->visu.center.dashboard_x + vm->visu.center.entry_left;
 	rect.y = vm->visu.center.state_top;

@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/31 19:39:37 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/06 17:46:16 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/18 22:40:59 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,29 +27,6 @@ int		ft_remove_notification(t_vm *vm, t_button *button, t_ixy xy)
 	return (0);
 }
 
-void	ft_scale_color_surface(SDL_Surface *surface, double t)
-{
-	t_color_manager	color;
-	int				i;
-	int				j;
-	int				*pixels;
-
-	pixels = surface->pixels;
-	i = 0;
-	while (i < surface->h)
-	{
-		j = 0;
-		while (j < surface->w)
-		{
-			color = ft_get_color(pixels[i * surface->w + j]);
-			color = ft_scale_color(color, t);
-			pixels[i * surface->w + j] = color.color;
-			j++;
-		}
-		i++;
-	}
-}
-
 void	ft_apply_color_filter(SDL_Surface *surface, int color)
 {
 	SDL_Surface *s;
@@ -58,9 +35,8 @@ void	ft_apply_color_filter(SDL_Surface *surface, int color)
 	SDL_FillRect(s, NULL, color);
 	SDL_SetSurfaceBlendMode(s, SDL_BLENDMODE_MOD);
 	SDL_BlitSurface(s, NULL, surface, NULL);
-	SDL_FreeSurface(s); 
+	SDL_FreeSurface(s);
 }
-
 
 int		ft_render_notification_panel(t_vm *vm, SDL_Rect notif_rect)
 {

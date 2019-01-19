@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/09 14:02:56 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/31 19:38:02 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/18 22:00:18 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int		ft_render(t_vm *vm, t_sdl *sdl)
 		return (1);
 	sdl->texture = SDL_CreateTextureFromSurface(sdl->renderer, sdl->w_surface);
 	SDL_RenderCopy(sdl->renderer, sdl->texture, NULL, NULL);
-	//SDL_FillRect(sdl->w_surface, NULL, BACKGROUND_COL);
 	SDL_DestroyTexture(sdl->texture);
 	SDL_RenderPresent(sdl->renderer);
 	vm->visu.framerate.fps_counter++;

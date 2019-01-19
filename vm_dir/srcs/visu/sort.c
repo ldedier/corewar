@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/11 20:35:18 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/15 21:26:01 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/18 23:41:05 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ int			ft_sort_alpha_cs(void *client_slot_1, void *client_slot_2)
 
 int			ft_sort_score_cs(void *client_slot_1, void *client_slot_2)
 {
-	t_client_slot *cs1;
-	t_client_slot *cs2;
-	int ret;
+	t_client_slot	*cs1;
+	t_client_slot	*cs2;
+	int				ret;
 
 	cs1 = (t_client_slot *)client_slot_1;
 	cs2 = (t_client_slot *)client_slot_2;
@@ -66,5 +66,6 @@ int			ft_sort_score_cs(void *client_slot_1, void *client_slot_2)
 
 void		ft_sort_client_slots(t_vm *vm)
 {
-	ft_lst_mergesort(&vm->client.client_slots, vm->visu.sort_cs_func, vm->visu.inv_sort);
+	ft_lst_mergesort(&vm->client.client_slots,
+		vm->visu.sort_cs_func, vm->visu.inv_sort);
 }

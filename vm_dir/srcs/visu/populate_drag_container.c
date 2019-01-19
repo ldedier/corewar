@@ -6,20 +6,11 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 20:12:01 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/19 20:16:59 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/18 21:55:54 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
-
-void	ft_fill_drag_container(t_drag_container *dc, t_ixy xy)
-{
-	if (dc != NULL)
-	{
-		dc->x = xy.x;
-		dc->y = xy.y;
-	}
-}
 
 void	ft_populate_drag_container_player(t_drag_container *dc,
 			t_player *player, t_player_source source)

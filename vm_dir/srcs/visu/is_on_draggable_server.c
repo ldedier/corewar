@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 19:43:08 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/28 19:43:08 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/18 21:45:36 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ int		ft_is_on_player_scrollbar_nocross(t_vm *vm, t_ixy xy, t_xy player_xy,
 		return ((player_xy.x < xy.x &&
 			player_xy.x + vm->visu.center.player_w > xy.x &&
 			player_xy.y < xy.y &&
-			player_xy.y + vm->visu.center.player_h  > xy.y));
+			player_xy.y + vm->visu.center.player_h > xy.y));
 	else if (xy.y > vscrollbar.pos.y &&
 			xy.y < vscrollbar.pos.y + vscrollbar.height)
 	{
 		scrolled_height = ft_get_scrolled_height(vscrollbar);
-		player_xy.y -= scrolled_height; 
+		player_xy.y -= scrolled_height;
 		return (player_xy.x < xy.x &&
 				player_xy.x + vm->visu.center.player_w > xy.x &&
 				player_xy.y < xy.y &&
@@ -50,27 +50,28 @@ int		ft_is_on_upload_slot(t_vm *vm, t_ixy xy, t_drag_container *dc)
 
 int		ft_is_on_server_slots(t_vm *vm, t_ixy xy, t_drag_container *dc)
 {
-	t_list	*ptr;
-	t_xy	player_pos;
-	t_center c;
+	t_list		*ptr;
+	t_xy		p_pos;
+	t_center	c;
 
 	c = vm->visu.center;
 	ptr = vm->client.client_slots;
-	player_pos.x = vm->visu.center.dashboard_x + vm->visu.center.labscore_left +
+	p_pos.x = vm->visu.center.dashboard_x + vm->visu.center.labscore_left +
 		vm->visu.center.labscore_width + vm->visu.center.labscore_right +
 		vm->visu.center.score_width + vm->visu.center.score_right;
-	player_pos.y = vm->visu.players_list[SERVER].vscrollbar.pos.y + c.player_top;
+	p_pos.y = vm->visu.players_list[SERVER].vscrollbar.pos.y +
+		c.player_top;
 	while (ptr != NULL)
 	{
-		if (ft_is_on_player_scrollbar_nocross(vm, xy, player_pos,
+		if (ft_is_on_player_scrollbar_nocross(vm, xy, p_pos,
 				vm->visu.players_list[SERVER].vscrollbar))
 		{
 			ft_populate_drag_container_player_client_slot(dc, ptr->content,
-					player_pos, ft_get_scrolled_height(vm->visu.
+					p_pos, ft_get_scrolled_height(vm->visu.
 							players_list[SERVER].vscrollbar));
 			return (1);
 		}
-		player_pos.y += vm->visu.center.player_padding + vm->visu.center.player_h;
+		p_pos.y += vm->visu.center.player_padding + vm->visu.center.player_h;
 		ptr = ptr->next;
 	}
 	return (0);

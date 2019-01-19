@@ -22,7 +22,7 @@ mei:
 
 	fork	%:reinhardt
 pharah:
-	st		r1, 6
+	st		r1,6000000000000000
 	live	%0
 	fork 	 	 	 	 	%:symmetra    	
 	st		r5, 6
@@ -43,7 +43,7 @@ payload:
 	zjmp	%-511
 reinhardt:
 	st		r1, 6
-	live	%0
+	live	%100000  
 	fork	%:mercy
 	st		r1, 6
 	live	%0

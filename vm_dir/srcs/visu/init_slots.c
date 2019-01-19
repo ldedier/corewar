@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 21:15:15 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/19 21:26:22 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/18 20:58:21 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void	ft_populate_slot_position(t_vm *vm, t_visu *v, int i, double *y)
 
 	v->positions.arena_slots[i].player.x = v->center.dashboard_x +
 		v->center.player_left -
-		(ft_to_print_scrollbar(v->players_list[ARENA].vscrollbar) ? 
-		 v->center.scrollbar_width / 2 : 0);
+			(ft_to_print_scrollbar(v->players_list[ARENA].vscrollbar) ?
+				v->center.scrollbar_width / 2 : 0);
 	v->positions.arena_slots[i].player.y = *y;
 	xy.x = v->positions.arena_slots[i].player.x +
 		v->center.player_w - v->center.cross_border;
@@ -46,13 +46,13 @@ void	ft_populate_slot_position(t_vm *vm, t_visu *v, int i, double *y)
 			&(vm->player[i]), xy);
 	v->positions.local_slots[i].player.x = v->center.dashboard_mid_x +
 		v->center.player_left -
-		(ft_to_print_scrollbar(v->players_list[LOCAL].vscrollbar) ? 
-		 v->center.scrollbar_width / 2 : 0);
+			(ft_to_print_scrollbar(v->players_list[LOCAL].vscrollbar) ?
+				v->center.scrollbar_width / 2 : 0);
 	v->positions.local_slots[i].player.y = *y;
 	*y += v->center.player_h + v->center.player_padding;
 }
 
-void    ft_populate_slots_positions(t_vm *vm, t_visu *v)
+void	ft_populate_slots_positions(t_vm *vm, t_visu *v)
 {
 	int		i;
 	double	y;

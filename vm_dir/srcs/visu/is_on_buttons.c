@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 21:54:50 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/15 21:20:06 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/18 21:43:11 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ int			ft_is_on_button(t_vm *vm, t_ixy xy, t_button *button,
 {
 	if (!button->visible || !button->enabled ||
 			button->phase != vm->visu.phase ||
-			(vm->visu.notification.image_index != -1 &&
-			 button != &vm->visu.buttons[OK_BUTTON]))
+				(vm->visu.notification.image_index != -1 &&
+					button != &vm->visu.buttons[OK_BUTTON]))
 		return (0);
 	if (button->vscrollbar == NULL ||
 			!ft_to_print_scrollbar(*button->vscrollbar))
@@ -58,26 +58,27 @@ int			ft_is_on_close(t_vm *vm, t_ixy xy, t_button **but)
 {
 	int i;
 
-	i = 0;
-	while (i < MAX_PLAYERS)
+	i = -1;
+	while (++i < MAX_PLAYERS)
 	{
-		if (ft_is_on_button(vm, xy, &(vm->visu.positions.arena_slots[i].close), but))
+		if (ft_is_on_button(vm, xy, &(vm->visu.positions.arena_slots[i].close),
+			but))
 			return (1);
-		i++;
 	}
 	if (ft_is_on_button(vm, xy, &(vm->visu.positions.upload_slot.close), but))
 		return (1);
-	i = 0;
-	while (i < NB_SOURCES)
+	i = -1;
+	while (++i < NB_SOURCES)
 	{
 		if (ft_to_print_scrollbar(vm->visu.players_list[i].vscrollbar))
 		{
-			if (ft_is_on_button(vm, xy, &(vm->visu.players_list[i].vscrollbar.up_button), but))
+			if (ft_is_on_button(vm, xy, &(vm->visu.players_list[i].
+				vscrollbar.up_button), but))
 				return (1);
-			if (ft_is_on_button(vm, xy, &(vm->visu.players_list[i].vscrollbar.down_button), but))
+			if (ft_is_on_button(vm, xy, &(vm->visu.players_list[i].
+				vscrollbar.down_button), but))
 				return (1);
 		}
-		i++;
 	}
 	return (0);
 }
@@ -89,21 +90,21 @@ int			ft_is_on_buttons(t_vm *vm, t_ixy xy, t_button **but)
 
 	if (ft_is_on_close(vm, xy, but))
 		return (1);
-	i = 0;
-	while (i < NB_BUTTONS)
+	i = -1;
+	while (++i < NB_BUTTONS)
 	{
 		if (ft_is_on_button(vm, xy, &(vm->visu.buttons[i]), but) &&
 				(vm->client.active || i >= FIGHT_BUTTON))
 			return (1);
-		i++;
 	}
 	if (vm->client.active)
 	{
 		ptr = vm->client.client_slots;
 		while (ptr != NULL)
 		{
-			if (ft_is_on_button(vm, xy, &((t_client_slot *)(ptr->content))->download,
-						but))
+			if (ft_is_on_button(vm, xy,
+				&((t_client_slot *)(ptr->content))->download,
+					but))
 				return (1);
 			ptr = ptr->next;
 		}

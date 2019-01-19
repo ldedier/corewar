@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 18:26:19 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/31 18:02:30 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/18 18:16:27 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ typedef struct			s_client
 	TCPsocket			socket;
 	IPaddress			server_ip;
 	SDLNet_SocketSet	socket_set;
-	char				running;
 	char				buffer[MAX_TCP_PACKET];
 	t_list				*client_slots;
 	t_player			upload_player;
@@ -49,4 +48,14 @@ int						ft_send_protected(TCPsocket socket, void *data,
 							size_t size);
 int						ft_process_client_events(t_vm *vm);
 int						ft_query_player_size(t_player *player);
+int						ft_free_all_client(t_client *client);
+int						ft_process_client_events(t_vm *vm);
+t_client_slot			*get_client_slot(t_vm *vm, char *name);
+t_client_slot			*ft_new_client_slot(t_vm *vm, t_player *player);
+int						ft_process_add_client_slots(int nb_bytes, t_vm *vm);
+int						ft_process_new_client_slot(t_vm *vm, int i,
+							t_name_len name_len, t_score score);
+void					ft_populate_download_button(t_vm *vm,
+							t_client_slot *client_slot, t_button *button);
+int						ft_receive_connect_status(t_vm *vm);
 #endif

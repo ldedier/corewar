@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/31 17:58:22 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/03 19:00:24 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/17 17:15:43 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 int		ft_send_core_bin_packet_size(t_player *player)
 {
-	int size = 0;
+	int size;
 
+	size = 0;
 	size += sizeof(t_flag);
 	size += sizeof(t_file_len);
 	size += player->file_len;

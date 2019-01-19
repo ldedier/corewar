@@ -6,11 +6,19 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 20:57:20 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/06 21:17:16 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/17 17:21:55 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "server.h"
+
+int		ft_send_flag(t_server *server, int client_index, t_flag flag)
+{
+	if (ft_send_protected(server->client_sockets[client_index].socket,
+				&flag, sizeof(t_flag)))
+		return (1);
+	return (0);
+}
 
 int		ft_send_rejection(TCPsocket socket)
 {
@@ -24,9 +32,9 @@ int		ft_send_rejection(TCPsocket socket)
 
 int		ft_send_deconnexion(TCPsocket socket, t_player_number player_number)
 {
-	t_flag flag;
-	char *data;
-	int size;
+	t_flag	flag;
+	char	*data;
+	int		size;
 
 	size = 0;
 	flag = DISCONNECTION;
