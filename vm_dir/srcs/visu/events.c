@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/08 23:37:36 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/18 15:25:47 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/19 16:47:33 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void		ft_key_down(t_vm *vm, SDL_Keycode code)
 			vm->visu.time_manager.pause = !vm->visu.time_manager.pause;
 	}
 	else if (code == SDLK_RIGHT && vm->visu.time_manager.pause)
-		process_cycle_all(vm);
+		process_cycle(vm);
 	else if (code == SDLK_r)
 		display_registers(vm);
 }
@@ -58,7 +58,7 @@ void		ft_process_keys(t_vm *vm, const Uint8 *keys)
 	if(keys[SDL_SCANCODE_DOWN])
 		ft_increment_cpt(vm, -1);
 //	if (keys[SDLK_KP_6] && vm->visu.time_manager.pause)
-//		process_cycle_all(vm);
+//		process_cycle(vm);
 }
 
 int			ft_process_events(t_vm *vm)
