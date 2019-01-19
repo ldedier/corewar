@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 21:48:50 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/18 20:19:10 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/19 17:07:04 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	ft_init_others(t_vm *vm, t_visu *v)
 		vm->visu.local_type = LOCAL_LOCAL;
 	else
 		vm->visu.local_type = LOCAL_DOWNLOAD;
-	vm->cycle = 1;
+	vm->cycle = 0;
 	v->sort_cs_func = &ft_sort_alpha_cs;
 	v->inv_sort = 0;
 	vm->visu.notification.image_index = -1;
