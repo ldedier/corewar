@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/19 17:11:04 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/20 16:00:28 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,20 +101,21 @@ void				error_exit_msg(const char *error);
 int					check_type(int ac, char **av);
 void				check_header(void);
 void				init_vm(t_vm *vm, char **argv, char **env);
+void				clear_vm(t_vm *vm);
 void				corehub_port_and_address(t_vm *vm, int argc,
 						char **argv, int *cur);
 void				flags(t_vm *vm, int argc, char **argv);
 int					read_files(t_vm *vm);
 void				error_exit_mgc(char *name);
 void				parse(t_vm *vm);
+void				init_players(t_vm *vm);
 void				dispatch_players(t_vm *vm, t_player *player);
 void				dispatch_players_init(t_vm *vm);
 int					init_processes(t_vm *vm);
 void				init_local_players(t_vm *vm);
 void				update_nb_players(t_vm *vm);
 int					ft_get_potential_num(int player_num);
-void				ft_set_numbers(t_player players[MAX_PLAYERS],
-															t_player *player);
+void				ft_set_numbers(t_player *players, t_player *player);
 void				update_buttons(t_vm *vm);
 
 /*

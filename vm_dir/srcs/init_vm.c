@@ -6,11 +6,37 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 16:42:17 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/17 15:32:14 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/01/20 16:12:17 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
+
+void			clear_vm(t_vm *vm)
+{
+		vm->live = 0;
+		vm->proc = NULL;
+		vm->nb = 1;
+		vm->total_cycle = 0;
+		vm->cycle = 0;
+//		ft_bzero(vm->arena, MEM_SIZE);
+		init_players(vm);
+}
+
+void			init_players(t_vm *vm)
+{
+	int		i;
+
+	i = -1;
+	while (++i < MAX_PLAYERS)
+	{
+		ft_bzero(&vm->player[i], sizeof(t_player));
+//		vm->player[i].relevant = 0;
+//		vm->player[i].color.value = NULL;
+//		vm->player[i].last_live_cycle = 0;
+//		ft_bzero(vm->player[i].aff_buf, MAX_AFF_LEN);
+	}
+}
 
 /*
 ** init_vm function initializes our corewar VM's environment by setting all
@@ -19,8 +45,6 @@
 
 void			init_vm(t_vm *vm, char **argv, char **env)
 {
-	int i;
-
 	vm->c_to_die = CYCLE_TO_DIE;
 	vm->files = argv;
 	vm->win = 0;
@@ -35,15 +59,9 @@ void			init_vm(t_vm *vm, char **argv, char **env)
 	vm->total_cycle = 0;
 	vm->cycle = 0;
 	ft_bzero(vm->color, MAX_PL_COLOR);
-	ft_bzero(vm->arena, MEM_SIZE);
+//	ft_bzero(vm->arena, MEM_SIZE);
 	ft_strlcat(vm->color, init_color_ref(env), MAX_PL_COLOR);
-	i = -1;
-	while (++i < MAX_PLAYERS)
-	{
-		vm->player[i].relevant = 0;
-		vm->player[i].color.value = NULL;
-		ft_bzero(vm->player[i].aff_buf, MAX_AFF_LEN);
-	}
+	init_players(vm);
 }
 
 /*

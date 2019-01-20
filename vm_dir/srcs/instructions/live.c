@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 17:10:34 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/19 17:04:59 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/19 17:46:04 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ int		ins_live(t_vm *vm, t_process *proc, t_parameter arg[3])
 				player->num, player->name);
 		live = (t_fade *)ft_memalloc(sizeof(t_fade));
 		live->pc = proc->pc;
-		live->color = *(int *)proc->player->color.value;
-		live->value = FADE_LEN;
+		live->color = *(int *)player->color.value;
+		live->value = /*vm->cycle +*/ FADE_LEN;
 		if (ft_add_to_list_ptr(&vm->live_ok, (void *)live, sizeof(t_fade)))
 			return (FAILURE);
 	}
