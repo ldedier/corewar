@@ -1,7 +1,7 @@
 .name "zork"
 .comment "justub r3, r2,a basic living prog"
 
-live: live %1		
+live: live 1		
 l2:	ld	%666666,r2
 	aff r2
 	ld %3, r3
