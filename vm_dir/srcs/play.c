@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/20 18:21:37 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/20 20:10:45 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,22 +230,21 @@ void		process_cycle(t_vm *vm)
 ** penser a clear vm plutot que init
 */
 
-t_player	*duel(t_vm *vm, t_player *pl1, t_player *pl2)
+int		fight_cores(t_vm *vm, t_player *pl1, t_player *pl2)
 {
+	vm->visu.active = 1;
 	clear_vm(vm);
-	ft_printf("duel between p1 %s and p2 %s\n", pl1->cor_name, pl2->cor_name);
 	if (ft_read_player(pl1->cor_name, &(vm->player[0]))
 			||	ft_read_player(pl2->cor_name, &(vm->player[1])))
-		return (NULL);
+		return (1);
 	vm->player[2].relevant = 0;
 	vm->player[3].relevant = 0;
 	dispatch_players_init(vm);
-//	init_local_players(vm);
 	if (!init_processes(vm))
 		error_exit_msg(INIT_PROC_ERROR);
-//	ft_printf("proc 1 pc = %d proc 2 pc = %d\n", ((t_process *)vm->proc->content)->pc, ((t_process *)vm->proc->next->content)->pc);
-	play(vm);
-	return (vm->winner);
+	while (vm->proc)
+		process_cycle(vm);
+	return (0);
 }
 
 

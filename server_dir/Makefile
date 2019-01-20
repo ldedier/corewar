@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/04 15:20:42 by ldedier           #+#    #+#              #
-#    Updated: 2019/01/17 17:49:49 by ldedier          ###   ########.fr        #
+#    Updated: 2019/01/20 20:04:18 by emuckens         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,22 +31,33 @@ LIBOPDIR = ../libop
 LIBOP_INCLUDEDIR = includes
 LIBOP = $(LIBOPDIR)/libop.a
 
+VMDIR = ../vm_dir
+OBJVMDIR = objs_vm
+VM_INCLUDEDIR = includes
+
 OK_COLOR = \x1b[32;01m
 EOC = \033[0m
 
-SRCS_NO_PREFIX =	main.c ft_process.c ft_fill_all.c tools.c ft_init.c\
-					ft_send_others.c ft_send_core.c ft_receive_upload.c\
-					ft_send_core_bin.c ft_attribute_scores_init.c\
+SRCS_NO_PREFIX =	main.c ft_process.c ft_fill_all.c tools.c ft_init.c \
+					ft_send_others.c ft_send_core.c ft_receive_upload.c \
+					ft_send_core_bin.c ft_attribute_scores_init.c \
 					ft_process_players.c
 
-INCLUDES_NO_PREFIX = #server.h
+VM_NO_PREFIX = arena.c error.c parse.c utils.c play.c env.c display.c display_player.c display_resize.c display_turn.c init_vm.c
 
-SOURCES = $(addprefix $(SRCDIR)/, $(SRCS_NO_PREFIX))
-OBJECTS = $(addprefix $(OBJDIR)/, $(SRCS_NO_PREFIX:%.c=%.o))
+
+INCLUDES_NO_PREFIX = vm.h #server.h vm.h
+
+SOURCES = $(addprefix $(SRCDIR)/, $(SRCS_NO_PREFIX)) \
+		 	$(addprefix $(VMDIR)/, $(VM_NO_PREFIX))
+
+OBJECTS = $(addprefix $(OBJDIR)/, $(SRCS_NO_PREFIX:%.c=%.o)) \
+			$(addprefix $(OBJDIR)/$(OBJVMDIR)/, $(VM_NO_PREFIX:%.c=%.o))
+
 INCLUDES = $(addprefix $(INCLUDESDIR)/, $(INCLUDES_NO_PREFIX))
 
 INC = -I $(INCLUDESDIR) -I $(LIBFTDIR)/$(LIBFT_INCLUDEDIR)\
-	  -I $(LIBOPDIR)/$(LIBOP_INCLUDEDIR)
+	  -I $(LIBOPDIR)/$(LIBOP_INCLUDEDIR) -I $(VMDIR)/$(VM_INCLUDEDIR)
 
 FRAMEWORKSDIR = $(PWD)/../frameworks
 
@@ -70,8 +81,13 @@ SDL2_FRAMEWORKS =	-framework SDL2 -framework SDL2_net
 opti:
 	@make all -j
 all:
-	@make -C $(LIBFTDIR) all
-	@make -C $(LIBOPDIR) all
+	make -C $(LIBFTDIR) all
+	make -C $(LIBOPDIR) all
+#@echo $(OBJDIR)/$(OBJVMDIR)/
+#@echo $(VMDIR)/$(SRCDIR)/
+	@echo $(OBJECTS)
+#@mkdir -p $(OBJDIR)/$(OBJVMDIR)
+#	make -C $(VMDIR) all
 	@make $(BINDIR)/$(NAME)
 
 optilibcomp:
@@ -83,7 +99,7 @@ libcomp:
 debug:
 	@make opti DEBUG=1
 
-$(LIBFT):
+$(LIBFT): 
 	@make -C $(LIBFTDIR) all
 
 $(BINDIR)/$(NAME): $(OBJECTS) $(LIBFT) $(LIBOP)
@@ -92,6 +108,10 @@ $(BINDIR)/$(NAME): $(OBJECTS) $(LIBFT) $(LIBOP)
 
 $(OBJDIR)/%.o : $(SRCDIR)/%.c $(INCLUDES)
 	@mkdir -p $(OBJDIR)
+	$(CC) -c $< -o $@ -F $(FRAMEWORKSDIR) $(CFLAGS)
+
+$(OBJDIR)/$(OBJVMDIR)/%.o : $(VMDIR)/$(SRCDIR)/%.c $(INCLUDES)
+	@mkdir -p $(OBJDIR)/$(OBJVMDIR)
 	$(CC) -c $< -o $@ -F $(FRAMEWORKSDIR) $(CFLAGS)
 
 clean:
