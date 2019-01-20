@@ -129,7 +129,6 @@ debug:
 
 $(LIBFT):
 	@make -C $(LIBFTDIR) all
-	#@$(CC) -o $@ $^ -F $(FRAMEWORKSDIR) $(CFLAGS) $(LFLAGS) #pour linux Emma | desolee!
 
 $(BINDIR)/$(NAME): $(OBJECTS)  $(LIBFT) $(LIBOP)
 	@$(CC) -o $@ $^ -F $(FRAMEWORKSDIR) $(SDL2_FRAMEWORKS) $(CFLAGS) $(LFLAGS)
@@ -139,11 +138,9 @@ $(OBJDIR)/%.o : $(SRCDIR)/%.c $(INCLUDES) $(LIBOP)
 	@mkdir -p $(OBJDIR)
 	@mkdir -p $(OBJDIR)/$(INSDIR)
 	@mkdir -p $(OBJDIR)/$(VISUDIR)
-#	@$(CC) -c $< -o $@ -F $(CFLAGS)
 	$(CC) -c $< -o $@ -F $(FRAMEWORKSDIR) $(CFLAGS)
 
 $(OBJDIR)/$(INSDIR)/%.o : $(SRCDIR)/$(INSDIR)/%.c $(INCLUDES)
-#	@$(CC) -c $< -o $@ -F $(CFLAGS)
 	$(CC) -c $< -o $@ -F $(FRAMEWORKSDIR) $(CFLAGS)
 
 $(OBJDIR)/$(VISUDIR)/%.o : $(SRCDIR)/$(VISUDIR)/%.c $(INCLUDES)
