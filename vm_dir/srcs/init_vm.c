@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 16:42:17 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/17 15:32:14 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/01/20 04:14:50 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ void			init_vm(t_vm *vm, char **argv, char **env)
 	while (++i < MAX_PLAYERS)
 	{
 		vm->player[i].relevant = 0;
+		vm->player[i].last_live_cycle = 0;
+		vm->player[i].live = 0;
 		vm->player[i].color.value = NULL;
 		ft_bzero(vm->player[i].aff_buf, MAX_AFF_LEN);
 	}

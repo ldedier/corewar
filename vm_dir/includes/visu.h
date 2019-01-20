@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/19 21:41:33 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/20 00:29:27 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -627,6 +627,7 @@ struct					s_visu
 	t_list				*downloaded_players;
 	t_notification		notification;
 	t_time_manager		time_manager;
+	double				current_hp_ratio;
 	t_hp_frame			frames[NB_FRAMES];
 	int					animation_index;
 };
@@ -863,4 +864,8 @@ SDL_Rect				get_rect_from_pc(t_vm *vm, int pc);
 int						ft_render_all_dead_process(t_vm *vm);
 void					ft_draw_rect_surface(SDL_Surface *surface,
 							SDL_Rect rect, int color);
+int						ft_moy(int val1, int val2);
+double					ft_fmoy(double val1, double val2);
+void					populate_hp_player_title_rect(t_vm *vm, SDL_Rect *rect);
+double					ft_flerp(double val1, double val2, double t);
 #endif

@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 18:41:42 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/15 22:23:22 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/20 04:17:15 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,5 +108,7 @@ int				ft_parse_player(t_player *player)
 	player->from_server = 0;
 	player->beaten_players = NULL;
 	player->nb_victories = 0;
+	player->live = 0;
+	player->last_live_cycle = 0;
 	return (0);
 }

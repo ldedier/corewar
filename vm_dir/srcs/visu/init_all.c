@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 21:48:50 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/19 17:07:04 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/19 23:29:09 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void	ft_init_others(t_vm *vm, t_visu *v)
 	v->inv_sort = 0;
 	vm->visu.notification.image_index = -1;
 	vm->visu.animation_index = 0;
+	vm->visu.current_hp_ratio = 0.5;
 }
 
 int		ft_init_all_visu(t_vm *vm, t_visu *v)

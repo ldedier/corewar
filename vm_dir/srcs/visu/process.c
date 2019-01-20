@@ -6,23 +6,11 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/20 16:29:42 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/19 14:52:42 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/20 00:58:35 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
-/*
-int		process_cycle_all(t_vm *vm)
-{
-	if (!(vm->cycle == vm->c_to_die &&
-		!handle_end_cycle(vm, &vm->cycle)))
-	{
-		process_cycle(vm);
-//		++vm->cycle;
-		return (0);
-	}
-	return (1);
-}*/
 
 int		process_play(t_vm *vm, double nb_cycles_db)
 {
@@ -37,7 +25,6 @@ int		process_play(t_vm *vm, double nb_cycles_db)
 	{
 		ft_printf("cycle = %d total cycle = %d\n", vm->cycle, vm->total_cycle);
 		process_cycle(vm);
-//		process_cycle_all(vm);
 	}
 	cycle_iterator -= nb_cycles;
 	return (0);
