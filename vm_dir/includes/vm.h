@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/20 16:00:28 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/20 16:52:16 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ void				update_nb_players(t_vm *vm);
 int					ft_get_potential_num(int player_num);
 void				ft_set_numbers(t_player *players, t_player *player);
 void				update_buttons(t_vm *vm);
+t_player			*duel(t_vm *vm, t_player *pl1, t_player *pl2);
 
 /*
 ** DISPLAY

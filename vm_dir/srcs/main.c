@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 17:19:23 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/20 16:04:29 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/20 18:20:57 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int		main(int argc, char **argv, char **env)
 		return (process_visu(&vm));
 	if (!init_processes(&vm))
 		error_exit_msg(INIT_PROC_ERROR);
+//	duel(&vm, &vm.player[3], &vm.player[2]);
+//	ft_printf("duel winner: %d\n", vm.winner->num);
 	play(&vm);
 	return (0);
 }

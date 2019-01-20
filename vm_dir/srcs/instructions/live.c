@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 17:10:34 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/19 17:46:04 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/20 16:47:48 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,9 @@ int		ins_live(t_vm *vm, t_process *proc, t_parameter arg[3])
 		player->last_live_cycle = vm->total_cycle;
 //		ft_printf("last live cycle = %d\n", player->last_live_cycle);
 		vm->winner = player;
-		ft_printf("A process declares the player %d(%s) alive.\n",
-				player->num, player->name);
+		if (!(vm->visu.active))
+			ft_printf("A process declares the player %d(%s) alive.\n",
+					player->num, player->name);
 		live = (t_fade *)ft_memalloc(sizeof(t_fade));
 		live->pc = proc->pc;
 		live->color = *(int *)player->color.value;

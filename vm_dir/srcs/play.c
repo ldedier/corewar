@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/20 16:12:15 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/20 18:21:37 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,20 @@ static int		kill_process(t_vm *vm, t_list *proc)
 	if (ft_add_to_list_ptr(&vm->killed_proc,
 										(void *)killed_proc, sizeof(t_fade)))
 		return (-1);
-	while (tmp2 && tmp2->next && tmp2->next != proc)
+//	ft_printf("vm proc = %d vm proc next = %d proc = %d proc next = %d\n", vm->proc, vm->proc->next, proc, proc->next);
+	while (tmp2 && tmp2->next && tmp2 != proc && tmp2->next != proc)
 			tmp2 = tmp2->next;
-	tmp2 = proc->next;
+//	ft_printf("tmp 2 = %d\n", tmp2);
+	tmp2->next = proc->next;
+//	ft_printf("vm proc = %d vm proc next = %d proc = %d proc next = %d\n", vm->proc, vm->proc->next, proc, proc->next);
 	if (proc == vm->proc && !proc->next)
 		vm->proc = NULL;
 	else
 		vm->proc = (proc == vm->proc) ? proc->next : vm->proc;
+//	ft_printf("AFTER vm proc = %d vm proc next = %d proc = %d proc next = %d\n", vm->proc, vm->proc->next, proc, proc->next);
 	ft_memdel((void **)&proc->content);
 	ft_memdel((void **)&proc);
+//	ft_printf("KILL PROCESS | current winner is %s\n", vm->winner->cor_name);
 	return (0);
 }
 
@@ -83,7 +88,7 @@ static int		reset_live_allprocesses(t_vm *vm)
 //		ft_printf("proc live = %d\n", proc->live);
 		if (!proc->live)
 		{
-			ft_printf("kill process");
+//			ft_printf("kill process");
 			if (kill_process(vm, proc_lst) == -1)
 				return (-1);
 		}
@@ -92,7 +97,6 @@ static int		reset_live_allprocesses(t_vm *vm)
 			proc->live = 0;
 			proc->player->live = 0;
 		}
-		vm->winner = proc->player;
 		proc_lst = proc_lst->next;
 	}
 	vm->live = 0;
@@ -108,10 +112,11 @@ static int		last_instruction_unresolved(t_vm *vm, t_process *proc)
 	t_pending *pending;
 
 	pending = ((t_pending *)&proc->pending);
-	ft_printf("pending cycles = %d\n", pending->cycles);
+//	ft_printf("pending cycles = %d\n", pending->cycles);
 	--pending->cycles;
-	if (pending->cycles >= 1 && ft_printf("%*s", PAD_INS, ""))
+	if (pending->cycles >= 1 && !vm->visu.active )
 	{
+		ft_printf("%*s", PAD_INS, "");
 		display(vm, proc, PL_CYCLE);
 		display(vm, proc, PL_PC);
 		return (1);
@@ -128,6 +133,8 @@ void		execute_pending_action(t_vm *vm, t_process *proc)
 
 	if (proc->pending.cycles == 0)
 	{
+		if (!vm->visu.active)
+		display_ins_description(vm, proc->pending.ins.op.description, proc->pending.ins.op.opcode);
 		proc->pc = (proc->pc + proc->pending.pc) % MEM_SIZE;
 		if (proc->pending.dest == vm->arena && (i = -1))
 		{
@@ -170,11 +177,11 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 	if (proc->pending.ins.op.opcode)
 	{
 		f_ins[(int)proc->pending.ins.op.opcode](vm, proc, proc->pending.ins.params);
-		display_ins_description(vm, proc->pending.ins.op.description, proc->pending.ins.op.opcode);
 		execute_pending_action(vm, proc);
 		return (0);
 	}
 	proc->ins_bytelen = get_instruction(vm->arena, &proc->pending.ins, proc->pc, MEM_SIZE);
+	
 	if ((proc->ins_bytelen))
 	{
 		proc->pending.pc = proc->ins_bytelen;
@@ -207,6 +214,7 @@ void		process_cycle(t_vm *vm)
 		vm->cycle = 0;
 	}
 	proc_lst = vm->proc;
+//	ft_printf("check vm proc = %d prc next = %d\n", vm->proc, vm->proc->next);
 	while (proc_lst)
 	{
 //		ft_printf("PROCESS CYCLE cycle = %d cycle to die = %d\n", vm->cycle, vm->c_to_die);
@@ -222,16 +230,20 @@ void		process_cycle(t_vm *vm)
 ** penser a clear vm plutot que init
 */
 
-t_player	*set_up_and_duel(t_vm *vm, t_player *pl1, t_player *pl2)
+t_player	*duel(t_vm *vm, t_player *pl1, t_player *pl2)
 {
 	clear_vm(vm);
+	ft_printf("duel between p1 %s and p2 %s\n", pl1->cor_name, pl2->cor_name);
 	if (ft_read_player(pl1->cor_name, &(vm->player[0]))
 			||	ft_read_player(pl2->cor_name, &(vm->player[1])))
 		return (NULL);
 	vm->player[2].relevant = 0;
 	vm->player[3].relevant = 0;
 	dispatch_players_init(vm);
-	init_local_players(vm);
+//	init_local_players(vm);
+	if (!init_processes(vm))
+		error_exit_msg(INIT_PROC_ERROR);
+//	ft_printf("proc 1 pc = %d proc 2 pc = %d\n", ((t_process *)vm->proc->content)->pc, ((t_process *)vm->proc->next->content)->pc);
 	play(vm);
 	return (vm->winner);
 }
@@ -255,9 +267,10 @@ int		play(t_vm *vm)
 	display(vm, 0, CYCLE_NBR);
 	while (vm->proc)
 	{
-//		ft_printf("\n%sPLAY cycle = %d | %s ", COLF_BGREY, vm->cycle,
+		ft_printf("\n%sPLAY cycle = %d | %s ", COLF_BGREY, vm->cycle,
 			MSG_CYCLES_REMAINING);
-		ft_printf(" [ %d ] %s\n", vm->c_to_die - vm->cycle, COLF_OFF);
+
+	ft_printf(" [ %d ] %s\n", vm->c_to_die - vm->cycle, COLF_OFF);
 		process_cycle(vm);
 	}
 	return (0);
