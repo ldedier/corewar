@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/20 16:29:42 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/20 00:58:35 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/20 20:16:23 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int		process_play(t_vm *vm, double nb_cycles_db)
 	i = nb_cycles;
 	while (i-- && vm->proc)
 	{
-		ft_printf("cycle = %d total cycle = %d\n", vm->cycle, vm->total_cycle);
 		process_cycle(vm);
 	}
 	cycle_iterator -= nb_cycles;

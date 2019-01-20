@@ -79,9 +79,9 @@ VISU_NO_PREFIX =		init_sdl.c visu.c events.c framerate.c render.c \
 
 INCLUDES_NO_PREFIX =	vm.h visu.h client.h
 
-SOURCES = $(addprefix $(SRCDIR)/, $(SRCS_NO_PREFIX)) \
-		$(addprefix $(SRCDIR)/$(INSDIR)/, $(INS_NO_PREFIX))\
-		$(addprefix $(SRCDIR)/$(VISUDIR)/, $(VISU_NO_PREFIX))
+#SOURCES = $(addprefix $(SRCDIR)/, $(SRCS_NO_PREFIX)) \
+#		$(addprefix $(SRCDIR)/$(INSDIR)/, $(INS_NO_PREFIX)) \
+#		$(addprefix $(SRCDIR)/$(VISUDIR)/, $(VISU_NO_PREFIX))
 
 OBJECTS =	$(addprefix $(OBJDIR)/, $(SRCS_NO_PREFIX:%.c=%.o)) \
 		$(addprefix $(OBJDIR)/$(INSDIR)/, $(INS_NO_PREFIX:%.c=%.o)) \
@@ -129,7 +129,6 @@ debug:
 
 $(LIBFT):
 	@make -C $(LIBFTDIR) all
-	#@$(CC) -o $@ $^ -F $(FRAMEWORKSDIR) $(CFLAGS) $(LFLAGS) #pour linux Emma | desolee!
 
 $(BINDIR)/$(NAME): $(OBJECTS)  $(LIBFT) $(LIBOP)
 	@$(CC) -o $@ $^ -F $(FRAMEWORKSDIR) $(SDL2_FRAMEWORKS) $(CFLAGS) $(LFLAGS)
@@ -139,11 +138,9 @@ $(OBJDIR)/%.o : $(SRCDIR)/%.c $(INCLUDES) $(LIBOP)
 	@mkdir -p $(OBJDIR)
 	@mkdir -p $(OBJDIR)/$(INSDIR)
 	@mkdir -p $(OBJDIR)/$(VISUDIR)
-#	@$(CC) -c $< -o $@ -F $(CFLAGS)
 	$(CC) -c $< -o $@ -F $(FRAMEWORKSDIR) $(CFLAGS)
 
 $(OBJDIR)/$(INSDIR)/%.o : $(SRCDIR)/$(INSDIR)/%.c $(INCLUDES)
-#	@$(CC) -c $< -o $@ -F $(CFLAGS)
 	$(CC) -c $< -o $@ -F $(FRAMEWORKSDIR) $(CFLAGS)
 
 $(OBJDIR)/$(VISUDIR)/%.o : $(SRCDIR)/$(VISUDIR)/%.c $(INCLUDES)

@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/30 22:57:11 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/17 17:24:29 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/20 21:11:55 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int		ft_process_player_scores(t_server *server, t_player *uploaded_player)
 {
 	t_list		*ptr;
 	t_player	*player;
-	t_player	*winner;
 	int			i;
 
 	ptr = server->players;
@@ -65,11 +64,11 @@ int		ft_process_player_scores(t_server *server, t_player *uploaded_player)
 	while (ptr != NULL)
 	{
 		player = (t_player *)ptr->content;
-		if (fight_cores(player, uploaded_player, &winner))
+		if (fight_cores(&server->vm, player, uploaded_player))
 			return (1);
-		winner->nb_victories++;
-		if (ft_add_to_list_ptr(&winner->beaten_players,
-				uploaded_player == winner ? player : uploaded_player,
+		server->vm.winner->nb_victories++;
+		if (ft_add_to_list_ptr(&server->vm.winner->beaten_players,
+				uploaded_player == server->vm.winner ? player : uploaded_player,
 					sizeof(t_player)))
 			return (1);
 		ptr = ptr->next;

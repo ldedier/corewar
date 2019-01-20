@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 20:42:59 by ldedier           #+#    #+#             */
-/*   Updated: 2018/12/06 21:27:19 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/20 21:22:24 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_init_client_socket(t_client_socket *cs)
 	cs->isfree = 1;
 }
 
-int		ft_init_server(int argc, char **argv, t_server *server)
+int		ft_init_server(int argc, char **argv, t_server *server, char **env)
 {
 	int i;
 
@@ -41,5 +41,6 @@ int		ft_init_server(int argc, char **argv, t_server *server)
 	}
 	server->nb_players = 0;
 	server->running = 1;
+	init_vm(&server->vm, argv, env);
 	return (0);
 }
