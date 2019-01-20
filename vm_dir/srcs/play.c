@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/20 20:16:05 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/20 21:38:52 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ static int		kill_process(t_vm *vm, t_list *proc)
 		vm->proc = NULL;
 	else
 		vm->proc = (proc == vm->proc) ? proc->next : vm->proc;
-//	ft_printf("AFTER vm proc = %d vm proc next = %d proc = %d proc next = %d\n", vm->proc, vm->proc->next, proc, proc->next);
+//	if (vm->proc)
+//		ft_printf("AFTER vm proc = %d vm proc next = %d proc = %d proc next = %d\n", vm->proc, vm->proc->next, proc, proc->next);
 	ft_memdel((void **)&proc->content);
 	ft_memdel((void **)&proc);
 //	ft_printf("KILL PROCESS | current winner is %s\n", vm->winner->cor_name);
@@ -114,11 +115,14 @@ static int		last_instruction_unresolved(t_vm *vm, t_process *proc)
 	pending = ((t_pending *)&proc->pending);
 //	ft_printf("pending cycles = %d\n", pending->cycles);
 	--pending->cycles;
-	if (pending->cycles >= 1 && !vm->visu.active )
+	if (pending->cycles >= 1)
 	{
-		ft_printf("%*s", PAD_INS, "");
-		display(vm, proc, PL_CYCLE);
-		display(vm, proc, PL_PC);
+		if (!vm->visu.active)
+		{
+			ft_printf("%*s", PAD_INS, "");
+			display(vm, proc, PL_CYCLE);
+			display(vm, proc, PL_PC);
+		}
 		return (1);
 	}
 	return (0);
@@ -131,11 +135,14 @@ void		execute_pending_action(t_vm *vm, t_process *proc)
 	int			val;
 	int			i;
 
+	ft_printf("buffer = %s\n", proc->player->aff_buf);
 	if (proc->pending.cycles == 0)
 	{
+		ft_printf("EXECUT PENDING ACTION\n");
 		if (!vm->visu.active)
 		display_ins_description(vm, proc->pending.ins.op.description, proc->pending.ins.op.opcode);
 		proc->pc = (proc->pc + proc->pending.pc) % MEM_SIZE;
+//		ft_printf("so proc pc = %d\n", proc->pc);
 		if (proc->pending.dest == vm->arena && (i = -1))
 		{
 			while (++i < 4)
@@ -172,12 +179,14 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 //	ft_printf("LAUNCH INSTRUCTION\n");
 
 //	ft_printf("launch instruction\n");
+//	ft_printf("opcode = %d cycles = %d\n", proc->pending.ins.op.opcode, proc->pending.cycles);
 	if (last_instruction_unresolved(vm, proc))
 		return (0);
 	if (proc->pending.ins.op.opcode)
 	{
 		f_ins[(int)proc->pending.ins.op.opcode](vm, proc, proc->pending.ins.params);
 		execute_pending_action(vm, proc);
+//		ft_printf("sortie EXECUTE\n");
 		return (0);
 	}
 	proc->ins_bytelen = get_instruction(vm->arena, &proc->pending.ins, proc->pc, MEM_SIZE);
@@ -185,6 +194,7 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 	if ((proc->ins_bytelen))
 	{
 		proc->pending.pc = proc->ins_bytelen;
+//		ft_printf("pending pc = %d\n", proc->pending.pc);
 		proc->pending.cycles = g_op_tab[(int)proc->pending.ins.op.opcode - 1].nb_cycles;
 //		display(vm, proc, PL_PC);
 //		display(vm, proc, PL_CYCLE);
@@ -226,10 +236,6 @@ void		process_cycle(t_vm *vm)
 	}
 }
 
-/*
-** penser a clear vm plutot que init
-*/
-
 int		fight_cores(t_vm *vm, t_player *pl1, t_player *pl2)
 {
 	vm->visu.active = 1;
@@ -266,10 +272,10 @@ int		play(t_vm *vm)
 	display(vm, 0, CYCLE_NBR);
 	while (vm->proc)
 	{
-		ft_printf("\n%sPLAY cycle = %d | %s ", COLF_BGREY, vm->cycle,
-			MSG_CYCLES_REMAINING);
+//		ft_printf("\n%sPLAY cycle = %d | %s ", COLF_BGREY, vm->cycle,
+//			MSG_CYCLES_REMAINING);
 
-	ft_printf(" [ %d ] %s\n", vm->c_to_die - vm->cycle, COLF_OFF);
+//	ft_printf(" [ %d ] %s\n", vm->c_to_die - vm->cycle, COLF_OFF);
 		process_cycle(vm);
 	}
 	return (0);
