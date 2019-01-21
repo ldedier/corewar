@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 19:28:28 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/20 21:36:52 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/21 17:06:54 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int		ins_fork(t_vm *vm, t_process *proc, t_parameter arg[3])
 	if (ft_add_to_list_ptr(&vm->proc, (void *)new_proc, sizeof(t_process)))
 		return (FAILURE);
 	++proc->player->nb_proc;
-	ft_printf("CREATE PROC | nb proc = %d\n", proc->player->nb_proc);
+//:w
+//ft_printf("CREATE PROC | nb proc = %d\n", proc->player->nb_proc);
 	return (SUCCESS);
 }

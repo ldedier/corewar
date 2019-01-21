@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 22:30:17 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/19 22:32:23 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/21 16:58:41 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ int			ft_read_player(char *path, t_player *player)
 	int fd;
 	int ret;
 
+	if (!path)
+		return (1);
 	if ((player->file_len = get_length(path, player)) == -1)
 		return (1);
 	if (player->file_len > TOT_SIZE)

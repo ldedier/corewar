@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 17:22:33 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/04 17:24:28 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/01/21 20:10:28 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ int			check_type(int ac, char **av)
 			i++;
 		else if (ft_is_of_extension(av[i], ".cor"))
 			i++;
+		else if (av[i][0] == '-' && ft_isdigit(av[i][1]))
+			++i;
 		else
 			return (0);
 	}
