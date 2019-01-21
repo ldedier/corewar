@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 16:42:17 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/18 19:34:21 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/01/20 20:17:44 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,6 @@ void			update_nb_players(t_vm *vm)
 	vm->nb_players = res;
 }
 
-/*
-** ft_get_potential_num function is used by ft_set_numbers function to get a
-** number for a player.
-*/
-
 int				ft_get_potential_num(int player_num)
 {
 	if (player_num == INT_MAX)
@@ -50,7 +45,7 @@ int				ft_get_potential_num(int player_num)
 ** ft_set_numbers function assigns each player a different number.
 */
 
-void			ft_set_numbers(t_player players[MAX_PLAYERS], t_player *player)
+void			ft_set_numbers(t_player *players, t_player *player)
 {
 	int i;
 	int j;

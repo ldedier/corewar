@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/19 00:51:38 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/20 20:18:12 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,9 +124,9 @@
 
 # define LIVE_BREAKDOWN_HP_PLAYERS_BOTTOM	20
 
-# define WINNER_HEIGHT			20
-# define WINNER_TOP				30
-# define WINNER_BOTTOM			60
+# define WINNER_HEIGHT			30
+# define WINNER_TOP				40
+# define WINNER_BOTTOM			30
 
 # define BACK_WIDTH				50
 # define BACK_HEIGHT			50
@@ -210,7 +210,7 @@
 # define DROP_TOLERANCE_H		30
 
 # define MAX_FADE				60
-# define FADE_LEN				5
+# define FADE_LEN				10
 
 typedef struct s_vm				t_vm;
 typedef struct s_visu			t_visu;
@@ -493,6 +493,7 @@ typedef struct			s_center
 	int					live_breakdown_hp_players_side;
 
 	int					winner_height;
+	int					winner_width;
 	int					winner_top;
 	int					winner_bottom;
 	int					winner_left;
@@ -626,6 +627,7 @@ struct					s_visu
 	t_list				*downloaded_players;
 	t_notification		notification;
 	t_time_manager		time_manager;
+	double				current_hp_ratio;
 	t_hp_frame			frames[NB_FRAMES];
 	int					animation_index;
 };
@@ -849,7 +851,8 @@ void					ft_init_center_spec(t_visu *visu, t_center *c);
 void					ft_init_center_fight(t_visu *visu, t_center *c);
 void					ft_init_center_online(t_visu *visu, t_center *c);
 void					ft_init_center_players(t_visu *visu, t_center *c);
-double					get_magic_ratio(int lives_player_1, int lives_player_2);
+double					get_magic_ratio(t_vm *vm,
+							int lives_player_1, int lives_player_2);
 void					ft_get_player_lives(t_vm *vm, int *nb_live_player_1,
 							int *nb_live_player_2);
 int						ft_render_button(t_vm *vm, t_button *button);
@@ -861,4 +864,8 @@ SDL_Rect				get_rect_from_pc(t_vm *vm, int pc);
 int						ft_render_all_dead_process(t_vm *vm);
 void					ft_draw_rect_surface(SDL_Surface *surface,
 							SDL_Rect rect, int color);
+int						ft_moy(int val1, int val2);
+double					ft_fmoy(double val1, double val2);
+void					populate_hp_player_title_rect(t_vm *vm, SDL_Rect *rect);
+double					ft_flerp(double val1, double val2, double t);
 #endif

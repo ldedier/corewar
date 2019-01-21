@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 20:48:24 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/18 20:48:43 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/19 19:20:23 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,11 @@ void	ft_init_center_fight(t_visu *visu, t_center *c)
 
 void	ft_init_center_footer(t_visu *visu, t_center *c)
 {
-	c->winner_top = WINNER_HEIGHT * visu->react.h_scale;
+	c->winner_top = WINNER_TOP * visu->react.h_scale;
 	c->winner_bottom = WINNER_BOTTOM * visu->react.h_scale;
 	c->winner_height = WINNER_HEIGHT * visu->react.h_scale;
-	c->winner_left = c->entry_left;
+	c->winner_width = 4 * c->dashboard_width / 5.0;
+	c->winner_left = (c->dashboard_width - c->winner_width) / 2.0;
 	c->back_width = BACK_WIDTH * visu->react.w_scale;
 	c->back_height = BACK_HEIGHT * visu->react.h_scale;
 	c->back_left = (c->dashboard_width - c->back_width) / 2.0;

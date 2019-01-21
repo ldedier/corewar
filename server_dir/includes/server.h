@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 17:20:50 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/17 17:54:09 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/20 21:21:07 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include "op.h"
 # include "network.h"
 # include "player.h"
+# include "vm.h"
 # include <dirent.h>
 # include <sys/stat.h>
 # define MAX_SOCKETS	MAX_PLAYERS + 1
@@ -43,10 +44,12 @@ typedef struct			s_server
 	char				buffer[MAX_TCP_PACKET];
 	t_flag				flag;
 	t_list				*players;
+	t_vm				vm;
 }						t_server;
 
 int						ft_print_usage(char *progname);
-int						ft_init_server(int argc, char **argv, t_server *server);
+int						ft_init_server(int argc, char **argv, t_server *server,
+							char **env);
 void					ft_init_client_socket(t_client_socket *cs);
 int						ft_init_db(t_server *server);
 int						ft_process_server(t_server *server);
@@ -73,8 +76,6 @@ int						ft_attribute_scores_init(t_server *server);
 void					ft_process_score(t_server *server);
 int						ft_send_flag(t_server *server, int client_index,
 							t_flag flag);
-int						fight_cores(t_player *player1, t_player *player2,
-							t_player **winner);
 int						ft_attempt_connection(t_server *server);
 int						ft_disconnect_player(t_server *server, int i);
 #endif

@@ -6,25 +6,17 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 14:46:58 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/16 23:45:31 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/20 19:09:12 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "server.h"
-
-int		fight_cores(t_player *player1, t_player *player2, t_player **winner)
-{
-	(void)player2;
-	*winner = player1;
-	return (0);
-}
 
 int		ft_blood_bath(t_server *server)
 {
 	t_list		*ptr;
 	t_player	*player1;
 	t_player	*player2;
-	t_player	*winner;
 	t_list		*next;
 
 	ptr = server->players;
@@ -35,11 +27,11 @@ int		ft_blood_bath(t_server *server)
 		while (next != NULL)
 		{
 			player2 = (t_player *)next->content;
-			if (fight_cores(player1, player2, &winner))
+			if (fight_cores(&server->vm, player1, player2))
 				return (1);
-			winner->nb_victories++;
-			if (ft_add_to_list_ptr(&winner->beaten_players,
-					player1 == winner ? player2 : player1, sizeof(t_player)))
+			server->vm.winner->nb_victories++;
+			if (ft_add_to_list_ptr(&server->vm.winner->beaten_players,
+					player1 == server->vm.winner ? player2 : player1, sizeof(t_player)))
 				return (1);
 			next = next->next;
 		}

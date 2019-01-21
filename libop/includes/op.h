@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+ /*************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   op.h                                               :+:      :+:    :+:   */
@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 19:01:37 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/17 01:27:07 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/20 20:39:55 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@
 # define NAME_CMD_STRING		".name"
 # define COMMENT_CMD_STRING		".comment"
 # define REG_NUMBER				16
-# define CYCLE_TO_DIE			200 //anciennement 1536
+# define CYCLE_TO_DIE			1536 //anciennement 1536
 # define CYCLE_DELTA			50
 # define NBR_LIVE				21
 # define MAX_CHECKS				10 //anciennement 10
@@ -154,6 +154,7 @@ struct							s_instruction
 	char						*source_code_line;
 	char						*label;
 	char						is_labeled;
+//	int							bytelen;
 };
 
 enum							e_op
