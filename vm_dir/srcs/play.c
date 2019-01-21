@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/20 21:38:52 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/21 22:19:22 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ static int		kill_process(t_vm *vm, t_list *proc)
 		vm->proc = (proc == vm->proc) ? proc->next : vm->proc;
 //	if (vm->proc)
 //		ft_printf("AFTER vm proc = %d vm proc next = %d proc = %d proc next = %d\n", vm->proc, vm->proc->next, proc, proc->next);
+	display_last_live(vm, (t_process *)proc->content);
 	ft_memdel((void **)&proc->content);
 	ft_memdel((void **)&proc);
 //	ft_printf("KILL PROCESS | current winner is %s\n", vm->winner->cor_name);
@@ -112,17 +113,19 @@ static int		last_instruction_unresolved(t_vm *vm, t_process *proc)
 {
 	t_pending *pending;
 
+	(void)vm;
 	pending = ((t_pending *)&proc->pending);
 //	ft_printf("pending cycles = %d\n", pending->cycles);
 	--pending->cycles;
-	if (pending->cycles >= 1)
+	if (pending->cycles > 1)
 	{
-		if (!vm->visu.active)
-		{
-			ft_printf("%*s", PAD_INS, "");
-			display(vm, proc, PL_CYCLE);
-			display(vm, proc, PL_PC);
-		}
+//		if (!vm->visu.active)
+//		{
+//			ft_printf("%*s", PAD_INS, "");
+//			display(vm, proc, PL_CYCLE);
+//			display(vm, proc, PL_PC);
+//:w
+//}
 		return (1);
 	}
 	return (0);
@@ -130,19 +133,16 @@ static int		last_instruction_unresolved(t_vm *vm, t_process *proc)
 
 void		execute_pending_action(t_vm *vm, t_process *proc)
 {
-//	t_process	*proc;
 	int			index;
 	int			val;
 	int			i;
 
-	ft_printf("buffer = %s\n", proc->player->aff_buf);
-	if (proc->pending.cycles == 0)
+	if (proc->pending.cycles == 1)
 	{
-		ft_printf("EXECUT PENDING ACTION\n");
-		if (!vm->visu.active)
-		display_ins_description(vm, proc->pending.ins.op.description, proc->pending.ins.op.opcode);
+		display_ins(vm, proc);
+		display_move(vm, proc);
 		proc->pc = (proc->pc + proc->pending.pc) % MEM_SIZE;
-//		ft_printf("so proc pc = %d\n", proc->pc);
+
 		if (proc->pending.dest == vm->arena && (i = -1))
 		{
 			while (++i < 4)
@@ -150,14 +150,15 @@ void		execute_pending_action(t_vm *vm, t_process *proc)
 				index = (proc->pending.dest_index + i) % MEM_SIZE;
 				val = proc->pending.value & (0xFF << ((3 - i) * 8));
 				*(char *)(proc->pending.dest + index) = val >> ((3 - i) * 8);
+				vm->metarena[index].color_index = 5;
 			//	vm->metarena[index].alt_color = 1;
 			}
 		}
 		else if (proc->pending.dest)
+		{
 			proc->reg[proc->pending.dest_index] = proc->pending.value;
+		}
 		proc->pending.dest = NULL;
-//		ft_printf("player pc = %d\n", proc->pc);//
-//		ft_printf("\n");//
 		ft_bzero((void *)&proc->pending.ins, sizeof(proc->pending.ins));
 
 	}
@@ -176,17 +177,12 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 		&ins_live, &ins_ld, &ins_st, &ins_add, &ins_sub, &ins_and, &ins_or,
 		&ins_xor, &ins_zjmp, &ins_ldi, &ins_sti, &ins_fork, &ins_lld, &ins_lldi,
 		&ins_lfork, &ins_aff};
-//	ft_printf("LAUNCH INSTRUCTION\n");
-
-//	ft_printf("launch instruction\n");
-//	ft_printf("opcode = %d cycles = %d\n", proc->pending.ins.op.opcode, proc->pending.cycles);
 	if (last_instruction_unresolved(vm, proc))
 		return (0);
 	if (proc->pending.ins.op.opcode)
 	{
 		f_ins[(int)proc->pending.ins.op.opcode](vm, proc, proc->pending.ins.params);
 		execute_pending_action(vm, proc);
-//		ft_printf("sortie EXECUTE\n");
 		return (0);
 	}
 	proc->ins_bytelen = get_instruction(vm->arena, &proc->pending.ins, proc->pc, MEM_SIZE);
@@ -194,15 +190,10 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 	if ((proc->ins_bytelen))
 	{
 		proc->pending.pc = proc->ins_bytelen;
-//		ft_printf("pending pc = %d\n", proc->pending.pc);
 		proc->pending.cycles = g_op_tab[(int)proc->pending.ins.op.opcode - 1].nb_cycles;
-//		display(vm, proc, PL_PC);
-//		display(vm, proc, PL_CYCLE);
 		return (1);
 	}
 		proc->pc += 1;
-//	display(vm, proc, MOVE_ONE);
-//	display(vm, proc, PL_PC);
 	return (0);
 }
 
@@ -214,9 +205,7 @@ void		process_cycle(t_vm *vm)
 {
 	t_list				*proc_lst;
 
-	++vm->cycle;
-//	ft_printf("vm cycle = %d\n", vm->cycle);
-	++vm->total_cycle;
+	display_cycle(vm);
 	if (vm->cycle >= vm->c_to_die)
 	{
 		reset_live_allprocesses(vm);
@@ -230,19 +219,25 @@ void		process_cycle(t_vm *vm)
 //		ft_printf("PROCESS CYCLE cycle = %d cycle to die = %d\n", vm->cycle, vm->c_to_die);
 		display(vm, (t_process *)proc_lst->content, TURN_PLAYER);
 		launch_instruction(vm, (t_process *)proc_lst->content);
-		if (!vm->visu.active)
-			ft_printf("\n");
+//		if (!vm->visu.active)
+//			ft_printf("\n");
 		proc_lst = proc_lst->next;
 	}
+	++vm->cycle;
+//	ft_printf("vm cycle = %d\n", vm->cycle);
+	++vm->total_cycle;
 }
 
 int		fight_cores(t_vm *vm, t_player *pl1, t_player *pl2)
 {
 	vm->visu.active = 1;
 	clear_vm(vm);
-	if (ft_read_player(pl1->cor_name, &(vm->player[0]))
-			||	ft_read_player(pl2->cor_name, &(vm->player[1])))
-		return (1);
+	ft_memmove(&vm->player[0], pl1, sizeof(t_player));
+	ft_memmove(&vm->player[1], pl2, sizeof(t_player));
+	vm->player[0].num = 1;
+	vm->player[1].num = 2;
+	vm->player[0].relevant = 1;
+	vm->player[1].relevant = 1;
 	vm->player[2].relevant = 0;
 	vm->player[3].relevant = 0;
 	dispatch_players_init(vm);
@@ -250,6 +245,10 @@ int		fight_cores(t_vm *vm, t_player *pl1, t_player *pl2)
 		error_exit_msg(INIT_PROC_ERROR);
 	while (vm->proc)
 		process_cycle(vm);
+	if (vm->winner == &vm->player[0])
+		vm->winner = pl1;
+	else
+		vm->winner = pl2;
 	return (0);
 }
 
@@ -274,8 +273,8 @@ int		play(t_vm *vm)
 	{
 //		ft_printf("\n%sPLAY cycle = %d | %s ", COLF_BGREY, vm->cycle,
 //			MSG_CYCLES_REMAINING);
-
-//	ft_printf(" [ %d ] %s\n", vm->c_to_die - vm->cycle, COLF_OFF);
+//
+///	ft_printf(" [ %d ] %s\n", vm->c_to_die - vm->cycle, COLF_OFF);
 		process_cycle(vm);
 	}
 	return (0);

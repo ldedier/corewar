@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 14:46:58 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/20 19:09:12 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/21 22:19:27 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int		ft_blood_bath(t_server *server)
 	t_player	*player1;
 	t_player	*player2;
 	t_list		*next;
+	int			ret;
 
 	ptr = server->players;
 	while (ptr != NULL)
@@ -27,9 +28,11 @@ int		ft_blood_bath(t_server *server)
 		while (next != NULL)
 		{
 			player2 = (t_player *)next->content;
-			if (fight_cores(&server->vm, player1, player2))
+			ret = fight_cores(&server->vm, player1, player2);
+			if (ret)
 				return (1);
 			server->vm.winner->nb_victories++;
+			ft_printf("server winner = %s victories = %d\n", server->vm.winner->name, server->vm.winner->nb_victories);
 			if (ft_add_to_list_ptr(&server->vm.winner->beaten_players,
 					player1 == server->vm.winner ? player2 : player1, sizeof(t_player)))
 				return (1);

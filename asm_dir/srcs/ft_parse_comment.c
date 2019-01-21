@@ -20,10 +20,10 @@ int			check_comment(char *str, t_env *env)
 	{
 		i = ft_strlen(COMMENT_CMD_STRING);
 		if (isprint(str[i]) == 1)
-			return (ft_log_error_no_line("Lexical error COMMENT", env));
+			return (ft_log_error_no_line(ERR_LXC, env));
 	}
 	else if (str[0] != '.')
-		return (ft_log_error_no_line("Lexical error COMMENT", env));
+		return (ft_log_error_no_line(ERR_LXC, env));
 	return (0);
 }
 
@@ -32,11 +32,11 @@ static int	check_after_comment(char *tmp, int i, t_env *env)
 	while (ft_strchr(&tmp[++i], '"'))
 		;
 	if (tmp[i - 1] != '"')
-		return (ft_log_error_no_line("Lexical error", env));
+		return (ft_log_error_no_line(ERR_LX, env));
 	while (tmp[i] || tmp[i] == ' ' || tmp[i] == '\t')
 	{
 		if (isprint(tmp[i]))
-			return (ft_log_error_no_line("Syntax error AFTER COMMENT", env));
+			return (ft_log_error_no_line(ERR_SXC, env));
 		i++;
 	}
 	return (0);
@@ -61,7 +61,7 @@ static int	get_comment_other_line(t_env *env, int fd, int i)
 	while (get_next_line(fd, &tmp))
 	{
 		if (ft_strlen(tmp) + ft_strlen(env->champ.header.comment) > COMMENT_LENGTH)
-			return (ft_log_error_no_line("Syntax error COMMENT", env));
+			return (ft_log_error_no_line(ERR_SIZE, env));
 		ft_strcat(env->champ.header.comment, tmp);
 		ft_strcat(env->champ.header.comment, "\n");
 		if (ft_strchr(tmp, '"'))
@@ -94,12 +94,12 @@ static int	read_comment_continue(char *line, int i, t_env *env, int fd)
 		while (line[i] || line[i] == '\t' || line[i] == ' ')
 		{
 			if (isprint(line[i]))
-				return (ft_log_error("Syntax error AFTER COMMENT", i - 2, env));
+				return (ft_log_error(ERR_SXC, i - 2, env));
 			i++;
 		}
 	}
 	if (ft_strlen(env->champ.header.comment) > COMMENT_LENGTH)
-		ft_log_error_no_line("Champion name too long (Max length 2048)", env);
+		ft_log_error_no_line(ERR_SIZE, env);
 //	printf("%s\n", env->champ.header.comment);
 	env->parser.parsed_comment = 1;
 	return (0);
@@ -111,17 +111,17 @@ int			read_comment(char *line, t_env *env, int fd, int i)
 
 	j = 0;
 	if (env->champ.header.comment[j])
-		return (ft_log_error("Syntax error COMMAND_COMMENT", 0, env));
+		return (ft_log_error("Syntax error", 0, env));
 	i = ft_strlen(COMMENT_CMD_STRING);
 	while (line[++i] == ' ' || line[i] == '\t')
 		;
 	if (line[i] != '"')
-		return (ft_log_error("Lexical error", i, env));
+		return (ft_log_error(ERR_LX, i, env));
 	while (line[i] && line[i + 1] != '"')
 		env->champ.header.comment[j++] = line[++i];
 	env->champ.header.comment[j] = '\0';
 	if (line[i + 1] != '"' && line[i] != '\0')
-		return (ft_log_error("Lexical error", i, env));
+		return (ft_log_error(ERR_LX, i, env));
 	if (read_comment_continue(line, i, env, fd) == 1)
 		return (1);
 	return (0);

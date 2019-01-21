@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 16:42:17 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/20 20:17:44 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/21 22:19:13 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int				ft_get_potential_num(int player_num)
 	if (player_num == INT_MAX)
 		return (INT_MIN);
 	else
-		return (player_num + 1);
+		return (-(player_num /*+ 1*/)); //ancienemment return player_um + 1
 	return (0);
 }
 

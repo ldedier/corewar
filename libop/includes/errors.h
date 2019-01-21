@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/10 16:04:06 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/01/21 19:26:54 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,13 @@
 # define ERR_HEADER "Header global error"
 # define RD_ERROR "Error while reading file"
 # define INIT_PROC_ERROR "Error while initializing player's process"
-
+# define ERR_SIZE "Champion comment too long (Max length 2048"
+# define ERR_LX "Lexical error"
+# define ERR_LXC "Lexical error COMMENT"
+# define ERR_LXN "Lexical error NAME"
+# define ERR_SIZEN "Name too long Max length 128"
+# define ERR_SXC "Syntax error AFTER COMMENT"
+# define ERR_SXN "Syntax error token AFTER NAME"
 /*
 ** PLAYER MESSAGES
 */

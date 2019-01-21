@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/20 20:17:57 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/21 22:19:40 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef struct		s_pending
 	t_instruction	ins;
 	void			*dest;
 	int				dest_index;
-	int				value;
+	long				value;
 	int				pc;
 	int				cycles;
 }					t_pending;
@@ -39,6 +39,7 @@ typedef struct		s_process
 	t_player		*player;
 	t_pending		pending;
 	int				live;
+	int				live_cycle;
 	unsigned int	reg[REG_NUMBER];
 	int				pc;
 	int				ins_bytelen;
@@ -67,6 +68,7 @@ typedef struct		s_vm
 	int				checks;
 	int				win;
 	int				cycle;
+	int				display;
 	int				total_cycle;
 	int				nb_players;
 	long long int	nb;
@@ -123,6 +125,14 @@ t_player			*duel(t_vm *vm, t_player *pl1, t_player *pl2);
 /*
 ** DISPLAY
 */
+
+void				display_player_intro(t_vm *vm, t_player *player);
+void				display_cycle(t_vm *vm);
+void				display_move(t_vm *vm, t_process *proc);
+void				display_ins(t_vm *vm, t_process *proc);
+void				display_last_live(t_vm *vm, t_process *proc);
+void				display_winner(t_vm *vm);
+
 
 void				display_ins_description(t_vm *vm, char *str, int opcode);
 void				display_live_player(t_vm *vm, int op_code);
