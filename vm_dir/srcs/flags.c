@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 17:19:23 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/07 17:30:54 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/21 20:09:37 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,7 @@ static void	add_player(t_vm *vm, char **argv, int *cur, int nb_pl)
 void		flags(t_vm *vm, int argc, char **argv)
 {
 	int cur;
+	int i;
 
 	cur = 1;
 	vm->nb_players = 0;
@@ -141,6 +142,10 @@ void		flags(t_vm *vm, int argc, char **argv)
 		dump_nb_cycles(vm, argc, argv, &cur);
 	while (cur < argc)
 	{
+		if (argv[cur][0] == '-' && ft_isdigit(argv[cur][1]) && !(i = 0))
+			while (ft_isdigit(argv[cur][++i]))
+				vm->display |= (1 << (argv[cur][i] - '0'));
+		else
 		if (!ft_strcmp("-v", argv[cur]))
 			vm->visu.active = 1;
 		else if (!ft_strcmp("-w", argv[cur]))
@@ -151,8 +156,8 @@ void		flags(t_vm *vm, int argc, char **argv)
 				add_player_n(vm, argc, argv, &cur);
 			else
 				add_player(vm, argv, &cur, vm->nb_players);
-			vm->nb_players += 1;
-			if (vm->nb_players > MAX_PLAYERS)
+//			vm->nb_players += 1;
+			if (++vm->nb_players > MAX_PLAYERS)
 				error_exit_msg(MAX_P_NUM);
 		}
 		cur++;

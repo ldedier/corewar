@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 16:42:17 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/20 20:17:36 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/21 22:19:15 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void			clear_vm(t_vm *vm)
 		vm->nb = 1;
 		vm->total_cycle = 0;
 		vm->cycle = 0;
-//		ft_bzero(vm->arena, MEM_SIZE);
+		ft_bzero(vm->arena, MEM_SIZE);
 		init_players(vm);
 }
 
@@ -57,13 +57,11 @@ void			init_vm(t_vm *vm, char **argv, char **env)
 	vm->client.port = 0;
 	vm->visu.active = 0;
 	vm->nb = 1;
-	vm->total_cycle = 0;
-	vm->cycle = 0;
+	vm->total_cycle = 1;
+	vm->cycle = 1;
 	ft_bzero(vm->color, MAX_PL_COLOR);
-//	ft_bzero(vm->arena, MEM_SIZE);
 	ft_strlcat(vm->color, init_color_ref(env), MAX_PL_COLOR);
 	init_players(vm);
-//	dispatch_players_init(vm);
 }
 
 /*
@@ -77,7 +75,7 @@ t_list			*add_process(t_vm *vm, int index, int start)
 	process = (t_process *)ft_memalloc(sizeof(t_process));
 	process->player = &vm->player[index];
 	process->pc = start;
-	process->reg[0] = process->player->num;
+	process->reg[0] = -process->player->num; // attention coherence, 
 	if (ft_add_to_list_ptr(&vm->proc, (void *)process, sizeof(t_process)))
 		return (NULL);
 	return (vm->proc);
@@ -123,11 +121,15 @@ void			dispatch_players_init(t_vm *vm)
 	ft_bzero(vm->metarena, sizeof(vm->metarena));
 	i = -1;
 	index = 0;
+	if (!vm->visu.active)
+		ft_printf("Introducing contestants...\n");
 	while (++i < MAX_PLAYERS)
 	{
 		set_color(&vm->player[i], vm->color);
+			ft_set_numbers(vm->player, &(vm->player[i]));
 		if (vm->player[i].relevant && ++index && (j = -1))
 		{
+			display_player_intro(vm, &vm->player[i]);
 			start = (MEM_SIZE / vm->nb_players) * (index - 1);
 			while (++j < vm->player[i].algo_len)
 			{

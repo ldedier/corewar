@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 17:18:28 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/18 19:09:30 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/01/21 20:08:46 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int		ins_sti(t_vm *vm, t_process *proc, t_parameter arg[3])
 	dest = proc->pc + (arg[1].dest_value + arg[2].dest_value) % IDX_MOD;
 	proc->pending.dest = vm->arena;
 	proc->pending.dest_index = dest;
-	proc->pending.value = arg[0].dest_value;
+//	ft_printf("dest index = %d\n", dest);
+	proc->pending.value = (short)arg[0].dest_value;
+//	ft_printf("dest value = %#x\n", proc->pending.value);
 	return (SUCCESS);
 }

@@ -6,13 +6,13 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/09 20:00:32 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/19 17:12:31 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/21 20:09:06 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-static int	getval_ind(t_vm *vm, t_process *proc, int index, int mod)
+static long	getval_ind(t_vm *vm, t_process *proc, int index, int mod)
 {
 	int	val;
 
@@ -23,14 +23,14 @@ static int	getval_ind(t_vm *vm, t_process *proc, int index, int mod)
 	return (val);
 }
 
-static int	getval_reg(t_vm *vm, t_process *proc, int index, int mod)
+static long	getval_reg(t_vm *vm, t_process *proc, int index, int mod)
 {
 	(void)vm;
 	(void)mod;
 	return (proc->reg[index - 1]);
 }
 
-static int	getval_dir(t_vm *vm, t_process *proc, int val, int mod)
+static long	getval_dir(t_vm *vm, t_process *proc, int val, int mod)
 {
 	(void)vm;
 	(void)proc;
@@ -41,8 +41,9 @@ static int	getval_dir(t_vm *vm, t_process *proc, int val, int mod)
 void		getval_param_dest(t_vm *vm, t_process *proc,
 												t_parameter *arg, int mod)
 {
-	static int (*f_data[NB_TYPES + 1])(t_vm *vm, t_process *proc,
+	static long (*f_data[NB_TYPES + 1])(t_vm *vm, t_process *proc,
 			int index, int mod) = {NULL, &getval_reg, &getval_dir, &getval_ind};
 
 	arg->dest_value = f_data[(int)arg->type](vm, proc, arg->value, mod);
+//	ft_printf("arg dest value = %#lx\n", arg->dest_value);
 }

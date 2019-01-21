@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 16:33:31 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/19 17:11:26 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/21 22:19:35 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,8 @@ int			getval_mod(char *arena, int index, int nb_bytes, int mod)
 	val = 0;
 	while (i < (unsigned int)nb_bytes)
 	{
-//		ft_printf("index = %d i = %d val = %d\n", index, i, val);
 		val <<= 8;
 		val |= arena[(index + i) % mod];
-//		ft_printf("after i = %d val = %d\n", i, val);
 		++i;
 	}
 	return (val);
@@ -77,10 +75,12 @@ static int	is_valid_ocp(unsigned char hex, t_instruction *ins)
 
 	arg = 3;
 	ft_bzero((void *)ins->params, sizeof(t_parameter) * 3);
+//	ft_printf("hex = %#x hex & 3 = %#x\n", hex, hex & 3);
 	if (hex & 3)
 		return (0);
 	while (--arg >= 0)
 	{
+//		ft_printf("arg = %d\n", arg);
 		param = &ins->params[arg];
 		hex = hex >> 2;
 		if (arg >= g_op_tab[ins->op.opcode - 1].nb_params)
@@ -123,10 +123,11 @@ int			get_instruction(char *arena, t_instruction *ins,
 		ft_memmove((void *)&ins->op, (void *)&g_op_tab[(int)hex - 1],
 															sizeof(t_op));
 	++i;
-//	ft_printf("considering instruction # %d\n", hex);
+//	ft_printf("\nconsidering instruction # %d | has ocp = %d\n", hex, ins->op.has_ocp);
 	if (ins->op.has_ocp == OCP_YES)
 	{
 		ins->ocp = (unsigned char)*(arena + (i % mod));
+//		ft_printf("ocp = %#x\n", (unsigned char)ins->ocp);
 		if (!is_valid_ocp((unsigned char)ins->ocp, ins))
 		{
 			ft_bzero((void *)ins, sizeof(*ins));
@@ -147,6 +148,6 @@ int			get_instruction(char *arena, t_instruction *ins,
 	}
 	len = ins->params[0].nb_bytes + ins->params[1].nb_bytes +
 						ins->params[2].nb_bytes + ins->op.has_ocp + 1;
-//	ft_printf("instruction len = %d\n", len);
+//	ft_printf("instruction len = %d\n\n", len);
 	return (len);
 }
