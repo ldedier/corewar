@@ -36,8 +36,8 @@ int	ft_parse_line_header(char *str, t_env *env, int i, int fd)
 			return (1);
 	}
 	else if (!ft_strcmp(env->champ.header.prog_name, ""))
-		return (ft_log_error_no_line("Lexical error NAME", env));
+		return (ft_log_error_no_line(ERR_LXN, env));
 	else if (!ft_strcmp(env->champ.header.comment, ""))
-		return (ft_log_error_no_line("Lexical error COMMENT", env));
+		return (ft_log_error_no_line(ERR_LXC, env));
 	return (0);
 }
