@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/22 14:56:56 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/22 16:58:38 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ void				init_players(t_vm *vm);
 void				dispatch_players(t_vm *vm, t_player *player);
 void				dispatch_players_init(t_vm *vm);
 int					init_processes(t_vm *vm);
+t_list				*add_process(t_vm *vm, int index, int start);
 void				init_local_players(t_vm *vm);
 void				update_nb_players(t_vm *vm);
 int					ft_get_potential_num(int player_num);

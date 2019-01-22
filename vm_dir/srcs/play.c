@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/21 22:19:22 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/22 19:32:46 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 ** Displays and sets variables accordingly
 */
 
-static void			check_resize_cycle(t_vm *vm, int *cycle)
+static void		check_resize_cycle(t_vm *vm, int *cycle)
 {
 	(void)cycle;
 	if (vm->live >= NBR_LIVE)
@@ -131,7 +131,7 @@ static int		last_instruction_unresolved(t_vm *vm, t_process *proc)
 	return (0);
 }
 
-void		execute_pending_action(t_vm *vm, t_process *proc)
+void			execute_pending_action(t_vm *vm, t_process *proc)
 {
 	int			index;
 	int			val;
@@ -142,16 +142,17 @@ void		execute_pending_action(t_vm *vm, t_process *proc)
 		display_ins(vm, proc);
 		display_move(vm, proc);
 		proc->pc = (proc->pc + proc->pending.pc) % MEM_SIZE;
-
 		if (proc->pending.dest == vm->arena && (i = -1))
 		{
 			while (++i < 4)
 			{
 				index = (proc->pending.dest_index + i) % MEM_SIZE;
+				if (index < 0)
+					index += MEM_SIZE;
 				val = proc->pending.value & (0xFF << ((3 - i) * 8));
 				*(char *)(proc->pending.dest + index) = val >> ((3 - i) * 8);
 				vm->metarena[index].color_index = 5;
-			//	vm->metarena[index].alt_color = 1;
+				//vm->metarena[index].alt_color = 1;
 			}
 		}
 		else if (proc->pending.dest)
@@ -160,7 +161,6 @@ void		execute_pending_action(t_vm *vm, t_process *proc)
 		}
 		proc->pending.dest = NULL;
 		ft_bzero((void *)&proc->pending.ins, sizeof(proc->pending.ins));
-
 	}
 }
 
@@ -172,28 +172,30 @@ void		execute_pending_action(t_vm *vm, t_process *proc)
 
 static int		launch_instruction(t_vm *vm, t_process *proc)
 {
-	static int 	(*f_ins[NB_INSTRUCTIONS + 1])(t_vm *vm, t_process *proc,
+	static int	(*f_ins[NB_INSTRUCTIONS + 1])(t_vm *vm, t_process *proc,
 			t_parameter arg[3]) = {NULL,
 		&ins_live, &ins_ld, &ins_st, &ins_add, &ins_sub, &ins_and, &ins_or,
 		&ins_xor, &ins_zjmp, &ins_ldi, &ins_sti, &ins_fork, &ins_lld, &ins_lldi,
 		&ins_lfork, &ins_aff};
+
 	if (last_instruction_unresolved(vm, proc))
 		return (0);
 	if (proc->pending.ins.op.opcode)
 	{
-		f_ins[(int)proc->pending.ins.op.opcode](vm, proc, proc->pending.ins.params);
+		f_ins[(int)proc->pending.ins.op.opcode](vm, proc,
+													proc->pending.ins.params);
 		execute_pending_action(vm, proc);
 		return (0);
 	}
-	proc->ins_bytelen = get_instruction(vm->arena, &proc->pending.ins, proc->pc, MEM_SIZE);
-	
+	proc->ins_bytelen = get_instruction(vm->arena, &proc->pending.ins,
+													proc->pc, MEM_SIZE);
 	if ((proc->ins_bytelen))
 	{
 		proc->pending.pc = proc->ins_bytelen;
 		proc->pending.cycles = g_op_tab[(int)proc->pending.ins.op.opcode - 1].nb_cycles;
 		return (1);
 	}
-		proc->pc += 1;
+	proc->pc += 1;
 	return (0);
 }
 
@@ -201,7 +203,7 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 ** process_cycle
 */
 
-void		process_cycle(t_vm *vm)
+void			process_cycle(t_vm *vm)
 {
 	t_list				*proc_lst;
 
@@ -216,7 +218,8 @@ void		process_cycle(t_vm *vm)
 //	ft_printf("check vm proc = %d prc next = %d\n", vm->proc, vm->proc->next);
 	while (proc_lst)
 	{
-//		ft_printf("PROCESS CYCLE cycle = %d cycle to die = %d\n", vm->cycle, vm->c_to_die);
+//		ft_printf("PROCESS CYCLE cycle = %d cycle to die = %d\n",
+//													vm->cycle, vm->c_to_die);
 		display(vm, (t_process *)proc_lst->content, TURN_PLAYER);
 		launch_instruction(vm, (t_process *)proc_lst->content);
 //		if (!vm->visu.active)
@@ -228,7 +231,7 @@ void		process_cycle(t_vm *vm)
 	++vm->total_cycle;
 }
 
-int		fight_cores(t_vm *vm, t_player *pl1, t_player *pl2)
+int				fight_cores(t_vm *vm, t_player *pl1, t_player *pl2)
 {
 	vm->visu.active = 1;
 	clear_vm(vm);
@@ -252,10 +255,6 @@ int		fight_cores(t_vm *vm, t_player *pl1, t_player *pl2)
 	return (0);
 }
 
-
-
-
-
 /*
 ** Core of the game progression : continues until cycles to end = 0 or
 ** only 1 player left.
@@ -266,7 +265,7 @@ int		fight_cores(t_vm *vm, t_player *pl1, t_player *pl2)
 **	- checks if there's a valid instruction
 */
 
-int		play(t_vm *vm)
+int				play(t_vm *vm)
 {
 	display(vm, 0, CYCLE_NBR);
 	while (vm->proc)
