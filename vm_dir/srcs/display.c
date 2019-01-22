@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 21:43:44 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/21 22:19:21 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/22 14:56:05 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void		display_last_live(t_vm *vm, t_process *proc)
 
 	if (vm->visu.active)
 		return ;
-	i = 0;
+	i = 1;
 	tmp = vm->proc;
 	while (tmp && ((t_process *)tmp->content) != proc && ++i)
 		tmp = tmp->next; // remplacer par num de process dans la struct?
