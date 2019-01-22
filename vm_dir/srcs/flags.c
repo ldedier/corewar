@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 17:19:23 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/21 20:09:37 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/22 14:56:08 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,84 +69,30 @@ static void	add_player_n(t_vm *vm, int argc, char **argv, int *cur)
 	}
 	vm->player[vm->nb_players].num = vm->nb;
 	*cur += 2;
-	vm->player[vm->nb_players].cor_name = argv[*cur];
-}
-
-/*
-** add_player_2 function is used by add_player function to determine which
-** smallest unused number it can assign to the current player.
-*/
-
-static int	add_player_2(t_vm *vm, int min)
-{
-	int	i;
-
-	i = 0;
-	while (i < vm->nb_players)
-	{
-		if (min == vm->player[i].num)
-		{
-			min++;
-			i = 0;
-		}
-		else
-			i++;
-	}
-	return (min);
-}
-
-/*
-** add_player function adds a player to the list of contestants WITHOUT a
-** number specified with the [-n] flag.
-*/
-
-static void	add_player(t_vm *vm, char **argv, int *cur, int nb_pl)
-{
-	int	nb;
-	int	i;
-	int	min;
-
-	if (nb_pl == 0)
-		nb = 1;
-	else
-	{
-		min = vm->player[0].num;
-		i = 1;
-		while (i < nb_pl)
-		{
-			if (min > vm->player[i].num)
-				min = vm->player[i].num;
-			i++;
-		}
-		min++;
-		nb = add_player_2(vm, min);
-	}
-	vm->player[nb_pl].num = nb;
-	vm->player[nb_pl].cor_name = argv[*cur];
 }
 
 /*
 ** flags function parses ./corewar 's arguments to check if there are any flags
 ** such as [-dump nbr-cycles] or [-n number], and then assigns a number to
 ** each player.
+** Numbers attributed by default follow sequence -1, -2, -3, etc, unless number
+** has been given to other player
 */
 
 void		flags(t_vm *vm, int argc, char **argv)
 {
-	int cur;
+	static int cur;
 	int i;
+	static int	nb;
 
-	cur = 1;
-	vm->nb_players = 0;
 	if (ft_strcmp("-dump", argv[cur]) == 0)
 		dump_nb_cycles(vm, argc, argv, &cur);
-	while (cur < argc)
+	while (++cur < argc)
 	{
 		if (argv[cur][0] == '-' && ft_isdigit(argv[cur][1]) && !(i = 0))
 			while (ft_isdigit(argv[cur][++i]))
 				vm->display |= (1 << (argv[cur][i] - '0'));
-		else
-		if (!ft_strcmp("-v", argv[cur]))
+		else if (!ft_strcmp("-v", argv[cur]))
 			vm->visu.active = 1;
 		else if (!ft_strcmp("-w", argv[cur]))
 			corehub_port_and_address(vm, argc, argv, &cur);
@@ -155,11 +101,10 @@ void		flags(t_vm *vm, int argc, char **argv)
 			if (ft_strcmp("-n", argv[cur]) == 0)
 				add_player_n(vm, argc, argv, &cur);
 			else
-				add_player(vm, argv, &cur, vm->nb_players);
-//			vm->nb_players += 1;
+				vm->player[vm->nb_players].num = --nb;
+			vm->player[vm->nb_players].cor_name = argv[cur];
 			if (++vm->nb_players > MAX_PLAYERS)
 				error_exit_msg(MAX_P_NUM);
 		}
-		cur++;
 	}
 }

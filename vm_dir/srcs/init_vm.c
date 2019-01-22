@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 16:42:17 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/21 22:19:15 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/22 14:56:12 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void			init_vm(t_vm *vm, char **argv, char **env)
 	vm->nb = 1;
 	vm->total_cycle = 1;
 	vm->cycle = 1;
+	vm->nb_players = 0;
 	ft_bzero(vm->color, MAX_PL_COLOR);
 	ft_strlcat(vm->color, init_color_ref(env), MAX_PL_COLOR);
 	init_players(vm);
@@ -75,7 +76,7 @@ t_list			*add_process(t_vm *vm, int index, int start)
 	process = (t_process *)ft_memalloc(sizeof(t_process));
 	process->player = &vm->player[index];
 	process->pc = start;
-	process->reg[0] = -process->player->num; // attention coherence, 
+	process->reg[0] = process->player->num; 
 	if (ft_add_to_list_ptr(&vm->proc, (void *)process, sizeof(t_process)))
 		return (NULL);
 	return (vm->proc);
@@ -126,7 +127,8 @@ void			dispatch_players_init(t_vm *vm)
 	while (++i < MAX_PLAYERS)
 	{
 		set_color(&vm->player[i], vm->color);
-			ft_set_numbers(vm->player, &(vm->player[i]));
+		ft_printf("player num = %d\n", vm->player[i].num);
+//			ft_set_numbers(vm->player, &(vm->player[i]));
 		if (vm->player[i].relevant && ++index && (j = -1))
 		{
 			display_player_intro(vm, &vm->player[i]);

@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 22:25:36 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/21 22:19:38 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/22 14:56:55 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ typedef struct		s_player
 	t_color			color;
 	char			aff_buf[MAX_AFF_LEN + 1];
 	int				nb_victories;
-	t_list			*beaten_players;
+	t_list			*beaten_players; // ??? WOWOWOWOWOWOWOW
+	t_list			*proc;
 }					t_player;
 
 int					ft_read_player(char *path, t_player *player);
