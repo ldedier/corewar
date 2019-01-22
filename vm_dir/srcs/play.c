@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/21 22:19:22 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/22 16:41:20 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,29 @@ static void			check_resize_cycle(t_vm *vm, int *cycle)
 	{
 		vm->checks = MAX_CHECKS;
 		vm->c_to_die -= CYCLE_DELTA < vm->c_to_die ? CYCLE_DELTA : vm->c_to_die;
-		display(vm, NULL, NEW_RESIZE);
+//		display(vm, NULL, NEW_RESIZE);
 	}
+}
+
+static void		kill_adjust_ptr(t_list **proc_lst, t_list **proc)
+{
+	t_list **tmp;
+
+	tmp = proc_lst;
+	while (*tmp && (*tmp)->next &&* tmp != *proc && (*tmp)->next != *proc)
+			*tmp = (*tmp)->next;
+	(*tmp)->next = (*proc)->next;
+//	if ((*proc) == *proc_lst && !(*proc)->next)
+//		*proc_lst = NULL;
+//	else
+		*proc_lst = (*proc == *proc_lst) ? (*proc)->next : *proc_lst;
 }
 
 static int		kill_process(t_vm *vm, t_list *proc)
 {
-	t_list	*tmp2;
 	t_fade	*killed_proc;
 
-	tmp2 = vm->proc;
-	display(vm, (t_process *)proc->content, PL_DEATH);
+//	display(vm, (t_process *)proc->content, PL_DEATH);
 	killed_proc = (t_fade *)ft_memalloc(sizeof(t_fade));
 	killed_proc->pc = ((t_process *)proc->content)->pc;
 	killed_proc->color =
@@ -53,22 +65,10 @@ static int		kill_process(t_vm *vm, t_list *proc)
 	if (ft_add_to_list_ptr(&vm->killed_proc,
 										(void *)killed_proc, sizeof(t_fade)))
 		return (-1);
-//	ft_printf("vm proc = %d vm proc next = %d proc = %d proc next = %d\n", vm->proc, vm->proc->next, proc, proc->next);
-	while (tmp2 && tmp2->next && tmp2 != proc && tmp2->next != proc)
-			tmp2 = tmp2->next;
-//	ft_printf("tmp 2 = %d\n", tmp2);
-	tmp2->next = proc->next;
-//	ft_printf("vm proc = %d vm proc next = %d proc = %d proc next = %d\n", vm->proc, vm->proc->next, proc, proc->next);
-	if (proc == vm->proc && !proc->next)
-		vm->proc = NULL;
-	else
-		vm->proc = (proc == vm->proc) ? proc->next : vm->proc;
-//	if (vm->proc)
-//		ft_printf("AFTER vm proc = %d vm proc next = %d proc = %d proc next = %d\n", vm->proc, vm->proc->next, proc, proc->next);
-	display_last_live(vm, (t_process *)proc->content);
+	kill_adjust_ptr(&vm->proc, &proc); 
+	display(vm, (t_process *)proc->content, MSG_LIVE);
 	ft_memdel((void **)&proc->content);
 	ft_memdel((void **)&proc);
-//	ft_printf("KILL PROCESS | current winner is %s\n", vm->winner->cor_name);
 	return (0);
 }
 
@@ -83,14 +83,12 @@ static int		reset_live_allprocesses(t_vm *vm)
 	t_list		*proc_lst;
 	t_process	*proc;
 
-	display(vm, NULL, CYCLE_END);
+//	display(vm, NULL, CYCLE_END);
 	proc_lst = vm->proc;
 	while (proc_lst && (proc = ((t_process *)proc_lst->content)))
 	{
-//		ft_printf("proc live = %d\n", proc->live);
 		if (!proc->live)
 		{
-//			ft_printf("kill process");
 			if (kill_process(vm, proc_lst) == -1)
 				return (-1);
 		}
@@ -139,8 +137,8 @@ void		execute_pending_action(t_vm *vm, t_process *proc)
 
 	if (proc->pending.cycles == 1)
 	{
-		display_ins(vm, proc);
-		display_move(vm, proc);
+		display(vm, proc, MSG_INS);
+		display(vm, proc, MSG_MOVE);
 		proc->pc = (proc->pc + proc->pending.pc) % MEM_SIZE;
 
 		if (proc->pending.dest == vm->arena && (i = -1))
@@ -198,14 +196,19 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 }
 
 /*
-** process_cycle
+** Core of the game progression for one turn :
+** Checks if it's the end of a cycle
+** Loops through all players:
+**	- moves forward according to latest instruction or 1 if no valid instruction
+**	- checks if there's a valid instruction
+** NB: should be called until vm->proc empty
 */
 
 void		process_cycle(t_vm *vm)
 {
 	t_list				*proc_lst;
 
-	display_cycle(vm);
+	display(vm, NULL, MSG_CYCLE);
 	if (vm->cycle >= vm->c_to_die)
 	{
 		reset_live_allprocesses(vm);
@@ -213,20 +216,19 @@ void		process_cycle(t_vm *vm)
 		vm->cycle = 0;
 	}
 	proc_lst = vm->proc;
-//	ft_printf("check vm proc = %d prc next = %d\n", vm->proc, vm->proc->next);
 	while (proc_lst)
 	{
-//		ft_printf("PROCESS CYCLE cycle = %d cycle to die = %d\n", vm->cycle, vm->c_to_die);
-		display(vm, (t_process *)proc_lst->content, TURN_PLAYER);
 		launch_instruction(vm, (t_process *)proc_lst->content);
-//		if (!vm->visu.active)
-//			ft_printf("\n");
 		proc_lst = proc_lst->next;
 	}
 	++vm->cycle;
-//	ft_printf("vm cycle = %d\n", vm->cycle);
 	++vm->total_cycle;
 }
+
+/*
+** Generates and runs through game for 2 players, to communicate result to
+** server for one-on-one match and subsequent score computation
+*/
 
 int		fight_cores(t_vm *vm, t_player *pl1, t_player *pl2)
 {
@@ -249,6 +251,7 @@ int		fight_cores(t_vm *vm, t_player *pl1, t_player *pl2)
 		vm->winner = pl1;
 	else
 		vm->winner = pl2;
+	vm->visu.active = 0;
 	return (0);
 }
 
@@ -256,26 +259,4 @@ int		fight_cores(t_vm *vm, t_player *pl1, t_player *pl2)
 
 
 
-/*
-** Core of the game progression : continues until cycles to end = 0 or
-** only 1 player left.
-** Each turn, it :
-** Checks if it's the end of a cycle
-** Loops through all players:
-**	- moves forward according to latest instruction or 1 if no valid instruction
-**	- checks if there's a valid instruction
-*/
 
-int		play(t_vm *vm)
-{
-	display(vm, 0, CYCLE_NBR);
-	while (vm->proc)
-	{
-//		ft_printf("\n%sPLAY cycle = %d | %s ", COLF_BGREY, vm->cycle,
-//			MSG_CYCLES_REMAINING);
-//
-///	ft_printf(" [ %d ] %s\n", vm->c_to_die - vm->cycle, COLF_OFF);
-		process_cycle(vm);
-	}
-	return (0);
-}

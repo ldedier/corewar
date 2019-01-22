@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 16:42:17 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/22 14:56:12 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/22 16:41:22 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void			init_players(t_vm *vm)
 	i = -1;
 	while (++i < MAX_PLAYERS)
 	{
-//		ft_bzero(&vm->player[i], sizeof(t_player));
 		vm->player[i].relevant = 0;
 		vm->player[i].color.value = NULL;
 		vm->player[i].last_live_cycle = 0;
@@ -72,10 +71,12 @@ void			init_vm(t_vm *vm, char **argv, char **env)
 t_list			*add_process(t_vm *vm, int index, int start)
 {
 	t_process	*process;
+	static int	nb = 0;
 
 	process = (t_process *)ft_memalloc(sizeof(t_process));
 	process->player = &vm->player[index];
 	process->pc = start;
+	process->nb = ++nb;
 	process->reg[0] = process->player->num; 
 	if (ft_add_to_list_ptr(&vm->proc, (void *)process, sizeof(t_process)))
 		return (NULL);
@@ -127,11 +128,10 @@ void			dispatch_players_init(t_vm *vm)
 	while (++i < MAX_PLAYERS)
 	{
 		set_color(&vm->player[i], vm->color);
-		ft_printf("player num = %d\n", vm->player[i].num);
-//			ft_set_numbers(vm->player, &(vm->player[i]));
 		if (vm->player[i].relevant && ++index && (j = -1))
 		{
-			display_player_intro(vm, &vm->player[i]);
+			if (!vm->visu.active)
+				display_player_intro(vm, &vm->player[i]);
 			start = (MEM_SIZE / vm->nb_players) * (index - 1);
 			while (++j < vm->player[i].algo_len)
 			{
@@ -160,6 +160,7 @@ void			dispatch_players(t_vm *vm, t_player *player)
 			ft_set_numbers(vm->player, &(vm->player[i]));
 		if (vm->player[i].relevant && ++index && (j = -1))
 		{
+			display_player_intro(vm, &vm->player[i]);
 			start = (MEM_SIZE / vm->nb_players) * (index - 1);
 			while (++j < vm->player[i].algo_len)
 			{

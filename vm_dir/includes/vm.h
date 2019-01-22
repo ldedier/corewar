@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/22 14:56:56 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/22 16:36:39 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct		s_process
 	int				cycle;
 	int				ins_cycle;
 	unsigned char	carry;
+	int				nb;
 }					t_process;
 
 typedef struct		s_metadata
@@ -127,17 +128,17 @@ t_player			*duel(t_vm *vm, t_player *pl1, t_player *pl2);
 */
 
 void				display_player_intro(t_vm *vm, t_player *player);
-void				display_cycle(t_vm *vm);
+void				display_cycle(t_vm *vm, t_process *proc);
 void				display_move(t_vm *vm, t_process *proc);
 void				display_ins(t_vm *vm, t_process *proc);
 void				display_last_live(t_vm *vm, t_process *proc);
-void				display_winner(t_vm *vm);
+void				display_winner(t_vm *vm, t_process *proc);
+void				display_registers(t_vm *vm, t_process *proc);
+void				display(t_vm *vm, t_process *proc, int type);
 
 
 void				display_ins_description(t_vm *vm, char *str, int opcode);
 void				display_live_player(t_vm *vm, int op_code);
-void				display_registers(t_vm *vm);
-void				display(t_vm *vm, t_process *proc, int type);
 void				pl_death(t_vm *vm, t_process *proc);
 void				pl_live(t_vm *vm, t_process *proc);
 void				pl_victory(t_vm *vm, t_process *proc);

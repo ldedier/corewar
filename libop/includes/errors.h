@@ -6,14 +6,14 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/21 19:26:54 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/22 16:36:53 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ERRORS_H
 # define ERRORS_H
 
-# define NB_GAME_MSG 13
+# define NB_GAME_MSG 6
 
 /*
 ** ERROR MESSAGES
@@ -40,6 +40,7 @@
 # define ERR_SIZEN "Name too long Max length 128"
 # define ERR_SXC "Syntax error AFTER COMMENT"
 # define ERR_SXN "Syntax error token AFTER NAME"
+
 /*
 ** PLAYER MESSAGES
 */
@@ -49,27 +50,10 @@
 # define MAX_CHAMP		"Given champion is too large to be handled"
 # define WRG_HEAD_SIZE	"Header size does not match file's code size"
 
-/*
-** GAME MESSAGES
-*/
-
-# define MSG_RESIZE	"New cycle length before checking if players are alive:"
-# define MSG_NBR_LIVES_TURN	"Number of lives this turn "
-# define MSG_NBR_TO_AUTORESIZE	"cycles to automatic resize"
-# define MSG_CYCLES_REMAINING	"cycles left to check lives"
-# define MSG_VICTORY	"VICTORY FOR"
-# define MSG_DEATH	"just died"
-# define MSG_CYCLE_END	">>>END OF CYCLE "
-# define MSG_MOVE_ONE	"Move forward..."
-
-# define LABEL_PLAYER	" PLAYER "
-# define LABEL_CYCLE	" CYCLE "
 
 enum	e_game_msg
 {
-	PL_PC, PL_CYCLE, PL_LIVE, PL_DEATH, PL_VICTORY,
-	LIVES_TURN, AUTO_RESIZE, NEW_RESIZE,
-	MOVE_ONE, LAST_LIVE, CYCLE_NBR, CYCLE_END, TURN_PLAYER
+	MSG_CYCLE, MSG_INS, MSG_LIVE, MSG_MOVE, MSG_REG, MSG_WINNER
 };
 
 #endif
