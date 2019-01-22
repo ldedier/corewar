@@ -6,14 +6,14 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/22 16:36:53 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/22 21:17:58 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ERRORS_H
 # define ERRORS_H
 
-# define NB_GAME_MSG 6
+# define NB_GAME_MSG 7
 
 /*
 ** ERROR MESSAGES
@@ -53,7 +53,7 @@
 
 enum	e_game_msg
 {
-	MSG_CYCLE, MSG_INS, MSG_LIVE, MSG_MOVE, MSG_REG, MSG_WINNER
+	NO_MSG, MSG_ALIVE, MSG_CYCLE, MSG_INS, MSG_LIVE, MSG_MOVE, MSG_REG, MSG_WINNER
 };
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/09 20:00:32 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/21 20:09:06 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/22 18:36:17 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ void		getval_param_dest(t_vm *vm, t_process *proc,
 	static long (*f_data[NB_TYPES + 1])(t_vm *vm, t_process *proc,
 			int index, int mod) = {NULL, &getval_reg, &getval_dir, &getval_ind};
 
+//	ft_printf("arg type= %d\n", arg->type);
+//	ft_printf("arg[1].value = %d\n", arg[1].value);
 	arg->dest_value = f_data[(int)arg->type](vm, proc, arg->value, mod);
-//	ft_printf("arg dest value = %#lx\n", arg->dest_value);
+//	ft_printf("after, arg value = %d arg dest value = %d\n", arg->value, arg->dest_value);
 }

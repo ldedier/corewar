@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/22 15:55:47 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/10 17:46:07 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/01/22 19:15:31 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,12 @@
 # include <player.h>
 
 # define COL_DESIGNATOR		"brgwlmcyBRGWLMCYx"
-# define DEFAULT_COLORS		"xrclLmwM"
+# define DEFAULT_COLORS		"xgrclmwyxGRCLMWY"
 # define NB_DESIGNATOR		17
 # define NB_COLORS			17
 # define MAX_PL_COLOR		9
 # define COREWAR_VAR_NAME	"CW_COLORS"
 # define STR_COLOR_LEN		10
-
-/*
-** "pspcplpdpvrlrarrtmtctep0p1p2p3p4p5p6p7p8p9"
-*/
-
-/*
-** PADDING
-*/
-
-# define PAD_PLNUM		4
-# define PAD_PLNAME		30
-# define PAD_PLCYCLE	7
-# define PAD_PLPC		4
-# define PAD_INS		30
 
 /*
 ** STANDARD COLORS - FOREGROUND

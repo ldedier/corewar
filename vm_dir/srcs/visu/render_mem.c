@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/11 17:08:36 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/18 23:59:26 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/22 19:24:24 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int			ft_print_byte_composant(t_vm *vm, t_xy *dist,
 	else
 		color_index = meta.color_index;
 	if (SDL_BlitScaled(
-				vm->visu.sdl.atlas[color_index][ascii_byte].surface, NULL,
+				vm->visu.sdl.atlas[color_index % 8][ascii_byte].surface, NULL,
 				vm->visu.sdl.w_surface, &rect) < 0)
 		return (ft_net_error());
 	dist->x += vm->visu.center.glyph_width;

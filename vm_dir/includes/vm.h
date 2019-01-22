@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/22 16:36:39 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/22 21:16:39 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ t_player			*duel(t_vm *vm, t_player *pl1, t_player *pl2);
 */
 
 void				display_player_intro(t_vm *vm, t_player *player);
+void				display_player_alive(t_vm *vm, t_process *proc);
 void				display_cycle(t_vm *vm, t_process *proc);
 void				display_move(t_vm *vm, t_process *proc);
 void				display_ins(t_vm *vm, t_process *proc);

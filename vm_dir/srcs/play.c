@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/22 16:41:20 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/22 21:45:00 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,18 +137,17 @@ void		execute_pending_action(t_vm *vm, t_process *proc)
 
 	if (proc->pending.cycles == 1)
 	{
-		display(vm, proc, MSG_INS);
-		display(vm, proc, MSG_MOVE);
 		proc->pc = (proc->pc + proc->pending.pc) % MEM_SIZE;
 
 		if (proc->pending.dest == vm->arena && (i = -1))
 		{
 			while (++i < 4)
 			{
-				index = (proc->pending.dest_index + i) % MEM_SIZE;
+				if ((index = (proc->pending.dest_index + i) % MEM_SIZE) < 0)
+					index += MEM_SIZE;
 				val = proc->pending.value & (0xFF << ((3 - i) * 8));
 				*(char *)(proc->pending.dest + index) = val >> ((3 - i) * 8);
-				vm->metarena[index].color_index = 5;
+				vm->metarena[index].color_index = proc->player->color.index + 8;
 			//	vm->metarena[index].alt_color = 1;
 			}
 		}
@@ -179,12 +178,13 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 		return (0);
 	if (proc->pending.ins.op.opcode)
 	{
+		display(vm, proc, MSG_INS);
 		f_ins[(int)proc->pending.ins.op.opcode](vm, proc, proc->pending.ins.params);
+		display(vm, proc, MSG_MOVE);
 		execute_pending_action(vm, proc);
 		return (0);
 	}
 	proc->ins_bytelen = get_instruction(vm->arena, &proc->pending.ins, proc->pc, MEM_SIZE);
-	
 	if ((proc->ins_bytelen))
 	{
 		proc->pending.pc = proc->ins_bytelen;
@@ -232,7 +232,7 @@ void		process_cycle(t_vm *vm)
 
 int		fight_cores(t_vm *vm, t_player *pl1, t_player *pl2)
 {
-	vm->visu.active = 1;
+//	vm->visu.active = 1;
 	clear_vm(vm);
 	ft_memmove(&vm->player[0], pl1, sizeof(t_player));
 	ft_memmove(&vm->player[1], pl2, sizeof(t_player));
@@ -246,7 +246,10 @@ int		fight_cores(t_vm *vm, t_player *pl1, t_player *pl2)
 	if (!init_processes(vm))
 		error_exit_msg(INIT_PROC_ERROR);
 	while (vm->proc)
+	{
+//		ft_printf("coucou\n");
 		process_cycle(vm);
+	}
 	if (vm->winner == &vm->player[0])
 		vm->winner = pl1;
 	else

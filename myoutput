@@ -1,7 +1,6 @@
 Introducing contestants...
 * Player 1, weighing 34 bytes, "zork" ("justub r3, r2,a basic living prog") !
 * Player 2, weighing 34 bytes, "zork" ("justub r3, r2,a basic living prog") !
-visu active ? 0
 It is now cycle 1
 It is now cycle 2
 It is now cycle 3
@@ -53,9 +52,9 @@ It is now cycle 32
 It is now cycle 33
 It is now cycle 34
 It is now cycle 35
-P    2 | st r4 -48
+P    2 | st r4 2000
 ADV 5 (0x0818 -> 0x081d) 03 70 04 07 d0 
-P    1 | st r4 -48
+P    1 | st r4 2000
 ADV 5 (0x0018 -> 0x001d) 03 70 04 07 d0 
 It is now cycle 36
 It is now cycle 37
@@ -2136,9 +2135,9 @@ It is now cycle 2091
 It is now cycle 2092
 It is now cycle 2093
 It is now cycle 2094
-P    2 | st r4 -48
+P    2 | st r4 2000
 ADV 5 (0x0018 -> 0x001d) 03 70 04 07 d0 
-P    1 | st r4 -48
+P    1 | st r4 2000
 ADV 5 (0x0818 -> 0x081d) 03 70 04 07 d0 
 It is now cycle 2095
 It is now cycle 2096
@@ -4219,9 +4218,9 @@ It is now cycle 4150
 It is now cycle 4151
 It is now cycle 4152
 It is now cycle 4153
-P    2 | st r4 -48
+P    2 | st r4 2000
 ADV 5 (0x0818 -> 0x081d) 03 70 04 07 d0 
-P    1 | st r4 -48
+P    1 | st r4 2000
 ADV 5 (0x0018 -> 0x001d) 03 70 04 07 d0 
 It is now cycle 4154
 It is now cycle 4155

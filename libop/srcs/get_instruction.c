@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 16:33:31 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/21 22:19:35 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/22 20:28:37 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,11 @@ int			getval_mod(char *arena, int index, int nb_bytes, int mod)
 	while (i < (unsigned int)nb_bytes)
 	{
 		val <<= 8;
-		val |= arena[(index + i) % mod];
+		if (!i)
+			val |= arena[(index + i) % mod];
+		else
+			val |= (unsigned char)arena[(index + i) % mod];
+//		ft_printf("val = %d\n", val);
 		++i;
 	}
 	return (val);
@@ -50,6 +54,7 @@ int			getval_params(char *arena, t_instruction *ins, int i, int mod)
 			return (-1);
 		}
 		param->value = getval_mod(arena, i, param->nb_bytes, mod);
+//		ft_printf("param->value = %d\n", param->value);
 //		ft_printf("j = %d params[j].value = %d, type= %#x\n",j, ins->params[j].value, ins->params[j].type);
 		i += param->nb_bytes;
 		if (param->type == REG_CODE && param->value > REG_NUMBER)

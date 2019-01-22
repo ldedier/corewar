@@ -6,11 +6,18 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 21:43:44 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/22 16:41:21 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/22 21:44:55 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
+
+void		display_nothing(t_vm *vm, t_process *proc)
+{
+	(void)vm;
+	(void)proc;
+}
+
 
 void		display_player_intro(t_vm *vm, t_player *player)
 {
@@ -31,6 +38,13 @@ void		display_player_intro(t_vm *vm, t_player *player)
 	}
 }
 
+void		display_player_alive(t_vm *vm, t_process *proc)
+{
+	(void)vm;
+	ft_printf("Player %d (%s) is said to be alive\n", proc->player->num, proc->player->name);
+}
+
+
 void		display_ins(t_vm *vm, t_process *proc)
 {
 	int		i;
@@ -44,12 +58,14 @@ void		display_ins(t_vm *vm, t_process *proc)
 	ft_printf("P%5d | %s", proc->nb, proc->pending.ins.op.instruction_name);
 	while (++i < proc->pending.ins.op.nb_params)
 	{
+//		ft_printf("ICI value = %d\n", proc->pending.ins.params[i].value);
 		ft_putchar(' ');
 		if (proc->pending.ins.params[i].type == T_REG)
 			ft_printf("r");
 		ft_printf("%d", proc->pending.ins.params[i].value);
 	}
-	ft_printf("\n");
+	if (proc->pending.ins.op.opcode != ZJMP && proc->pending.ins.op.opcode != FORK)
+		ft_printf("\n");
 }
 
 
@@ -79,12 +95,15 @@ void		display_winner(t_vm *vm, t_process *proc)
 	ft_printf(", has won !\n");
 }
 
+
 void		display_move(t_vm *vm, t_process *proc)
 {
 	int i;
 	int	j;
 	int	var_len;
 	(void)vm;
+	if (proc->pending.ins.op.opcode == ZJMP && proc->carry)
+		return ;
 //	if (vm->visu.active || !(vm->display & (1 << 2)))
 //		return ;
 	i = -1;
@@ -142,13 +161,17 @@ void		display_registers(t_vm *vm, t_process *proc)
 
 void		display(t_vm *vm, t_process *proc, int type)
 {
-	static void (*display[NB_GAME_MSG][2])(t_vm *vm, t_process *proc) = {
-		{&display_cycle, NULL},
-	   	{&display_ins, NULL},
-	   	{&display_last_live, NULL},
-		{&display_move, NULL},
-		{&display_registers, NULL},
-		{&display_winner, NULL}};
+	static void (*display[NB_GAME_MSG + 1][2])(t_vm *vm, t_process *proc) = {
 
-	display[type][(int)vm->visu.active](vm, proc);
+		{&display_nothing, &display_nothing},
+		{&display_player_alive, &display_nothing},
+		{&display_cycle, &display_nothing},
+	   	{&display_ins, &display_nothing},
+	   	{&display_last_live, &display_nothing},
+		{&display_move, &display_nothing},
+		{&display_registers, &display_nothing},
+		{&display_winner, &display_nothing}};
+
+	if (!(vm->display & (1 << type)))
+		display[type][(int)vm->visu.active](vm, proc);
 }
