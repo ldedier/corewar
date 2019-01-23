@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/09 20:29:58 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/22 18:31:47 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/23 19:40:43 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 
 void	loadval(t_vm *vm, t_process *proc, t_parameter *arg, int val)
 {
-//	ft_printf("load val arg value = %d\n", arg->value);
+//	ft_printf("load val arg value = %d val = %d\n", arg->value, val);
 	if (arg->type == 1)
 	{
 		proc->pending.dest = proc->reg;
@@ -52,4 +52,6 @@ void	loadval(t_vm *vm, t_process *proc, t_parameter *arg, int val)
 	}
 //	ft_printf("proc pending dest = %d val = %d\n", proc->pending.dest_index, val);
 	proc->pending.value = val;
+//	if (proc->pending.ins.op.opcode == LD)
+//		ft_printf("pending value = %d\n", val);
 }

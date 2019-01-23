@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 19:28:45 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/21 20:08:52 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/23 20:04:00 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,13 @@ int		ins_ldi(t_vm *vm, t_process *proc, t_parameter arg[3])
 		return (FAILURE);
 	getval_param_dest(vm, proc, &arg[0], IDX_MOD);
 	getval_param_dest(vm, proc, &arg[1], IDX_MOD);
-	ind = proc->pc + (arg[0].dest_value + arg[1].dest_value) % IDX_MOD;
+//	ft_printf("\"arg0 val = %d dest = %d\n", arg[0].value, arg[0].dest_value);
+//	ft_printf("arg1 val = %d dest = %d\n", arg[1].value, arg[1].dest_value);
+//	ft_printf("arg2 val = %d dest = %d\n", arg[2].value, arg[2].dest_value);
+	ind = mod((arg[0].dest_value + arg[1].dest_value), IDX_MOD);
+	arg[1].value = mod(arg[1].value, IDX_MOD);
+	if (ind + proc->pc >= IDX_MOD)
+		arg[1].value -= IDX_MOD;
 	val = proc->reg[arg[2].dest_value - 1];
 //	ft_printf("ldi | ind = %d, val = %#x\n", ind, val);
 	loadval(vm, proc, &arg[2], val);

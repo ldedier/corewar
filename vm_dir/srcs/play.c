@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/22 21:45:00 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/23 21:36:29 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,14 +137,16 @@ void		execute_pending_action(t_vm *vm, t_process *proc)
 
 	if (proc->pending.cycles == 1)
 	{
-		proc->pc = (proc->pc + proc->pending.pc) % MEM_SIZE;
+		proc->pc = mod(proc->pc + proc->pending.pc, MEM_SIZE);
 
 		if (proc->pending.dest == vm->arena && (i = -1))
 		{
 			while (++i < 4)
 			{
-				if ((index = (proc->pending.dest_index + i) % MEM_SIZE) < 0)
-					index += MEM_SIZE;
+				index = mod(proc->pending.dest_index + i, MEM_SIZE);
+				ft_printf("index = %d\n", index);
+//				if ((index = (proc->pending.dest_index + i) % MEM_SIZE) < 0)
+//					index += MEM_SIZE;
 				val = proc->pending.value & (0xFF << ((3 - i) * 8));
 				*(char *)(proc->pending.dest + index) = val >> ((3 - i) * 8);
 				vm->metarena[index].color_index = proc->player->color.index + 8;
@@ -178,8 +180,10 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 		return (0);
 	if (proc->pending.ins.op.opcode)
 	{
-		display(vm, proc, MSG_INS);
 		f_ins[(int)proc->pending.ins.op.opcode](vm, proc, proc->pending.ins.params);
+		display(vm, proc, MSG_INS);
+		if (proc->pending.ins.op.opcode == LIVE)
+			display(vm, proc, MSG_ALIVE);
 		display(vm, proc, MSG_MOVE);
 		execute_pending_action(vm, proc);
 		return (0);
@@ -187,6 +191,7 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 	proc->ins_bytelen = get_instruction(vm->arena, &proc->pending.ins, proc->pc, MEM_SIZE);
 	if ((proc->ins_bytelen))
 	{
+//		ft_printf("bytelen = %d arg0 val = %d arg1 val = %d arg2 val  %d\n", proc->ins_bytelen, proc->pending.ins.params[0].value, proc->pending.ins.params[1].value, proc->pending.ins.params[2].value);
 		proc->pending.pc = proc->ins_bytelen;
 		proc->pending.cycles = g_op_tab[(int)proc->pending.ins.op.opcode - 1].nb_cycles;
 		return (1);

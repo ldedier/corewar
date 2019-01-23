@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 19:28:28 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/22 21:51:45 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/23 20:35:08 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,18 @@ int		ins_fork(t_vm *vm, t_process *proc, t_parameter arg[3])
 
 	new_proc = (t_process *)ft_memalloc(sizeof(t_process));
 	ft_memmove(new_proc, proc, sizeof(t_process));
+//	arg[0].value = (unsigned short)arg[0].value % IDX_MOD;
+//	ft_printf("FORK arg 0 value = %d, proc pc = %d\n", arg[0].value, proc->pc);
 //	new_proc->player = proc->player;
-	new_proc->pc = (proc->pc + arg[0].value % IDX_MOD) % MEM_SIZE;
+	getval_param_dest(vm, proc, &arg[0], IDX_MOD);
+	if (arg[0].value + proc->pc > IDX_MOD)
+		arg[0].value -= IDX_MOD;
+	new_proc->pc = (proc->pc + arg[0].value) % MEM_SIZE;
 	new_proc->nb = nb;
 
 	ft_bzero((void *)&new_proc->pending.ins, sizeof(t_instruction));
 
-	ft_printf(" (%d)\n", new_proc->pc);
+//	ft_printf(" (%d)\n", new_proc->pc);
 //	new_proc->carry = proc->carry;
 	i = -1;
 	while (++i < 16)

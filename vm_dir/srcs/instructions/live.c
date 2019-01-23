@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 17:10:34 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/22 21:44:39 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/23 16:45:44 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,14 @@ int		ins_live(t_vm *vm, t_process *proc, t_parameter arg[3])
 	proc->live = 1;
 	proc->live_cycle = vm->total_cycle;
 	player = get_player_num(vm->proc, arg[0].value);
-	ft_printf("arg0 value = %d player num = %d\n", arg[0].value, player); 
 	if (player)
 	{
 		++vm->live;
 		player->live++;
 		player->last_live_cycle = vm->total_cycle;
 		vm->winner = player;
-		if (!(vm->visu.active))
-			display(vm, proc, MSG_ALIVE);
+//		if (!(vm->visu.active))
+//			display(vm, proc, MSG_ALIVE);
 		live = (t_fade *)ft_memalloc(sizeof(t_fade));
 		live->pc = proc->pc;
 		live->color = *(int *)player->color.value;

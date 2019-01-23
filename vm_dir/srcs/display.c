@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 21:43:44 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/22 21:44:55 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/23 21:32:55 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ void		display_player_intro(t_vm *vm, t_player *player)
 void		display_player_alive(t_vm *vm, t_process *proc)
 {
 	(void)vm;
-	ft_printf("Player %d (%s) is said to be alive\n", proc->player->num, proc->player->name);
+	if (vm->live_ok && ((t_fade *)vm->live_ok->content)->pc == proc->pc)
+		ft_printf("Player %d (%s) is said to be alive\n", proc->player->num, proc->player->name);
 }
 
 
@@ -52,27 +53,37 @@ void		display_ins(t_vm *vm, t_process *proc)
 	(void)vm;
 	if (!proc)
 		return ;
-//	if (!proc || vm->visu.active || !(vm->display & (1 << 1)))
-//		return ;
 	i = -1;
 	ft_printf("P%5d | %s", proc->nb, proc->pending.ins.op.instruction_name);
 	while (++i < proc->pending.ins.op.nb_params)
 	{
 //		ft_printf("ICI value = %d\n", proc->pending.ins.params[i].value);
 		ft_putchar(' ');
-		if (proc->pending.ins.params[i].type == T_REG)
-			ft_printf("r");
-		ft_printf("%d", proc->pending.ins.params[i].value);
+	//	if (proc->pending.ins.op.opcode == STI && i == 2)
+	//		ft_printf("%d", proc->pending.ins.params[i].dest_value);
+	//	else
+	//	{
+			if (proc->pending.ins.params[i].type == T_REG)
+				ft_printf("r");
+			ft_printf("%d", proc->pending.ins.params[i].value);
+	//	}
+
 	}
-	if (proc->pending.ins.op.opcode != ZJMP && proc->pending.ins.op.opcode != FORK)
+	if (proc->pending.ins.op.opcode == ZJMP)
+		ft_printf("%s\n", proc->carry ? " OK" : " FAILED");
+	else if (proc->pending.ins.op.opcode == FORK)
+		ft_printf(" (%d)\n", (proc->pc + proc->pending.ins.params[0].value % IDX_MOD) % MEM_SIZE);
+	else
 		ft_printf("\n");
+	if (proc->pending.ins.op.opcode == STI)
+			ft_printf("%6s | --> %.5s to %d + %d = %d (with pc and mod %d)\n", "", proc->pending.ins.op.description, proc->pending.ins.params[1].value, proc->pending.ins.params[2].value, proc->pending.ins.params[2].value + proc->pending.ins.params[1].value, (proc->pc + proc->pending.ins.params[1].value + proc->pending.ins.params[2].value) % MEM_SIZE);
+	if (proc->pending.ins.op.opcode == LDI)
+			ft_printf("%6s | --> %.4s from %d + %d = %d (with pc and mod %d)\n", "", proc->pending.ins.op.description, proc->pending.ins.params[0].value, proc->pending.ins.params[1].value, proc->pending.ins.params[0].value + proc->pending.ins.params[1].value, (proc->pc + proc->pending.ins.params[1].value + proc->pending.ins.params[0].value) % MEM_SIZE);
 }
 
 
 void		display_last_live(t_vm *vm, t_process *proc)
 {
-//	if (vm->visu.active)
-//		return ;
 	ft_printf("Process %d hasn't lived for %d cycles (CTD %d)\n", proc->nb, vm->total_cycle - proc->live_cycle, vm->c_to_die);
 
 }
@@ -80,8 +91,6 @@ void		display_last_live(t_vm *vm, t_process *proc)
 void		display_cycle(t_vm *vm, t_process *proc)
 {
 	(void)proc;
-//	if (vm->visu.active || !(vm->display & (1 << 1)))
-//		return ;
 	ft_printf("It is now cycle %d\n", vm->total_cycle);
 }
 
@@ -141,6 +150,7 @@ void		display_ins_description(t_vm *vm, char *str, int opcode)
 	display_live_player(vm, opcode);
 }
 */
+
 void		display_registers(t_vm *vm, t_process *proc)
 {
 	int		i;
@@ -172,6 +182,10 @@ void		display(t_vm *vm, t_process *proc, int type)
 		{&display_registers, &display_nothing},
 		{&display_winner, &display_nothing}};
 
-	if (!(vm->display & (1 << type)))
+
+//	ft_printf("vm display = %#x 1 << type = %#x\n", vm->display, type);
+	if ((vm->display & (1 << type)))
+	{
 		display[type][(int)vm->visu.active](vm, proc);
+	}
 }
