@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/24 19:46:24 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/24 21:54:22 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ enum				e_console_display
 
 void				load_arena(t_vm *vm, t_process *proc, int index, int val);
 void				load_reg(t_vm *vm, t_process*proc, int num, int val);
+t_list				*add_process(t_vm *vm, int index, int start, t_process *src);
 
 
 int					fight_cores(t_vm *vm, t_player *pl1, t_player *pl2);

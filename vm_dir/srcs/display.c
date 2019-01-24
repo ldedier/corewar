@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 21:43:44 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/24 19:46:16 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/24 21:52:14 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ void		display_proc_ins(t_process *proc, int val1, int val2, int val3)
 	int type;
 	int	val[3];
 
-//	if (vm->visu.active || !(vm->display & MSG_INS))
+//	if (vm->visu.active || !(vm->display & MSG_INS))// voir si moyen de display dest_vals, retirer val 1 2 3 des params et passer vm pour eviter check dans fonctions display
 //		return ;
 	i = -1;
 	val[0] = val1;
 	val[1] = val2;
 	val[2] = val3;
-	ft_printf("P%5d | %s", proc->nb, proc->pending_ins.op.instruction_name);
+	ft_printf("\nP%5d | %s", proc->nb, proc->pending_ins.op.instruction_name);
 	while (++i < proc->pending_ins.op.nb_params)
 	{
 		type = proc->pending_ins.params[i].type;
@@ -35,17 +35,17 @@ void		display_proc_ins(t_process *proc, int val1, int val2, int val3)
 
 void		display_player_intro(t_player *player)
 {
-	ft_printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n",
+	ft_printf("\n* Player %d, weighing %d bytes, \"%s\" (\"%s\") !",
 			player->num,
 			player->algo_len,
 			player->name,
-			player->comm[0] ? player->comm : ""); // verifier si inverse player num ou si ordre d'entree quel que soit le nom
+			player->comm[0] ? player->comm : ""); // decider si inverse player num ou si ordre d'entree quel que soit le nom (mieux 2e mais faut recup l'index du player)
 }
 
 void		display_resize(t_vm *vm)
 {
 	if (!vm->visu.active && vm->display & (1 << MSG_CYCLE))
-		ft_printf("Cycle to die is now %d\n", vm->c_to_die);
+		ft_printf("\nCycle to die is now %d", vm->c_to_die);
 }
 
 void		display_player_alive(t_vm *vm, t_process *proc)
@@ -59,7 +59,7 @@ void		display_player_alive(t_vm *vm, t_process *proc)
 void		display_last_live(t_vm *vm, t_process *proc)
 {
 	if (!vm->visu.active && vm->display & (1 << MSG_DEATH))
-		ft_printf("Process %d hasn't lived for %d cycles (CTD %d)\n",
+		ft_printf("\nProcess %d hasn't lived for %d cycles (CTD %d)",
 				proc->nb,
 				vm->total_cycle - proc->live_cycle,
 				vm->c_to_die);
@@ -68,12 +68,12 @@ void		display_last_live(t_vm *vm, t_process *proc)
 void		display_cycle(t_vm *vm)
 {
 	if (!vm->visu.active && vm->display & (1 << MSG_CYCLE))
-		ft_printf("It is now cycle %d\n", vm->total_cycle);
+		ft_printf("\nIt is now cycle %d", vm->total_cycle);
 }
 
 void		display_winner(t_vm *vm)
 {
-	ft_printf("Contestant %d, ", -vm->winner->num);
+	ft_printf("\nContestant %d, ", -vm->winner->num);
 	ft_putchar('"');
 	ft_printf("%s", vm->winner->name);
 	ft_putchar('"');
@@ -90,7 +90,7 @@ void		display_move(t_vm *vm, t_process *proc)
 	if (proc->pending_ins.op.opcode == ZJMP && proc->carry)
 		return ;
 	i = -1;
-	ft_printf("ADV %d (0x%04x -> 0x%04x)", proc->ins_bytelen, proc->pc, (proc->pc + proc->ins_bytelen % MEM_SIZE));
+	ft_printf("\nADV %d (0x%04x -> 0x%04x)", proc->ins_bytelen, proc->pc, (proc->pc + proc->ins_bytelen % MEM_SIZE));
 	ft_printf(" %02x", (unsigned char)proc->pending_ins.op.opcode);
 	if (proc->pending_ins.op.has_ocp)
 	ft_printf(" %02x", (unsigned char)proc->pending_ins.ocp);
@@ -104,7 +104,6 @@ void		display_move(t_vm *vm, t_process *proc)
 		}
 		var_len += proc->pending_ins.params[i].nb_bytes;
 	}
-	ft_printf(" \n");
 }
 
 void		display_registers(t_vm *vm)

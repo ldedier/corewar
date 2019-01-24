@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 16:42:17 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/24 15:55:49 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/24 21:54:17 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,19 +68,34 @@ void			init_vm(t_vm *vm, char **argv, char **env)
 ** add_process function is used by init_processes to add a process to the list
 */
 
-t_list			*add_process(t_vm *vm, int index, int start)
+t_list			*add_process(t_vm *vm, int index, int start, t_process *src)
 {
 	t_process	*process;
 	static int	nb = 0;
 
 	process = (t_process *)ft_memalloc(sizeof(t_process));
-	process->player = &vm->player[index];
-	process->pc = start;
+	if (src)
+	{
+		ft_memmove(process, src, sizeof(t_process));
+		ft_bzero((void *)&process->pending_ins, sizeof(t_instruction));
+		process->live = 0;
+		process->live_cycle = 0;
+		++process->player->nb_proc;
+	}
+	else
+	{
+		process->player = &vm->player[index];
+		process->pc = start;
+		process->reg[0] = process->player->num; 
+	}
 	process->nb = ++nb;
-	ft_printf("new process nb = %d\n", process->nb);
-	process->reg[0] = process->player->num; 
+//	ft_printf("\n\nnew process nb = %d\n\n", process->nb);
 	if (ft_add_to_list_ptr(&vm->proc, (void *)process, sizeof(t_process)))
 		return (NULL);
+	int i = 1;
+	for (t_list *tmp = vm->proc; tmp; tmp = tmp->next)
+		++i;
+//	ft_printf("%d process in list\n", i);
 	return (vm->proc);
 }
 
@@ -99,7 +114,7 @@ int				init_processes(t_vm *vm)
 	while (++i < MAX_PLAYERS)
 	{
 		start = (MEM_SIZE / vm->nb_players) * (index - 1);
-		if (vm->player[i].relevant && ++index && !add_process(vm, i, start))
+		if (vm->player[i].relevant && ++index && !add_process(vm, i, start, NULL))
 			return (0);
 		vm->player[i].nb_proc = 1;
 		vm->winner = ((t_process *)(vm->proc->content))->player;
@@ -125,7 +140,7 @@ void			dispatch_players_init(t_vm *vm)
 	i = -1;
 	index = 0;
 	if (!vm->visu.active)
-		ft_printf("Introducing contestants...\n");
+		ft_printf("Introducing contestants...");
 	while (++i < MAX_PLAYERS)
 	{
 		set_color(&vm->player[i], vm->color);
