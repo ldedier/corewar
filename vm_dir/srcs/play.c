@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/24 13:39:44 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/24 19:46:14 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ static void			check_resize_cycle(t_vm *vm, int *cycle)
 	{
 		vm->checks = MAX_CHECKS;
 		vm->c_to_die -= CYCLE_DELTA;
-		return ;
 	}
 	else if (!--vm->checks)
 	{
@@ -37,8 +36,7 @@ static void			check_resize_cycle(t_vm *vm, int *cycle)
 	}
 	else
 		return ;
-	if (vm->display & (1 << MSG_CYCLE))
-		ft_printf("Cycle to die is now %d\n", vm->c_to_die);
+	display_resize(vm);
 }
 
 static void		kill_adjust_ptr(t_list **proc_lst, t_list **proc)
@@ -70,7 +68,7 @@ static int		kill_process(t_vm *vm, t_list *proc)
 										(void *)killed_proc, sizeof(t_fade)))
 		return (-1);
 	kill_adjust_ptr(&vm->proc, &proc); 
-	display(vm, (t_process *)proc->content, MSG_LIVE);
+	display_last_live(vm, (t_process *)proc->content);
 	ft_memdel((void **)&proc->content);
 	ft_memdel((void **)&proc);
 	return (0);
@@ -189,11 +187,11 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 		return (0);
 	if (proc->pending_ins.op.opcode > 0)
 	{
-		if (!f_ins[(int)proc->pending_ins.op.opcode](vm, proc, proc->pending_ins.params))
+		if (!f_ins[(int)proc->pending_ins.op.opcode](vm, proc, proc->pending_ins.params) && !vm->visu.active && (vm->display & (1 << MSG_INS)))
 			ft_printf("\n");
-		display(vm, proc, MSG_MOVE);
+		display_move(vm, proc);
 //		ft_printf("pc = %d bytlen = %d\n", proc->pc, proc->ins_bytelen);
-		if (proc->pending_ins.op.opcode != ZJMP)
+		if (proc->pending_ins.op.opcode != ZJMP || !proc->carry)
 			proc->pc += proc->ins_bytelen;
 //		ft_printf("new pc = %d\n", proc->pc);
 		ft_bzero(&proc->pending_ins, sizeof(t_instruction));
@@ -230,13 +228,16 @@ void		process_cycle(t_vm *vm)
 {
 	t_list				*proc_lst;
 
-	display(vm, NULL, MSG_CYCLE);
+	display_cycle(vm);
 		proc_lst = vm->proc;
 	while (proc_lst)
 	{
 		launch_instruction(vm, (t_process *)proc_lst->content);
 		if (vm->total_cycle - ((t_process *)proc_lst->content)->live_cycle >= vm->c_to_die)
+		{
+			ft_printf("KILL!!!\n");
 			kill_process(vm, proc_lst);	
+		}
 		proc_lst = proc_lst->next;
 	}
 	if (vm->cycle >= vm->c_to_die)

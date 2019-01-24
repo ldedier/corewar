@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/09 20:29:58 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/24 12:52:15 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/24 19:14:12 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,11 @@ void	load_arena(t_vm *vm, t_process *proc, int index, int val)
 	int		byte_val;
 
 	i = -1;
-	mod_index = mod(index + proc->pc, MEM_SIZE);
+	mod_index = mod(index, MEM_SIZE);
 	while (++i < DIR_SIZE)
 	{
+//	ft_printf("mod index = %d\n", mod_index);
+	
 		if (mod_index >= MEM_SIZE)
 			mod_index -= MEM_SIZE;
 		byte_val = val & (0xFF << ((3 - i) * 8));

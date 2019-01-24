@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 21:43:44 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/24 13:39:46 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/24 19:46:16 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void		display_proc_ins(t_process *proc, int val1, int val2, int val3)
 	int type;
 	int	val[3];
 
+//	if (vm->visu.active || !(vm->display & MSG_INS))
+//		return ;
 	i = -1;
 	val[0] = val1;
 	val[1] = val2;
@@ -31,94 +33,46 @@ void		display_proc_ins(t_process *proc, int val1, int val2, int val3)
 	}
 }
 
-
-void		display_nothing(t_vm *vm, t_process *proc)
+void		display_player_intro(t_player *player)
 {
-	(void)vm;
-	(void)proc;
+	ft_printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n",
+			player->num,
+			player->algo_len,
+			player->name,
+			player->comm[0] ? player->comm : ""); // verifier si inverse player num ou si ordre d'entree quel que soit le nom
 }
 
-
-void		display_player_intro(t_vm *vm, t_player *player)
+void		display_resize(t_vm *vm)
 {
-	(void)vm;
-	ft_printf("* Player %d, weighing %d bytes, ",
-			-player->num,
-			player->algo_len); // verifier si inverse player num ou si ordre d'entree quel que soit le nom
-	ft_putchar('"');
-	ft_printf("%s", player->name);
-	ft_putchar('"');
-	if (player->comm[0])
-	{
-		ft_printf(" (");
-		ft_putchar('"');
-		ft_printf("%s", player->comm);
-		ft_putchar('"');
-		ft_printf(") !\n");
-	}
+	if (!vm->visu.active && vm->display & (1 << MSG_CYCLE))
+		ft_printf("Cycle to die is now %d\n", vm->c_to_die);
 }
 
 void		display_player_alive(t_vm *vm, t_process *proc)
 {
-	(void)vm;
-	ft_printf("\nPlayer %d (%s) is said to be alive", proc->player->num, proc->player->name);
+	if (!vm->visu.active && vm->display & (1 << MSG_LIVE))
+		ft_printf("\nPlayer %d (%s) is said to be alive",
+				-proc->player->num,
+				proc->player->name);
 }
 
-/*
-void		display_ins(t_vm *vm, t_process *proc)
-{
-	int		i;
-
-	(void)vm;
-	if (!proc)
-		return ;
-	i = -1;
-	ft_printf("P%5d | %s", proc->nb, proc->pending.ins.op.instruction_name);
-	while (++i < proc->pending.ins.op.nb_params)
-	{
-//		ft_printf("ICI value = %d\n", proc->pending.ins.params[i].value);
-		ft_putchar(' ');
-	//	if (proc->pending.ins.op.opcode == STI && i == 2)
-	//		ft_printf("%d", proc->pending.ins.params[i].dest_value);
-	//	else
-	//	{
-			if (proc->pending.ins.params[i].type == T_REG)
-				ft_printf("r");
-			ft_printf("%d", proc->pending.ins.params[i].value);
-	//	}
-
-	}
-	if (proc->pending.ins.op.opcode == ZJMP)
-		ft_printf("%s\n", proc->carry ? " OK" : " FAILED");
-	else if (proc->pending.ins.op.opcode == FORK)
-		ft_printf(" (%d)\n", (proc->pc + proc->pending.ins.params[0].value % IDX_MOD) % MEM_SIZE);
-	else
-		ft_printf("\n");
-//	if (proc->pending.ins.op.opcode == STI)
-//			ft_printf("%6s | --> %.5s to %d + %d = %d (with pc and mod %d)\n", "", proc->pending.ins.op.description, proc->pending.ins.params[1].value, proc->pending.ins.params[2].value, proc->pending.ins.params[2].value + proc->pending.ins.params[1].value, (proc->pc + proc->pending.ins.params[1].value + proc->pending.ins.params[2].value) % MEM_SIZE);
-	if (proc->pending.ins.op.opcode == LDI)
-			ft_printf("%6s | --> %.4s from %d + %d = %d (with pc and mod %d)\n", "", proc->pending.ins.op.description, proc->pending.ins.params[0].value, proc->pending.ins.params[1].value, proc->pending.ins.params[0].value + proc->pending.ins.params[1].value, (proc->pc + proc->pending.ins.params[1].value + proc->pending.ins.params[0].value) % MEM_SIZE);
-}
-
-*/
 void		display_last_live(t_vm *vm, t_process *proc)
 {
-	ft_printf("Process %d hasn't lived for %d cycles (CTD %d)\n", proc->nb, vm->total_cycle - proc->live_cycle, vm->c_to_die);
-
+	if (!vm->visu.active && vm->display & (1 << MSG_DEATH))
+		ft_printf("Process %d hasn't lived for %d cycles (CTD %d)\n",
+				proc->nb,
+				vm->total_cycle - proc->live_cycle,
+				vm->c_to_die);
 }
 
-
-
-
-void		display_cycle(t_vm *vm, t_process *proc)
+void		display_cycle(t_vm *vm)
 {
-	(void)proc;
-	ft_printf("It is now cycle %d\n", vm->total_cycle);
+	if (!vm->visu.active && vm->display & (1 << MSG_CYCLE))
+		ft_printf("It is now cycle %d\n", vm->total_cycle);
 }
 
-void		display_winner(t_vm *vm, t_process *proc)
+void		display_winner(t_vm *vm)
 {
-	(void)proc;
 	ft_printf("Contestant %d, ", -vm->winner->num);
 	ft_putchar('"');
 	ft_printf("%s", vm->winner->name);
@@ -126,17 +80,15 @@ void		display_winner(t_vm *vm, t_process *proc)
 	ft_printf(", has won !\n");
 }
 
-
 void		display_move(t_vm *vm, t_process *proc)
 {
 	int i;
 	int	j;
 	int	var_len;
-	(void)vm;
+	if (vm->visu.active || !(vm->display & (1 << MSG_MOVE)))
+		return ;
 	if (proc->pending_ins.op.opcode == ZJMP && proc->carry)
 		return ;
-//	if (vm->visu.active || !(vm->display & (1 << 2)))
-//		return ;
 	i = -1;
 	ft_printf("ADV %d (0x%04x -> 0x%04x)", proc->ins_bytelen, proc->pc, (proc->pc + proc->ins_bytelen % MEM_SIZE));
 	ft_printf(" %02x", (unsigned char)proc->pending_ins.op.opcode);
@@ -154,31 +106,12 @@ void		display_move(t_vm *vm, t_process *proc)
 	}
 	ft_printf(" \n");
 }
-/*
-void		display_live_player(t_vm *vm, int op_code)
-{
-	t_player *player;
 
-	if (op_code == LIVE)
-	{
-		player = get_player_num(vm->proc, vm->winner->num);
-		display(vm, NULL, LAST_LIVE);
-	}
-}
-
-void		display_ins_description(t_vm *vm, char *str, int opcode)
-{
-	ft_printf("%s >>> %*-s%s", COLF_CYAN, PAD_INS - 5, str, COLF_OFF);
-	display_live_player(vm, opcode);
-}
-*/
-
-void		display_registers(t_vm *vm, t_process *proc)
+void		display_registers(t_vm *vm)
 {
 	int		i;
 	t_list	*proc_lst;
 
-	(void)proc;
 	proc_lst = vm->proc;
 	ft_printf("*** DISPLAY REGISTERS ***\n\n");
 	while (proc_lst && proc_lst->content)
@@ -188,26 +121,5 @@ void		display_registers(t_vm *vm, t_process *proc)
 			ft_printf("R%d: %d | ", i + 1, ((t_process *)proc_lst->content)->reg[i]);
 		ft_printf("\n\n");
 		proc_lst = proc_lst->next;
-	}
-}
-
-void		display(t_vm *vm, t_process *proc, int type)
-{
-	static void (*display[NB_GAME_MSG - 1][2])(t_vm *vm, t_process *proc) = {
-
-		{&display_nothing, &display_nothing},
-		{&display_player_alive, &display_nothing},
-		{&display_cycle, &display_nothing},
-//	   	{&display_ins, &display_nothing},
-	   	{&display_last_live, &display_nothing},
-		{&display_move, &display_nothing}, // used to be move
-		{&display_registers, &display_nothing}};
-//		{&display_winner, &display_winner}};
-
-
-//	ft_printf("vm display = %#x 1 << type = %#x\n", vm->display, type);
-	if (vm->display & (1 << type))
-	{
-		display[type][(int)vm->visu.active](vm, proc);
 	}
 }

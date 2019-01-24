@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 16:33:31 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/24 12:53:10 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/24 19:17:22 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,20 @@ int			getval_mod(char *arena, int index, int nb_bytes, int modulo)
 	while (i < (unsigned int)nb_bytes)
 	{
 		val <<= 8;
+//		ft_printf("index + i = %d\n", index + i);
 	//	ft_printf("val = %#x index + i = %d (index + i) %% mod = %d arena[index + i] = %#x arena[(index + i) %% mod]\n", val, index + i, (index + i) % mod, arena[index + i] % mod, arena[(index + i) % mod]);
 	
 //		if (!i)
 //		ft_printf("mod %d\n", mod);
-//			val |= arena[mod(index + i, MEM_SIZE)];
+//			val |= arena[mod(index + i, modulo)];
 //		else
 			val |= (unsigned char)arena[mod((index + i), modulo)];
 //		ft_printf("index + i %% mod = %d | val = %#x\n", (index + i) % mod, val);
 //	ft_printf("val = %#x\n", val);
 		++i;
 	}
+//	val = (unsigned short)val;
+//	ft_printf("val = %d\n", val);
 	return (val);
 }
 

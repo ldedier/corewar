@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/24 12:03:10 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/24 19:46:26 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,5 @@
 # define MAX_CHAMP		"Given champion is too large to be handled"
 # define WRG_HEAD_SIZE	"Header size does not match file's code size"
 
-
-enum	e_game_msg
-{
-	NO_MSG, MSG_ALIVE, MSG_CYCLE, MSG_LIVE, MSG_MOVE, MSG_REG, MSG_WINNER
-};
 
 #endif

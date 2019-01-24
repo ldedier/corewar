@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 16:42:17 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/22 21:51:43 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/24 15:55:49 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ void			dispatch_players_init(t_vm *vm)
 		if (vm->player[i].relevant && ++index && (j = -1))
 		{
 			if (!vm->visu.active)
-				display_player_intro(vm, &vm->player[i]);
+				display_player_intro(&vm->player[i]);
 			start = (MEM_SIZE / vm->nb_players) * (index - 1);
 			while (++j < vm->player[i].algo_len)
 			{
@@ -161,7 +161,7 @@ void			dispatch_players(t_vm *vm, t_player *player)
 			ft_set_numbers(vm->player, &(vm->player[i]));
 		if (vm->player[i].relevant && ++index && (j = -1))
 		{
-			display_player_intro(vm, &vm->player[i]);
+			display_player_intro(&vm->player[i]);
 			start = (MEM_SIZE / vm->nb_players) * (index - 1);
 			while (++j < vm->player[i].algo_len)
 			{
