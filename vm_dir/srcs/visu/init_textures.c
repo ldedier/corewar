@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 21:26:16 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/18 21:39:28 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/24 23:06:39 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,9 @@ static inline int	ft_init_textures_2(t_visu *visu)
 		return (1);
 	if (!(visu->sdl.images[DL_DISABLED] =
 				ft_load_image(PATH"/resources/download_disabled.png")))
+		return (1);
+	if (!(visu->sdl.images[KEYS] =
+				ft_load_image(PATH"/resources/keys.png")))
 		return (1);
 	return (0);
 }

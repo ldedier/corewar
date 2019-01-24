@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 19:07:54 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/18 23:26:24 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/24 23:30:20 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,18 @@
 
 int		ft_render_init_offline(t_vm *vm)
 {
-	(void)vm;
+	SDL_Rect rect;
+
+	rect.x = vm->visu.center.dashboard_x + 1;
+	rect.w = vm->visu.center.dashboard_width - 1;
+	rect.y = vm->visu.center.top_dashboard_height +
+		vm->visu.center.top_dashboard_fheight + 1;
+	rect.h = vm->visu.center.mid_dashboard_height;
+	if (SDL_BlitScaled(vm->visu.sdl.images[KEYS], NULL, vm->visu.sdl.w_surface,
+			&rect))
+		return (1);
+	ft_render_horizontal_line_dashboard(vm, vm->visu.center.footer_y,
+		LINE_COL);
 	return (0);
 }
 

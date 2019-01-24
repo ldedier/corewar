@@ -74,7 +74,7 @@ VISU_NO_PREFIX =		init_sdl.c visu.c events.c framerate.c render.c \
 						update_scrollbar.c init_textures_hp.c\
 						render_live_breakdown_hp_tools.c render_online_top.c\
 						render_online_2.c render_live.c render_fade.c\
-						render_activity.c client_get_new_cores.c
+						render_activity.c client_get_new_cores.c render_alts.c
 
 
 INCLUDES_NO_PREFIX =	vm.h visu.h client.h

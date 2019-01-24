@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/21 22:19:22 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/24 20:45:24 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,8 +150,8 @@ void		execute_pending_action(t_vm *vm, t_process *proc)
 				index = (proc->pending.dest_index + i) % MEM_SIZE;
 				val = proc->pending.value & (0xFF << ((3 - i) * 8));
 				*(char *)(proc->pending.dest + index) = val >> ((3 - i) * 8);
-				vm->metarena[index].color_index = 5;
-			//	vm->metarena[index].alt_color = 1;
+			//	vm->metarena[index].color_index = 5;
+				vm->metarena[index].alt_color = ALT_COLOR_VALUE;
 			}
 		}
 		else if (proc->pending.dest)

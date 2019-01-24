@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 16:42:17 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/22 14:56:12 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/24 21:25:52 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void			init_vm(t_vm *vm, char **argv, char **env)
 	vm->client.active = 0;
 	vm->client.port = 0;
 	vm->visu.active = 0;
-	vm->nb = 1;
+	vm->nb = -1;
 	vm->total_cycle = 1;
 	vm->cycle = 1;
 	vm->nb_players = 0;
