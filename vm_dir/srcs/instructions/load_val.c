@@ -6,34 +6,36 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/09 20:29:58 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/23 19:40:43 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/24 11:28:32 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-/*
-**static void	load_arena(t_vm *vm, t_process *proc, t_parameter *arg, int val)
-**{
-**	int 	i;
-**	int		index;
-**
-**	i = -1;
-**	index = arg->value + proc->pc;
-**	while (++i < DIR_SIZE)
-**	{
-**		vm->arena[(index + i) % MEM_SIZE] =
-**					(val & (0xFF << (8 * (3 - i)))) >> ((3 - i) * 8);
-**		vm->metarena[(index + i) % MEM_SIZE].color_index =
-**										*(int *)proc->player->color.value;
-**	}
-**}
-**
-**static void	load_reg(t_vm *vm, t_process *proc, t_parameter *arg, int val)
-**{
-**	proc->reg[arg->value - 1] = val;
-**}
-*/
+
+void	load_arena(t_vm *vm, t_process *proc, int index, int val)
+{
+	int 	i;
+	int		mod_index;
+	int		byte_val;
+
+	i = -1;
+	mod_index = mod(index + proc->pc, MEM_SIZE);
+	while (++i < DIR_SIZE)
+	{
+		if (mod_index >= MEM_SIZE)
+			mod_index -= MEM_SIZE;
+		byte_val = val & (0xFF << ((3 - i) * 8));
+		vm->arena[mod_index] = byte_val >> ((3 - i) * 8);
+		vm->metarena[mod_index].color_index = proc->player->color.index;
+	}
+}
+
+void	load_reg(t_vm *vm, t_process *proc, int num, int val)
+{
+	proc->reg[num - 1] = val;
+}
+
 
 void	loadval(t_vm *vm, t_process *proc, t_parameter *arg, int val)
 {

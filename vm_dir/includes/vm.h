@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/23 18:37:43 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/24 11:28:30 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,11 @@ enum				e_arg
 {
 	FIRST, SECOND, THIRD
 };
+
+
+void				load_arena(t_vm *vm, t_process *proc, int index, int val);
+void				load_reg(t_vm *vm, t_process*proc, int num, int val);
+
 
 int					fight_cores(t_vm *vm, t_player *pl1, t_player *pl2);
 void				ft_error_exit(const char *error);
