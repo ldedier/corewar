@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/09 20:29:58 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/24 12:09:47 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/24 12:52:15 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	load_arena(t_vm *vm, t_process *proc, int index, int val)
 		byte_val = val & (0xFF << ((3 - i) * 8));
 		vm->arena[mod_index] = byte_val >> ((3 - i) * 8);
 		vm->metarena[mod_index].color_index = proc->player->color.index;
+		++mod_index;
 	}
 }
 

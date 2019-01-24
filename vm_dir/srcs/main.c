@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 17:19:23 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/22 21:52:58 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/24 13:12:08 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,6 @@ int		main(int argc, char **argv, char **env)
 		
 		process_cycle(&vm);
 	}
-	display(&vm, NULL, MSG_WINNER);
+	display_winner(&vm, NULL);
 	return (0);
 }

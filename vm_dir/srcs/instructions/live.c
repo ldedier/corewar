@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 17:10:34 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/24 12:09:15 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/24 13:39:47 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,10 @@ int		ins_live(t_vm *vm, t_process *proc, t_parameter arg[3])
 
 	getval_param_dest(vm, proc, &arg[0], 1);
 	proc->live = 1;
-	proc->live_cycle = vm->total_cycle;
+	++vm->issued_live;
+	proc->live_cycle = vm->total_cycle; // enlever, gere par proc->pending_ins.op
 	player = get_player_num(vm->proc, arg[0].value);
+	display_proc_ins(proc, arg[0].value, arg[1].value, arg[2].value);
 	if (player)
 	{
 		++vm->live;
@@ -40,10 +42,9 @@ int		ins_live(t_vm *vm, t_process *proc, t_parameter arg[3])
 		live->pc = proc->pc;
 		live->color = *(int *)player->color.value;
 		live->value = /*vm->cycle +*/ FADE_LEN;
+		display_player_alive(vm, proc);
 		if (ft_add_to_list_ptr(&vm->live_ok, (void *)live, sizeof(t_fade)))
 			return (FAILURE);
-		display_proc_ins(proc, arg[0].value, arg[1].value, arg[2].value);
-		display(vm, proc, MSG_ALIVE);
 	}
 	return (SUCCESS);
 }

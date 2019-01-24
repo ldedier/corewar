@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 21:43:44 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/24 12:14:39 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/24 13:39:46 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,7 @@ void		display_player_intro(t_vm *vm, t_player *player)
 void		display_player_alive(t_vm *vm, t_process *proc)
 {
 	(void)vm;
-	if (vm->live_ok && ((t_fade *)vm->live_ok->content)->pc == proc->pc)
-		ft_printf("Player %d (%s) is said to be alive\n", proc->player->num, proc->player->name);
+	ft_printf("\nPlayer %d (%s) is said to be alive", proc->player->num, proc->player->name);
 }
 
 /*
@@ -108,6 +107,9 @@ void		display_last_live(t_vm *vm, t_process *proc)
 
 }
 
+
+
+
 void		display_cycle(t_vm *vm, t_process *proc)
 {
 	(void)proc;
@@ -124,34 +126,34 @@ void		display_winner(t_vm *vm, t_process *proc)
 	ft_printf(", has won !\n");
 }
 
-/*
+
 void		display_move(t_vm *vm, t_process *proc)
 {
 	int i;
 	int	j;
 	int	var_len;
 	(void)vm;
-	if (proc->pending.ins.op.opcode == ZJMP && proc->carry)
+	if (proc->pending_ins.op.opcode == ZJMP && proc->carry)
 		return ;
 //	if (vm->visu.active || !(vm->display & (1 << 2)))
 //		return ;
 	i = -1;
 	ft_printf("ADV %d (0x%04x -> 0x%04x)", proc->ins_bytelen, proc->pc, (proc->pc + proc->ins_bytelen % MEM_SIZE));
-	ft_printf(" %02x", (unsigned char)proc->pending.ins.op.opcode);
-	if (proc->pending.ins.op.has_ocp)
-	ft_printf(" %02x", (unsigned char)proc->pending.ins.ocp);
+	ft_printf(" %02x", (unsigned char)proc->pending_ins.op.opcode);
+	if (proc->pending_ins.op.has_ocp)
+	ft_printf(" %02x", (unsigned char)proc->pending_ins.ocp);
 	var_len = 0;
-	while (++i < proc->pending.ins.op.nb_params)
+	while (++i < proc->pending_ins.op.nb_params)
 	{
 		j = 0;
-		while (++j <= proc->pending.ins.params[i].nb_bytes)
+		while (++j <= proc->pending_ins.params[i].nb_bytes)
 		{
-			ft_printf(" %02x", (unsigned char)(vm->arena[proc->pc + proc->pending.ins.op.has_ocp + var_len + j]));
+			ft_printf(" %02x", (unsigned char)(vm->arena[proc->pc + proc->pending_ins.op.has_ocp + var_len + j]));
 		}
-		var_len += proc->pending.ins.params[i].nb_bytes;
+		var_len += proc->pending_ins.params[i].nb_bytes;
 	}
 	ft_printf(" \n");
-}*/
+}
 /*
 void		display_live_player(t_vm *vm, int op_code)
 {
@@ -191,20 +193,20 @@ void		display_registers(t_vm *vm, t_process *proc)
 
 void		display(t_vm *vm, t_process *proc, int type)
 {
-	static void (*display[NB_GAME_MSG][2])(t_vm *vm, t_process *proc) = {
+	static void (*display[NB_GAME_MSG - 1][2])(t_vm *vm, t_process *proc) = {
 
 		{&display_nothing, &display_nothing},
 		{&display_player_alive, &display_nothing},
 		{&display_cycle, &display_nothing},
 //	   	{&display_ins, &display_nothing},
 	   	{&display_last_live, &display_nothing},
-		{&display_nothing, &display_nothing}, // used to be move
-		{&display_registers, &display_nothing},
-		{&display_winner, &display_nothing}};
+		{&display_move, &display_nothing}, // used to be move
+		{&display_registers, &display_nothing}};
+//		{&display_winner, &display_winner}};
 
 
 //	ft_printf("vm display = %#x 1 << type = %#x\n", vm->display, type);
-	if ((vm->display & (1 << type)))
+	if (vm->display & (1 << type))
 	{
 		display[type][(int)vm->visu.active](vm, proc);
 	}

@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/24 12:02:59 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/24 13:20:04 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ typedef struct		s_vm
 	t_list			*killed_proc;
 	t_list			*live_ok;
 	int				live;
+	int				issued_live;
 	t_player		*winner;
 }					t_vm;
 

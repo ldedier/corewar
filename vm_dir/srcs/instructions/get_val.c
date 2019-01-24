@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/09 20:00:32 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/23 21:27:12 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/24 13:07:28 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,9 @@ static long	getval_ind(t_vm *vm, t_process *proc, int *index, int modulo)
 //	if (mod == IDX_MOD)
 //		index %= mod;
 //	ft_printf("getval ind, IDX MOD = %d\n", IDX_MOD);
-	*index = mod(*index, IDX_MOD);
-	ft_printf("index = %d\n", *index);
+//	*index = mod(*index, IDX_MOD);
 	val = getval_mod(vm->arena, *index, DIR_SIZE, MEM_SIZE);
-	ft_printf("1 getval ind, val = %d\n", val);
+//	ft_printf("1 getval ind, val = %d\n", val);
 //	val = mod(val, MEM_SIZE);
 //	ft_printf("2 getval ind, val = %d\n", val);
 	return (val);
@@ -52,9 +51,9 @@ void		getval_param_dest(t_vm *vm, t_process *proc,
 	static long (*f_data[NB_TYPES + 1])(t_vm *vm, t_process *proc,
 			int *index, int mod) = {NULL, &getval_reg, &getval_dir, &getval_ind};
 
-	ft_printf("arg type= %d\n", arg->type);
-	ft_printf("before arg.value = %d\n", arg->value);
+//	ft_printf("arg type= %d\n", arg->type);
+//	ft_printf("before arg.value = %d\n", arg->value);
 	arg->dest_value = f_data[(int)arg->type](vm, proc, &arg->value, modulo);
-	arg->dest_value = mod(arg->dest_value, modulo);
+//	arg->dest_value = mod(arg->dest_value, modulo);
 //	ft_printf("after, arg value = %d arg dest value = %d\n", arg->value, arg->dest_value);
 }

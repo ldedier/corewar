@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/24 12:14:57 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/24 13:39:44 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,22 @@
 static void			check_resize_cycle(t_vm *vm, int *cycle)
 {
 	(void)cycle;
-	if (vm->live >= NBR_LIVE)
+	if (vm->issued_live >= NBR_LIVE)
 	{
 		vm->checks = MAX_CHECKS;
-		vm->c_to_die -= CYCLE_DELTA < vm->c_to_die ? CYCLE_DELTA : vm->c_to_die;
+		vm->c_to_die -= CYCLE_DELTA;
 		return ;
 	}
-	if (!--vm->checks)
+	else if (!--vm->checks)
 	{
 		vm->checks = MAX_CHECKS;
-		vm->c_to_die -= CYCLE_DELTA < vm->c_to_die ? CYCLE_DELTA : vm->c_to_die;
+		vm->c_to_die -= CYCLE_DELTA;
 //		display(vm, NULL, NEW_RESIZE);
 	}
+	else
+		return ;
+	if (vm->display & (1 << MSG_CYCLE))
+		ft_printf("Cycle to die is now %d\n", vm->c_to_die);
 }
 
 static void		kill_adjust_ptr(t_list **proc_lst, t_list **proc)
@@ -87,19 +91,20 @@ static int		reset_live_allprocesses(t_vm *vm)
 	proc_lst = vm->proc;
 	while (proc_lst && (proc = ((t_process *)proc_lst->content)))
 	{
-		if (!proc->live)
-		{
-			if (kill_process(vm, proc_lst) == -1)
-				return (-1);
-		}
-		else
-		{
+//		if (!proc->live)
+//		{
+//			if (kill_process(vm, proc_lst) == -1)
+//				return (-1);
+//		}
+//		else
+//		{
 			proc->live = 0;
 			proc->player->live = 0;
-		}
+//		}
 		proc_lst = proc_lst->next;
 	}
 	vm->live = 0;
+	vm->issued_live = 0;
 	return (0);
 }
 
@@ -179,13 +184,20 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 		&ins_live, &ins_ld, &ins_st, &ins_add, &ins_sub, &ins_and, &ins_or,
 		&ins_xor, &ins_zjmp, &ins_ldi, &ins_sti, &ins_fork, &ins_lld, &ins_lldi,
 		&ins_lfork, &ins_aff};
+//	ft_printf("pc = %d pending nb cycles = %d opcode = %d\n", proc->pc, proc->pending_ins.op.nb_cycles - 1, proc->pending_ins.op.opcode);
 	if (--proc->pending_ins.op.nb_cycles > 1)
 		return (0);
-	if (proc->pending_ins.op.opcode)
+	if (proc->pending_ins.op.opcode > 0)
 	{
-		f_ins[(int)proc->pending_ins.op.opcode](vm, proc, proc->pending_ins.params);
-		ft_putchar('\n');
-		proc->pc = proc->ins_bytelen;
+		if (!f_ins[(int)proc->pending_ins.op.opcode](vm, proc, proc->pending_ins.params))
+			ft_printf("\n");
+		display(vm, proc, MSG_MOVE);
+//		ft_printf("pc = %d bytlen = %d\n", proc->pc, proc->ins_bytelen);
+		if (proc->pending_ins.op.opcode != ZJMP)
+			proc->pc += proc->ins_bytelen;
+//		ft_printf("new pc = %d\n", proc->pc);
+		ft_bzero(&proc->pending_ins, sizeof(t_instruction));
+		proc->ins_bytelen = 0;
 //		display(vm, proc, MSG_INS);
 //		if (proc->pending_ins.op.opcode == LIVE)
 //			display(vm, proc, MSG_ALIVE);
@@ -219,18 +231,21 @@ void		process_cycle(t_vm *vm)
 	t_list				*proc_lst;
 
 	display(vm, NULL, MSG_CYCLE);
-	if (vm->cycle >= vm->c_to_die)
-	{
-		reset_live_allprocesses(vm);
-		check_resize_cycle(vm, &vm->cycle);
-		vm->cycle = 0;
-	}
-	proc_lst = vm->proc;
+		proc_lst = vm->proc;
 	while (proc_lst)
 	{
 		launch_instruction(vm, (t_process *)proc_lst->content);
+		if (vm->total_cycle - ((t_process *)proc_lst->content)->live_cycle >= vm->c_to_die)
+			kill_process(vm, proc_lst);	
 		proc_lst = proc_lst->next;
 	}
+	if (vm->cycle >= vm->c_to_die)
+	{
+		check_resize_cycle(vm, &vm->cycle);
+		reset_live_allprocesses(vm);
+		vm->cycle = 0;
+	}
+
 	++vm->cycle;
 	++vm->total_cycle;
 }
