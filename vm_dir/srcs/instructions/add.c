@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/01 17:38:36 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/23 20:14:54 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/24 11:43:01 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,11 @@ int		ins_add(t_vm *vm, t_process *proc, t_parameter arg[3])
 {
 	int sum;
 
-	(void)vm;
-//	if (!is_reg(arg[0].value) || !is_reg(arg[1].value) || !is_reg(arg[2].value))
-//		return (FAILURE);
 	sum = proc->reg[arg[0].value - 1] + proc->reg[arg[1].value - 1];
-//	sum = sum % IDX_MOD;
-	proc->reg[arg[2].value - 1] = sum;
+	load_reg(vm, proc, arg[2].value, sum);
 	//display_registers(vm, proc);
 //	ft_printf("arg0 value = %d arg1 value = %d sum = %d\n", arg[0].value, arg[1].value, sum);
 	proc->carry = !sum;
+	display_proc_ins(proc, arg[0].value, arg[1].value, arg[2].value); // sum instead of arg 2 val ?
 	return (SUCCESS);
 }

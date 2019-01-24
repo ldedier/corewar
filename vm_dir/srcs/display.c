@@ -6,11 +6,31 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 21:43:44 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/23 21:32:55 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/24 12:14:39 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
+
+
+void		display_proc_ins(t_process *proc, int val1, int val2, int val3)
+{
+	int i;
+	int type;
+	int	val[3];
+
+	i = -1;
+	val[0] = val1;
+	val[1] = val2;
+	val[2] = val3;
+	ft_printf("P%5d | %s", proc->nb, proc->pending_ins.op.instruction_name);
+	while (++i < proc->pending_ins.op.nb_params)
+	{
+		type = proc->pending_ins.params[i].type;
+		ft_printf(" %s%d", type == REG_CODE ? "r" : "", val[i]);
+	}
+}
+
 
 void		display_nothing(t_vm *vm, t_process *proc)
 {
@@ -45,7 +65,7 @@ void		display_player_alive(t_vm *vm, t_process *proc)
 		ft_printf("Player %d (%s) is said to be alive\n", proc->player->num, proc->player->name);
 }
 
-
+/*
 void		display_ins(t_vm *vm, t_process *proc)
 {
 	int		i;
@@ -75,13 +95,13 @@ void		display_ins(t_vm *vm, t_process *proc)
 		ft_printf(" (%d)\n", (proc->pc + proc->pending.ins.params[0].value % IDX_MOD) % MEM_SIZE);
 	else
 		ft_printf("\n");
-	if (proc->pending.ins.op.opcode == STI)
-			ft_printf("%6s | --> %.5s to %d + %d = %d (with pc and mod %d)\n", "", proc->pending.ins.op.description, proc->pending.ins.params[1].value, proc->pending.ins.params[2].value, proc->pending.ins.params[2].value + proc->pending.ins.params[1].value, (proc->pc + proc->pending.ins.params[1].value + proc->pending.ins.params[2].value) % MEM_SIZE);
+//	if (proc->pending.ins.op.opcode == STI)
+//			ft_printf("%6s | --> %.5s to %d + %d = %d (with pc and mod %d)\n", "", proc->pending.ins.op.description, proc->pending.ins.params[1].value, proc->pending.ins.params[2].value, proc->pending.ins.params[2].value + proc->pending.ins.params[1].value, (proc->pc + proc->pending.ins.params[1].value + proc->pending.ins.params[2].value) % MEM_SIZE);
 	if (proc->pending.ins.op.opcode == LDI)
 			ft_printf("%6s | --> %.4s from %d + %d = %d (with pc and mod %d)\n", "", proc->pending.ins.op.description, proc->pending.ins.params[0].value, proc->pending.ins.params[1].value, proc->pending.ins.params[0].value + proc->pending.ins.params[1].value, (proc->pc + proc->pending.ins.params[1].value + proc->pending.ins.params[0].value) % MEM_SIZE);
 }
 
-
+*/
 void		display_last_live(t_vm *vm, t_process *proc)
 {
 	ft_printf("Process %d hasn't lived for %d cycles (CTD %d)\n", proc->nb, vm->total_cycle - proc->live_cycle, vm->c_to_die);
@@ -104,7 +124,7 @@ void		display_winner(t_vm *vm, t_process *proc)
 	ft_printf(", has won !\n");
 }
 
-
+/*
 void		display_move(t_vm *vm, t_process *proc)
 {
 	int i;
@@ -131,7 +151,7 @@ void		display_move(t_vm *vm, t_process *proc)
 		var_len += proc->pending.ins.params[i].nb_bytes;
 	}
 	ft_printf(" \n");
-}
+}*/
 /*
 void		display_live_player(t_vm *vm, int op_code)
 {
@@ -171,14 +191,14 @@ void		display_registers(t_vm *vm, t_process *proc)
 
 void		display(t_vm *vm, t_process *proc, int type)
 {
-	static void (*display[NB_GAME_MSG + 1][2])(t_vm *vm, t_process *proc) = {
+	static void (*display[NB_GAME_MSG][2])(t_vm *vm, t_process *proc) = {
 
 		{&display_nothing, &display_nothing},
 		{&display_player_alive, &display_nothing},
 		{&display_cycle, &display_nothing},
-	   	{&display_ins, &display_nothing},
+//	   	{&display_ins, &display_nothing},
 	   	{&display_last_live, &display_nothing},
-		{&display_move, &display_nothing},
+		{&display_nothing, &display_nothing}, // used to be move
 		{&display_registers, &display_nothing},
 		{&display_winner, &display_nothing}};
 

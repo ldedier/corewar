@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 17:15:28 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/10 17:15:43 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/01/24 11:51:17 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ int		ins_lldi(t_vm *vm, t_process *proc, t_parameter arg[3])
 	getval_param_dest(vm, proc, &arg[1], 0);
 	ind = proc->pc + (arg[0].dest_value + arg[1].dest_value);
 	val = getval_mod(vm->arena, ind, DIR_SIZE, MEM_SIZE);
-	loadval(vm, proc, &arg[2], val);
+	load_reg(vm, proc, arg[2].value, val);
 	proc->carry = !val;
+	display_proc_ins(proc, arg[0].value, arg[1].value, arg[2].value);
 	return (SUCCESS);
 }

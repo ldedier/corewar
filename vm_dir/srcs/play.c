@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/24 11:26:55 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/24 12:14:57 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,16 +106,18 @@ static int		reset_live_allprocesses(t_vm *vm)
 /*
 ** checks if latest instruction is still ongoing (via proc->cycle) and displays
 */
-
+/*
 static int		last_instruction_unresolved(t_vm *vm, t_process *proc)
 {
-	t_pending *pending;
+//	t_pending *pending;
 
 	(void)vm;
-	pending = ((t_pending *)&proc->pending);
+//	pending = ((t_pending *)&proc->pending);
 //	ft_printf("pending cycles = %d\n", pending->cycles);
-	--pending->cycles;
-	if (pending->cycles > 1)
+	if (--proc->pending_ins.op.nb_cycles > 1)
+		return (1);
+	return (0);
+	
 	{
 //		if (!vm->visu.active)
 //		{
@@ -128,7 +130,8 @@ static int		last_instruction_unresolved(t_vm *vm, t_process *proc)
 	}
 	return (0);
 }
-
+*/
+/*
 void		execute_pending_action(t_vm *vm, t_process *proc)
 {
 	int			index;
@@ -162,7 +165,7 @@ void		execute_pending_action(t_vm *vm, t_process *proc)
 
 	}
 }
-
+*/
 /*
 ** Checks if last instruction is still running.
 ** Else, if there's a valid instruction at the current position, launches it,
@@ -176,24 +179,26 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 		&ins_live, &ins_ld, &ins_st, &ins_add, &ins_sub, &ins_and, &ins_or,
 		&ins_xor, &ins_zjmp, &ins_ldi, &ins_sti, &ins_fork, &ins_lld, &ins_lldi,
 		&ins_lfork, &ins_aff};
-	if (last_instruction_unresolved(vm, proc))
+	if (--proc->pending_ins.op.nb_cycles > 1)
 		return (0);
-	if (proc->pending.ins.op.opcode)
+	if (proc->pending_ins.op.opcode)
 	{
-		f_ins[(int)proc->pending.ins.op.opcode](vm, proc, proc->pending.ins.params);
-		display(vm, proc, MSG_INS);
-		if (proc->pending.ins.op.opcode == LIVE)
-			display(vm, proc, MSG_ALIVE);
-		display(vm, proc, MSG_MOVE);
-		execute_pending_action(vm, proc);
+		f_ins[(int)proc->pending_ins.op.opcode](vm, proc, proc->pending_ins.params);
+		ft_putchar('\n');
+		proc->pc = proc->ins_bytelen;
+//		display(vm, proc, MSG_INS);
+//		if (proc->pending_ins.op.opcode == LIVE)
+//			display(vm, proc, MSG_ALIVE);
+//		display(vm, proc, MSG_MOVE);
+//		execute_pending_action(vm, proc);
 		return (0);
 	}
-	proc->ins_bytelen = get_instruction(vm->arena, &proc->pending.ins, proc->pc, MEM_SIZE);
+	proc->ins_bytelen = get_instruction(vm->arena, &proc->pending_ins, proc->pc, MEM_SIZE);
 	if ((proc->ins_bytelen))
 	{
 //		ft_printf("bytelen = %d arg0 val = %d arg1 val = %d arg2 val  %d\n", proc->ins_bytelen, proc->pending.ins.params[0].value, proc->pending.ins.params[1].value, proc->pending.ins.params[2].value);
-		proc->pending.pc = proc->ins_bytelen;
-		proc->pending.cycles = g_op_tab[(int)proc->pending.ins.op.opcode - 1].nb_cycles;
+//		proc->pending.pc = proc->ins_bytelen;
+//		proc->pending.cycles = g_op_tab[(int)proc->pending_ins.op.opcode - 1].nb_cycles;
 		return (1);
 	}
 		proc->pc += 1;
@@ -241,7 +246,7 @@ int		fight_cores(t_vm *vm, t_player *pl1, t_player *pl2)
 	clear_vm(vm);
 	ft_memmove(&vm->player[0], pl1, sizeof(t_player));
 	ft_memmove(&vm->player[1], pl2, sizeof(t_player));
-	vm->player[0].num = 1;
+	vm->player[0].num = 1; //faire par pointeurs...
 	vm->player[1].num = 2;
 	vm->player[0].relevant = 1;
 	vm->player[1].relevant = 1;

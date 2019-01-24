@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 19:29:31 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/23 21:19:56 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/24 12:13:35 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,12 @@ int		ins_zjmp(t_vm *vm, t_process *proc, t_parameter arg[3])
 	if (arg[0].value + proc->pc >= IDX_MOD)
 		arg[0].value -= IDX_MOD;
 //	ft_printf("proc pc = %d dest value = %d\n", proc->pc, arg[0].dest_value);
+	display_proc_ins(proc, arg[0].value, arg[1].value, arg[2].value);
 	if (proc->carry)
 	{
 
-		proc->pending.pc = ((arg[0].value));
+		proc->pc = ((arg[0].value));
+		ft_printf(" OK");
 //		arg[0].value = (proc->pending.pc + proc->pc) % IDX_MOD;
 //		ft_printf("proc pc = %d proc pending pc = %d\n", proc->pc, proc->pending.pc);
 //		if (proc->pending.pc + proc->pc < 0)
@@ -38,6 +40,8 @@ int		ins_zjmp(t_vm *vm, t_process *proc, t_parameter arg[3])
 //		}
 //		ft_printf("AFTER proc pc = %d proc pending pc = %d\n", proc->pc, proc->pending.pc);
 	}
+	else
+		ft_printf(" FAILED");
 //	ft_printf("zjump proc->pending pc = %d\n", proc->pending.pc);
 	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/24 11:28:30 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/24 12:02:59 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef struct		s_pending
 typedef struct		s_process
 {
 	t_player		*player;
-	t_pending		pending;
+	t_instruction	pending_ins;
 	int				live;
 	int				live_cycle;
 	unsigned int	reg[REG_NUMBER];
@@ -141,6 +141,7 @@ void				display_last_live(t_vm *vm, t_process *proc);
 void				display_winner(t_vm *vm, t_process *proc);
 void				display_registers(t_vm *vm, t_process *proc);
 void				display(t_vm *vm, t_process *proc, int type);
+void				display_proc_ins(t_process *proc, int val1, int val2, int val3);
 
 
 void				display_ins_description(t_vm *vm, char *str, int opcode);

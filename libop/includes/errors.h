@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/23 18:04:24 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/24 12:03:10 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@
 
 enum	e_game_msg
 {
-	NO_MSG, MSG_ALIVE, MSG_CYCLE, MSG_INS, MSG_LIVE, MSG_MOVE, MSG_REG, MSG_WINNER
+	NO_MSG, MSG_ALIVE, MSG_CYCLE, MSG_LIVE, MSG_MOVE, MSG_REG, MSG_WINNER
 };
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 19:28:28 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/23 20:35:08 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/24 12:14:14 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ int		ins_fork(t_vm *vm, t_process *proc, t_parameter arg[3])
 	if (!nb)
 		nb = vm->nb_players + 1;
 	t_process	*new_proc;
-	int			i;
+//	int			i;
 	(void)arg;
-	(void)i;
+//	(void)i;
 	(void)new_proc;
 	(void)vm;
 	(void)proc;
@@ -45,13 +45,13 @@ int		ins_fork(t_vm *vm, t_process *proc, t_parameter arg[3])
 	new_proc->pc = (proc->pc + arg[0].value) % MEM_SIZE;
 	new_proc->nb = nb;
 
-	ft_bzero((void *)&new_proc->pending.ins, sizeof(t_instruction));
+	ft_bzero((void *)&new_proc->pending_ins, sizeof(t_instruction));
 
 //	ft_printf(" (%d)\n", new_proc->pc);
 //	new_proc->carry = proc->carry;
-	i = -1;
-	while (++i < 16)
-		new_proc->reg[i] = proc->reg[i];
+//	i = -1;
+//	while (++i < 16) // deja le cas avec memmove
+//		new_proc->reg[i] = proc->reg[i]; 
 	if (ft_add_to_list_ptr(&vm->proc, (void *)new_proc, sizeof(t_process)))
 		return (FAILURE);
 	++nb;

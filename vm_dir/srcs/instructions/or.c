@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 17:17:30 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/14 17:15:11 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/01/24 11:51:52 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ int		ins_or(t_vm *vm, t_process *proc, t_parameter arg[3])
 	getval_param_dest(vm, proc, &arg[0], IDX_MOD);
 	getval_param_dest(vm, proc, &arg[1], IDX_MOD);
 	res = arg[0].dest_value | arg[1].dest_value;
-	loadval(vm, proc, &arg[2], res);
+	load_reg(vm, proc, arg[2].value, res);
 	proc->carry = !res;
+	display_proc_ins(proc, arg[0].value, arg[1].value, arg[2].value);
 	return (SUCCESS);
 }
