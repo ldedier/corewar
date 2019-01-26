@@ -6,30 +6,39 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 21:43:44 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/24 21:52:14 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/26 19:33:01 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
 
-void		display_proc_ins(t_process *proc, int val1, int val2, int val3)
+void		display_proc_ins(t_vm *vm, t_process *proc)
 {
 	int i;
-	int type;
-	int	val[3];
+	int arg_type;
+	int	val;
 
-//	if (vm->visu.active || !(vm->display & MSG_INS))// voir si moyen de display dest_vals, retirer val 1 2 3 des params et passer vm pour eviter check dans fonctions display
-//		return ;
+	if (vm->visu.active || !(vm->display & MSG_INS))// voir si moyen de display dest_vals, retirer val 1 2 3 des params et passer vm pour eviter check dans fonctions display
+		return ;
 	i = -1;
-	val[0] = val1;
-	val[1] = val2;
-	val[2] = val3;
+//	val[0] = val1;
+//	val[1] = val2;
+//	val[2] = val3;
 	ft_printf("\nP%5d | %s", proc->nb, proc->pending_ins.op.instruction_name);
 	while (++i < proc->pending_ins.op.nb_params)
 	{
-		type = proc->pending_ins.params[i].type;
-		ft_printf(" %s%d", type == REG_CODE ? "r" : "", val[i]);
+		if (proc->pending_ins.params[i].retrieval_mode)
+			ft_printf(" %d", proc->pending_ins.params[i].dest_value);
+		else
+		{
+			val = proc->pending_ins.params[i].value;
+			arg_type = proc->pending_ins.params[i].type;
+			ft_printf(" %s%d", arg_type == REG_CODE ? "r" : "", val);
+
+		}
+//		type = proc->pending_ins.params[i].type;
+//		ft_printf(" %s%d", type == REG_CODE ? "r" : "", val[i]);
 	}
 }
 
@@ -90,8 +99,9 @@ void		display_move(t_vm *vm, t_process *proc)
 	if (proc->pending_ins.op.opcode == ZJMP && proc->carry)
 		return ;
 	i = -1;
-	ft_printf("\nADV %d (0x%04x -> 0x%04x)", proc->ins_bytelen, proc->pc, (proc->pc + proc->ins_bytelen % MEM_SIZE));
-	ft_printf(" %02x", (unsigned char)proc->pending_ins.op.opcode);
+//	ft_printf("bytlen = %d opcode = %d\n", proc->ins_bytelen, proc->pending_ins.op.opcode);
+	ft_printf("\nADV %d (0x%04x -> 0x%04x)", ft_abs(proc->ins_bytelen), proc->pc, (proc->pc + ft_abs(proc->ins_bytelen) % MEM_SIZE));
+	ft_printf(" %02x", (unsigned char)ft_abs(proc->pending_ins.op.opcode));
 	if (proc->pending_ins.op.has_ocp)
 	ft_printf(" %02x", (unsigned char)proc->pending_ins.ocp);
 	var_len = 0;

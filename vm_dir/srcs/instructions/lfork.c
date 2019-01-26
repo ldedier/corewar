@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 17:09:32 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/24 19:25:44 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/26 15:25:12 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int		ins_lfork(t_vm *vm, t_process *proc, t_parameter arg[3])
 	new_proc->pc = (proc->pc + arg[0].value) % MEM_SIZE;
 	new_proc->carry = proc->carry;
 	i = -1;
+	arg[0].retrieval_mode = 0;
 	while (++i < 16)
 		new_proc->reg[i] = proc->reg[i];
 	if (ft_add_to_list_ptr(&vm->proc, (void *)new_proc, sizeof(t_process)))

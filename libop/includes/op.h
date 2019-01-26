@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 19:01:37 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/23 18:01:49 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/26 17:46:39 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ typedef struct					s_parameter
 	char						*label_name;
 	int							source_code_col;
 	int							nb_bytes;
+	char						retrieval_mode;
 	t_instruction				*labeled_to;
 }								t_parameter;
 

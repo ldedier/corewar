@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/01 17:38:36 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/24 19:24:34 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/26 16:02:00 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ int		ins_add(t_vm *vm, t_process *proc, t_parameter arg[3])
 	//display_registers(vm, proc);
 //	ft_printf("arg0 value = %d arg1 value = %d sum = %d\n", arg[0].value, arg[1].value, sum);
 	proc->carry = !sum;
-	if (!vm->visu.active && (vm->display & (1 << MSG_INS)))
-		display_proc_ins(proc, arg[0].value, arg[1].value, arg[2].value); // sum instead of arg 2 val ?
+	arg[0].retrieval_mode = 1;
+	arg[1].retrieval_mode = 1;
+	arg[2].retrieval_mode = 0;
+//	if (!vm->visu.active && (vm->display & (1 << MSG_INS)))
+		display_proc_ins(vm, proc); // sum instead of arg 2 val ?
 	return (SUCCESS);
 }

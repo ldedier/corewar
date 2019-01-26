@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 17:38:14 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/24 19:46:15 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/26 18:51:34 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ int			mod(int val, int max)
 	else
 		res = (val + max) % max;
 //	ft_printf("res = %d max = %d\n", res, max);
-	if (res == -max)
-		res = 0;
+//	if (res == -max)
+//		res = 0;
 //	ft_printf("val = %d mod = %d res = %d\n", val, max, res);
 	return (res);
 }

@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/24 21:54:22 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/26 17:07:27 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ void				display_last_live(t_vm *vm, t_process *proc);
 void				display_winner(t_vm *vm);
 void				display_registers(t_vm *vm);
 void				display(t_vm *vm, t_process *proc, int type);
-void				display_proc_ins(t_process *proc, int val1, int val2, int val3);
+void				display_proc_ins(t_vm *vm, t_process *proc);
 
 
 void				display_ins_description(t_vm *vm, char *str, int opcode);

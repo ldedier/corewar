@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/24 21:54:19 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/26 18:17:53 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,23 @@
 ** Displays and sets variables accordingly
 */
 
-static void			check_resize_cycle(t_vm *vm, int *cycle)
+static int			check_resize_cycle(t_vm *vm, int *cycle)
 {
 	(void)cycle;
+//	*cycle = 0;
 	if (vm->issued_live >= NBR_LIVE)
 	{
 		vm->checks = MAX_CHECKS;
-		vm->c_to_die -= CYCLE_DELTA;
+//		vm->c_to_die -= CYCLE_DELTA;
 	}
 	else if (!--vm->checks)
 	{
 		vm->checks = MAX_CHECKS;
-		vm->c_to_die -= CYCLE_DELTA;
+//		vm->c_to_die -= CYCLE_DELTA;
 	}
 	else
-		return ;
-	display_resize(vm);
+		return (0);
+	return (1);
 }
 
 static void		kill_adjust_ptr(t_list **proc_lst, t_list **proc)
@@ -83,6 +84,8 @@ static int		reset_live_allprocesses(t_vm *vm)
 	proc_lst = vm->proc;
 	while (proc_lst && (proc = ((t_process *)proc_lst->content)))
 	{
+//		if (vm->c_to_die == 1386)
+//			ft_printf("proc number = %d total cycle = %d proc live cycle = %d | delta = %d\n", proc->nb, vm->total_cycle, proc->live_cycle, vm->total_cycle - proc->live_cycle);
 		if (vm->total_cycle - proc->live_cycle >= vm->c_to_die)
 			kill_process(vm, proc_lst);	
 		else
@@ -110,21 +113,37 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 		&ins_live, &ins_ld, &ins_st, &ins_add, &ins_sub, &ins_and, &ins_or,
 		&ins_xor, &ins_zjmp, &ins_ldi, &ins_sti, &ins_fork, &ins_lld, &ins_lldi,
 		&ins_lfork, &ins_aff};
+//	ft_printf("nb cycles = %d\n", proc->pending_ins.op.nb_cycles - 1);
 	if (--proc->pending_ins.op.nb_cycles > 1)
 		return (0);
-	if (proc->pending_ins.op.opcode > 0)
+//		ft_printf("op code = %d\n", proc->pending_ins.op.opcode);
+	if (proc->pending_ins.op.nb_cycles == 1 && proc->pending_ins.op.opcode)
 	{
-		f_ins[(int)proc->pending_ins.op.opcode](vm, proc, proc->pending_ins.params) && !vm->visu.active && (vm->display & (1 << MSG_INS));
+		if (proc->pending_ins.op.opcode > 0)
+			f_ins[ft_abs((int)proc->pending_ins.op.opcode)](vm, proc, proc->pending_ins.params);// && !vm->visu.active && (vm->display & (1 << MSG_INS));
+//			ft_printf("coucou\n");&& !vm->visu.active && (vm->display & (1 << MSG_INS))&& !vm->visu.active && (vm->display & (1 << MSG_INS));;
+///		display_ins(vm, proc)
 		display_move(vm, proc);
 		if (proc->pending_ins.op.opcode != ZJMP || !proc->carry)
-			proc->pc += proc->ins_bytelen;
+			proc->pc += ft_abs(proc->ins_bytelen);
 		ft_bzero(&proc->pending_ins, sizeof(t_instruction));
 		proc->ins_bytelen = 0;
 		return (0);
 	}
 	proc->ins_bytelen = get_instruction(vm->arena, &proc->pending_ins, proc->pc, MEM_SIZE);
+//	ft_printf("bytelen = %d, has ocp  = %d\n", proc->ins_bytelen, proc->pending_ins.op.has_ocp);
 	if (!(proc->ins_bytelen))
-		proc->pc += 1;
+	{
+//		proc->ins_bytelen = -1 - proc->pending_ins.op.has_ocp;
+//		ft_printf("proc ins bytlen = %d\n", proc->ins_bytelen);
+		++proc->pc;
+		ft_bzero(&proc->pending_ins, sizeof(t_instruction));
+	}
+	else if (proc->ins_bytelen < 0)
+	{
+//		proc->pc += ft_abs(proc->ins_bytelen); // anciennement proc->pc + 1
+		proc->pending_ins.op.opcode *= -1;
+	}
 	return (0);
 }
 
@@ -141,19 +160,29 @@ void		process_cycle(t_vm *vm)
 {
 	t_list				*proc_lst;
 	t_process			*proc;
+	int					new_ctodie;
 
 	display_cycle(vm);
 		proc_lst = vm->proc;
+//			ft_printf("resize, new cycle = %d\n", vm->cycle);
+//			return ;
 	while (proc_lst)
 	{
 		proc = (t_process *)proc_lst->content;
 		launch_instruction(vm, proc);
 		proc_lst = proc_lst->next;
 	}
+//	if (vm->cycle >= vm->c_to_die)
 	if (vm->cycle >= vm->c_to_die)
 	{
-		check_resize_cycle(vm, &vm->cycle);
+//		check_resize_cycle(vm, &vm->cycle);
+		new_ctodie = check_resize_cycle(vm, &vm->cycle);
 		reset_live_allprocesses(vm);
+		if (new_ctodie)
+		{
+			vm->c_to_die -= CYCLE_DELTA;
+			display_resize(vm);
+		}
 		vm->cycle = 0;
 	}
 

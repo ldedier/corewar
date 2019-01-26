@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 19:28:28 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/24 21:16:54 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/26 15:33:47 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int		ins_fork(t_vm *vm, t_process *proc, t_parameter arg[3])
 	arg[0].value = mod(arg[0].value, IDX_MOD);
 	if (arg[0].value + proc->pc > IDX_MOD)
 		arg[0].value -= IDX_MOD;
+	arg[0].retrieval_mode = 0;
 	((t_process *)vm->proc->content)->pc = mod(proc->pc + arg[0].value, MEM_SIZE);
 //	new_proc->nb = nb;
 
@@ -56,11 +57,9 @@ int		ins_fork(t_vm *vm, t_process *proc, t_parameter arg[3])
 //		return (FAILURE);
 //	++nb;
 //	++((t_process *)vm->content)->proc->player->nb_proc;
+	display_proc_ins(vm, proc);
 	if (!vm->visu.active && (vm->display & (1 << MSG_INS)))
-	{
-		display_proc_ins(proc, arg[0].value, arg[1].value, arg[2].value);
 		ft_printf(" (%d)", ((t_process *)vm->proc->content)->pc);
-	}
 //:w
 //ft_printf("CREATE PROC | nb proc = %d\n", proc->player->nb_proc);
 	return (SUCCESS);

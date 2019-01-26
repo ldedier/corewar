@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 16:33:31 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/24 19:17:22 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/26 18:20:50 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ int			getval_mod(char *arena, int index, int nb_bytes, int modulo)
 //		ft_printf("index + i = %d\n", index + i);
 	//	ft_printf("val = %#x index + i = %d (index + i) %% mod = %d arena[index + i] = %#x arena[(index + i) %% mod]\n", val, index + i, (index + i) % mod, arena[index + i] % mod, arena[(index + i) % mod]);
 	
-//		if (!i)
+		if (!i)
 //		ft_printf("mod %d\n", mod);
-//			val |= arena[mod(index + i, modulo)];
-//		else
+			val |= arena[mod(index + i, modulo)];
+		else
 			val |= (unsigned char)arena[mod((index + i), modulo)];
 //		ft_printf("index + i %% mod = %d | val = %#x\n", (index + i) % mod, val);
 //	ft_printf("val = %#x\n", val);
@@ -109,7 +109,7 @@ static int	is_valid_ocp(unsigned char hex, t_instruction *ins)
 	arg = 3;
 	ft_bzero((void *)ins->params, sizeof(t_parameter) * 3);
 //	ft_printf("hex = %#x hex & 3 = %#x\n", hex, hex & 3);
-	if (hex & 3)
+	if (!hex || hex & 3)
 		return (0);
 	while (--arg >= 0)
 	{
@@ -163,8 +163,8 @@ int			get_instruction(char *arena, t_instruction *ins,
 //		ft_printf("ocp = %#x\n", (unsigned char)ins->ocp);
 		if (!is_valid_ocp((unsigned char)ins->ocp, ins))
 		{
-			ft_bzero((void *)ins, sizeof(*ins));
-			return (0);
+//			ft_bzero((void *)ins, sizeof(*ins));
+			return (-2);
 		}
 	}
 	else
@@ -180,8 +180,8 @@ int			get_instruction(char *arena, t_instruction *ins,
 //	ft_printf("ocp is valid, = %#x\n", (unsigned char)ins->ocp);
 	if (getval_params(arena, ins, i + ins->op.has_ocp, mod) == -1)
 	{
-		ft_bzero((void *)ins, sizeof(*ins));
-		return (0);
+//		ft_bzero((void *)ins, sizeof(*ins));
+		return (-1 - ins->op.has_ocp);
 	}
 	len = ins->params[0].nb_bytes + ins->params[1].nb_bytes +
 						ins->params[2].nb_bytes + ins->op.has_ocp + 1;

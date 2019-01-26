@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/04 17:39:43 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/24 19:24:56 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/26 15:31:17 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ int		ins_and(t_vm *vm, t_process *proc, t_parameter arg[3])
 	res = arg[0].dest_value & arg[1].dest_value;
 	load_reg(vm, proc, arg[2].value, res);
 	proc->carry = !res;
-	if (!vm->visu.active && (vm->display & (1 << MSG_INS)))
-		display_proc_ins(proc, arg[0].value, arg[1].value, arg[2].value);
+	arg[0].retrieval_mode = 1;
+	arg[1].retrieval_mode = 1;
+	arg[2].retrieval_mode = 2;
+//	if (!vm->visu.active && (vm->display & (1 << MSG_INS)))
+		display_proc_ins(vm, proc);
 	return (SUCCESS);
 }
