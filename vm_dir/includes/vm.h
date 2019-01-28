@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/26 17:07:27 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/28 18:09:06 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,6 +217,7 @@ int					getval(t_vm *vm, t_process *proc, t_parameter arg);
 t_process			*get_proc_index(t_list *lst, int index);
 t_player			*get_player_num(t_list *lst, int num);
 int					is_reg(int num);
+int					list_size(t_vm *vm, t_list *l);
 
 /*
 ** TEMP delete at end

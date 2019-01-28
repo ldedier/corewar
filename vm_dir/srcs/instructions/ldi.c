@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 19:28:45 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/26 19:33:12 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/28 17:23:24 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int		ins_ldi(t_vm *vm, t_process *proc, t_parameter arg[3])
 	val = 0;
 //	if (!is_reg(arg[2].value))
 //		return (FAILURE);
-	ft_printf("arg0 val = %d arg1 val = %d\n", arg[0].value, arg[1].value);
+//	ft_printf("arg0 val = %d arg1 val = %d\n", arg[0].value, arg[1].value);
 	display_proc_ins(vm, proc);
 	getval_param_dest(vm, proc, &arg[0], IDX_MOD);
 	getval_param_dest(vm, proc, &arg[1], IDX_MOD);
@@ -37,9 +37,9 @@ int		ins_ldi(t_vm *vm, t_process *proc, t_parameter arg[3])
 	arg[1].dest_value %= IDX_MOD;
 //	arg[1].dest_value = mod(arg[1].dest_value, IDX_MOD);
 	ind = (arg[0].value + arg[1].value) % IDX_MOD;
-	ft_printf("\narg 0 dest val = %d arg1 dest val = %d ldi: index = %d, proc pc = %d\n", arg[0].dest_value, arg[1].dest_value, ind, proc->pc);
+//	ft_printf("\narg 0 dest val = %d arg1 dest val = %d ldi: index = %d, proc pc = %d\n", arg[0].dest_value, arg[1].dest_value, ind, proc->pc);
 	ind = mod(ind + proc->pc, MEM_SIZE);
-	ft_printf("with pc, ind = %d\n", ind);
+//	ft_printf("with pc, ind = %d\n", ind);
 //	ind = mod((proc->pc + arg[0].dest_value + arg[1].dest_value), IDX_MOD);
 //	if ((arg[1].value = mod(arg[1].value, IDX_MOD)) + proc->pc >= IDX_MOD)
 //		arg[1].value -= IDX_MOD;
@@ -52,13 +52,13 @@ int		ins_ldi(t_vm *vm, t_process *proc, t_parameter arg[3])
 		if (ind >= MEM_SIZE)
 			ind -= MEM_SIZE;
 		val <<= 8;
-	ft_printf("ldi: index = %d\n", ind);
+//	ft_printf("ldi: index = %d\n", ind);
 		val |= (unsigned char)vm->arena[ind];
-	ft_printf("char val = %#x\n", (unsigned char)vm->arena[ind]);
+//	ft_printf("char val = %#x\n", (unsigned char)vm->arena[ind]);
 		++ind;
 	}
 	proc->reg[arg[2].value - 1] = val;
-	ft_printf("val to store in reg = %#x\n", val);
+//	ft_printf("val to store in reg = %#x\n", val);
 //	arg[0].retrieval_mode = 1;
 //	arg[1].retrieval_mode = 1;
 //	arg[2].retrieval_mode = 0;

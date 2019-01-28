@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 16:42:17 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/22 15:07:23 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/28 20:08:45 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void			update_nb_players(t_vm *vm)
 
 int				ft_get_potential_num(int player_num)
 {
-	ft_printf("player num = %d\n", player_num);
+//	ft_printf("player num = %d\n", player_num);
 	if (player_num == INT_MAX) // ne se fait pas naturellement en castant?
 		return (INT_MIN);
 	else
@@ -58,7 +58,7 @@ void			ft_set_numbers(t_player *players, t_player *player)
 		if (players[i].relevant && player != &players[i])
 		{
 			player->num = ft_get_potential_num(players[i].num);
-		ft_printf("after player num = %d\n", player->num);
+//		ft_printf("after player num = %d\n", player->num);
 
 			found = 1;
 			j = -1;

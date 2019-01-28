@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 16:42:17 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/26 14:56:16 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/28 18:35:29 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ t_list			*add_process(t_vm *vm, int index, int start, t_process *src)
 	{
 		ft_memmove(process, src, sizeof(t_process));
 		ft_bzero((void *)&process->pending_ins, sizeof(t_instruction));
-//		process->live = 0;
+		process->live = 0;
 //		process->live_cycle = 0;
 //		process->live_cycle = vm->total_cycle;
 		++process->player->nb_proc;
@@ -88,11 +88,12 @@ t_list			*add_process(t_vm *vm, int index, int start, t_process *src)
 		process->player = &vm->player[index];
 		process->pc = start;
 		process->reg[0] = process->player->num; 
+//		process->live = 0;
 	}
 	process->nb = ++nb;
-	ft_printf("\n\ncycle = %d new process nb = %d, last live = %d, cycle to die = %d\n\n", vm->total_cycle, process->nb, process->live_cycle, vm->c_to_die);
-	if (src)
-		ft_printf("old src live num = %d cycle = %d\n", src->nb, src->live_cycle);
+//	ft_printf("\n\ncycle = %d new process nb = %d, last live = %d, cycle to die = %d\n\n", vm->total_cycle, process->nb, process->live_cycle, vm->c_to_die);
+//	if (src)
+//		ft_printf("old src live num = %d cycle = %d\n", src->nb, src->live_cycle);
 	if (ft_add_to_list_ptr(&vm->proc, (void *)process, sizeof(t_process)))
 		return (NULL);
 	int i = 1;

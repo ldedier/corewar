@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 21:43:44 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/26 19:33:01 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/28 21:38:58 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,21 +96,22 @@ void		display_move(t_vm *vm, t_process *proc)
 	int	var_len;
 	if (vm->visu.active || !(vm->display & (1 << MSG_MOVE)))
 		return ;
-	if (proc->pending_ins.op.opcode == ZJMP && proc->carry)
+	if (proc->pending_ins.op.opcode == ZJMP && proc->carry) // bien verifier si toujours pertinent apres gros changement
 		return ;
 	i = -1;
+//	ft_printf("opcode = %d\n", proc->pending_ins.ocp);
 //	ft_printf("bytlen = %d opcode = %d\n", proc->ins_bytelen, proc->pending_ins.op.opcode);
-	ft_printf("\nADV %d (0x%04x -> 0x%04x)", ft_abs(proc->ins_bytelen), proc->pc, (proc->pc + ft_abs(proc->ins_bytelen) % MEM_SIZE));
-	ft_printf(" %02x", (unsigned char)ft_abs(proc->pending_ins.op.opcode));
+//	ft_printf("\nADV %d (0x%04x -> 0x%04x)", ft_abs(proc->ins_bytelen), proc->pc, (proc->pc + ft_abs(proc->ins_bytelen) % MEM_SIZE));
+	ft_printf(" %02x ", (unsigned char)ft_abs(proc->pending_ins.op.opcode));
 	if (proc->pending_ins.op.has_ocp)
-	ft_printf(" %02x", (unsigned char)proc->pending_ins.ocp);
+	ft_printf("%02x ", (unsigned char)proc->pending_ins.ocp);
 	var_len = 0;
 	while (++i < proc->pending_ins.op.nb_params)
 	{
 		j = 0;
 		while (++j <= proc->pending_ins.params[i].nb_bytes)
 		{
-			ft_printf(" %02x", (unsigned char)(vm->arena[proc->pc + proc->pending_ins.op.has_ocp + var_len + j]));
+			ft_printf("%02x ", (unsigned char)(vm->arena[proc->pc + proc->pending_ins.op.has_ocp + var_len + j]));
 		}
 		var_len += proc->pending_ins.params[i].nb_bytes;
 	}

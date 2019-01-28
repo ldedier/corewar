@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 16:33:31 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/26 18:20:50 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/28 21:39:03 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,20 +151,27 @@ int			get_instruction(char *arena, t_instruction *ins,
 	hex = *(unsigned char *)(arena + (i % mod));
 	ins->op.nb_params = 1;
 	if ((int)hex > NB_INSTRUCTIONS || !hex)
-		return (0);
+		return (-1);
 	else
+	{
 		ft_memmove((void *)&ins->op, (void *)&g_op_tab[(int)hex - 1],
 															sizeof(t_op));
-	++i;
+		ins->ocp = (unsigned char)*(arena + (++i % mod));
+	}
+//	++i;
 //	ft_printf("\nconsidering instruction # %d | has ocp = %d\n", hex, ins->op.has_ocp);
 	if (ins->op.has_ocp == OCP_YES)
 	{
-		ins->ocp = (unsigned char)*(arena + (i % mod));
+//		ins->ocp = (unsigned char)*(arena + (i % mod));
 //		ft_printf("ocp = %#x\n", (unsigned char)ins->ocp);
 		if (!is_valid_ocp((unsigned char)ins->ocp, ins))
 		{
+//			ft_printf("invalid ocp\n");
+//			if (ins->ocp == 3 || ins->ocp == 5)
 //			ft_bzero((void *)ins, sizeof(*ins));
-			return (-2);
+			return (0);
+//	/		else
+//	//			return ();
 		}
 	}
 	else
@@ -181,7 +188,7 @@ int			get_instruction(char *arena, t_instruction *ins,
 	if (getval_params(arena, ins, i + ins->op.has_ocp, mod) == -1)
 	{
 //		ft_bzero((void *)ins, sizeof(*ins));
-		return (-1 - ins->op.has_ocp);
+		return (0);
 	}
 	len = ins->params[0].nb_bytes + ins->params[1].nb_bytes +
 						ins->params[2].nb_bytes + ins->op.has_ocp + 1;
