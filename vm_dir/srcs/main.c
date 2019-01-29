@@ -6,20 +6,20 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 17:19:23 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/21 22:19:20 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/22 16:41:00 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
 /*
-void __attribute__((destructor)) end();
-
-void    end(void) //permet de mieux checker les leaks !
-{
-	ft_printf("destructor loop\n");
-	while(1);
-}
+**void __attribute__((destructor)) end();
+**
+**void    end(void) //permet de mieux checker les leaks !
+**{
+**	ft_printf("destructor loop\n");
+**	while(1);
+**}
 */
 
 int		main(int argc, char **argv, char **env)

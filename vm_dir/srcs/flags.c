@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 17:19:23 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/22 14:56:08 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/22 16:51:56 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,24 @@ static void	dump_nb_cycles(t_vm *vm, int argc, char **argv, int *cur)
 	long long int	nb;
 	int				i;
 
-	*cur += 1;
-	if (*cur + 2 > argc)
-		error_exit_msg(WRG_DUMP);
-	i = 0;
-	while (argv[*cur][i])
+	if (ft_strcmp("-dump", argv[*cur]) == 0)
 	{
-		if (!(ft_strchr("0123456789", argv[*cur][i])))
+		*cur += 1;
+		if (*cur + 2 > argc)
 			error_exit_msg(WRG_DUMP);
-		i++;
+		i = 0;
+		while (argv[*cur][i])
+		{
+			if (!(ft_strchr("0123456789", argv[*cur][i])))
+				error_exit_msg(WRG_DUMP);
+			i++;
+		}
+		nb = ft_atoll(argv[*cur]);
+		if (nb > 2147483647)
+			error_exit_msg(MAX_DUMP);
+		vm->dump = nb;
+		*cur += 1;
 	}
-	nb = ft_atoll(argv[*cur]);
-	if (nb > 2147483647)
-		error_exit_msg(MAX_DUMP);
-	vm->dump = nb;
-	*cur += 1;
 }
 
 /*
@@ -72,6 +75,29 @@ static void	add_player_n(t_vm *vm, int argc, char **argv, int *cur)
 }
 
 /*
+** add_player function adds a player to the list of contestants WITHOUT a
+** number specified
+*/
+
+static int	add_player(t_vm *vm)
+{
+	int			i;
+	static int	nb;
+
+	i = -1;
+	nb = -1;
+	while (++i < vm->nb_players)
+	{
+		if (vm->player[i].num == nb)
+		{
+			--(nb);
+			i = -1;
+		}
+	}
+	return (nb);
+}
+
+/*
 ** flags function parses ./corewar 's arguments to check if there are any flags
 ** such as [-dump nbr-cycles] or [-n number], and then assigns a number to
 ** each player.
@@ -81,12 +107,10 @@ static void	add_player_n(t_vm *vm, int argc, char **argv, int *cur)
 
 void		flags(t_vm *vm, int argc, char **argv)
 {
-	static int cur;
-	int i;
-	static int	nb;
+	static int	cur;
+	int			i;
 
-	if (ft_strcmp("-dump", argv[cur]) == 0)
-		dump_nb_cycles(vm, argc, argv, &cur);
+	dump_nb_cycles(vm, argc, argv, &cur);
 	while (++cur < argc)
 	{
 		if (argv[cur][0] == '-' && ft_isdigit(argv[cur][1]) && !(i = 0))
@@ -101,7 +125,7 @@ void		flags(t_vm *vm, int argc, char **argv)
 			if (ft_strcmp("-n", argv[cur]) == 0)
 				add_player_n(vm, argc, argv, &cur);
 			else
-				vm->player[vm->nb_players].num = --nb;
+				vm->player[vm->nb_players].num = add_player(vm);
 			vm->player[vm->nb_players].cor_name = argv[cur];
 			if (++vm->nb_players > MAX_PLAYERS)
 				error_exit_msg(MAX_P_NUM);
