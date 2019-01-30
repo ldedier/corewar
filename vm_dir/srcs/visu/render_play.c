@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_phase.c                                     :+:      :+:    :+:   */
+/*   render_play.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/19 19:07:54 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/18 23:27:19 by ldedier          ###   ########.fr       */
+/*   Created: 2019/01/24 21:16:32 by ldedier           #+#    #+#             */
+/*   Updated: 2019/01/24 21:16:45 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,15 @@ void	ft_reset_metarena(t_vm *vm)
 void	ft_render_play_lines(t_vm *vm)
 {
 	ft_render_horizontal_line_dashboard(vm, vm->visu.center.game_entries_h,
-		LINE_COL);
+			LINE_COL);
 	ft_render_horizontal_line_dashboard(vm, vm->visu.center.game_entries_h +
 			vm->visu.center.player_entries_h, LINE_COL);
 	if (vm->nb_players != 2)
 		ft_render_horizontal_line_dashboard(vm, vm->visu.center.game_entries_h +
-			vm->visu.center.list_player_entries_h, LINE_COL);
+				vm->visu.center.list_player_entries_h, LINE_COL);
 	else
 		ft_render_horizontal_line_dashboard(vm,
-			vm->visu.center.live_breakdown_hp_y, LINE_COL);
+				vm->visu.center.live_breakdown_hp_y, LINE_COL);
 }
 
 int		ft_render_dashboard(t_vm *vm)
@@ -68,6 +68,7 @@ int		ft_render_play(t_vm *vm)
 
 	if (ft_render_all_dead_process(vm))
 		return (1);
+	ft_render_alt_colors(vm);
 	if (ft_render_all_process(vm))
 		return (1);
 	if (ft_render_all_lives(vm))
@@ -80,7 +81,7 @@ int		ft_render_play(t_vm *vm)
 	if (!vm->visu.time_manager.pause)
 	{
 		anim_rest += ft_fclamp(0.25,
-			vm->visu.time_manager.cycles_per_turn * 0.025, 1);
+				vm->visu.time_manager.cycles_per_turn * 0.025, 1);
 		vm->visu.animation_index = (int)(vm->visu.animation_index + anim_rest)
 			% NB_FRAMES;
 		if (anim_rest > 1)

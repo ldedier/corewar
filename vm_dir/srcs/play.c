@@ -91,7 +91,7 @@ static int		kill_process(t_vm *vm, t_list **proc_lst, t_list *proc)
 //	else
 //	if (vm->proc)
 //	{
-		kill_adjust_ptr(&vm->proc, &proc); 
+		kill_adjust_ptr(&vm->proc, &proc);
 		display_last_live(vm, (t_process *)proc->content);
 //	}
 	ft_memdel((void **)&proc->content);
@@ -114,7 +114,7 @@ static int		reset_live_allprocesses(t_vm *vm)
 	while (proc_lst && (proc = ((t_process *)proc_lst->content)))
 	{
 		if (vm->total_cycle - proc->live_cycle >= vm->c_to_die)
-			kill_process(vm, &vm->proc, proc_lst);	
+			kill_process(vm, &vm->proc, proc_lst);
 		else
 		{
 			proc->live = 0;
@@ -135,7 +135,7 @@ static int		reset_live_allprocesses(t_vm *vm)
 
 static int		launch_instruction(t_vm *vm, t_process *proc)
 {
-	static int 	(*f_ins[NB_INSTRUCTIONS + 1])(t_vm *vm, t_process *proc,
+	static int	(*f_ins[NB_INSTRUCTIONS + 1])(t_vm *vm, t_process *proc,
 			t_parameter arg[3]) = {NULL,
 		&ins_live, &ins_ld, &ins_st, &ins_add, &ins_sub, &ins_and, &ins_or,
 		&ins_xor, &ins_zjmp, &ins_ldi, &ins_sti, &ins_fork, &ins_lld, &ins_lldi,
@@ -148,8 +148,8 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 	{
 		if ((proc->ins_bytelen = get_instruction(vm->arena, &proc->pending_ins, proc->pc, MEM_SIZE)) <= 0)
 		{
-			proc->ins_bytelen = 2; 
-//			proc->ins_bytelen =  1 + proc->pending_ins.op.has_ocp; // verifier aue c'est ca, sinon voir avec longueur bit de l'opcode (en commentaires ci dessous) 
+			proc->ins_bytelen = 2;
+//			proc->ins_bytelen =  1 + proc->pending_ins.op.has_ocp; // verifier aue c'est ca, sinon voir avec longueur bit de l'opcode (en commentaires ci dessous)
 //			val = proc->pending_ins.op.opcode`;
 //			ft_printf("val = %d\n", val);
 //			display_move(vm, proc);
@@ -182,7 +182,7 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 ** NB: should be called until vm->proc empty
 */
 
-void		process_cycle(t_vm *vm)
+void			process_cycle(t_vm *vm)
 {
 	t_list				*proc_lst;
 	t_process			*proc;
@@ -241,9 +241,3 @@ int		fight_cores(t_vm *vm, t_player *pl1, t_player *pl2)
 	vm->visu.active = 0;
 	return (0);
 }
-
-
-
-
-
-

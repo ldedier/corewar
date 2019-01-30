@@ -33,7 +33,7 @@ int			getval_mod(char *arena, int index, int nb_bytes, int modulo)
 		val <<= 8;
 //		ft_printf("index + i = %d\n", index + i);
 	//	ft_printf("val = %#x index + i = %d (index + i) %% mod = %d arena[index + i] = %#x arena[(index + i) %% mod]\n", val, index + i, (index + i) % mod, arena[index + i] % mod, arena[(index + i) % mod]);
-	
+
 		if (!i)
 //		ft_printf("mod %d\n", mod);
 			val |= arena[(index + i) % modulo];
@@ -173,7 +173,7 @@ int			get_instruction(char *arena, t_instruction *ins,
 	{
 		if (ins->op.opcode != LIVE)
 			ins->params[0].type = IND_CODE;
-		else 
+		else
 			ins->params[0].type = g_op_tab[ins->op.opcode - 1].arg_types[0];
 		ins->params[0].nb_bytes =
 			4 - 2 * g_op_tab[ins->op.opcode - 1].describe_address;

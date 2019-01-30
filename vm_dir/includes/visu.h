@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/20 20:18:12 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/24 22:53:25 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@
 # define RANK					7
 # define COREWAR				8
 
-# define NB_IMAGES				22
+# define NB_IMAGES				23
 
 # define CLOSE					0
 # define DL						1
@@ -175,6 +175,7 @@
 # define OK						19
 # define BREAKDOWN_BAR			20
 # define BACK					21
+# define KEYS					22
 
 # define NB_CURSORS				5
 
@@ -211,6 +212,7 @@
 
 # define MAX_FADE				60
 # define FADE_LEN				10
+# define ALT_COLOR_VALUE		30
 
 typedef struct s_vm				t_vm;
 typedef struct s_visu			t_visu;
@@ -868,4 +870,5 @@ int						ft_moy(int val1, int val2);
 double					ft_fmoy(double val1, double val2);
 void					populate_hp_player_title_rect(t_vm *vm, SDL_Rect *rect);
 double					ft_flerp(double val1, double val2, double t);
+void					ft_render_alt_colors(t_vm *vm);
 #endif

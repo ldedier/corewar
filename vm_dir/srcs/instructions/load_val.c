@@ -24,7 +24,7 @@ void	load_arena(t_vm *vm, t_process *proc, int index, int val)
 	while (++i < DIR_SIZE)
 	{
 //	ft_printf("mod index = %d\n", mod_index);
-	
+
 		if (mod_index >= MEM_SIZE)
 			mod_index -= MEM_SIZE;
 		byte_val = val & (0xFF << ((3 - i) * 8));

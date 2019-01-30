@@ -23,24 +23,9 @@ void			clear_vm(t_vm *vm)
 		init_players(vm);
 }
 
-void			init_players(t_vm *vm)
-{
-	int		i;
-
-	i = -1;
-	while (++i < MAX_PLAYERS)
-	{
-		vm->player[i].relevant = 0;
-		vm->player[i].color.value = NULL;
-		vm->player[i].last_live_cycle = 0;
-		vm->player[i].nb_proc = 0;
-		ft_bzero(vm->player[i].aff_buf, MAX_AFF_LEN);
-	}
-}
-
 /*
 ** init_vm function initializes our corewar VM's environment by setting all
-** its parameters to their default value.
+** its parametzers to their default value.
 */
 
 void			init_vm(t_vm *vm, char **argv, char **env)
@@ -55,7 +40,7 @@ void			init_vm(t_vm *vm, char **argv, char **env)
 	vm->client.active = 0;
 	vm->client.port = 0;
 	vm->visu.active = 0;
-	vm->nb = 1;
+	vm->nb = -1;
 	vm->total_cycle = 1;
 	vm->cycle = 1;
 	vm->nb_players = 0;
@@ -87,7 +72,7 @@ t_list			*add_process(t_vm *vm, int index, int start, t_process *src)
 	{
 		process->player = &vm->player[index];
 		process->pc = start;
-		process->reg[0] = process->player->num; 
+		process->reg[0] = process->player->num;
 //		process->live = 0;
 	}
 	process->nb = ++nb;
@@ -103,28 +88,6 @@ t_list			*add_process(t_vm *vm, int index, int start, t_process *src)
 	return (vm->proc);
 }
 
-/*
-** init_processes function initializes each players' starting process.
-*/
-
-int				init_processes(t_vm *vm)
-{
-	int i;
-	int	index;
-	int start;
-
-	i = -1;
-	index = 1;
-	while (++i < MAX_PLAYERS)
-	{
-		start = (MEM_SIZE / vm->nb_players) * (index - 1);
-		if (vm->player[i].relevant && ++index && !add_process(vm, i, start, NULL))
-			return (0);
-		vm->player[i].nb_proc = 1;
-		vm->winner = ((t_process *)(vm->proc->content))->player;
-	}
-	return (1);
-}
 
 /*
 ** dispatch_players_init and dispatch_players functions send each player

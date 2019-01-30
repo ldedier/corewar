@@ -13,13 +13,13 @@
 #include "vm.h"
 
 /*
-void __attribute__((destructor)) end();
-
-void    end(void) //permet de mieux checker les leaks !
-{
-	ft_printf("destructor loop\n");
-	while(1);
-}
+**void __attribute__((destructor)) end();
+**
+**void    end(void) //permet de mieux checker les leaks !
+**{
+**	ft_printf("destructor loop\n");
+**	while(1);
+**}
 */
 
 int		main(int argc, char **argv, char **env)
@@ -46,7 +46,7 @@ int		main(int argc, char **argv, char **env)
 		error_exit_msg(INIT_PROC_ERROR);
 	while (vm.proc)
 	{
-		
+
 		process_cycle(&vm);
 	}
 	display_winner(&vm);
