@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/28 21:38:56 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/30 14:08:14 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,11 @@
 static int			check_resize_cycle(t_vm *vm, int *cycle)
 {
 	(void)cycle;
-//	*cycle = 0;
+
 	if (vm->issued_live >= NBR_LIVE)
-	{
 		vm->checks = MAX_CHECKS;
-//		vm->c_to_die -= CYCLE_DELTA;
-	}
 	else if (!--vm->checks)
-	{
 		vm->checks = MAX_CHECKS;
-//		vm->c_to_die -= CYCLE_DELTA;
-	}
 	else
 		return (0);
 	return (1);
@@ -51,8 +45,6 @@ static void		kill_adjust_ptr(t_list **proc_lst, t_list **proc)
 	tmp = *proc_lst;
 	while (tmp && (tmp)->next && (tmp)->next != *proc)
 			tmp = (tmp)->next;
-//	if (!tmp->next)
-//		ft_printf("coucou\n");
 	(tmp)->next = (*proc)->next;
 }
 
@@ -66,9 +58,6 @@ int		list_size(t_vm *vm, t_list *l)
 	i = 0;
 	while (tmp)
 	{
-//		if (((t_process *)tmp->content)->nb == 0)
-//			ft_printf("CYCLE %d\n", vm->total_cycle);
-//		ft_printf("proc #%d\n", ((t_process *)tmp->content)->nb);
 		tmp = tmp->next;
 		++i;
 	}
@@ -124,34 +113,14 @@ static int		reset_live_allprocesses(t_vm *vm)
 	proc_lst = vm->proc;
 	while (proc_lst && (proc = ((t_process *)proc_lst->content)))
 	{
-//		if (vm->c_to_die == 1386)
-//			ft_printf("proc number = %d total cycle = %d proc live cycle = %d | delta = %d\n", proc->nb, vm->total_cycle, proc->live_cycle, vm->total_cycle - proc->live_cycle);
 		if (vm->total_cycle - proc->live_cycle >= vm->c_to_die)
-		{
-
-//			if (proc->nb == 19)
-//				ft_printf("kill proc 19\n");
-//			ft_printf("before kill\n");
-//			list_size(vm->proc);
 			kill_process(vm, &vm->proc, proc_lst);	
-//			ft_printf("vm proc = %d\n", vm->proc);
-//			ft_printf("after kill\n");
-//			ft_printf("\n\n");
-//			list_size(vm->proc);
-//			ft_printf("\n\n");
-
-		}
 		else
 		{
-//			if (proc->nb == 19)
-//				ft_printf("reset proc 19\n");
 			proc->live = 0;
 			proc->player->live = 0;
 		}
-//		ft_printf("listsize = %d\n", list_size(vm, vm->proc));
-	
 		proc_lst = proc_lst->next;
-	//	if (proc_st == vm->proc)
 	}
 	vm->live = 0;
 	vm->issued_live = 0;
@@ -171,41 +140,36 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 		&ins_live, &ins_ld, &ins_st, &ins_add, &ins_sub, &ins_and, &ins_or,
 		&ins_xor, &ins_zjmp, &ins_ldi, &ins_sti, &ins_fork, &ins_lld, &ins_lldi,
 		&ins_lfork, &ins_aff};
-//	ft_printf("nb cycles = %d\n", proc->pending_ins.op.nb_cycles - 1);
+//	int	val;
+
 	if (--proc->pending_ins.op.nb_cycles > 1)
 		return (0);
-//		ft_printf("\nop code = %d, cycles = %d", proc->pending_ins.op.opcode, proc->pending_ins.op.nb_cycles);
-	if (proc->pending_ins.op.nb_cycles == 1)
+	if (proc->pending_ins.op.nb_cycles == 1 /*&& proc->ins_bytelen > 0*/)
 	{
-		if (proc->pending_ins.op.opcode > 0)
-			f_ins[ft_abs((int)proc->pending_ins.op.opcode)](vm, proc, proc->pending_ins.params);// && !vm->visu.active && (vm->display & (1 << MSG_INS));
-//			ft_printf("coucou\n");&& !vm->visu.active && (vm->display & (1 << MSG_INS))&& !vm->visu.active && (vm->display & (1 << MSG_INS));;
-///		display_ins(vm, proc)
+		if ((proc->ins_bytelen = get_instruction(vm->arena, &proc->pending_ins, proc->pc, MEM_SIZE)) <= 0)
+		{
+			proc->ins_bytelen = 2; 
+//			proc->ins_bytelen =  1 + proc->pending_ins.op.has_ocp; // verifier aue c'est ca, sinon voir avec longueur bit de l'opcode (en commentaires ci dessous) 
+//			val = proc->pending_ins.op.opcode`;
+//			ft_printf("val = %d\n", val);
+//			display_move(vm, proc);
+//			while (val)
+//			{
+//				proc->ins_bytelen += 1;
+//				val >>= 1;
+//			}
+		}
+		else
+			f_ins[ft_abs((int)proc->pending_ins.op.opcode)](vm, proc, proc->pending_ins.params);
 		display_move(vm, proc);
 		if (proc->pending_ins.op.opcode != ZJMP || !proc->carry)
-	//	if (proc->ins_bytelen)
 			proc->pc += proc->ins_bytelen;
 		ft_bzero(&proc->pending_ins, sizeof(t_instruction));
 		proc->ins_bytelen = 0;
 		return (0);
 	}
-	proc->ins_bytelen = get_instruction(vm->arena, &proc->pending_ins, proc->pc, MEM_SIZE);
-//	ft_printf("bytelen = %d, has ocp  = %d\n", proc->ins_bytelen, proc->pending_ins.op.has_ocp);
-	if (!(proc->ins_bytelen))
-	{
-
-//		proc->ins_bytelen = -1 - proc->pending_ins.op.has_ocp;
-		proc->ins_bytelen = proc->pending_ins.op.opcode;
-//		ft_printf("failed instruction, proc ins bytlen = %d, cycles = %d\n", proc->ins_bytelen, proc->pending_ins.op.nb_cycles);
-//		proc->pc += proc->pending_ins.op.opcode;
-		ft_bzero(&proc->pending_ins, sizeof(t_instruction));
-	}
-	else if (proc->ins_bytelen < 0)
-	{
+	if ((proc->ins_bytelen = get_instruction(vm->arena, &proc->pending_ins, proc->pc, MEM_SIZE)) <= 0)
 		++proc->pc;
-//		proc->pc += ft_abs(proc->ins_bytelen); // anciennement proc->pc + 1
-		proc->pending_ins.op.opcode *= -1;
-	}
 	return (0);
 }
 
@@ -225,22 +189,15 @@ void		process_cycle(t_vm *vm)
 	int					new_ctodie;
 
 	display_cycle(vm);
-		proc_lst = vm->proc;
-//			ft_printf("resize, new cycle = %d\n", vm->cycle);
-//			return ;
-// 	list_size(vm, vm->proc);
+	proc_lst = vm->proc;
 	while (proc_lst)
 	{
 		proc = (t_process *)proc_lst->content;
-//		if (vm->cycle <= 1386 && proc->nb == 19)
-//			ft_printf("proc 19 pc = %d, total cycle = %d last live = %d, ctodie = %d, delta = %d, proc live = %d\n", proc->pc, vm->total_cycle, proc->live_cycle, vm->c_to_die, vm->total_cycle - proc->live_cycle, proc->live);
 		launch_instruction(vm, proc);
 		proc_lst = proc_lst->next;
 	}
-//	if (vm->cycle >= vm->c_to_die)
 	if (vm->cycle >= vm->c_to_die)
 	{
-//		check_resize_cycle(vm, &vm->cycle);
 		new_ctodie = check_resize_cycle(vm, &vm->cycle);
 		reset_live_allprocesses(vm);
 		if (new_ctodie)
@@ -250,7 +207,6 @@ void		process_cycle(t_vm *vm)
 		}
 		vm->cycle = 0;
 	}
-
 	++vm->cycle;
 	++vm->total_cycle;
 }
@@ -262,7 +218,6 @@ void		process_cycle(t_vm *vm)
 
 int		fight_cores(t_vm *vm, t_player *pl1, t_player *pl2)
 {
-//	vm->visu.active = 1;
 	clear_vm(vm);
 	ft_memmove(&vm->player[0], pl1, sizeof(t_player));
 	ft_memmove(&vm->player[1], pl2, sizeof(t_player));

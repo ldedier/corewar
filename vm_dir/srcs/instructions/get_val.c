@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/09 20:00:32 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/26 19:33:09 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/30 12:53:06 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static long	getval_ind(t_vm *vm, t_process *proc, int *index, int modulo)
 //		index %= mod;
 //	ft_printf("getval ind, IDX MOD = %d\n", IDX_MOD);
 //	*index = mod(*index, IDX_MOD);
-	val = getval_mod(vm->arena, *index % IDX_MOD, DIR_SIZE, MEM_SIZE);
+	val = getval_mod(vm->arena, mod(proc->pc + *index, MEM_SIZE), DIR_SIZE, MEM_SIZE);
 //	ft_printf("1 getval ind, val = %d\n", val);
 //	val = mod(val, MEM_SIZE);
 //	ft_printf("2 getval ind, val = %d\n", val);

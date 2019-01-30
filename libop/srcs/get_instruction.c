@@ -6,17 +6,17 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 16:33:31 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/28 21:39:03 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/30 14:00:37 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "op.h"
-
+/*
 static int		mod(int val, int max)
 {
 		return (val >= 0 ? val % max : max - 1 - ((-val - max) % max));
 }
-
+*/
 
 
 int			getval_mod(char *arena, int index, int nb_bytes, int modulo)
@@ -36,9 +36,12 @@ int			getval_mod(char *arena, int index, int nb_bytes, int modulo)
 	
 		if (!i)
 //		ft_printf("mod %d\n", mod);
-			val |= arena[mod(index + i, modulo)];
+			val |= arena[(index + i) % modulo];
 		else
-			val |= (unsigned char)arena[mod((index + i), modulo)];
+			val |= (unsigned char)arena[(index + i) % modulo];
+//			val |= arena[mod(index + i, modulo)];
+//		else
+//			val |= (unsigned char)arena[mod((index + i), modulo)];
 //		ft_printf("index + i %% mod = %d | val = %#x\n", (index + i) % mod, val);
 //	ft_printf("val = %#x\n", val);
 		++i;
@@ -146,8 +149,6 @@ int			get_instruction(char *arena, t_instruction *ins,
 	unsigned char	hex;
 	int				len;
 
-//	ft_bzero((void *)ins, sizeof(t_instruction));
-//	ft_printf("ins address = %d\n", ins);
 	hex = *(unsigned char *)(arena + (i % mod));
 	ins->op.nb_params = 1;
 	if ((int)hex > NB_INSTRUCTIONS || !hex)
@@ -158,20 +159,14 @@ int			get_instruction(char *arena, t_instruction *ins,
 															sizeof(t_op));
 		ins->ocp = (unsigned char)*(arena + (++i % mod));
 	}
-//	++i;
 //	ft_printf("\nconsidering instruction # %d | has ocp = %d\n", hex, ins->op.has_ocp);
 	if (ins->op.has_ocp == OCP_YES)
 	{
-//		ins->ocp = (unsigned char)*(arena + (i % mod));
 //		ft_printf("ocp = %#x\n", (unsigned char)ins->ocp);
 		if (!is_valid_ocp((unsigned char)ins->ocp, ins))
 		{
-//			ft_printf("invalid ocp\n");
-//			if (ins->ocp == 3 || ins->ocp == 5)
-//			ft_bzero((void *)ins, sizeof(*ins));
+			ft_bzero((void *)ins, sizeof(*ins));
 			return (0);
-//	/		else
-//	//			return ();
 		}
 	}
 	else
@@ -187,7 +182,7 @@ int			get_instruction(char *arena, t_instruction *ins,
 //	ft_printf("ocp is valid, = %#x\n", (unsigned char)ins->ocp);
 	if (getval_params(arena, ins, i + ins->op.has_ocp, mod) == -1)
 	{
-//		ft_bzero((void *)ins, sizeof(*ins));
+		ft_bzero((void *)ins, sizeof(*ins));
 		return (0);
 	}
 	len = ins->params[0].nb_bytes + ins->params[1].nb_bytes +

@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 21:43:44 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/28 21:38:58 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/30 14:03:28 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,9 @@ void		display_proc_ins(t_vm *vm, t_process *proc)
 	int arg_type;
 	int	val;
 
-	if (vm->visu.active || !(vm->display & MSG_INS))// voir si moyen de display dest_vals, retirer val 1 2 3 des params et passer vm pour eviter check dans fonctions display
+	if (vm->visu.active || !(vm->display & (1 << MSG_INS)))
 		return ;
 	i = -1;
-//	val[0] = val1;
-//	val[1] = val2;
-//	val[2] = val3;
 	ft_printf("\nP%5d | %s", proc->nb, proc->pending_ins.op.instruction_name);
 	while (++i < proc->pending_ins.op.nb_params)
 	{
@@ -37,8 +34,6 @@ void		display_proc_ins(t_vm *vm, t_process *proc)
 			ft_printf(" %s%d", arg_type == REG_CODE ? "r" : "", val);
 
 		}
-//		type = proc->pending_ins.params[i].type;
-//		ft_printf(" %s%d", type == REG_CODE ? "r" : "", val[i]);
 	}
 }
 
@@ -48,7 +43,7 @@ void		display_player_intro(t_player *player)
 			player->num,
 			player->algo_len,
 			player->name,
-			player->comm[0] ? player->comm : ""); // decider si inverse player num ou si ordre d'entree quel que soit le nom (mieux 2e mais faut recup l'index du player)
+			player->comm[0] ? player->comm : ""); 
 }
 
 void		display_resize(t_vm *vm)
@@ -92,29 +87,15 @@ void		display_winner(t_vm *vm)
 void		display_move(t_vm *vm, t_process *proc)
 {
 	int i;
-	int	j;
-	int	var_len;
+
 	if (vm->visu.active || !(vm->display & (1 << MSG_MOVE)))
 		return ;
-	if (proc->pending_ins.op.opcode == ZJMP && proc->carry) // bien verifier si toujours pertinent apres gros changement
+	if (proc->pending_ins.op.opcode == ZJMP && proc->carry)
 		return ;
+	ft_printf("\nADV %d (0x%04x -> 0x%04x) ", ft_abs(proc->ins_bytelen), proc->pc, (proc->pc + ft_abs(proc->ins_bytelen) % MEM_SIZE));
 	i = -1;
-//	ft_printf("opcode = %d\n", proc->pending_ins.ocp);
-//	ft_printf("bytlen = %d opcode = %d\n", proc->ins_bytelen, proc->pending_ins.op.opcode);
-//	ft_printf("\nADV %d (0x%04x -> 0x%04x)", ft_abs(proc->ins_bytelen), proc->pc, (proc->pc + ft_abs(proc->ins_bytelen) % MEM_SIZE));
-	ft_printf(" %02x ", (unsigned char)ft_abs(proc->pending_ins.op.opcode));
-	if (proc->pending_ins.op.has_ocp)
-	ft_printf("%02x ", (unsigned char)proc->pending_ins.ocp);
-	var_len = 0;
-	while (++i < proc->pending_ins.op.nb_params)
-	{
-		j = 0;
-		while (++j <= proc->pending_ins.params[i].nb_bytes)
-		{
-			ft_printf("%02x ", (unsigned char)(vm->arena[proc->pc + proc->pending_ins.op.has_ocp + var_len + j]));
-		}
-		var_len += proc->pending_ins.params[i].nb_bytes;
-	}
+	while (++i < proc->ins_bytelen)
+		ft_printf("%02x ", (unsigned char)(vm->arena[proc->pc + i]));
 }
 
 void		display_registers(t_vm *vm)
