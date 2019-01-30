@@ -78,15 +78,14 @@ VISU_NO_PREFIX =		init_sdl.c visu.c events.c framerate.c render.c \
 
 INCLUDES_NO_PREFIX =	vm.h visu.h client.h
 
-#SOURCES = $(addprefix $(SRCDIR)/, $(SRCS_NO_PREFIX)) \
-#		$(addprefix $(SRCDIR)/$(INSDIR)/, $(INS_NO_PREFIX)) \
-#		$(addprefix $(SRCDIR)/$(VISUDIR)/, $(VISU_NO_PREFIX))
+OP_INCLUDES_NO_PREFIX =	champion.h color.h errors.h network.h op.h player.h
 
 OBJECTS =	$(addprefix $(OBJDIR)/, $(SRCS_NO_PREFIX:%.c=%.o)) \
 		$(addprefix $(OBJDIR)/$(INSDIR)/, $(INS_NO_PREFIX:%.c=%.o)) \
 		$(addprefix $(OBJDIR)/$(VISUDIR)/, $(VISU_NO_PREFIX:%.c=%.o))
 
 INCLUDES = $(addprefix $(INCLUDESDIR)/, $(INCLUDES_NO_PREFIX))
+OP_INCLUDES = $(addprefix $(LIBOPDIR)/$(LIBOP_INCLUDEDIR)/, $(OP_INCLUDES_NO_PREFIX))
 
 INC = -I $(INCLUDESDIR) -I $(LIBFTDIR)/$(LIBFT_INCLUDEDIR)\
 	  -I $(LIBOPDIR)/$(LIBOP_INCLUDEDIR) \
@@ -129,20 +128,21 @@ debug:
 $(LIBFT):
 	@make -C $(LIBFTDIR) all
 
-$(BINDIR)/$(NAME): $(OBJECTS)  $(LIBFT) $(LIBOP)
+$(BINDIR)/$(NAME): $(OBJECTS) $(LIBFT) $(LIBOP)
 	@$(CC) -o $@ $^ -F $(FRAMEWORKSDIR) $(SDL2_FRAMEWORKS) $(CFLAGS) $(LFLAGS)
 	@echo "$(OK_COLOR)$(NAME) linked with success !$(EOC)"
 
-$(OBJDIR)/%.o : $(SRCDIR)/%.c $(INCLUDES) $(LIBOP)
+
+$(OBJDIR)/%.o : $(SRCDIR)/%.c $(INCLUDES) $(OP_INCLUDES)
 	@mkdir -p $(OBJDIR)
 	@mkdir -p $(OBJDIR)/$(INSDIR)
 	@mkdir -p $(OBJDIR)/$(VISUDIR)
 	$(CC) -c $< -o $@ -F $(FRAMEWORKSDIR) $(CFLAGS)
 
-$(OBJDIR)/$(INSDIR)/%.o : $(SRCDIR)/$(INSDIR)/%.c $(INCLUDES)
+$(OBJDIR)/$(INSDIR)/%.o : $(SRCDIR)/$(INSDIR)/%.c $(INCLUDES) $(OP_INCLUDES)
 	$(CC) -c $< -o $@ -F $(FRAMEWORKSDIR) $(CFLAGS)
 
-$(OBJDIR)/$(VISUDIR)/%.o : $(SRCDIR)/$(VISUDIR)/%.c $(INCLUDES)
+$(OBJDIR)/$(VISUDIR)/%.o : $(SRCDIR)/$(VISUDIR)/%.c $(INCLUDES) $(OP_INCLUDES)
 	$(CC) -c $< -o $@ -F $(FRAMEWORKSDIR) $(CFLAGS)
 
 clean:

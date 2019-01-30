@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/04 15:20:42 by ldedier           #+#    #+#              #
-#    Updated: 2019/01/22 17:02:57 by uboumedj         ###   ########.fr        #
+#    Updated: 2019/01/30 18:28:57 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,9 @@ OBJVMDIR = objs_vm
 INSDIR = instructions
 VM_INCLUDEDIR = includes
 
+VM_DIR = ../vm_dir
+COREWAR = $(VM_DIR)/corewar
+
 OK_COLOR = \x1b[32;01m
 EOC = \033[0m
 
@@ -52,15 +55,14 @@ VM_INS_NO_PREFIX =	get_val.c load_val.c live.c ld.c st.c add.c sub.c and.c \
 					aff.c
 
 INCLUDES_NO_PREFIX = server.h
-
-#SOURCES = $(addprefix $(SRCDIR)/, $(SRCS_NO_PREFIX)) \
-#		 	$(addprefix $(VMDIR)/, $(VM_NO_PREFIX))
+OP_INCLUDES_NO_PREFIX = champion.h color.h errors.h network.h op.h player.h
 
 OBJECTS = $(addprefix $(OBJDIR)/, $(SRCS_NO_PREFIX:%.c=%.o)) \
 			$(addprefix $(OBJDIR)/$(OBJVMDIR)/, $(VM_NO_PREFIX:%.c=%.o)) \
 			$(addprefix $(OBJDIR)/$(OBJVMDIR)/$(INSDIR)/, $(VM_INS_NO_PREFIX:%.c=%.o))
 
 INCLUDES = $(addprefix $(INCLUDESDIR)/, $(INCLUDES_NO_PREFIX))
+OP_INCLUDES = $(addprefix $(LIBOPDIR)/$(LIBOP_INCLUDEDIR)/, $(OP_INCLUDES_NO_PREFIX))
 
 INC = -I $(INCLUDESDIR) -I $(LIBFTDIR)/$(LIBFT_INCLUDEDIR)\
 	  -I $(LIBOPDIR)/$(LIBOP_INCLUDEDIR) -I $(VMDIR)/$(VM_INCLUDEDIR)
@@ -81,7 +83,7 @@ endif
 
 SDL2 = $(PWD)/$(FRAMEWORKSDIR)/SDL2.framework/Versions/A/SDL2
 SDL2_net = $(PWD)/$(FRAMEWORKSDIR)/SDL2_net.framework/Versions/A/SDL2_net
-SDL2_FRAMEWORKS =	-framework SDL2 -framework SDL2_net
+SDL2_FRAMEWORKS = -framework SDL2 -framework SDL2_net
 
 opti:
 	@make all -j
@@ -106,15 +108,15 @@ $(BINDIR)/$(NAME): $(OBJECTS) $(LIBFT) $(LIBOP)
 	@$(CC) -o $@ $^ -F $(FRAMEWORKSDIR) $(SDL2_FRAMEWORKS) $(CFLAGS) $(LFLAGS)
 	@echo "$(OK_COLOR)$(NAME) linked with success !$(EOC)"
 
-$(OBJDIR)/%.o : $(SRCDIR)/%.c $(INCLUDES)
+$(OBJDIR)/%.o : $(SRCDIR)/%.c $(INCLUDES) $(OP_INCLUDES)
 	@mkdir -p $(OBJDIR)
 	$(CC) -c $< -o $@ -F $(FRAMEWORKSDIR) $(CFLAGS)
 
-$(OBJDIR)/$(OBJVMDIR)/$(INSDIR)/%.o : $(VMDIR)/$(SRCDIR)/$(INSDIR)/%.c $(INCLUDES)
+$(OBJDIR)/$(OBJVMDIR)/$(INSDIR)/%.o : $(VMDIR)/$(SRCDIR)/$(INSDIR)/%.c $(INCLUDES) $(OP_INCLUDES)
 	@mkdir -p $(OBJDIR)/$(OBJVMDIR)/$(INSDIR)
 	$(CC) -c $< -o $@ -F $(FRAMEWORKSDIR) $(CFLAGS)
 
-$(OBJDIR)/$(OBJVMDIR)/%.o : $(VMDIR)/$(SRCDIR)/%.c $(INCLUDES)
+$(OBJDIR)/$(OBJVMDIR)/%.o : $(VMDIR)/$(SRCDIR)/%.c $(INCLUDES) $(OP_INCLUDES)
 	@mkdir -p $(OBJDIR)/$(OBJVMDIR)
 	$(CC) -c $< -o $@ -F $(FRAMEWORKSDIR) $(CFLAGS)
 
