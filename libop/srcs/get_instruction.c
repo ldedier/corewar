@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 16:33:31 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/30 14:00:37 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/30 19:42:46 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,22 +150,31 @@ int			get_instruction(char *arena, t_instruction *ins,
 	int				len;
 
 	hex = *(unsigned char *)(arena + (i % mod));
-	ins->op.nb_params = 1;
-	if ((int)hex > NB_INSTRUCTIONS || !hex)
+//	ins->op.nb_params = 1;
+	if (ins->op.opcode)
+	if (!ins->op.opcode && ((int)hex > NB_INSTRUCTIONS || !hex))
 		return (-1);
-	else
-	{
-		ft_memmove((void *)&ins->op, (void *)&g_op_tab[(int)hex - 1],
+//	ft_printf("GET initial nb of params = %d\n", ins->op.nb_params);
+//	ft_printf("getting instruction, opcode = %d ocp = %d\n", ins->op.opcode, ins->ocp);
+//	else
+//	{
+		if (!ins->op.opcode)
+			ft_memmove((void *)&ins->op, (void *)&g_op_tab[(int)hex - 1],
 															sizeof(t_op));
-		ins->ocp = (unsigned char)*(arena + (++i % mod));
-	}
+//		else
+//			ft_printf("op already retrieved!!\n");
+//		if (!ins->ocp)
+//		ft_printf("GET new nb of params = %d\n", ins->op.nb_params);
+			ins->ocp = (unsigned char)*(arena + (++i % mod));
+//	}
 //	ft_printf("\nconsidering instruction # %d | has ocp = %d\n", hex, ins->op.has_ocp);
 	if (ins->op.has_ocp == OCP_YES)
 	{
 //		ft_printf("ocp = %#x\n", (unsigned char)ins->ocp);
 		if (!is_valid_ocp((unsigned char)ins->ocp, ins))
 		{
-			ft_bzero((void *)ins, sizeof(*ins));
+//			ft_printf("invalid ocp\n");
+//			ft_bzero((void *)ins, sizeof(*ins));
 			return (0);
 		}
 	}
@@ -182,9 +191,11 @@ int			get_instruction(char *arena, t_instruction *ins,
 //	ft_printf("ocp is valid, = %#x\n", (unsigned char)ins->ocp);
 	if (getval_params(arena, ins, i + ins->op.has_ocp, mod) == -1)
 	{
-		ft_bzero((void *)ins, sizeof(*ins));
+//		ft_printf("invalid params\n");
+//		ft_bzero((void *)ins, sizeof(*ins));
 		return (0);
 	}
+//	ft_printf("mid nb params = %d\n", ins->op.nb_params);
 	len = ins->params[0].nb_bytes + ins->params[1].nb_bytes +
 						ins->params[2].nb_bytes + ins->op.has_ocp + 1;
 //	ft_printf("instruction len = %d\n\n", len);

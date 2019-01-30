@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 17:18:28 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/30 14:20:18 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/30 20:37:24 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int		ins_sti(t_vm *vm, t_process *proc, t_parameter arg[3])
 	getval_param_dest(vm, proc, &arg[1], arg[1].value);
 	getval_param_dest(vm, proc, &arg[2], arg[2].value);
 //	ft_printf(" | 1 dest value = %d 2 dest value = %d\n", arg[1].dest_value, arg[2].dest_value);
+
 	arg[0].retrieval_mode = 0;
 	arg[1].retrieval_mode = 1;
 	arg[2].retrieval_mode = 1;
@@ -39,11 +40,11 @@ int		ins_sti(t_vm *vm, t_process *proc, t_parameter arg[3])
 	dest = (arg[1].dest_value + arg[2].dest_value) % IDX_MOD;
 //		dest -= IDX_MOD;
 //	ft_printf("pc = %d arg1 val = %d, dest = %d\n", proc->pc, arg[1].value, dest);
-	dest += proc->pc;
+//	dest += proc->pc;
 //	{
 	if (!vm->visu.active && (vm->display & (1 << MSG_INS)))
-		ft_printf("\n%6s | -> store to %d + %d = %d (with pc and mod %d)", "", arg[1].value, arg[2].value, arg[2].value + arg[1].value, dest);
+		ft_printf("\n%6s | -> store to %d + %d = %d (with pc and mod %d)", "", arg[1].dest_value, arg[2].dest_value, dest, dest + proc->pc);
 //	}
-	load_arena(vm, proc, mod(dest, MEM_SIZE), proc->reg[arg[0].value - 1]);
+	load_arena(vm, proc, dest + proc->pc, proc->reg[arg[0].value - 1]);
 	return (SUCCESS);
 }

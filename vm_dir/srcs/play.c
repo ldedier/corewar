@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/30 14:08:14 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/30 20:37:25 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,19 +140,25 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 		&ins_live, &ins_ld, &ins_st, &ins_add, &ins_sub, &ins_and, &ins_or,
 		&ins_xor, &ins_zjmp, &ins_ldi, &ins_sti, &ins_fork, &ins_lld, &ins_lldi,
 		&ins_lfork, &ins_aff};
+	int		old_op;
+	int		old_ocp;
 //	int	val;
 
 	if (--proc->pending_ins.op.nb_cycles > 1)
 		return (0);
 	if (proc->pending_ins.op.nb_cycles == 1 /*&& proc->ins_bytelen > 0*/)
 	{
-		if ((proc->ins_bytelen = get_instruction(vm->arena, &proc->pending_ins, proc->pc, MEM_SIZE)) <= 0)
+	
+//			ft_printf("nb params = %d\n", proc->pending_ins.op.nb_params);
+		old_op = proc->pending_ins.op.opcode;
+		old_ocp = proc->pending_ins.ocp;
+		if (/*proc->pending_ins.op.opcode != FORK && */(proc->ins_bytelen = get_instruction(vm->arena, &proc->pending_ins, proc->pc, MEM_SIZE)) <= 0)
 		{
 			proc->ins_bytelen = 2;
 //			proc->ins_bytelen =  1 + proc->pending_ins.op.has_ocp; // verifier aue c'est ca, sinon voir avec longueur bit de l'opcode (en commentaires ci dessous)
-//			val = proc->pending_ins.op.opcode`;
-//			ft_printf("val = %d\n", val);
-//			display_move(vm, proc);
+	//		val = proc->pending_ins.op.opcode`;
+//			ft_printf("val = %d\n", old_op);
+			display_move(vm, proc);
 //			while (val)
 //			{
 //				proc->ins_bytelen += 1;
@@ -160,16 +166,33 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 //			}
 		}
 		else
+		{
+//			ft_printf("opcode = %d bytelen = %d\n", proc->pending_ins.op.opcode, proc->ins_bytelen);
+//			if (old_op != proc->pending_ins.op.opcode)
+//				ft_printf("WARNING op change\n");
 			f_ins[ft_abs((int)proc->pending_ins.op.opcode)](vm, proc, proc->pending_ins.params);
-		display_move(vm, proc);
+			display_move(vm, proc);
+		}
 		if (proc->pending_ins.op.opcode != ZJMP || !proc->carry)
 			proc->pc += proc->ins_bytelen;
 		ft_bzero(&proc->pending_ins, sizeof(t_instruction));
 		proc->ins_bytelen = 0;
 		return (0);
 	}
-	if ((proc->ins_bytelen = get_instruction(vm->arena, &proc->pending_ins, proc->pc, MEM_SIZE)) <= 0)
+	if ((proc->ins_bytelen = get_instruction(vm->arena, &proc->pending_ins, proc->pc, MEM_SIZE)) == -1)
 		++proc->pc;
+	else if (!proc->ins_bytelen)
+	{
+		ft_printf("\n\nINVALID OP #%d pc in %#x, cycles = %d\n\n", proc->pending_ins.op.opcode, proc->pc, proc->pending_ins.op.nb_cycles);
+//		proc->pending_ins.op.nb_cycles = 2;
+			proc->ins_bytelen = 2;
+//			display_move(vm, proc);
+//			proc->pc += 2;
+//			ft_bzero(&proc->pending_ins, sizeof(t_instruction)); 
+
+	}
+//		ft_printf(EOC"invalid params "EOC"for instruction # %d\n", proc->pending_ins.op.opcode);
+
 	return (0);
 }
 
