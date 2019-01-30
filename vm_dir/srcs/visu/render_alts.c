@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 21:15:42 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/24 21:15:44 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/30 17:16:17 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,7 @@ void	ft_render_alt(t_vm *vm, int pc, int value)
 	cm = ft_interpolate_color(0xffffff, BACKGROUND_COL, value /
 		(double)ALT_COLOR_VALUE);
 	rect.x--;
-	rect.y--;
 	rect.w += 2;
-	rect.h += 2;
 	SDL_FillRect(vm->visu.sdl.w_surface, &rect, cm.color);
 	if (!vm->visu.time_manager.pause)
 		vm->metarena[pc].alt_color--;
