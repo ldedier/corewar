@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 16:49:37 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/16 14:57:18 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/31 06:02:09 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,11 @@ typedef struct		s_parser
 	char			*current_line;
 	int				column_offset;
 	int				fd;
+	char			parse_param;
+	char			nb_params;
 	char			too_much_errors_displayed;
 }					t_parser;
+
 
 typedef struct		s_env
 {
