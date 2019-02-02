@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/24 22:53:25 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/01/30 18:47:06 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,7 +200,7 @@
 
 # define PLAYER_COL_BORDER		0x000000
 # define PLAYER_COL				0x222222
-# define BACKGROUND_COL			0x333333
+# define BACKGROUND_COL			0x111111
 # define PLAYER_BACKGROUND_COL	0x444444
 # define PLAYER_HOVERED_BG_COL	0x666666
 # define UPLOAD_COLOR			PLAYER_BACKGROUND_COL
@@ -212,7 +212,9 @@
 
 # define MAX_FADE				60
 # define FADE_LEN				10
+
 # define ALT_COLOR_VALUE		30
+# define ALT_COLOR				0xAAAAAA
 
 typedef struct s_vm				t_vm;
 typedef struct s_visu			t_visu;
