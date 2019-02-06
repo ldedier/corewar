@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/30 14:08:14 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/06 16:05:48 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,21 +79,9 @@ static int		kill_process(t_vm *vm, t_list **proc_lst, t_list *proc)
 	if (ft_add_to_list_ptr(&vm->killed_proc,
 										(void *)killed_proc, sizeof(t_fade)))
 		return (-1);
-//	if (((t_process *)proc->content)->nb == 19)
-//		ft_printf("proc = %d\n", proc);
-//	if (proc && proc == *proc_lst /*&& ft_printf("special case\n")*/)
-//	{
-//		ft_printf("coucou lala\n");
-//		ft_printf("proc lst = %d next = %d\n", *proc_lst, (*proc_lst)->next);
-//		*proc_lst = (*proc_lst)->next;
-//		ft_printf("after proc lst = %d\n", *proc_lst);
-//	}
-//	else
-//	if (vm->proc)
-//	{
 		kill_adjust_ptr(&vm->proc, &proc);
 		display_last_live(vm, (t_process *)proc->content);
-//	}
+
 	ft_memdel((void **)&proc->content);
 	ft_memdel((void **)&proc);
 	return (0);
@@ -140,36 +128,37 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 		&ins_live, &ins_ld, &ins_st, &ins_add, &ins_sub, &ins_and, &ins_or,
 		&ins_xor, &ins_zjmp, &ins_ldi, &ins_sti, &ins_fork, &ins_lld, &ins_lldi,
 		&ins_lfork, &ins_aff};
-//	int	val;
+	int old_op;
+	t_instruction	*ins;
 
-	if (--proc->pending_ins.op.nb_cycles > 1)
+	ins = &proc->pending_ins;
+	if (--ins->op.nb_cycles > 1)
 		return (0);
-	if (proc->pending_ins.op.nb_cycles == 1 /*&& proc->ins_bytelen > 0*/)
+	if (ins->op.nb_cycles == 1)
 	{
-		if ((proc->ins_bytelen = get_instruction(vm->arena, &proc->pending_ins, proc->pc, MEM_SIZE)) <= 0)
+		old_op = ins->op.opcode;
+		proc->ins_bytelen = get_instruction(vm->arena, ins, proc->pc, MEM_SIZE);
+		if (proc->ins_bytelen > 0)
 		{
-			proc->ins_bytelen = 2;
-//			proc->ins_bytelen =  1 + proc->pending_ins.op.has_ocp; // verifier aue c'est ca, sinon voir avec longueur bit de l'opcode (en commentaires ci dessous)
-//			val = proc->pending_ins.op.opcode`;
-//			ft_printf("val = %d\n", val);
-//			display_move(vm, proc);
-//			while (val)
-//			{
-//				proc->ins_bytelen += 1;
-//				val >>= 1;
-//			}
+			f_ins[ins->op.opcode](vm, proc, ins->params);
+			display_move(vm, proc);
+			if (ins->op.opcode != ZJMP || !proc->carry)
+				proc->pc = mod(proc->pc + proc->ins_bytelen, MEM_SIZE);
 		}
 		else
-			f_ins[ft_abs((int)proc->pending_ins.op.opcode)](vm, proc, proc->pending_ins.params);
+		{
 		display_move(vm, proc);
-		if (proc->pending_ins.op.opcode != ZJMP || !proc->carry)
-			proc->pc += proc->ins_bytelen;
-		ft_bzero(&proc->pending_ins, sizeof(t_instruction));
+		if (!proc->ins_bytelen)
+			proc->pc = mod(proc->pc + old_op, MEM_SIZE);
+		else 
+			proc->pc = mod(proc->pc - proc->ins_bytelen, MEM_SIZE);
+		}
+		ft_bzero(ins, sizeof(t_instruction));
 		proc->ins_bytelen = 0;
-		return (0);
 	}
-	if ((proc->ins_bytelen = get_instruction(vm->arena, &proc->pending_ins, proc->pc, MEM_SIZE)) <= 0)
-		++proc->pc;
+	else if (!(proc->ins_bytelen = get_instruction(vm->arena, ins, proc->pc, MEM_SIZE)))
+			if (++proc->pc == MEM_SIZE)
+				proc->pc -= MEM_SIZE;
 	return (0);
 }
 

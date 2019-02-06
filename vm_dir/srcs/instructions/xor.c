@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 17:17:46 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/26 15:46:18 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/04 22:43:41 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ int		ins_xor(t_vm *vm, t_process *proc, t_parameter arg[3])
 {
 	int		res;
 
-	if (!is_reg(arg[2].value))
-		return (FAILURE);
+//	if (!is_reg(arg[2].value))
+//		return (FAILURE);
 	getval_param_dest(vm, proc, &arg[0], IDX_MOD);
 	getval_param_dest(vm, proc, &arg[1], IDX_MOD);
 	res = arg[0].dest_value ^ arg[1].dest_value;

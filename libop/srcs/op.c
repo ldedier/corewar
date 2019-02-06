@@ -6,7 +6,7 @@
 /*   By: zaz <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/10/04 11:43:01 by zaz               #+#    #+#             */
-/*   Updated: 2019/01/30 12:47:47 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/04 22:31:32 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_op	g_op_tab[NB_INSTRUCTIONS + 1] =
 		OR, 6, OR_STR, OCP_YES, CARRY_YES, 0},
 	{"xor", THREE, {T_REG | T_IND | T_DIR, T_REG | T_IND | T_DIR, T_REG},
 		XOR, 6, XOR_STR, OCP_YES, CARRY_YES, 0},
-	{"zjmp", ONE, {T_DIR}, ZJMP, 20, ZJMP_STR, OCP_NO, CARRY_YES, 1},
+	{"zjmp", ONE, {T_DIR}, ZJMP, 20, ZJMP_STR, OCP_NO, CARRY_NO, 1},
 	{"ldi", THREE, {T_REG | T_DIR | T_IND, T_DIR | T_REG, T_REG}, LDI, 25,
 		LDI_STR, OCP_YES, CARRY_NO, 1},
 	{"sti", THREE, {T_REG, T_REG | T_DIR | T_IND, T_DIR | T_REG}, STI, 25,

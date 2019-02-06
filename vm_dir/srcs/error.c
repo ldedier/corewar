@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 17:22:33 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/21 20:10:28 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/01/30 17:37:36 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int			check_type(int ac, char **av)
 
 void		check_header(void)
 {
-	if (MAX_PLAYERS <= 0)
+	if (MAX_PLAYERS != 4)
 		error_exit_msg(ERR_HEADER);
 	if (MEM_SIZE < MAX_PLAYERS * 1024)
 		error_exit_msg(ERR_HEADER);

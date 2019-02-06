@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 21:43:44 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/30 14:03:28 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/04 18:23:34 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,11 @@ void		display_proc_ins(t_vm *vm, t_process *proc)
 	if (vm->visu.active || !(vm->display & (1 << MSG_INS)))
 		return ;
 	i = -1;
+//	ft_printf("nb params = %d\n", proc->pending_ins.op.nb_params);
 	ft_printf("\nP%5d | %s", proc->nb, proc->pending_ins.op.instruction_name);
 	while (++i < proc->pending_ins.op.nb_params)
 	{
+//		ft_printf("coucou\n");
 		if (proc->pending_ins.params[i].retrieval_mode)
 			ft_printf(" %d", proc->pending_ins.params[i].dest_value);
 		else
@@ -87,15 +89,19 @@ void		display_winner(t_vm *vm)
 void		display_move(t_vm *vm, t_process *proc)
 {
 	int i;
+	int len;
+
+	len = ft_abs(proc->ins_bytelen);
 
 	if (vm->visu.active || !(vm->display & (1 << MSG_MOVE)))
 		return ;
 	if (proc->pending_ins.op.opcode == ZJMP && proc->carry)
 		return ;
-	ft_printf("\nADV %d (0x%04x -> 0x%04x) ", ft_abs(proc->ins_bytelen), proc->pc, (proc->pc + ft_abs(proc->ins_bytelen) % MEM_SIZE));
+	proc->pc = mod(proc->pc, MEM_SIZE);
+	ft_printf("\nADV %d (0x%04x -> 0x%04x) ", len, proc->pc, proc->pc + len);
 	i = -1;
-	while (++i < proc->ins_bytelen)
-		ft_printf("%02x ", (unsigned char)(vm->arena[proc->pc + i]));
+	while (++i < len)
+		ft_printf("%02x ", (unsigned char)(vm->arena[mod(proc->pc + i, MEM_SIZE)]));
 }
 
 void		display_registers(t_vm *vm)

@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 19:29:20 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/26 17:02:45 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/04 22:43:01 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,7 @@ int		ins_sub(t_vm *vm, t_process *proc, t_parameter arg[3])
 	arg[0].retrieval_mode = 0;
 	arg[1].retrieval_mode = 0;
 	arg[2].retrieval_mode = 0;
-//	proc->reg[arg[2].value - 1] = sub;
 	proc->carry = !sub;
-	if (!vm->visu.active && (vm->display & (1 << MSG_INS)))	
-		display_proc_ins(vm, proc);
+	display_proc_ins(vm, proc);
 	return (SUCCESS);
 }

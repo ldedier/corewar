@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 19:01:37 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/30 18:29:57 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/02/03 19:46:25 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,9 @@ enum							e_mod_carry
 };
 
 t_op							g_op_tab[NB_INSTRUCTIONS + 1];
+
+int								invalid_param(int type, int op);
+int								is_valid_ocp(unsigned char hex, t_instruction *ins);
 
 int								getval_mod(char *arena,  int index, int nb_bytes,int mod);
 void							set_argval(t_parameter *arg, int index, int size);
