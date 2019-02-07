@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 21:43:44 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/04 18:23:34 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/07 17:55:02 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ void		display_proc_ins(t_vm *vm, t_process *proc)
 		{
 			val = proc->pending_ins.params[i].value;
 			arg_type = proc->pending_ins.params[i].type;
-			ft_printf(" %s%d", arg_type == REG_CODE ? "r" : "", val);
+			if (!(proc->pending_ins.op.opcode == ST && i == 1)) // pas reussi a gerer autrement octobre rouge st r1 3 en 3265
+				ft_printf(" %s%d", arg_type == REG_CODE ? "r" : "", val);
+			else
+				ft_printf(" %d", val);
 
 		}
 	}
@@ -98,7 +101,7 @@ void		display_move(t_vm *vm, t_process *proc)
 	if (proc->pending_ins.op.opcode == ZJMP && proc->carry)
 		return ;
 	proc->pc = mod(proc->pc, MEM_SIZE);
-	ft_printf("\nADV %d (0x%04x -> 0x%04x) ", len, proc->pc, proc->pc + len);
+	ft_printf("\nADV %d (0x%04x -> 0x%04x) ", len, proc->pc, (proc->pc + len));
 	i = -1;
 	while (++i < len)
 		ft_printf("%02x ", (unsigned char)(vm->arena[mod(proc->pc + i, MEM_SIZE)]));

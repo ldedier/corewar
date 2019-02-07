@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/06 16:05:48 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/07 17:55:03 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,9 +132,9 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 	t_instruction	*ins;
 
 	ins = &proc->pending_ins;
-	if (--ins->op.nb_cycles > 1)
+	if (--proc->ins_cycle > 1)
 		return (0);
-	if (ins->op.nb_cycles == 1)
+	if (proc->ins_cycle == 1)
 	{
 		old_op = ins->op.opcode;
 		proc->ins_bytelen = get_instruction(vm->arena, ins, proc->pc, MEM_SIZE);
@@ -157,8 +157,13 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 		proc->ins_bytelen = 0;
 	}
 	else if (!(proc->ins_bytelen = get_instruction(vm->arena, ins, proc->pc, MEM_SIZE)))
+	{
 			if (++proc->pc == MEM_SIZE)
 				proc->pc -= MEM_SIZE;
+	}
+	else
+		proc->ins_cycle = ins->op.nb_cycles;
+				
 	return (0);
 }
 

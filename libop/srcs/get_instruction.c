@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 16:33:31 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/06 16:05:38 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/07 17:37:16 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,8 +179,10 @@ int			get_instruction(char *arena, t_instruction *ins,
 	++i;
 		if (!ins->op.opcode)
 		{
-			ft_memmove((void *)&ins->op, (void *)&g_op_tab[(int)hex - 1],
-															sizeof(t_op));
+			ins->op = g_op_tab[(int)hex - 1];
+//			ft_memmove((void *)&ins->op, (void *)&g_op_tab[(int)hex - 1],
+//			
+//															sizeof(t_op));
 		}
 		ins->ocp = (unsigned char)*(arena + (i % mod));
 	if (ins->op.has_ocp == OCP_YES)
