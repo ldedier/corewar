@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 21:43:44 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/07 17:55:02 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/07 18:23:23 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,9 @@ void		display_proc_ins(t_vm *vm, t_process *proc)
 	if (vm->visu.active || !(vm->display & (1 << MSG_INS)))
 		return ;
 	i = -1;
-//	ft_printf("nb params = %d\n", proc->pending_ins.op.nb_params);
 	ft_printf("\nP%5d | %s", proc->nb, proc->pending_ins.op.instruction_name);
 	while (++i < proc->pending_ins.op.nb_params)
 	{
-//		ft_printf("coucou\n");
 		if (proc->pending_ins.params[i].retrieval_mode)
 			ft_printf(" %d", proc->pending_ins.params[i].dest_value);
 		else
@@ -57,12 +55,10 @@ void		display_resize(t_vm *vm)
 		ft_printf("\nCycle to die is now %d", vm->c_to_die);
 }
 
-void		display_player_alive(t_vm *vm, t_process *proc)
+void		display_player_alive(t_vm *vm, t_player *player)
 {
 	if (!vm->visu.active && vm->display & (1 << MSG_LIVE))
-		ft_printf("\nPlayer %d (%s) is said to be alive",
-				-proc->player->num,
-				proc->player->name);
+		ft_printf("\nPlayer %d (%s) is said to be alive", player->num, player->name);
 }
 
 void		display_last_live(t_vm *vm, t_process *proc)

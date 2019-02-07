@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 17:09:32 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/06 16:08:00 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/07 18:22:45 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,11 @@
 
 int		ins_lfork(t_vm *vm, t_process *proc, t_parameter arg[3])
 {
-	t_process	*new_proc;
-	int			i;
-	(void)proc;
-	(void)vm;
-	(void)arg;
-	(void)i;
-	(void)new_proc;
-
 	add_process(vm, 0, 0, proc);
 	getval_param_dest(vm, proc, &arg[0], arg[0].value);
-	arg[0].retrieval_mode = 0;
-	((t_process *)vm->proc->content)->pc = mod(proc->pc + arg[0].value, MEM_SIZE);
-	i = -1;
-	arg[0].retrieval_mode = 0;
 	display_proc_ins(vm, proc);
 	if (!vm->visu.active && vm->display & (1 << MSG_INS))
-		ft_printf(" (%d)", ((t_process *)vm->proc->content)->pc);
+		ft_printf(" (%d)", proc->pc + arg[0].value);
+	((t_process *)vm->proc->content)->pc = mod(proc->pc + arg[0].value, MEM_SIZE);
 	return (SUCCESS);
 }
