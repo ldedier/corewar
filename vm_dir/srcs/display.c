@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 21:43:44 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/07 18:23:23 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/07 20:20:16 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void		display_proc_ins(t_vm *vm, t_process *proc)
 	if (vm->visu.active || !(vm->display & (1 << MSG_INS)))
 		return ;
 	i = -1;
-	ft_printf("\nP%5d | %s", proc->nb, proc->pending_ins.op.instruction_name);
+	ft_printf("\nP %4d | %s", proc->nb, proc->pending_ins.op.instruction_name);
 	while (++i < proc->pending_ins.op.nb_params)
 	{
 		if (proc->pending_ins.params[i].retrieval_mode)

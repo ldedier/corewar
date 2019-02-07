@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 16:33:31 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/07 17:37:16 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/07 20:51:49 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,8 @@ int			getval_params(char *arena, t_instruction *ins, int i, int mod)
 		}
 	}
 	if (((ins->op.opcode == STI || ins->op.opcode == ST || ins->op.opcode == AFF) && ins->params[0].type != T_REG)
-			|| ((ins->op.opcode == LD || ins->op.opcode == LLD) && (ins->params[1].type != T_REG /*|| ins->params[1].value == 1)*/))
-			|| (ins->op.opcode >= ADD && ins->op.opcode <= XOR && (/*ins->params[0].type != T_REG || ins->params[1].type != T_REG ||*/ ins->params[2].type != T_REG))
+			|| ((ins->op.opcode == LD || ins->op.opcode == LLD) && ins->params[1].type != T_REG)
+			|| (ins->op.opcode >= ADD && ins->op.opcode <= XOR && ins->params[2].type != T_REG)
 			|| ((ins->op.opcode == LDI || ins->op.opcode == LLDI) && ins->params[2].type != T_REG))
 		return (-1);
 	return (0);
@@ -179,6 +179,7 @@ int			get_instruction(char *arena, t_instruction *ins,
 	++i;
 		if (!ins->op.opcode)
 		{
+//			ft_printf("invalid op\n");
 			ins->op = g_op_tab[(int)hex - 1];
 //			ft_memmove((void *)&ins->op, (void *)&g_op_tab[(int)hex - 1],
 //			
@@ -189,6 +190,8 @@ int			get_instruction(char *arena, t_instruction *ins,
 	{
 		if (!is_valid_ocp((unsigned char)ins->ocp, ins))
 		{
+//			ft_printf("invalid ocp\n");
+			
 			len = ins->params[0].nb_bytes + ins->params[1].nb_bytes +
 			ins->params[2].nb_bytes + ins->op.has_ocp + 1;
 			return (-len);

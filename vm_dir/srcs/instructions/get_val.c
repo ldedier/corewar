@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/09 20:00:32 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/03 20:02:27 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/07 19:56:05 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ void		getval_param_dest(t_vm *vm, t_process *proc,
 	static long (*f_data[NB_TYPES + 1])(t_vm *vm, t_process *proc,
 			int *index, int mod) = {NULL, &getval_reg, &getval_dir, &getval_ind};
 
-//	ft_printf("arg type= %d\n", arg->type);
 //	ft_printf("before arg.value = %d, arg type = %d\n", arg->value, arg->type);
 	if (arg->type == 0)
 		return ;
