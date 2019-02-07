@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 16:33:31 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/07 20:51:49 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/07 20:54:43 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,27 +27,15 @@ int			getval_mod(char *arena, int index, int nb_bytes, int modulo)
 	i = 0;
 	val = 0;
 	(void)modulo;
-//	ft_printf("getval mod on %d bytes\n", nb_bytes);
 	while (i < (unsigned int)nb_bytes)
 	{
 		val <<= 8;
-//		ft_printf("index + i = %d\n", index + i);
-	//	ft_printf("val = %#x index + i = %d (index + i) %% mod = %d arena[index + i] = %#x arena[(index + i) %% mod]\n", val, index + i, (index + i) % mod, arena[index + i] % mod, arena[(index + i) % mod]);
-
 		if (!i)
-//		ft_printf("mod %d\n", mod);
 			val |= arena[(index + i) % modulo];
 		else
 			val |= (unsigned char)arena[(index + i) % modulo];
-//			val |= arena[mod(index + i, modulo)];
-//		else
-//			val |= (unsigned char)arena[mod((index + i), modulo)];
-//		ft_printf("index + i %% mod = %d | val = %#x\n", (index + i) % mod, val);
-//	ft_printf("val = %#x\n", val);
 		++i;
 	}
-//	val = (unsigned short)val;
-//	ft_printf("val = %d\n", val);
 	return (val);
 }
 
@@ -75,34 +63,9 @@ int			getval_params(char *arena, t_instruction *ins, int i, int mod)
 	j = -1;
 	while (++j < ins->op.nb_params)
 	{
-//		if (ins->op.opcode == LD)
-//		ft_printf("\nopcode= %d j = %d params j type = %#x, \ngoptab 0 = %d goptab 1 = %d goptab 2 = %d\n", ins->op.opcode, j, ins->params[j].type, g_op_tab[ins->op.opcode- 1].arg_types[0], g_op_tab[ins->op.opcode - 1].arg_types[1], g_op_tab[ins->op.opcode - 1].arg_types[2]);
 		param = &ins->params[j];
 		param->value = getval_mod(arena, i, param->nb_bytes, mod);
-//		if (ins->op.opcode == LD)
-//			ft_printf("j = %d type = %d bytes = %d params value = %d\n", j, param->type, param->nb_bytes, param->value);
 		i += param->nb_bytes;
-//		if (param->type > g_op_tab[ins->op.opcode - 1].arg_types[j] ||(!(param->type & g_op_tab[ins->op.opcode - 1].arg_types[j])))
-//			&& !(param->type & g_op_tab[ins->op.opcode - 1].arg_types[1])
-//			&& !(param->type & g_op_tab[ins->op.opcode - 1].arg_types[2])))
-//		{
-//			return (-1);
-//			ft_printf("invalid params\n");
-//			return (-1); // GROS GROS TEST
-//		}
-//		ft_printf("param->value = %d\n", param->value);
-//		ft_printf("j = %d params[j].value = %d, type= %d\n",j, ins->params[j].value, ins->params[j].type);
-//		ft_printf("param type = %d value = %d\n", param->type, param->value);
-//		if (param->type == IND_CODE)
-//		{
-//			param->value %= IDX_MOD;
-//			ft_printf("param value = %d\n", param->value);
-//			if (param->value < 0)
-//			{
-//				param->value += IDX_MOD;
-//				ft_printf("AFTER value = %d\n", param->value);
-//			}
-//		}
 		if (!param->type || (param->type == T_REG && (param->value > REG_NUMBER || param->value <= 0))) // PEUT ETRE REMETTRE
 		{
 			return (-1);
@@ -132,28 +95,24 @@ int			getval_params(char *arena, t_instruction *ins, int i, int mod)
 
 	arg = 3;
 	op = hex;
-//	ft_printf("hex = %#x hex & 3 = %#x\n", hex, hex & 3);
 	ft_bzero((void *)ins->params, sizeof(t_parameter) * 3);
 	while (--arg >= 0)
 	{
-//		ft_printf("arg = %d\n", arg);
 		param = &ins->params[arg];
 		hex = hex >> 2;
 		if (arg >= g_op_tab[ins->op.opcode - 1].nb_params)
 			param->type = NA;
 		else
 		{
-//			ft_printf("hex = %#x, hex & 3 = %#x\n", hex, hex & 3);
 			param->type = (hex & 3);
 			if (param->type >= 0 && param->type < 4)
 				param->nb_bytes = len[(int)param->type];
-//			ft_printf("type= %#x nb bytes= %d\n", param->type, param->nb_bytes);
 			if (param->type == DIR_CODE)
 				param->nb_bytes -=
 					g_op_tab[ins->op.opcode - 1].describe_address * 2;
 		}
 	}
-	if (!op /*|| op & 3*/)
+	if (!op)
 		return (0);
 	return (1);
 }
@@ -178,20 +137,12 @@ int			get_instruction(char *arena, t_instruction *ins,
 		return (0);
 	++i;
 		if (!ins->op.opcode)
-		{
-//			ft_printf("invalid op\n");
 			ins->op = g_op_tab[(int)hex - 1];
-//			ft_memmove((void *)&ins->op, (void *)&g_op_tab[(int)hex - 1],
-//			
-//															sizeof(t_op));
-		}
 		ins->ocp = (unsigned char)*(arena + (i % mod));
 	if (ins->op.has_ocp == OCP_YES)
 	{
 		if (!is_valid_ocp((unsigned char)ins->ocp, ins))
 		{
-//			ft_printf("invalid ocp\n");
-			
 			len = ins->params[0].nb_bytes + ins->params[1].nb_bytes +
 			ins->params[2].nb_bytes + ins->op.has_ocp + 1;
 			return (-len);
