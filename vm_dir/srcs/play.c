@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/08 20:04:46 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/08 20:26:04 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,6 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 		&ins_live, &ins_ld, &ins_st, &ins_add, &ins_sub, &ins_and, &ins_or,
 		&ins_xor, &ins_zjmp, &ins_ldi, &ins_sti, &ins_fork, &ins_lld, &ins_lldi,
 		&ins_lfork, &ins_aff};
-//	int old_op;
 	t_instruction	*ins;
 
 	ins = &proc->pending_ins;
@@ -140,7 +139,6 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 		return (0);
 	if (proc->ins_cycle == 1)
 	{
-//		old_op = ins->op->opcode;
 		proc->ins_bytelen = get_instruction(vm->arena, ins, proc->pc, MEM_SIZE);
 		if (proc->ins_bytelen > 0)
 		{
@@ -152,7 +150,7 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 		else
 		{
 			display_move(vm, proc);
-//		if (!proc->ins_bytelen)
+//		if (!proc->ins_bytelen) // Enlever une fois que tout bien bien bien teste
 //			proc->pc = mod(proc->pc + old_op, MEM_SIZE);
 //		else 
 			proc->pc = mod(proc->pc - proc->ins_bytelen, MEM_SIZE);
@@ -170,7 +168,6 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 	}
 	else
 		proc->ins_cycle = ins->op->nb_cycles;
-				
 	return (0);
 }
 

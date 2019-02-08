@@ -6,18 +6,11 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 16:33:31 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/08 18:37:13 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/08 20:14:07 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "op.h"
-/*
-static int		mod(int val, int max)
-{
-		return (val >= 0 ? val % max : max - 1 - ((-val - max) % max));
-}
-*/
-
 
 int			getval_mod(char *arena, int index, int nb_bytes, int modulo)
 {
@@ -27,27 +20,14 @@ int			getval_mod(char *arena, int index, int nb_bytes, int modulo)
 	i = 0;
 	val = 0;
 	(void)modulo;
-	while (i < (unsigned int)nb_bytes)
+	val |= arena[(index + i) % modulo];
+	while (++i < (unsigned int)nb_bytes)
 	{
 		val <<= 8;
-		if (!i)
-			val |= arena[(index + i) % modulo];
-		else
-			val |= (unsigned char)arena[(index + i) % modulo];
-		++i;
+		val |= (unsigned char)arena[(index + i) % modulo];
 	}
 	return (val);
 }
-
-int			invalid_param(int type, int op)
-{
-		if (op != LIVE && !(type & g_op_tab[op - 1].arg_types[0])
-			&& !(type & g_op_tab[op - 1].arg_types[1])
-			&& !(type & g_op_tab[op - 1].arg_types[2]))
-			return (1);
-		return (0);
-}	
-
 
 
 /*
@@ -66,7 +46,7 @@ int			getval_params(char *arena, t_instruction *ins, int i, int mod)
 		param = &ins->params[j];
 		param->value = getval_mod(arena, i, param->nb_bytes, mod);
 		i += param->nb_bytes;
-		if (!param->type || (param->type == T_REG && (param->value > REG_NUMBER || param->value <= 0))) // PEUT ETRE REMETTRE
+		if (!param->type || (param->type == T_REG && (param->value > REG_NUMBER || param->value <= 0))) 
 		{
 			return (-1);
 		}

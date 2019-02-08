@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 17:10:34 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/08 18:06:33 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/08 20:22:23 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ int		ins_live(t_vm *vm, t_process *proc, t_parameter arg[3])
 	t_player	*player;
 	t_fade		*live;
 
+	live = NULL;
 	getval_param_dest(vm, proc, &arg[0], 1);
 	proc->live = 1;
 	++vm->issued_live;
 	proc->live_cycle = vm->total_cycle; // enlever, gere par proc->pending_ins.op
 	player = get_player_num(vm, vm->proc, arg[0].value);
-	arg[0].retrieval_mode = 0;
 	display_proc_ins(vm, proc);
 	if (player)
 	{
