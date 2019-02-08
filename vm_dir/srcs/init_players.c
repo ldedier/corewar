@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 16:27:59 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/22 16:37:55 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/02/08 18:02:58 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void			init_players(t_vm *vm)
 		vm->player[i].color.value = NULL;
 		vm->player[i].last_live_cycle = 0;
 		vm->player[i].nb_proc = 0;
+		vm->player[i].num = 0; // pas sur!
 		ft_bzero(vm->player[i].aff_buf, MAX_AFF_LEN);
 	}
 }

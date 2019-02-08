@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 16:42:17 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/02/08 15:52:13 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/08 20:04:44 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void			init_vm(t_vm *vm, char **argv, char **env)
 	vm->total_cycle = 1;
 	vm->cycle = 1;
 	vm->nb_players = 0;
+	vm->display = 0;
+	vm->issued_live = 0;
 	ft_bzero(vm->color, MAX_PL_COLOR);
 	ft_strlcat(vm->color, init_color_ref(env), MAX_PL_COLOR);
 	init_players(vm);
@@ -63,8 +65,19 @@ t_list			*add_process(t_vm *vm, int index, int start, t_process *src)
 	process = (t_process *)ft_memalloc(sizeof(t_process));
 	if (src)
 	{
-		ft_memmove(process, src, sizeof(t_process));
-		ft_bzero((void *)&process->pending_ins, sizeof(t_instruction));
+		process->player = src->player;
+		process->ins_bytelen = src->ins_bytelen;
+		process->pending_ins.op = src->pending_ins.op;
+		process->live_cycle = src->live_cycle;
+		ft_memmove(process->reg, src->reg, REG_NUMBER * sizeof(int));
+		process->pc = src->pc;
+		process->carry = src->carry;
+		process->cycle = src->cycle;
+		process->ins_cycle = src->ins_cycle;
+		process->pending_ins.op = NULL;
+		process->pending_ins.params[0].nb_bytes = 0;
+		process->pending_ins.params[1].nb_bytes = 0;
+		process->pending_ins.params[2].nb_bytes = 0;
 		process->live = 0;
 		++process->player->nb_proc;
 	}
@@ -73,6 +86,7 @@ t_list			*add_process(t_vm *vm, int index, int start, t_process *src)
 		process->player = &vm->player[index];
 		process->pc = start;
 		process->reg[0] = process->player->num;
+		process->ins_bytelen = 0;
 	}
 	process->nb = ++nb;
 	if (ft_add_to_list_ptr(&vm->proc, (void *)process, sizeof(t_process)))

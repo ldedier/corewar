@@ -6,7 +6,7 @@
 /*   By: cammapou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 17:32:49 by cammapou          #+#    #+#             */
-/*   Updated: 2019/01/18 00:19:36 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/02/08 18:37:16 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		ft_process_parse_direct(char *str, int index, t_env *e)
 {
-	if (e->parser.current_instruction->op.describe_address)
+	if (e->parser.current_instruction->op->describe_address)
 	{
 		e->parser.current_instruction->params[index].nb_bytes = E_IND;
 		e->champ.header.prog_size += E_IND;
@@ -25,7 +25,7 @@ int		ft_process_parse_direct(char *str, int index, t_env *e)
 		e->champ.header.prog_size += E_DIR;
 	}
 	e->parser.current_instruction->ocp |= (DIR_CODE << (6 - (2 * index)));
-	if (!(T_DIR & e->parser.current_instruction->op.arg_types[index]))
+	if (!(T_DIR & e->parser.current_instruction->op->arg_types[index]))
 		return (ft_log_custom_wrong_param_type("direct", index, 0, e));
 	e->parser.current_instruction->params[index].type |= T_DIR;
 	if (str[0] == LABEL_CHAR)
@@ -58,7 +58,7 @@ int		ft_process_parse_register(char *str, int index, t_env *e)
 	e->parser.current_instruction->ocp |= (REG_CODE << (6 - (2 * index)));
 	i = 0;
 	str2 = str;
-	if (!(T_REG & e->parser.current_instruction->op.arg_types[index]))
+	if (!(T_REG & e->parser.current_instruction->op->arg_types[index]))
 		return (ft_log_custom_wrong_param_type("register", index, 0, e));
 	if (str[0] == '\0')
 		return (ft_log_error(LEXICAL_ERROR, 0, e));

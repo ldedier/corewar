@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 17:10:34 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/07 19:33:03 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/08 18:06:33 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int		ins_live(t_vm *vm, t_process *proc, t_parameter arg[3])
 		vm->winner = player;
 		live = (t_fade *)ft_memalloc(sizeof(t_fade));
 		live->pc = proc->pc;
-//		live->color = *(int *)player->color.value;
+		live->color = *(int *)player->color.value;
 		live->value = FADE_LEN;
 		display_player_alive(vm, player);
 		if (ft_add_to_list_ptr(&vm->live_ok, (void *)live, sizeof(t_fade)))

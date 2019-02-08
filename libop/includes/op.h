@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 19:01:37 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/08 15:24:29 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/08 18:42:48 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ typedef struct					s_parameter
 
 struct							s_instruction
 {
-	t_op						op;
+	t_op						*op;
 	t_parameter					params[3];
 	unsigned int				address;
 	int							nb_line;

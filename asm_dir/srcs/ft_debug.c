@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/01 16:53:52 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/15 17:00:28 by cammapou         ###   ########.fr       */
+/*   Updated: 2019/02/08 17:14:19 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_print_param(t_parameter param, int index)
 			ft_printf("%s\n", param.label_name);
 		}
 		ft_printf("%d\n", param.value);
-		return ;
+		return ; 
 	}
 	else if (param.type & T_IND)
 	{
@@ -43,9 +43,9 @@ void	ft_print_param(t_parameter param, int index)
 	}
 }
 
-void	ft_print_op(t_op op)
+void	ft_print_op(t_op *op)
 {
-	ft_printf("opcode: %#04x\n", op.opcode);
+	ft_printf("opcode: %#04x\n", op->opcode);
 }
 
 void	ft_print_instruction(t_instruction *instruction)
@@ -56,10 +56,10 @@ void	ft_print_instruction(t_instruction *instruction)
 	ft_printf(RED"instruction line %d:\n"EOC, instruction->nb_line);
 	ft_printf("address: %d\n", instruction->address);
 	ft_print_op(instruction->op);
-	if (instruction->op.has_ocp)
+	if (instruction->op->has_ocp)
 		ft_printf("Octet de Codage des Parametres: %#04x (%08b)\n", instruction->ocp,
 		instruction->ocp);
-	while (i < instruction->op.nb_params)
+	while (i < instruction->op->nb_params)
 	{
 		ft_print_param(instruction->params[i], i + 1);
 		i++;

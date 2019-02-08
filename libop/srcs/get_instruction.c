@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 16:33:31 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/07 20:54:43 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/08 18:37:13 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int			getval_params(char *arena, t_instruction *ins, int i, int mod)
 	t_parameter	*param;
 
 	j = -1;
-	while (++j < ins->op.nb_params)
+	while (++j < ins->op->nb_params)
 	{
 		param = &ins->params[j];
 		param->value = getval_mod(arena, i, param->nb_bytes, mod);
@@ -71,10 +71,10 @@ int			getval_params(char *arena, t_instruction *ins, int i, int mod)
 			return (-1);
 		}
 	}
-	if (((ins->op.opcode == STI || ins->op.opcode == ST || ins->op.opcode == AFF) && ins->params[0].type != T_REG)
-			|| ((ins->op.opcode == LD || ins->op.opcode == LLD) && ins->params[1].type != T_REG)
-			|| (ins->op.opcode >= ADD && ins->op.opcode <= XOR && ins->params[2].type != T_REG)
-			|| ((ins->op.opcode == LDI || ins->op.opcode == LLDI) && ins->params[2].type != T_REG))
+	if (((ins->op->opcode == STI || ins->op->opcode == ST || ins->op->opcode == AFF) && ins->params[0].type != T_REG)
+			|| ((ins->op->opcode == LD || ins->op->opcode == LLD) && ins->params[1].type != T_REG)
+			|| (ins->op->opcode >= ADD && ins->op->opcode <= XOR && ins->params[2].type != T_REG)
+			|| ((ins->op->opcode == LDI || ins->op->opcode == LLDI) && ins->params[2].type != T_REG))
 		return (-1);
 	return (0);
 }
@@ -100,7 +100,7 @@ int			getval_params(char *arena, t_instruction *ins, int i, int mod)
 	{
 		param = &ins->params[arg];
 		hex = hex >> 2;
-		if (arg >= g_op_tab[ins->op.opcode - 1].nb_params)
+		if (arg >= g_op_tab[ins->op->opcode - 1].nb_params)
 			param->type = NA;
 		else
 		{
@@ -109,7 +109,7 @@ int			getval_params(char *arena, t_instruction *ins, int i, int mod)
 				param->nb_bytes = len[(int)param->type];
 			if (param->type == DIR_CODE)
 				param->nb_bytes -=
-					g_op_tab[ins->op.opcode - 1].describe_address * 2;
+					g_op_tab[ins->op->opcode - 1].describe_address * 2;
 		}
 	}
 	if (!op)
@@ -133,33 +133,33 @@ int			get_instruction(char *arena, t_instruction *ins,
 
 	len = 0;
 	hex = *(unsigned char *)(arena + (i % mod));
-	if (!ins->op.opcode && ((int)hex > NB_INSTRUCTIONS || (int)hex == 0))
+	if (!ins->op && ((int)hex > NB_INSTRUCTIONS || (int)hex == 0))
 		return (0);
 	++i;
-		if (!ins->op.opcode)
-			ins->op = g_op_tab[(int)hex - 1];
+		if (!ins->op)
+			ins->op = &g_op_tab[(int)hex - 1];
 		ins->ocp = (unsigned char)*(arena + (i % mod));
-	if (ins->op.has_ocp == OCP_YES)
+	if (ins->op->has_ocp == OCP_YES)
 	{
 		if (!is_valid_ocp((unsigned char)ins->ocp, ins))
 		{
 			len = ins->params[0].nb_bytes + ins->params[1].nb_bytes +
-			ins->params[2].nb_bytes + ins->op.has_ocp + 1;
+			ins->params[2].nb_bytes + ins->op->has_ocp + 1;
 			return (-len);
 		}
 	}
 	else
 	{
-		if (ins->op.opcode != LIVE)
+		if (ins->op->opcode != LIVE)
 			ins->params[0].type = IND_CODE;
 		else
-			ins->params[0].type = g_op_tab[ins->op.opcode - 1].arg_types[0];
+			ins->params[0].type = g_op_tab[ins->op->opcode - 1].arg_types[0];
 		ins->params[0].nb_bytes =
-			4 - 2 * g_op_tab[ins->op.opcode - 1].describe_address;
+			4 - 2 * g_op_tab[ins->op->opcode - 1].describe_address;
 	}
 		len = ins->params[0].nb_bytes + ins->params[1].nb_bytes +
-						ins->params[2].nb_bytes + ins->op.has_ocp + 1;
-	if (getval_params(arena, ins, i + ins->op.has_ocp, mod) == -1)
+						ins->params[2].nb_bytes + ins->op->has_ocp + 1;
+	if (getval_params(arena, ins, i + ins->op->has_ocp, mod) == -1)
 	{
 		return (-len);
 	}

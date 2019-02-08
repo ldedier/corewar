@@ -6,7 +6,7 @@
 /*   By: cammapou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 17:18:58 by cammapou          #+#    #+#             */
-/*   Updated: 2019/01/15 17:22:09 by cammapou         ###   ########.fr       */
+/*   Updated: 2019/02/08 18:37:21 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int		ft_fill_instructions_labels_values(t_env *e)
 	{
 		instruction = (t_instruction *)(ptr->content);
 		i = 0;
-		while (i < instruction->op.nb_params)
+		while (i < instruction->op->nb_params)
 		{
 			if (instruction->params[i].type & T_LAB)
 			{

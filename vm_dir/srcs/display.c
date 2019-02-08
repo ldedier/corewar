@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 21:43:44 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/07 20:20:16 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/08 17:14:22 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ void		display_proc_ins(t_vm *vm, t_process *proc)
 	int arg_type;
 	int	val;
 
-	if (vm->visu.active || !(vm->display & (1 << MSG_INS)))
+	if (!(vm->display & (1 << MSG_INS)))
 		return ;
 	i = -1;
-	ft_printf("\nP %4d | %s", proc->nb, proc->pending_ins.op.instruction_name);
-	while (++i < proc->pending_ins.op.nb_params)
+	ft_printf("\nP %4d | %s", proc->nb, proc->pending_ins.op->instruction_name);
+	while (++i < proc->pending_ins.op->nb_params)
 	{
 		if (proc->pending_ins.params[i].retrieval_mode)
 			ft_printf(" %d", proc->pending_ins.params[i].dest_value);
@@ -31,7 +31,7 @@ void		display_proc_ins(t_vm *vm, t_process *proc)
 		{
 			val = proc->pending_ins.params[i].value;
 			arg_type = proc->pending_ins.params[i].type;
-			if (!(proc->pending_ins.op.opcode == ST && i == 1)) // pas reussi a gerer autrement octobre rouge st r1 3 en 3265
+			if (!(proc->pending_ins.op->opcode == ST && i == 1)) // pas reussi a gerer autrement octobre rouge st r1 3 en 3265
 				ft_printf(" %s%d", arg_type == REG_CODE ? "r" : "", val);
 			else
 				ft_printf(" %d", val);
@@ -51,19 +51,19 @@ void		display_player_intro(t_player *player)
 
 void		display_resize(t_vm *vm)
 {
-	if (!vm->visu.active && vm->display & (1 << MSG_CYCLE))
+	if (vm->display & (1 << MSG_CYCLE))
 		ft_printf("\nCycle to die is now %d", vm->c_to_die);
 }
 
 void		display_player_alive(t_vm *vm, t_player *player)
 {
-	if (!vm->visu.active && vm->display & (1 << MSG_LIVE))
+	if (vm->display & (1 << MSG_LIVE))
 		ft_printf("\nPlayer %d (%s) is said to be alive", player->num, player->name);
 }
 
 void		display_last_live(t_vm *vm, t_process *proc)
 {
-	if (!vm->visu.active && vm->display & (1 << MSG_DEATH))
+	if (vm->display & (1 << MSG_DEATH))
 		ft_printf("\nProcess %d hasn't lived for %d cycles (CTD %d)",
 				proc->nb,
 				vm->total_cycle - proc->live_cycle,
@@ -72,7 +72,7 @@ void		display_last_live(t_vm *vm, t_process *proc)
 
 void		display_cycle(t_vm *vm)
 {
-	if (!vm->visu.active && vm->display & (1 << MSG_CYCLE))
+	if (vm->display & (1 << MSG_CYCLE))
 		ft_printf("\nIt is now cycle %d", vm->total_cycle);
 }
 
@@ -92,9 +92,9 @@ void		display_move(t_vm *vm, t_process *proc)
 
 	len = ft_abs(proc->ins_bytelen);
 
-	if (vm->visu.active || !(vm->display & (1 << MSG_MOVE)))
+	if (!(vm->display & (1 << MSG_MOVE)))
 		return ;
-	if (proc->pending_ins.op.opcode == ZJMP && proc->carry)
+	if (proc->pending_ins.op->opcode == ZJMP && proc->carry)
 		return ;
 	proc->pc = mod(proc->pc, MEM_SIZE);
 	ft_printf("\nADV %d (0x%04x -> 0x%04x) ", len, proc->pc, (proc->pc + len));

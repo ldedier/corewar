@@ -6,7 +6,7 @@
 /*   By: cammapou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 17:26:08 by cammapou          #+#    #+#             */
-/*   Updated: 2019/01/16 14:59:10 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/02/08 18:37:17 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ int		ft_nb_params_coherent(char *str, t_env *e)
 		i++;
 		if (str[i] == SEPARATOR_CHAR)
 		{
-			if (++nb_params > e->parser.current_instruction->op.nb_params)
+			if (++nb_params > e->parser.current_instruction->op->nb_params)
 			{
 				ft_log_custom_nb_params_error(e);
 				return (0);
 			}
 		}
 	}
-	if (nb_params == e->parser.current_instruction->op.nb_params)
+	if (nb_params == e->parser.current_instruction->op->nb_params)
 		return (1);
 	else
 	{
