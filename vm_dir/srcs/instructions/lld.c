@@ -26,7 +26,7 @@ int		ins_lld(t_vm *vm, t_process *proc, t_parameter arg[3])
 	proc->carry = !arg[0].dest_value;
 	arg[0].retrieval_mode = 1;
 	arg[1].retrieval_mode = 0;
-//	if (!vm->visu.active && (vm->display & (1 << MSG_INS)))
+//if (!vm->visu.active && (vm->display & (1 << MSG_INS)))
 		display_proc_ins(vm, proc);
 	return (SUCCESS);
 }

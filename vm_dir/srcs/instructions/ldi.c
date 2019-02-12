@@ -36,7 +36,6 @@ int		ins_ldi(t_vm *vm, t_process *proc, t_parameter arg[3])
 		ft_printf("\n%6s | -> load from %d + %d = %d (with pc and mod %d)", "",
 				arg[0].dest_value, arg[1].dest_value,
 				arg[0].dest_value + arg[1].dest_value, ind);
-
 	i = -1;
 	arg[0].dest_value %= IDX_MOD;
 	arg[1].dest_value %= IDX_MOD;

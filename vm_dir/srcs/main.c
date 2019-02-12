@@ -45,10 +45,7 @@ int		main(int argc, char **argv, char **env)
 	if (!init_processes(&vm))
 		error_exit_msg(INIT_PROC_ERROR);
 	while (vm.proc)
-	{
-
 		process_cycle(&vm);
-	}
 	display_winner(&vm);
 	return (0);
 }

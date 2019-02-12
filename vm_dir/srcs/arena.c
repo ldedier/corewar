@@ -82,3 +82,36 @@ void			update_buttons(t_vm *vm)
 	else
 		vm->visu.buttons[CLEAN_ARENA_BUTTON].enabled = 0;
 }
+
+/*
+** dump is called in every cycle to check if we have reached the max cycle
+** amount set by the [-dump] option
+*/
+
+void			dump(t_vm *vm)
+{
+	int		i;
+	int		hex;
+
+	if (vm->total_cycle >= vm->dump)
+	{
+		i = -1;
+		while (++i < nb_players)
+			display_player_intro(vm->player[i]);
+		hex = 0;
+		i = 0;
+		while (i < MEM_SIZE)
+		{
+			if (i % 32 == 0)
+				ft_printf("0x%04x : ", hex);
+			ft_printf("%02x ", 0xFF & vm->arena[i]);
+			if (((i + 1) % 32) == 0)
+			{
+				ft_printf("\n");
+				hex += 32;
+			}
+			i++;
+		}
+		exit(1);
+	}
+}

@@ -35,7 +35,7 @@ void			init_vm(t_vm *vm, char **argv, char **env)
 	vm->c_to_die = CYCLE_TO_DIE;
 	vm->files = argv;
 	vm->win = 0;
-	vm->dump = 0;
+	vm->dump = -1;
 	vm->checks = MAX_CHECKS;
 	vm->live = 0;
 	vm->proc = NULL;

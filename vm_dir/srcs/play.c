@@ -152,7 +152,7 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 			display_move(vm, proc);
 //		if (!proc->ins_bytelen) // Enlever une fois que tout bien bien bien teste
 //			proc->pc = mod(proc->pc + old_op, MEM_SIZE);
-//		else 
+//		else
 			proc->pc = mod(proc->pc - proc->ins_bytelen, MEM_SIZE);
 		}
 		ins->op = NULL;
@@ -207,6 +207,8 @@ void			process_cycle(t_vm *vm)
 	}
 	++vm->cycle;
 	++vm->total_cycle;
+	if (vm->dump >= 0)
+		dump(vm);
 }
 
 /*

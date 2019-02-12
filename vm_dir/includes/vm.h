@@ -206,6 +206,7 @@ int					ins_aff(t_vm *vm, t_process *proc, t_parameter arg[3]);
 void				process_cycle(t_vm *vm);
 int					handle_end_cycle(t_vm *vm, int *cycle);
 int					play(t_vm *vm);
+void				dump(t_vm *vm);
 
 /*
 ** UTILS
