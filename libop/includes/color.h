@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/22 15:55:47 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/22 19:15:31 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/08 15:49:08 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <player.h>
 
 # define COL_DESIGNATOR		"brgwlmcyBRGWLMCYx"
-# define DEFAULT_COLORS		"xgrclmwyxGRCLMWY"
+# define DEFAULT_COLORS		"xGMCWrlyxGRCLMWY"
 # define NB_DESIGNATOR		17
 # define NB_COLORS			17
 # define MAX_PL_COLOR		9
@@ -59,11 +59,11 @@
 # define COL_GREY		0xABB2B9
 # define COL_BBLACK		0x17202A
 # define COL_BRED		0xE74C3C
-# define COL_BGREEN		0x8BC34A
-# define COL_BBROWN		0xFFCA28
+# define COL_BGREEN		0x21F500
+# define COL_BBROWN		0xFFD707
 # define COL_BBLUE		0x5DADE2
-# define COL_BMAGENTA	0xF48FB1
-# define COL_BCYAN		0x00BCDA
+# define COL_BMAGENTA	0xFF0461
+# define COL_BCYAN		0x0066FF
 # define COL_BGREY		0xFFFFFF
 # define COL_OFF		0xFFFFFF
 

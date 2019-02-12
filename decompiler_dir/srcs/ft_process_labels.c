@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 15:30:22 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/17 15:32:11 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/02/08 17:08:28 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,12 @@ int		ft_process_asm_labels(t_env *e)
 	{
 		instru = (t_instruction *)ptr->content;
 		i = 0;
-		while (i < instru->op.nb_params)
+		while (i < instru->op->nb_params)
 		{
 			if (instru->params[i].type != REG_CODE &&
-				((i == 0 && (instru->op.opcode == FORK ||
-				instru->op.opcode == ZJMP || instru->op.opcode == LDI))
-					|| (i == 1 && instru->op.opcode == STI)))
+				((i == 0 && (instru->op->opcode == FORK ||
+				instru->op->opcode == ZJMP || instru->op->opcode == LDI))
+					|| (i == 1 && instru->op->opcode == STI)))
 				ft_update_labeled_to(instru, i, e->champ.instructions);
 			else
 				instru->params[i].labeled_to = NULL;

@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/28 18:09:06 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/08 18:42:00 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ t_player			*duel(t_vm *vm, t_player *pl1, t_player *pl2);
 */
 
 void				display_player_intro(t_player *player);
-void				display_player_alive(t_vm *vm, t_process *proc);
+void				display_player_alive(t_vm *vm, t_player *player);
 void				display_cycle(t_vm *vm);
 void				display_resize(t_vm *vm);
 void				display_move(t_vm *vm, t_process *proc);
@@ -215,7 +215,7 @@ int					mod(int val, int max);
 int					ft_pow(int n, int pow);
 int					getval(t_vm *vm, t_process *proc, t_parameter arg);
 t_process			*get_proc_index(t_list *lst, int index);
-t_player			*get_player_num(t_list *lst, int num);
+t_player			*get_player_num(t_vm *vm, t_list *lst, int num);
 int					is_reg(int num);
 int					list_size(t_vm *vm, t_list *l);
 

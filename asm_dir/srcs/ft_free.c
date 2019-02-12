@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 00:35:48 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/16 23:08:04 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/02/08 17:05:50 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_free_instruction(t_instruction *instruction)
 	int i;
 
 	i = 0;
-	while (i < instruction->op.nb_params)
+	while (i < instruction->op->nb_params)
 	{
 		if (instruction->params[i].label_name)
 			free(instruction->params[i].label_name);

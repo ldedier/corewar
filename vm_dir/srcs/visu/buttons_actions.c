@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 21:45:31 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/20 15:57:20 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/08 15:31:58 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ int		start_fight(t_vm *vm)
 int		go_back(t_vm *vm, t_button *this, t_ixy xy)
 {
 	(void)this;
+	clear_vm(vm);
+	dispatch_players_init(vm);
 	vm->visu.phase = PHASE_INIT;
 	ft_update_cursor(vm, xy);
 	return (0);

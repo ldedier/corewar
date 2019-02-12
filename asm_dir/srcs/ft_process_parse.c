@@ -6,7 +6,7 @@
 /*   By: cammapou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 17:30:46 by cammapou          #+#    #+#             */
-/*   Updated: 2019/01/18 00:20:27 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/02/08 18:37:10 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int		ft_process_populate_from_opcode(char *opcode_str, t_env *e)
 	{
 		if (!ft_strcmp(opcode_str, g_op_tab[i].instruction_name))
 		{
-			e->parser.current_instruction->op = g_op_tab[i];
+			e->parser.current_instruction->op = &g_op_tab[i];
 			free(opcode_str);
 			return (0);
 		}
@@ -111,7 +111,7 @@ int		ft_process_parse_indirect(char *str, int index, t_env *e)
 	e->champ.header.prog_size += E_IND;
 	e->parser.current_instruction->params[index].nb_bytes = E_IND;
 	e->parser.current_instruction->ocp |= (IND_CODE << (6 - (2 * index)));
-	if (!(T_IND & e->parser.current_instruction->op.arg_types[index]))
+	if (!(T_IND & e->parser.current_instruction->op->arg_types[index]))
 		return (ft_log_custom_wrong_param_type("indirect", index, 0, e));
 	e->parser.current_instruction->params[index].type |= T_IND;
 	if (str[0] == LABEL_CHAR)

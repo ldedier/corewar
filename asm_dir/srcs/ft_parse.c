@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 20:06:08 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/16 17:43:44 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/02/08 17:05:31 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int			ft_populate_from_opcode(char *str, int start, int i, t_env *e)
 	if (ft_process_populate_from_opcode(opcode_str, e))
 		return (ft_log_error(UNKNOWN_INSTRUCTION, 0, e));
 	e->champ.header.prog_size++;
-	if (e->parser.current_instruction->op.has_ocp)
+	if (e->parser.current_instruction->op->has_ocp)
 		e->champ.header.prog_size++;
 	e->parser.column_offset += i - start;
 	return (ft_parse_params(str, i, e));
@@ -37,7 +37,7 @@ int			ft_parse_params(char *str, int i, t_env *e)
 	{
 		e->parser.column_offset = save;
 		return (ft_log_error(NO_PARAMETERS, -
-			ft_strlen(e->parser.current_instruction->op.instruction_name), e));
+			ft_strlen(e->parser.current_instruction->op->instruction_name), e));
 	}
 	if (!(params_split = ft_strsplit(&(str[i]), SEPARATOR_CHAR)))
 		return (ft_log_error(MALLOC_ERROR, 0, e));

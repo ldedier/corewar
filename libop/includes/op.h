@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 19:01:37 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/03 19:46:25 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/08 18:42:48 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,10 @@
 # define IND_CODE				3
 # define MAX_ARGS_NUMBER		4
 # define MAX_PLAYERS			4
-# define MEM_SIZE				(MAX_PLAYERS * 1024)
+# define MEM_SIZE				(4 * 1024)
 # define IDX_MOD				(MEM_SIZE / 8)
-# define CHAMP_MAX_SIZE			(MEM_SIZE / (MAX_PLAYERS + 2))
+# define CHAMP_MAX_SIZE			(MEM_SIZE / 6)
+//# define CHAMP_MAX_SIZE			(MEM_SIZE / (MAX_PLAYERS + 2))
 # define COMMENT_CHAR			'#'
 # define REGISTER_CHAR			'r'
 # define LABEL_CHAR				':'
@@ -147,7 +148,7 @@ typedef struct					s_parameter
 
 struct							s_instruction
 {
-	t_op						op;
+	t_op						*op;
 	t_parameter					params[3];
 	unsigned int				address;
 	int							nb_line;

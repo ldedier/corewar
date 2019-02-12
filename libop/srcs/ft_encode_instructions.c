@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 17:39:57 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/30 18:22:16 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/02/08 18:37:11 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,15 @@ static int		ft_encode_instruction(int fd, t_instruction *instruction,
 	int i;
 
 	if (create_labels)
-		ft_dprintf(fd, "	%s\t", instruction->op.instruction_name);
+		ft_dprintf(fd, "	%s\t", instruction->op->instruction_name);
 	else
-		ft_dprintf(fd, "%s\t", instruction->op.instruction_name);
+		ft_dprintf(fd, "%s\t", instruction->op->instruction_name);
 	i = 0;
-	while (i < instruction->op.nb_params)
+	while (i < instruction->op->nb_params)
 	{
 		ft_print_parameter(fd, &instruction->params[i]);
 		i++;
-		if (i < instruction->op.nb_params)
+		if (i < instruction->op->nb_params)
 			ft_dprintf(fd, "%c", SEPARATOR_CHAR);
 	}
 	ft_dprintf(fd, "\n");

@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 00:59:48 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/16 16:36:19 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/02/08 18:37:09 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void		ft_encode_param(int fd, t_instruction *instruction, int index)
 		ft_write(fd, instruction->params[index].value, E_IND);
 	else if (instruction->params[index].type & T_DIR)
 	{
-		if (instruction->op.describe_address)
+		if (instruction->op->describe_address)
 			ft_write(fd, instruction->params[index].value, E_IND);
 		else
 			ft_write(fd, instruction->params[index].value, E_DIR);
@@ -82,10 +82,10 @@ void		ft_encode_instruction(int fd, t_instruction *instruction)
 	int i;
 
 	i = 0;
-	ft_write(fd, instruction->op.opcode, 1);
-	if (instruction->op.has_ocp)
+	ft_write(fd, instruction->op->opcode, 1);
+	if (instruction->op->has_ocp)
 		ft_write(fd, instruction->ocp, 1);
-	while (i < instruction->op.nb_params)
+	while (i < instruction->op->nb_params)
 	{
 		ft_encode_param(fd, instruction, i);
 		i++;

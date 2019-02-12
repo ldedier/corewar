@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 17:38:14 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/30 11:55:23 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/08 18:37:05 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,6 @@ int			mod(int val, int max)
 		res = val % max;
 	else
 		res = (val + max) % max;
-//	ft_printf("res = %d max = %d\n", res, max);
-//	if (res == -max)
-//		res = 0;
-//	ft_printf("val = %d mod = %d res = %d\n", val, max, res);
 	return (res);
 }
 
@@ -41,17 +37,16 @@ int			ft_pow(int n, int pow)
 	return (result);
 }
 
-t_player	*get_player_num(t_list *lst, int num)
+t_player	*get_player_num(t_vm *vm, t_list *lst, int num)
 {
-	t_list	*tmp;
+	int		i;
 
-	tmp = lst;
-	while (tmp)
-	{
-		if (((t_process *)(tmp->content))->player->num == num)
-			return (((t_process *)(tmp->content))->player);
-		tmp = tmp->next;
-	}
+	(void)lst;
+	i = -1;
+
+	while (++i < MAX_PLAYERS)
+		if (vm->player[i].num == num && vm->player[i].relevant)
+			return (&vm->player[i]);
 	return (NULL);
 }
 

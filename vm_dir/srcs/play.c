@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/06 16:05:48 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/08 20:26:38 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,25 +65,25 @@ int		list_size(t_vm *vm, t_list *l)
 }
 
 
-static int		kill_process(t_vm *vm, t_list **proc_lst, t_list *proc)
+static int		kill_process(t_vm *vm, t_list **proc_lst, t_list **proc)
 {
 	t_fade	*killed_proc;
 	(void)*proc_lst;
 
 	killed_proc = (t_fade *)ft_memalloc(sizeof(t_fade));
-	killed_proc->pc = ((t_process *)proc->content)->pc;
+	killed_proc->pc = ((t_process *)(*proc)->content)->pc;
 	killed_proc->color =
-					*((int *)((t_process *)proc->content)->player->color.value);
+					*((int *)((t_process *)(*proc)->content)->player->color.value);
 	killed_proc->value = MAX_FADE;
-	--((t_process *)proc->content)->player->nb_proc;
+	--((t_process *)(*proc)->content)->player->nb_proc;
 	if (ft_add_to_list_ptr(&vm->killed_proc,
 										(void *)killed_proc, sizeof(t_fade)))
 		return (-1);
-		kill_adjust_ptr(&vm->proc, &proc);
-		display_last_live(vm, (t_process *)proc->content);
+		kill_adjust_ptr(&vm->proc, proc);
+		display_last_live(vm, (t_process *)(*proc)->content);
 
-	ft_memdel((void **)&proc->content);
-	ft_memdel((void **)&proc);
+	ft_memdel((void **)&(*proc)->content);
+	ft_memdel((void **)proc);
 	return (0);
 }
 
@@ -97,18 +97,22 @@ static int		reset_live_allprocesses(t_vm *vm)
 {
 	t_list		*proc_lst;
 	t_process	*proc;
+	t_list		*tmp;
 
 	proc_lst = vm->proc;
 	while (proc_lst && (proc = ((t_process *)proc_lst->content)))
 	{
+		tmp = proc_lst->next;
 		if (vm->total_cycle - proc->live_cycle >= vm->c_to_die)
-			kill_process(vm, &vm->proc, proc_lst);
+		{
+			kill_process(vm, &vm->proc, &proc_lst);
+		}
 		else
 		{
 			proc->live = 0;
 			proc->player->live = 0;
 		}
-		proc_lst = proc_lst->next;
+			proc_lst = tmp;
 	}
 	vm->live = 0;
 	vm->issued_live = 0;
@@ -128,37 +132,42 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 		&ins_live, &ins_ld, &ins_st, &ins_add, &ins_sub, &ins_and, &ins_or,
 		&ins_xor, &ins_zjmp, &ins_ldi, &ins_sti, &ins_fork, &ins_lld, &ins_lldi,
 		&ins_lfork, &ins_aff};
-	int old_op;
 	t_instruction	*ins;
 
 	ins = &proc->pending_ins;
-	if (--ins->op.nb_cycles > 1)
+	if (--proc->ins_cycle > 1)
 		return (0);
-	if (ins->op.nb_cycles == 1)
+	if (proc->ins_cycle == 1)
 	{
-		old_op = ins->op.opcode;
 		proc->ins_bytelen = get_instruction(vm->arena, ins, proc->pc, MEM_SIZE);
 		if (proc->ins_bytelen > 0)
 		{
-			f_ins[ins->op.opcode](vm, proc, ins->params);
+			f_ins[ins->op->opcode](vm, proc, ins->params);
 			display_move(vm, proc);
-			if (ins->op.opcode != ZJMP || !proc->carry)
+			if (ins->op->opcode != ZJMP || !proc->carry)
 				proc->pc = mod(proc->pc + proc->ins_bytelen, MEM_SIZE);
 		}
 		else
 		{
-		display_move(vm, proc);
-		if (!proc->ins_bytelen)
-			proc->pc = mod(proc->pc + old_op, MEM_SIZE);
-		else 
+			display_move(vm, proc);
+//		if (!proc->ins_bytelen) // Enlever une fois que tout bien bien bien teste
+//			proc->pc = mod(proc->pc + old_op, MEM_SIZE);
+//		else 
 			proc->pc = mod(proc->pc - proc->ins_bytelen, MEM_SIZE);
 		}
-		ft_bzero(ins, sizeof(t_instruction));
+		ins->op = NULL;
+		ins->params[0].nb_bytes = 0;
+		ins->params[1].nb_bytes = 0;
+		ins->params[2].nb_bytes = 0;
 		proc->ins_bytelen = 0;
 	}
 	else if (!(proc->ins_bytelen = get_instruction(vm->arena, ins, proc->pc, MEM_SIZE)))
+	{
 			if (++proc->pc == MEM_SIZE)
 				proc->pc -= MEM_SIZE;
+	}
+	else
+		proc->ins_cycle = ins->op->nb_cycles;
 	return (0);
 }
 
