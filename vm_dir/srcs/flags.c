@@ -71,6 +71,7 @@ static void	add_player_n(t_vm *vm, int argc, char **argv, int *cur)
 			error_exit_msg(WRG_P_NUM);
 	}
 	vm->player[vm->nb_players].num = vm->nb;
+	vm->player[vm->nb_players].num_type = 1;
 	*cur += 2;
 }
 

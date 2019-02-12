@@ -51,6 +51,7 @@ typedef struct		s_player
 	int				nb_proc;
 	int				header_size;
 	int				num;
+	char			num_type;
 	char			relevant;
 	char			*cor_name;
 	char			from_server;
