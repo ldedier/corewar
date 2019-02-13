@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 21:43:44 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/08 17:14:22 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/13 19:21:19 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void		display_resize(t_vm *vm)
 void		display_player_alive(t_vm *vm, t_player *player)
 {
 	if (vm->display & (1 << MSG_LIVE))
-		ft_printf("\nPlayer %d (%s) is said to be alive", player->num, player->name);
+		ft_printf("\nPlayer %d (%s) is said to be alive", -1 * player->num, player->name);
 }
 
 void		display_last_live(t_vm *vm, t_process *proc)
