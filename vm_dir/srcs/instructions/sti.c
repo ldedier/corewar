@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 17:18:28 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/08 19:45:55 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/14 19:55:39 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int		ins_sti(t_vm *vm, t_process *proc, t_parameter arg[3])
 
 	arg[1].retrieval_mode = 1;
 	arg[2].retrieval_mode = 1;
+//	ft_printf("ocp = %3x\n", proc->pending_ins.ocp);
 	display_proc_ins(vm, proc);
 	dest = (arg[1].dest_value + arg[2].dest_value);
 	if (!vm->visu.active && (vm->display & (1 << MSG_INS)))

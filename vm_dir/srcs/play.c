@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/13 19:28:32 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/14 20:26:16 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,8 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 	if (proc->ins_cycle == 1)
 	{
 		proc->ins_bytelen = get_instruction(vm->arena, ins, proc->pc, MEM_SIZE);
+//		if (ins->op->opcode == LIVE)
+//			ft_printf("bytlen = %d\n", proc->ins_bytelen);
 		if (proc->ins_bytelen > 0)
 		{
 			f_ins[ins->op->opcode](vm, proc, ins->params);
@@ -149,6 +151,14 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 		}
 		else
 		{
+//			if (proc->ins_bytelen < 0 && ins->op->carry)
+//				proc->carry = 0;
+//			if (ins->op->carry)
+//			{
+//				proc->carry = 0;
+				
+//			if (proc->nb == 39)
+//				ft_printf("\nP   39 | REJECTED ins %s\n", ins->op->description);
 			display_move(vm, proc);
 //		if (!proc->ins_bytelen) // Enlever une fois que tout bien bien bien teste
 //			proc->pc = mod(proc->pc + old_op, MEM_SIZE);
@@ -167,7 +177,15 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 				proc->pc -= MEM_SIZE;
 	}
 	else
+	{
 		proc->ins_cycle = ins->op->nb_cycles;
+//		if (ins->op->carry)
+//		{
+//			if (proc->nb == 39)
+//				ft_printf("\nP   39 | instruction = %s\n", ins->op->description);
+//			proc->carry = 0;
+//		}
+	}
 	return (0);
 }
 

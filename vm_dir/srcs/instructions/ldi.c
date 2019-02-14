@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 19:28:45 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/02/07 20:53:01 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/14 20:03:15 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,6 @@ int		ins_ldi(t_vm *vm, t_process *proc, t_parameter arg[3])
 		++ind;
 	}
 	proc->reg[arg[2].value - 1] = val;
-	proc->carry = !val;
+	proc->carry = !arg[0].value;
 	return (SUCCESS);
 }
