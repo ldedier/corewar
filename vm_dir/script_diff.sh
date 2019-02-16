@@ -101,6 +101,7 @@ then
 	for filename in $champions_folder/*.cor; do
 		for filename2 in $champions_folder/*.cor; do
 			for filename3 in $champions_folder/*.cor; do
+		#	echo "./corewar -$option $filename $filename2 $filename2"
 				rm -f $my_tmp
 				rm -f $zaz_tmp
 				./corewar -$option $filename $filename2 $filename3 > $my_tmp
@@ -144,6 +145,7 @@ then
 				for filename4 in $champions_folder/*.cor; do
 					rm -f $my_tmp
 					rm -f $zaz_tmp
+				#	echo "./corewar -$option $filename $filename2 $filename2 $filename3"
 					./corewar -$option $filename $filename2 $filename3 $filename4 > $my_tmp
 					../zaz/corewar -v $option $filename $filename2 $filename3 $filename4 > $zaz_tmp
 					j=$((j+1))
