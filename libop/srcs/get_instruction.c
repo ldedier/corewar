@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 16:33:31 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/13 21:06:09 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/20 12:35:27 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ int			getval_params(char *arena, t_instruction *ins, int i, int mod)
 			param->nb_bytes = 0;
 		}
 	}
-	if (ins->op->opcode == ST) // pas tres coherent de mettre juste ST, pas LD ou LLD en gestion 3e argument attendu vu le ocp
-		if (op & 0xF)
+	if (ins->op->opcode == ST || ins->op->opcode == STI) // pas tres coherent de mettre juste ST, pas LD ou LLD en gestion 3e argument attendu vu le ocp
+		if (op & 0x3)
 			return (0);
 	if (!op)
 		return (0);
@@ -109,27 +109,48 @@ int			getval_params(char *arena, t_instruction *ins, int i, int mod)
 */
 
 int			get_instruction(char *arena, t_instruction *ins,
-													unsigned int i, int mod)
+													unsigned int i, unsigned int mod)
 {
 	unsigned char	hex;
 	int				len;
-	int				error;
 
 	len = 0;
-	error = 0;
-	hex = *(unsigned char *)(arena + (i % mod));
+	hex = *(unsigned char *)(arena + i);
 	if (!ins->op && ((int)hex > NB_INSTRUCTIONS || (int)hex == 0))
 		return (0);
-	++i;
+	if (++i == mod)
+	{
+		i -= mod;
+//		ft_printf("i = %d mod = %d\n", i, mod);
+	}
+
 		if (!ins->op)
+//		{
 			ins->op = &g_op_tab[(int)hex - 1];
-		ins->ocp = (unsigned char)*(arena + (i % mod));
+//		else if (ins->op->has_ocp && ins->op->opcode != *(unsigned char *)(arena + (i - 1) % mod))
+//		{
+//			ins->ocp = (unsigned char)*(arena + (i % mod));
+//			is_valid_ocp((unsigned char)ins->ocp, ins);
+//			len = ins->params[0].nb_bytes + ins->params[1].nb_bytes +
+//			ins->params[2].nb_bytes + ins->op->has_ocp + 1;
+			
+//			return (-len);
+//		}
+//			return (-(ins->params[0].nb_bytes + ins->params[1].nb_bytes + ins->params[2].nb_bytes + ins->op->has_ocp + 1));
+	//		ft_printf("\nop = %d val in arena = %d, len = %d pc = %#x\n", ins->op->opcode, *(unsigned char *)(arena + (i - 1) % mod), ins->params[0].nb_bytes + ins->params[1].nb_bytes + ins->params[2].nb_bytes + ins->op->has_ocp + 1, i);
+		ins->ocp = (unsigned char)*(arena + i);
+//		}
+//		if (ins->op->opcode == LIVE)
+//			ft_printf("ocp = %d\n", ins->ocp);
 	if (ins->op->has_ocp == OCP_YES)
 	{
-		if (!(error = is_valid_ocp((unsigned char)ins->ocp, ins)))
+		if (!is_valid_ocp((unsigned char)ins->ocp, ins))
 		{
+//		if (ins->op->opcode == LD)
+//			ft_printf("invalid ocp\n");
 			len = ins->params[0].nb_bytes + ins->params[1].nb_bytes +
 			ins->params[2].nb_bytes + ins->op->has_ocp + 1;
+//			ft_printf("return -%d\n", -len);
 			return (-len);
 		}
 			
@@ -145,8 +166,16 @@ int			get_instruction(char *arena, t_instruction *ins,
 	}
 		len = ins->params[0].nb_bytes + ins->params[1].nb_bytes +
 						ins->params[2].nb_bytes + ins->op->has_ocp + 1;
+	if (g_op_tab[*(unsigned char *)(arena + i - 1) - 1].has_ocp && ins->op->has_ocp && ins->op->opcode != *(unsigned char *)(arena + i - 1))
+	{
+//		ft_printf("coucou opcode = %d arena = %d i = %#x\n", ins->op->opcode, *(unsigned char *)(arena + i - 1), i);
+		getval_params(arena, ins, i + ins->op->has_ocp, mod);
+		return (-len);
+	}
 	if (getval_params(arena, ins, i + ins->op->has_ocp, mod) == -1)
 	{
+//		if (ins->op->opcode == LD)
+//			ft_printf("invalid params\n");
 		return (-len);
 	}
 	return (len);

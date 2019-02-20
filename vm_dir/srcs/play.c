@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/14 20:26:16 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/20 12:10:12 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,9 +142,11 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 		proc->ins_bytelen = get_instruction(vm->arena, ins, proc->pc, MEM_SIZE);
 //		if (ins->op->opcode == LIVE)
 //			ft_printf("bytlen = %d\n", proc->ins_bytelen);
-		if (proc->ins_bytelen > 0)
+		if (proc->ins_bytelen > 0/* && ins->op->opcode == *(vm->arena + proc->pc)*/)
 		{
-			f_ins[ins->op->opcode](vm, proc, ins->params);
+//			ft_printf("opcode = %d arena val = %d\n", ins->op->opcode, *(unsigned char *)(vm->arena + proc->pc));
+	//		if (ins->op->opcode == *(unsigned char *)(vm->arena + proc->pc))
+				f_ins[ins->op->opcode](vm, proc, ins->params);
 			display_move(vm, proc);
 			if (ins->op->opcode != ZJMP || !proc->carry)
 				proc->pc = mod(proc->pc + proc->ins_bytelen, MEM_SIZE);
