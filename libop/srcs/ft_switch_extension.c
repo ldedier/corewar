@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 21:23:51 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/10 17:43:01 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/02/25 16:41:20 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,8 @@ int			ft_switch_extension(char *str, char *ext_from, char *ext_to,
 	char	*name;
 	int		len;
 	int		len_ext_from;
-//	int		len_ext_to;
 
 	len = ft_strlen(str);
-//	len_ext_to = ft_strlen(ext_to);
 	len_ext_from = ft_strlen(ext_from);
 	if (ft_is_of_ext_len(str, len, ext_from, len_ext_from))
 	{

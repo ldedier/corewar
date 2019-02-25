@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 16:33:31 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/13 21:06:09 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/25 16:46:09 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int			getval_mod(char *arena, int index, int nb_bytes, int modulo)
 	return (val);
 }
 
-
 /*
 ** store pointer on arg, loop to
 ** beginning if ptr located after mod len in arena
@@ -46,15 +45,18 @@ int			getval_params(char *arena, t_instruction *ins, int i, int mod)
 		param = &ins->params[j];
 		param->value = getval_mod(arena, i, param->nb_bytes, mod);
 		i += param->nb_bytes;
-		if (!param->type || (param->type == T_REG && (param->value > REG_NUMBER || param->value <= 0))) 
-		{
+		if (!param->type || (param->type == T_REG &&
+						(param->value > REG_NUMBER || param->value <= 0)))
 			return (-1);
-		}
 	}
-	if (((ins->op->opcode == STI || ins->op->opcode == ST || ins->op->opcode == AFF) && ins->params[0].type != T_REG)
-			|| ((ins->op->opcode == LD || ins->op->opcode == LLD) && ins->params[1].type != T_REG)
-			|| (ins->op->opcode >= ADD && ins->op->opcode <= XOR && ins->params[2].type != T_REG)
-			|| ((ins->op->opcode == LDI || ins->op->opcode == LLDI) && ins->params[2].type != T_REG))
+	if (((ins->op->opcode == STI || ins->op->opcode == ST ||
+					ins->op->opcode == AFF) && ins->params[0].type != T_REG)
+			|| ((ins->op->opcode == LD || ins->op->opcode == LLD) &&
+					ins->params[1].type != T_REG)
+			|| (ins->op->opcode >= ADD && ins->op->opcode <= XOR &&
+					ins->params[2].type != T_REG)
+			|| ((ins->op->opcode == LDI || ins->op->opcode == LLDI) &&
+					ins->params[2].type != T_REG))
 		return (-1);
 	return (0);
 }
@@ -66,7 +68,7 @@ int			getval_params(char *arena, t_instruction *ins, int i, int mod)
 ** Return 1 if valid, 0 if invalid
 */
 
- int	is_valid_ocp(unsigned char hex, t_instruction *ins)
+int			is_valid_ocp(unsigned char hex, t_instruction *ins)
 {
 	static int		len[4] = {NA, E_REG, E_DIR, E_IND};
 	int				arg;
@@ -85,14 +87,16 @@ int			getval_params(char *arena, t_instruction *ins, int i, int mod)
 		if (param->type >= 0 && param->type < 4)
 			param->nb_bytes = len[(int)param->type];
 		if (param->type == DIR_CODE)
-			param->nb_bytes -= g_op_tab[ins->op->opcode - 1].describe_address * 2;
+			param->nb_bytes -=
+					g_op_tab[ins->op->opcode - 1].describe_address * 2;
 		if (arg >= g_op_tab[ins->op->opcode - 1].nb_params)
 		{
 			param->type = NA;
 			param->nb_bytes = 0;
 		}
 	}
-	if (ins->op->opcode == ST) // pas tres coherent de mettre juste ST, pas LD ou LLD en gestion 3e argument attendu vu le ocp
+	if (ins->op->opcode == ST) // pas tres coherent de mettre juste ST,
+		// pas LD ou LLD en gestion 3e argument attendu vu le ocp
 		if (op & 0xF)
 			return (0);
 	if (!op)
@@ -121,9 +125,9 @@ int			get_instruction(char *arena, t_instruction *ins,
 	if (!ins->op && ((int)hex > NB_INSTRUCTIONS || (int)hex == 0))
 		return (0);
 	++i;
-		if (!ins->op)
-			ins->op = &g_op_tab[(int)hex - 1];
-		ins->ocp = (unsigned char)*(arena + (i % mod));
+	if (!ins->op)
+		ins->op = &g_op_tab[(int)hex - 1];
+	ins->ocp = (unsigned char)*(arena + (i % mod));
 	if (ins->op->has_ocp == OCP_YES)
 	{
 		if (!(error = is_valid_ocp((unsigned char)ins->ocp, ins)))
@@ -132,7 +136,6 @@ int			get_instruction(char *arena, t_instruction *ins,
 			ins->params[2].nb_bytes + ins->op->has_ocp + 1;
 			return (-len);
 		}
-			
 	}
 	else
 	{
@@ -143,11 +146,9 @@ int			get_instruction(char *arena, t_instruction *ins,
 		ins->params[0].nb_bytes =
 			4 - 2 * g_op_tab[ins->op->opcode - 1].describe_address;
 	}
-		len = ins->params[0].nb_bytes + ins->params[1].nb_bytes +
+	len = ins->params[0].nb_bytes + ins->params[1].nb_bytes +
 						ins->params[2].nb_bytes + ins->op->has_ocp + 1;
 	if (getval_params(arena, ins, i + ins->op->has_ocp, mod) == -1)
-	{
 		return (-len);
-	}
 	return (len);
 }

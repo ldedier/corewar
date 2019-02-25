@@ -1,12 +1,12 @@
- /*************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   op.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
+/*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 19:01:37 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/08 18:42:48 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/25 16:54:52 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@
 # define MEM_SIZE				(4 * 1024)
 # define IDX_MOD				(MEM_SIZE / 8)
 # define CHAMP_MAX_SIZE			(MEM_SIZE / 6)
-//# define CHAMP_MAX_SIZE			(MEM_SIZE / (MAX_PLAYERS + 2))
 # define COMMENT_CHAR			'#'
 # define REGISTER_CHAR			'r'
 # define LABEL_CHAR				':'
@@ -47,17 +46,17 @@
 # define NAME_CMD_STRING		".name"
 # define COMMENT_CMD_STRING		".comment"
 # define REG_NUMBER				16
-# define CYCLE_TO_DIE			1536 //anciennement 1536
+# define CYCLE_TO_DIE			1536
 # define CYCLE_DELTA			50
 # define NBR_LIVE				21
-# define MAX_CHECKS				10 //anciennement 10
+# define MAX_CHECKS				10
 
 # define T_REG					1
 # define T_DIR					2
 # define T_IND					4
 # define T_LAB					8
 
-# define PROG_NAME_LENGTH		(128) // anciennement 128
+# define PROG_NAME_LENGTH		(128)
 # define COMMENT_LENGTH			(2048)
 # define COREWAR_EXEC_MAGIC		0xea83f3
 # define NB_INSTRUCTIONS		16
@@ -136,7 +135,7 @@ typedef struct					s_header
 
 typedef struct					s_parameter
 {
-	t_arg_type					type; //T_REG || T_IND || T_DIR || T_LAB
+	t_arg_type					type;
 	int							value;
 	int							dest_value;
 	char						*label_name;

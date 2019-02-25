@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 20:42:40 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/08 15:52:16 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/25 16:47:06 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void		color_on_term(char index)
 
 int			get_color_sdl(char index)
 {
-//	ft_printf("sdl color = %#x\n", *(int *)get_color_ptr(index));
 	return (*(int *)get_color_ptr(index));
 }
 
@@ -72,10 +71,8 @@ int			set_color(t_player *player, char *color_index_ref)
 	index_min_count = 1;
 	i = 0;
 	while (++i < MAX_PL_COLOR)
-	{
 		if (color_counter[i] < color_counter[index_min_count])
 			index_min_count = i;
-	}
 	++color_counter[index_min_count];
 	player->color.index = index_min_count;
 	player->color.value = get_color_ptr(color_index_ref[index_min_count]);
