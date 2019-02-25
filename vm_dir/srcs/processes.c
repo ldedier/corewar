@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:24:20 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/25 15:57:50 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/25 17:43:54 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,5 @@ t_list			*add_process(t_vm *vm, int index, int start, t_process *src)
 	process->nb = ++nb;
 	if (ft_add_to_list_ptr(&vm->proc, (void *)process, sizeof(t_process)))
 		return (NULL);
-	ft_printf("new proc #%d pc = %d\n", process->nb, process->pc);
 	return (vm->proc);
 }

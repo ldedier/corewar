@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/25 15:52:14 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/25 17:44:09 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,17 +119,16 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 	ins = &proc->pending_ins;
 	if (--proc->ins_cycle > 1)
 		return (0);
-		ft_printf("proc #%d pc = %d\n", proc->nb, proc->pc);
 	if (proc->ins_cycle == 1)
 	{
 		proc->ins_bytelen = get_instruction(vm->arena, ins, proc->pc, MEM_SIZE);
-		ft_printf("bytelen = %d\n", proc->ins_bytelen);
 		if (proc->ins_bytelen > 0)
 		{
 			f_ins[ins->op->opcode](vm, proc, ins->params);
 			display_move(vm, proc);
-			if (ins->op->opcode != ZJMP || !proc->carry)
+			if ((ins->op->opcode != ZJMP || !proc->carry))
 				proc->pc = mod(proc->pc + proc->ins_bytelen, MEM_SIZE);
+//			ft_printf("after ins, proc #%d  pc = %d\n", proc->nb,  proc->pc);
 		}
 		else
 		{
@@ -152,7 +151,6 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 	}
 	else
 		proc->ins_cycle = ins->op->nb_cycles;
-	ft_printf("proc #%d pc = %d\n", proc->nb, proc->pc);
 	return (0);
 }
 
