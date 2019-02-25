@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 16:33:31 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/25 16:46:09 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/02/25 18:10:53 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,8 @@ int			is_valid_ocp(unsigned char hex, t_instruction *ins)
 			param->nb_bytes = 0;
 		}
 	}
-	if (ins->op->opcode == ST) // pas tres coherent de mettre juste ST,
-		// pas LD ou LLD en gestion 3e argument attendu vu le ocp
-		if (op & 0xF)
+	if (ins->op->opcode == ST || ins->op->opcode == STI) // pas tres coherent de mettre juste ST, pas LD ou LLD en gestion 3e argument attendu vu le ocp
+		if (op & 0x3)
 			return (0);
 	if (!op)
 		return (0);
@@ -113,24 +112,23 @@ int			is_valid_ocp(unsigned char hex, t_instruction *ins)
 */
 
 int			get_instruction(char *arena, t_instruction *ins,
-													unsigned int i, int mod)
+											unsigned int i, unsigned int mod)
 {
 	unsigned char	hex;
 	int				len;
-	int				error;
 
 	len = 0;
-	error = 0;
-	hex = *(unsigned char *)(arena + (i % mod));
+	hex = *(unsigned char *)(arena + i);
+	if (++i == mod)
+		i -= mod;
 	if (!ins->op && ((int)hex > NB_INSTRUCTIONS || (int)hex == 0))
 		return (0);
-	++i;
 	if (!ins->op)
 		ins->op = &g_op_tab[(int)hex - 1];
-	ins->ocp = (unsigned char)*(arena + (i % mod));
+	ins->ocp = (unsigned char)*(arena + i);
 	if (ins->op->has_ocp == OCP_YES)
 	{
-		if (!(error = is_valid_ocp((unsigned char)ins->ocp, ins)))
+		if (!is_valid_ocp((unsigned char)ins->ocp, ins))
 		{
 			len = ins->params[0].nb_bytes + ins->params[1].nb_bytes +
 			ins->params[2].nb_bytes + ins->op->has_ocp + 1;

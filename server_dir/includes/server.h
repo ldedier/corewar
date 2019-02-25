@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 17:20:50 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/20 21:21:07 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/02/25 17:12:35 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ typedef struct			s_server
 	t_vm				vm;
 }						t_server;
 
+int						fight_cores(t_vm *vm, t_player *pl1, t_player *pl2);
 int						ft_print_usage(char *progname);
-int						ft_init_server(int argc, char **argv, t_server *server,
-							char **env);
+int						ft_init_server(int argc, char **argv, t_server *server);
 void					ft_init_client_socket(t_client_socket *cs);
 int						ft_init_db(t_server *server);
 int						ft_process_server(t_server *server);

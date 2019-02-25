@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/25 14:00:52 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/02/25 17:44:09 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,28 +47,12 @@ static void		kill_adjust_ptr(t_list **proc_lst, t_list **proc)
 	(tmp)->next = (*proc)->next;
 }
 
-int				list_size(t_vm *vm, t_list *l)
-{
-	t_list	*tmp;
-	int		i;
-
-	(void)vm;
-	tmp = l;
-	i = 0;
-	while (tmp)
-	{
-		tmp = tmp->next;
-		++i;
-	}
-	return (i);
-}
-
-static int		kill_process(t_vm *vm, t_list **proc_lst, t_list **proc)
+static int		kill_process(t_vm *vm,  t_list **proc)
 {
 	t_fade	*killed_proc;
 
-	(void)*proc_lst;
-	killed_proc = (t_fade *)ft_memalloc(sizeof(t_fade));
+	if (!(killed_proc = (t_fade *)ft_memalloc(sizeof(t_fade))))
+		return (error_exit_msg(vm, ERR_MALLOC));
 	killed_proc->pc = ((t_process *)(*proc)->content)->pc;
 	killed_proc->color =
 				*((int *)((t_process *)(*proc)->content)->player->color.value);
@@ -76,12 +60,13 @@ static int		kill_process(t_vm *vm, t_list **proc_lst, t_list **proc)
 	--((t_process *)(*proc)->content)->player->nb_proc;
 	if (ft_add_to_list_ptr(&vm->killed_proc,
 										(void *)killed_proc, sizeof(t_fade)))
-		return (-1);
+		return (error_exit_msg(vm, ERR_MALLOC));
 	kill_adjust_ptr(&vm->proc, proc);
 	display_last_live(vm, (t_process *)(*proc)->content);
+
 	ft_memdel((void **)&(*proc)->content);
 	ft_memdel((void **)proc);
-	return (0);
+	return (SUCCESS);
 }
 
 /*
@@ -102,7 +87,7 @@ static int		reset_live_allprocesses(t_vm *vm)
 		tmp = proc_lst->next;
 		if (vm->total_cycle - proc->live_cycle >= vm->c_to_die)
 		{
-			kill_process(vm, &vm->proc, &proc_lst);
+			kill_process(vm, &proc_lst);
 		}
 		else
 		{
@@ -137,28 +122,17 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 	if (proc->ins_cycle == 1)
 	{
 		proc->ins_bytelen = get_instruction(vm->arena, ins, proc->pc, MEM_SIZE);
-//		if (ins->op->opcode == LIVE)
-//			ft_printf("bytlen = %d\n", proc->ins_bytelen);
 		if (proc->ins_bytelen > 0)
 		{
 			f_ins[ins->op->opcode](vm, proc, ins->params);
 			display_move(vm, proc);
-			if (ins->op->opcode != ZJMP || !proc->carry)
+			if ((ins->op->opcode != ZJMP || !proc->carry))
 				proc->pc = mod(proc->pc + proc->ins_bytelen, MEM_SIZE);
+//			ft_printf("after ins, proc #%d  pc = %d\n", proc->nb,  proc->pc);
 		}
 		else
 		{
-//			if (proc->ins_bytelen < 0 && ins->op->carry)
-//				proc->carry = 0;
-//			if (ins->op->carry)
-//			{
-//				proc->carry = 0;
-//			if (proc->nb == 39)
-//				ft_printf("\nP   39 | REJECTED ins %s\n", ins->op->description);
 			display_move(vm, proc);
-//		if (!proc->ins_bytelen) // Enlever une fois que tout bien bien teste
-//			proc->pc = mod(proc->pc + old_op, MEM_SIZE);
-//		else
 			proc->pc = mod(proc->pc - proc->ins_bytelen, MEM_SIZE);
 		}
 		ins->op = NULL;
@@ -166,6 +140,8 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 		ins->params[1].nb_bytes = 0;
 		ins->params[2].nb_bytes = 0;
 		proc->ins_bytelen = 0;
+		return (0);
+
 	}
 	else if (!(proc->ins_bytelen =
 						get_instruction(vm->arena, ins, proc->pc, MEM_SIZE)))
@@ -174,16 +150,7 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 			proc->pc -= MEM_SIZE;
 	}
 	else
-	{
 		proc->ins_cycle = ins->op->nb_cycles;
-//		if (ins->op->carry)
-//		{
-//			if (proc->nb == 39)
-//				ft_printf("\nP   39 | instruction = %s\n",
-//														ins->op->description);
-//			proc->carry = 0;
-//		}
-	}
 	return (0);
 }
 
@@ -221,10 +188,10 @@ void			process_cycle(t_vm *vm)
 		}
 		vm->cycle = 0;
 	}
-	++vm->cycle;
-	++vm->total_cycle;
 	if (vm->dump >= 0)
 		dump(vm);
+	++vm->cycle;
+	++vm->total_cycle;
 }
 
 /*
@@ -245,7 +212,7 @@ int				fight_cores(t_vm *vm, t_player *pl1, t_player *pl2)
 	vm->player[3].relevant = 0;
 	dispatch_players_init(vm);
 	if (!init_processes(vm))
-		error_exit_msg(INIT_PROC_ERROR);
+		return (error_exit_msg(vm, INIT_PROC_ERROR));
 	while (vm->proc)
 	{
 		process_cycle(vm);
@@ -255,5 +222,5 @@ int				fight_cores(t_vm *vm, t_player *pl1, t_player *pl2)
 	else
 		vm->winner = pl2;
 	vm->visu.active = 0;
-	return (0);
+	return (SUCCESS);
 }

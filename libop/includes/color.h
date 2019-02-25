@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/22 15:55:47 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/25 16:48:37 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/02/25 18:13:13 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,6 @@ typedef struct		s_color_type
 	char	term[STR_COLOR_LEN];
 }					t_color_type;
 
-/*
-**enum				e_output
-**{
-**	TERM, SDL
-**};
-*/
-
 int					set_color(t_player *player, char *color);
 void				color_on_term(char index);
 int					get_color_sdl(char index);
@@ -87,6 +80,6 @@ void				color_off(void);
 void				*get_term_color(char index);
 int					get_envar(char **env, char ****env_var);
 int					get_envar_index(char ***env_var, char *var, int nb_envar);
-char				*init_color_ref(char **env);
+char				*init_color_ref(void);
 
 #endif

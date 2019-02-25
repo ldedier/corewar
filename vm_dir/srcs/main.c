@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 17:19:23 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/02/25 15:28:10 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/02/25 17:57:52 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,20 @@
 **}
 */
 
-int		main(int argc, char **argv, char **env)
+int		main(int argc, char **argv)
 {
 	t_vm	vm;
 
 	if (argc <= 1)
-		error_exit_msg(USAGE);
+		return (error_exit_msg(&vm, USAGE));
 	if (!check_type(argc, argv))
-		error_exit_msg(WRG_FILE_TYPE);
-	check_header();
-	init_vm(&vm, argv, env);
-	flags(&vm, argc, argv);
+		return (error_exit_msg(&vm, WRG_FILE_TYPE));
+	check_header(&vm);
+	init_vm(&vm, argv);
+	if (flags(&vm, argc, argv))
+		return (FAILURE);
 	if (read_files(&vm))
-		error_exit_msg(RD_ERROR);
+		return (error_exit_msg(&vm, RD_ERROR));
 	dispatch_players_init(&vm);
 	init_local_players(&vm);
 	if (vm.client.active)
@@ -42,7 +43,7 @@ int		main(int argc, char **argv, char **env)
 	if (vm.visu.active)
 		return (process_visu(&vm));
 	if (!init_processes(&vm))
-		error_exit_msg(INIT_PROC_ERROR);
+		return (error_exit_msg(&vm, INIT_PROC_ERROR));
 	while (vm.proc)
 		process_cycle(&vm);
 	display_winner(&vm);

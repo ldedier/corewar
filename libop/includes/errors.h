@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/02/25 16:48:01 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/02/25 18:12:43 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@
 # define ERR_SIZEN "Name too long Max length 128"
 # define ERR_SXC "Syntax error AFTER COMMENT"
 # define ERR_SXN "Syntax error token AFTER NAME"
+# define ERR_MALLOC "Failed memory allocation"
 
 /*
 ** PLAYER MESSAGES

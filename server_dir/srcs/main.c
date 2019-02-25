@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 17:21:44 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/22 16:30:43 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/25 13:04:50 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ int		ft_print_usage(char *name)
 	return (1);
 }
 
-int		main(int argc, char **argv, char **env)
+int		main(int argc, char **argv)
 {
 	t_server server;
 
 	if (SDLNet_Init() == -1)
 		return (ft_error());
-	if (ft_init_server(argc, argv, &server, env))
+	if (ft_init_server(argc, argv, &server))
 		return (1);
 	if (ft_parse_player_folder(PATH"/cores", &server.players))
 		return (1);
