@@ -6,20 +6,20 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 15:47:14 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/18 00:32:40 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/02/25 16:00:36 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "decompiler.h"
 
 /*
-void __attribute__((destructor)) end();
-
-void    end(void) //permet de mieux checker les leaks !
-{
-	ft_printf("destructor loop\n");
-	while(1);
-}
+**void __attribute__((destructor)) end();
+**
+**void    end(void) //permet de mieux checker les leaks !
+**{
+**	ft_printf("destructor loop\n");
+**	while(1);
+**}
 */
 
 int	ft_print_usage(char *progname)

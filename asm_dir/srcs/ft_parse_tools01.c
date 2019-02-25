@@ -6,14 +6,13 @@
 /*   By: cammapou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 17:26:08 by cammapou          #+#    #+#             */
-/*   Updated: 2019/02/13 20:57:29 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/02/25 16:18:15 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-int		ft_process_nb_params_coherent(int *save,
-			t_env *e, char c)
+int				ft_process_nb_params_coherent(int *save, t_env *e, char c)
 {
 	if (!e->parser.parse_param && !ft_isseparator(c) && c != SEPARATOR_CHAR)
 		e->parser.parse_param = 1;
@@ -40,7 +39,7 @@ int		ft_process_nb_params_coherent(int *save,
 	return (0);
 }
 
-int		ft_nb_params_coherent(char *str, t_env *e)
+int				ft_nb_params_coherent(char *str, t_env *e)
 {
 	int		i;
 	int		save;
@@ -86,7 +85,7 @@ t_instruction	*ft_add_new_instruction(t_env *e)
 	return (instruction);
 }
 
-int		ft_addco(char c, t_env *e)
+int				ft_addco(char c, t_env *e)
 {
 	if (c == '\t')
 	{
@@ -98,7 +97,7 @@ int		ft_addco(char c, t_env *e)
 	return (1);
 }
 
-int		ft_is_atouiable(char *s)
+int				ft_is_atouiable(char *s)
 {
 	long	res;
 	int		start;

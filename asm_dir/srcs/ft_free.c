@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 00:35:48 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/08 17:05:50 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/25 16:06:28 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,7 @@ void	ft_free_label_tlst(void *label, size_t dummy)
 
 void	ft_free_instruction_tlst(void *instruction, size_t dummy)
 {
-//	t_instruction *i;
 	(void)dummy;
-//	i = instruction;
 	ft_free_instruction(instruction);
 }
 

@@ -6,7 +6,7 @@
 /*   By: cammapou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 17:30:46 by cammapou          #+#    #+#             */
-/*   Updated: 2019/02/13 20:46:27 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/02/25 16:17:32 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ int		ft_process_populate_from_opcode(char *opcode_str, t_env *e)
 	return (1);
 }
 
-int		ft_process_parse_indirect_value(char *str, int index, int offset, t_env *e)
+int		ft_process_parse_indirect_value(char *str, int index,
+														int offset, t_env *e)
 {
 	int		ret;
 	char	*str2;

@@ -6,13 +6,13 @@
 /*   By: cammapou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 17:24:03 by cammapou          #+#    #+#             */
-/*   Updated: 2019/01/15 17:25:36 by cammapou         ###   ########.fr       */
+/*   Updated: 2019/02/25 16:15:21 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-void	ft_update_co(char *str, t_env *e)
+void		ft_update_co(char *str, t_env *e)
 {
 	int	i;
 
@@ -35,7 +35,7 @@ char		*ft_get_str(char **line)
 	return (str);
 }
 
-int		ft_is_relevant(char *str)
+int			ft_is_relevant(char *str)
 {
 	int	i;
 
@@ -47,7 +47,7 @@ int		ft_is_relevant(char *str)
 	return (1);
 }
 
-char	*ft_refine_line(char *str)
+char		*ft_refine_line(char *str)
 {
 	int	i;
 
@@ -57,7 +57,7 @@ char	*ft_refine_line(char *str)
 	return (ft_strndup(str, i));
 }
 
-int		ft_is_only_label(char *str)
+int			ft_is_only_label(char *str)
 {
 	int	start;
 	int	i;

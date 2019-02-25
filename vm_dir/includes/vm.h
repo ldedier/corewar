@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/02/08 18:42:00 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/25 16:20:56 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef struct		s_pending
 	t_instruction	ins;
 	void			*dest;
 	int				dest_index;
-	long				value;
+	long			value;
 	int				pc;
 	int				cycles;
 }					t_pending;
@@ -107,9 +107,8 @@ enum				e_console_display
 
 void				load_arena(t_vm *vm, t_process *proc, int index, int val);
 void				load_reg(t_vm *vm, t_process*proc, int num, int val);
-t_list				*add_process(t_vm *vm, int index, int start, t_process *src);
-
-
+t_list				*add_process(t_vm *vm, int index, int start,
+															t_process *src);
 int					fight_cores(t_vm *vm, t_player *pl1, t_player *pl2);
 void				ft_error_exit(const char *error);
 void				error_exit_msg(const char *error);
@@ -149,7 +148,6 @@ void				display_winner(t_vm *vm);
 void				display_registers(t_vm *vm);
 void				display(t_vm *vm, t_process *proc, int type);
 void				display_proc_ins(t_vm *vm, t_process *proc);
-
 
 void				display_ins_description(t_vm *vm, char *str, int opcode);
 void				display_live_player(t_vm *vm, int op_code);

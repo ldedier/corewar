@@ -6,13 +6,13 @@
 /*   By: cammapou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 17:18:58 by cammapou          #+#    #+#             */
-/*   Updated: 2019/02/08 18:37:21 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/25 16:14:48 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-int		ft_describe_label(char *str, int n, t_env *e)
+int			ft_describe_label(char *str, int n, t_env *e)
 {
 	int		i;
 
@@ -34,7 +34,7 @@ int		ft_describe_label(char *str, int n, t_env *e)
 	return (1);
 }
 
-int		ft_fill_instructions_labels_values(t_env *e)
+int			ft_fill_instructions_labels_values(t_env *e)
 {
 	t_list			*ptr;
 	t_instruction	*instruction;

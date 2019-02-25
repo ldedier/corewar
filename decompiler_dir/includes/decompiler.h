@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:52:19 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/17 15:39:20 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/02/25 16:02:45 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include "player.h"
 # include <fcntl.h>
 # include <stdio.h>
-# define malloc(X) NULL
+# define MALLOC(X) NULL
 # define CHUNK_SIZE 4096
 
 typedef struct		s_chunk
@@ -36,7 +36,7 @@ typedef enum		e_phase
 
 typedef struct		s_parser
 {
-	t_phase			phase;	
+	t_phase			phase;
 }					t_parser;
 
 typedef struct		s_env

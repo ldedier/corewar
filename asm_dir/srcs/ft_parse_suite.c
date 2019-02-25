@@ -6,7 +6,7 @@
 /*   By: cammapou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 17:23:19 by cammapou          #+#    #+#             */
-/*   Updated: 2019/01/16 14:42:25 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/02/25 16:15:45 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int		ft_parse_param(char *str, int index, t_env *e)
 	i = 0;
 	while (ft_isseparator(str[i]) && ft_addco(str[i], e))
 		i++;
-//		return (ft_log_error(TOO_BIG_CHAMP, 0, e));
 	ret = ft_process_parse_param(&(str[i]), index, e);
 	if (e->champ.header.prog_size > CHAMP_MAX_SIZE)
 		return (ft_log_error(TOO_BIG_CHAMP, 0, e));

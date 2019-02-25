@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 20:06:08 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/13 20:48:04 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/02/25 16:12:44 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,14 @@ int			ft_parse_asm(char *str, t_env *e)
 		perror(str);
 		return (1);
 	}
-	else if ((ret = ft_switch_extension(str, ".s", ".cor", &(e->champ.cor_name))))
+	else if ((ret = ft_switch_extension(str, ".s",
+												".cor", &(e->champ.cor_name))))
 	{
 		if (ret == -1)
 			return (ft_log_error_no_line(MALLOC_ERROR, e));
 		else
-			return (ft_log_error_no_line("File must be of extension \'.s\'", e));
+			return (ft_log_error_no_line("File must be of extension \'.s\'",
+																		e));
 	}
 	while (get_next_line(e->parser.fd, &line))
 	{
@@ -103,16 +105,15 @@ int			ft_parse_asm(char *str, t_env *e)
 	}
 	free(line);
 	if (!e->parser.parsed_name)
-	   return (ft_log_error_no_line("no name found", e));
+		return (ft_log_error_no_line("no name found", e));
 	else if (!e->parser.parsed_comment)
-	   return (ft_log_error_no_line("no comment found", e));
+		return (ft_log_error_no_line("no comment found", e));
 	else if (ft_fill_instructions_labels_values(e))
 		return (1);
 	else
 	{
 	//	ft_print_instructions(e->champ.instructions);
 	//	ft_print_labels(e->champ.labels);
-	//	ft_printf(":)\n");
 		return (0);
 	}
 	close(e->parser.fd);

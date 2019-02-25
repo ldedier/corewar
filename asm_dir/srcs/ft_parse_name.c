@@ -6,7 +6,7 @@
 /*   By: cammapou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 13:41:21 by cammapou          #+#    #+#             */
-/*   Updated: 2019/01/15 19:16:42 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/02/25 16:13:01 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ int			read_name(char *line, t_env *env, int i, int j)
 	env->champ.header.prog_name[j] = '\0';
 	if (read_name_continue(line, i, env) == 1)
 		return (1);
-//	printf("%s\n", env->champ.header.prog_name);
 	env->parser.parsed_name = 1;
 	return (0);
 }
