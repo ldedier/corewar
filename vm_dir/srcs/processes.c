@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:24:20 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/25 14:46:14 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/25 15:57:50 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,22 @@ int				init_processes(t_vm *vm)
 /*
  ** Copy significant process data to newly created process
  */
-void	copy_process_stat(t_process * proc, t_process *src)
+void	copy_process_stat(t_process **proc, t_process *src)
 {
-	proc->player = src->player;
-	proc->ins_bytelen = src->ins_bytelen;
-	proc->live_cycle = src->live_cycle;
-	ft_memmove(proc->reg, src->reg, REG_NUMBER * sizeof(int));
-	proc->pc = src->pc;
-	proc->carry = src->carry;
-	proc->cycle = src->cycle;
-	proc->ins_cycle = src->ins_cycle;
-	++proc->player->nb_proc;
+	(*proc)->player = src->player;
+	(*proc)->ins_bytelen = src->ins_bytelen;
+	(*proc)->live_cycle = src->live_cycle;
+	ft_memmove((*proc)->reg, src->reg, REG_NUMBER * sizeof(int));
+	(*proc)->pc = src->pc;
+	(*proc)->pending_ins.op = NULL;
+	(*proc)->pending_ins.params[0].nb_bytes = 0;
+	(*proc)->pending_ins.params[1].nb_bytes = 0;
+	(*proc)->pending_ins.params[2].nb_bytes = 0;
+	(*proc)->carry = src->carry;
+	(*proc)->cycle = src->cycle;
+	(*proc)->ins_cycle = src->ins_cycle;
+	(*proc)->live = 0;
+	++(*proc)->player->nb_proc;
 }
 
 /*
@@ -64,7 +69,7 @@ t_list			*add_process(t_vm *vm, int index, int start, t_process *src)
 		return (NULL);
 	if (src)
 	{
-		copy_process_stat(process, src);
+		copy_process_stat(&process, src);
 	}
 	else
 	{
@@ -75,5 +80,6 @@ t_list			*add_process(t_vm *vm, int index, int start, t_process *src)
 	process->nb = ++nb;
 	if (ft_add_to_list_ptr(&vm->proc, (void *)process, sizeof(t_process)))
 		return (NULL);
+	ft_printf("new proc #%d pc = %d\n", process->nb, process->pc);
 	return (vm->proc);
 }

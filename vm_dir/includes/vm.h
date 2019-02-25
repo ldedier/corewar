@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/02/25 14:23:50 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/25 15:52:50 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,6 @@
 # include "libft.h"
 
 # define NB_TYPES	3
-
-typedef struct		s_pending
-{
-	t_instruction	ins;
-	void			*dest;
-	int				dest_index;
-	long				value;
-	int				pc;
-	int				cycles;
-}					t_pending;
 
 typedef struct		s_process
 {
@@ -201,6 +191,7 @@ int					ins_aff(t_vm *vm, t_process *proc, t_parameter arg[3]);
 void				process_cycle(t_vm *vm);
 int					handle_end_cycle(t_vm *vm, int *cycle);
 int					play(t_vm *vm);
+void				dump(t_vm *vm);
 
 /*
 ** UTILS
