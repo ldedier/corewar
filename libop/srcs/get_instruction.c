@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 16:33:31 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/08 20:14:07 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/13 21:06:09 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,23 +75,26 @@ int			getval_params(char *arena, t_instruction *ins, int i, int mod)
 
 	arg = 3;
 	op = hex;
+	
 	ft_bzero((void *)ins->params, sizeof(t_parameter) * 3);
 	while (--arg >= 0)
 	{
 		param = &ins->params[arg];
 		hex = hex >> 2;
+		param->type = (hex & 3);
+		if (param->type >= 0 && param->type < 4)
+			param->nb_bytes = len[(int)param->type];
+		if (param->type == DIR_CODE)
+			param->nb_bytes -= g_op_tab[ins->op->opcode - 1].describe_address * 2;
 		if (arg >= g_op_tab[ins->op->opcode - 1].nb_params)
-			param->type = NA;
-		else
 		{
-			param->type = (hex & 3);
-			if (param->type >= 0 && param->type < 4)
-				param->nb_bytes = len[(int)param->type];
-			if (param->type == DIR_CODE)
-				param->nb_bytes -=
-					g_op_tab[ins->op->opcode - 1].describe_address * 2;
+			param->type = NA;
+			param->nb_bytes = 0;
 		}
 	}
+	if (ins->op->opcode == ST) // pas tres coherent de mettre juste ST, pas LD ou LLD en gestion 3e argument attendu vu le ocp
+		if (op & 0xF)
+			return (0);
 	if (!op)
 		return (0);
 	return (1);
@@ -110,8 +113,10 @@ int			get_instruction(char *arena, t_instruction *ins,
 {
 	unsigned char	hex;
 	int				len;
+	int				error;
 
 	len = 0;
+	error = 0;
 	hex = *(unsigned char *)(arena + (i % mod));
 	if (!ins->op && ((int)hex > NB_INSTRUCTIONS || (int)hex == 0))
 		return (0);
@@ -121,12 +126,13 @@ int			get_instruction(char *arena, t_instruction *ins,
 		ins->ocp = (unsigned char)*(arena + (i % mod));
 	if (ins->op->has_ocp == OCP_YES)
 	{
-		if (!is_valid_ocp((unsigned char)ins->ocp, ins))
+		if (!(error = is_valid_ocp((unsigned char)ins->ocp, ins)))
 		{
 			len = ins->params[0].nb_bytes + ins->params[1].nb_bytes +
 			ins->params[2].nb_bytes + ins->op->has_ocp + 1;
 			return (-len);
 		}
+			
 	}
 	else
 	{

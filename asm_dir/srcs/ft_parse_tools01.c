@@ -6,32 +6,57 @@
 /*   By: cammapou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 17:26:08 by cammapou          #+#    #+#             */
-/*   Updated: 2019/02/08 18:37:17 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/13 20:57:29 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
+int		ft_process_nb_params_coherent(int *save,
+			t_env *e, char c)
+{
+	if (!e->parser.parse_param && !ft_isseparator(c) && c != SEPARATOR_CHAR)
+		e->parser.parse_param = 1;
+	if (c == SEPARATOR_CHAR)
+	{
+		if (!e->parser.parse_param)
+		{
+			if (*save != -1)
+				e->parser.column_offset = *save;
+			else
+				e->parser.column_offset--;
+			ft_log_error("empty argument", 0, e);
+			return (1);
+		}
+		*save = e->parser.column_offset;
+		e->parser.parse_param = 0;
+		e->parser.nb_params += 1;
+		if (e->parser.nb_params > e->parser.current_instruction->op->nb_params)
+		{
+			ft_log_custom_nb_params_error(e);
+			return (1);
+		}
+	}
+	return (0);
+}
+
 int		ft_nb_params_coherent(char *str, t_env *e)
 {
-	int	i;
-	int	nb_params;
+	int		i;
+	int		save;
 
-	nb_params = 1;
+	save = -1;
+	e->parser.nb_params = 0;
+	e->parser.parse_param = 0;
 	i = 0;
 	while (str[i] && ft_addco(str[i], e))
 	{
+		if (ft_process_nb_params_coherent(&save, e, str[i]))
+			return (0);
 		i++;
-		if (str[i] == SEPARATOR_CHAR)
-		{
-			if (++nb_params > e->parser.current_instruction->op->nb_params)
-			{
-				ft_log_custom_nb_params_error(e);
-				return (0);
-			}
-		}
 	}
-	if (nb_params == e->parser.current_instruction->op->nb_params)
+	if (e->parser.parse_param && ++e->parser.nb_params ==
+			e->parser.current_instruction->op->nb_params)
 		return (1);
 	else
 	{
