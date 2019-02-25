@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 17:38:14 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/08 18:37:05 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/25 13:52:45 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int			mod(int val, int max)
 {
 	int res;
+
 	if (val >= 0)
 		res = val % max;
 	else
@@ -43,7 +44,6 @@ t_player	*get_player_num(t_vm *vm, t_list *lst, int num)
 
 	(void)lst;
 	i = -1;
-
 	while (++i < MAX_PLAYERS)
 		if (vm->player[i].num == num && vm->player[i].relevant)
 			return (&vm->player[i]);

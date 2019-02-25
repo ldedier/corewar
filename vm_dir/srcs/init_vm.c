@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 16:42:17 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/02/08 20:04:44 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/25 13:49:35 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void			clear_vm(t_vm *vm)
 		vm->c_to_die = CYCLE_TO_DIE;
 		ft_bzero(vm->arena, MEM_SIZE);
 		ft_bzero(vm->metarena, sizeof(vm->metarena));
-//		init_players(vm);
 }
 
 /*

@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 17:19:23 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/24 17:22:19 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/25 13:51:53 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,23 +22,22 @@ static void	dump_nb_cycles(t_vm *vm, int argc, char **argv, int *cur)
 	long long int	nb;
 	int				i;
 
-	if (ft_strcmp("-dump", argv[*cur]) == 0)
+	if (ft_strcmp("-dump", argv[*cur + 1]) == 0)
 	{
-		*cur += 1;
+		*cur += 2;
 		if (*cur + 2 > argc)
 			error_exit_msg(WRG_DUMP);
 		i = 0;
 		while (argv[*cur][i])
 		{
-			if (!(ft_strchr("0123456789", argv[*cur][i])))
+			if (!(ft_strchr("-0123456789", argv[*cur][i])))
 				error_exit_msg(WRG_DUMP);
 			i++;
 		}
 		nb = ft_atoll(argv[*cur]);
-		if (nb > 2147483647)
-			error_exit_msg(MAX_DUMP);
+		if (nb > 2147483647 || nb < 0)
+			nb = -1;
 		vm->dump = nb;
-		*cur += 1;
 	}
 }
 
