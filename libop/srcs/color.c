@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 20:42:40 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/08 15:52:16 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/25 12:59:25 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,28 +82,17 @@ int			set_color(t_player *player, char *color_index_ref)
 	return (1);
 }
 
-char		*init_color_ref(char **env)
+char		*init_color_ref(void)
 {
-	char		***env_var;
 	static char	color_ref_index[MAX_PL_COLOR];
 	int			i;
-	int			nb_envar;
-	int			index;
 
 	if (!color_ref_index[1])
 	{
-		nb_envar = get_envar(env, &env_var);
-		if ((index = get_envar_index(env_var, COREWAR_VAR_NAME, nb_envar))
-																		!= -1)
-			ft_strlcat(color_ref_index, env_var[(int)index][1], MAX_PL_COLOR);
-		else
-			ft_strlcat(color_ref_index, DEFAULT_COLORS, MAX_PL_COLOR);
+		ft_strlcat(color_ref_index, DEFAULT_COLORS, MAX_PL_COLOR);
 		i = -1;
 		while (color_ref_index[++i])
-		{
-			color_ref_index[i] = (char)ft_strichr(COL_DESIGNATOR,
-														color_ref_index[i]);
-		}
+			color_ref_index[i] = (char)ft_strichr(COL_DESIGNATOR, color_ref_index[i]);
 	}
 	return (color_ref_index);
 }

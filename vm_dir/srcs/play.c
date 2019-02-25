@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/20 12:10:12 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/22 19:07:04 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,13 +139,15 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 		return (0);
 	if (proc->ins_cycle == 1)
 	{
+//		if (proc->nb == 118)
+//			ft_printf("proc carry = %d op = %d\n", proc->carry, ins->op->opcode);
 		proc->ins_bytelen = get_instruction(vm->arena, ins, proc->pc, MEM_SIZE);
 //		if (ins->op->opcode == LIVE)
 //			ft_printf("bytlen = %d\n", proc->ins_bytelen);
 		if (proc->ins_bytelen > 0/* && ins->op->opcode == *(vm->arena + proc->pc)*/)
 		{
+//			proc->carry = 0;
 //			ft_printf("opcode = %d arena val = %d\n", ins->op->opcode, *(unsigned char *)(vm->arena + proc->pc));
-	//		if (ins->op->opcode == *(unsigned char *)(vm->arena + proc->pc))
 				f_ins[ins->op->opcode](vm, proc, ins->params);
 			display_move(vm, proc);
 			if (ins->op->opcode != ZJMP || !proc->carry)
@@ -153,18 +155,10 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 		}
 		else
 		{
-//			if (proc->ins_bytelen < 0 && ins->op->carry)
-//				proc->carry = 0;
 //			if (ins->op->carry)
-//			{
 //				proc->carry = 0;
-				
-//			if (proc->nb == 39)
-//				ft_printf("\nP   39 | REJECTED ins %s\n", ins->op->description);
+//			ft_printf("P  %d abandoned action = %d\n", proc->nb, ins->op->opcode);
 			display_move(vm, proc);
-//		if (!proc->ins_bytelen) // Enlever une fois que tout bien bien bien teste
-//			proc->pc = mod(proc->pc + old_op, MEM_SIZE);
-//		else 
 			proc->pc = mod(proc->pc - proc->ins_bytelen, MEM_SIZE);
 		}
 		ins->op = NULL;
@@ -172,6 +166,8 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 		ins->params[1].nb_bytes = 0;
 		ins->params[2].nb_bytes = 0;
 		proc->ins_bytelen = 0;
+		return (0);
+
 	}
 	else if (!(proc->ins_bytelen = get_instruction(vm->arena, ins, proc->pc, MEM_SIZE)))
 	{
@@ -179,15 +175,7 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 				proc->pc -= MEM_SIZE;
 	}
 	else
-	{
 		proc->ins_cycle = ins->op->nb_cycles;
-//		if (ins->op->carry)
-//		{
-//			if (proc->nb == 39)
-//				ft_printf("\nP   39 | instruction = %s\n", ins->op->description);
-//			proc->carry = 0;
-//		}
-	}
 	return (0);
 }
 

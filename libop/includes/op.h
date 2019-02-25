@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 19:01:37 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/20 12:20:03 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/25 13:00:09 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,36 +79,6 @@
 # define LFORK_STR				"long fork"
 # define AFF_STR				"aff"
 
-/*
-PAS DE PANIQUE JE VAIS VIRER TOUT CA NORMALEMENT
-# define R					REG_SIZE
-# define D					DIR_SIZE
-# define I					IND_SIZE
-# define RD					R + D
-# define RI					R + I
-# define DI					D + I
-# define RDI				RD + I
-# define ARG3_BYTES			2
-# define ARG1_BYTES			3 * ARG
-# define ARG2_BYTES			2 * ARG
-# define GETARG(A1, A2, A3)		(A1 << ARG1_BYTES) | (A2 << ARG2_BYTES) | (A3 << ARG3_BYTES)
-# define LIVE_ARG_TYPE			GET_ARGTYPE(D, 0, 0)
-# define LD_ARG_TYPE			GET_ARGTYPE(DI, R, 0)
-# define ST_ARG_TYPE			GET_ARGTYPE(R, RI, 0)
-# define ADD_ARG_TYPE			GET_ARGTYPE(R, R, R)
-# define SUB_ARG_TYPE			GET_ARGTYPE(R, R, R)
-# define OR_ARG_TYPE			GET_ARGTYPE(RDI, RDI, R)
-# define AND_ARG_TYPE			GET_ARGTYPE(RDI, RDI, R)
-# define XOR_ARG_TYPE			GET_ARGTYPE(RD, RD, R)
-# define ZJMP_ARG_TYPE			GET_ARGTYPE(D, 0, 0)
-# define LDI_ARG_TYPE			GET_ARGTYPE(RDI, RDi, R)
-# define STI_ARG_TYPE			GET_ARGTYPE(R, RDI, RD)
-# define FORK_ARG_TYPE			GET_ARGTYPE(D, 0, 0)
-# define LLD_ARG_TYPE			GET_ARGTYPE(DI, R, 0)
-# define LLDI_ARG_TYPE			GET_ARGTYPE(RDI, RD, R)
-# define LFORK_ARG_TYPE			GET_ARGTYPE(D, 0)
-# define AFF_ARG_TYPE			GET_ARGTYPE(R, 0)
-*/
 
 typedef char					t_arg_type;
 typedef struct					s_instruction t_instruction;
@@ -156,7 +126,6 @@ struct							s_instruction
 	char						*source_code_line;
 	char						*label;
 	char						is_labeled;
-//	int							bytelen;
 };
 
 enum							e_op

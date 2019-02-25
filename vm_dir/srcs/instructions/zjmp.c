@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 19:29:31 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/02/06 11:57:32 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/22 18:40:26 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int		ins_zjmp(t_vm *vm, t_process *proc, t_parameter arg[3])
 
 //		ft_printf("proc pc = %d, arg0 value = %d\n", proc->pc, arg[0].value);
 		proc->pc = mod(arg[0].value + proc->pc, MEM_SIZE);
+///		proc->carry = 0;
 		if (!vm->visu.active && (vm->display & (1 << MSG_INS)))
 			ft_printf(" OK");
 //		arg[0].value = (proc->pending.pc + proc->pc) % IDX_MOD;

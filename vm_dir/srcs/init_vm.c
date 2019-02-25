@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 16:42:17 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/02/08 20:04:44 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/25 13:01:40 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void			clear_vm(t_vm *vm)
 ** its parametzers to their default value.
 */
 
-void			init_vm(t_vm *vm, char **argv, char **env)
+void			init_vm(t_vm *vm, char **argv)
 {
 	vm->c_to_die = CYCLE_TO_DIE;
 	vm->files = argv;
@@ -49,7 +49,7 @@ void			init_vm(t_vm *vm, char **argv, char **env)
 	vm->display = 0;
 	vm->issued_live = 0;
 	ft_bzero(vm->color, MAX_PL_COLOR);
-	ft_strlcat(vm->color, init_color_ref(env), MAX_PL_COLOR);
+	ft_strlcat(vm->color, init_color_ref(), MAX_PL_COLOR);
 	init_players(vm);
 }
 

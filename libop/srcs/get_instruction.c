@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 16:33:31 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/20 12:35:27 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/22 18:36:28 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,12 +166,12 @@ int			get_instruction(char *arena, t_instruction *ins,
 	}
 		len = ins->params[0].nb_bytes + ins->params[1].nb_bytes +
 						ins->params[2].nb_bytes + ins->op->has_ocp + 1;
-	if (g_op_tab[*(unsigned char *)(arena + i - 1) - 1].has_ocp && ins->op->has_ocp && ins->op->opcode != *(unsigned char *)(arena + i - 1))
-	{
+//	if (g_op_tab[*(unsigned char *)(arena + i - 1) - 1].has_ocp && ins->op->has_ocp && ins->op->opcode != *(unsigned char *)(arena + i - 1))
+//	{
 //		ft_printf("coucou opcode = %d arena = %d i = %#x\n", ins->op->opcode, *(unsigned char *)(arena + i - 1), i);
-		getval_params(arena, ins, i + ins->op->has_ocp, mod);
-		return (-len);
-	}
+//		getval_params(arena, ins, i + ins->op->has_ocp, mod);
+//		return (-len);
+//	}
 	if (getval_params(arena, ins, i + ins->op->has_ocp, mod) == -1)
 	{
 //		if (ins->op->opcode == LD)

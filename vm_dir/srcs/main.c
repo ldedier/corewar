@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 17:19:23 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/02/13 23:05:05 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/02/25 13:01:32 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 **}
 */
 
-int		main(int argc, char **argv, char **env)
+int		main(int argc, char **argv)
 {
 	t_vm	vm;
 
@@ -31,7 +31,7 @@ int		main(int argc, char **argv, char **env)
 	if (!check_type(argc, argv))
 		error_exit_msg(WRG_FILE_TYPE);
 	check_header();
-	init_vm(&vm, argv, env)
+	init_vm(&vm, argv)
 		;
 	flags(&vm, argc, argv);
 	if (read_files(&vm))

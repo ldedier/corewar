@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 17:09:32 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/07 18:22:45 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/20 19:56:57 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int		ins_lfork(t_vm *vm, t_process *proc, t_parameter arg[3])
 {
 	add_process(vm, 0, 0, proc);
 	getval_param_dest(vm, proc, &arg[0], arg[0].value);
+	arg[0].retrieval_mode = 0;
 	display_proc_ins(vm, proc);
 	if (!vm->visu.active && vm->display & (1 << MSG_INS))
 		ft_printf(" (%d)", proc->pc + arg[0].value);

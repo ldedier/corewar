@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/02/08 18:42:00 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/25 13:02:28 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void				ft_error_exit(const char *error);
 void				error_exit_msg(const char *error);
 int					check_type(int ac, char **av);
 void				check_header(void);
-void				init_vm(t_vm *vm, char **argv, char **env);
+void				init_vm(t_vm *vm, char **argv);
 void				clear_vm(t_vm *vm);
 void				corehub_port_and_address(t_vm *vm, int argc,
 						char **argv, int *cur);
