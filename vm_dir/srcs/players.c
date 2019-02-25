@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:20:21 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/25 14:29:10 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/25 14:31:47 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,19 @@ void			init_players(t_vm *vm)
 		vm->player[i].num_type = -1;
 		ft_bzero(vm->player[i].aff_buf, MAX_AFF_LEN);
 	}
+}
+
+t_player	*get_player_num(t_vm *vm, t_list *lst, int num)
+{
+	int		i;
+
+	(void)lst;
+	i = -1;
+
+	while (++i < MAX_PLAYERS)
+		if (vm->player[i].num == num && vm->player[i].relevant)
+			return (&vm->player[i]);
+	return (NULL);
 }
 
 /*

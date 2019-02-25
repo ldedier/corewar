@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/25 14:03:08 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/25 14:47:48 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,23 +47,6 @@ static void		kill_adjust_ptr(t_list **proc_lst, t_list **proc)
 			tmp = (tmp)->next;
 	(tmp)->next = (*proc)->next;
 }
-
-int		list_size(t_vm *vm, t_list *l)
-{
-	t_list *tmp;
-	int		i;
-
-	(void)vm;
-	tmp = l;
-	i = 0;
-	while (tmp)
-	{
-		tmp = tmp->next;
-		++i;
-	}
-	return (i);
-}
-
 
 static int		kill_process(t_vm *vm, t_list **proc_lst, t_list **proc)
 {
