@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 17:38:14 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/25 14:33:48 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/25 16:13:51 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 
 int			mod(int val, int max)
 {
-	int res;
-	
-	res = val < 0 ? (val + max) % max : val % max;
-	return (res);
+	while (val < 0)
+		val += max;
+	return (val % max);
 }
 
 /*
