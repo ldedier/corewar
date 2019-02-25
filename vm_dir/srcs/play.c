@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/22 19:07:04 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/25 14:03:08 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ static int		kill_process(t_vm *vm, t_list **proc_lst, t_list **proc)
 	t_fade	*killed_proc;
 	(void)*proc_lst;
 
-	killed_proc = (t_fade *)ft_memalloc(sizeof(t_fade));
+	if (!(killed_proc = (t_fade *)ft_memalloc(sizeof(t_fade))))
+		return (error_exit_msg(vm, ERR_MALLOC));
 	killed_proc->pc = ((t_process *)(*proc)->content)->pc;
 	killed_proc->color =
 					*((int *)((t_process *)(*proc)->content)->player->color.value);
@@ -78,13 +79,13 @@ static int		kill_process(t_vm *vm, t_list **proc_lst, t_list **proc)
 	--((t_process *)(*proc)->content)->player->nb_proc;
 	if (ft_add_to_list_ptr(&vm->killed_proc,
 										(void *)killed_proc, sizeof(t_fade)))
-		return (-1);
+		return (error_exit_msg(vm, ERR_MALLOC));
 		kill_adjust_ptr(&vm->proc, proc);
 		display_last_live(vm, (t_process *)(*proc)->content);
 
 	ft_memdel((void **)&(*proc)->content);
 	ft_memdel((void **)proc);
-	return (0);
+	return (SUCCESS);
 }
 
 /*
@@ -139,15 +140,9 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 		return (0);
 	if (proc->ins_cycle == 1)
 	{
-//		if (proc->nb == 118)
-//			ft_printf("proc carry = %d op = %d\n", proc->carry, ins->op->opcode);
 		proc->ins_bytelen = get_instruction(vm->arena, ins, proc->pc, MEM_SIZE);
-//		if (ins->op->opcode == LIVE)
-//			ft_printf("bytlen = %d\n", proc->ins_bytelen);
-		if (proc->ins_bytelen > 0/* && ins->op->opcode == *(vm->arena + proc->pc)*/)
+		if (proc->ins_bytelen > 0)
 		{
-//			proc->carry = 0;
-//			ft_printf("opcode = %d arena val = %d\n", ins->op->opcode, *(unsigned char *)(vm->arena + proc->pc));
 				f_ins[ins->op->opcode](vm, proc, ins->params);
 			display_move(vm, proc);
 			if (ins->op->opcode != ZJMP || !proc->carry)
@@ -155,9 +150,6 @@ static int		launch_instruction(t_vm *vm, t_process *proc)
 		}
 		else
 		{
-//			if (ins->op->carry)
-//				proc->carry = 0;
-//			ft_printf("P  %d abandoned action = %d\n", proc->nb, ins->op->opcode);
 			display_move(vm, proc);
 			proc->pc = mod(proc->pc - proc->ins_bytelen, MEM_SIZE);
 		}
@@ -235,7 +227,7 @@ int		fight_cores(t_vm *vm, t_player *pl1, t_player *pl2)
 	vm->player[3].relevant = 0;
 	dispatch_players_init(vm);
 	if (!init_processes(vm))
-		error_exit_msg(INIT_PROC_ERROR);
+		return (error_exit_msg(vm, INIT_PROC_ERROR));
 	while (vm->proc)
 	{
 		process_cycle(vm);
@@ -245,5 +237,5 @@ int		fight_cores(t_vm *vm, t_player *pl1, t_player *pl2)
 	else
 		vm->winner = pl2;
 	vm->visu.active = 0;
-	return (0);
+	return (SUCCESS);
 }

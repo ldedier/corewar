@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/02/25 13:02:28 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/25 14:23:50 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,26 +111,21 @@ t_list				*add_process(t_vm *vm, int index, int start, t_process *src);
 
 
 int					fight_cores(t_vm *vm, t_player *pl1, t_player *pl2);
-void				ft_error_exit(const char *error);
-void				error_exit_msg(const char *error);
+int					error_exit_msg(t_vm *vm, const char *error);
 int					check_type(int ac, char **av);
-void				check_header(void);
+int					check_header(t_vm *vm);
 void				init_vm(t_vm *vm, char **argv);
 void				clear_vm(t_vm *vm);
-void				corehub_port_and_address(t_vm *vm, int argc,
+int					corehub_port_and_address(t_vm *vm, int argc,
 						char **argv, int *cur);
-void				flags(t_vm *vm, int argc, char **argv);
+int					flags(t_vm *vm, int argc, char **argv);
 int					read_files(t_vm *vm);
-void				error_exit_mgc(char *name);
-void				parse(t_vm *vm);
+int					parse(t_vm *vm);
 void				init_players(t_vm *vm);
-void				dispatch_players(t_vm *vm, t_player *player);
 void				dispatch_players_init(t_vm *vm);
 int					init_processes(t_vm *vm);
 void				init_local_players(t_vm *vm);
 void				update_nb_players(t_vm *vm);
-int					ft_get_potential_num(int player_num);
-void				ft_set_numbers(t_player *players, t_player *player);
 void				update_buttons(t_vm *vm);
 t_player			*duel(t_vm *vm, t_player *pl1, t_player *pl2);
 

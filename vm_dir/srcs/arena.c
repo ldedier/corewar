@@ -6,68 +6,11 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 16:42:17 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/02/22 18:15:09 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/25 14:07:20 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
-
-/*
-** update_nb_players updates the number of players currently in the arena
-*/
-
-void			update_nb_players(t_vm *vm)
-{
-	int i;
-	int res;
-
-	res = 0;
-	i = -1;
-	while (++i < MAX_PLAYERS)
-	{
-		if (vm->player[i].relevant)
-			res++;
-	}
-	vm->nb_players = res;
-}
-
-int				ft_get_potential_num(int player_num)
-{
-	return (player_num == INT_MAX ? INT_MIN : player_num - 1);
-}
-
-/*
-** ft_set_numbers function assigns each player a different number.
-*/
-
-void			ft_set_numbers(t_player *players, t_player *player)
-{
-	int i;
-	int j;
-	int found;
-
-	i = -1;
-	while (++i < MAX_PLAYERS)
-	{
-		if (players[i].relevant && player != &players[i])
-		{
-			player->num = ft_get_potential_num(players[i].num);
-			found = 1;
-			j = -1;
-			while (++j < MAX_PLAYERS)
-			{
-				if (i != j && players[j].relevant && &players[j] != player &&
-						player->num == players[j].num)
-				{
-					found = 0;
-					break ;
-				}
-			}
-			if (found)
-				return ;
-		}
-	}
-}
 
 void			update_buttons(t_vm *vm)
 {
