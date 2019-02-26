@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 20:42:40 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/25 12:59:25 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/26 21:35:42 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,12 @@ void		color_off(void)
 
 void		*get_color_ptr(char index)
 {
-	static t_color_type color[NB_COLORS] = {
-		{COL_BLACK, COLF_BLACK},
-		{COL_RED, COLF_RED},
+	(void)index;
+	static t_color_type color[4] = {
+		{COL_MAGENTA, COLF_RED},
 		{COL_GREEN, COLF_GREEN},
-		{COL_BROWN, COLF_BROWN},
 		{COL_BLUE, COLF_BLUE},
-		{COL_MAGENTA, COLF_MAGENTA},
-		{COL_CYAN, COLF_CYAN},
-		{COL_GREY, COLF_GREY},
-		{COL_BBLACK, COLF_BBLACK},
-		{COL_BRED, COLF_BRED},
-		{COL_BGREEN, COLF_BGREEN},
-		{COL_BBROWN, COLF_BBROWN},
-		{COL_BBLUE, COLF_BBLUE},
-		{COL_BMAGENTA, COLF_BMAGENTA},
-		{COL_BCYAN, COLF_BCYAN},
-		{COL_BGREY, COLF_BGREY},
-		{COL_OFF, COLF_OFF}};
+		{COL_BROWN, COLF_BROWN}};
 
 	return ((void *)&color[(int)index]);
 }
@@ -48,37 +36,40 @@ void		color_on_term(char index)
 
 int			get_color_sdl(char index)
 {
-//	ft_printf("sdl color = %#x\n", *(int *)get_color_ptr(index));
 	return (*(int *)get_color_ptr(index));
 }
 
-int			set_color(t_player *player, char *color_index_ref)
+int			set_color(t_player *player, char *color_index_ref) // virer tout le micmac couleurs?
 {
-	static char	color_counter[MAX_PL_COLOR] = {0};
+	static char	color_counter[MAX_PLAYERS];
+	static int color_ref[MAX_PLAYERS] = {COL_MAGENTA, COL_GREEN, COL_BLUE, COL_BROWN};
+	(void)color_index_ref;
 	int			index_min_count;
 	int			i;
 
 	if (!player->relevant)
 	{
-		if (player->color.value != NULL)
+		if (player->color.value != 1)
 		{
 			--color_counter[player->color.index];
-			player->color.value = NULL;
+			player->color.value = 1;
 		}
 		return (0);
 	}
 	if (player->color.value)
 		return (0);
-	index_min_count = 1;
-	i = 0;
-	while (++i < MAX_PL_COLOR)
+	index_min_count = 0;
+	i = -1;
+	while (++i < MAX_PLAYERS)
 	{
 		if (color_counter[i] < color_counter[index_min_count])
 			index_min_count = i;
 	}
 	++color_counter[index_min_count];
 	player->color.index = index_min_count;
-	player->color.value = get_color_ptr(color_index_ref[index_min_count]);
+	ft_printf("min cound  %d\n", index_min_count);
+	player->color.value = color_ref[index_min_count];
+//	player->color.value = get_color_ptr(color_index_ref[index_min_count]);
 	return (1);
 }
 

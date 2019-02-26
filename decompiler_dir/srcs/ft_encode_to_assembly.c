@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/08 00:08:01 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/18 00:32:05 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/02/26 17:17:45 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int		ft_encode_asm(int fd, t_env *e)
 	int				ret;
 
 	i = 0;
-	while (((ret = get_instruction(e->player.algo, &instruction,
-			i, e->player.algo_len))) && i < e->player.algo_len)
+	while (((ret = get_ins(e->player.algo, &instruction, i,
+			e->player.algo_len))) && i < e->player.algo_len)
 	{
 		instruction.address = i;
 		instruction.is_labeled = 0;

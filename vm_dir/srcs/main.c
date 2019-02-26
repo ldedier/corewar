@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 17:19:23 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/02/25 14:00:01 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/26 21:07:14 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int		main(int argc, char **argv)
 	if (!init_processes(&vm))
 		return (error_exit_msg(&vm, INIT_PROC_ERROR));
 	while (vm.proc)
-		process_cycle(&vm);
+		play_one_cycle(&vm);
 	display_winner(&vm);
 	return (0);
 }

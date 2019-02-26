@@ -101,11 +101,8 @@ then
 	((i=0))
 	((j=0))
 	for filename in $champions_folder/*.cor; do
-		echo "loop1"
 		for filename2 in $champions_folder/*.cor; do
-			echo "loop2"
 			for filename3 in $champions_folder/*.cor; do
-				echo "loop3"
 				rm -f $my_tmp
 				rm -f $zaz_tmp
 				echo "testing $filename vs $filename2 vs $filename3\n"

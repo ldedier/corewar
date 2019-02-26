@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 17:19:23 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/02/25 14:16:54 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/26 21:12:47 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,8 @@ int			flags(t_vm *vm, int argc, char **argv)
 		if (argv[cur][0] == '-' && ft_isdigit(argv[cur][1]) && !(i = 0))
 			while (ft_isdigit(argv[cur][++i]))
 				vm->display = 10 * vm->display + (argv[cur][i] - '0');
+		else if (!ft_strcmp("-c", argv[cur]))
+			set_colors(vm);
 		else if (!ft_strcmp("-v", argv[cur]))
 			vm->visu.active = 1;
 		else if (!ft_strcmp("-w", argv[cur]))

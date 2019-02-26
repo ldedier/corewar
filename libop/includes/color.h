@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/22 15:55:47 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/25 13:00:31 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/26 21:56:36 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # define DEFAULT_COLORS		"xGMCWrlyxGRCLMWY"
 # define NB_DESIGNATOR		17
 # define NB_COLORS			17
-# define MAX_PL_COLOR		9
+# define MAX_PL_COLOR		MAX_PLAYERS
 # define COREWAR_VAR_NAME	"CW_COLORS"
 # define STR_COLOR_LEN		10
 
@@ -44,6 +44,13 @@
 # define COLF_BCYAN		"\033[01;36m"
 # define COLF_BGREY		"\033[01;37m"
 # define COLF_OFF		"\033[0m"
+
+# define COL_CYCLES		COLF_BGREY
+# define COL_DEATH		COLF_BBLACK
+# define COL_RESIZE		COLF_BCYAN
+
+
+
 
 /*
 ** EQUIVALENT STANDARD COLORS FOR SDL

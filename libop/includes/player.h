@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 22:25:36 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/07 20:53:05 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/26 21:38:43 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ typedef int				t_score;
 
 typedef struct		s_color
 {
-	void			*value;
+	int				value;
+	char			term[11];
 	int				index;
 }					t_color;
 

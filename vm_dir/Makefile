@@ -41,10 +41,10 @@ EOC = \033[0m
 SRCS_NO_PREFIX =		arena.c error.c flags.c main.c \
 						tmp.c utils.c op.c play.c \
 						net_tools.c \
-						test.c display.c processes.c \
-						vm.c players.c parse.c
+						test.c display.c display_player.c display_ins.c processes.c \
+						vm.c players.c parse.c color.c 
 
-INS_NO_PREFIX =			get_val.c load_val.c\
+INS_NO_PREFIX =			get_val.c load_val.c no_ins.c \
 						live.c ld.c st.c add.c sub.c and.c or.c xor.c zjmp.c \
 						ldi.c sti.c fork.c lld.c lldi.c lfork.c aff.c
 

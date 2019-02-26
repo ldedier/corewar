@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/21 13:40:59 by ldedier           #+#    #+#              #
-#    Updated: 2019/01/30 13:11:59 by emuckens         ###   ########.fr        #
+#    Updated: 2019/02/26 17:44:46 by emuckens         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ EOC = \033[0m
 SRCS_NO_PREFIX =	op.c ft_is_of_extension.c ft_switch_extension.c\
 					ft_encode_instructions.c ft_read_player.c ft_parse_player.c\
 					player.c get_instruction.c color.c ft_parse_player_folder.c\
-					net.c out_of_atlas_range.c
+					net.c out_of_atlas_range.c get_instruction_nostore.c
 
 INCLUDES_NO_PREFIX = op.h champion.h player.h network.h color.h errors.h
 

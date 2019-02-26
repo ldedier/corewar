@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/03 21:23:05 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/20 01:06:19 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/02/26 21:32:25 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int		ft_process_render_live_breakdown_bar(t_vm *vm, SDL_Rect *rect,
 				vm->player[i].live / (double)vm->live;
 		*from += rect->w;
 		if (SDL_FillRect(vm->visu.sdl.w_surface, rect,
-				*(int *)vm->player[i].color.value))
+				vm->player[i].color.value))
 			return (1);
 	}
 	return (0);

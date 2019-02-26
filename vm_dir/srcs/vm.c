@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:15:00 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/25 13:51:15 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/26 21:08:42 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 /*
 ** clear arena and metarena, reset game indicators, free all processes
 */
-// BIEN VERIFIER LA LIBERATION DES PROCESS
 
 void			clear_vm(t_vm *vm)
 {
@@ -32,9 +31,9 @@ void			clear_vm(t_vm *vm)
 }
 
 /*
- * ** init_vm function initializes our corewar VM's environment by setting all
- * ** its parametzers to their default value.
- * */
+** init_vm function initializes our corewar VM's environment by setting all
+** its parametzers to their default value.
+*/
 
 void			init_vm(t_vm *vm, char **argv)
 {
@@ -56,5 +55,6 @@ void			init_vm(t_vm *vm, char **argv)
 	vm->issued_live = 0;
 	ft_bzero(vm->color, MAX_PL_COLOR);
 	ft_strlcat(vm->color, init_color_ref(), MAX_PL_COLOR);
+	ft_bzero(&vm->col, sizeof(t_color_term));
 	init_players(vm);
 }

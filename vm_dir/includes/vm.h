@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/02/25 14:23:50 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/26 21:09:20 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,13 @@ typedef struct		s_fade
 	int				value;
 }					t_fade;
 
+typedef struct		s_color_term
+{
+	char 			cycle[11];
+	char			death[11];
+	char			resize[11];
+}					t_color_term;
+
 typedef struct		s_vm
 {
 	int				c_to_die;
@@ -87,6 +94,7 @@ typedef struct		s_vm
 	t_list			*live_ok;
 	int				live;
 	int				issued_live;
+	t_color_term	col;
 	t_player		*winner;
 }					t_vm;
 
@@ -102,7 +110,7 @@ enum				e_arg
 
 enum				e_console_display
 {
-	MSG_LIVE, MSG_CYCLE, MSG_INS, MSG_DEATH, MSG_MOVE
+	MSG_LIVE, MSG_CYCLE, MSG_INS, MSG_DEATH, MSG_MOVE, COLOR
 };
 
 void				load_arena(t_vm *vm, t_process *proc, int index, int val);
@@ -144,6 +152,8 @@ void				display_winner(t_vm *vm);
 void				display_registers(t_vm *vm);
 void				display(t_vm *vm, t_process *proc, int type);
 void				display_proc_ins(t_vm *vm, t_process *proc);
+void				set_colors(t_vm *vm);
+
 
 
 void				display_ins_description(t_vm *vm, char *str, int opcode);
@@ -177,6 +187,7 @@ void				getval_param_dest(t_vm *vm, t_process *proc,
 void				loadval(t_vm *vm, t_process *proc,
 												t_parameter *arg, int val);
 void				set_argval(t_parameter *arg, int index, int size);
+int					no_ins(t_vm *vm, t_process *proc, t_parameter arg[3]);
 int					ins_live(t_vm *vm, t_process *proc, t_parameter arg[3]);
 int					ins_ld(t_vm *vm, t_process *proc, t_parameter arg[3]);
 int					ins_st(t_vm *vm, t_process *proc, t_parameter arg[3]);
@@ -198,9 +209,9 @@ int					ins_aff(t_vm *vm, t_process *proc, t_parameter arg[3]);
 ** PLAY
 */
 
-void				process_cycle(t_vm *vm);
+int					play_one_cycle(t_vm *vm);
 int					handle_end_cycle(t_vm *vm, int *cycle);
-int					play(t_vm *vm);
+int					kill_process(t_vm *vm, t_list **proc_lst, t_list **proc);
 
 /*
 ** UTILS
@@ -210,7 +221,6 @@ int					mod(int val, int max);
 int					ft_pow(int n, int pow);
 int					getval(t_vm *vm, t_process *proc, t_parameter arg);
 t_process			*get_proc_index(t_list *lst, int index);
-t_player			*get_player_num(t_vm *vm, t_list *lst, int num);
 int					is_reg(int num);
 int					list_size(t_vm *vm, t_list *l);
 

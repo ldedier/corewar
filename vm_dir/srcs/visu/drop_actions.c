@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 20:22:52 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/20 15:59:18 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/26 21:31:56 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	ft_place(t_vm *vm, t_drop_container *dc)
 	if (dc->player == &vm->client.upload_player)
 		ft_remove_color_player(vm, dc->player);
 	vm->visu.drag_container.drag_union.drag_player.player->relevant = 0;
-	vm->visu.drag_container.drag_union.drag_player.player->color.value = NULL;
+	vm->visu.drag_container.drag_union.drag_player.player->color.value = 1;
 	if (vm->visu.drag_container.drag_union.drag_player.close)
 		vm->visu.drag_container.drag_union.drag_player.close->visible = 0;
 	dc->close->visible = 1;
@@ -62,7 +62,7 @@ void	ft_copy(t_vm *vm, t_drop_container *dc)
 	int rel;
 
 	if (dc->player == &vm->client.upload_player)
-		dc->player->color.value = NULL;
+		dc->player->color.value = 1;
 	rel = dc->player->relevant;
 	dc->player->relevant = 0;
 	set_color(dc->player, vm->color);
