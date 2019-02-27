@@ -116,7 +116,11 @@ int			ft_parse_asm(char *str, t_env *e)
 			return (ft_log_error_no_line("File must be of extension \'.s\'",
 						e));
 	}
-	ft_parse_asm_suite(e);
+	if (ft_parse_asm_suite(e) == 1)
+	{
+		close(e->parser.fd);
+		return (1);
+	}
 	close(e->parser.fd);
 	return (0);
 }

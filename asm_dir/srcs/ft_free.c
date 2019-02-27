@@ -53,5 +53,5 @@ void	ft_free_all(t_env *e)
 	if (e->champ.cor_name)
 		free(e->champ.cor_name);
 	ft_lstdel(&(e->champ.labels), &ft_free_label_tlst);
-	ft_lstdel(&(e->champ.instructions), &ft_free_instruction_tlst);
+	//ft_lstdel(&(e->champ.instructions), &ft_free_instruction_tlst);
 }
