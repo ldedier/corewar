@@ -49,6 +49,5 @@ int			ft_set_parser_co(int save, t_env *e, int ret)
 {
 	(void)save;
 	(void)e;
-//	save = e->parser.column_offset;
 	return (ret);
 }

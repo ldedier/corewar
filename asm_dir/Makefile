@@ -39,7 +39,10 @@ SRCS_NO_PREFIX		=	main.c ft_init.c ft_parse_header.c\
 						ft_parse_comment.c ft_parse_name.c ft_parse_tools00.c\
 						ft_init_parser.c ft_process_parse.c ft_parse_suite.c\
 						ft_parse_label.c ft_parse_log.c\
-						ft_process_parse_suite.c ft_parse_tools01.c ft_parse.c
+						ft_process_parse_suite.c ft_parse_tools01.c ft_parse.c\
+						ft_debug_suite.c ft_encode_suite.c ft_parse_tools03.c\
+
+
 
 INCLUDES_NO_PREFIX	=	asm.h
 

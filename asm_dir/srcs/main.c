@@ -22,13 +22,13 @@
 **}
 */
 
-int		ft_print_usage(char *progname)
+int	ft_print_usage(char *progname)
 {
 	ft_printf("Usage: %s <sourcefile.s>\n", progname);
 	return (1);
 }
 
-int		main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_env	e;
 	int		ret;

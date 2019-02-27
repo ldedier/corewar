@@ -6,26 +6,11 @@
 /*   By: cammapou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 13:41:10 by cammapou          #+#    #+#             */
-/*   Updated: 2019/01/15 22:24:48 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/02/27 13:06:15 by cammapou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
-
-int			check_comment(char *str, t_env *env)
-{
-	int i;
-
-	if (str[0] == '.')
-	{
-		i = ft_strlen(COMMENT_CMD_STRING);
-		if (isprint(str[i]) == 1)
-			return (ft_log_error_no_line(ERR_LXC, env));
-	}
-	else if (str[0] != '.')
-		return (ft_log_error_no_line(ERR_LXC, env));
-	return (0);
-}
 
 static int	check_after_comment(char *tmp, int i, t_env *env)
 {
@@ -60,7 +45,8 @@ static int	get_comment_other_line(t_env *env, int fd, int i)
 	check_comment_exist(env, 0);
 	while (get_next_line(fd, &tmp))
 	{
-		if (ft_strlen(tmp) + ft_strlen(env->champ.header.comment) > COMMENT_LENGTH)
+		if (ft_strlen(tmp) + ft_strlen(env->champ.header.comment) >
+				COMMENT_LENGTH)
 			return (ft_log_error_no_line(ERR_SIZE, env));
 		ft_strcat(env->champ.header.comment, tmp);
 		ft_strcat(env->champ.header.comment, "\n");
@@ -100,7 +86,6 @@ static int	read_comment_continue(char *line, int i, t_env *env, int fd)
 	}
 	if (ft_strlen(env->champ.header.comment) > COMMENT_LENGTH)
 		ft_log_error_no_line(ERR_SIZE, env);
-//	printf("%s\n", env->champ.header.comment);
 	env->parser.parsed_comment = 1;
 	return (0);
 }

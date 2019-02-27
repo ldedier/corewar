@@ -15,24 +15,23 @@
 int		ft_log_custom_nb_params_error(t_env *e)
 {
 	char *str;
-	char *nb_instructions;
+	char *nb_instruc;
 
 	if (!(str = ft_strdup(e->parser.current_instruction->op->instruction_name)))
 		return (ft_log_error(MALLOC_ERROR, 0, e));
 	if (!(str = ft_strjoin_free(str, " instruction takes exactly ")))
 		return (ft_log_error(MALLOC_ERROR, 0, e));
-	if (!(nb_instructions =
-				ft_itoa(e->parser.current_instruction->op->nb_params)))
+	if (!(nb_instruc = ft_itoa(e->parser.current_instruction->op->nb_params)))
 	{
 		free(str);
 		return (ft_log_error(MALLOC_ERROR, 0, e));
 	}
-	if (!(str = ft_strjoin_free(str, nb_instructions)))
+	if (!(str = ft_strjoin_free(str, nb_instruc)))
 	{
-		free(nb_instructions);
+		free(nb_instruc);
 		return (ft_log_error(MALLOC_ERROR, 0, e));
 	}
-	free(nb_instructions);
+	free(nb_instruc);
 	if (!(str = ft_strjoin_free(str,
 					e->parser.current_instruction->op->nb_params == 1 ?
 					" argument !" : " arguments !")))
