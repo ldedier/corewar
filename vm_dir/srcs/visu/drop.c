@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 19:09:06 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/20 16:02:19 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/27 14:42:20 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ void	ft_drop_dragged_player(t_vm *vm, t_ixy mouse)
 				drag_player.source == UPLOAD))
 		{
 			vm->visu.drag_container.drag_union.drag_player.player->relevant = 0;
-			set_color(vm->visu.drag_container.drag_union.
-				drag_player.player, vm->color);
+			set_color_sdl(vm, vm->visu.drag_container.drag_union.
+				drag_player.player);
 			dispatch_players(vm, NULL);
 		}
 	}

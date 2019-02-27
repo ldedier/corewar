@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 19:01:37 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/25 18:12:13 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/02/27 14:14:11 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,11 +150,13 @@ enum							e_mod_carry
 t_op							g_op_tab[NB_INSTRUCTIONS + 1];
 
 int								invalid_param(int type, int op);
+int								getval_params(char *arena, t_instruction *ins, int i, int mod);
 int								is_valid_ocp(unsigned char hex, t_instruction *ins);
 
 int								getval_mod(char *arena,  int index, int nb_bytes,int mod);
 void							set_argval(t_parameter *arg, int index, int size);
-int								get_instruction(char *arena, t_instruction *ins, unsigned int i, unsigned int mod);
+int								get_ins(char *arena, t_instruction *ins, unsigned int i, unsigned int mod);
+int								get_ins_nostore(char *arena, t_instruction *ins, unsigned int i, unsigned int mod);
 int								store_arg(char *arena, t_instruction *ins, int i, int ocp);
 void							set_optab(t_op **tab);
 int								ft_encode_instructions(int fd, t_list *instructions, char create_label);

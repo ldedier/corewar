@@ -1,0 +1,851 @@
+libop/srcs/color.c:61:		if (vm->player[i].relevant && vm->player[i]->color.value != 1)
+server_dir/srcs/fight_cores.c:23:	ft_memmove(&vm->player[0], pl1, sizeof(t_player));
+server_dir/srcs/fight_cores.c:24:	ft_memmove(&vm->player[1], pl2, sizeof(t_player));
+server_dir/srcs/fight_cores.c:25:	vm->player[0].num = 1; //faire par pointeurs...
+server_dir/srcs/fight_cores.c:26:	vm->player[1].num = 2;
+server_dir/srcs/fight_cores.c:27:	vm->player[0].relevant = 1;
+server_dir/srcs/fight_cores.c:28:	vm->player[1].relevant = 1;
+server_dir/srcs/fight_cores.c:29:	vm->player[2].relevant = 0;
+server_dir/srcs/fight_cores.c:30:	vm->player[3].relevant = 0;
+server_dir/srcs/fight_cores.c:34:	while (vm->proc)
+server_dir/srcs/fight_cores.c:36:	if (vm->winner == &vm->player[0])
+server_dir/srcs/fight_cores.c:37:		vm->winner = pl1;
+server_dir/srcs/fight_cores.c:39:		vm->winner = pl2;
+server_dir/srcs/fight_cores.c:40:	vm->visu.active = 0;
+vm_dir/srcs/arena.c:17:	if (vm->nb_players)
+vm_dir/srcs/arena.c:18:		vm->visu.buttons[CLEAN_ARENA_BUTTON].enabled = 1;
+vm_dir/srcs/arena.c:20:		vm->visu.buttons[CLEAN_ARENA_BUTTON].enabled = 0;
+vm_dir/srcs/bonus_flags.c:20:	vm->client.active = 1;
+vm_dir/srcs/bonus_flags.c:21:	vm->visu.active = 1;
+vm_dir/srcs/bonus_flags.c:25:	vm->client.server_address = argv[*cur];
+vm_dir/srcs/bonus_flags.c:37:	vm->client.port = nb;
+vm_dir/srcs/color.c:21:	if (vm->visu.active)
+vm_dir/srcs/color.c:25:		ft_memmove(vm->player[i].color.term, color_ref[i], 11);
+vm_dir/srcs/color.c:26:		ft_printf("test color ref i = %s coucou %s\n", vm->player[i].color.term, EOC);
+vm_dir/srcs/color.c:28:	ft_memmove(vm->color.cycle, COL_CYCLES, 11);
+vm_dir/srcs/color.c:29:	ft_memmove(vm->color.death, COL_DEATH, 11);
+vm_dir/srcs/color.c:30:	ft_memmove(vm->color.resize, COL_RESIZE, 11);
+vm_dir/srcs/color.c:58:		if (vm->player[i].color.value != 1)
+vm_dir/srcs/display.c:17:	if (vm->display & (1 << MSG_CYCLE))
+vm_dir/srcs/display.c:18:		ft_printf("%s\nCycle to die is now %d"EOC, vm->color.resize, vm->c_to_die);
+vm_dir/srcs/display.c:23:	if (vm->display & (1 << MSG_DEATH))
+vm_dir/srcs/display.c:25:				vm->color.death,
+vm_dir/srcs/display.c:27:				vm->total_cycle - proc->live_cycle,
+vm_dir/srcs/display.c:28:				vm->c_to_die);
+vm_dir/srcs/display.c:33:	if (vm->display & (1 << MSG_CYCLE))
+vm_dir/srcs/display.c:34:		ft_printf("\n%sIt is now cycle %d"EOC, vm->color.cycle, vm->total_cycle);
+vm_dir/srcs/display.c:42:	proc_lst = vm->proc;
+vm_dir/srcs/display_ins.c:21:	if (!(vm->display & (1 << MSG_INS)))
+vm_dir/srcs/display_ins.c:49:	if (!(vm->display & (1 << MSG_MOVE)))
+vm_dir/srcs/display_ins.c:57:		ft_printf("%02x ", (unsigned char)(vm->arena[mod(proc->pc + i, MEM_SIZE)]));
+vm_dir/srcs/display_player.c:17:	if (vm->visu.active)
+vm_dir/srcs/display_player.c:29:	if (!vm->visu.active && vm->display & (1 << MSG_LIVE))
+vm_dir/srcs/display_player.c:36:	if (vm->visu.active)
+vm_dir/srcs/display_player.c:38:	ft_printf("%s\nContestant %d, ", vm->winner->color.term, -vm->winner->num);
+vm_dir/srcs/display_player.c:40:	ft_printf("%s", vm->winner->name);
+vm_dir/srcs/display_player_color.c:27:	if (vm->display & (1 << MSG_LIVE))
+vm_dir/srcs/display_player_color.c:34:	ft_printf("\n%sContestant %d, ", vm->winner->color->value, -vm->winner->num);
+vm_dir/srcs/display_player_color.c:36:	ft_printf("%s", vm->winner->name);
+vm_dir/srcs/flags.c:20:	vm->client.active = 1;
+vm_dir/srcs/flags.c:21:	vm->visu.active = 1;
+vm_dir/srcs/flags.c:25:	vm->client.server_address = argv[*cur];
+vm_dir/srcs/flags.c:37:	vm->client.port = nb;
+vm_dir/srcs/flags.c:66:		vm->dump = nb;
+vm_dir/srcs/flags.c:91:	vm->nb = ft_atoll(argv[*cur + 1]);
+vm_dir/srcs/flags.c:92:	if (vm->nb > 2147483647 || vm->nb < -2147483648)
+vm_dir/srcs/flags.c:95:	while (++i < vm->nb_players)
+vm_dir/srcs/flags.c:97:		if (vm->player[i].num == vm->nb)
+vm_dir/srcs/flags.c:100:	vm->player[vm->nb_players].num = vm->nb;
+vm_dir/srcs/flags.c:101:	vm->player[vm->nb_players].num_type = 1;
+vm_dir/srcs/flags.c:118:	while (++i < vm->nb_players)
+vm_dir/srcs/flags.c:120:		if (vm->player[i].num == nb)
+vm_dir/srcs/flags.c:148:				vm->display = 10 * vm->display + (argv[cur][i] - '0');
+vm_dir/srcs/flags.c:152:			vm->visu.active = 1;
+vm_dir/srcs/flags.c:163:				vm->player[vm->nb_players].num = add_player(vm);
+vm_dir/srcs/flags.c:164:			vm->player[vm->nb_players].cor_name = argv[cur];
+vm_dir/srcs/flags.c:165:			if (++vm->nb_players > MAX_PLAYERS)
+vm_dir/srcs/instructions/aff.c:43:	if (!vm->dump)
+vm_dir/srcs/instructions/and.c:35://	if (!vm->visu.active && (vm->display & (1 << MSG_INS)))
+vm_dir/srcs/instructions/fork.c:30:	if (!vm->visu.active && (vm->display & (1 << MSG_INS)))
+vm_dir/srcs/instructions/fork.c:32:	((t_process *)vm->proc->content)->pc = mod(proc->pc + arg[0].value, MEM_SIZE);
+vm_dir/srcs/instructions/get_val.c:26:	val = getval_mod(vm->arena, mod(proc->pc + *index, MEM_SIZE), DIR_SIZE, MEM_SIZE);
+vm_dir/srcs/instructions/ldi.c:35:	if ((vm->display & (1 << MSG_INS)))
+vm_dir/srcs/instructions/ldi.c:48:		val |= (unsigned char)vm->arena[ind];
+vm_dir/srcs/instructions/lfork.c:29:	if (vm->display & (1 << MSG_INS))
+vm_dir/srcs/instructions/lfork.c:31:	((t_process *)vm->proc->content)->pc = mod(proc->pc + arg[0].value, MEM_SIZE);
+vm_dir/srcs/instructions/lfork.c:32://	ft_printf("new proc %d pc = %d\n", ((t_process *)vm->proc->content)->nb, ((t_process *)vm->proc->content)->pc);
+vm_dir/srcs/instructions/live.c:27:		if (vm->player[i].num == num && vm->player[i].relevant)
+vm_dir/srcs/instructions/live.c:28:			return (&vm->player[i]);
+vm_dir/srcs/instructions/live.c:48:	++vm->issued_live;
+vm_dir/srcs/instructions/live.c:49:	proc->live_cycle = vm->total_cycle; // enlever, gere par proc->pending_ins.op
+vm_dir/srcs/instructions/live.c:50:	player = get_player_num(vm, vm->proc, arg[0].value);
+vm_dir/srcs/instructions/live.c:54:		++vm->live;
+vm_dir/srcs/instructions/live.c:56:		player->last_live_cycle = vm->total_cycle;
+vm_dir/srcs/instructions/live.c:57:		vm->winner = player;
+vm_dir/srcs/instructions/live.c:63:		if (ft_add_to_list_ptr(&vm->live_ok, (void *)live, sizeof(t_fade)))
+vm_dir/srcs/instructions/lld.c:29://	if (!vm->visu.active && (vm->display & (1 << MSG_INS)))
+vm_dir/srcs/instructions/lldi.c:35:	val = getval_mod(vm->arena, ind, DIR_SIZE, MEM_SIZE);
+vm_dir/srcs/instructions/lldi.c:39:	if (vm->display & (1 << MSG_INS))
+vm_dir/srcs/instructions/load_val.c:31:		vm->arena[mod_index] = byte_val >> ((3 - i) * 8);
+vm_dir/srcs/instructions/load_val.c:32:		vm->metarena[mod_index].color_index = proc->player->color.index;
+vm_dir/srcs/instructions/load_val.c:33:		vm->metarena[mod_index].alt_color = ALT_COLOR_VALUE;
+vm_dir/srcs/instructions/load_val.c:56:		proc->pending.dest = vm->arena;
+vm_dir/srcs/instructions/or.c:37://	if (!vm->visu.active && (vm->display & (1 << MSG_INS)))
+vm_dir/srcs/instructions/sti.c:34:	if (!vm->visu.active && (vm->display & (1 << MSG_INS)))
+vm_dir/srcs/instructions/xor.c:37://	if (!vm->visu.active && (vm->display & (1 << MSG_INS)))	
+vm_dir/srcs/instructions/zjmp.c:25:	if (vm->display & (1 << MSG_INS))
+vm_dir/srcs/instructions/zjmp.c:32:		if (!vm->visu.active && (vm->display & (1 << MSG_INS)))
+vm_dir/srcs/instructions/zjmp.c:35:	else if (!vm->visu.active && (vm->display & (1 << MSG_INS)))
+vm_dir/srcs/parse.c:21:	while (i < vm->nb_players)
+vm_dir/srcs/parse.c:23:		if (ft_read_player(vm->player[i].cor_name, &(vm->player[i])))
+vm_dir/srcs/play.c:24:	if (vm->issued_live >= NBR_LIVE || !--vm->checks)
+vm_dir/srcs/play.c:26:		vm->checks = MAX_CHECKS;
+vm_dir/srcs/play.c:44:	proc_lst = vm->proc;
+vm_dir/srcs/play.c:48:		if (vm->total_cycle - proc->live_cycle >= vm->c_to_die)
+vm_dir/srcs/play.c:50:			if (kill_process(vm, &vm->proc, &proc_lst) == FAILURE)
+vm_dir/srcs/play.c:60:	vm->live = 0;
+vm_dir/srcs/play.c:105:		proc->ins_bytelen = get_ins(vm->arena, ins, proc->pc, MEM_SIZE);
+vm_dir/srcs/play.c:111:	else if (get_ins_nostore(vm->arena, ins, proc->pc, MEM_SIZE))
+vm_dir/srcs/play.c:122:** NB: should be called until vm->proc empty
+vm_dir/srcs/play.c:130:	proc_lst = vm->proc;
+vm_dir/srcs/play.c:137:	if (vm->cycle >= vm->c_to_die)
+vm_dir/srcs/play.c:143:			vm->c_to_die -= CYCLE_DELTA;
+vm_dir/srcs/play.c:146:		vm->issued_live = 0;
+vm_dir/srcs/play.c:147:		vm->cycle = 0;
+vm_dir/srcs/play.c:149:	++vm->cycle;
+vm_dir/srcs/play.c:150:	++vm->total_cycle;
+vm_dir/srcs/players.c:27:		vm->player[i].relevant = 0;
+vm_dir/srcs/players.c:28:		vm->player[i].color.value = 1;
+vm_dir/srcs/players.c:29:		vm->player[i].last_live_cycle = 0;
+vm_dir/srcs/players.c:30:		vm->player[i].nb_proc = 0;
+vm_dir/srcs/players.c:31:		vm->player[i].num_type = -1;
+vm_dir/srcs/players.c:32:		ft_bzero(vm->player[i].aff_buf, MAX_AFF_LEN);
+vm_dir/srcs/players.c:49:		if (vm->player[i].relevant)
+vm_dir/srcs/players.c:52:	vm->nb_players = res;
+vm_dir/srcs/players.c:67:	ft_bzero(vm->arena, MEM_SIZE);
+vm_dir/srcs/players.c:68:	ft_bzero(vm->metarena, sizeof(vm->metarena));
+vm_dir/srcs/players.c:71:	if (!vm->visu.active)
+vm_dir/srcs/players.c:75:		set_color_sdl(vm, &vm->player[i]);
+vm_dir/srcs/players.c:76:		if (vm->player[i].relevant && ++index && (j = -1))
+vm_dir/srcs/players.c:78:			display_player_intro(vm, &vm->player[i]);
+vm_dir/srcs/players.c:79:			start = (MEM_SIZE / vm->nb_players) * (index - 1);
+vm_dir/srcs/players.c:80:			while (++j < vm->player[i].algo_len)
+vm_dir/srcs/players.c:82:				vm->metarena[start + j].color_index = vm->player[i].color.index;
+vm_dir/srcs/players.c:83:				*(vm->arena + start + j) = vm->player[i].algo[j];
+vm_dir/srcs/players.c:96:		vm->local_player[i] = vm->player[i];
+vm_dir/srcs/players.c:97:		vm->local_player[i].color.value = 1;
+vm_dir/srcs/players.c:98:		vm->local_player[i].num = vm->nb;
+vm_dir/srcs/processes.c:41:	if (ft_add_to_list_ptr(&vm->killed_proc,
+vm_dir/srcs/processes.c:44:	kill_adjust_ptr(&vm->proc, proc);
+vm_dir/srcs/processes.c:65:		start = (MEM_SIZE / vm->nb_players) * (index - 1);
+vm_dir/srcs/processes.c:66:		if (vm->player[i].relevant && ++index && !add_process(vm, i, start, NULL))
+vm_dir/srcs/processes.c:68:		vm->player[i].nb_proc = 1;
+vm_dir/srcs/processes.c:69:		vm->winner = ((t_process *)(vm->proc->content))->player;
+vm_dir/srcs/processes.c:108:		process->player = &vm->player[index];
+vm_dir/srcs/processes.c:113:	if (ft_add_to_list_ptr(&vm->proc, (void *)process, sizeof(t_process)))
+vm_dir/srcs/processes.c:115:	return (vm->proc);
+vm_dir/srcs/visu/atlas.c:60:	if (ft_init_atlas_color(sdl, i, vm->visu.sdl.color))
+vm_dir/srcs/visu/buttons_actions.c:28:	if (vm->nb_players)
+vm_dir/srcs/visu/buttons_actions.c:30:		vm->visu.phase = PHASE_PLAY;
+vm_dir/srcs/visu/buttons_actions.c:44:	vm->visu.phase = PHASE_INIT;
+vm_dir/srcs/visu/buttons_actions.c:67:		vm->player[i].relevant = 0;
+vm_dir/srcs/visu/buttons_actions.c:68:		vm->visu.positions.arena_slots[i].close.visible = 0;
+vm_dir/srcs/visu/buttons_actions_2.c:19:	if (vm->visu.local_type == LOCAL_LOCAL)
+vm_dir/srcs/visu/buttons_actions_2.c:21:		vm->visu.players_list[LOCAL].vscrollbar.relevant = 0;
+vm_dir/srcs/visu/buttons_actions_2.c:22:		vm->visu.players_list[DOWNLOADS].vscrollbar.relevant = 1;
+vm_dir/srcs/visu/buttons_actions_2.c:23:		vm->visu.players_list[DOWNLOADS].vscrollbar.state = 0;
+vm_dir/srcs/visu/buttons_actions_2.c:24:		vm->visu.local_type = LOCAL_DOWNLOAD;
+vm_dir/srcs/visu/buttons_actions_2.c:28:		vm->visu.players_list[DOWNLOADS].vscrollbar.relevant = 0;
+vm_dir/srcs/visu/buttons_actions_2.c:29:		vm->visu.players_list[LOCAL].vscrollbar.relevant = 1;
+vm_dir/srcs/visu/buttons_actions_2.c:30:		vm->visu.players_list[LOCAL].vscrollbar.state = 0;
+vm_dir/srcs/visu/buttons_actions_2.c:31:		vm->visu.local_type = LOCAL_LOCAL;
+vm_dir/srcs/visu/buttons_actions_client.c:19:	if (vm->visu.sort_cs_func == &ft_sort_alpha_cs)
+vm_dir/srcs/visu/buttons_actions_client.c:20:		vm->visu.inv_sort = !vm->visu.inv_sort;
+vm_dir/srcs/visu/buttons_actions_client.c:23:		vm->visu.inv_sort = 0;
+vm_dir/srcs/visu/buttons_actions_client.c:24:		vm->visu.sort_cs_func = &ft_sort_alpha_cs;
+vm_dir/srcs/visu/buttons_actions_client.c:26:	vm->visu.players_list[SERVER].vscrollbar.state = 0;
+vm_dir/srcs/visu/buttons_actions_client.c:35:	if (vm->visu.sort_cs_func == &ft_sort_score_cs)
+vm_dir/srcs/visu/buttons_actions_client.c:36:		vm->visu.inv_sort = !vm->visu.inv_sort;
+vm_dir/srcs/visu/buttons_actions_client.c:39:		vm->visu.inv_sort = 0;
+vm_dir/srcs/visu/buttons_actions_client.c:40:		vm->visu.sort_cs_func = &ft_sort_score_cs;
+vm_dir/srcs/visu/buttons_actions_client.c:42:	vm->visu.sort_cs_func = &ft_sort_score_cs;
+vm_dir/srcs/visu/buttons_actions_client.c:43:	vm->visu.players_list[SERVER].vscrollbar.state = 0;
+vm_dir/srcs/visu/buttons_actions_client.c:52:	if (vm->client.upload_player.from_server)
+vm_dir/srcs/visu/buttons_actions_client.c:54:	else if (out_of_atlas_range(vm->client.upload_player.name))
+vm_dir/srcs/visu/buttons_actions_client.c:57:		ft_process_upload(vm, vm->client.upload_player);
+vm_dir/srcs/visu/buttons_actions_client.c:58:	vm->client.upload_player.relevant = 0;
+vm_dir/srcs/visu/buttons_actions_client.c:59:	vm->visu.positions.upload_slot.close.visible = 0;
+vm_dir/srcs/visu/client.c:59:	if (ft_init_client(&(vm->client)))
+vm_dir/srcs/visu/client.c:60:		return (ft_free_all_client(&vm->client));
+vm_dir/srcs/visu/client.c:62:		return (ft_free_all_client(&vm->client));
+vm_dir/srcs/visu/client.c:63:	vm->visu.players_list[SERVER].vscrollbar.compressed_height =
+vm_dir/srcs/visu/client.c:64:		ft_get_vscrollbar_compressed_height(&(vm->visu),
+vm_dir/srcs/visu/client.c:65:				ft_lstlength(vm->client.client_slots));
+vm_dir/srcs/visu/client.c:67:	ft_free_all_client(&(vm->client));
+vm_dir/srcs/visu/client_events.c:21:	ft_memcpy(&flag, vm->client.buffer, sizeof(t_flag));
+vm_dir/srcs/visu/client_events.c:31:	if (SDLNet_CheckSockets(vm->client.socket_set, 0))
+vm_dir/srcs/visu/client_events.c:33:		if (SDLNet_SocketReady(vm->client.socket))
+vm_dir/srcs/visu/client_events.c:35:			nb_bytes = SDLNet_TCP_Recv(vm->client.socket, vm->client.buffer,
+vm_dir/srcs/visu/client_events.c:40:				vm->client.active = 0;
+vm_dir/srcs/visu/client_events.c:41:				vm->visu.players_list[SERVER].vscrollbar.relevant = 0;
+vm_dir/srcs/visu/client_get_new_cores.c:22:	ft_memcpy_recv(&score, vm->client.buffer, i, sizeof(t_score));
+vm_dir/srcs/visu/client_get_new_cores.c:25:	ft_memcpy_recv(name_len, vm->client.buffer, i, sizeof(t_name_len));
+vm_dir/srcs/visu/client_get_new_cores.c:43:	ft_memcpy_recv(&nb_players, vm->client.buffer, &i, sizeof(t_nb_players));
+vm_dir/srcs/visu/client_get_new_cores.c:52:	ft_lst_mergesort(&vm->client.client_slots,
+vm_dir/srcs/visu/client_get_new_cores.c:53:			vm->visu.sort_cs_func, vm->visu.inv_sort);
+vm_dir/srcs/visu/client_get_new_cores.c:55:	ft_update_vscrollbar_server_compressed_size(vm, &(vm->visu));
+vm_dir/srcs/visu/client_slot.c:33:	ptr = vm->client.client_slots;
+vm_dir/srcs/visu/client_slot_add.c:24:	if (ft_add_to_list_ptr_back(&(vm->client.client_slots),
+vm_dir/srcs/visu/client_slot_add.c:31:	player->num = vm->nb;
+vm_dir/srcs/visu/client_slot_add.c:41:	if (!(player = ft_new_player(&(vm->client.buffer[i]), name_len, score)))
+vm_dir/srcs/visu/client_slot_add.c:52:	if (!(player = ft_new_player(&(vm->client.buffer[i]), name_len, score)))
+vm_dir/srcs/visu/client_slot_add.c:76:		ft_memcpy_recv(&score, vm->client.buffer, &i, sizeof(t_score));
+vm_dir/srcs/visu/client_slot_add.c:79:		ft_memcpy_recv(&name_len, vm->client.buffer, &i, sizeof(t_name_len));
+vm_dir/srcs/visu/client_slot_add.c:100:	ft_memcpy_recv(&nb_players, vm->client.buffer, &i, sizeof(t_nb_players));
+vm_dir/srcs/visu/client_status.c:19:	if ((t_flag)vm->client.buffer[0] == GET_LIST)
+vm_dir/srcs/visu/client_status.c:25:				vm->client.server_address, vm->client.port);
+vm_dir/srcs/visu/client_status.c:26:		ft_lst_mergesort(&vm->client.client_slots, &ft_sort_alpha_cs, 0);
+vm_dir/srcs/visu/client_status.c:29:	else if ((t_flag)vm->client.buffer[0] == SERVER_FULL)
+vm_dir/srcs/visu/client_status.c:45:	if (SDLNet_CheckSockets(vm->client.socket_set, 1500))
+vm_dir/srcs/visu/client_status.c:47:		if (SDLNet_SocketReady(vm->client.socket))
+vm_dir/srcs/visu/client_status.c:49:			if ((nb_bytes = SDLNet_TCP_Recv(vm->client.socket,
+vm_dir/srcs/visu/client_status.c:50:				vm->client.buffer, MAX_TCP_PACKET)) <= 0)
+vm_dir/srcs/visu/copy_str_to_surface.c:44:		if (SDL_BlitScaled(vm->visu.sdl.atlas[color_index]
+vm_dir/srcs/visu/copy_str_to_surface.c:46:					vm->visu.sdl.w_surface, &char_rect) < 0)
+vm_dir/srcs/visu/copy_str_to_surface.c:61:		if (ft_blit_scaled_scrollbar(&vm->visu.sdl,
+vm_dir/srcs/visu/copy_str_to_surface.c:62:					vm->visu.sdl.atlas[col_source.x]
+vm_dir/srcs/visu/copy_str_to_surface.c:65:					vm->visu.players_list[col_source.y].vscrollbar) < 0)
+vm_dir/srcs/visu/copy_str_to_surface.c:70:		if (SDL_BlitScaled(vm->visu.sdl.atlas[col_source.x]
+vm_dir/srcs/visu/copy_str_to_surface.c:72:					vm->visu.sdl.w_surface, char_rect) < 0)
+vm_dir/srcs/visu/cursor.c:17:	if (vm->visu.sdl.current_cursor != index)
+vm_dir/srcs/visu/cursor.c:22:			SDL_SetCursor(vm->visu.sdl.cursor_packers[index].cursor);
+vm_dir/srcs/visu/cursor.c:23:			vm->visu.sdl.current_cursor = index;
+vm_dir/srcs/visu/cursor.c:25:		vm->visu.event_manager.enable_mouse_up = 0;
+vm_dir/srcs/visu/download.c:23:		ft_lst_mergesort(&vm->visu.downloaded_players, &ft_sort_alpha, 0);
+vm_dir/srcs/visu/download.c:38:	button->surface = vm->visu.sdl.images[DL];
+vm_dir/srcs/visu/download.c:39:	button->vscrollbar = &vm->visu.players_list[SERVER].vscrollbar;
+vm_dir/srcs/visu/drag.c:32:				player_xy.x + vm->visu.center.player_w > xy.x &&
+vm_dir/srcs/visu/drag.c:34:				player_xy.y + vm->visu.center.player_h > xy.y);
+vm_dir/srcs/visu/drag.c:42:					player_xy.x + vm->visu.center.player_w > xy.x &&
+vm_dir/srcs/visu/drag.c:44:					player_xy.y + vm->visu.center.player_h > xy.y));
+vm_dir/srcs/visu/drag.c:52:	if (vm->player[i].relevant && ft_is_on_player_scrollbar(vm, xy,
+vm_dir/srcs/visu/drag.c:53:				vm->visu.positions.arena_slots[i].player,
+vm_dir/srcs/visu/drag.c:54:				vm->visu.players_list[ARENA].vscrollbar))
+vm_dir/srcs/visu/drag.c:56:		ft_populate_drag_container_player_slot(dc, &(vm->player[i]),
+vm_dir/srcs/visu/drag.c:57:				&(vm->visu.positions.arena_slots[i]), ARENA);
+vm_dir/srcs/visu/drag.c:60:	if (vm->visu.local_type == LOCAL_LOCAL &&
+vm_dir/srcs/visu/drag.c:61:			vm->local_player[i].relevant && ft_is_on_player_scrollbar(vm, xy,
+vm_dir/srcs/visu/drag.c:62:				vm->visu.positions.local_slots[i].player,
+vm_dir/srcs/visu/drag.c:63:				vm->visu.players_list[LOCAL].vscrollbar))
+vm_dir/srcs/visu/drag.c:65:		ft_populate_drag_container_player_slot(dc, &(vm->local_player[i]),
+vm_dir/srcs/visu/drag.c:66:				&(vm->visu.positions.local_slots[i]), LOCAL);
+vm_dir/srcs/visu/drag.c:76:	if (vm->visu.phase == PHASE_INIT && vm->visu.notification.image_index == -1)
+vm_dir/srcs/visu/drag.c:86:		if (vm->client.active && ft_is_on_client_players(vm, xy, dc))
+vm_dir/srcs/visu/drag.c:88:		if (vm->visu.local_type == LOCAL_DOWNLOAD &&
+vm_dir/srcs/visu/drop.c:17:	if (vm->visu.drag_container.drag_union.drag_player.source ==
+vm_dir/srcs/visu/drop.c:18:			SERVER && !vm->visu.drag_container.drag_union.
+vm_dir/srcs/visu/drop.c:20:		ft_query_player(vm, vm->visu.drag_container.drag_union.
+vm_dir/srcs/visu/drop.c:22:	if (vm->visu.drag_container.drag_union.drag_player.source
+vm_dir/srcs/visu/drop.c:23:			== LOCAL || vm->visu.drag_container.drag_union.
+vm_dir/srcs/visu/drop.c:24:			drag_player.source == DOWNLOADS || vm->visu.
+vm_dir/srcs/visu/drop.c:36:	if (vm->visu.drag_container.drag_enum == DRAG_PLAYER &&
+vm_dir/srcs/visu/drop.c:37:			vm->visu.drag_container.drag_union.drag_player.player)
+vm_dir/srcs/visu/drop.c:41:		else if (vm->visu.drag_container.drag_union.drag_player.player &&
+vm_dir/srcs/visu/drop.c:42:				(vm->visu.drag_container.drag_union.drag_player.source
+vm_dir/srcs/visu/drop.c:43:				== ARENA || vm->visu.drag_container.drag_union.
+vm_dir/srcs/visu/drop.c:46:			vm->visu.drag_container.drag_union.drag_player.player->relevant = 0;
+vm_dir/srcs/visu/drop.c:47:			set_color_sdl(vm, vm->visu.drag_container.drag_union.
+vm_dir/srcs/visu/drop.c:52:	if (vm->client.upload_player.relevant)
+vm_dir/srcs/visu/drop.c:53:		vm->visu.buttons[UPLOAD_BUTTON].enabled = 1;
+vm_dir/srcs/visu/drop.c:54:	vm->visu.drag_container.drag_union.drag_player.player = NULL;
+vm_dir/srcs/visu/drop.c:55:	vm->visu.drag_container.drag_union.vscrollbar = NULL;
+vm_dir/srcs/visu/drop.c:56:	vm->visu.drop_container.player = NULL;
+vm_dir/srcs/visu/drop_actions.c:24:	*(vm->visu.drag_container.drag_union.drag_player.player) =
+vm_dir/srcs/visu/drop_actions.c:26:	if (vm->visu.drag_container.drag_union.drag_player.close)
+vm_dir/srcs/visu/drop_actions.c:27:		vm->visu.drag_container.drag_union.drag_player.close->visible = 1;
+vm_dir/srcs/visu/drop_actions.c:28:	if (dc->player == &vm->client.upload_player)
+vm_dir/srcs/visu/drop_actions.c:30:	if (vm->visu.drag_container.drag_union.drag_player.source == UPLOAD)
+vm_dir/srcs/visu/drop_actions.c:31:		ft_remove_color_player(vm, vm->visu.drag_container.
+vm_dir/srcs/visu/drop_actions.c:37:	if (dc->player == &vm->client.upload_player)
+vm_dir/srcs/visu/drop_actions.c:39:	vm->visu.drag_container.drag_union.drag_player.player->relevant = 0;
+vm_dir/srcs/visu/drop_actions.c:40:	vm->visu.drag_container.drag_union.drag_player.player->color.value = 1;
+vm_dir/srcs/visu/drop_actions.c:41:	if (vm->visu.drag_container.drag_union.drag_player.close)
+vm_dir/srcs/visu/drop_actions.c:42:		vm->visu.drag_container.drag_union.drag_player.close->visible = 0;
+vm_dir/srcs/visu/drop_actions.c:51:	*dc->player = *(vm->visu.drag_container.drag_union.drag_player.player);
+vm_dir/srcs/visu/drop_actions.c:64:	if (dc->player == &vm->client.upload_player)
+vm_dir/srcs/visu/drop_actions.c:72:		*(dc->player) = *(vm->visu.drag_container.
+vm_dir/srcs/visu/drop_actions.c:79:		*(dc->player) = *(vm->visu.drag_container.
+vm_dir/srcs/visu/events.c:19:		if (vm->visu.phase == PHASE_INIT)
+vm_dir/srcs/visu/events.c:22:			vm->visu.time_manager.pause = !vm->visu.time_manager.pause;
+vm_dir/srcs/visu/events.c:24:	else if (code == SDLK_RIGHT && vm->visu.time_manager.pause)
+vm_dir/srcs/visu/events.c:38:	if (vm->visu.time_manager.cycles_per_turn <= 4)
+vm_dir/srcs/visu/events.c:39:		vm->visu.time_manager.cycles_per_turn =
+vm_dir/srcs/visu/events.c:40:		ft_fmax(vm->visu.time_manager.cycles_per_turn +
+vm_dir/srcs/visu/events.c:42:	else if (vm->visu.time_manager.cycles_per_turn >= 5000)
+vm_dir/srcs/visu/events.c:43:		vm->visu.time_manager.cycles_per_turn = ft_fmin(20000,
+vm_dir/srcs/visu/events.c:44:			vm->visu.time_manager.cycles_per_turn + direction * 1000);
+vm_dir/srcs/visu/events.c:45:	else if (vm->visu.time_manager.cycles_per_turn >= 500)
+vm_dir/srcs/visu/events.c:46:		vm->visu.time_manager.cycles_per_turn += direction * 100;
+vm_dir/srcs/visu/events.c:48:		vm->visu.time_manager.cycles_per_turn += direction;
+vm_dir/srcs/visu/events.c:59://	if (keys[SDLK_KP_6] && vm->visu.time_manager.pause)
+vm_dir/srcs/visu/events.c:72:			vm->visu.active = 0;
+vm_dir/srcs/visu/events.c:87:	if (vm->visu.phase == PHASE_PLAY)
+vm_dir/srcs/visu/init_all.c:49:	ptr = vm->visu.downloaded_players;
+vm_dir/srcs/visu/init_all.c:53:		player->num = vm->nb;
+vm_dir/srcs/visu/init_all.c:66:	if (vm->client.active)
+vm_dir/srcs/visu/init_all.c:73:	vm->visu.phase = PHASE_INIT;
+vm_dir/srcs/visu/init_all.c:74:	if (vm->nb_players)
+vm_dir/srcs/visu/init_all.c:75:		vm->visu.local_type = LOCAL_LOCAL;
+vm_dir/srcs/visu/init_all.c:77:		vm->visu.local_type = LOCAL_DOWNLOAD;
+vm_dir/srcs/visu/init_all.c:78:	vm->cycle = 0;
+vm_dir/srcs/visu/init_all.c:81:	vm->visu.notification.image_index = -1;
+vm_dir/srcs/visu/init_all.c:82:	vm->visu.animation_index = 0;
+vm_dir/srcs/visu/init_all.c:83:	vm->visu.current_hp_ratio = 0.5;
+vm_dir/srcs/visu/init_all.c:94:	if (ft_parse_player_folder(PATH"/downloads", &vm->visu.downloaded_players))
+vm_dir/srcs/visu/init_all.c:96:	ft_lst_mergesort(&vm->visu.downloaded_players, ft_sort_alpha, 0);
+vm_dir/srcs/visu/init_all.c:99:	if (ft_init_hp_surface(&vm->visu))
+vm_dir/srcs/visu/init_buttons.c:20:	button->rect.w = vm->visu.center.cross_border;
+vm_dir/srcs/visu/init_buttons.c:21:	button->rect.h = vm->visu.center.cross_border;
+vm_dir/srcs/visu/init_buttons.c:22:	button->surface = vm->visu.sdl.images[CLOSE];
+vm_dir/srcs/visu/init_buttons.c:29:	button->vscrollbar = &vm->visu.players_list[ARENA].vscrollbar;
+vm_dir/srcs/visu/init_buttons.c:58:	vm->visu.sdl.images[OK], &ft_remove_notification);
+vm_dir/srcs/visu/init_buttons.c:67:		vm->visu.sdl.images[BACK], &go_back);
+vm_dir/srcs/visu/init_buttons.c:80:	vm->visu.sdl.images[FIGHT], &fight);
+vm_dir/srcs/visu/init_buttons.c:86:	vm->visu.sdl.images[TRASH], &clean_arena);
+vm_dir/srcs/visu/init_buttons.c:88:	visu->buttons[CLEAN_ARENA_BUTTON].enabled = vm->nb_players;
+vm_dir/srcs/visu/init_buttons.c:93:	vm->visu.sdl.images[SWITCH_1], &switch_local);
+vm_dir/srcs/visu/init_buttons.c:110:		vm->visu.sdl.images[UL], &ft_upload);
+vm_dir/srcs/visu/init_buttons.c:115:		vm->visu.sdl.images[SORT_ALPHA], &sort_alpha);
+vm_dir/srcs/visu/init_buttons.c:118:		vm->visu.sdl.images[SORT_SCORE], &sort_score);
+vm_dir/srcs/visu/init_players.c:62:	ft_bzero(vm->arena, MEM_SIZE);
+vm_dir/srcs/visu/init_players.c:63:	ft_bzero(vm->metarena, sizeof(vm->metarena));
+vm_dir/srcs/visu/init_players.c:68:		if (set_color_sdl(vm, &vm->player[i]) && player != &vm->player[i])
+vm_dir/srcs/visu/init_players.c:69:			ft_set_numbers(vm->player, &(vm->player[i]));
+vm_dir/srcs/visu/init_players.c:70:		if (vm->player[i].relevant && ++index && (j = -1))
+vm_dir/srcs/visu/init_players.c:72:			display_player_intro(vm, &vm->player[i]); // vraimen? laisser?
+vm_dir/srcs/visu/init_players.c:73:			start = (MEM_SIZE / vm->nb_players) * (index - 1);
+vm_dir/srcs/visu/init_players.c:74:			while (++j < vm->player[i].algo_len)
+vm_dir/srcs/visu/init_players.c:76:				vm->metarena[start + j].color_index = vm->player[i].color.index;
+vm_dir/srcs/visu/init_players.c:77:				*(vm->arena + start + j) = vm->player[i].algo[j];
+vm_dir/srcs/visu/init_scrollbar.c:55:	v->players_list[LOCAL].vscrollbar.relevant = vm->nb_players;
+vm_dir/srcs/visu/init_scrollbar.c:56:	v->players_list[DOWNLOADS].vscrollbar.relevant = !vm->nb_players;
+vm_dir/srcs/visu/init_scrollbar.c:94:		ft_get_vscrollbar_compressed_height(v, vm->nb_players);
+vm_dir/srcs/visu/init_scrollbar.c:95:	if (vm->client.active)
+vm_dir/srcs/visu/init_slots.c:28:		&(v->positions.upload_slot.close), &vm->client.upload_player, xy);
+vm_dir/srcs/visu/init_slots.c:30:		&vm->visu.players_list[UPLOAD].vscrollbar;
+vm_dir/srcs/visu/init_slots.c:46:			&(vm->player[i]), xy);
+vm_dir/srcs/visu/init_slots.c:78:		if (vm->player[i].relevant)
+vm_dir/srcs/visu/init_slots.c:79:			vm->visu.positions.arena_slots[i].close.visible = 1;
+vm_dir/srcs/visu/init_slots.c:89:	ptr = vm->client.client_slots;
+vm_dir/srcs/visu/init_slots.c:93:		slot->download.surface = vm->visu.sdl.images[DL];
+vm_dir/srcs/visu/init_slots.c:94:		slot->download.vscrollbar = &vm->visu.players_list[SERVER].vscrollbar;
+vm_dir/srcs/visu/is_droppable.c:17:	return (ft_fabs((mouse.x - vm->visu.drag_container.diff_x) -
+vm_dir/srcs/visu/is_droppable.c:18:				xy.x) < (vm->visu.center.player_w) &&
+vm_dir/srcs/visu/is_droppable.c:19:					ft_fabs((mouse.y - vm->visu.drag_container.diff_y) -
+vm_dir/srcs/visu/is_droppable.c:20:						xy.y) < (ft_max(vm->visu.center.player_padding,
+vm_dir/srcs/visu/is_droppable.c:21:								vm->visu.center.player_h)));
+vm_dir/srcs/visu/is_droppable.c:32:	if (xy.y - scrolled_height + vm->visu.center.player_h > vscrollbar.pos.y &&
+vm_dir/srcs/visu/is_droppable.c:43:	if (vm->client.active &&
+vm_dir/srcs/visu/is_droppable.c:44:		vm->visu.drag_container.drag_union.drag_player.source != SERVER &&
+vm_dir/srcs/visu/is_droppable.c:46:				vm->visu.positions.upload_slot.player,
+vm_dir/srcs/visu/is_droppable.c:47:					vm->visu.players_list[UPLOAD].vscrollbar))
+vm_dir/srcs/visu/is_droppable.c:49:		dc->player = &(vm->client.upload_player);
+vm_dir/srcs/visu/is_droppable.c:50:		dc->close = &(vm->visu.positions.upload_slot.close);
+vm_dir/srcs/visu/is_droppable.c:60:	if (vm->visu.phase == PHASE_INIT &&
+vm_dir/srcs/visu/is_droppable.c:61:		vm->visu.drag_container.drag_union.drag_player.player != NULL)
+vm_dir/srcs/visu/is_droppable.c:67:				vm->visu.positions.arena_slots[i].player,
+vm_dir/srcs/visu/is_droppable.c:68:					vm->visu.players_list[ARENA].vscrollbar))
+vm_dir/srcs/visu/is_droppable.c:70:				dc->player = &(vm->player[i]);
+vm_dir/srcs/visu/is_droppable.c:71:				dc->close = &(vm->visu.positions.arena_slots[i].close);
+vm_dir/srcs/visu/is_on_buttons.c:31:			button->phase != vm->visu.phase ||
+vm_dir/srcs/visu/is_on_buttons.c:32:				(vm->visu.notification.image_index != -1 &&
+vm_dir/srcs/visu/is_on_buttons.c:33:					button != &vm->visu.buttons[OK_BUTTON]))
+vm_dir/srcs/visu/is_on_buttons.c:64:		if (ft_is_on_button(vm, xy, &(vm->visu.positions.arena_slots[i].close),
+vm_dir/srcs/visu/is_on_buttons.c:68:	if (ft_is_on_button(vm, xy, &(vm->visu.positions.upload_slot.close), but))
+vm_dir/srcs/visu/is_on_buttons.c:73:		if (ft_to_print_scrollbar(vm->visu.players_list[i].vscrollbar))
+vm_dir/srcs/visu/is_on_buttons.c:75:			if (ft_is_on_button(vm, xy, &(vm->visu.players_list[i].
+vm_dir/srcs/visu/is_on_buttons.c:78:			if (ft_is_on_button(vm, xy, &(vm->visu.players_list[i].
+vm_dir/srcs/visu/is_on_buttons.c:96:		if (ft_is_on_button(vm, xy, &(vm->visu.buttons[i]), but) &&
+vm_dir/srcs/visu/is_on_buttons.c:97:				(vm->client.active || i >= FIGHT_BUTTON))
+vm_dir/srcs/visu/is_on_buttons.c:100:	if (vm->client.active)
+vm_dir/srcs/visu/is_on_buttons.c:102:		ptr = vm->client.client_slots;
+vm_dir/srcs/visu/is_on_draggable_server.c:22:			player_xy.x + vm->visu.center.player_w > xy.x &&
+vm_dir/srcs/visu/is_on_draggable_server.c:24:			player_xy.y + vm->visu.center.player_h > xy.y));
+vm_dir/srcs/visu/is_on_draggable_server.c:31:				player_xy.x + vm->visu.center.player_w > xy.x &&
+vm_dir/srcs/visu/is_on_draggable_server.c:33:				player_xy.y + vm->visu.center.player_h > xy.y);
+vm_dir/srcs/visu/is_on_draggable_server.c:40:	if (vm->client.upload_player.relevant && ft_is_on_player_scrollbar(vm, xy,
+vm_dir/srcs/visu/is_on_draggable_server.c:41:		vm->visu.positions.upload_slot.player,
+vm_dir/srcs/visu/is_on_draggable_server.c:42:			vm->visu.players_list[UPLOAD].vscrollbar))
+vm_dir/srcs/visu/is_on_draggable_server.c:44:		ft_populate_drag_container_player_slot(dc, &(vm->client.upload_player),
+vm_dir/srcs/visu/is_on_draggable_server.c:45:			&(vm->visu.positions.upload_slot), UPLOAD);
+vm_dir/srcs/visu/is_on_draggable_server.c:57:	c = vm->visu.center;
+vm_dir/srcs/visu/is_on_draggable_server.c:58:	ptr = vm->client.client_slots;
+vm_dir/srcs/visu/is_on_draggable_server.c:59:	p_pos.x = vm->visu.center.dashboard_x + vm->visu.center.labscore_left +
+vm_dir/srcs/visu/is_on_draggable_server.c:60:		vm->visu.center.labscore_width + vm->visu.center.labscore_right +
+vm_dir/srcs/visu/is_on_draggable_server.c:61:		vm->visu.center.score_width + vm->visu.center.score_right;
+vm_dir/srcs/visu/is_on_draggable_server.c:62:	p_pos.y = vm->visu.players_list[SERVER].vscrollbar.pos.y +
+vm_dir/srcs/visu/is_on_draggable_server.c:67:				vm->visu.players_list[SERVER].vscrollbar))
+vm_dir/srcs/visu/is_on_draggable_server.c:70:					p_pos, ft_get_scrolled_height(vm->visu.
+vm_dir/srcs/visu/is_on_draggable_server.c:74:		p_pos.y += vm->visu.center.player_padding + vm->visu.center.player_h;
+vm_dir/srcs/visu/is_on_draggable_server.c:86:	c = vm->visu.center;
+vm_dir/srcs/visu/is_on_draggable_server.c:87:	ptr = vm->visu.downloaded_players;
+vm_dir/srcs/visu/is_on_draggable_server.c:89:	(ft_to_print_scrollbar(vm->visu.players_list[DOWNLOADS].vscrollbar) ?
+vm_dir/srcs/visu/is_on_draggable_server.c:91:	player_pos.y = vm->visu.players_list[DOWNLOADS].vscrollbar.pos.y +
+vm_dir/srcs/visu/is_on_draggable_server.c:96:				vm->visu.players_list[DOWNLOADS].vscrollbar))
+vm_dir/srcs/visu/is_on_draggable_server.c:99:				player_pos, ft_get_scrolled_height(vm->visu.
+vm_dir/srcs/visu/is_on_scrollbar.c:32:	if (vm->visu.phase == PHASE_INIT && vm->visu.notification.image_index == -1)
+vm_dir/srcs/visu/is_on_scrollbar.c:37:			if (ft_is_on_scrollbar_bar(xy, vm->visu.players_list[i].vscrollbar))
+vm_dir/srcs/visu/is_on_scrollbar.c:40:						&vm->visu.players_list[i].vscrollbar);
+vm_dir/srcs/visu/mouse.c:23:		ft_is_on_buttons(vm, xy, &vm->visu.event_manager.pressed_button);
+vm_dir/srcs/visu/mouse.c:24:		vm->visu.event_manager.enable_mouse_up = 1;
+vm_dir/srcs/visu/mouse.c:25:		if (ft_is_on_draggable(vm, xy, &(vm->visu.drag_container)))
+vm_dir/srcs/visu/mouse.c:31:		ft_is_on_droppable(vm, xy, &(vm->visu.drop_container));
+vm_dir/srcs/visu/mouse.c:47:	vm->visu.event_manager.pressed_button = NULL;
+vm_dir/srcs/visu/mouse.c:51:		vm->visu.event_manager.enable_mouse_up)
+vm_dir/srcs/visu/mouse.c:53:		vm->visu.event_manager.enable_mouse_up = 0;
+vm_dir/srcs/visu/mouse.c:65:	vm->visu.drag_container.x = event.motion.x;
+vm_dir/srcs/visu/mouse.c:66:	vm->visu.drag_container.y = event.motion.y;
+vm_dir/srcs/visu/mouse.c:67:	if (vm->visu.drag_container.drag_enum == DRAG_VSCROLLBAR &&
+vm_dir/srcs/visu/mouse.c:68:			vm->visu.drag_container.drag_union.vscrollbar)
+vm_dir/srcs/visu/mouse.c:69:		ft_update_scrollbar(vm, vm->visu.drag_container.drag_union.vscrollbar);
+vm_dir/srcs/visu/mouse.c:70:	ft_is_on_droppable(vm, xy, &(vm->visu.drop_container));
+vm_dir/srcs/visu/mouse.c:75:	if (vm->visu.event_manager.pressed_button)
+vm_dir/srcs/visu/mouse.c:76:		vm->visu.event_manager.pressed_button->on_press(vm,
+vm_dir/srcs/visu/mouse.c:77:			vm->visu.event_manager.pressed_button);
+vm_dir/srcs/visu/process.c:24:	while (i-- && vm->proc)
+vm_dir/srcs/visu/process.c:34:	if (vm->visu.phase == PHASE_PLAY)
+vm_dir/srcs/visu/process.c:36:		if (!(vm->visu.time_manager.pause))
+vm_dir/srcs/visu/process.c:37:			return (process_play(vm, vm->visu.time_manager.cycles_per_turn));
+vm_dir/srcs/visu/query_player.c:35:	ft_memcpy_recv(&flag, vm->client.buffer, &i, sizeof(t_flag));
+vm_dir/srcs/visu/query_player.c:38:	ft_memcpy_recv(&player->comm_len, vm->client.buffer,
+vm_dir/srcs/visu/query_player.c:40:	ft_memcpy_recv(&player->comm, vm->client.buffer, &i, player->comm_len);
+vm_dir/srcs/visu/query_player.c:42:	ft_memcpy_recv(&player->algo_len, vm->client.buffer,
+vm_dir/srcs/visu/query_player.c:44:	ft_memcpy_recv(&player->algo, vm->client.buffer, &i, player->algo_len);
+vm_dir/srcs/visu/query_player.c:53:	if (SDLNet_CheckSockets(vm->client.socket_set, 1500))
+vm_dir/srcs/visu/query_player.c:55:		if (SDLNet_SocketReady(vm->client.socket))
+vm_dir/srcs/visu/query_player.c:57:			if ((nb_bytes = SDLNet_TCP_Recv(vm->client.socket,
+vm_dir/srcs/visu/query_player.c:58:							vm->client.buffer, MAX_TCP_PACKET)) <= 0)
+vm_dir/srcs/visu/query_player.c:82:	vm->client.flag = GET_CORE;
+vm_dir/srcs/visu/query_player.c:84:	size += ft_memcpy_ret(&(data[size]), &(vm->client.flag), sizeof(t_flag));
+vm_dir/srcs/visu/query_player.c:89:	if (ft_send_protected(vm->client.socket, data, size))
+vm_dir/srcs/visu/query_player_bin.c:36:	if (ft_process_read_player(&(vm->client.buffer[i]),
+vm_dir/srcs/visu/query_player_bin.c:41:	if (ft_add_to_list_ptr_back(&vm->visu.downloaded_players, player,
+vm_dir/srcs/visu/query_player_bin.c:44:	player->num = vm->nb;
+vm_dir/srcs/visu/query_player_bin.c:46:	ft_update_vscrollbar_downloads_compressed_size(vm, &(vm->visu));
+vm_dir/srcs/visu/query_player_bin.c:61:	ft_memcpy_recv(&flag, vm->client.buffer, &i, sizeof(t_flag));
+vm_dir/srcs/visu/query_player_bin.c:66:	ft_memcpy_recv(&player->file_len, vm->client.buffer,
+vm_dir/srcs/visu/query_player_bin.c:70:	ft_memcpy(&player->bin, &(vm->client.buffer[i]), player->file_len);
+vm_dir/srcs/visu/query_player_bin.c:78:	if (SDLNet_CheckSockets(vm->client.socket_set, 1500))
+vm_dir/srcs/visu/query_player_bin.c:80:		if (SDLNet_SocketReady(vm->client.socket))
+vm_dir/srcs/visu/query_player_bin.c:82:			if ((nb_bytes = SDLNet_TCP_Recv(vm->client.socket,
+vm_dir/srcs/visu/query_player_bin.c:83:					vm->client.buffer, MAX_TCP_PACKET)) <= 0)
+vm_dir/srcs/visu/query_player_bin.c:107:	vm->client.flag = GET_CORE_BIN;
+vm_dir/srcs/visu/query_player_bin.c:109:	size += ft_memcpy_ret(&(data[size]), &(vm->client.flag), sizeof(t_flag));
+vm_dir/srcs/visu/query_player_bin.c:114:	if (ft_send_protected(vm->client.socket, data, size))
+vm_dir/srcs/visu/render.c:22:		if (vm->visu.positions.arena_slots[i].close.render(vm,
+vm_dir/srcs/visu/render.c:23:			&vm->visu.positions.arena_slots[i].close))
+vm_dir/srcs/visu/render.c:42:	vm->visu.framerate.fps_counter++;
+vm_dir/srcs/visu/render_activity.c:20:	ft_draw_rect_surface(vm->visu.sdl.w_surface, rect, color);
+vm_dir/srcs/visu/render_activity.c:48:	vm->metarena[process->pc].process_color_index =
+vm_dir/srcs/visu/render_activity.c:52:	SDL_FillRect(vm->visu.sdl.w_surface, &rect, c.color);
+vm_dir/srcs/visu/render_activity.c:61:		ft_draw_rect_surface(vm->visu.sdl.w_surface, rect, 0xffffff);
+vm_dir/srcs/visu/render_activity.c:71:	ptr = vm->proc;
+vm_dir/srcs/visu/render_alts.c:25:	SDL_FillRect(vm->visu.sdl.w_surface, &rect, cm.color);
+vm_dir/srcs/visu/render_alts.c:26:	if (!vm->visu.time_manager.pause)
+vm_dir/srcs/visu/render_alts.c:27:		vm->metarena[pc].alt_color--;
+vm_dir/srcs/visu/render_alts.c:44:				if ((value = vm->metarena[i * MEM_COLS + j].alt_color))
+vm_dir/srcs/visu/render_buttons.c:21:					vm->visu.sdl.w_surface, &rect) < 0)
+vm_dir/srcs/visu/render_buttons.c:26:		return (ft_blit_scaled_scrollbar(&vm->visu.sdl,
+vm_dir/srcs/visu/render_buttons.c:32:	if ((vm->visu.drag_container.drag_enum == DRAG_PLAYER &&
+vm_dir/srcs/visu/render_buttons.c:33:				vm->visu.drop_container.player == &vm->client.upload_player) ||
+vm_dir/srcs/visu/render_buttons.c:34:			(vm->client.upload_player.relevant == 1 &&
+vm_dir/srcs/visu/render_buttons.c:35:				(vm->visu.drag_container.drag_enum != DRAG_PLAYER ||
+vm_dir/srcs/visu/render_buttons.c:36:					vm->visu.drag_container.drag_union.drag_player.player
+vm_dir/srcs/visu/render_buttons.c:37:						!= &vm->client.upload_player)))
+vm_dir/srcs/visu/render_buttons.c:39:					vm->visu.sdl.images[UL], this->vscrollbar));
+vm_dir/srcs/visu/render_buttons.c:42:					vm->visu.sdl.images[UL_DISABLED], this->vscrollbar));
+vm_dir/srcs/visu/render_buttons.c:49:					vm->visu.sdl.images[TRASH], this->vscrollbar));
+vm_dir/srcs/visu/render_buttons.c:52:					vm->visu.sdl.images[TRASH_DISABLED], this->vscrollbar));
+vm_dir/srcs/visu/render_buttons.c:59:					vm->visu.sdl.images[DL], this->vscrollbar));
+vm_dir/srcs/visu/render_buttons.c:62:					vm->visu.sdl.images[DL_DISABLED], this->vscrollbar));
+vm_dir/srcs/visu/render_buttons.c:67:	if (vm->visu.local_type == LOCAL_LOCAL)
+vm_dir/srcs/visu/render_buttons.c:69:					vm->visu.sdl.images[SWITCH_1], this->vscrollbar));
+vm_dir/srcs/visu/render_buttons.c:72:					vm->visu.sdl.images[SWITCH_2], this->vscrollbar));
+vm_dir/srcs/visu/render_entries_1.c:29:	rect.x = vm->visu.center.dashboard_x + vm->visu.center.entry_left;
+vm_dir/srcs/visu/render_entries_1.c:31:	rect.w = vm->visu.center.entry_max_w;
+vm_dir/srcs/visu/render_entries_1.c:32:	rect.h = vm->visu.center.entry_h;
+vm_dir/srcs/visu/render_entries_1.c:38:	rect.x = rect.x + rect.w + vm->visu.center.entry_space;
+vm_dir/srcs/visu/render_entries_1.c:39:	rect.w = vm->visu.center.entry_value_max_w;
+vm_dir/srcs/visu/render_entries_1.c:54:	val = vm->visu.time_manager.cycles_per_turn * FRAMERATE;
+vm_dir/srcs/visu/render_entries_1.c:74:	if (!(value = ft_itoa(vm->total_cycle)))
+vm_dir/srcs/visu/render_entries_1.c:87:	rect.x = vm->visu.center.dashboard_x + vm->visu.center.entry_left;
+vm_dir/srcs/visu/render_entries_1.c:88:	rect.y = vm->visu.center.state_top;
+vm_dir/srcs/visu/render_entries_1.c:89:	rect.w = 2 * vm->visu.center.dashboard_width / 3.0;
+vm_dir/srcs/visu/render_entries_1.c:90:	rect.h = vm->visu.center.state_h;
+vm_dir/srcs/visu/render_entries_1.c:91:	if (vm->visu.time_manager.pause)
+vm_dir/srcs/visu/render_entries_1.c:96:	y = rect.y + rect.h + vm->visu.center.state_bottom;
+vm_dir/srcs/visu/render_entries_1.c:101:		y += vm->visu.center.entry_padding + vm->visu.center.entry_h;
+vm_dir/srcs/visu/render_entries_2.c:19:	if (!(value = ft_itoa(vm->c_to_die)))
+vm_dir/srcs/visu/render_entries_2.c:44:	val = vm->cycle;
+vm_dir/srcs/visu/render_entries_2.c:47:	if (!(tmp2 = ft_itoa(vm->c_to_die)))
+vm_dir/srcs/visu/render_entries_2.c:72:	val = vm->live;
+vm_dir/srcs/visu/render_entries_2.c:100:	val = MAX_CHECKS - vm->checks;
+vm_dir/srcs/visu/render_fade.c:23:	SDL_FillRect(vm->visu.sdl.w_surface, &rect, cm.color);
+vm_dir/srcs/visu/render_fade.c:74:	ptr = vm->killed_proc;
+vm_dir/srcs/visu/render_fade.c:75:	ft_render_fades_at_head(&ptr, &prev, &vm->killed_proc, vm);
+vm_dir/srcs/visu/render_line.c:20:	pix = (int *)vm->visu.sdl.w_surface->pixels;
+vm_dir/srcs/visu/render_line.c:21:	i = vm->visu.center.dashboard_x;
+vm_dir/srcs/visu/render_line.c:22:	while (i < vm->visu.sdl.w_surface->w)
+vm_dir/srcs/visu/render_line.c:24:		pix[y * vm->visu.sdl.w_surface->w + i] = col;
+vm_dir/srcs/visu/render_line.c:35:	pix = (int *)vm->visu.sdl.w_surface->pixels;
+vm_dir/srcs/visu/render_line.c:36:	while (i < vm->visu.sdl.w_surface->h)
+vm_dir/srcs/visu/render_line.c:38:		pix[(int)(i * vm->visu.sdl.w_surface->w +
+vm_dir/srcs/visu/render_line.c:39:				vm->visu.center.dashboard_x)] = LINE_COL;
+vm_dir/srcs/visu/render_line.c:50:	pix = (int *)vm->visu.sdl.w_surface->pixels;
+vm_dir/srcs/visu/render_line.c:52:			vm->visu.center.title_h + vm->visu.center.title_top +
+vm_dir/srcs/visu/render_line.c:53:			vm->visu.center.title_bottom - 1, LINE_COL_DARKER);
+vm_dir/srcs/visu/render_line.c:55:		vm->visu.center.top_dashboard_height, LINE_COL);
+vm_dir/srcs/visu/render_line.c:57:		vm->visu.center.top_dashboard_height +
+vm_dir/srcs/visu/render_line.c:58:			vm->visu.center.top_dashboard_fheight, LINE_COL);
+vm_dir/srcs/visu/render_line.c:60:	while (i < vm->visu.center.top_dashboard_height +
+vm_dir/srcs/visu/render_line.c:61:		vm->visu.center.top_dashboard_fheight)
+vm_dir/srcs/visu/render_line.c:63:		pix[(int)(i * vm->visu.sdl.w_surface->w +
+vm_dir/srcs/visu/render_line.c:64:				vm->visu.center.dashboard_mid_x)] = LINE_COL;
+vm_dir/srcs/visu/render_live.c:23:	SDL_FillRect(vm->visu.sdl.w_surface, &rect, fade->color);
+vm_dir/srcs/visu/render_live.c:74:	ptr = vm->live_ok;
+vm_dir/srcs/visu/render_live.c:75:	ft_render_lives_at_head(&ptr, &prev, &vm->live_ok, vm);
+vm_dir/srcs/visu/render_live_breakdown.c:17:	rect->x = vm->visu.center.dashboard_x +
+vm_dir/srcs/visu/render_live_breakdown.c:18:		vm->visu.center.live_breakdown_bar_left;
+vm_dir/srcs/visu/render_live_breakdown.c:19:	rect->w = vm->visu.center.live_breakdown_bar_w;
+vm_dir/srcs/visu/render_live_breakdown.c:20:	rect->h = vm->visu.center.live_breakdown_bar_h;
+vm_dir/srcs/visu/render_live_breakdown.c:21:	rect->y = vm->visu.center.game_entries_h +
+vm_dir/srcs/visu/render_live_breakdown.c:22:		vm->visu.center.list_player_entries_h +
+vm_dir/srcs/visu/render_live_breakdown.c:23:		vm->visu.center.live_breakdown_bar_top;
+vm_dir/srcs/visu/render_live_breakdown.c:29:	if (vm->player[i].relevant)
+vm_dir/srcs/visu/render_live_breakdown.c:31:		rect->x = vm->visu.center.dashboard_x +
+vm_dir/srcs/visu/render_live_breakdown.c:32:			vm->visu.center.live_breakdown_bar_left + *from;
+vm_dir/srcs/visu/render_live_breakdown.c:33:		if (!vm->live)
+vm_dir/srcs/visu/render_live_breakdown.c:34:			rect->w = vm->visu.center.live_breakdown_bar_w /
+vm_dir/srcs/visu/render_live_breakdown.c:35:				(double)vm->nb_players;
+vm_dir/srcs/visu/render_live_breakdown.c:37:			rect->w = vm->visu.center.live_breakdown_bar_w *
+vm_dir/srcs/visu/render_live_breakdown.c:38:				vm->player[i].live / (double)vm->live;
+vm_dir/srcs/visu/render_live_breakdown.c:40:		if (SDL_FillRect(vm->visu.sdl.w_surface, rect,
+vm_dir/srcs/visu/render_live_breakdown.c:41:				vm->player[i].color.value))
+vm_dir/srcs/visu/render_live_breakdown.c:62:	rect.x = vm->visu.center.dashboard_x +
+vm_dir/srcs/visu/render_live_breakdown.c:63:		vm->visu.center.live_breakdown_bar_left;
+vm_dir/srcs/visu/render_live_breakdown.c:64:	rect.w = vm->visu.center.live_breakdown_bar_w;
+vm_dir/srcs/visu/render_live_breakdown.c:65:	if (SDL_BlitScaled(vm->visu.sdl.images[BREAKDOWN_BAR],
+vm_dir/srcs/visu/render_live_breakdown.c:66:			NULL, vm->visu.sdl.w_surface, &rect))
+vm_dir/srcs/visu/render_live_breakdown.c:83:	rect.x = vm->visu.center.dashboard_x + vm->visu.center.entry_left;
+vm_dir/srcs/visu/render_live_breakdown.c:84:	rect.y = vm->visu.center.game_entries_h +
+vm_dir/srcs/visu/render_live_breakdown.c:85:		vm->visu.center.list_player_entries_h +
+vm_dir/srcs/visu/render_live_breakdown.c:86:			vm->visu.center.live_breakdown_title_top;
+vm_dir/srcs/visu/render_live_breakdown.c:87:	rect.w = vm->visu.center.live_breakdown_title_w;
+vm_dir/srcs/visu/render_live_breakdown.c:88:	rect.h = vm->visu.center.live_breakdown_title_h;
+vm_dir/srcs/visu/render_live_breakdown_hp.c:17:	rect->x = vm->visu.center.dashboard_x + 1;
+vm_dir/srcs/visu/render_live_breakdown_hp.c:18:	rect->w = vm->visu.center.dashboard_width - 1;
+vm_dir/srcs/visu/render_live_breakdown_hp.c:19:	rect->y = vm->visu.center.live_breakdown_hp_anim_y;
+vm_dir/srcs/visu/render_live_breakdown_hp.c:20:	rect->h = vm->visu.center.live_breakdown_hp_anim_h;
+vm_dir/srcs/visu/render_live_breakdown_hp.c:21:	if (SDL_BlitScaled(vm->visu.frames[vm->visu.animation_index].background,
+vm_dir/srcs/visu/render_live_breakdown_hp.c:22:			NULL, vm->visu.sdl.w_surface, rect))
+vm_dir/srcs/visu/render_live_breakdown_hp.c:36:		ratio = ft_flerp(vm->visu.current_hp_ratio, ratio, 0.25);
+vm_dir/srcs/visu/render_live_breakdown_hp.c:38:		ratio = ft_flerp(vm->visu.current_hp_ratio, ratio, 0.4);
+vm_dir/srcs/visu/render_live_breakdown_hp.c:39:	if (!vm->visu.time_manager.pause)
+vm_dir/srcs/visu/render_live_breakdown_hp.c:40:		vm->visu.current_hp_ratio = ratio;
+vm_dir/srcs/visu/render_live_breakdown_hp.c:41:	rect->x = vm->visu.center.dashboard_x + 1 +
+vm_dir/srcs/visu/render_live_breakdown_hp.c:42:		vm->visu.frames[vm->visu.animation_index].voldemort_ray.x_offset;
+vm_dir/srcs/visu/render_live_breakdown_hp.c:43:	rect->w = ((vm->visu.frames[vm->visu.animation_index].
+vm_dir/srcs/visu/render_live_breakdown_hp.c:44:		harry_ray.x_offset - vm->visu.frames[vm->visu.animation_index].
+vm_dir/srcs/visu/render_live_breakdown_hp.c:47:	if (SDL_BlitScaled(vm->visu.frames[vm->visu.animation_index].
+vm_dir/srcs/visu/render_live_breakdown_hp.c:49:			vm->visu.sdl.w_surface, rect))
+vm_dir/srcs/visu/render_live_breakdown_hp.c:63:	rect.x = rect.x + w + (vm->visu.frames[vm->visu.animation_index].
+vm_dir/srcs/visu/render_live_breakdown_hp.c:64:		harry_ray.x_offset - vm->visu.frames[vm->visu.animation_index].
+vm_dir/srcs/visu/render_live_breakdown_hp.c:65:		harry_ray.screen_width) - (vm->visu.frames[vm->visu.animation_index].
+vm_dir/srcs/visu/render_live_breakdown_hp.c:66:		voldemort_ray.screen_width + vm->visu.frames[vm->visu.animation_index].
+vm_dir/srcs/visu/render_live_breakdown_hp.c:68:	rect.w = vm->visu.center.dashboard_x + 1 +
+vm_dir/srcs/visu/render_live_breakdown_hp.c:69:		vm->visu.frames[vm->visu.animation_index].harry_ray.x_offset - rect.x;
+vm_dir/srcs/visu/render_live_breakdown_hp.c:70:	if (SDL_BlitScaled(vm->visu.frames[vm->visu.animation_index].
+vm_dir/srcs/visu/render_live_breakdown_hp.c:72:			vm->visu.sdl.w_surface, &rect))
+vm_dir/srcs/visu/render_live_breakdown_hp.c:89:		if (vm->player[i].relevant)
+vm_dir/srcs/visu/render_live_breakdown_hp.c:91:			ft_copy_abbrev(abbrev, vm->player[i].name);
+vm_dir/srcs/visu/render_live_breakdown_hp.c:93:					vm->player[i].color.index))
+vm_dir/srcs/visu/render_live_breakdown_hp.c:95:			rect.x += rect.w + vm->visu.center.live_breakdown_hp_players_side;
+vm_dir/srcs/visu/render_live_breakdown_hp.c:96:			rect.w = vm->visu.dim.width - rect.x;
+vm_dir/srcs/visu/render_live_breakdown_hp.c:109:	rect.x = vm->visu.center.dashboard_x + vm->visu.center.entry_left;
+vm_dir/srcs/visu/render_live_breakdown_hp.c:110:	rect.y = vm->visu.center.live_breakdown_hp_y +
+vm_dir/srcs/visu/render_live_breakdown_hp.c:111:		vm->visu.center.live_breakdown_hp_title_top;
+vm_dir/srcs/visu/render_live_breakdown_hp.c:112:	rect.w = vm->visu.center.live_breakdown_title_w;
+vm_dir/srcs/visu/render_live_breakdown_hp.c:113:	rect.h = vm->visu.center.live_breakdown_title_h;
+vm_dir/srcs/visu/render_live_breakdown_hp_tools.c:25:	if (vm->proc == NULL)
+vm_dir/srcs/visu/render_live_breakdown_hp_tools.c:30:			if (vm->player[i].relevant)
+vm_dir/srcs/visu/render_live_breakdown_hp_tools.c:32:				if (vm->winner == &vm->player[i])
+vm_dir/srcs/visu/render_live_breakdown_hp_tools.c:59:	rect->x = vm->visu.center.dashboard_x +
+vm_dir/srcs/visu/render_live_breakdown_hp_tools.c:60:		vm->visu.center.live_breakdown_hp_players_side;
+vm_dir/srcs/visu/render_live_breakdown_hp_tools.c:61:	rect->y = vm->visu.center.live_breakdown_hp_y +
+vm_dir/srcs/visu/render_live_breakdown_hp_tools.c:62:		vm->visu.center.live_breakdown_hp_title_top +
+vm_dir/srcs/visu/render_live_breakdown_hp_tools.c:63:		vm->visu.center.live_breakdown_title_h +
+vm_dir/srcs/visu/render_live_breakdown_hp_tools.c:64:		vm->visu.center.live_breakdown_hp_title_bottom;
+vm_dir/srcs/visu/render_live_breakdown_hp_tools.c:65:	rect->w = vm->visu.center.entry_max_w;
+vm_dir/srcs/visu/render_live_breakdown_hp_tools.c:66:	rect->h = vm->visu.center.live_breakdown_hp_players_h;
+vm_dir/srcs/visu/render_live_breakdown_hp_tools.c:79:		if (vm->player[i].relevant)
+vm_dir/srcs/visu/render_live_breakdown_hp_tools.c:82:				*nb_live_player_1 = vm->player[i].live;
+vm_dir/srcs/visu/render_live_breakdown_hp_tools.c:85:				*nb_live_player_2 = vm->player[i].live;
+vm_dir/srcs/visu/render_mem.c:23:	res.w = vm->visu.center.glyph_width * 2 + vm->visu.center.x_diff_byte +
+vm_dir/srcs/visu/render_mem.c:24:		vm->visu.center.x_diff;
+vm_dir/srcs/visu/render_mem.c:25:	res.h = vm->visu.center.glyph_height + vm->visu.center.y_diff;
+vm_dir/srcs/visu/render_mem.c:26:	res.x = vm->visu.center.left_margin + x * (vm->visu.center.glyph_width * 2
+vm_dir/srcs/visu/render_mem.c:27:			+ vm->visu.center.x_diff_byte + vm->visu.center.x_diff) -
+vm_dir/srcs/visu/render_mem.c:28:		vm->visu.center.x_diff / 2.0;
+vm_dir/srcs/visu/render_mem.c:29:	res.y = vm->visu.center.top_margin + y * (vm->visu.center.glyph_height +
+vm_dir/srcs/visu/render_mem.c:30:			vm->visu.center.y_diff) - vm->visu.center.y_diff / 2.0;
+vm_dir/srcs/visu/render_mem.c:64:	rect.w = vm->visu.center.glyph_width;
+vm_dir/srcs/visu/render_mem.c:65:	rect.h = vm->visu.center.glyph_height;
+vm_dir/srcs/visu/render_mem.c:77:				vm->visu.sdl.atlas[color_index % 8][ascii_byte].surface, NULL,
+vm_dir/srcs/visu/render_mem.c:78:				vm->visu.sdl.w_surface, &rect) < 0)
+vm_dir/srcs/visu/render_mem.c:80:	dist->x += vm->visu.center.glyph_width;
+vm_dir/srcs/visu/render_mem.c:88:	dist->x += vm->visu.center.x_diff_byte;
+vm_dir/srcs/visu/render_mem.c:101:	dist.y = vm->visu.center.top_margin;
+vm_dir/srcs/visu/render_mem.c:105:		dist.x = vm->visu.center.left_margin;
+vm_dir/srcs/visu/render_mem.c:111:					(unsigned char)vm->arena[i * MEM_COLS + j],
+vm_dir/srcs/visu/render_mem.c:112:						vm->metarena[i * MEM_COLS + j], &dist))
+vm_dir/srcs/visu/render_mem.c:114:				dist.x += vm->visu.center.x_diff;
+vm_dir/srcs/visu/render_mem.c:118:		dist.y += vm->visu.center.glyph_height + vm->visu.center.y_diff;
+vm_dir/srcs/visu/render_notification.c:17:	vm->visu.notification.image_index = image_index;
+vm_dir/srcs/visu/render_notification.c:18:	vm->visu.buttons[OK_BUTTON].visible = 1;
+vm_dir/srcs/visu/render_notification.c:25:	vm->visu.notification.image_index = -1;
+vm_dir/srcs/visu/render_notification.c:26:	vm->visu.buttons[OK_BUTTON].visible = 0;
+vm_dir/srcs/visu/render_notification.c:43:	SDL_BlitScaled(vm->visu.sdl.images[vm->visu.notification.image_index], NULL,
+vm_dir/srcs/visu/render_notification.c:44:		vm->visu.sdl.w_surface, &notif_rect);
+vm_dir/srcs/visu/render_notification.c:45:	ft_render_button(vm, &vm->visu.buttons[OK_BUTTON]);
+vm_dir/srcs/visu/render_notification.c:53:	if (vm->visu.notification.image_index != -1)
+vm_dir/srcs/visu/render_notification.c:55:		rect.w = vm->visu.center.notif_panel_w;
+vm_dir/srcs/visu/render_notification.c:56:		rect.h = vm->visu.center.notif_panel_h;
+vm_dir/srcs/visu/render_notification.c:57:		rect.x = vm->visu.center.notif_panel_left;
+vm_dir/srcs/visu/render_notification.c:58:		rect.y = vm->visu.center.notif_panel_top;
+vm_dir/srcs/visu/render_notification.c:59:		ft_apply_color_filter(vm->visu.sdl.w_surface, 0x44777777);
+vm_dir/srcs/visu/render_online.c:31:	rect.w = vm->visu.center.labscore_width;
+vm_dir/srcs/visu/render_online.c:32:	rect.h = vm->visu.center.player_h;
+vm_dir/srcs/visu/render_online.c:33:	if (ft_blit_scaled_scrollbar(&vm->visu.sdl, vm->visu.sdl.titles[SCORE],
+vm_dir/srcs/visu/render_online.c:34:		rect, vm->visu.players_list[SERVER].vscrollbar) < 0)
+vm_dir/srcs/visu/render_online.c:49:	rect.w = vm->visu.center.score_width;
+vm_dir/srcs/visu/render_online.c:50:	rect.h = vm->visu.center.player_h;
+vm_dir/srcs/visu/render_online.c:74:	y = vm->visu.players_list[SERVER].vscrollbar.pos.y +
+vm_dir/srcs/visu/render_online.c:75:		vm->visu.center.player_top;
+vm_dir/srcs/visu/render_online.c:76:	x = vm->visu.center.dashboard_x + vm->visu.center.labscore_left +
+vm_dir/srcs/visu/render_online.c:77:		vm->visu.center.labscore_width + vm->visu.center.labscore_right +
+vm_dir/srcs/visu/render_online.c:78:			vm->visu.center.score_width + vm->visu.center.score_right
+vm_dir/srcs/visu/render_online.c:79:				+ vm->visu.center.player_w + vm->visu.center.download_side -
+vm_dir/srcs/visu/render_online.c:80:					(ft_to_print_scrollbar(vm->visu.players_list[SERVER].
+vm_dir/srcs/visu/render_online.c:81:						vscrollbar) ? vm->visu.center.scrollbar_width / 2 : 0);
+vm_dir/srcs/visu/render_online.c:82:	ptr = vm->client.client_slots;
+vm_dir/srcs/visu/render_online.c:88:		slot->download.rect.w = vm->visu.center.player_h;
+vm_dir/srcs/visu/render_online.c:89:		slot->download.rect.h = vm->visu.center.player_h;
+vm_dir/srcs/visu/render_online.c:90:		y += vm->visu.center.player_padding + vm->visu.center.player_h;
+vm_dir/srcs/visu/render_online.c:100:	x = vm->visu.center.dashboard_x + vm->visu.center.labscore_left;
+vm_dir/srcs/visu/render_online.c:103:	x += vm->visu.center.labscore_width + vm->visu.center.labscore_right;
+vm_dir/srcs/visu/render_online.c:106:	x += vm->visu.center.score_width + vm->visu.center.score_right;
+vm_dir/srcs/visu/render_online_2.c:20:	y += vm->visu.center.player_top;
+vm_dir/srcs/visu/render_online_2.c:21:	ptr = vm->client.client_slots;
+vm_dir/srcs/visu/render_online_2.c:27:		y += vm->visu.center.player_padding + vm->visu.center.player_h;
+vm_dir/srcs/visu/render_online_2.c:37:	y = vm->visu.center.top_dashboard_height +
+vm_dir/srcs/visu/render_online_2.c:38:		vm->visu.center.top_dashboard_fheight + vm->visu.center.title_top;
+vm_dir/srcs/visu/render_online_2.c:41:	y += vm->visu.center.s_title_h + vm->visu.center.title_bottom;
+vm_dir/srcs/visu/render_online_2.c:44:	y += vm->visu.center.player_h + vm->visu.center.toolbar_bottom;
+vm_dir/srcs/visu/render_online_2.c:48:	ft_render_horizontal_line_dashboard(vm, vm->visu.center.footer_y,
+vm_dir/srcs/visu/render_online_top.c:19:	rect.x = vm->visu.center.dashboard_x + vm->visu.center.s_title_side;
+vm_dir/srcs/visu/render_online_top.c:21:	rect.w = vm->visu.center.dashboard_width -
+vm_dir/srcs/visu/render_online_top.c:22:		2 * vm->visu.center.s_title_side;
+vm_dir/srcs/visu/render_online_top.c:23:	rect.h = vm->visu.center.s_title_h;
+vm_dir/srcs/visu/render_online_top.c:24:	if (SDL_BlitScaled(vm->visu.sdl.titles[SCOREWAR], NULL,
+vm_dir/srcs/visu/render_online_top.c:25:				vm->visu.sdl.w_surface, &rect) < 0)
+vm_dir/srcs/visu/render_online_top.c:50:	if (vm->client.upload_player.relevant &&
+vm_dir/srcs/visu/render_online_top.c:51:			vm->visu.drag_container.drag_union.drag_player.player !=
+vm_dir/srcs/visu/render_online_top.c:52:				&vm->client.upload_player)
+vm_dir/srcs/visu/render_online_top.c:55:		color = ft_get_player_color(vm, &vm->client.upload_player,
+vm_dir/srcs/visu/render_online_top.c:57:	pixels = (int *)vm->visu.sdl.w_surface->pixels;
+vm_dir/srcs/visu/render_online_top.c:59:	while (i < vm->visu.center.upload_left)
+vm_dir/srcs/visu/render_online_top.c:61:		pixels[(int)xy.y * vm->visu.dim.width + i + (int)xy.x] = color;
+vm_dir/srcs/visu/render_online_top.c:70:	xy.x = vm->visu.center.dashboard_x + vm->visu.center.upload_left;
+vm_dir/srcs/visu/render_online_top.c:72:	ft_render_player(vm, &(vm->client.upload_player), xy, UPLOAD);
+vm_dir/srcs/visu/render_online_top.c:73:	xy.x += vm->visu.center.player_w;
+vm_dir/srcs/visu/render_online_top.c:74:	xy.y += vm->visu.center.player_h / 2;
+vm_dir/srcs/visu/render_online_top.c:76:	vm->visu.positions.upload_slot.close.render(vm,
+vm_dir/srcs/visu/render_online_top.c:77:		&vm->visu.positions.upload_slot.close);
+vm_dir/srcs/visu/render_online_top.c:78:	ft_render_toolbar_buttons(vm, vm->visu.buttons);
+vm_dir/srcs/visu/render_phase.c:19:	rect.x = vm->visu.center.dashboard_x + 1;
+vm_dir/srcs/visu/render_phase.c:20:	rect.w = vm->visu.center.dashboard_width - 1;
+vm_dir/srcs/visu/render_phase.c:21:	rect.y = vm->visu.center.top_dashboard_height +
+vm_dir/srcs/visu/render_phase.c:22:		vm->visu.center.top_dashboard_fheight + 1;
+vm_dir/srcs/visu/render_phase.c:23:	rect.h = vm->visu.center.mid_dashboard_height;
+vm_dir/srcs/visu/render_phase.c:24:	if (SDL_BlitScaled(vm->visu.sdl.images[KEYS], NULL, vm->visu.sdl.w_surface,
+vm_dir/srcs/visu/render_phase.c:27:	ft_render_horizontal_line_dashboard(vm, vm->visu.center.footer_y,
+vm_dir/srcs/visu/render_phase.c:53:	if (vm->client.active)
+vm_dir/srcs/visu/render_phase.c:58:	ft_render_offline_buttons(vm, vm->visu.buttons);
+vm_dir/srcs/visu/render_phase.c:65:	if (vm->visu.phase == PHASE_INIT)
+vm_dir/srcs/visu/render_play.c:20:	ptr = vm->proc;
+vm_dir/srcs/visu/render_play.c:24:		vm->metarena[process->pc].process_color_index = 0;
+vm_dir/srcs/visu/render_play.c:31:	ft_render_horizontal_line_dashboard(vm, vm->visu.center.game_entries_h,
+vm_dir/srcs/visu/render_play.c:33:	ft_render_horizontal_line_dashboard(vm, vm->visu.center.game_entries_h +
+vm_dir/srcs/visu/render_play.c:34:			vm->visu.center.player_entries_h, LINE_COL);
+vm_dir/srcs/visu/render_play.c:35:	if (vm->nb_players != 2)
+vm_dir/srcs/visu/render_play.c:36:		ft_render_horizontal_line_dashboard(vm, vm->visu.center.game_entries_h +
+vm_dir/srcs/visu/render_play.c:37:				vm->visu.center.list_player_entries_h, LINE_COL);
+vm_dir/srcs/visu/render_play.c:40:				vm->visu.center.live_breakdown_hp_y, LINE_COL);
+vm_dir/srcs/visu/render_play.c:50:	if (vm->nb_players != 2)
+vm_dir/srcs/visu/render_play.c:81:	if (!vm->visu.time_manager.pause)
+vm_dir/srcs/visu/render_play.c:84:				vm->visu.time_manager.cycles_per_turn * 0.025, 1);
+vm_dir/srcs/visu/render_play.c:85:		vm->visu.animation_index = (int)(vm->visu.animation_index + anim_rest)
+vm_dir/srcs/visu/render_play_footer.c:22:	ft_copy_abbrev(abbrev, vm->winner->name);
+vm_dir/srcs/visu/render_play_footer.c:29:				rect, vm->winner->color.index))
+vm_dir/srcs/visu/render_play_footer.c:42:	rect.x = vm->visu.center.dashboard_x + vm->visu.center.winner_left;
+vm_dir/srcs/visu/render_play_footer.c:43:	rect.y = vm->visu.center.game_entries_h + vm->visu.center.player_entries_h +
+vm_dir/srcs/visu/render_play_footer.c:44:		vm->visu.center.winner_top;
+vm_dir/srcs/visu/render_play_footer.c:45:	rect.w = vm->visu.center.winner_width;
+vm_dir/srcs/visu/render_play_footer.c:46:	rect.h = vm->visu.center.winner_height;
+vm_dir/srcs/visu/render_play_footer.c:47:	if (vm->proc == NULL && vm->winner)
+vm_dir/srcs/visu/render_play_footer.c:56:	if (ft_render_button(vm, &vm->visu.buttons[BACK_BUTTON]))
+vm_dir/srcs/visu/render_player_entries.c:26:	rect.x = vm->visu.center.dashboard_x + vm->visu.center.player_entry_left;
+vm_dir/srcs/visu/render_player_entries.c:28:	rect.w = vm->visu.center.entry_max_w;
+vm_dir/srcs/visu/render_player_entries.c:29:	rect.h = vm->visu.center.player_entry_height;
+vm_dir/srcs/visu/render_player_entries.c:35:	rect.x = vm->visu.center.dashboard_x + vm->visu.center.entry_left +
+vm_dir/srcs/visu/render_player_entries.c:36:		rect.w + vm->visu.center.entry_space;
+vm_dir/srcs/visu/render_player_entries.c:37:	rect.w = vm->visu.center.entry_value_max_w;
+vm_dir/srcs/visu/render_player_entries.c:54:	rect.x = vm->visu.center.dashboard_x + vm->visu.center.entry_left;
+vm_dir/srcs/visu/render_player_entries.c:56:	rect.w = vm->visu.center.entry_max_w;
+vm_dir/srcs/visu/render_player_entries.c:57:	rect.h = vm->visu.center.player_title_height;
+vm_dir/srcs/visu/render_player_entries.c:68:	rect.x = rect.x + rect.w + vm->visu.center.entry_space;
+vm_dir/srcs/visu/render_player_entries.c:69:	rect.w = vm->visu.center.entry_value_max_w;
+vm_dir/srcs/visu/render_player_entries.c:81:	*y += vm->visu.center.player_title_height +
+vm_dir/srcs/visu/render_player_entries.c:82:			vm->visu.center.player_title_bottom;
+vm_dir/srcs/visu/render_player_entries.c:87:		*y += vm->visu.center.player_entry_height;
+vm_dir/srcs/visu/render_player_entries.c:90:			*y += vm->visu.center.player_entry_ipadding;
+vm_dir/srcs/visu/render_player_entries.c:100:	y = vm->visu.center.game_entries_h + vm->visu.center.player_title_top;
+vm_dir/srcs/visu/render_player_entries.c:104:		if (vm->player[i].relevant)
+vm_dir/srcs/visu/render_player_entries.c:106:			if (ft_render_player_entry_bloc(vm, vm->player[i], &y))
+vm_dir/srcs/visu/render_player_entries.c:108:			y += vm->visu.center.player_entry_padding;
+vm_dir/srcs/visu/render_player_tools.c:19:	cross_rect.w = vm->visu.center.cross_border;
+vm_dir/srcs/visu/render_player_tools.c:20:	cross_rect.h = vm->visu.center.cross_border;
+vm_dir/srcs/visu/render_player_tools.c:21:	cross_rect.x = xy.x + vm->visu.center.player_w -
+vm_dir/srcs/visu/render_player_tools.c:22:			vm->visu.center.cross_border;
+vm_dir/srcs/visu/render_player_tools.c:24:	if (SDL_BlitScaled(vm->visu.sdl.images[CLOSE], NULL,
+vm_dir/srcs/visu/render_player_tools.c:25:			vm->visu.sdl.w_surface, &cross_rect) < 0)
+vm_dir/srcs/visu/render_player_tools.c:35:	if (player != vm->visu.drop_container.player ||
+vm_dir/srcs/visu/render_player_tools.c:36:			player == vm->visu.drag_container.drag_union.drag_player.player ||
+vm_dir/srcs/visu/render_player_tools.c:37:				vm->visu.drag_container.drag_enum != DRAG_PLAYER)
+vm_dir/srcs/visu/render_player_tools.c:51:	if (player != vm->visu.drop_container.player ||
+vm_dir/srcs/visu/render_player_tools.c:52:		vm->visu.drag_container.drag_enum != DRAG_PLAYER)
+vm_dir/srcs/visu/render_player_tools.c:84:	rect.w = vm->visu.center.dashboard_mid_width -
+vm_dir/srcs/visu/render_player_tools.c:85:		2 * vm->visu.center.title_side;
+vm_dir/srcs/visu/render_player_tools.c:86:	rect.h = vm->visu.center.title_h;
+vm_dir/srcs/visu/render_player_tools.c:87:	if (SDL_BlitScaled(vm->visu.sdl.titles[title_index],
+vm_dir/srcs/visu/render_player_tools.c:88:			NULL, vm->visu.sdl.w_surface, &rect) < 0)
+vm_dir/srcs/visu/render_players.c:19:	ft_render_title(vm, ARENA, vm->visu.center.dashboard_x +
+vm_dir/srcs/visu/render_players.c:20:			vm->visu.center.title_side, vm->visu.center.title_top);
+vm_dir/srcs/visu/render_players.c:24:		ft_render_player(vm, &(vm->player[i]),
+vm_dir/srcs/visu/render_players.c:25:			vm->visu.positions.arena_slots[i].player, ARENA);
+vm_dir/srcs/visu/render_players.c:35:	ft_render_title(vm, LOCAL, vm->visu.center.dashboard_mid_x +
+vm_dir/srcs/visu/render_players.c:36:		vm->visu.center.title_side, vm->visu.center.title_top);
+vm_dir/srcs/visu/render_players.c:40:		ft_render_player(vm, &(vm->local_player[i]),
+vm_dir/srcs/visu/render_players.c:41:			vm->visu.positions.local_slots[i].player, LOCAL);
+vm_dir/srcs/visu/render_players.c:53:	ft_render_title(vm, DOWNLOADS, vm->visu.center.dashboard_mid_x +
+vm_dir/srcs/visu/render_players.c:54:		vm->visu.center.title_side, vm->visu.center.title_top);
+vm_dir/srcs/visu/render_players.c:58:	xy.y = vm->visu.center.title_top + vm->visu.center.title_h +
+vm_dir/srcs/visu/render_players.c:59:		vm->visu.center.title_bottom + vm->visu.center.player_top;
+vm_dir/srcs/visu/render_players.c:65:		xy.y += vm->visu.center.player_h + vm->visu.center.player_padding;
+vm_dir/srcs/visu/render_players.c:74:	if (vm->visu.local_type == LOCAL_LOCAL)
+vm_dir/srcs/visu/render_players.c:77:		ft_render_local_downloads_players(vm, &vm->visu);
+vm_dir/srcs/visu/render_players_2.c:20:	inner_rect.w = player_rect.w - vm->visu.center.player_inner_border * 2;
+vm_dir/srcs/visu/render_players_2.c:21:	inner_rect.h = player_rect.h - vm->visu.center.player_inner_border * 2;
+vm_dir/srcs/visu/render_players_2.c:22:	inner_rect.x = player_rect.x + vm->visu.center.player_inner_border;
+vm_dir/srcs/visu/render_players_2.c:23:	inner_rect.y = player_rect.y + vm->visu.center.player_inner_border;
+vm_dir/srcs/visu/render_players_2.c:25:		SDL_FillRect(vm->visu.sdl.w_surface, &inner_rect,
+vm_dir/srcs/visu/render_players_2.c:28:		ft_fill_rect_scrollbar(vm->visu.sdl.w_surface, &inner_rect,
+vm_dir/srcs/visu/render_players_2.c:30:			vm->visu.players_list[source].vscrollbar);
+vm_dir/srcs/visu/render_players_2.c:49:	rect.w = vm->visu.center.player_w;
+vm_dir/srcs/visu/render_players_2.c:50:	rect.h = vm->visu.center.player_h;
+vm_dir/srcs/visu/render_players_2.c:52:		SDL_FillRect(vm->visu.sdl.w_surface, &rect, PLAYER_COL_BORDER);
+vm_dir/srcs/visu/render_players_2.c:54:		ft_fill_rect_scrollbar(vm->visu.sdl.w_surface, &rect, PLAYER_COL_BORDER,
+vm_dir/srcs/visu/render_players_2.c:55:			vm->visu.players_list[source].vscrollbar);
+vm_dir/srcs/visu/render_players_2.c:68:	rect.w = vm->visu.center.player_w;
+vm_dir/srcs/visu/render_players_2.c:69:	rect.h = vm->visu.center.player_h;
+vm_dir/srcs/visu/render_players_2.c:71:		ft_fill_rect_scrollbar(vm->visu.sdl.w_surface, &rect,
+vm_dir/srcs/visu/render_players_2.c:73:				vm->visu.players_list[source].vscrollbar);
+vm_dir/srcs/visu/render_players_2.c:76:		ft_fill_rect_scrollbar(vm->visu.sdl.w_surface, &rect,
+vm_dir/srcs/visu/render_players_2.c:78:				vm->visu.players_list[source].vscrollbar);
+vm_dir/srcs/visu/render_players_2.c:88:			(vm->visu.drag_container.drag_enum != DRAG_PLAYER ||
+vm_dir/srcs/visu/render_players_2.c:89:			vm->visu.drag_container.drag_union.drag_player.player != player)))
+vm_dir/srcs/visu/render_players_2.c:103:	if (vm->visu.drag_container.drag_enum == DRAG_PLAYER &&
+vm_dir/srcs/visu/render_players_2.c:104:		vm->visu.drag_container.drag_union.drag_player.player != NULL)
+vm_dir/srcs/visu/render_players_2.c:107:			vm->visu.drag_container.x - vm->visu.drag_container.diff_x,
+vm_dir/srcs/visu/render_players_2.c:108:				vm->visu.dim.width - vm->visu.center.player_w);
+vm_dir/srcs/visu/render_players_2.c:109:		xy.y = ft_fclamp(0, vm->visu.drag_container.y -
+vm_dir/srcs/visu/render_players_2.c:110:				vm->visu.drag_container.diff_y,
+vm_dir/srcs/visu/render_players_2.c:111:					vm->visu.dim.height - vm->visu.center.player_h);
+vm_dir/srcs/visu/render_players_2.c:113:				vm->visu.drag_container.drag_union.drag_player.player, xy,
+vm_dir/srcs/visu/render_players_2.c:114:			vm->visu.drag_container.drag_union.drag_player.source + NB_SOURCES);
+vm_dir/srcs/visu/render_players_2.c:115:		if (vm->visu.drag_container.drag_union.drag_player.source == ARENA ||
+vm_dir/srcs/visu/render_players_2.c:116:				vm->visu.drag_container.drag_union.drag_player.source == UPLOAD)
+vm_dir/srcs/visu/render_scrollbar.c:25:	if (SDL_BlitScaled(vm->visu.sdl.images[SCROLL_BAR], NULL,
+vm_dir/srcs/visu/render_scrollbar.c:26:			vm->visu.sdl.w_surface, &rect) < 0)
+vm_dir/srcs/visu/render_scrollbar.c:48:	SDL_FillRect(vm->visu.sdl.w_surface, &rect, 0x777777);
+vm_dir/srcs/visu/render_scrollbar.c:61:		if (ft_to_print_scrollbar(vm->visu.players_list[i].vscrollbar))
+vm_dir/srcs/visu/render_scrollbar.c:62:			ft_render_scrollbar(vm, vm->visu.players_list[i].vscrollbar);
+vm_dir/srcs/visu/scroll_scrollbar.c:43:		if (ft_is_in_scrollbar_focus(vm->visu.players_list[i].vscrollbar))
+vm_dir/srcs/visu/scroll_scrollbar.c:45:			ft_scroll_scrollbar(&vm->visu.players_list[i].vscrollbar,
+vm_dir/srcs/visu/scrollbar.c:41:		vscroll = &vm->visu.players_list[i].vscrollbar;
+vm_dir/srcs/visu/scrollbar.c:71:			vm->visu.drag_container.y - vm->visu.drag_container.diff_y, y2);
+vm_dir/srcs/visu/sort.c:69:	ft_lst_mergesort(&vm->client.client_slots,
+vm_dir/srcs/visu/sort.c:70:		vm->visu.sort_cs_func, vm->visu.inv_sort);
+vm_dir/srcs/visu/update_scrollbar.c:19:				ft_lstlength(vm->client.client_slots));
+vm_dir/srcs/visu/update_scrollbar.c:26:					ft_lstlength(vm->visu.downloaded_players));
+vm_dir/srcs/visu/upload.c:21:	ft_memcpy(&flag, vm->client.buffer, sizeof(t_flag));
+vm_dir/srcs/visu/upload.c:35:	if (SDLNet_CheckSockets(vm->client.socket_set, 1500))
+vm_dir/srcs/visu/upload.c:37:		if (SDLNet_SocketReady(vm->client.socket))
+vm_dir/srcs/visu/upload.c:39:			if ((nb_bytes = SDLNet_TCP_Recv(vm->client.socket,
+vm_dir/srcs/visu/upload.c:40:					vm->client.buffer, MAX_TCP_PACKET)) <= 0)
+vm_dir/srcs/visu/upload.c:65:	vm->client.flag = FLAG_UPLOAD;
+vm_dir/srcs/visu/upload.c:66:	i += ft_memcpy_ret(&(data[i]), &(vm->client.flag), sizeof(t_flag));
+vm_dir/srcs/visu/upload.c:69:	if (ft_send_protected(vm->client.socket, data, size))
+vm_dir/srcs/visu/visu.c:17:	if (ft_init_all_visu(vm, &(vm->visu)))
+vm_dir/srcs/visu/visu.c:19:	vm->visu.framerate.ms_counter = SDL_GetTicks();
+vm_dir/srcs/visu/visu.c:20:	while (vm->visu.active)
+vm_dir/srcs/visu/visu.c:22:		ft_process_delta_first(&(vm->visu.framerate));
+vm_dir/srcs/visu/visu.c:24:		if ((vm->client.active && ft_process_client_events(vm)))
+vm_dir/srcs/visu/visu.c:25:			vm->client.active = 0;
+vm_dir/srcs/visu/visu.c:27:		if (ft_render(vm, &(vm->visu.sdl)))
+vm_dir/srcs/visu/visu.c:28:			ft_free_all_visu(&(vm->visu));
+vm_dir/srcs/visu/visu.c:29:		ft_process_delta(&(vm->visu.framerate));
+vm_dir/srcs/visu/visu.c:30:		ft_print_fps(&(vm->visu.framerate));
+vm_dir/srcs/visu/visu.c:32:				(vm->visu.framerate.delta)));
+vm_dir/srcs/visu/visu.c:34:	ft_free_all_visu(&(vm->visu));
+vm_dir/srcs/vm.c:21:	vm->live = 0;
+vm_dir/srcs/vm.c:22:	vm->proc = NULL;
+vm_dir/srcs/vm.c:23:	vm->nb = 1;
+vm_dir/srcs/vm.c:24:	vm->total_cycle = 0;
+vm_dir/srcs/vm.c:25:	vm->cycle = 0;
+vm_dir/srcs/vm.c:26:	vm->c_to_die = CYCLE_TO_DIE;
+vm_dir/srcs/vm.c:27:	ft_bzero(vm->arena, MEM_SIZE);
+vm_dir/srcs/vm.c:28:	ft_bzero(vm->metarena, sizeof(vm->metarena));
+vm_dir/srcs/vm.c:29:	while (vm->proc)
+vm_dir/srcs/vm.c:30:		ft_lstpop(&vm->proc);
+vm_dir/srcs/vm.c:40:	vm->c_to_die = CYCLE_TO_DIE;
+vm_dir/srcs/vm.c:41:	vm->files = argv;
+vm_dir/srcs/vm.c:42:	vm->win = 0;
+vm_dir/srcs/vm.c:43:	vm->dump = 0;
+vm_dir/srcs/vm.c:44:	vm->checks = MAX_CHECKS;
+vm_dir/srcs/vm.c:45:	vm->live = 0;
+vm_dir/srcs/vm.c:46:	vm->proc = NULL;
+vm_dir/srcs/vm.c:47:	vm->client.active = 0;
+vm_dir/srcs/vm.c:48:	vm->client.port = 0;
+vm_dir/srcs/vm.c:49:	vm->visu.active = 0;
+vm_dir/srcs/vm.c:50:	vm->nb = -1;
+vm_dir/srcs/vm.c:51:	vm->total_cycle = 1;
+vm_dir/srcs/vm.c:52:	vm->cycle = 1;
+vm_dir/srcs/vm.c:53:	vm->nb_players = 0;
+vm_dir/srcs/vm.c:54:	vm->display = 0;
+vm_dir/srcs/vm.c:55:	vm->issued_live = 0;
+vm_dir/srcs/vm.c:56:	vm->killed_proc = NULL;
+vm_dir/srcs/vm.c:57:	vm->live_ok = NULL;
+vm_dir/srcs/vm.c:58:	ft_bzero(&vm->color, MAX_PL_COLOR);
+vm_dir/srcs/vm.c:59://	ft_strlcat(vm->color, init_color_ref(), MAX_PL_COLOR);
+vm_dir/srcs/vm.c:60:	ft_bzero(&vm->color, sizeof(t_color));

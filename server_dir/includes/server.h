@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 17:20:50 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/25 17:12:35 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/26 16:57:20 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,6 @@ int						ft_send_flag(t_server *server, int client_index,
 							t_flag flag);
 int						ft_attempt_connection(t_server *server);
 int						ft_disconnect_player(t_server *server, int i);
+int						fight_cores(t_vm *vm, t_player *pl1, t_player *pl2);
+
 #endif

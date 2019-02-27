@@ -1,29 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstpop_ptr.c                                    :+:      :+:    :+:   */
+/*   no_ins.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
+/*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/15 16:34:08 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/27 16:55:14 by emuckens         ###   ########.fr       */
+/*   Created: 2019/02/26 16:04:05 by emuckens          #+#    #+#             */
+/*   Updated: 2019/02/26 17:00:43 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "vm.h"
 
-void	*ft_lstpop_ptr(t_list **list)
+int		no_ins(t_vm *vm, t_process *proc, t_parameter *arg)
 {
-	void	*content;
-	t_list	*ptr;
-
-	if (*list != NULL)
-	{
-		ptr = *list;
-		content = ptr->content;
-		*list = (*list)->next;
-		free(ptr);
-		return (content);
-	}
-	return (NULL);
+	(void)vm;
+	(void)proc;
+	(void)arg;
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 17:19:23 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/02/25 17:57:52 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/02/27 18:01:30 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ int		main(int argc, char **argv)
 {
 	t_vm	vm;
 
+	init_vm(&vm, argv);
 	if (argc <= 1)
 		return (error_exit_msg(&vm, USAGE));
 	if (!check_type(argc, argv))
 		return (error_exit_msg(&vm, WRG_FILE_TYPE));
 	check_header(&vm);
-	init_vm(&vm, argv);
 	if (flags(&vm, argc, argv))
 		return (FAILURE);
 	if (read_files(&vm))
@@ -45,7 +45,8 @@ int		main(int argc, char **argv)
 	if (!init_processes(&vm))
 		return (error_exit_msg(&vm, INIT_PROC_ERROR));
 	while (vm.proc)
-		process_cycle(&vm);
+		play_one_cycle(&vm);
 	display_winner(&vm);
+	clear_vm(&vm);
 	return (0);
 }
