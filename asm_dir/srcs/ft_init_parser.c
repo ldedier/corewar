@@ -12,37 +12,22 @@
 
 #include "asm.h"
 
+void	ft_init_parser(t_parser *parser)
+{
+	parser->nb_line = 0;
+	parser->column_offset = 0;
+	parser->nb_warnings = 0;
+	parser->nb_errors = 0;
+	parser->parsed_name = 0;
+	parser->parsed_comment = 0;
+	parser->too_much_errors_displayed = 0;
+}
+
 void		ft_reset_parser(t_parser *parser, char *str)
 {
 	parser->nb_args_parsed = 0;
 	parser->current_line = str;
 	parser->column_offset = 0;
-}
-
-void		ft_init_parameter(t_parameter *parameter)
-{
-	parameter->type = 0;
-	parameter->value = 0;
-	parameter->source_code_col = 0;
-	parameter->label_name = NULL;
-}
-
-int			ft_init_instruction(t_instruction *instruction, t_env *e)
-{
-	int		i;
-
-	instruction->address = e->champ.header.prog_size;
-	instruction->nb_line = e->parser.nb_line;
-	instruction->ocp = 0;
-	i = 0;
-	while (i < 3)
-	{
-		ft_init_parameter(&(instruction->params[i]));
-		i++;
-	}
-	if (!(instruction->source_code_line = ft_strdup(e->parser.current_line)))
-		return (1);
-	return (0);
 }
 
 int			ft_set_parser_co(int save, t_env *e, int ret)

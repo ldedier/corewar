@@ -95,6 +95,7 @@ static int	ft_parse_asm_suite(t_env *e)
 		return (ft_log_error_no_line("no comment found", e));
 	else if (ft_fill_instructions_labels_values(e))
 		return (1);
+	close(e->parser.fd);
 	return (0);
 }
 
@@ -117,10 +118,6 @@ int			ft_parse_asm(char *str, t_env *e)
 						e));
 	}
 	if (ft_parse_asm_suite(e) == 1)
-	{
-		close(e->parser.fd);
 		return (1);
-	}
-	close(e->parser.fd);
 	return (0);
 }

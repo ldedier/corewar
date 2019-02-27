@@ -23,12 +23,15 @@ void	ft_free_instruction(t_instruction *instruction)
 	int i;
 
 	i = 0;
-	while (i < instruction->op->nb_params)
+	if (instruction->op)
 	{
-		if (instruction->params[i].label_name)
-			free(instruction->params[i].label_name);
-		i++;
-	}
+		while (i < instruction->op->nb_params)
+		{
+			if (instruction->params[i].label_name)
+				free(instruction->params[i].label_name);
+			i++;
+		}
+}
 	free(instruction->source_code_line);
 	free(instruction);
 }
@@ -50,10 +53,10 @@ void	ft_free_instruction_tlst(void *instruction, size_t dummy)
 
 void	ft_free_all(t_env *e)
 {
+	int i;
+	i = 0;
 	if (e->champ.cor_name)
 		free(e->champ.cor_name);
 	ft_lstdel(&(e->champ.labels), &ft_free_label_tlst);
-	if (!e->champ.instructions)
-		ft_lstdel(&(e->champ.instructions), &ft_free_instruction_tlst);
-	//ft_lstdel(&(e->champ.instructions), &ft_free_instruction_tlst);
+	ft_lstdel(&(e->champ.instructions), &ft_free_instruction_tlst);
 }
