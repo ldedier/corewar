@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 19:05:29 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/18 19:05:30 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/02/27 16:04:23 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_render_inner_name_value(t_vm *vm, SDL_Rect inner_rect,
 	if (source % NB_SOURCES == ARENA)
 		col_source.x = player->color.index;
 	else
-		col_source.x = MAX_PL_COLOR;
+		col_source.x = 0;
 	ft_copy_abbrev(abbrev, player->name);
 	ft_copy_str_to_surface(vm, abbrev, name_rect, col_source);
 }
@@ -43,7 +43,7 @@ void	ft_render_inner_name(t_vm *vm, SDL_Rect inner_rect, t_player *player,
 	name_rect.x = inner_rect.x + inner_rect.w / 16;
 	name_rect.y = inner_rect.y + inner_rect.h / 12;
 	col_source.y = source;
-	col_source.x = MAX_PL_COLOR;
+	col_source.x = 0;
 	ft_copy_str_to_surface(vm, "name", name_rect, col_source);
 	ft_render_inner_name_value(vm, inner_rect, player, source);
 }
@@ -60,7 +60,7 @@ int		ft_render_inner_number_value(t_vm *vm, SDL_Rect inner_rect,
 	name_rect.x = inner_rect.x + 7 * (inner_rect.w / 16);
 	name_rect.y = inner_rect.y + 7 * inner_rect.h / 12;
 	col_source.y = source;
-	col_source.x = MAX_PL_COLOR;
+	col_source.x = 0;
 	if (!(number_to_str = ft_itoa(player->num)))
 		return (1);
 	ft_copy_str_to_surface(vm, number_to_str, name_rect, col_source);
@@ -79,7 +79,7 @@ int		ft_render_inner_number(t_vm *vm, SDL_Rect inner_rect, t_player *player,
 	name_rect.x = inner_rect.x + inner_rect.w / 16;
 	name_rect.y = inner_rect.y + 7 * inner_rect.h / 12;
 	col_source.y = source;
-	col_source.x = MAX_PL_COLOR;
+	col_source.x = 0;
 	ft_copy_str_to_surface(vm, "number", name_rect, col_source);
 	if (ft_render_inner_number_value(vm, inner_rect, player, source))
 		return (1);
@@ -102,7 +102,7 @@ void	ft_render_inner_name_full(t_vm *vm, SDL_Rect player_rect,
 	if (source % NB_SOURCES == ARENA)
 		col_source.x = player->color.index;
 	else
-		col_source.x = MAX_PL_COLOR;
+		col_source.x = 0;
 	ft_copy_abbrev(abbrev, player->name);
 	abbrev_len = ft_strlen(abbrev);
 	len = ft_copied_char_surface_w(name_rect, abbrev_len) * abbrev_len;

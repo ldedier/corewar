@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 20:22:52 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/26 21:31:56 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/27 14:43:12 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	ft_remove_color_player(t_vm *vm, t_player *player)
 {
 	player->relevant = 0;
-	set_color(player, vm->color);
+	set_color_sdl(vm, player);
 	player->relevant = 1;
 }
 
@@ -65,7 +65,7 @@ void	ft_copy(t_vm *vm, t_drop_container *dc)
 		dc->player->color.value = 1;
 	rel = dc->player->relevant;
 	dc->player->relevant = 0;
-	set_color(dc->player, vm->color);
+	set_color_sdl(vm, dc->player);
 	if (rel)
 	{
 		tmp = dc->player->num;

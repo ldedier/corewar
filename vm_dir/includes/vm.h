@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/02/26 21:09:20 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/27 16:07:00 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,6 @@ typedef struct		s_fade
 	int				value;
 }					t_fade;
 
-typedef struct		s_color_term
-{
-	char 			cycle[11];
-	char			death[11];
-	char			resize[11];
-}					t_color_term;
-
 typedef struct		s_vm
 {
 	int				c_to_die;
@@ -82,7 +75,7 @@ typedef struct		s_vm
 	long long int	nb;
 	char			**files;
 	int				dump;
-	char			color[MAX_PL_COLOR];
+//	char			color[MAX_PL_COLOR];
 	t_visu			visu;
 	t_client		client;
 	char			arena[MEM_SIZE];
@@ -94,7 +87,8 @@ typedef struct		s_vm
 	t_list			*live_ok;
 	int				live;
 	int				issued_live;
-	t_color_term	col;
+	t_color_msg		color;
+//	t_color_term	col;
 	t_player		*winner;
 }					t_vm;
 
@@ -141,7 +135,7 @@ t_player			*duel(t_vm *vm, t_player *pl1, t_player *pl2);
 ** DISPLAY
 */
 
-void				display_player_intro(t_player *player);
+void				display_player_intro(t_vm *vm, t_player *player);
 void				display_player_alive(t_vm *vm, t_player *player);
 void				display_cycle(t_vm *vm);
 void				display_resize(t_vm *vm);
@@ -152,7 +146,7 @@ void				display_winner(t_vm *vm);
 void				display_registers(t_vm *vm);
 void				display(t_vm *vm, t_process *proc, int type);
 void				display_proc_ins(t_vm *vm, t_process *proc);
-void				set_colors(t_vm *vm);
+void				set_colors_term(t_vm *vm);
 
 
 
@@ -171,6 +165,11 @@ void				move_one(t_vm *vm, t_process *proc);
 void				cycle_nb(t_vm *vm, t_process *proc);
 void				last_live(t_vm *vm, t_process *proc);
 void				turn_player(t_vm *vm, t_process *proc);
+
+int					set_color_sdl(t_vm *vm, t_player *player);
+int					get_color_sdl(int index);
+
+
 
 /*
 ** ENV

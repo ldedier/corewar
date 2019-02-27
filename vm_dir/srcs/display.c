@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 21:43:44 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/26 21:13:51 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/27 14:28:35 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 void		display_resize(t_vm *vm)
 {
 	if (vm->display & (1 << MSG_CYCLE))
-		ft_printf("%s\nCycle to die is now %d"EOC, vm->col.resize, vm->c_to_die);
+		ft_printf("%s\nCycle to die is now %d"EOC, vm->color.resize, vm->c_to_die);
 }
 
 void		display_last_live(t_vm *vm, t_process *proc)
 {
 	if (vm->display & (1 << MSG_DEATH))
 		ft_printf("\n%sProcess %d hasn't lived for %d cycles (CTD %d)"EOC,
-				vm->col.death,
+				vm->color.death,
 				proc->nb,
 				vm->total_cycle - proc->live_cycle,
 				vm->c_to_die);
@@ -31,7 +31,7 @@ void		display_last_live(t_vm *vm, t_process *proc)
 void		display_cycle(t_vm *vm)
 {
 	if (vm->display & (1 << MSG_CYCLE))
-		ft_printf("\n%sIt is now cycle %d"EOC, vm->col.cycle, vm->total_cycle);
+		ft_printf("\n%sIt is now cycle %d"EOC, vm->color.cycle, vm->total_cycle);
 }
 
 void		display_registers(t_vm *vm)

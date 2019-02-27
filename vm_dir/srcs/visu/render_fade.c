@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 23:47:43 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/26 21:46:23 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/27 16:40:00 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int			ft_render_fade(t_fade *fade, t_vm *vm)
 void		ft_render_fades_at_head(t_list **temp, t_list **prev,
 		t_list **start, t_vm *vm)
 {
+//	if (*temp == NULL)
+//		return ;
 	while (*temp != NULL && ft_render_fade((t_fade *)((*temp)->content), vm))
 	{
 		*start = (*temp)->next;

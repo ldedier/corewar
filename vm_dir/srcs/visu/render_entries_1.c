@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/03 15:42:09 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/18 22:01:34 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/02/27 15:55:37 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,14 @@ int		ft_render_entry(t_vm *vm, char *entry, char *value, int y)
 	rect.y = y;
 	rect.w = vm->visu.center.entry_max_w;
 	rect.h = vm->visu.center.entry_h;
-	if (ft_copy_str_to_surface_no_source(vm, entry, rect, MAX_PL_COLOR))
+	if (ft_copy_str_to_surface_no_source(vm, entry, rect, 0))
 	{
 		free(value);
 		return (1);
 	}
 	rect.x = rect.x + rect.w + vm->visu.center.entry_space;
 	rect.w = vm->visu.center.entry_value_max_w;
-	if (ft_copy_str_to_surface_no_source(vm, value, rect, MAX_PL_COLOR))
+	if (ft_copy_str_to_surface_no_source(vm, value, rect, 0))
 	{
 		free(value);
 		return (1);
@@ -89,9 +89,9 @@ int		ft_render_entries(t_vm *vm)
 	rect.w = 2 * vm->visu.center.dashboard_width / 3.0;
 	rect.h = vm->visu.center.state_h;
 	if (vm->visu.time_manager.pause)
-		ft_copy_str_to_surface_no_source(vm, "Paused", rect, MAX_PL_COLOR);
+		ft_copy_str_to_surface_no_source(vm, "Paused", rect, 0);
 	else
-		ft_copy_str_to_surface_no_source(vm, "Running", rect, MAX_PL_COLOR);
+		ft_copy_str_to_surface_no_source(vm, "Running", rect, 0);
 	i = 0;
 	y = rect.y + rect.h + vm->visu.center.state_bottom;
 	while (i < NB_ENTRIES)

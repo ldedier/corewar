@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:15:00 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/26 21:08:42 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/27 17:12:31 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@ void			clear_vm(t_vm *vm)
 	ft_bzero(vm->metarena, sizeof(vm->metarena));
 	while (vm->proc)
 		ft_lstpop(&vm->proc);
+	while (vm->killed_proc)
+		ft_lstpop(&vm->killed_proc);
+	while (vm->live_ok)
+		ft_lstpop(&vm->live_ok);
 }
 
 /*
@@ -53,8 +57,9 @@ void			init_vm(t_vm *vm, char **argv)
 	vm->nb_players = 0;
 	vm->display = 0;
 	vm->issued_live = 0;
-	ft_bzero(vm->color, MAX_PL_COLOR);
-	ft_strlcat(vm->color, init_color_ref(), MAX_PL_COLOR);
-	ft_bzero(&vm->col, sizeof(t_color_term));
+	vm->killed_proc = NULL;
+	vm->live_ok = NULL;
+	vm->proc = NULL;
+	ft_bzero(&vm->color, sizeof(t_color));
 	init_players(vm);
 }

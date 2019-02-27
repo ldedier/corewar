@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/03 17:34:02 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/24 20:25:22 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/02/27 16:00:48 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		ft_render_player_entry(t_vm *vm, char *entry, char *value, int y)
 	rect.y = y;
 	rect.w = vm->visu.center.entry_max_w;
 	rect.h = vm->visu.center.player_entry_height;
-	if (ft_copy_str_to_surface_no_source(vm, entry, rect, MAX_PL_COLOR))
+	if (ft_copy_str_to_surface_no_source(vm, entry, rect, 0))
 	{
 		free(value);
 		return (1);
@@ -35,7 +35,7 @@ int		ft_render_player_entry(t_vm *vm, char *entry, char *value, int y)
 	rect.x = vm->visu.center.dashboard_x + vm->visu.center.entry_left +
 		rect.w + vm->visu.center.entry_space;
 	rect.w = vm->visu.center.entry_value_max_w;
-	if (ft_copy_str_to_surface_no_source(vm, value, rect, MAX_PL_COLOR))
+	if (ft_copy_str_to_surface_no_source(vm, value, rect, 0))
 	{
 		free(value);
 		return (1);
