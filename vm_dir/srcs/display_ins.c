@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 19:05:47 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/28 15:55:07 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/28 17:28:46 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ void		display_proc_ins(t_vm *vm, t_process *proc)
 		if (proc->pending_ins.params[i].retrieval_mode)
 		{
 			ft_printf(" %d", proc->pending_ins.params[i].dest_value);
-//			if (proc->pending_ins.op->opcode == LIVE)
-//				ft_printf("coucou");
 		}
 		else
 		{
@@ -47,6 +45,7 @@ void		display_move(t_vm *vm, t_process *proc)
 {
 	int i;
 	int len;
+	unsigned char	c;
 
 	len = ft_abs(proc->ins_bytelen);
 
@@ -58,5 +57,8 @@ void		display_move(t_vm *vm, t_process *proc)
 	ft_printf("\nADV %d (0x%04x -> 0x%04x) ", len, proc->pc, (proc->pc + len));
 	i = -1;
 	while (++i < len)
-		ft_printf("%02x ", (unsigned char)(vm->arena[mod(proc->pc + i, MEM_SIZE)]));
+	{
+		c = (unsigned char)(vm->arena[mod(proc->pc + i, MEM_SIZE)]);
+		ft_printf("%02x ", c);
+	}
 }
