@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/27 16:33:58 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/28 21:47:37 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ static void		move_forward(t_vm *vm, t_process *proc)
 static int		next_process_action(t_vm *vm, t_process *proc)
 {
 	t_instruction	*ins;
+	int				op;
 	static int		(*f_ins[NB_INSTRUCTIONS + 1])(t_vm *vm, t_process *proc,
 			t_parameter arg[3]) = {&no_ins, &ins_live, &ins_ld, &ins_st,
 			&ins_add, &ins_sub, &ins_and, &ins_or, &ins_xor, &ins_zjmp,
@@ -103,7 +104,8 @@ static int		next_process_action(t_vm *vm, t_process *proc)
 	if (proc->ins_cycle == 1)
 	{
 		proc->ins_bytelen = get_ins(vm->arena, ins, proc->pc, MEM_SIZE);
-		if (f_ins[(proc->ins_bytelen > 0) * ins->op->opcode](vm, proc, ins->params)
+		op = (proc->ins_bytelen > 0) * ins->op->opcode;
+		if (f_ins[op](vm, proc, ins->params)
 				== FAILURE)
 			return (FAILURE);
 		move_forward(vm, proc);
@@ -138,16 +140,14 @@ int				play_one_cycle(t_vm *vm)
 	{
 		if (reset_live_allprocesses(vm) == FAILURE)
 			return (FAILURE);
-		if (check_resize_cycle(vm))
+		if (!(vm->cycle = 0) && check_resize_cycle(vm))
 		{
 			vm->c_to_die -= CYCLE_DELTA;
 			display_resize(vm);
 		}
 		vm->issued_live = 0;
-		vm->cycle = 0;
 	}
-	if (vm->dump >= 0)
-		dump(vm);
+	dump(vm);
 	++vm->cycle;
 	++vm->total_cycle;
 	return (SUCCESS);

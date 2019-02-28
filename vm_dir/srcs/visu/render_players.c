@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/11 17:47:31 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/18 19:11:52 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/02/28 17:17:15 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int		ft_render_arena_players(t_vm *vm)
 	while (i < MAX_PLAYERS)
 	{
 		ft_render_player(vm, &(vm->player[i]),
-			vm->visu.positions.arena_slots[i].player, ARENA);
+		vm->visu.positions.arena_slots[i].player, ARENA);
 		i++;
 	}
 	return (0);
@@ -38,7 +38,7 @@ int		ft_render_local_local_players(t_vm *vm)
 	while (i < MAX_PLAYERS)
 	{
 		ft_render_player(vm, &(vm->local_player[i]),
-			vm->visu.positions.local_slots[i].player, LOCAL);
+		vm->visu.positions.local_slots[i].player, LOCAL);
 		i++;
 	}
 	return (0);
