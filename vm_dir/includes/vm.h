@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/02/28 15:55:59 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/28 16:59:15 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,8 +130,10 @@ void				dispatch_players_init(t_vm *vm);
 int					init_processes(t_vm *vm);
 void				init_local_players(t_vm *vm);
 void				update_nb_players(t_vm *vm);
-void				update_buttons(t_vm *vm);
 t_player			*duel(t_vm *vm, t_player *pl1, t_player *pl2);
+int					add_player_n(t_vm *vm, int argc, char **arg, int *cur);
+int					add_player(t_vm *vm);
+
 
 /*
 ** DISPLAY

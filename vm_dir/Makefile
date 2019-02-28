@@ -39,7 +39,7 @@ EOC = \033[0m
 
 
 SRCS_NO_PREFIX =		arena.c error.c flags.c main.c \
-						tmp.c utils.c op.c play.c \
+						tmp.c utils.c play.c \
 						net_tools.c \
 						test.c display.c display_player.c display_ins.c processes.c \
 						vm.c players.c parse.c color.c 

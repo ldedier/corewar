@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:24:20 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/28 16:12:09 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/28 21:47:22 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void		kill_adjust_ptr(t_list **proc_lst, t_list **proc)
 {
 	t_list *tmp;
 
-	if (*proc ==  *proc_lst)
+	if (*proc == *proc_lst)
 	{
 		*proc_lst = (*proc_lst)->next;
 		return ;
@@ -27,11 +27,11 @@ static void		kill_adjust_ptr(t_list **proc_lst, t_list **proc)
 	tmp->next = (*proc)->next;
 }
 
-int		kill_process(t_vm *vm, t_list **proc_lst, t_list **proc)
+int				kill_process(t_vm *vm, t_list **proc_lst, t_list **proc)
 {
 	t_fade	*killed_proc;
-	(void)*proc_lst;
 
+	(void)proc_lst;
 	if (!(killed_proc = (t_fade *)ft_memalloc(sizeof(t_fade))))
 		return (error_exit_msg(vm, ERR_MALLOC));
 	killed_proc->pc = ((t_process *)(*proc)->content)->pc;
@@ -63,7 +63,9 @@ int				init_processes(t_vm *vm)
 	while (++i < MAX_PLAYERS)
 	{
 		start = (MEM_SIZE / vm->nb_players) * (index - 1);
-		if (vm->player[i].relevant && ++index && !add_process(vm, i, start, NULL))
+		if (vm->player[i].relevant
+			&& ++index
+			&& !add_process(vm, i, start, NULL))
 			return (0);
 		vm->player[i].nb_proc = 1;
 		if (vm->player[i].relevant)
@@ -76,12 +78,12 @@ int				init_processes(t_vm *vm)
 ** Copy significant process data to newly created process (copy of creator)
 */
 
-void	copy_process_stat(t_process * proc, t_process *src)
+void			copy_process_stat(t_process *proc, t_process *src)
 {
 	proc->player = src->player;
 	proc->ins_bytelen = src->ins_bytelen;
 	proc->live_cycle = src->live_cycle;
-	ft_memmove(proc->reg, src->reg, REG_NUMBER * sizeof(int));
+	ft_memmove(proc->reg, src->reg, sizeof(proc->reg));
 	proc->pc = src->pc;
 	proc->pending_ins.op = NULL;
 	proc->pending_ins.params[0].nb_bytes = 0;
@@ -101,7 +103,7 @@ void	copy_process_stat(t_process * proc, t_process *src)
 t_list			*add_process(t_vm *vm, int index, int start, t_process *src)
 {
 	t_process	*process;
-	static int	nb = 0;
+	static int	nb;
 
 	if (!(process = (t_process *)ft_memalloc(sizeof(t_process))))
 		return (NULL);

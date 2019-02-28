@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 17:22:33 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/02/28 15:15:27 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/28 20:33:30 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 ** specified in error.h used during its call, then exits the program.
 */
 
-int		error_exit_msg(t_vm *vm, const char *str)
+int			error_exit_msg(t_vm *vm, const char *str)
 {
 	clear_vm(vm);
 	ft_dprintf(2, "%s\n", str);
@@ -36,12 +36,12 @@ int			check_type(int ac, char **av)
 	i = 1;
 	while (i < ac)
 	{
-		if (((!ft_strcmp("-dump", av[i]) || !ft_strcmp("-n", av[i])) &&
-				i + 1 < ac))
+		if (((!ft_strcmp("-dump", av[i]) || !ft_strcmp("-n", av[i]))
+			&& i + 1 < ac))
 			i += 2;
 		else if (!ft_strcmp("-w", av[i]) && i + 2 < ac)
 			i += 3;
-		else if (!ft_strcmp("-v", av[i]) && i + 1 < ac)
+		else if (!ft_strcmp("-v", av[i]))
 			i++;
 		else if (!ft_strcmp("-c", av[i]) && i + 1 < ac)
 			i++;
