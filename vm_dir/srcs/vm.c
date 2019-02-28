@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:15:00 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/27 17:12:31 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/28 15:56:24 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,12 @@ void			init_vm(t_vm *vm, char **argv)
 	vm->total_cycle = 1;
 	vm->cycle = 1;
 	vm->nb_players = 0;
-	vm->display = 0;
+	vm->display.code = 0;
 	vm->issued_live = 0;
 	vm->killed_proc = NULL;
 	vm->live_ok = NULL;
 	vm->proc = NULL;
+	vm->display.status = OFF;
 	ft_bzero(&vm->color, sizeof(t_color));
 	init_players(vm);
 }

@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:24:20 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/27 18:11:56 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/28 16:12:09 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ int				init_processes(t_vm *vm)
 		if (vm->player[i].relevant && ++index && !add_process(vm, i, start, NULL))
 			return (0);
 		vm->player[i].nb_proc = 1;
-		vm->winner = ((t_process *)(vm->proc->content))->player;
+		if (vm->player[i].relevant)
+			vm->winner = ((t_process *)(vm->proc->content))->player;
 	}
 	return (1);
 }

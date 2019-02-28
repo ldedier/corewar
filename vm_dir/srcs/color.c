@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 19:27:27 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/27 18:01:29 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/28 16:00:47 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,23 @@ void		set_colors_term(t_vm *vm)
 	static char *color_ref[4] = {COLF_BRED, COLF_BGREEN, COLF_BBLUE, COLF_BBROWN};
 
 	i = -1;
-	if (vm->visu.active)
-		return ;
 	while (++i < MAX_PLAYERS)
 	{
-		ft_memmove(vm->player[i].color.term, color_ref[i], 11);
-		ft_printf("test color ref i = %s coucou %s\n", vm->player[i].color.term, EOC);
+		if (!vm->visu.active && vm->display.status == ON)
+			ft_memmove(vm->player[i].color.term, color_ref[i], 11);
+		else
+			ft_bzero(&vm->player[i].color.term, 8);
+	}
+	if (vm->visu.active || vm->display.status == OFF)
+	{
+		ft_bzero(&vm->color, sizeof(t_color));
+		return ;
 	}
 	ft_memmove(vm->color.cycle, COL_CYCLES, 11);
 	ft_memmove(vm->color.death, COL_DEATH, 11);
 	ft_memmove(vm->color.resize, COL_RESIZE, 11);
+	ft_memmove(vm->color.off, EOC, 7);
+	
 }
 
 int			get_color_sdl(int index)
