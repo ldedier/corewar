@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 17:22:33 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/02/28 15:15:27 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/28 17:34:38 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,12 @@ int			check_type(int ac, char **av)
 	i = 1;
 	while (i < ac)
 	{
-		if (((!ft_strcmp("-dump", av[i]) || !ft_strcmp("-n", av[i])) &&
+		if (((!ft_strcmp("-dump", av[i]) || !ft_strcmp("-n", av[i])) && 
 				i + 1 < ac))
 			i += 2;
 		else if (!ft_strcmp("-w", av[i]) && i + 2 < ac)
 			i += 3;
-		else if (!ft_strcmp("-v", av[i]) && i + 1 < ac)
+		else if (!ft_strcmp("-v", av[i]))
 			i++;
 		else if (!ft_strcmp("-c", av[i]) && i + 1 < ac)
 			i++;
