@@ -6,40 +6,22 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 17:22:33 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/30 17:37:36 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/28 15:15:27 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
 /*
-** error_exit_mgc function outputs an error message if a file is given with
-** the wrong magic number at the beginning, then exits the program.
-*/
-
-void		error_exit_mgc(char *name)
-{
-	ft_putstr_fd("File ", 2);
-	ft_putstr_fd(name, 2);
-	ft_putstr_fd(" has wrong magic number and is therefore not readable\n", 2);
-	exit(1);
-}
-
-/*
 ** error_exit_msg and ft_error_exit functions output the error message
 ** specified in error.h used during its call, then exits the program.
 */
 
-void		error_exit_msg(const char *str)
+int		error_exit_msg(t_vm *vm, const char *str)
 {
+	clear_vm(vm);
 	ft_dprintf(2, "%s\n", str);
-	exit(1);
-}
-
-void		ft_error_exit(const char *str)
-{
-	ft_dprintf(2, "%s\n", str);
-	exit(1);
+	return (1);
 }
 
 /*
@@ -59,7 +41,9 @@ int			check_type(int ac, char **av)
 			i += 2;
 		else if (!ft_strcmp("-w", av[i]) && i + 2 < ac)
 			i += 3;
-		else if ((!ft_strcmp("-v", av[i]) && i + 1 < ac))
+		else if (!ft_strcmp("-v", av[i]) && i + 1 < ac)
+			i++;
+		else if (!ft_strcmp("-c", av[i]) && i + 1 < ac)
 			i++;
 		else if (ft_is_of_extension(av[i], ".cor"))
 			i++;
@@ -76,12 +60,13 @@ int			check_type(int ac, char **av)
 ** illogical declarations.
 */
 
-void		check_header(void)
+int			check_header(t_vm *vm)
 {
 	if (MAX_PLAYERS != 4)
-		error_exit_msg(ERR_HEADER);
+		return (error_exit_msg(vm, ERR_HEADER));
 	if (MEM_SIZE < MAX_PLAYERS * 1024)
-		error_exit_msg(ERR_HEADER);
+		return (error_exit_msg(vm, ERR_HEADER));
 	if (CHAMP_MAX_SIZE > MEM_SIZE / MAX_PLAYERS)
-		error_exit_msg(ERR_HEADER);
+		return (error_exit_msg(vm, ERR_HEADER));
+	return (SUCCESS);
 }

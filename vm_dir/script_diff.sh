@@ -30,10 +30,11 @@ then
 		rm -f $zaz_tmp
 		./corewar -$option $filename > $my_tmp
 		../zaz/corewar -v $option $filename > $zaz_tmp
+		echo "testing $filename\n"
 		j=$((j+1))
 		if [ -f $my_tmp ] || [ -f $zaz_tmp ]
 		then
-			diff $my_tmp $zaz_tmp > /dev/null #HERE TO GET THE DIFFS
+			diff --brief $my_tmp $zaz_tmp > /dev/null #HERE TO GET THE DIFFS
 			let "res = $?"
 			if [ $res != 0 ]
 			then
@@ -67,10 +68,11 @@ then
 			rm -f $zaz_tmp
 			./corewar -$option $filename $filename2 > $my_tmp
 			../zaz/corewar -v $option $filename $filename2 > $zaz_tmp
+			echo "testing $filename vs $filename2\n"
 			j=$((j+1))
 			if [ -f $my_tmp ] || [ -f $zaz_tmp ]
 			then
-				diff $my_tmp $zaz_tmp > /dev/null #HERE TO GET THE DIFFS
+				diff --brief $my_tmp $zaz_tmp > /dev/null #HERE TO GET THE DIFFS
 				let "res = $?"
 				if [ $res != 0 ]
 				then
@@ -104,12 +106,13 @@ then
 		#	echo "./corewar -$option $filename $filename2 $filename2"
 				rm -f $my_tmp
 				rm -f $zaz_tmp
+				echo "testing $filename vs $filename2 vs $filename3\n"
 				./corewar -$option $filename $filename2 $filename3 > $my_tmp
 				../zaz/corewar -v $option $filename $filename2 $filename3 > $zaz_tmp
 				j=$((j+1))
 				if [ -f $my_tmp ] || [ -f $zaz_tmp ]
 				then
-					diff $my_tmp $zaz_tmp > /dev/null #HERE TO GET THE DIFFS
+					diff --brief $my_tmp $zaz_tmp > /dev/null #HERE TO GET THE DIFFS
 					let "res = $?"
 					if [ $res != 0 ]
 					then
@@ -151,7 +154,7 @@ then
 					j=$((j+1))
 					if [ -f $my_tmp ] || [ -f $zaz_tmp ]
 					then
-						diff $my_tmp $zaz_tmp > /dev/null #HERE TO GET THE DIFFS
+						diff --brief $my_tmp $zaz_tmp > /dev/null #HERE TO GET THE DIFFS
 						let "res = $?"
 						if [ $res != 0 ]
 						then

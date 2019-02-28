@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 22:25:36 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/07 20:53:05 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/28 15:18:04 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,18 @@ typedef int				t_score;
 
 typedef struct		s_color
 {
-	void			*value;
 	int				index;
+	int				value;
+	char			term[11];
 }					t_color;
+
+typedef struct		s_color_msg
+{
+	char			cycle[11];
+	char			resize[11];
+	char			death[11];
+	char			off[8];
+}					t_color_msg;
 
 typedef struct		s_player
 {
@@ -48,6 +57,7 @@ typedef struct		s_player
 	t_file_len		file_len;
 	int				live;
 	int				last_live_cycle;
+	int				color_index;;
 	int				nb_proc;
 	int				header_size;
 	int				num;

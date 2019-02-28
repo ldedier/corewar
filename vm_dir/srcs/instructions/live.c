@@ -6,11 +6,29 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 17:10:34 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/08 20:22:23 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/28 15:30:32 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/vm.h"
+
+/*
+** retrieve player if number in parameter has been attributed
+*/
+
+static t_player	*get_player_num(t_vm *vm, t_list *lst, int num)
+{
+	int		i;
+
+	(void)lst;
+	i = -1;
+
+	while (++i < MAX_PLAYERS)
+		if (vm->player[i].num == num && vm->player[i].relevant)
+			return (&vm->player[i]);
+	return (NULL);
+}
+
 
 /*
 ** [live] instruction declares the player whose number is [arg 1] alive.
@@ -19,7 +37,7 @@
 ** isn't a known player number.
 */
 
-int		ins_live(t_vm *vm, t_process *proc, t_parameter arg[3])
+int				ins_live(t_vm *vm, t_process *proc, t_parameter arg[3])
 {
 	t_player	*player;
 	t_fade		*live;
@@ -39,7 +57,7 @@ int		ins_live(t_vm *vm, t_process *proc, t_parameter arg[3])
 		vm->winner = player;
 		live = (t_fade *)ft_memalloc(sizeof(t_fade));
 		live->pc = proc->pc;
-		live->color = *(int *)player->color.value;
+		live->color = player->color.value;
 		live->value = FADE_LEN;
 		display_player_alive(vm, player);
 		if (ft_add_to_list_ptr(&vm->live_ok, (void *)live, sizeof(t_fade)))

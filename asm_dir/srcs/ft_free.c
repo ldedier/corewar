@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 00:35:48 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/08 17:05:50 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/25 16:06:28 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,15 @@ void	ft_free_instruction(t_instruction *instruction)
 	int i;
 
 	i = 0;
-	while (i < instruction->op->nb_params)
+	if (instruction->op)
 	{
-		if (instruction->params[i].label_name)
-			free(instruction->params[i].label_name);
-		i++;
-	}
+		while (i < instruction->op->nb_params)
+		{
+			if (instruction->params[i].label_name)
+				free(instruction->params[i].label_name);
+			i++;
+		}
+}
 	free(instruction->source_code_line);
 	free(instruction);
 }
@@ -44,14 +47,14 @@ void	ft_free_label_tlst(void *label, size_t dummy)
 
 void	ft_free_instruction_tlst(void *instruction, size_t dummy)
 {
-//	t_instruction *i;
 	(void)dummy;
-//	i = instruction;
 	ft_free_instruction(instruction);
 }
 
 void	ft_free_all(t_env *e)
 {
+	int i;
+	i = 0;
 	if (e->champ.cor_name)
 		free(e->champ.cor_name);
 	ft_lstdel(&(e->champ.labels), &ft_free_label_tlst);

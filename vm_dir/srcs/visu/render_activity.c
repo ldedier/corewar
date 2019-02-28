@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 23:57:26 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/24 20:56:17 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/02/26 21:34:13 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int			ft_mark_as_instruction(t_vm *vm, SDL_Rect rect, t_process *process)
 {
 	int color;
 
-	color = (*(int *)(process->player->color.value));
+	color = (process->player->color.value);
 	ft_draw_rect_surface(vm->visu.sdl.w_surface, rect, color);
 	return (0);
 }
@@ -47,7 +47,7 @@ int			ft_render_process(t_vm *vm, t_process *process)
 
 	vm->metarena[process->pc].process_color_index =
 		process->player->color.index;
-	c = ft_get_color(*(int *)(process->player->color.value));
+	c = ft_get_color(process->player->color.value);
 	rect = get_rect_from_pc(vm, process->pc);
 	SDL_FillRect(vm->visu.sdl.w_surface, &rect, c.color);
 	if (ft_render_process_instruction(vm, process))

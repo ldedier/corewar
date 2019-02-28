@@ -6,29 +6,29 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:44:16 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/31 06:10:47 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/02/25 16:16:26 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
 /*
-void __attribute__((destructor)) end();
-
-void    end(void) //permet de mieux checker les leaks !
-{
-	ft_printf("destructor loop\n");
-	while(1);
-}
+**void __attribute__((destructor)) end();
+**
+**void    end(void) //permet de mieux checker les leaks !
+**{
+**	ft_printf("destructor loop\n");
+**	while(1);
+**}
 */
 
-int ft_print_usage(char *progname)
+int	ft_print_usage(char *progname)
 {
 	ft_printf("Usage: %s <sourcefile.s>\n", progname);
 	return (1);
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_env	e;
 	int		ret;

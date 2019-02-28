@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/01/30 18:30:09 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/02/25 18:12:43 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@
 # define ERR_SIZEN "Name too long Max length 128"
 # define ERR_SXC "Syntax error AFTER COMMENT"
 # define ERR_SXN "Syntax error token AFTER NAME"
+# define ERR_MALLOC "Failed memory allocation"
 
 /*
 ** PLAYER MESSAGES
@@ -49,6 +50,4 @@
 # define INVALID_CHARS	"Incorrect characters were used in the .cor file"
 # define MAX_CHAMP		"Given champion is too large to be handled"
 # define WRG_HEAD_SIZE	"Header size does not match file's code size"
-
-
 #endif

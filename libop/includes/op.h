@@ -1,12 +1,12 @@
- /*************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   op.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
+/*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 19:01:37 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/08 18:42:48 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/27 14:14:11 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@
 # define MEM_SIZE				(4 * 1024)
 # define IDX_MOD				(MEM_SIZE / 8)
 # define CHAMP_MAX_SIZE			(MEM_SIZE / 6)
-//# define CHAMP_MAX_SIZE			(MEM_SIZE / (MAX_PLAYERS + 2))
 # define COMMENT_CHAR			'#'
 # define REGISTER_CHAR			'r'
 # define LABEL_CHAR				':'
@@ -47,17 +46,17 @@
 # define NAME_CMD_STRING		".name"
 # define COMMENT_CMD_STRING		".comment"
 # define REG_NUMBER				16
-# define CYCLE_TO_DIE			1536 //anciennement 1536
+# define CYCLE_TO_DIE			1536
 # define CYCLE_DELTA			50
 # define NBR_LIVE				21
-# define MAX_CHECKS				10 //anciennement 10
+# define MAX_CHECKS				10
 
 # define T_REG					1
 # define T_DIR					2
 # define T_IND					4
 # define T_LAB					8
 
-# define PROG_NAME_LENGTH		(128) // anciennement 128
+# define PROG_NAME_LENGTH		(128)
 # define COMMENT_LENGTH			(2048)
 # define COREWAR_EXEC_MAGIC		0xea83f3
 # define NB_INSTRUCTIONS		16
@@ -79,36 +78,6 @@
 # define LFORK_STR				"long fork"
 # define AFF_STR				"aff"
 
-/*
-PAS DE PANIQUE JE VAIS VIRER TOUT CA NORMALEMENT
-# define R					REG_SIZE
-# define D					DIR_SIZE
-# define I					IND_SIZE
-# define RD					R + D
-# define RI					R + I
-# define DI					D + I
-# define RDI				RD + I
-# define ARG3_BYTES			2
-# define ARG1_BYTES			3 * ARG
-# define ARG2_BYTES			2 * ARG
-# define GETARG(A1, A2, A3)		(A1 << ARG1_BYTES) | (A2 << ARG2_BYTES) | (A3 << ARG3_BYTES)
-# define LIVE_ARG_TYPE			GET_ARGTYPE(D, 0, 0)
-# define LD_ARG_TYPE			GET_ARGTYPE(DI, R, 0)
-# define ST_ARG_TYPE			GET_ARGTYPE(R, RI, 0)
-# define ADD_ARG_TYPE			GET_ARGTYPE(R, R, R)
-# define SUB_ARG_TYPE			GET_ARGTYPE(R, R, R)
-# define OR_ARG_TYPE			GET_ARGTYPE(RDI, RDI, R)
-# define AND_ARG_TYPE			GET_ARGTYPE(RDI, RDI, R)
-# define XOR_ARG_TYPE			GET_ARGTYPE(RD, RD, R)
-# define ZJMP_ARG_TYPE			GET_ARGTYPE(D, 0, 0)
-# define LDI_ARG_TYPE			GET_ARGTYPE(RDI, RDi, R)
-# define STI_ARG_TYPE			GET_ARGTYPE(R, RDI, RD)
-# define FORK_ARG_TYPE			GET_ARGTYPE(D, 0, 0)
-# define LLD_ARG_TYPE			GET_ARGTYPE(DI, R, 0)
-# define LLDI_ARG_TYPE			GET_ARGTYPE(RDI, RD, R)
-# define LFORK_ARG_TYPE			GET_ARGTYPE(D, 0)
-# define AFF_ARG_TYPE			GET_ARGTYPE(R, 0)
-*/
 
 typedef char					t_arg_type;
 typedef struct					s_instruction t_instruction;
@@ -136,7 +105,7 @@ typedef struct					s_header
 
 typedef struct					s_parameter
 {
-	t_arg_type					type; //T_REG || T_IND || T_DIR || T_LAB
+	t_arg_type					type;
 	int							value;
 	int							dest_value;
 	char						*label_name;
@@ -156,7 +125,6 @@ struct							s_instruction
 	char						*source_code_line;
 	char						*label;
 	char						is_labeled;
-//	int							bytelen;
 };
 
 enum							e_op
@@ -182,11 +150,13 @@ enum							e_mod_carry
 t_op							g_op_tab[NB_INSTRUCTIONS + 1];
 
 int								invalid_param(int type, int op);
+int								getval_params(char *arena, t_instruction *ins, int i, int mod);
 int								is_valid_ocp(unsigned char hex, t_instruction *ins);
 
 int								getval_mod(char *arena,  int index, int nb_bytes,int mod);
 void							set_argval(t_parameter *arg, int index, int size);
-int								get_instruction(char *arena, t_instruction *ins, unsigned int i, int mod);
+int								get_ins(char *arena, t_instruction *ins, unsigned int i, unsigned int mod);
+int								get_ins_nostore(char *arena, t_instruction *ins, unsigned int i, unsigned int mod);
 int								store_arg(char *arena, t_instruction *ins, int i, int ocp);
 void							set_optab(t_op **tab);
 int								ft_encode_instructions(int fd, t_list *instructions, char create_label);

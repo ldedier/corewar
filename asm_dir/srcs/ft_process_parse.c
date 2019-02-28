@@ -6,7 +6,7 @@
 /*   By: cammapou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 17:30:46 by cammapou          #+#    #+#             */
-/*   Updated: 2019/02/13 20:46:27 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/02/25 16:17:32 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,13 @@ int		ft_process_populate_from_opcode(char *opcode_str, t_env *e)
 	return (1);
 }
 
-int		ft_process_parse_indirect_value(char *str, int index, int offset, t_env *e)
+/*
+** if (ret < 0 || ret > REG_NUMBER)
+** return (ft_log_error(INVALID_IND_NUMBER, offset + 1, e));
+*/
+
+int		ft_process_parse_ind_value(char *str, int index,
+														int offset, t_env *e)
 {
 	int		ret;
 	char	*str2;
@@ -69,8 +75,6 @@ int		ft_process_parse_indirect_value(char *str, int index, int offset, t_env *e)
 	ret = ft_patoui(&str);
 	if (str == str2)
 		return (ft_log_error(LEXICAL_ERROR, offset, e));
-	//if (ret < 0 || ret > REG_NUMBER)
-	//	return (ft_log_error(INVALID_IND_NUMBER, offset + 1, e));
 	e->parser.current_instruction->params[index].value = ret;
 	e->parser.column_offset += str + 1 - str2;
 	while (ft_isseparator(str[i]) && ft_addco(str[i], e))
@@ -80,7 +84,12 @@ int		ft_process_parse_indirect_value(char *str, int index, int offset, t_env *e)
 	return (0);
 }
 
-int		ft_process_parse_direct_value(char *str, int index, int offset, t_env *e)
+/*
+** if (ret < 0 || ret > REG_NUMBER)
+** return (ft_log_error(INVALID_IND_NUMBER, offset + 1, e));
+*/
+
+int		ft_process_parse_dir_value(char *str, int index, int offset, t_env *e)
 {
 	int		ret;
 	char	*str2;
@@ -95,8 +104,6 @@ int		ft_process_parse_direct_value(char *str, int index, int offset, t_env *e)
 	ret = ft_patoui(&str);
 	if (str == str2)
 		return (ft_log_error(LEXICAL_ERROR, offset, e));
-	//	if (ret < 0 || ret > REG_NUMBER)
-	//		return (ft_log_error(INVALID_IND_NUMBER, offset + 1, e));
 	e->parser.current_instruction->params[index].value = ret;
 	e->parser.column_offset += str - str2 + 1;
 	while (ft_isseparator(str[i]) && ft_addco(str[i], e))
@@ -117,5 +124,5 @@ int		ft_process_parse_indirect(char *str, int index, t_env *e)
 	if (str[0] == LABEL_CHAR)
 		return (ft_process_parse_label(&(str[1]), index, 1, e));
 	else
-		return (ft_process_parse_indirect_value(str, index, 0, e));
+		return (ft_process_parse_ind_value(str, index, 0, e));
 }

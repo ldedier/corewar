@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/04 17:36:44 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/02/13 21:13:31 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/22 19:02:18 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void		output_aff(t_process *proc)
 		len = ft_strlen(proc->player->aff_buf);
 		ft_bzero(proc->player->aff_buf, (size_t)len);
 	}
-	proc->carry = 1;
+//	proc->carry = 1;
 }
 
 int				ins_aff(t_vm *vm, t_process *proc, t_parameter arg[3])

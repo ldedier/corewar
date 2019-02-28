@@ -6,48 +6,11 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 00:59:48 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/08 18:37:09 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/25 16:10:07 by uboumedj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
-
-int			ft_write(int fd, int value, int size)
-{
-	char	bytes[4];
-	char	tmp;
-	int		i;
-
-	i = 0;
-	while (i < size)
-	{
-		bytes[i] = (value >> (8 * i)) & 0xff;
-		i++;
-	}
-	i = 0;
-	while (i < size / 2)
-	{
-		tmp = bytes[i];
-		bytes[i] = bytes[size - i - 1];
-		bytes[size - i - 1] = tmp;
-		i++;
-	}
-	return (write(fd, bytes, size));
-}
-
-void		ft_add_padding(int fd, int total_bytes)
-{
-	int		i;
-	char	c;
-
-	c = 0;
-	i = 0;
-	while ((i + total_bytes) % 4 != 0)
-	{
-		write(fd, &c, 1);
-		i++;
-	}
-}
 
 void		ft_encode_header(int fd, t_env *e)
 {
@@ -55,9 +18,11 @@ void		ft_encode_header(int fd, t_env *e)
 
 	total = 0;
 	total += ft_write(fd, e->champ.header.magic, sizeof(e->champ.header.magic));
-	total += write(fd, e->champ.header.prog_name, sizeof(e->champ.header.prog_name));
+	total += write(fd, e->champ.header.prog_name,
+											sizeof(e->champ.header.prog_name));
 	ft_add_padding(fd, total);
-	total += ft_write(fd, e->champ.header.prog_size, sizeof(e->champ.header.prog_size));
+	total += ft_write(fd, e->champ.header.prog_size,
+											sizeof(e->champ.header.prog_size));
 	write(fd, e->champ.header.comment, sizeof(e->champ.header.comment));
 	ft_add_padding(fd, total);
 }
