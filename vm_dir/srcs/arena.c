@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/28 16:53:41 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/28 16:53:55 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/28 20:43:11 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void			dump(t_vm *vm)
 	int		i;
 	int		hex;
 
-	if (vm->total_cycle >= vm->dump)
+	if (vm->dump >= 0 && vm->total_cycle >= vm->dump)
 	{
 		ft_putchar('\n');
 		hex = 0;

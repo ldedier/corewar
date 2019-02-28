@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 17:19:23 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/02/28 17:17:18 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/28 21:47:34 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ static int	mng_players(t_vm *vm, int argc, char **argv, int *cur)
 	else
 		vm->player[vm->nb_players].num = add_player(vm);
 	vm->player[vm->nb_players].cor_name = argv[*cur];
-//	ft_printf("player name = %s\n", argv[*cur]);
 	if (++vm->nb_players > MAX_PLAYERS)
 		return (error_exit_msg(vm, MAX_P_NUM));
 	return (0);
