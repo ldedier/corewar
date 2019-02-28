@@ -66,37 +66,3 @@ void	ft_print_instruction(t_instruction *instruction)
 	}
 	ft_printf("\n");
 }
-
-void	ft_print_instructions(t_list *instructions)
-{
-	t_list			*ptr;
-	t_instruction	*instruction;
-
-	ptr = instructions;
-	while (ptr != NULL)
-	{
-		instruction = ptr->content;
-		ft_print_instruction(instruction);
-		ptr = ptr->next;
-	}
-}
-
-void	ft_print_label(t_label *label)
-{
-	ft_printf(CYAN"%s\n"EOC, label->name);
-	ft_printf("%d\n\n", label->address);
-}
-
-void	ft_print_labels(t_list *labels)
-{
-	t_list			*ptr;
-	t_label			*label;
-
-	ptr = labels;
-	while (ptr != NULL)
-	{
-		label = ptr->content;
-		ft_print_label(label);
-		ptr = ptr->next;
-	}
-}

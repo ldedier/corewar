@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 14:12:22 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/25 14:21:19 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/27 15:22:55 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,11 @@ void			dispatch_players(t_vm *vm, t_player *player)
 	index = 0;
 	while (++i < MAX_PLAYERS)
 	{
-		if (set_color(&vm->player[i], vm->color) && player != &vm->player[i])
+		if (set_color_sdl(vm, &vm->player[i]) && player != &vm->player[i])
 			ft_set_numbers(vm->player, &(vm->player[i]));
 		if (vm->player[i].relevant && ++index && (j = -1))
 		{
-			display_player_intro(&vm->player[i]);
+			display_player_intro(vm, &vm->player[i]); // vraimen? laisser?
 			start = (MEM_SIZE / vm->nb_players) * (index - 1);
 			while (++j < vm->player[i].algo_len)
 			{

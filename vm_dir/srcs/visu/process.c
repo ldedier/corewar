@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/20 16:29:42 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/22 19:05:31 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/26 16:50:40 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int		process_play(t_vm *vm, double nb_cycles_db)
 	i = nb_cycles;
 	while (i-- && vm->proc)
 	{
-		process_cycle(vm);
+		play_one_cycle(vm); // check return 
 	}
 	cycle_iterator -= nb_cycles;
 	return (0);

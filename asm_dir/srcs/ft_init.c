@@ -24,19 +24,35 @@ void	ft_init_champion(t_champion *champ, char *filename)
 	ft_bzero(champ->header.comment, COMMENT_LENGTH + 1);
 }
 
-void	ft_init_parser(t_parser *parser)
+void		ft_init_parameter(t_parameter *parameter)
 {
-	parser->nb_line = 0;
-	parser->column_offset = 0;
-	parser->nb_warnings = 0;
-	parser->nb_errors = 0;
-	parser->parsed_name = 0;
-	parser->parsed_comment = 0;
-	parser->too_much_errors_displayed = 0;
+	parameter->type = 0;
+	parameter->value = 0;
+	parameter->source_code_col = 0;
+	parameter->label_name = NULL;
 }
 
 void	ft_init_env(t_env *e, char *filename)
 {
 	ft_init_champion(&(e->champ), filename);
 	ft_init_parser(&(e->parser));
+}
+
+int			ft_init_instruction(t_instruction *instruction, t_env *e)
+{
+	int		i;
+
+	instruction->op = NULL;
+	instruction->address = e->champ.header.prog_size;
+	instruction->nb_line = e->parser.nb_line;
+	instruction->ocp = 0;
+	i = 0;
+	while (i < 3)
+	{
+		ft_init_parameter(&(instruction->params[i]));
+		i++;
+	}
+	if (!(instruction->source_code_line = ft_strdup(e->parser.current_line)))
+		return (1);
+	return (0);
 }

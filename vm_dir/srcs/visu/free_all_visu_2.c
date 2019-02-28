@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 16:07:26 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/18 20:14:08 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/02/27 16:01:27 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	ft_free_atlas(t_visu *v)
 	int j;
 
 	i = 0;
-	while (i < MAX_PL_COLOR)
+	while (i < MAX_PLAYERS + 1)
 	{
 		j = ATLAS_MIN;
 		while (j <= ATLAS_MAX)

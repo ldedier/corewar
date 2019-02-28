@@ -71,29 +71,14 @@ int			ft_parse_line(char *str, t_env *e, int fd)
 	return (ret);
 }
 
-int			ft_parse_asm(char *str, t_env *e)
+static int	ft_parse_asm_suite(t_env *e)
 {
 	char	*line;
-	int		ret;
 
-	if ((e->parser.fd = open(str, O_RDONLY)) == -1)
-	{
-		perror(str);
-		return (1);
-	}
-	else if ((ret = ft_switch_extension(str, ".s",
-												".cor", &(e->champ.cor_name))))
-	{
-		if (ret == -1)
-			return (ft_log_error_no_line(MALLOC_ERROR, e));
-		else
-			return (ft_log_error_no_line("File must be of extension \'.s\'",
-																		e));
-	}
 	while (get_next_line(e->parser.fd, &line))
 	{
 		e->parser.nb_line++;
-		if (ft_is_relevant(line)) // pas une ligne vide ou un commentaire
+		if (ft_is_relevant(line))
 		{
 			if (ft_parse_line(line, e, e->parser.fd) == 1)
 			{
@@ -110,12 +95,29 @@ int			ft_parse_asm(char *str, t_env *e)
 		return (ft_log_error_no_line("no comment found", e));
 	else if (ft_fill_instructions_labels_values(e))
 		return (1);
-	else
-	{
-	//	ft_print_instructions(e->champ.instructions);
-	//	ft_print_labels(e->champ.labels);
-		return (0);
-	}
 	close(e->parser.fd);
+	return (0);
+}
+
+int			ft_parse_asm(char *str, t_env *e)
+{
+	int		ret;
+
+	if ((e->parser.fd = open(str, O_RDONLY)) == -1)
+	{
+		perror(str);
+		return (1);
+	}
+	else if ((ret = ft_switch_extension(str, ".s", ".cor",
+					&(e->champ.cor_name))))
+	{
+		if (ret == -1)
+			return (ft_log_error_no_line(MALLOC_ERROR, e));
+		else
+			return (ft_log_error_no_line("File must be of extension \'.s\'",
+						e));
+	}
+	if (ft_parse_asm_suite(e) == 1)
+		return (1);
 	return (0);
 }

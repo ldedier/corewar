@@ -12,43 +12,6 @@
 
 #include "asm.h"
 
-int			ft_write(int fd, int value, int size)
-{
-	char	bytes[4];
-	char	tmp;
-	int		i;
-
-	i = 0;
-	while (i < size)
-	{
-		bytes[i] = (value >> (8 * i)) & 0xff;
-		i++;
-	}
-	i = 0;
-	while (i < size / 2)
-	{
-		tmp = bytes[i];
-		bytes[i] = bytes[size - i - 1];
-		bytes[size - i - 1] = tmp;
-		i++;
-	}
-	return (write(fd, bytes, size));
-}
-
-void		ft_add_padding(int fd, int total_bytes)
-{
-	int		i;
-	char	c;
-
-	c = 0;
-	i = 0;
-	while ((i + total_bytes) % 4 != 0)
-	{
-		write(fd, &c, 1);
-		i++;
-	}
-}
-
 void		ft_encode_header(int fd, t_env *e)
 {
 	int total;
