@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:20:21 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/28 17:17:16 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/28 20:36:51 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,9 @@ void			dispatch_players_init(t_vm *vm)
 				*(vm->arena + start + j) = vm->player[i].algo[j];
 			}
 		}
-			vm->local_player[i] = vm->player[i];
-			vm->local_player[i].color.value = 1;
-			vm->local_player[i].num = vm->nb;
+		vm->local_player[i] = vm->player[i];
+		vm->local_player[i].color.value = 1;
+		vm->local_player[i].num = vm->nb;
 	}
 }
 

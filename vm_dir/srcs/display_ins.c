@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 19:05:47 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/28 17:28:46 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/28 20:29:15 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,17 @@ void		display_proc_ins(t_vm *vm, t_process *proc)
 				ft_printf(" %s%d", arg_type == REG_CODE ? "r" : "", val);
 			else
 				ft_printf(" %d", val);
-
 		}
 	}
 }
 
 void		display_move(t_vm *vm, t_process *proc)
 {
-	int i;
-	int len;
+	int				i;
+	int				len;
 	unsigned char	c;
 
 	len = ft_abs(proc->ins_bytelen);
-
 	if (!(vm->display.code & (1 << MSG_MOVE)))
 		return ;
 	if (proc->pending_ins.op->opcode == ZJMP && proc->carry)
