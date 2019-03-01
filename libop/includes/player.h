@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 22:25:36 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/27 14:39:12 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/28 15:18:04 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct		s_color_msg
 	char			cycle[11];
 	char			resize[11];
 	char			death[11];
+	char			off[8];
 }					t_color_msg;
 
 typedef struct		s_player

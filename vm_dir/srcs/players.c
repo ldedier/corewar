@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:20:21 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/27 16:04:56 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/28 20:36:51 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,22 +54,20 @@ void			update_nb_players(t_vm *vm)
 
 /*
 ** store each player data to their respective starting point in the arena
+** NB!!: arena and metarena MUST follow each other in structure declaration, for
+** correct bzero
 */
 
 void			dispatch_players_init(t_vm *vm)
 {
-	int			index;
-	int			i;
+	static int	index;
+	static int	i = -1;
 	int			j;
 	int			start;
 
 	update_nb_players(vm);
-	ft_bzero(vm->arena, MEM_SIZE);
-	ft_bzero(vm->metarena, sizeof(vm->metarena));
-	i = -1;
-	index = 0;
-	if (!vm->visu.active)
-		ft_printf("Introducing contestants...");
+	ft_bzero(vm->arena, MEM_SIZE + sizeof(vm->metarena));
+	ft_printf("%s", vm->visu.active ? "" : "Introducing contestants...");
 	while (++i < MAX_PLAYERS)
 	{
 		set_color_sdl(vm, &vm->player[i]);
@@ -83,19 +81,65 @@ void			dispatch_players_init(t_vm *vm)
 				*(vm->arena + start + j) = vm->player[i].algo[j];
 			}
 		}
-	}
-}
-
-void			init_local_players(t_vm *vm)
-{
-	int i;
-
-	i = 0;
-	while (i < MAX_PLAYERS)
-	{
 		vm->local_player[i] = vm->player[i];
 		vm->local_player[i].color.value = 1;
 		vm->local_player[i].num = vm->nb;
-		i++;
 	}
+}
+
+/*
+** add_player_n function adds a player to the list of contestants WITH a number
+** specified with the [-n] flag.
+*/
+
+int				add_player_n(t_vm *vm, int argc, char **argv, int *cur)
+{
+	int				i;
+
+	if (*cur + 3 > argc)
+		return (error_exit_msg(vm, WRG_N_FLAG));
+	i = -1;
+	if (argv[*cur + 1][i + 1] == '-')
+		i++;
+	while (argv[*cur + 1][++i])
+	{
+		if (!(ft_strchr("0123456789", argv[*cur + 1][i])))
+			return (error_exit_msg(vm, WRG_N_FLAG));
+	}
+	vm->nb = ft_atoll(argv[*cur + 1]);
+	if (vm->nb > 2147483647 || vm->nb < -2147483648)
+		return (error_exit_msg(vm, MAX_N_FLAG));
+	i = -1;
+	while (++i < vm->nb_players)
+	{
+		if (vm->player[i].num == vm->nb)
+			return (error_exit_msg(vm, WRG_P_NUM));
+	}
+	vm->player[vm->nb_players].num = vm->nb;
+	vm->player[vm->nb_players].num_type = 1;
+	*cur += 2;
+	return (0);
+}
+
+/*
+** add_player function adds a player to the list of contestants WITHOUT a
+** number specified
+*/
+
+int				add_player(t_vm *vm)
+{
+	int			i;
+	static int	nb;
+
+	i = -1;
+	nb = -1;
+	while (++i < vm->nb_players)
+	{
+		if (vm->player[i].num == nb)
+		{
+			--(nb);
+			i = -1;
+		}
+	}
+	return (nb);
 }

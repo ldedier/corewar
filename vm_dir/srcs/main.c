@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 17:19:23 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/02/27 18:01:30 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/28 17:34:40 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ int		main(int argc, char **argv)
 	check_header(&vm);
 	if (flags(&vm, argc, argv))
 		return (FAILURE);
+	set_colors_term(&vm);
 	if (read_files(&vm))
 		return (error_exit_msg(&vm, RD_ERROR));
 	dispatch_players_init(&vm);
-	init_local_players(&vm);
 	if (vm.client.active)
 		return (process_client(&vm));
 	if (vm.visu.active)

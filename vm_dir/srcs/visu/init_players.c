@@ -6,12 +6,21 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 14:12:22 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/27 15:22:55 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/28 17:16:18 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "limits.h"
 #include "vm.h"
+
+static void			update_buttons(t_vm *vm)
+{
+	if (vm->nb_players)
+		vm->visu.buttons[CLEAN_ARENA_BUTTON].enabled = 1;
+	else
+		vm->visu.buttons[CLEAN_ARENA_BUTTON].enabled = 0;
+}
+
 
 static int			ft_get_potential_num(int player_num)
 {

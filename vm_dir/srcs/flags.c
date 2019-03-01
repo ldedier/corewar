@@ -6,13 +6,13 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 17:19:23 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/02/27 18:09:53 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/28 21:47:34 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-int		corehub_port_and_address(t_vm *vm, int argc, char **argv, int *cur)
+int			corehub_port_and_address(t_vm *vm, int argc, char **argv, int *cur)
 {
 	long long int	nb;
 	int				i;
@@ -50,12 +50,12 @@ static int	dump_nb_cycles(t_vm *vm, int argc, char **argv, int *cur)
 
 	*cur += 1;
 	if (*cur + 2 > argc && vm->nb_players == 0)
-		return(error_exit_msg(vm, WRG_DUMP));
+		return (error_exit_msg(vm, WRG_DUMP));
 	i = 0;
 	while (argv[*cur][i])
 	{
 		if (!(ft_strchr("-0123456789", argv[*cur][i])))
-			return(error_exit_msg(vm, WRG_DUMP));
+			return (error_exit_msg(vm, WRG_DUMP));
 		i++;
 	}
 	nb = ft_atoll(argv[*cur]);
@@ -63,63 +63,6 @@ static int	dump_nb_cycles(t_vm *vm, int argc, char **argv, int *cur)
 		nb = -1;
 	vm->dump = nb;
 	return (SUCCESS);
-}
-
-/*
-** add_player_n function adds a player to the list of contestants WITH a number
-** specified with the [-n] flag.
-*/
-
-static int	add_player_n(t_vm *vm, int argc, char **argv, int *cur)
-{
-	int				i;
-
-	if (*cur + 3 > argc)
-		return (error_exit_msg(vm, WRG_N_FLAG));
-	i = -1;
-	if (argv[*cur + 1][i + 1] == '-')
-		i++;
-	while (argv[*cur + 1][++i])
-	{
-		if (!(ft_strchr("0123456789", argv[*cur + 1][i])))
-			return (error_exit_msg(vm, WRG_N_FLAG));
-	}
-	vm->nb = ft_atoll(argv[*cur + 1]);
-	if (vm->nb > 2147483647 || vm->nb < -2147483648)
-		return (error_exit_msg(vm, MAX_N_FLAG));
-	i = -1;
-	while (++i < vm->nb_players)
-	{
-		if (vm->player[i].num == vm->nb)
-			return (error_exit_msg(vm, WRG_P_NUM));
-	}
-	vm->player[vm->nb_players].num = vm->nb;
-	vm->player[vm->nb_players].num_type = 1;
-	*cur += 2;
-	return (0);
-}
-
-/*
-** add_player function adds a player to the list of contestants WITHOUT a
-** number specified
-*/
-
-static int	add_player(t_vm *vm)
-{
-	int			i;
-	static int	nb;
-
-	i = -1;
-	nb = -1;
-	while (++i < vm->nb_players)
-	{
-		if (vm->player[i].num == nb)
-		{
-			--(nb);
-			i = -1;
-		}
-	}
-	return (nb);
 }
 
 /*
@@ -135,7 +78,7 @@ static int	mng_players(t_vm *vm, int argc, char **argv, int *cur)
 		vm->player[vm->nb_players].num = add_player(vm);
 	vm->player[vm->nb_players].cor_name = argv[*cur];
 	if (++vm->nb_players > MAX_PLAYERS)
-		return(error_exit_msg(vm, MAX_P_NUM));
+		return (error_exit_msg(vm, MAX_P_NUM));
 	return (0);
 }
 
@@ -162,10 +105,10 @@ int			flags(t_vm *vm, int argc, char **argv)
 		else if (argv[cur][0] == '-' && ft_isdigit(argv[cur][1]) && !(i = 0))
 		{
 			while (ft_isdigit(argv[cur][++i]))
-				vm->display = 10 * vm->display + (argv[cur][i] - '0');
+				vm->display.code = 10 * vm->display.code + (argv[cur][i] - '0');
 		}
 		else if (!ft_strcmp("-c", argv[cur]))
-			set_colors_term(vm);
+			vm->display.status = ON;
 		else if (!ft_strcmp("-v", argv[cur]))
 			vm->visu.active = 1;
 		else if (!ft_strcmp("-w", argv[cur]))
@@ -173,7 +116,5 @@ int			flags(t_vm *vm, int argc, char **argv)
 		else
 			mng_players(vm, argc, argv, &cur);
 	}
-	if (vm->visu.active)
-		vm->dump = -1;
 	return (0);
 }

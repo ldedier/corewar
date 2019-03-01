@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/02/27 16:07:00 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/28 16:59:15 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,19 @@ typedef struct		s_fade
 	int				value;
 }					t_fade;
 
+typedef struct		s_display
+{
+	int				code;
+	int				status;
+}					t_display;
+
 typedef struct		s_vm
 {
 	int				c_to_die;
 	int				checks;
 	int				win;
 	int				cycle;
-	int				display;
+	t_display		display;
 	int				total_cycle;
 	int				nb_players;
 	long long int	nb;
@@ -78,6 +84,7 @@ typedef struct		s_vm
 	int				live;
 	int				issued_live;
 	t_color_msg		color;
+
 //	t_color_term	col;
 	t_player		*winner;
 }					t_vm;
@@ -91,6 +98,12 @@ enum				e_arg
 {
 	FIRST, SECOND, THIRD
 };
+
+enum				e_display
+{
+	OFF, ON
+};
+
 
 enum				e_console_display
 {
@@ -117,8 +130,10 @@ void				dispatch_players_init(t_vm *vm);
 int					init_processes(t_vm *vm);
 void				init_local_players(t_vm *vm);
 void				update_nb_players(t_vm *vm);
-void				update_buttons(t_vm *vm);
 t_player			*duel(t_vm *vm, t_player *pl1, t_player *pl2);
+int					add_player_n(t_vm *vm, int argc, char **arg, int *cur);
+int					add_player(t_vm *vm);
+
 
 /*
 ** DISPLAY

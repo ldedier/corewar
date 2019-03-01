@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 17:18:28 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/14 19:55:39 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/02/28 15:54:13 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int		ins_sti(t_vm *vm, t_process *proc, t_parameter arg[3])
 //	ft_printf("ocp = %3x\n", proc->pending_ins.ocp);
 	display_proc_ins(vm, proc);
 	dest = (arg[1].dest_value + arg[2].dest_value);
-	if (!vm->visu.active && (vm->display & (1 << MSG_INS)))
+	if (!vm->visu.active && (vm->display.code & (1 << MSG_INS)))
 		ft_printf("\n%6s | -> store to %d + %d = %d (with pc and mod %d)", "",
 				arg[1].dest_value, arg[2].dest_value, dest, dest % IDX_MOD + proc->pc);
 	dest %= IDX_MOD;
