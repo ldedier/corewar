@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/30 22:25:06 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/15 20:34:56 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/01 22:17:02 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,10 @@ int		ft_process_upload(t_vm *vm, t_player player)
 	i += ft_memcpy_ret(&(data[i]), &(player.file_len), sizeof(t_file_len));
 	i += ft_memcpy_ret(&(data[i]), player.bin, player.file_len);
 	if (ft_send_protected(vm->client.socket, data, size))
+	{
+		free(data);
 		return (1);
+	}
+	free(data);
 	return (ft_receive_upload_result(vm));
 }
