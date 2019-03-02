@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 23:46:12 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/27 15:42:05 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/02 23:30:43 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ int			ft_render_live(t_fade *fade, t_vm *vm)
 void		ft_render_lives_at_head(t_list **temp, t_list **prev,
 		t_list **start, t_vm *vm)
 {
-//	if (!(*temp))
-//		return ;
 	while (*temp != NULL && ft_render_live((t_fade *)((*temp)->content), vm))
 	{
 		*start = (*temp)->next;

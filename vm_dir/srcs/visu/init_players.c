@@ -6,14 +6,14 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 14:12:22 by emuckens          #+#    #+#             */
-/*   Updated: 2019/03/02 16:29:22 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/02 23:27:02 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "limits.h"
 #include "vm.h"
 
-static void			update_buttons(t_vm *vm)
+static void		update_buttons(t_vm *vm)
 {
 	if (vm->nb_players)
 		vm->visu.buttons[CLEAN_ARENA_BUTTON].enabled = 1;
@@ -21,10 +21,9 @@ static void			update_buttons(t_vm *vm)
 		vm->visu.buttons[CLEAN_ARENA_BUTTON].enabled = 0;
 }
 
-
 static int			ft_get_potential_num(int player_num)
 {
-		return (player_num == INT_MAX ? INT_MIN : player_num - 1);
+	return (player_num == INT_MAX ? INT_MIN : player_num - 1);
 }
 
 /*
@@ -78,7 +77,7 @@ void			dispatch_players(t_vm *vm, t_player *player)
 			ft_set_numbers(vm->player, &(vm->player[i]));
 		if (vm->player[i].relevant && ++index && (j = -1))
 		{
-			display_player_intro(vm, &vm->player[i]); // vraimen? laisser?
+			display_player_intro(vm, &vm->player[i]); // vraimen? laisser? moi ca me soule ca fait 26 lignes en plus
 			start = (MEM_SIZE / vm->nb_players) * (index - 1);
 			while (++j < vm->player[i].algo_len)
 			{
