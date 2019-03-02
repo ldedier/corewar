@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/30 22:57:11 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/20 21:11:55 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/02 20:42:12 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ int		ft_process_player_scores(t_server *server, t_player *uploaded_player)
 			return (1);
 		ptr = ptr->next;
 	}
-	ft_process_score(server);
 	return (0);
 }
 
@@ -91,6 +90,7 @@ int		ft_process_uploaded_player(t_server *server,
 		if (ft_add_to_list_ptr_back(&(server->players),
 					player, sizeof(t_player)))
 			return (1);
+		ft_process_score(server);
 		ft_process_send_new_players_to_all(server);
 		ft_add_player_persistency(player);
 	}

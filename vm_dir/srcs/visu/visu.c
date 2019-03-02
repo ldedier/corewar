@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 16:21:43 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/01 22:33:09 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/02 17:12:31 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,11 @@
 int		process_visu(t_vm *vm)
 {
 	if (ft_init_all_visu(vm, &(vm->visu)))
+	{
+		clear_vm(vm);
+		ft_free_all_visu(&(vm->visu));
 		return (ft_net_error());
+	}
 	vm->visu.framerate.ms_counter = SDL_GetTicks();
 	while (vm->visu.active)
 	{

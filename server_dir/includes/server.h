@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 17:20:50 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/26 16:57:20 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/02 18:46:16 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include "vm.h"
 # include <dirent.h>
 # include <sys/stat.h>
+# include <term.h>
 # define MAX_SOCKETS	MAX_PLAYERS + 1
 # define ACTIVITY_SRCH	"server is looking for activity..."
 
@@ -79,5 +80,6 @@ int						ft_send_flag(t_server *server, int client_index,
 int						ft_attempt_connection(t_server *server);
 int						ft_disconnect_player(t_server *server, int i);
 int						fight_cores(t_vm *vm, t_player *pl1, t_player *pl2);
-
+int						reset_shell(int ret);
+int						exit_server(t_server *server, int ret);
 #endif
