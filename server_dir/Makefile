@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/04 15:20:42 by ldedier           #+#    #+#              #
-#    Updated: 2019/02/26 19:39:29 by emuckens         ###   ########.fr        #
+#    Updated: 2019/03/02 20:47:46 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,8 @@ EOC = \033[0m
 SRCS_NO_PREFIX =	main.c ft_process.c ft_fill_all.c tools.c ft_init.c \
 					ft_send_others.c ft_send_core.c ft_receive_upload.c \
 					ft_send_core_bin.c ft_attribute_scores_init.c \
-					ft_process_players.c fight_cores.c
+					ft_process_players.c fight_cores.c signals.c\
+					ft_free.c
 
 VM_NO_PREFIX =		arena.c error.c parse.c utils.c play.c display.c color.c \
 			  	vm.c players.c processes.c display_player.c display_ins.c

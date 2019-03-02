@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 16:07:26 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/27 16:01:27 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/01 22:30:30 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	ft_free_surfaces(t_visu *v)
 		ft_free_surface(v->sdl.titles[i]);
 		i++;
 	}
+	i = 0;
 	while (i < NB_FRAMES)
 	{
 		ft_free_surface(v->frames[i].harry_ray.surface);

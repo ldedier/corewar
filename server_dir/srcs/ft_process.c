@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 17:50:39 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/21 15:19:23 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/02 20:49:46 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,17 +69,30 @@ int		ft_process_activity(t_server *server)
 	return (0);
 }
 
+void	get_keys(t_server *server)
+{
+	char	buffer[4];
+	int		ret;
+
+	if ((ret = read(0, &buffer, 4)))
+	{
+		if (buffer[0] == 27 && !buffer[1] && !buffer[2] && !buffer[3])
+			server->running = 0;
+	}
+}
+
 int		ft_process_server(t_server *server)
 {
 	while (server->running)
 	{
-		if (SDLNet_CheckSockets(server->socket_set, 1000) <= 0)
-			ft_printf("%s\n", ACTIVITY_SRCH);
+		if (SDLNet_CheckSockets(server->socket_set, 0000) <= 0)
+			get_keys(server);
 		else
 		{
 			if (ft_process_activity(server))
 				return (1);
 		}
 	}
+	ft_printf("disonnecting server..\n");
 	return (0);
 }
