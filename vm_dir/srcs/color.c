@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 19:27:27 by emuckens          #+#    #+#             */
-/*   Updated: 2019/03/02 15:53:03 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/02 16:37:13 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void		set_colors_term(t_vm *vm)
 
 int			get_color_sdl(int index)
 {
-	static int color[5] = {COL_OFF, COL_GREEN, COL_RED, COL_CYAN, COL_BROWN};
+	static int color[5] = {COL_OFF, COL_GREEN, COL_RED, COL_BBLUE, COL_BROWN};
 
 	return (color[(int)index]);
 }
