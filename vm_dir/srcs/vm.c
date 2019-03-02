@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:15:00 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/28 16:42:50 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/02 16:24:19 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 void			clear_vm(t_vm *vm)
 {
 	vm->live = 0;
-	vm->proc = NULL;
 	vm->nb = 1;
 	vm->total_cycle = 0;
 	vm->cycle = 0;
@@ -47,7 +46,6 @@ void			init_vm(t_vm *vm, char **argv)
 	vm->dump = -1;
 	vm->checks = MAX_CHECKS;
 	vm->live = 0;
-	vm->proc = NULL;
 	vm->client.active = 0;
 	vm->client.port = 0;
 	vm->visu.active = 0;
