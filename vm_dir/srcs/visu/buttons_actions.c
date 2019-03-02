@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 21:45:31 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/27 16:17:03 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/02 16:29:23 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,10 @@ int		go_back(t_vm *vm, t_button *this, t_ixy xy)
 	(void)this;
 	clear_vm(vm);
 	vm->visu.time_manager.cycles_per_turn = INIT_CYCLES_PER_TURN;
-	dispatch_players_init(vm);
+	vm->visu.time_manager.pause = 0;
 	vm->visu.phase = PHASE_INIT;
+	dispatch_players_init(vm);
+	dispatch_players(vm, NULL);
 	ft_update_cursor(vm, xy);
 	return (0);
 }

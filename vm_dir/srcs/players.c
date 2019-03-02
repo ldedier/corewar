@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:20:21 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/28 20:36:51 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/02 16:29:56 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,13 @@ void			dispatch_players_init(t_vm *vm)
 	int			start;
 
 	update_nb_players(vm);
-	ft_bzero(vm->arena, MEM_SIZE + sizeof(vm->metarena));
 	ft_printf("%s", vm->visu.active ? "" : "Introducing contestants...");
 	while (++i < MAX_PLAYERS)
 	{
 		set_color_sdl(vm, &vm->player[i]);
-		if (vm->player[i].relevant && ++index && (j = -1))
+		if (vm->player[i].relevant && ++index)
 		{
+			j = -1;
 			display_player_intro(vm, &vm->player[i]);
 			start = (MEM_SIZE / vm->nb_players) * (index - 1);
 			while (++j < vm->player[i].algo_len)
