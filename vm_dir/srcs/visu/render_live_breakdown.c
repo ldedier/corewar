@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/03 21:23:05 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/27 15:56:11 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/02 21:40:52 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,21 @@ void	ft_populate_breakdown_bar(t_vm *vm, SDL_Rect *rect)
 }
 
 int		ft_process_render_live_breakdown_bar(t_vm *vm, SDL_Rect *rect,
-			double *from, int i)
+			double *from, t_ixy i_sum)
 {
-	if (vm->player[i].relevant)
+	if (vm->player[i_sum.x].relevant)
 	{
 		rect->x = vm->visu.center.dashboard_x +
 			vm->visu.center.live_breakdown_bar_left + *from;
-		if (!vm->live)
+		if (!i_sum.y)
 			rect->w = vm->visu.center.live_breakdown_bar_w /
 				(double)vm->nb_players;
 		else
 			rect->w = vm->visu.center.live_breakdown_bar_w *
-				vm->player[i].live / (double)vm->live;
+				vm->player[i_sum.x].live / (double)i_sum.y;
 		*from += rect->w;
 		if (SDL_FillRect(vm->visu.sdl.w_surface, rect,
-				vm->player[i].color.value))
+				vm->player[i_sum.x].color.value))
 			return (1);
 	}
 	return (0);
@@ -46,18 +46,19 @@ int		ft_process_render_live_breakdown_bar(t_vm *vm, SDL_Rect *rect,
 
 int		ft_render_live_breakdown_bar(t_vm *vm)
 {
-	int			i;
 	double		from;
 	SDL_Rect	rect;
+	t_ixy		i_sum;
 
 	ft_populate_breakdown_bar(vm, &rect);
 	from = 0;
-	i = 0;
-	while (i < MAX_PLAYERS)
+	i_sum.x = 0;
+	i_sum.y = get_live_sum(vm);
+	while (i_sum.x < MAX_PLAYERS)
 	{
-		if (ft_process_render_live_breakdown_bar(vm, &rect, &from, i))
+		if (ft_process_render_live_breakdown_bar(vm, &rect, &from, i_sum))
 			return (1);
-		i++;
+		i_sum.x++;
 	}
 	rect.x = vm->visu.center.dashboard_x +
 		vm->visu.center.live_breakdown_bar_left;

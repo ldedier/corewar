@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 17:21:44 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/02 20:51:40 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/02 23:08:19 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ static struct termios  g_term_init;
 void __attribute__((destructor)) end();
 void	end(void) //permet de mieux checker les leaks !
 {
-	ft_printf("destructor loop\n");
-	while(1);
+//	ft_printf("destructor loop\n");
+//	while(1);
 }
 
 int		ft_print_usage(char *name)

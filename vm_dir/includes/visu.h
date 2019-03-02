@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/27 16:17:01 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/02 21:41:52 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -874,4 +874,5 @@ void					populate_hp_player_title_rect(t_vm *vm, SDL_Rect *rect);
 double					ft_flerp(double val1, double val2, double t);
 void					ft_render_alt_colors(t_vm *vm);
 void					dispatch_players(t_vm *vm, t_player *player);
+int						get_live_sum(t_vm *vm);
 #endif
