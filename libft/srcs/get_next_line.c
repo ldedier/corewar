@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/08 15:44:18 by ldedier           #+#    #+#             */
-/*   Updated: 2018/11/15 14:36:24 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/03 00:12:06 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int		ft_may_free_node(int ret, t_list **gnls, t_gnl *to_del)
 				free(to_del->whole_buffer);
 				free(to_del);
 				free(current);
+				return (ret);
 			}
 			prev = current;
 			current = current->next;
