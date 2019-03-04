@@ -6,7 +6,7 @@
 /*   By: cammapou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 17:07:52 by cammapou          #+#    #+#             */
-/*   Updated: 2019/01/15 17:08:55 by cammapou         ###   ########.fr       */
+/*   Updated: 2019/03/04 14:06:48 by cammapou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ void	ft_init_parser(t_parser *parser)
 	parser->too_much_errors_displayed = 0;
 }
 
-void		ft_reset_parser(t_parser *parser, char *str)
+void	ft_reset_parser(t_parser *parser, char *str)
 {
 	parser->nb_args_parsed = 0;
 	parser->current_line = str;
 	parser->column_offset = 0;
 }
 
-int			ft_set_parser_co(int save, t_env *e, int ret)
+int		ft_set_parser_co(int save, t_env *e, int ret)
 {
 	(void)save;
 	(void)e;

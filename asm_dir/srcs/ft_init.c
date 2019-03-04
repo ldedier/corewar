@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/01 16:10:09 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/17 01:11:08 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/04 14:11:05 by cammapou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_init_champion(t_champion *champ, char *filename)
 	ft_bzero(champ->header.comment, COMMENT_LENGTH + 1);
 }
 
-void		ft_init_parameter(t_parameter *parameter)
+void	ft_init_parameter(t_parameter *parameter)
 {
 	parameter->type = 0;
 	parameter->value = 0;
@@ -38,9 +38,9 @@ void	ft_init_env(t_env *e, char *filename)
 	ft_init_parser(&(e->parser));
 }
 
-int			ft_init_instruction(t_instruction *instruction, t_env *e)
+int		ft_init_instruction(t_instruction *instruction, t_env *e)
 {
-	int		i;
+	int	i;
 
 	instruction->op = NULL;
 	instruction->address = e->champ.header.prog_size;

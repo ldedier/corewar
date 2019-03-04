@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 00:35:48 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/25 16:06:28 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/03/04 14:08:46 by cammapou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_free_label(t_label *label)
 
 void	ft_free_instruction(t_instruction *instruction)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (instruction->op)
@@ -31,7 +31,7 @@ void	ft_free_instruction(t_instruction *instruction)
 				free(instruction->params[i].label_name);
 			i++;
 		}
-}
+	}
 	free(instruction->source_code_line);
 	free(instruction);
 }
