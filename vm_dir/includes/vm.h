@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/02/28 16:59:15 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/02 16:35:22 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ typedef struct		s_vm
 	long long int	nb;
 	char			**files;
 	int				dump;
-//	char			color[MAX_PL_COLOR];
 	t_visu			visu;
 	t_client		client;
 	char			arena[MEM_SIZE];

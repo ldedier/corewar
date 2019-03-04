@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/03 17:34:02 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/28 17:10:02 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/02 15:56:08 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ int		ft_render_player_title(t_vm *vm, t_player player, int y)
 	rect.y = y;
 	rect.w = vm->visu.center.entry_max_w;
 	rect.h = vm->visu.center.player_title_height;
-		ft_printf("PLAYER\n");
 	if (!(tmp = ft_itoa(player.num)))
 		return (1);
 	if (!(str = ft_strjoin("Player ", tmp)))
