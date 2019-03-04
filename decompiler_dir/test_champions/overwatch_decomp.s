@@ -3,9 +3,9 @@
 
 ld	 %58382, r1
 live	 %0
-zjmp	 %65524
-st	 r15, 65524
-st	 r16, 65514
+zjmp	 %-12
+st	 r15, -12
+st	 r16, -22
 fork	 %91
 st	 r1, 6
 live	 %0
@@ -20,9 +20,9 @@ zjmp	 %3
 ld	 %190057742, r11
 ld	 %269090402, r16
 ld	 %0, r16
-st	 r11, 65035
-st	 r12, 65034
-zjmp	 %65025
+st	 r11, -501
+st	 r12, -502
+zjmp	 %-511
 st	 r1, 6
 live	 %0
 fork	 %44
@@ -32,14 +32,14 @@ ld	 %190057743, r13
 ld	 %-409, r14
 ld	 %-21, r15
 ld	 %0, r16
-zjmp	 %65451
+zjmp	 %-85
 st	 r1, 6
 live	 %0
 ld	 %269090790, r13
 ld	 %-405, r14
 ld	 %-17, r15
 ld	 %0, r16
-zjmp	 %65410
+zjmp	 %-126
 lfork	 %0
 lfork	 %0
 lfork	 %0
@@ -105,8 +105,8 @@ lfork	 %0
 lfork	 %0
 lfork	 %0
 lfork	 %0
-ldi	 %65130, %0, r1
-ldi	 %65123, %4, r2
+ldi	 %-406, %0, r1
+ldi	 %-413, %4, r2
 ld	 %196608, r3
 add	 r2, r3, r3
 ld	 %57671937, r16
@@ -142,4 +142,3 @@ st	 r16, 399
 ld	 %151110400, r16
 st	 r16, 391
 ld	 %0, r16
-zjmp	 %319
