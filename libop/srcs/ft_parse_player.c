@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 18:41:42 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/02/26 21:29:06 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/04 15:28:05 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,14 @@ static int		parse_instructions(t_player *player)
 	n = 0;
 	while (PROG_NAME_LENGTH + 16 + COMMENT_LENGTH + n < player->file_len)
 	{
+//		ft_printf("player bin = %d ", player->bin[PROG_NAME_LENGTH + 16 + COMMENT_LENGTH + n]);
 		player->algo[n] = player->bin[PROG_NAME_LENGTH + 16 +
 														COMMENT_LENGTH + n];
+//		ft_printf("player algo char = %d\n", player->algo[n]);
 		n++;
 	}
 	player->algo_len = n;
+//	ft_printf("player algo len = %d\n", player->algo_len);
 	check_head_size(player);
 	if (n != player->header_size)
 		return (ft_return_verbosed(WRG_HEAD_SIZE, 1));

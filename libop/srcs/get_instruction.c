@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 16:33:31 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/26 18:16:26 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/04 15:28:02 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,14 @@ int			getval_mod(char *arena, int index, int nb_bytes, int modulo)
 
 	i = 0;
 	val = 0;
+//	ft_printf("src = %s\n", arena);
 	val |= arena[(index + i) % modulo];
-	while (++i < (unsigned int)nb_bytes)
+//	ft_printf("intermediate val = %d\n", val);
+	while (++i < (unsigned int)nb_bytes) // avant <
 	{
 		val <<= 8;
 		val |= (unsigned char)arena[(index + i) % modulo];
+//		ft_printf("intermediate val = %d\n", val);
 	}
 	return (val);
 }
@@ -116,17 +119,23 @@ int			get_ins(char *arena, t_instruction *ins,
 
 	len = 0;
 	hex = *(unsigned char *)(arena + i);
+//	ft_printf("i = %zu hex = %d\n", i, hex);
 	if (++i == mod)
 		i -= mod;
-	if (!ins->op && ((int)hex > NB_INSTRUCTIONS || (int)hex == 0))
+	if (!ins->op && (((int)hex > NB_INSTRUCTIONS) || (int)hex == 0))
+	{
+//		ft_printf("mauvais op\n");
 		return (0);
+	}
 	if (!ins->op)
 		ins->op = &g_op_tab[(int)hex - 1];
 	ins->ocp = (unsigned char)*(arena + i);
+//	ft_printf("op = %d ocp = %#x\n", ins->op->opcode, ins->ocp);
 	if (ins->op->has_ocp == OCP_YES)
 	{
 		if (!is_valid_ocp((unsigned char)ins->ocp, ins))
 		{
+//			ft_printf("invalid ocp\n");
 			len = ins->params[0].nb_bytes + ins->params[1].nb_bytes +
 			ins->params[2].nb_bytes + ins->op->has_ocp + 1;
 			return (-len);
@@ -144,6 +153,9 @@ int			get_ins(char *arena, t_instruction *ins,
 	len = ins->params[0].nb_bytes + ins->params[1].nb_bytes +
 						ins->params[2].nb_bytes + ins->op->has_ocp + 1;
 	if (getval_params(arena, ins, i + ins->op->has_ocp, mod) == -1)
+	{
+//			ft_printf("invalid params\n");
 		return (-len);
+	}
 	return (len);
 }

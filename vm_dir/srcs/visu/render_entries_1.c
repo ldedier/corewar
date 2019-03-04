@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/03 15:42:09 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/27 15:55:37 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/02 19:39:37 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int		ft_render_entries(t_vm *vm)
 	rect.w = 2 * vm->visu.center.dashboard_width / 3.0;
 	rect.h = vm->visu.center.state_h;
 	if (vm->visu.time_manager.pause)
-		ft_copy_str_to_surface_no_source(vm, "Paused", rect, 0);
+		ft_copy_str_to_surface_no_source(vm, "Paused", rect, 2);
 	else
 		ft_copy_str_to_surface_no_source(vm, "Running", rect, 0);
 	i = 0;
