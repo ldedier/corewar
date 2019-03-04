@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 16:33:31 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/26 17:44:33 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/02 21:48:02 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ int			get_ins_nostore(char *arena, t_instruction *ins,
 	ins->ocp = (unsigned char)*(arena + i);
 	if (ins->op->has_ocp == OCP_YES)
 	{
-		if (!is_valid_ocp_nostore((unsigned char)ins->ocp, ins))
-			return (-1);
+		if (!is_valid_ocp((unsigned char)ins->ocp, ins))
+			return (-(ins->params[0].nb_bytes + ins->params[1].nb_bytes + ins->params[2].nb_bytes + 2));
 	}
 	else
 	{
@@ -75,6 +75,6 @@ int			get_ins_nostore(char *arena, t_instruction *ins,
 		ins->params[0].nb_bytes = 4
 			- 2 * g_op_tab[ins->op->opcode - 1].describe_address;
 	}
-	return (1);
+	return (ins->params[0].nb_bytes + ins->params[1].nb_bytes + ins->params[2].nb_bytes + ins->op->has_ocp + 1);
 }
 

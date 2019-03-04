@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/21 13:40:59 by ldedier           #+#    #+#              #
-#    Updated: 2019/01/30 17:57:14 by ldedier          ###   ########.fr        #
+#    Updated: 2019/03/04 15:07:10 by emuckens         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ OK_COLOR = \x1b[32;01m
 EOC = \033[0m
 
 SRCS_NO_PREFIX		= main.c ft_init.c ft_encode_to_assembly.c ft_free_all.c\
-					  ft_process_labels.c
+					  ft_process_labels.c read_ins.c
 
 INCLUDES_NO_PREFIX	= decompiler.h
 OP_INCLUDES_NO_PREFIX = champion.h color.h errors.h network.h op.h player.h

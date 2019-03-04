@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 20:50:21 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/27 15:50:09 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/02 21:07:57 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,15 @@ int		ft_init_atlas(t_vm *vm, t_sdl *sdl)
 	int				i;
 	SDL_Color		color;
 
-	i = 0;
-	while (i < MAX_PLAYERS + 1)
+	if (ft_init_atlas_color(sdl, 0, vm->visu.sdl.color))
+		return (1);
+	i = 1;
+	while (i <= MAX_PLAYERS)
 	{
 		ft_populate_sdl_color_from_int(get_color_sdl(i), &color);
 		if (ft_init_atlas_color(sdl, i, color))
 			return (1);
 		i++;
 	}
-	if (ft_init_atlas_color(sdl, i, vm->visu.sdl.color))
-		return (1);
 	return (0);
 }

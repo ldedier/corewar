@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:15:00 by emuckens          #+#    #+#             */
-/*   Updated: 2019/03/02 16:24:19 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/02 19:33:15 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void			clear_vm(t_vm *vm)
 	vm->cycle = 0;
 	vm->c_to_die = CYCLE_TO_DIE;
 	ft_bzero(vm->arena, MEM_SIZE);
-	ft_bzero(vm->metarena, sizeof(vm->metarena));
+	ft_memset(vm->metarena, sizeof(vm->metarena), MAX_PLAYERS);
 	while (vm->proc)
 		ft_lstpop(&vm->proc);
 	while (vm->killed_proc)

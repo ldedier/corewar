@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/08 00:08:01 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/26 17:17:45 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/04 15:27:56 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,35 @@
 int		ft_encode_asm(int fd, t_env *e)
 {
 	t_instruction	instruction;
-	int				i;
+	unsigned int				i;
 	int				ret;
 
 	i = 0;
-	while (((ret = get_ins(e->player.algo, &instruction, i,
-			e->player.algo_len))) && i < e->player.algo_len)
+	ft_bzero(&instruction, sizeof(t_instruction));
+//	ft_printf("check algo = %s\n", e->player.algo);
+//	instruction.op = NULL;
+	while (((ret = read_ins(e->player.algo, &instruction, &i,
+			e->player.algo_len))) && i < (unsigned int)e->player.algo_len)
 	{
+//		ft_printf("ret = %d\n", ret);
 		instruction.address = i;
 		instruction.is_labeled = 0;
 		instruction.label = NULL;
 		if (ft_add_to_list_back(&e->champ.instructions, &instruction,
 			sizeof(t_instruction)))
+		{
 			return (-1);
-		i += ret;
+		}
+//		i += ret;
+//		if (i >= MEM_SIZE)
+//			i -= MEM_SIZE;
+//		ft_printf("instruction %d OK\n", instruction.op->opcode);
+		instruction.op = NULL;
 	}
-	if (i != e->player.algo_len)
+	if (i != (unsigned int)e->player.algo_len)
+	{
 		return (1);
+	}
 	else
 		return (ft_process_encode_asm(fd, e));
 }
