@@ -30,7 +30,7 @@ int		ins_xor(t_vm *vm, t_process *proc, t_parameter arg[3])
 	arg[1].retrieval_mode = 1;
 	arg[2].retrieval_mode = 0;
 	load_reg(vm, proc, arg[2].value, res);
-	proc->carry = res ? 0 : 1;
+	proc->carry = !res;
 	display_proc_ins(vm, proc);
 	return (SUCCESS);
 }
