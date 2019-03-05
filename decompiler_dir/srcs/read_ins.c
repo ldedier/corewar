@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 12:40:29 by emuckens          #+#    #+#             */
-/*   Updated: 2019/03/04 15:27:07 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/04 20:08:52 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ static int		isvalid_ocp(t_instruction *ins, unsigned char op, unsigned char ocp)
 	}
 	if (g_op_tab[op - 1].has_ocp && (ret = (ins->ocp - (ins->params[0].type << 6) - (ins->params[1].type << 4) - (ins->params[2].type << 2))))
 		return (0);
-//	if (i < 3 && ((ocp & offset) >> (6 - i * 2)))
-//		return (0);
 	return (1);
 }
 

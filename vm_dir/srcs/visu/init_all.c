@@ -6,13 +6,13 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 21:48:50 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/19 23:29:09 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/05 17:13:25 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-int		ft_init_sdl_utils(t_vm *vm, t_visu *v)
+static int		ft_init_sdl_utils(t_vm *vm, t_visu *v)
 {
 	v->sdl.color.r = 255;
 	v->sdl.color.g = 255;
@@ -29,7 +29,7 @@ int		ft_init_sdl_utils(t_vm *vm, t_visu *v)
 	return (0);
 }
 
-int		ft_init_positions(t_vm *vm, t_visu *v)
+static int		ft_init_positions(t_vm *vm, t_visu *v)
 {
 	v->react.w_scale = (double)v->dim.width / 2560.0;
 	v->react.h_scale = (double)v->dim.height / 1440.0;
@@ -41,7 +41,7 @@ int		ft_init_positions(t_vm *vm, t_visu *v)
 	return (0);
 }
 
-void	set_number_downloaded_players(t_vm *vm)
+static void		set_number_downloaded_players(t_vm *vm)
 {
 	t_list		*ptr;
 	t_player	*player;
@@ -55,7 +55,7 @@ void	set_number_downloaded_players(t_vm *vm)
 	}
 }
 
-void	ft_init_others(t_vm *vm, t_visu *v)
+static void		ft_init_others(t_vm *vm, t_visu *v)
 {
 	set_number_downloaded_players(vm);
 	v->event_manager.enable_mouse_up = 1;
@@ -83,7 +83,7 @@ void	ft_init_others(t_vm *vm, t_visu *v)
 	vm->visu.current_hp_ratio = 0.5;
 }
 
-int		ft_init_all_visu(t_vm *vm, t_visu *v)
+int				ft_init_all_visu(t_vm *vm, t_visu *v)
 {
 	ft_bzero(v, sizeof(t_visu));
 	v->active = 1;

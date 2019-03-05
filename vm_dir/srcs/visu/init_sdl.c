@@ -6,13 +6,13 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 15:02:55 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/18 20:56:52 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/05 18:07:31 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-int		ft_init_sdl_2(t_visu *v)
+static int		ft_init_sdl_2(t_visu *v)
 {
 	if (!(v->sdl.renderer = SDL_CreateRenderer(v->sdl.window, -1, 0)))
 		return (1);
@@ -27,7 +27,7 @@ int		ft_init_sdl_2(t_visu *v)
 	return (0);
 }
 
-int		ft_init_sdl(t_visu *v)
+int				ft_init_sdl(t_visu *v)
 {
 	v->sdl.screen.x = 300;
 	v->sdl.screen.y = 200;

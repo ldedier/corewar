@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 14:12:22 by emuckens          #+#    #+#             */
-/*   Updated: 2019/03/02 23:27:02 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/05 18:01:52 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void		update_buttons(t_vm *vm)
 		vm->visu.buttons[CLEAN_ARENA_BUTTON].enabled = 0;
 }
 
-static int			ft_get_potential_num(int player_num)
+static int		ft_get_potential_num(int player_num)
 {
 	return (player_num == INT_MAX ? INT_MIN : player_num - 1);
 }
@@ -30,7 +30,7 @@ static int			ft_get_potential_num(int player_num)
 ** ft_set_numbers function assigns each player a different number.
 */
 
-static void			ft_set_numbers(t_player *players, t_player *player)
+static void		ft_set_numbers(t_player *players, t_player *player)
 {
 	int i;
 	int j;
@@ -46,8 +46,8 @@ static void			ft_set_numbers(t_player *players, t_player *player)
 			j = -1;
 			while (++j < MAX_PLAYERS)
 			{
-				if (i != j && players[j].relevant && &players[j] != player &&
-						player->num == players[j].num)
+				if (i != j && players[j].relevant && &players[j] != player
+						&& player->num == players[j].num)
 				{
 					found = 0;
 					break ;
@@ -77,7 +77,6 @@ void			dispatch_players(t_vm *vm, t_player *player)
 			ft_set_numbers(vm->player, &(vm->player[i]));
 		if (vm->player[i].relevant && ++index && (j = -1))
 		{
-			display_player_intro(vm, &vm->player[i]); // vraimen? laisser? moi ca me soule ca fait 26 lignes en plus
 			start = (MEM_SIZE / vm->nb_players) * (index - 1);
 			while (++j < vm->player[i].algo_len)
 			{

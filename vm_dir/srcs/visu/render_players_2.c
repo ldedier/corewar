@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 19:11:34 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/18 19:11:36 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/05 20:53:58 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,19 +80,20 @@ int		ft_render_no_local_player(t_vm *vm, t_player *player, t_xy xy,
 	return (0);
 }
 
-int		ft_render_player(t_vm *vm, t_player *player, t_xy xy,
+int		ft_render_player(t_vm *vm, t_player *pl, t_xy xy,
 		t_player_source source)
 {
-	if (player->relevant && (source == DOWNLOADS ||
-		source == LOCAL || source == SERVER ||
-			(vm->visu.drag_container.drag_enum != DRAG_PLAYER ||
-			vm->visu.drag_container.drag_union.drag_player.player != player)))
+	if (pl->relevant
+		&& (source == DOWNLOADS
+			|| source == LOCAL || source == SERVER
+			|| (vm->visu.drag_container.drag_enum != DRAG_PLAYER
+			|| vm->visu.drag_container.drag_union.drag_player.player != pl)))
 	{
-		if (ft_render_relevant_player(vm, player, xy, source))
+		if (ft_render_relevant_player(vm, pl, xy, source))
 			return (1);
 	}
 	else if (source != LOCAL)
-		return (ft_render_no_local_player(vm, player, xy, source));
+		return (ft_render_no_local_player(vm, pl, xy, source));
 	return (0);
 }
 
@@ -106,14 +107,14 @@ int		ft_render_dragged_player(t_vm *vm)
 		xy.x = ft_fclamp(0,
 			vm->visu.drag_container.x - vm->visu.drag_container.diff_x,
 				vm->visu.dim.width - vm->visu.center.player_w);
-		xy.y = ft_fclamp(0, vm->visu.drag_container.y -
-				vm->visu.drag_container.diff_y,
-					vm->visu.dim.height - vm->visu.center.player_h);
+		xy.y = ft_fclamp(0, vm->visu.drag_container.y
+				- vm->visu.drag_container.diff_y,
+				vm->visu.dim.height - vm->visu.center.player_h);
 		ft_render_relevant_player(vm,
 				vm->visu.drag_container.drag_union.drag_player.player, xy,
 			vm->visu.drag_container.drag_union.drag_player.source + NB_SOURCES);
-		if (vm->visu.drag_container.drag_union.drag_player.source == ARENA ||
-				vm->visu.drag_container.drag_union.drag_player.source == UPLOAD)
+		if (vm->visu.drag_container.drag_union.drag_player.source == ARENA
+			|| vm->visu.drag_container.drag_union.drag_player.source == UPLOAD)
 			ft_render_closing_cross(vm, xy);
 	}
 	return (0);

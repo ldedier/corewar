@@ -6,13 +6,13 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 18:15:22 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/18 18:31:13 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/05 16:32:59 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-int		ft_process_connect_status(int nb_bytes, t_vm *vm)
+static int	ft_process_connect_status(int nb_bytes, t_vm *vm)
 {
 	if (nb_bytes < (int)sizeof(t_flag))
 		return (1);
@@ -38,7 +38,7 @@ int		ft_process_connect_status(int nb_bytes, t_vm *vm)
 	}
 }
 
-int		ft_receive_connect_status(t_vm *vm)
+int			ft_receive_connect_status(t_vm *vm)
 {
 	int nb_bytes;
 

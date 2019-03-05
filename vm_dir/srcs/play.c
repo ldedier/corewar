@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2019/03/04 14:47:59 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/05 15:01:34 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,14 +103,13 @@ static int		next_process_action(t_vm *vm, t_process *proc)
 		return (SUCCESS);
 	if (proc->ins_cycle == 1)
 	{
-			proc->ins_bytelen = get_ins(vm->arena, ins, proc->pc, MEM_SIZE);
+		proc->ins_bytelen = get_ins(vm->arena, ins, proc->pc, 1);
 		op = (proc->ins_bytelen > 0) * ins->op->opcode;
-		if (f_ins[op](vm, proc, ins->params)
-				== FAILURE)
+		if (f_ins[op](vm, proc, ins->params) == FAILURE)
 			return (FAILURE);
 		move_forward(vm, proc);
 	}
-	else if (get_ins_nostore(vm->arena, ins, proc->pc, MEM_SIZE))
+	else if (get_ins(vm->arena, ins, proc->pc, 0))
 		proc->ins_cycle = ins->op->nb_cycles;
 	else if (++proc->pc == MEM_SIZE)
 		proc->pc -= MEM_SIZE;

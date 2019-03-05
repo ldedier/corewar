@@ -6,13 +6,13 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 23:57:26 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/26 21:34:13 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/05 19:52:30 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-int			ft_mark_as_instruction(t_vm *vm, SDL_Rect rect, t_process *process)
+static int	ft_mark_as_instruction(t_vm *vm, SDL_Rect rect, t_process *process)
 {
 	int color;
 
@@ -21,7 +21,7 @@ int			ft_mark_as_instruction(t_vm *vm, SDL_Rect rect, t_process *process)
 	return (0);
 }
 
-int			ft_render_process_instruction(t_vm *vm, t_process *process)
+static int	ft_render_process_instruction(t_vm *vm, t_process *process)
 {
 	int			i;
 	SDL_Rect	rect;
@@ -40,13 +40,14 @@ int			ft_render_process_instruction(t_vm *vm, t_process *process)
 	return (0);
 }
 
-int			ft_render_process(t_vm *vm, t_process *process)
+static int	ft_render_process(t_vm *vm, t_process *process)
 {
 	SDL_Rect		rect;
 	t_color_manager	c;
+	int				index;
 
-	vm->metarena[process->pc].process_color_index =
-		process->player->color.index;
+	index = process->player->color.index;
+	vm->metarena[process->pc].process_color_index = index;
 	c = ft_get_color(process->player->color.value);
 	rect = get_rect_from_pc(vm, process->pc);
 	SDL_FillRect(vm->visu.sdl.w_surface, &rect, c.color);

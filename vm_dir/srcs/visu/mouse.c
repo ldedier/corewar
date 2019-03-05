@@ -6,13 +6,13 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 21:58:19 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/18 21:53:56 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/05 21:27:56 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-void		ft_mouse_down(t_vm *vm, SDL_Event event)
+void			ft_mouse_down(t_vm *vm, SDL_Event event)
 {
 	t_ixy			xy;
 	t_vscrollbar	*vscrollbar;
@@ -32,7 +32,7 @@ void		ft_mouse_down(t_vm *vm, SDL_Event event)
 	}
 }
 
-void		ft_process_mouse_up(t_vm *vm, t_ixy xy)
+static void		ft_process_mouse_up(t_vm *vm, t_ixy xy)
 {
 	t_button	*button;
 
@@ -40,15 +40,15 @@ void		ft_process_mouse_up(t_vm *vm, t_ixy xy)
 		button->on_click(vm, button, xy);
 }
 
-void		ft_mouse_up(t_vm *vm, SDL_Event event)
+void			ft_mouse_up(t_vm *vm, SDL_Event event)
 {
 	t_ixy xy;
 
 	vm->visu.event_manager.pressed_button = NULL;
 	xy = new_ixy(event.button.x, event.button.y);
 	ft_drop_dragged_player(vm, xy);
-	if (event.button.button == SDL_BUTTON_LEFT &&
-		vm->visu.event_manager.enable_mouse_up)
+	if (event.button.button == SDL_BUTTON_LEFT
+			&& vm->visu.event_manager.enable_mouse_up)
 	{
 		vm->visu.event_manager.enable_mouse_up = 0;
 		ft_process_mouse_up(vm, xy);
@@ -56,7 +56,7 @@ void		ft_mouse_up(t_vm *vm, SDL_Event event)
 	ft_update_cursor(vm, xy);
 }
 
-void		ft_mouse_motion(t_vm *vm, SDL_Event event)
+void			ft_mouse_motion(t_vm *vm, SDL_Event event)
 {
 	t_ixy xy;
 
@@ -64,13 +64,13 @@ void		ft_mouse_motion(t_vm *vm, SDL_Event event)
 	ft_update_cursor(vm, xy);
 	vm->visu.drag_container.x = event.motion.x;
 	vm->visu.drag_container.y = event.motion.y;
-	if (vm->visu.drag_container.drag_enum == DRAG_VSCROLLBAR &&
-			vm->visu.drag_container.drag_union.vscrollbar)
+	if (vm->visu.drag_container.drag_enum == DRAG_VSCROLLBAR
+			&& vm->visu.drag_container.drag_union.vscrollbar)
 		ft_update_scrollbar(vm, vm->visu.drag_container.drag_union.vscrollbar);
 	ft_is_on_droppable(vm, xy, &(vm->visu.drop_container));
 }
 
-int			ft_process_button_pressed(t_vm *vm)
+int				ft_process_button_pressed(t_vm *vm)
 {
 	if (vm->visu.event_manager.pressed_button)
 		vm->visu.event_manager.pressed_button->on_press(vm,

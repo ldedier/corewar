@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 21:16:32 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/02 19:38:44 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/05 20:47:37 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ void	ft_render_play_lines(t_vm *vm)
 {
 	ft_render_horizontal_line_dashboard(vm, vm->visu.center.game_entries_h,
 			LINE_COL);
-	ft_render_horizontal_line_dashboard(vm, vm->visu.center.game_entries_h +
-			vm->visu.center.player_entries_h, LINE_COL);
+	ft_render_horizontal_line_dashboard(vm, vm->visu.center.game_entries_h
+			+ vm->visu.center.player_entries_h, LINE_COL);
 	if (vm->nb_players != 2)
-		ft_render_horizontal_line_dashboard(vm, vm->visu.center.game_entries_h +
-				vm->visu.center.list_player_entries_h, LINE_COL);
+		ft_render_horizontal_line_dashboard(vm, vm->visu.center.game_entries_h
+				+ vm->visu.center.list_player_entries_h, LINE_COL);
 	else
 		ft_render_horizontal_line_dashboard(vm,
 				vm->visu.center.live_breakdown_hp_y, LINE_COL);

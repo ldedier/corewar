@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 21:15:15 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/18 20:58:21 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/05 21:21:22 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,40 +14,44 @@
 
 void	ft_populate_upload_slot(t_vm *vm, t_visu *v)
 {
-	t_ixy xy;
+	t_ixy			xy;
+	t_vscrollbar	*scrollbar;
 
-	v->positions.upload_slot.player.x = v->center.dashboard_x +
-		v->center.upload_left;
-	v->positions.upload_slot.player.y = v->center.top_dashboard_height +
-		v->center.top_dashboard_fheight +
-		v->center.title_top + v->center.s_title_h + v->center.title_bottom;
-	xy.x = v->positions.upload_slot.player.x + v->center.player_w -
-			v->center.cross_border;
+	v->positions.upload_slot.player.x = v->center.dashboard_x
+		+ v->center.upload_left;
+	v->positions.upload_slot.player.y = v->center.top_dashboard_height
+		+ v->center.top_dashboard_fheight + v->center.title_top
+		+ v->center.s_title_h + v->center.title_bottom;
+	xy.x = v->positions.upload_slot.player.x + v->center.player_w
+		- v->center.cross_border;
 	xy.y = v->positions.upload_slot.player.y;
 	ft_populate_closing_button(vm,
 		&(v->positions.upload_slot.close), &vm->client.upload_player, xy);
-	v->positions.upload_slot.close.vscrollbar =
-		&vm->visu.players_list[UPLOAD].vscrollbar;
+	scrollbar = v->positions.upload_slot.close.vscrollbar;
+	scrollbar = &vm->visu.players_list[UPLOAD].vscrollbar;
 }
 
 void	ft_populate_slot_position(t_vm *vm, t_visu *v, int i, double *y)
 {
 	t_ixy	xy;
+	int		to_print;
 
-	v->positions.arena_slots[i].player.x = v->center.dashboard_x +
-		v->center.player_left -
-			(ft_to_print_scrollbar(v->players_list[ARENA].vscrollbar) ?
-				v->center.scrollbar_width / 2 : 0);
+	to_print = 0;
+	if (ft_to_print_scrollbar(v->players_list[ARENA].vscrollbar))
+		to_print = v->center.scrollbar_width / 2;
+	v->positions.arena_slots[i].player.x = v->center.dashboard_x
+		+ v->center.player_left - to_print;
 	v->positions.arena_slots[i].player.y = *y;
-	xy.x = v->positions.arena_slots[i].player.x +
-		v->center.player_w - v->center.cross_border;
+	xy.x = v->positions.arena_slots[i].player.x
+		+ v->center.player_w - v->center.cross_border;
 	xy.y = *y;
 	ft_populate_closing_button(vm, &(v->positions.arena_slots[i].close),
 			&(vm->player[i]), xy);
-	v->positions.local_slots[i].player.x = v->center.dashboard_mid_x +
-		v->center.player_left -
-			(ft_to_print_scrollbar(v->players_list[LOCAL].vscrollbar) ?
-				v->center.scrollbar_width / 2 : 0);
+	to_print = 0;
+	if (ft_to_print_scrollbar(v->players_list[LOCAL].vscrollbar))
+		to_print = v->center.scrollbar_width / 2;
+	v->positions.local_slots[i].player.x = v->center.dashboard_mid_x
+		+ v->center.player_left - to_print;
 	v->positions.local_slots[i].player.y = *y;
 	*y += v->center.player_h + v->center.player_padding;
 }
@@ -57,8 +61,8 @@ void	ft_populate_slots_positions(t_vm *vm, t_visu *v)
 	int		i;
 	double	y;
 
-	y = v->center.title_top + v->center.title_h +
-		v->center.title_bottom + v->center.player_top;
+	y = v->center.title_top + v->center.title_h
+		+ v->center.title_bottom + v->center.player_top;
 	i = 0;
 	while (i < MAX_PLAYERS)
 	{

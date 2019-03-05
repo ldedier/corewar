@@ -6,26 +6,26 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 20:18:31 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/18 21:52:57 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/05 19:27:13 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-int		ft_is_on_scrollbar_bar(t_ixy xy, t_vscrollbar vscrollbar)
+static int		ft_is_on_scrollbar_bar(t_ixy xy, t_vscrollbar vscrollbar)
 {
 	t_ixy scrollbar_bar_height_y;
 
 	if (!ft_to_print_scrollbar(vscrollbar))
 		return (0);
 	scrollbar_bar_height_y = ft_get_vscrollbar_bar_height_y(vscrollbar);
-	return (xy.x >= vscrollbar.pos.x &&
-			xy.x <= vscrollbar.pos.x + vscrollbar.bar_width &&
-			xy.y > scrollbar_bar_height_y.y &&
-			xy.y < scrollbar_bar_height_y.y + scrollbar_bar_height_y.x);
+	return (xy.x >= vscrollbar.pos.x
+			&& xy.x <= vscrollbar.pos.x + vscrollbar.bar_width
+			&& xy.y > scrollbar_bar_height_y.y
+			&& xy.y < scrollbar_bar_height_y.y + scrollbar_bar_height_y.x);
 }
 
-int		ft_is_on_scrollbars(t_vm *vm, t_ixy xy, t_drag_container *dc)
+int				ft_is_on_scrollbars(t_vm *vm, t_ixy xy, t_drag_container *dc)
 {
 	int i;
 

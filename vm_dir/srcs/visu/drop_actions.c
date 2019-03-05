@@ -6,23 +6,22 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 20:22:52 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/27 14:43:12 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/05 21:26:10 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-void	ft_remove_color_player(t_vm *vm, t_player *player)
+static void	ft_remove_color_player(t_vm *vm, t_player *player)
 {
 	player->relevant = 0;
 	set_color_sdl(vm, player);
 	player->relevant = 1;
 }
 
-void	ft_swap(t_vm *vm, t_drop_container *dc, t_player dragged_on_player)
+static void	ft_swap(t_vm *vm, t_drop_container *dc, t_player dragged_player)
 {
-	*(vm->visu.drag_container.drag_union.drag_player.player) =
-		dragged_on_player;
+	*(vm->visu.drag_container.drag_union.drag_player.player) = dragged_player;
 	if (vm->visu.drag_container.drag_union.drag_player.close)
 		vm->visu.drag_container.drag_union.drag_player.close->visible = 1;
 	if (dc->player == &vm->client.upload_player)
@@ -32,7 +31,7 @@ void	ft_swap(t_vm *vm, t_drop_container *dc, t_player dragged_on_player)
 				drag_union.drag_player.player);
 }
 
-void	ft_place(t_vm *vm, t_drop_container *dc)
+static void	ft_place(t_vm *vm, t_drop_container *dc)
 {
 	if (dc->player == &vm->client.upload_player)
 		ft_remove_color_player(vm, dc->player);
@@ -43,7 +42,7 @@ void	ft_place(t_vm *vm, t_drop_container *dc)
 	dc->close->visible = 1;
 }
 
-void	ft_place_or_swap(t_vm *vm, t_drop_container *dc)
+void		ft_place_or_swap(t_vm *vm, t_drop_container *dc)
 {
 	t_player	tmp;
 
@@ -56,7 +55,7 @@ void	ft_place_or_swap(t_vm *vm, t_drop_container *dc)
 	dispatch_players(vm, NULL);
 }
 
-void	ft_copy(t_vm *vm, t_drop_container *dc)
+void		ft_copy(t_vm *vm, t_drop_container *dc)
 {
 	int tmp;
 	int rel;

@@ -6,20 +6,21 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 21:15:42 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/30 18:36:18 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/05 20:37:56 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-void	ft_render_alt(t_vm *vm, int pc, int value)
+static void		ft_render_alt(t_vm *vm, int pc, int value)
 {
 	SDL_Rect		rect;
 	t_color_manager	cm;
+	double			altval;
 
 	rect = get_rect_from_pc(vm, pc);
-	cm = ft_interpolate_color(ALT_COLOR, BACKGROUND_COL, value /
-		(double)ALT_COLOR_VALUE);
+	altval = value / (double)ALT_COLOR_VALUE;
+	cm = ft_interpolate_color(ALT_COLOR, BACKGROUND_COL, altval);
 	rect.x--;
 	rect.w += 2;
 	SDL_FillRect(vm->visu.sdl.w_surface, &rect, cm.color);
@@ -27,7 +28,7 @@ void	ft_render_alt(t_vm *vm, int pc, int value)
 		vm->metarena[pc].alt_color--;
 }
 
-void	ft_render_alt_colors(t_vm *vm)
+void			ft_render_alt_colors(t_vm *vm)
 {
 	int i;
 	int j;

@@ -6,13 +6,13 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 21:28:15 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/02 16:19:38 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/05 17:17:33 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-void	ft_populate_closing_button(t_vm *vm, t_button *button,
+void		ft_populate_closing_button(t_vm *vm, t_button *button,
 			t_player *player, t_ixy xy)
 {
 	button->rect.x = xy.x;
@@ -30,8 +30,8 @@ void	ft_populate_closing_button(t_vm *vm, t_button *button,
 	button->phase = PHASE_INIT;
 }
 
-void	ft_init_button(t_button *button, SDL_Rect rect, SDL_Surface *surface,
-			int (*on_click)(t_vm *, t_button *, t_ixy xy))
+static void	ft_init_button(t_button *button, SDL_Rect rect,
+			SDL_Surface *surface, int (*on_click)(t_vm *, t_button *, t_ixy xy))
 {
 	button->rect = rect;
 	button->surface = surface;
@@ -44,23 +44,23 @@ void	ft_init_button(t_button *button, SDL_Rect rect, SDL_Surface *surface,
 	button->phase = PHASE_INIT;
 }
 
-void	ft_init_buttons_3(t_vm *vm, t_visu *visu)
+static void	ft_init_buttons_3(t_vm *vm, t_visu *visu)
 {
 	SDL_Rect	rect;
 
-	rect.x = visu->center.notif_panel_left +
-		3 * (visu->center.notif_panel_w) / 8.0;
-	rect.y = visu->center.notif_panel_top +
-		(3.0 * visu->center.notif_panel_h) / 4.0;
+	rect.x = visu->center.notif_panel_left
+		+ 3 * (visu->center.notif_panel_w) / 8.0;
+	rect.y = visu->center.notif_panel_top
+		+ (3.0 * visu->center.notif_panel_h) / 4.0;
 	rect.w = visu->center.notif_panel_w / 4.0;
 	rect.h = visu->center.notif_panel_h / 8.0;
 	ft_init_button(&(visu->buttons[OK_BUTTON]), rect,
 	vm->visu.sdl.images[OK], &ft_remove_notification);
 	visu->buttons[OK_BUTTON].visible = 0;
 	rect.x = visu->center.dashboard_x + visu->center.back_left;
-	rect.y = visu->center.game_entries_h + visu->center.player_entries_h +
-		visu->center.winner_top + visu->center.winner_height +
-			visu->center.winner_bottom;
+	rect.y = visu->center.game_entries_h + visu->center.player_entries_h
+		+ visu->center.winner_top + visu->center.winner_height
+		+ visu->center.winner_bottom;
 	rect.w = visu->center.back_width;
 	rect.h = visu->center.back_height;
 	ft_init_button(&(visu->buttons[BACK_BUTTON]), rect,
@@ -68,7 +68,7 @@ void	ft_init_buttons_3(t_vm *vm, t_visu *visu)
 	visu->buttons[BACK_BUTTON].phase = PHASE_PLAY;
 }
 
-void	ft_init_buttons_2(t_vm *vm, t_visu *visu)
+static void	ft_init_buttons_2(t_vm *vm, t_visu *visu)
 {
 	SDL_Rect	rect;
 
@@ -87,25 +87,25 @@ void	ft_init_buttons_2(t_vm *vm, t_visu *visu)
 	visu->buttons[CLEAN_ARENA_BUTTON].render = ft_render_trash_button;
 	visu->buttons[CLEAN_ARENA_BUTTON].enabled = vm->nb_players;
 	rect.w = visu->center.switch_w;
-	rect.x = visu->center.dashboard_x + visu->center.dashboard_mid_width +
-		visu->center.switch_left;
+	rect.x = visu->center.dashboard_x + visu->center.dashboard_mid_width
+		+ visu->center.switch_left;
 	ft_init_button(&(visu->buttons[SWITCH_LOCAL_BUTTON]), rect,
 	vm->visu.sdl.images[SWITCH_1], &switch_local);
 	visu->buttons[SWITCH_LOCAL_BUTTON].render = ft_render_switch_button;
 	ft_init_buttons_3(vm, visu);
 }
 
-void	ft_init_buttons(t_vm *vm, t_visu *visu)
+void		ft_init_buttons(t_vm *vm, t_visu *visu)
 {
 	SDL_Rect	rect;
 
 	rect.w = visu->center.player_h;
 	rect.h = visu->center.player_h;
-	rect.x = visu->center.dashboard_x + visu->center.upload_left +
-		visu->center.player_w + visu->center.upload_right;
-	rect.y = visu->center.top_dashboard_height +
-		visu->center.top_dashboard_fheight + visu->center.s_title_h +
-			visu->center.title_bottom + visu->center.title_top;
+	rect.x = visu->center.dashboard_x + visu->center.upload_left
+		+ visu->center.player_w + visu->center.upload_right;
+	rect.y = visu->center.top_dashboard_height
+		+ visu->center.top_dashboard_fheight + visu->center.s_title_h
+		+ visu->center.title_bottom + visu->center.title_top;
 	ft_init_button(&(visu->buttons[UPLOAD_BUTTON]), rect,
 		vm->visu.sdl.images[UL], &ft_upload);
 	visu->buttons[UPLOAD_BUTTON].enabled = 0;

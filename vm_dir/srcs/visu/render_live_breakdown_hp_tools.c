@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 22:26:38 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/20 00:58:04 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/05 20:23:18 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,9 @@ double	get_magic_ratio(t_vm *vm, int lives_player_1, int lives_player_2)
 	else if (!lives_player_1 && !lives_player_2)
 		return (0.5);
 	else
-		return (ft_fclamp(0.05, (double)lives_player_1 /
-					(double)(lives_player_1 + lives_player_2), 0.98));
+		return (ft_fclamp(0.05,
+			(double)lives_player_1 / (double)(lives_player_1 + lives_player_2),
+			0.98));
 }
 
 double	ft_fmoy(double val1, double val2)
@@ -56,12 +57,12 @@ double	ft_flerp(double val1, double val2, double t)
 
 void	populate_hp_player_title_rect(t_vm *vm, SDL_Rect *rect)
 {
-	rect->x = vm->visu.center.dashboard_x +
-		vm->visu.center.live_breakdown_hp_players_side;
-	rect->y = vm->visu.center.live_breakdown_hp_y +
-		vm->visu.center.live_breakdown_hp_title_top +
-		vm->visu.center.live_breakdown_title_h +
-		vm->visu.center.live_breakdown_hp_title_bottom;
+	rect->x = vm->visu.center.dashboard_x
+		+ vm->visu.center.live_breakdown_hp_players_side;
+	rect->y = vm->visu.center.live_breakdown_hp_y
+		+ vm->visu.center.live_breakdown_hp_title_top
+		+ vm->visu.center.live_breakdown_title_h
+		+ vm->visu.center.live_breakdown_hp_title_bottom;
 	rect->w = vm->visu.center.entry_max_w;
 	rect->h = vm->visu.center.live_breakdown_hp_players_h;
 }

@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/03 17:34:02 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/02 19:39:57 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/05 20:48:44 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ int		ft_render_player_entry(t_vm *vm, char *entry, char *value, int y)
 		free(value);
 		return (1);
 	}
-	rect.x = vm->visu.center.dashboard_x + vm->visu.center.entry_left +
-		rect.w + vm->visu.center.entry_space;
+	rect.x = vm->visu.center.dashboard_x + vm->visu.center.entry_left
+		+ rect.w + vm->visu.center.entry_space;
 	rect.w = vm->visu.center.entry_value_max_w;
 	if (ft_copy_str_to_surface_no_source(vm, value, rect, 0))
 	{
@@ -78,8 +78,8 @@ int		ft_render_player_entry_bloc(t_vm *vm, t_player player, int *y)
 
 	if (ft_render_player_title(vm, player, *y))
 		return (1);
-	*y += vm->visu.center.player_title_height +
-			vm->visu.center.player_title_bottom;
+	*y += vm->visu.center.player_title_height
+		+ vm->visu.center.player_title_bottom;
 	i = 0;
 	while (i < NB_PLAYER_ENTRIES)
 	{

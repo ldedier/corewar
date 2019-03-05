@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/03/02 16:35:22 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/05 14:44:29 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,31 @@
 # include "libft.h"
 
 # define NB_TYPES	3
+
+/*
+** STANDARD COLORS (FOREGROUND)
+*/
+
+# define COLF_BLACK		"\033[22;30m"
+# define COLF_RED		"\033[22;31m"
+# define COLF_GREEN		"\033[22;32m"
+# define COLF_BROWN		"\033[22;33m"
+# define COLF_BLUE		"\033[22;34m"
+# define COLF_MAGENTA	"\033[22;35m"
+# define COLF_CYAN		"\033[22;36m"
+# define COLF_GREY		"\033[22;37m"
+# define COLF_BBLACK	"\033[01;30m"
+# define COLF_BRED		"\033[01;31m"
+# define COLF_BGREEN	"\033[01;32m"
+# define COLF_BBROWN	"\033[01;33m"
+# define COLF_BBLUE		"\033[01;34m"
+# define COLF_BMAGENTA	"\033[01;35m"
+# define COLF_BCYAN		"\033[01;36m"
+# define COLF_BGREY		"\033[01;37m"
+# define COLF_OFF		"\033[0m"
+# define COL_CYCLES		COLF_BGREY
+# define COL_DEATH		COLF_BBLACK
+# define COL_RESIZE		COLF_BCYAN
 
 typedef struct		s_process
 {
@@ -83,19 +108,12 @@ typedef struct		s_vm
 	int				live;
 	int				issued_live;
 	t_color_msg		color;
-
-//	t_color_term	col;
 	t_player		*winner;
 }					t_vm;
 
 enum				e_return
 {
 	SUCCESS, FAILURE
-};
-
-enum				e_arg
-{
-	FIRST, SECOND, THIRD
 };
 
 enum				e_display
@@ -109,33 +127,9 @@ enum				e_console_display
 	MSG_LIVE, MSG_CYCLE, MSG_INS, MSG_DEATH, MSG_MOVE, COLOR
 };
 
-void				load_arena(t_vm *vm, t_process *proc, int index, int val);
-void				load_reg(t_vm *vm, t_process*proc, int num, int val);
-t_list				*add_process(t_vm *vm, int index, int start,
-															t_process *src);
-int					fight_cores(t_vm *vm, t_player *pl1, t_player *pl2);
-int					error_exit_msg(t_vm *vm, const char *error);
-int					check_type(int ac, char **av);
-int					check_header(t_vm *vm);
-void				init_vm(t_vm *vm, char **argv);
-void				clear_vm(t_vm *vm);
-int					corehub_port_and_address(t_vm *vm, int argc,
-						char **argv, int *cur);
-int					flags(t_vm *vm, int argc, char **argv);
-int					read_files(t_vm *vm);
-int					parse(t_vm *vm);
-void				init_players(t_vm *vm);
-void				dispatch_players_init(t_vm *vm);
-int					init_processes(t_vm *vm);
-void				init_local_players(t_vm *vm);
-void				update_nb_players(t_vm *vm);
-t_player			*duel(t_vm *vm, t_player *pl1, t_player *pl2);
-int					add_player_n(t_vm *vm, int argc, char **arg, int *cur);
-int					add_player(t_vm *vm);
-
 
 /*
-** DISPLAY
+** DISPLAY AND COLOR
 */
 
 void				display_player_intro(t_vm *vm, t_player *player);
@@ -147,37 +141,33 @@ void				display_ins(t_vm *vm, t_process *proc);
 void				display_last_live(t_vm *vm, t_process *proc);
 void				display_winner(t_vm *vm);
 void				display_registers(t_vm *vm);
-void				display(t_vm *vm, t_process *proc, int type);
 void				display_proc_ins(t_vm *vm, t_process *proc);
+int					error_exit_msg(t_vm *vm, const char *error);
 void				set_colors_term(t_vm *vm);
 
-
-void				display_ins_description(t_vm *vm, char *str, int opcode);
-void				display_live_player(t_vm *vm, int op_code);
-void				pl_death(t_vm *vm, t_process *proc);
-void				pl_live(t_vm *vm, t_process *proc);
-void				pl_victory(t_vm *vm, t_process *proc);
-void				pl_cycle(t_vm *vm, t_process *proc);
-void				pl_pc(t_vm *vm, t_process *proc);
-void				lives_turn(t_vm *vm, t_process *proc);
-void				cycles_to_autoresize(t_vm *vm, t_process *proc);
-void				resize(t_vm *vm, t_process *proc);
-void				cycle_end(t_vm *vm, t_process *proc);
-void				move_one(t_vm *vm, t_process *proc);
-void				cycle_nb(t_vm *vm, t_process *proc);
-void				last_live(t_vm *vm, t_process *proc);
-void				turn_player(t_vm *vm, t_process *proc);
 
 int					set_color_sdl(t_vm *vm, t_player *player);
 int					get_color_sdl(int index);
 
-
-
 /*
-** ENV
+** READ & PARSE
 */
 
-int					get_envar(char **env, char ****envvar);
+int					check_type(int ac, char **av);
+int					check_header(void);
+int					corehub_port_and_address(t_vm *vm, int argc,
+						char **argv, int *cur);
+int					flags(t_vm *vm, int argc, char **argv);
+int					read_files(t_vm *vm);
+
+/*
+** SET-UP AND CLEAR
+*/
+
+void				clear_vm(t_vm *vm);
+void				init_vm(t_vm *vm, char **argv);
+void				update_nb_players(t_vm *vm);
+int					mng_players(t_vm *v, int argc, char **argv, int *cur);
 
 /*
 ** INSTRUCTIONS
@@ -185,10 +175,6 @@ int					get_envar(char **env, char ****envvar);
 
 void				getval_param_dest(t_vm *vm, t_process *proc,
 												t_parameter *arg, int mod);
-void				loadval(t_vm *vm, t_process *proc,
-												t_parameter *arg, int val);
-void				set_argval(t_parameter *arg, int index, int size);
-int					no_ins(t_vm *vm, t_process *proc, t_parameter arg[3]);
 int					ins_live(t_vm *vm, t_process *proc, t_parameter arg[3]);
 int					ins_ld(t_vm *vm, t_process *proc, t_parameter arg[3]);
 int					ins_st(t_vm *vm, t_process *proc, t_parameter arg[3]);
@@ -205,36 +191,29 @@ int					ins_lld(t_vm *vm, t_process *proc, t_parameter arg[3]);
 int					ins_lldi(t_vm *vm, t_process *proc, t_parameter arg[3]);
 int					ins_lfork(t_vm *vm, t_process *proc, t_parameter arg[3]);
 int					ins_aff(t_vm *vm, t_process *proc, t_parameter arg[3]);
+void				load_arena(t_vm *vm, t_process *proc, int index, int val);
+void				load_reg(t_vm *vm, t_process*proc, int num, int val);
+int					no_ins(t_vm *vm, t_process *proc, t_parameter arg[3]);
 
 /*
 ** PLAY
 */
 
-int					play_one_cycle(t_vm *vm);
-int					handle_end_cycle(t_vm *vm, int *cycle);
-
+void				dispatch_players_init(t_vm *vm);
 void				dump(t_vm *vm);
+t_list				*add_process(t_vm *vm, int i, int start, t_process *src);
 int					kill_process(t_vm *vm, t_list **proc_lst, t_list **proc);
+int					init_processes(t_vm *vm);
+int					play_one_cycle(t_vm *vm);
+
 
 /*
 ** UTILS
 */
 
 int					mod(int val, int max);
-int					ft_pow(int n, int pow);
 int					getval(t_vm *vm, t_process *proc, t_parameter arg);
-t_process			*get_proc_index(t_list *lst, int index);
-int					is_reg(int num);
-int					list_size(t_vm *vm, t_list *l);
-
-/*
-** TEMP delete at end
-*/
-
-void				display_arena(unsigned char *arena);
-void				test_ins(t_vm *vm);
-void				set_processes(t_vm *vm, t_process **proc);
-void				test(t_vm vm);
+int					is_reg(int num); // supprimer apres norme instructions
 
 /*
 ** process visual loop and events
@@ -247,5 +226,6 @@ int					process_visu(t_vm *vm);
 */
 
 int					process_client(t_vm *vm);
+int					fight_cores(t_vm *vm, t_player *pl1, t_player *pl2);
 
 #endif
