@@ -38,6 +38,7 @@ int		ins_lldi(t_vm *vm, t_process *proc, t_parameter arg[3])
 		display_proc_ins(vm, proc);
 	if (vm->display.code & (1 << MSG_INS))
 		ft_printf("\n%6s | -> load from %d + %d = %d (with pc %d)", "",
-				arg[0].dest_value, arg[1].dest_value, arg[0].dest_value + arg[1].dest_value, ind);
+				arg[0].dest_value, arg[1].dest_value,
+				arg[0].dest_value + arg[1].dest_value, ind);
 	return (SUCCESS);
 }

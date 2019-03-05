@@ -17,15 +17,12 @@
 ** then stores the result in the register given in [arg 3].
 **
 ** Takes three arguments, third one is necessarily a REGISTER
-** Returns failure if register value is incorrect.
 */
 
 int		ins_or(t_vm *vm, t_process *proc, t_parameter arg[3])
 {
 	int		res;
 
-//	if (!is_reg(arg[2].value))
-//		return (FAILURE);
 	getval_param_dest(vm, proc, &arg[0], IDX_MOD);
 	getval_param_dest(vm, proc, &arg[1], IDX_MOD);
 	res = arg[0].dest_value | arg[1].dest_value;
@@ -34,7 +31,6 @@ int		ins_or(t_vm *vm, t_process *proc, t_parameter arg[3])
 	arg[0].retrieval_mode = 1;
 	arg[1].retrieval_mode = 1;
 	arg[2].retrieval_mode = 0;
-//	if (!vm->visu.active && (vm->display & (1 << MSG_INS)))
-		display_proc_ins(vm, proc); 
+	display_proc_ins(vm, proc);
 	return (SUCCESS);
 }

@@ -23,10 +23,9 @@ int		ins_lld(t_vm *vm, t_process *proc, t_parameter arg[3])
 {
 	getval_param_dest(vm, proc, &arg[0], 0);
 	load_reg(vm, proc, arg[1].value, arg[0].dest_value);
-	proc->carry = !arg[0].dest_value; // ou value?
+	proc->carry = !arg[0].dest_value;
 	arg[0].retrieval_mode = 1;
 	arg[1].retrieval_mode = 0;
-//if (!vm->visu.active && (vm->display & (1 << MSG_INS)))
-		display_proc_ins(vm, proc);
+	display_proc_ins(vm, proc);
 	return (SUCCESS);
 }
