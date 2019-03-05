@@ -6,14 +6,14 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 20:12:01 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/18 21:55:54 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/05 21:17:48 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-void	ft_populate_drag_container_player(t_drag_container *dc,
-			t_player *player, t_player_source source)
+void		ft_populate_drag_container_player(t_drag_container *dc,
+				t_player *player, t_player_source source)
 {
 	if (dc != NULL)
 	{
@@ -23,8 +23,8 @@ void	ft_populate_drag_container_player(t_drag_container *dc,
 	}
 }
 
-void	ft_populate_drag_container_player_slot(t_drag_container *dc,
-			t_player *player, t_slot *slot, t_player_source source)
+void		ft_populate_drag_container_player_slot(t_drag_container *dc,
+				t_player *player, t_slot *slot, t_player_source source)
 {
 	if (dc != NULL)
 	{
@@ -33,16 +33,16 @@ void	ft_populate_drag_container_player_slot(t_drag_container *dc,
 		slot->close.visible = 0;
 		dc->diff_x = dc->x - slot->player.x;
 		if (ft_to_print_scrollbar(dc->parent->players_list[source].vscrollbar))
-			dc->diff_y = dc->y - slot->player.y +
-				ft_get_scrolled_height(dc->parent->players_list[source].
+			dc->diff_y = dc->y - slot->player.y
+				+ ft_get_scrolled_height(dc->parent->players_list[source].
 					vscrollbar);
 		else
 			dc->diff_y = dc->y - slot->player.y;
 	}
 }
 
-void	ft_populate_drag_container_player_client_slot(t_drag_container *dc,
-			t_client_slot *client_slot, t_xy player_pos, int scrolled_h)
+void		ft_populate_drag_container_player_client_slot(t_drag_container *dc,
+				t_client_slot *client_slot, t_xy player_pos, int scrolled_h)
 {
 	if (dc != NULL)
 	{
@@ -54,8 +54,8 @@ void	ft_populate_drag_container_player_client_slot(t_drag_container *dc,
 	}
 }
 
-void	ft_populate_drag_container_player_download(t_drag_container *dc,
-			t_player *player, t_xy player_pos, int scrolled_h)
+void		ft_populate_drag_container_player_download(t_drag_container *dc,
+				t_player *player, t_xy player_pos, int scrolled_h)
 {
 	if (dc != NULL)
 	{
@@ -66,8 +66,8 @@ void	ft_populate_drag_container_player_download(t_drag_container *dc,
 	}
 }
 
-void	ft_populate_drag_container_vscrollbar(t_drag_container *dc,
-			t_vscrollbar *vscrollbar)
+void		ft_populate_drag_container_vscrollbar(t_drag_container *dc,
+				t_vscrollbar *vscrollbar)
 {
 	t_ixy xy;
 

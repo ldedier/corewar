@@ -6,13 +6,13 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/20 16:29:42 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/02 23:32:03 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/05 19:44:38 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-int		process_play(t_vm *vm, double nb_cycles_db)
+static int	process_play(t_vm *vm, double nb_cycles_db)
 {
 	static double	cycle_iterator = 0;
 	int				nb_cycles;
@@ -30,7 +30,7 @@ int		process_play(t_vm *vm, double nb_cycles_db)
 	return (0);
 }
 
-int		process(t_vm *vm)
+int			process(t_vm *vm)
 {
 	if (vm->visu.phase == PHASE_PLAY)
 	{

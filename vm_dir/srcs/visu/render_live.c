@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 23:46:12 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/02 23:30:43 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/05 20:17:46 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ int			ft_render_live(t_fade *fade, t_vm *vm)
 	SDL_Rect		rect;
 	t_color_manager	cm;
 
-	cm = ft_interpolate_color(fade->color, BACKGROUND_COL, fade->value /
-			(double)MAX_FADE);
+	cm = ft_interpolate_color(fade->color, BACKGROUND_COL,
+			fade->value / (double)MAX_FADE);
 	rect = get_rect_from_pc(vm, fade->pc);
 	SDL_FillRect(vm->visu.sdl.w_surface, &rect, fade->color);
 	if (!--fade->value)

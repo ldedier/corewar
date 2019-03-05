@@ -6,14 +6,14 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 19:16:22 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/18 20:56:25 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/05 21:21:35 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-void	ft_init_scrollbar_button(t_visu *v, t_button *button,
-		t_vscrollbar *vscrollbar)
+static void		ft_init_scrollbar_button(t_visu *v, t_button *button,
+					t_vscrollbar *vscrollbar)
 {
 	button->visible = 1;
 	button->enabled = 1;
@@ -31,15 +31,15 @@ void	ft_init_scrollbar_button(t_visu *v, t_button *button,
 	{
 		button->on_press = &ft_scroll_down;
 		button->surface = v->sdl.images[SCROLL_DOWN];
-		button->rect.y = vscrollbar->pos.y + vscrollbar->height -
-			button->rect.h;
+		button->rect.y = vscrollbar->pos.y + vscrollbar->height
+			- button->rect.h;
 	}
 	button->on_click = &nothing_on_click;
 	button->render = &ft_render_button;
 }
 
-void	ft_init_vscrollbar(t_visu *v, t_ixy xy, int height,
-			t_vscrollbar *vscrollbar)
+static void		ft_init_vscrollbar(t_visu *v, t_ixy xy, int height,
+					t_vscrollbar *vscrollbar)
 {
 	vscrollbar->pos = xy;
 	vscrollbar->height = height;
@@ -48,7 +48,7 @@ void	ft_init_vscrollbar(t_visu *v, t_ixy xy, int height,
 	ft_init_scrollbar_button(v, &vscrollbar->down_button, vscrollbar);
 }
 
-void	ft_init_client_players_list(t_vm *vm, t_visu *v, t_ixy xy)
+static void		ft_init_client_players_list(t_vm *vm, t_visu *v, t_ixy xy)
 {
 	ft_init_vscrollbar(v, xy, v->center.top_dashboard_height - xy.y,
 			&v->players_list[DOWNLOADS].vscrollbar);
@@ -62,7 +62,7 @@ void	ft_init_client_players_list(t_vm *vm, t_visu *v, t_ixy xy)
 	v->players_list[SERVER].vscrollbar.pos_x = v->center.dashboard_x;
 }
 
-void	ft_init_players_list(t_vm *vm, t_visu *v)
+void			ft_init_players_list(t_vm *vm, t_visu *v)
 {
 	int		i;
 	t_ixy	xy;
@@ -73,8 +73,8 @@ void	ft_init_players_list(t_vm *vm, t_visu *v)
 		v->players_list[i].source = i;
 		v->players_list[i].vscrollbar.relevant = 1;
 	}
-	xy.x = v->center.dashboard_x + v->center.dashboard_mid_width -
-		v->center.scrollbar_width;
+	xy.x = v->center.dashboard_x + v->center.dashboard_mid_width
+		- v->center.scrollbar_width;
 	xy.y = v->center.title_top + v->center.title_h + v->center.title_bottom;
 	ft_init_vscrollbar(v, xy, v->center.top_dashboard_height - xy.y,
 			&v->players_list[ARENA].vscrollbar);
@@ -86,12 +86,14 @@ void	ft_init_players_list(t_vm *vm, t_visu *v)
 	ft_init_client_players_list(vm, v, xy);
 }
 
-void	ft_init_vscrollbars_compressed_size(t_vm *vm, t_visu *v)
+void			ft_init_vscrollbars_compressed_size(t_vm *vm, t_visu *v)
 {
-	v->players_list[ARENA].vscrollbar.compressed_height =
-		ft_get_vscrollbar_compressed_height(v, MAX_PLAYERS);
-	v->players_list[LOCAL].vscrollbar.compressed_height =
-		ft_get_vscrollbar_compressed_height(v, vm->nb_players);
+	double	len;
+
+	len = ft_get_vscrollbar_compressed_height(v, MAX_PLAYERS);
+	v->players_list[ARENA].vscrollbar.compressed_height = len;
+	len = ft_get_vscrollbar_compressed_height(v, vm->nb_players);
+	v->players_list[LOCAL].vscrollbar.compressed_height = len;
 	if (vm->client.active)
 		ft_update_vscrollbar_server_compressed_size(vm, v);
 	ft_update_vscrollbar_downloads_compressed_size(vm, v);

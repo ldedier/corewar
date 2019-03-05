@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/11 17:47:31 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/28 17:17:15 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/05 21:15:43 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ int		ft_render_arena_players(t_vm *vm)
 {
 	int i;
 
-	ft_render_title(vm, ARENA, vm->visu.center.dashboard_x +
-			vm->visu.center.title_side, vm->visu.center.title_top);
+	ft_render_title(vm, ARENA, vm->visu.center.dashboard_x
+			+ vm->visu.center.title_side, vm->visu.center.title_top);
 	i = 0;
 	while (i < MAX_PLAYERS)
 	{
@@ -32,8 +32,8 @@ int		ft_render_local_local_players(t_vm *vm)
 {
 	int i;
 
-	ft_render_title(vm, LOCAL, vm->visu.center.dashboard_mid_x +
-		vm->visu.center.title_side, vm->visu.center.title_top);
+	ft_render_title(vm, LOCAL, vm->visu.center.dashboard_mid_x
+			+ vm->visu.center.title_side, vm->visu.center.title_top);
 	i = 0;
 	while (i < MAX_PLAYERS)
 	{
@@ -49,14 +49,16 @@ int		ft_render_local_downloads_players(t_vm *vm, t_visu *v)
 	t_list		*ptr;
 	t_player	*player;
 	t_xy		xy;
+	double		w;
 
-	ft_render_title(vm, DOWNLOADS, vm->visu.center.dashboard_mid_x +
-		vm->visu.center.title_side, vm->visu.center.title_top);
-	xy.x = v->center.dashboard_mid_x + v->center.player_left -
-		(ft_to_print_scrollbar(v->players_list[DOWNLOADS].vscrollbar) ?
-		v->center.scrollbar_width / 2 : 0);
-	xy.y = vm->visu.center.title_top + vm->visu.center.title_h +
-		vm->visu.center.title_bottom + vm->visu.center.player_top;
+	w = 0;
+	if (ft_to_print_scrollbar(v->players_list[DOWNLOADS].vscrollbar))
+		w = v->center.scrollbar_width / 2;
+	ft_render_title(vm, DOWNLOADS, vm->visu.center.dashboard_mid_x
+		+ vm->visu.center.title_side, vm->visu.center.title_top);
+	xy.x = v->center.dashboard_mid_x + v->center.player_left - w;
+	xy.y = vm->visu.center.title_top + vm->visu.center.title_h
+		+ vm->visu.center.title_bottom + vm->visu.center.player_top;
 	ptr = v->downloaded_players;
 	while (ptr != NULL)
 	{

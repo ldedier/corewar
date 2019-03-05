@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:15:00 by emuckens          #+#    #+#             */
-/*   Updated: 2019/03/04 15:30:31 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/05 22:20:57 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,27 @@ void			clear_vm(t_vm *vm)
 		ft_lstpop(&vm->killed_proc);
 	while (vm->live_ok)
 		ft_lstpop(&vm->live_ok);
+}
+
+/*
+** init_players function initializes each player's structures' parameters to
+** their default value
+*/
+
+static void		init_players(t_vm *vm)
+{
+	int		i;
+
+	i = -1;
+	while (++i < MAX_PLAYERS)
+	{
+		vm->player[i].relevant = 0;
+		vm->player[i].color.value = 1;
+		vm->player[i].last_live_cycle = 0;
+		vm->player[i].nb_proc = 0;
+		vm->player[i].num_type = -1;
+		ft_bzero(vm->player[i].aff_buf, MAX_AFF_LEN);
+	}
 }
 
 /*

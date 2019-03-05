@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 17:22:33 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/02/28 20:33:30 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/05 14:45:25 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,13 @@ int			check_type(int ac, char **av)
 ** illogical declarations.
 */
 
-int			check_header(t_vm *vm)
+int			check_header(void)
 {
 	if (MAX_PLAYERS != 4)
-		return (error_exit_msg(vm, ERR_HEADER));
+		return (0);
 	if (MEM_SIZE < MAX_PLAYERS * 1024)
-		return (error_exit_msg(vm, ERR_HEADER));
+		return (0);
 	if (CHAMP_MAX_SIZE > MEM_SIZE / MAX_PLAYERS)
-		return (error_exit_msg(vm, ERR_HEADER));
-	return (SUCCESS);
+		return (0);
+	return (1);
 }

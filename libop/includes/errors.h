@@ -6,14 +6,12 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/02/25 18:12:43 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/03/05 14:51:17 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ERRORS_H
 # define ERRORS_H
-
-# define NB_GAME_MSG 7
 
 /*
 ** ERROR MESSAGES
@@ -24,7 +22,7 @@
 # define WRG_DUMP "Wrong arguments after -dump"
 # define MAX_DUMP "[-dump nbr_cycle]: nbr_cycle can't exceed INT_MAX"
 # define WRG_N_FLAG "Wrong arguments after -n"
-# define MAX_N_FLAG "[-n nb] :  nb can't exceed INT_MAX or -INT_MAX"
+# define MAX_N_FLAG "[-n nb] : nb can't exceed INT_MAX or -INT_MAX"
 # define WRG_P_NUM "Trying to assign a player number already taken"
 # define FILE_ISSUE "Issue while handling file"
 # define MAX_P_NUM "Number of players exceeded max amount"
@@ -33,7 +31,7 @@
 # define ERR_HEADER "Header global error"
 # define RD_ERROR "Error while reading file"
 # define INIT_PROC_ERROR "Error while initializing player's process"
-# define ERR_SIZE "Champion comment too long (Max length 2048"
+# define ERR_SIZE "Champion comment too long (Max length 2048)"
 # define ERR_LX "Lexical error"
 # define ERR_LXC "Lexical error COMMENT"
 # define ERR_LXN "Lexical error NAME"

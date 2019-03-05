@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 21:43:09 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/18 23:45:03 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/05 19:58:23 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,16 @@ int		ft_process_render_button(t_vm *vm, SDL_Rect rect,
 
 int		ft_render_upload_button(t_vm *vm, t_button *this)
 {
-	if ((vm->visu.drag_container.drag_enum == DRAG_PLAYER &&
-				vm->visu.drop_container.player == &vm->client.upload_player) ||
-			(vm->client.upload_player.relevant == 1 &&
-				(vm->visu.drag_container.drag_enum != DRAG_PLAYER ||
-					vm->visu.drag_container.drag_union.drag_player.player
-						!= &vm->client.upload_player)))
+	int	dropped_player;
+
+	dropped_player = 0;
+	if (vm->visu.drop_container.player == &vm->client.upload_player)
+		dropped_player = 1;
+	if ((vm->visu.drag_container.drag_enum == DRAG_PLAYER && dropped_player)
+			|| (vm->client.upload_player.relevant == 1
+				&& (vm->visu.drag_container.drag_enum != DRAG_PLAYER
+					|| vm->visu.drag_container.drag_union.drag_player.player
+					!= &vm->client.upload_player)))
 		return (ft_process_render_button(vm, this->rect,
 					vm->visu.sdl.images[UL], this->vscrollbar));
 	else

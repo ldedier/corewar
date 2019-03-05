@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 19:10:55 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/18 23:39:13 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/05 20:56:30 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 void	ft_scroll_scrollbar(t_vscrollbar *vscrollbar, double value)
 {
-	vscrollbar->state = ft_fclamp(0,
-			vscrollbar->state - value *
-			(double)vscrollbar->height / (double)vscrollbar->compressed_height,
-			1);
+	double val;
+
+	val = value * (double)vscrollbar->height;
+	val /= (double)vscrollbar->compressed_height;
+	vscrollbar->state = ft_fclamp(0, vscrollbar->state - val, 1);
 }
 
 void	ft_scroll_up(t_vm *vm, t_button *button)

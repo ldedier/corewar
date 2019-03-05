@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 18:59:39 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/18 23:38:43 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/05 20:54:56 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ int		ft_blit_scaled_scrollbar(t_sdl *sdl, SDL_Surface *from, SDL_Rect rect,
 		return (0);
 	from_rect.w = rect.w;
 	from_rect.x = 0;
-	from_rect.h = ft_min(rect.h, (vscrollbar.pos.y + vscrollbar.height -
-			true_y));
+	from_rect.h = ft_min(rect.h, (vscrollbar.pos.y + vscrollbar.height
+		- true_y));
 	from_rect.y = ft_max(0, vscrollbar.pos.y - true_y);
 	return (ft_process_blit_scaled_scrollbar(sdl, rect,
 		from_rect, scrolled_height));
@@ -78,16 +78,16 @@ int		ft_fill_rect_scrollbar(SDL_Surface *from, SDL_Rect *rect,
 	}
 	scrolled_height = ft_get_scrolled_height(vscrollbar);
 	true_y = rect->y - scrolled_height;
-	if (true_y > vscrollbar.pos.y + vscrollbar.height ||
-		true_y + rect->h < vscrollbar.pos.y)
+	if (true_y > vscrollbar.pos.y + vscrollbar.height
+			|| true_y + rect->h < vscrollbar.pos.y)
 		return (0);
 	from_rect.w = rect->w;
 	from_rect.x = rect->x;
 	if (vscrollbar.pos.y > true_y)
 		from_rect.h = rect->h - (vscrollbar.pos.y - true_y);
 	else
-		from_rect.h = ft_min(rect->h, (vscrollbar.pos.y + vscrollbar.height -
-			true_y));
+		from_rect.h = ft_min(rect->h, (vscrollbar.pos.y + vscrollbar.height
+					- true_y));
 	from_rect.y = ft_max(vscrollbar.pos.y, rect->y - scrolled_height);
 	SDL_FillRect(from, &from_rect, color);
 	return (0);

@@ -6,19 +6,19 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/31 19:39:37 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/18 22:40:59 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/05 20:28:14 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-void	ft_set_notification(t_vm *vm, int image_index)
+void		ft_set_notification(t_vm *vm, int image_index)
 {
 	vm->visu.notification.image_index = image_index;
 	vm->visu.buttons[OK_BUTTON].visible = 1;
 }
 
-int		ft_remove_notification(t_vm *vm, t_button *button, t_ixy xy)
+int			ft_remove_notification(t_vm *vm, t_button *button, t_ixy xy)
 {
 	(void)xy;
 	(void)button;
@@ -27,7 +27,7 @@ int		ft_remove_notification(t_vm *vm, t_button *button, t_ixy xy)
 	return (0);
 }
 
-void	ft_apply_color_filter(SDL_Surface *surface, int color)
+static void	ft_apply_color_filter(SDL_Surface *surface, int color)
 {
 	SDL_Surface *s;
 
@@ -38,7 +38,7 @@ void	ft_apply_color_filter(SDL_Surface *surface, int color)
 	SDL_FreeSurface(s);
 }
 
-int		ft_render_notification_panel(t_vm *vm, SDL_Rect notif_rect)
+static int	ft_render_notification_panel(t_vm *vm, SDL_Rect notif_rect)
 {
 	SDL_BlitScaled(vm->visu.sdl.images[vm->visu.notification.image_index], NULL,
 		vm->visu.sdl.w_surface, &notif_rect);
@@ -46,7 +46,7 @@ int		ft_render_notification_panel(t_vm *vm, SDL_Rect notif_rect)
 	return (0);
 }
 
-int		ft_render_notification(t_vm *vm)
+int			ft_render_notification(t_vm *vm)
 {
 	SDL_Rect rect;
 

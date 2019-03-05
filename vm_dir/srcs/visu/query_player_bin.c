@@ -6,13 +6,13 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/31 18:00:35 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/19 00:18:34 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/05 21:28:23 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-int		ft_write_to_downloads(t_player *player)
+static int		ft_write_to_downloads(t_player *player)
 {
 	int		fd;
 	char	*filename;
@@ -31,7 +31,8 @@ int		ft_write_to_downloads(t_player *player)
 	return (0);
 }
 
-int		ft_process_process_player_bin_info(t_vm *vm, t_player *player, int i)
+static int		ft_process_process_player_bin_info(t_vm *vm, t_player *player,
+					int i)
 {
 	if (ft_process_read_player(&(vm->client.buffer[i]),
 				player->file_len, player))
@@ -47,7 +48,7 @@ int		ft_process_process_player_bin_info(t_vm *vm, t_player *player, int i)
 	return (0);
 }
 
-int		ft_process_player_bin_info(t_vm *vm, int nb_bytes)
+static int		ft_process_player_bin_info(t_vm *vm, int nb_bytes)
 {
 	int			i;
 	t_flag		flag;
@@ -71,7 +72,7 @@ int		ft_process_player_bin_info(t_vm *vm, int nb_bytes)
 	return (ft_process_process_player_bin_info(vm, player, i));
 }
 
-int		ft_receive_player_bin_info(t_vm *vm)
+static int		ft_receive_player_bin_info(t_vm *vm)
 {
 	int nb_bytes;
 
@@ -95,7 +96,7 @@ int		ft_receive_player_bin_info(t_vm *vm)
 	}
 }
 
-int		ft_query_player_bin(t_vm *vm, t_client_slot *cs)
+int				ft_query_player_bin(t_vm *vm, t_client_slot *cs)
 {
 	int		total_size;
 	int		size;

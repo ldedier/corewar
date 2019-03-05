@@ -6,13 +6,13 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 18:14:23 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/18 18:14:45 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/05 16:42:24 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-int		ft_download(t_vm *vm, t_button *this, t_ixy xy)
+static int	ft_download(t_vm *vm, t_button *this, t_ixy xy)
 {
 	(void)xy;
 	(void)vm;
@@ -27,8 +27,8 @@ int		ft_download(t_vm *vm, t_button *this, t_ixy xy)
 	return (0);
 }
 
-void	ft_populate_download_button(t_vm *vm, t_client_slot *client_slot,
-		t_button *button)
+void		ft_populate_download_button(t_vm *vm, t_client_slot *client_slot,
+				t_button *button)
 {
 	button->visible = 1;
 	button->enabled = 1;

@@ -6,32 +6,12 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:20:21 by emuckens          #+#    #+#             */
-/*   Updated: 2019/03/02 16:29:56 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/05 22:20:43 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-/*
-** init_players function initializes each player's structures' parameters to
-** their default value
-*/
-
-void			init_players(t_vm *vm)
-{
-	int		i;
-
-	i = -1;
-	while (++i < MAX_PLAYERS)
-	{
-		vm->player[i].relevant = 0;
-		vm->player[i].color.value = 1;
-		vm->player[i].last_live_cycle = 0;
-		vm->player[i].nb_proc = 0;
-		vm->player[i].num_type = -1;
-		ft_bzero(vm->player[i].aff_buf, MAX_AFF_LEN);
-	}
-}
 
 /*
 ** update_nb_players updates the number of players currently in the arena
@@ -60,20 +40,22 @@ void			update_nb_players(t_vm *vm)
 
 void			dispatch_players_init(t_vm *vm)
 {
-	static int	index;
-	static int	i = -1;
+	int	index;
+	int	i;
 	int			j;
 	int			start;
 
+	i = -1;
+	index = 0;
 	update_nb_players(vm);
 	ft_printf("%s", vm->visu.active ? "" : "Introducing contestants...");
 	while (++i < MAX_PLAYERS)
 	{
 		set_color_sdl(vm, &vm->player[i]);
-		if (vm->player[i].relevant && ++index)
+		if (vm->player[i].relevant && ++index && (j = -1))
 		{
-			j = -1;
-			display_player_intro(vm, &vm->player[i]);
+			if (!vm->visu.active)
+				display_player_intro(vm, &vm->player[i]);
 			start = (MEM_SIZE / vm->nb_players) * (index - 1);
 			while (++j < vm->player[i].algo_len)
 			{
@@ -92,7 +74,7 @@ void			dispatch_players_init(t_vm *vm)
 ** specified with the [-n] flag.
 */
 
-int				add_player_n(t_vm *vm, int argc, char **argv, int *cur)
+static int		add_player_n(t_vm *vm, int argc, char **argv, int *cur)
 {
 	int				i;
 
@@ -126,7 +108,7 @@ int				add_player_n(t_vm *vm, int argc, char **argv, int *cur)
 ** number specified
 */
 
-int				add_player(t_vm *vm)
+static int		add_player(t_vm *vm)
 {
 	int			i;
 	static int	nb;
@@ -142,4 +124,21 @@ int				add_player(t_vm *vm)
 		}
 	}
 	return (nb);
+}
+
+/*
+** mng_players static function manages the case where the current argument
+** describes a player
+*/
+
+int				mng_players(t_vm *vm, int argc, char **argv, int *cur)
+{
+	if (ft_strcmp("-n", argv[*cur]) == 0)
+		add_player_n(vm, argc, argv, cur);
+	else
+		vm->player[vm->nb_players].num = add_player(vm);
+	vm->player[vm->nb_players].cor_name = argv[*cur];
+	if (++vm->nb_players > MAX_PLAYERS)
+		return (error_exit_msg(vm, MAX_P_NUM));
+	return (0);
 }

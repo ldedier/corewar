@@ -6,12 +6,44 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 16:06:35 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/26 16:31:30 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/05 18:41:19 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
+/*
+static void			dispatch_players_nodisplay(t_vm *vm)
+{
+	static int	index;
+	int	i;
+	int			j;
+	int			start;
 
+	i = -1;
+	update_nb_players(vm);
+	ft_printf("%s", vm->visu.active ? "" : "Introducing contestants...");
+	while (++i < MAX_PLAYERS)
+	{
+		set_color_sdl(vm, &vm->player[i]);
+		if (vm->player[i].relevant && ++index && (j = -1))
+		{
+			j = -1;
+			if (!vm->visu.active) 
+				display_player_intro(vm, &vm->player[i]);
+			start = (MEM_SIZE / vm->nb_players) * (index - 1);
+			while (++j < vm->player[i].algo_len)
+			{
+				vm->metarena[start + j].color_index = vm->player[i].color.index;
+				*(vm->arena + start + j) = vm->player[i].algo[j];
+			}
+		}
+		vm->local_player[i] = vm->player[i];
+		vm->local_player[i].color.value = 1;
+		vm->local_player[i].num = vm->nb;
+	}
+}
+
+*/
 /*
 ** Generates and runs through game for 2 players, to communicate result to
 ** server for one-on-one match and subsequent score computation

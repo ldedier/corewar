@@ -6,13 +6,13 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 18:07:20 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/19 21:24:27 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/05 16:27:57 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-int		ft_process_event(int nb_bytes, t_vm *vm)
+static int	ft_process_event(int nb_bytes, t_vm *vm)
 {
 	t_flag flag;
 
@@ -24,7 +24,7 @@ int		ft_process_event(int nb_bytes, t_vm *vm)
 	return (0);
 }
 
-int		ft_process_client_events(t_vm *vm)
+int			ft_process_client_events(t_vm *vm)
 {
 	int nb_bytes;
 

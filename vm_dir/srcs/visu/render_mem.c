@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/11 17:08:36 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/02 19:30:36 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/05 20:25:25 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,15 @@ SDL_Rect	get_rect_from_pc(t_vm *vm, int pc)
 
 	x = pc % MEM_COLS;
 	y = pc / MEM_COLS;
-	res.w = vm->visu.center.glyph_width * 2 + vm->visu.center.x_diff_byte +
-		vm->visu.center.x_diff;
+	res.w = vm->visu.center.glyph_width * 2 + vm->visu.center.x_diff_byte
+		+ vm->visu.center.x_diff;
 	res.h = vm->visu.center.glyph_height + vm->visu.center.y_diff;
 	res.x = vm->visu.center.left_margin + x * (vm->visu.center.glyph_width * 2
-			+ vm->visu.center.x_diff_byte + vm->visu.center.x_diff) -
-		vm->visu.center.x_diff / 2.0;
-	res.y = vm->visu.center.top_margin + y * (vm->visu.center.glyph_height +
-			vm->visu.center.y_diff) - vm->visu.center.y_diff / 2.0;
+			+ vm->visu.center.x_diff_byte + vm->visu.center.x_diff)
+		- vm->visu.center.x_diff / 2.0;
+	res.y = vm->visu.center.top_margin + y
+		* (vm->visu.center.glyph_height + vm->visu.center.y_diff)
+		- vm->visu.center.y_diff / 2.0;
 	return (res);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 20:48:24 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/19 19:20:23 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/05 21:21:07 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,17 @@
 
 void	ft_init_center_online(t_visu *visu, t_center *c)
 {
+	double side;
+
 	c->s_title_side = S_TITLE_SIDE * visu->react.w_scale;
 	c->s_title_h = S_TITLE_HEIGHT * visu->react.h_scale;
 	c->upload_left = UPLOAD_LEFT * visu->react.w_scale;
 	c->upload_right = UPLOAD_RIGHT * visu->react.w_scale;
 	c->sort_padding = SORT_PADDING * visu->react.w_scale;
 	c->sort_score_right = SORT_SCORE_RIGHT * visu->react.w_scale;
-	c->toolbar_blank = c->dashboard_width - ((c->player_h * 3) + c->player_w +
-			c->upload_right + c->upload_left + c->sort_padding +
-			c->sort_score_right);
+	c->toolbar_blank = c->dashboard_width - ((c->player_h * 3) + c->player_w
+			+ c->upload_right + c->upload_left + c->sort_padding
+			+ c->sort_score_right);
 	c->toolbar_bottom = TOOLBAR_BOTTOM * visu->react.h_scale;
 	c->labscore_left = LABSCORE_LEFT * visu->react.w_scale;
 	c->labscore_width = LABSCORE_WIDTH * visu->react.w_scale;
@@ -31,13 +33,16 @@ void	ft_init_center_online(t_visu *visu, t_center *c)
 	c->score_right = SCORE_RIGHT * visu->react.w_scale;
 	c->scrollbar_width = SCROLLBAR_WIDTH * visu->react.w_scale;
 	c->scrollbar_buttons_height = SCROLLBAR_BTTN_HEIGHT * visu->react.h_scale;
-	c->download_side = (c->dashboard_width - (c->labscore_left +
-				c->labscore_width + c->labscore_right + c->score_width +
-				c->score_right + c->player_w + c->player_h)) / 2.0;
+	side = c->dashboard_width - (c->labscore_left + c->labscore_width
+			+ c->labscore_right + c->score_width + c->score_right + c->player_w
+			+ c->player_h);
+	c->download_side = side / 2.0;
 }
 
 void	ft_init_center_players(t_visu *visu, t_center *c)
 {
+	double player_h;
+
 	c->title_top = TITLE_BORDER_TOP * visu->react.h_scale;
 	c->title_bottom = TITLE_BORDER_BOTTOM * visu->react.h_scale;
 	c->title_side = TITLE_BORDER_SIDE * visu->react.w_scale;
@@ -51,13 +56,12 @@ void	ft_init_center_players(t_visu *visu, t_center *c)
 			visu->react.h_scale);
 	c->cross_border = CROSS_BORDER * ft_fmin(visu->react.w_scale,
 			visu->react.h_scale);
-	c->player_w = (visu->dim.width - c->dashboard_mid_x) - (c->player_left +
-			c->player_right);
-	c->player_h = (c->top_dashboard_height - (double)(c->title_top +
-				c->title_h +
-				c->title_bottom + c->player_top + ((INIT_MAX_PLAYERS - 1) *
-					(c->player_padding)) + c->player_bottom)) /
-		(double)INIT_MAX_PLAYERS;
+	c->player_w = (visu->dim.width - c->dashboard_mid_x)
+		- (c->player_left + c->player_right);
+	player_h = (double)(c->title_top + c->title_h + c->title_bottom);
+	player_h += (double)((INIT_MAX_PLAYERS - 1) * c->player_padding);
+	player_h += (double)c->player_top + c->player_bottom;
+	c->player_h = player_h / (double)INIT_MAX_PLAYERS;
 }
 
 void	ft_init_center_fight(t_visu *visu, t_center *c)
@@ -84,9 +88,11 @@ void	ft_init_center_footer(t_visu *visu, t_center *c)
 
 void	ft_init_center_spec(t_visu *visu, t_center *c)
 {
+	double w;
+
 	c->spec_vborder = SPEC_VBORDER * visu->react.h_scale;
-	c->switch_w = (TOP_DASHBOARD_FHEIGHT - (2 * SPEC_VBORDER)) * 2 *
-		visu->react.w_scale;
+	w = (TOP_DASHBOARD_FHEIGHT - (2 * SPEC_VBORDER)) * 2 * visu->react.w_scale;
+	c->switch_w = w;
 	c->spec_h = c->top_dashboard_fheight - c->spec_vborder * 2;
 	c->spec_left = (c->dashboard_mid_width - c->spec_h) / 2.0;
 	c->switch_left = (c->dashboard_mid_width - c->switch_w) / 2.0;
