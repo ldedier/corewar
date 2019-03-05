@@ -13,7 +13,8 @@
 #include "../includes/vm.h"
 
 /*
-** retrieve player if number in parameter has been attributed
+** get_player_num function retrieves the player if the number given in
+** the parameter has been attributed
 */
 
 static t_player	*get_player_num(t_vm *vm, t_list *lst, int num)
@@ -22,7 +23,6 @@ static t_player	*get_player_num(t_vm *vm, t_list *lst, int num)
 
 	(void)lst;
 	i = -1;
-
 	while (++i < MAX_PLAYERS)
 		if (vm->player[i].num == num && vm->player[i].relevant)
 			return (&vm->player[i]);

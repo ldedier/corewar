@@ -17,7 +17,6 @@
 ** then stores the result in the register given in [arg 3].
 **
 ** Takes three arguments, third one is necessarily a REGISTER
-** Returns failure if register value is incorrect.
 */
 
 int		ins_and(t_vm *vm, t_process *proc, t_parameter arg[3])
@@ -31,8 +30,7 @@ int		ins_and(t_vm *vm, t_process *proc, t_parameter arg[3])
 	proc->carry = !res;
 	arg[0].retrieval_mode = 1;
 	arg[1].retrieval_mode = 1;
-//	arg[2].retrieval_mode = 2;
-//	if (!vm->visu.active && (vm->display & (1 << MSG_INS)))
-		display_proc_ins(vm, proc);
+	arg[2].retrieval_mode = 0;
+	display_proc_ins(vm, proc);
 	return (SUCCESS);
 }

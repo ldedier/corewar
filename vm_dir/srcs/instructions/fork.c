@@ -22,7 +22,8 @@
 
 int		ins_fork(t_vm *vm, t_process *proc, t_parameter arg[3])
 {
-	add_process(vm, 0, 0, proc);
+	if (!add_process(vm, 0, 0, proc))
+		return (FAILURE);
 	getval_param_dest(vm, proc, &arg[0], IDX_MOD);
 	arg[0].retrieval_mode = 0;
 	display_proc_ins(vm, proc);

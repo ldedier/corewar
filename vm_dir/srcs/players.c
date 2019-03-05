@@ -29,7 +29,7 @@ void			init_players(t_vm *vm)
 		vm->player[i].last_live_cycle = 0;
 		vm->player[i].nb_proc = 0;
 		vm->player[i].num_type = -1;
-		ft_bzero(vm->player[i].aff_buf, MAX_AFF_LEN);
+		ft_bzero(vm->player[i].aff_buf, MAX_AFF_LEN + 1);
 	}
 }
 

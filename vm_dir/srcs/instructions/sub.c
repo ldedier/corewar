@@ -17,15 +17,12 @@
 ** and stores the result in register [arg 3].
 **
 ** Takes three arguments, all necessarily REGISTERS
-** Returns failure if register values are incorrect.
 */
 
 int		ins_sub(t_vm *vm, t_process *proc, t_parameter arg[3])
 {
 	int	sub;
 
-	if (!is_reg(arg[0].value) || !is_reg(arg[1].value) || !is_reg(arg[2].value))
-		return (FAILURE);
 	sub = proc->reg[arg[0].value - 1] - proc->reg[arg[1].value - 1];
 	load_reg(vm, proc, arg[2].value, sub);
 	arg[0].retrieval_mode = 0;

@@ -21,13 +21,10 @@
 
 int			ins_ld(t_vm *vm, t_process *proc, t_parameter arg[3])
 {
-
 	arg[0].retrieval_mode = 1;
 	getval_param_dest(vm, proc, &arg[0], IDX_MOD);
-	display_proc_ins(vm, proc); 
+	display_proc_ins(vm, proc);
 	proc->reg[arg[1].value - 1] = arg[0].dest_value;
-//	ft_printf("arg 0 val = %d dest val = %d 1 val = %d dest val = %d\n", arg[0].value, arg[0].dest_value, arg[1].value, arg[1].dest_value);
 	proc->carry = !arg[0].dest_value;
-//	proc->carry = !arg[0].value;
 	return (SUCCESS);
 }

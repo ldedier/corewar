@@ -18,7 +18,7 @@ void		display_proc_ins(t_vm *vm, t_process *proc)
 	int arg_type;
 	int	val;
 
-	if (!(vm->display.code & (1 << MSG_INS)))
+	if (!(vm->display.code & (1 << MSG_INS)) || vm->visu.active)
 		return ;
 	i = -1;
 	ft_printf("\nP %4d | %s", proc->nb, proc->pending_ins.op->instruction_name);

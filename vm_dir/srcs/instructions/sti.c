@@ -22,13 +22,12 @@
 int		ins_sti(t_vm *vm, t_process *proc, t_parameter arg[3])
 {
 	int dest;
+
 	getval_param_dest(vm, proc, &arg[0], arg[0].value);
 	getval_param_dest(vm, proc, &arg[1], arg[1].value);
 	getval_param_dest(vm, proc, &arg[2], arg[2].value);
-
 	arg[1].retrieval_mode = 1;
 	arg[2].retrieval_mode = 1;
-//	ft_printf("ocp = %3x\n", proc->pending_ins.ocp);
 	display_proc_ins(vm, proc);
 	dest = (arg[1].dest_value + arg[2].dest_value);
 	if (!vm->visu.active && (vm->display.code & (1 << MSG_INS)))
