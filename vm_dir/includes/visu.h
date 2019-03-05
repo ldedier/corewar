@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/02 21:41:52 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/05 13:54:15 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,16 @@
 # include "player.h"
 # include "color.h"
 # include "op.h"
+
+/*
+** PLAYER COLORS
+*/
+# define COL_BLUE		0x0D47A1
+# define COL_GREEN		0x21F500
+# define COL_BROWN		0xFFD707
+# define COL_BBLUE		0x5DADE2
+# define COL_RED		0xFF0461
+# define COL_OFF		0xFFFFFF
 
 # define INIT_MAX_PLAYERS		4
 # define INIT_CYCLES_PER_TURN	1

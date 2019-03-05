@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/03/02 16:35:22 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/05 13:54:21 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,32 @@
 # include "libft.h"
 
 # define NB_TYPES	3
+
+/*
+** STANDARD COLORS (FOREGROUND)
+*/
+
+# define COLF_BLACK		"\033[22;30m"
+# define COLF_RED		"\033[22;31m"
+# define COLF_GREEN		"\033[22;32m"
+# define COLF_BROWN		"\033[22;33m"
+# define COLF_BLUE		"\033[22;34m"
+# define COLF_MAGENTA	"\033[22;35m"
+# define COLF_CYAN		"\033[22;36m"
+# define COLF_GREY		"\033[22;37m"
+# define COLF_BBLACK	"\033[01;30m"
+# define COLF_BRED		"\033[01;31m"
+# define COLF_BGREEN	"\033[01;32m"
+# define COLF_BBROWN	"\033[01;33m"
+# define COLF_BBLUE		"\033[01;34m"
+# define COLF_BMAGENTA	"\033[01;35m"
+# define COLF_BCYAN		"\033[01;36m"
+# define COLF_BGREY		"\033[01;37m"
+# define COLF_OFF		"\033[0m"
+
+# define COL_CYCLES		COLF_BGREY
+# define COL_DEATH		COLF_BBLACK
+# define COL_RESIZE		COLF_BCYAN
 
 typedef struct		s_process
 {
