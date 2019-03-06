@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/03/05 14:44:29 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/06 14:30:31 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,7 @@ void				update_nb_players(t_vm *vm);
 int					mng_players(t_vm *v, int argc, char **argv, int *cur);
 
 /*
-** INSTRUCTIONS
+** INSTRUCTIONS, LOADING AND STORING
 */
 
 void				getval_param_dest(t_vm *vm, t_process *proc,
@@ -206,14 +206,11 @@ int					kill_process(t_vm *vm, t_list **proc_lst, t_list **proc);
 int					init_processes(t_vm *vm);
 int					play_one_cycle(t_vm *vm);
 
-
 /*
 ** UTILS
 */
 
 int					mod(int val, int max);
-int					getval(t_vm *vm, t_process *proc, t_parameter arg);
-int					is_reg(int num); // supprimer apres norme instructions
 
 /*
 ** process visual loop and events
