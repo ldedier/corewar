@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/08 00:08:01 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/04 17:16:34 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/06 17:11:57 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,9 @@ int		ft_encode_asm(int fd, t_env *e)
 
 	i = 0;
 	ft_bzero(&instruction, sizeof(t_instruction));
-//	ft_printf("check algo = %s\n", e->player.algo);
-//	instruction.op = NULL;
 	while (((ret = read_ins(e->player.algo, &instruction, &i,
 			e->player.algo_len))) && i <= (unsigned int)e->player.algo_len)
 	{
-//		ft_printf("ret = %d\n", ret);
 		instruction.is_labeled = 0;
 		instruction.label = NULL;
 		if (ft_add_to_list_back(&e->champ.instructions, &instruction,
@@ -33,10 +30,6 @@ int		ft_encode_asm(int fd, t_env *e)
 		{
 			return (-1);
 		}
-//		i += ret;
-//		if (i >= MEM_SIZE)
-//			i -= MEM_SIZE;
-//		ft_printf("instruction %d OK\n", instruction.op->opcode);
 		instruction.op = NULL;
 		instruction.address = i;
 	}

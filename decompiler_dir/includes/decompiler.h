@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:52:19 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/04 14:57:23 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/06 17:12:31 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ typedef struct		s_env
 }					t_env;
 
 int					ft_init_env(t_env *e, int argc, char **argv);
-int					ft_read_ins(char *src, t_instruction *ins, unsigned int *index, unsigned int mod);
+int					ft_read_ins(char *src, t_instruction *ins,
+						unsigned int *index, unsigned int mod);
 int					ft_parse_cor(char *filename, t_env *e);
 int					get_next_chunk(int fd, t_chunk *chunk);
 int					ft_encode_to_assembly(t_env *e);
