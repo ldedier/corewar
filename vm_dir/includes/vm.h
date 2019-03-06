@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/03/06 14:30:31 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/06 14:32:37 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,12 +121,10 @@ enum				e_display
 	OFF, ON
 };
 
-
 enum				e_console_display
 {
 	MSG_LIVE, MSG_CYCLE, MSG_INS, MSG_DEATH, MSG_MOVE, COLOR
 };
-
 
 /*
 ** DISPLAY AND COLOR
@@ -144,8 +142,6 @@ void				display_registers(t_vm *vm);
 void				display_proc_ins(t_vm *vm, t_process *proc);
 int					error_exit_msg(t_vm *vm, const char *error);
 void				set_colors_term(t_vm *vm);
-
-
 int					set_color_sdl(t_vm *vm, t_player *player);
 int					get_color_sdl(int index);
 

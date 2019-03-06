@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/05 21:30:07 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/06 14:47:25 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -298,7 +298,7 @@ typedef struct			s_button
 ** pos:					whole scrollbar x and y coordinate
 */
 
-typedef struct			s_vscrollbar
+struct					s_vscrollbar
 {
 	t_ixy				pos;
 	int					pos_x;
@@ -309,7 +309,7 @@ typedef struct			s_vscrollbar
 	t_button			up_button;
 	t_button			down_button;
 	char				relevant;
-}						t_vscrollbar;
+};
 
 typedef enum			e_player_source
 {
@@ -648,7 +648,7 @@ struct					s_visu
 
 /*
 ** BUTTONS & RELATED ACTIONS
-*/ 
+*/
 
 int						ft_is_on_close(t_vm *vm, t_ixy xy, t_button **button);
 int						ft_is_on_button(t_vm *vm, t_ixy xy, t_button *button,
