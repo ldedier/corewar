@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 17:49:38 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/17 17:52:56 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/06 15:18:04 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int			ft_accept_player(t_server *server)
 	int i;
 
 	i = 0;
-	while (i < MAX_PLAYERS)
+	while (i < MAX_CLIENTS)
 	{
 		if (server->client_sockets[i].isfree == 1)
 		{
@@ -52,7 +52,7 @@ int			ft_deny_player(t_server *server)
 
 int			ft_attempt_connection(t_server *server)
 {
-	if (server->nb_players < MAX_PLAYERS)
+	if (server->nb_players < MAX_CLIENTS)
 		return (ft_accept_player(server));
 	else
 		return (ft_deny_player(server));

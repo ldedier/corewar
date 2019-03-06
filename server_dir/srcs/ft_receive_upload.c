@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/30 22:57:11 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/02 20:42:12 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/06 15:18:29 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int		ft_process_send_new_players_to_all(t_server *server)
 	i = 0;
 	if (!(data = ft_get_buffer_all_cores(server, FLAG_NEW_CORES, &size)))
 		return (1);
-	while (i < MAX_PLAYERS)
+	while (i < MAX_CLIENTS)
 	{
 		if (!server->client_sockets[i].isfree)
 		{
