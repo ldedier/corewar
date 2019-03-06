@@ -38,7 +38,7 @@ OK_COLOR = \x1b[32;01m
 EOC = \033[0m
 
 
-SRCS_NO_PREFIX =		arena.c error.c flags.c main.c \
+SRCS_NO_PREFIX =		dump.c error.c flags.c main.c \
 						tmp.c utils.c play.c \
 						net_tools.c \
 						display.c display_player.c display_ins.c processes.c \
