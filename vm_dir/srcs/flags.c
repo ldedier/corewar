@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 17:19:23 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/03/05 14:44:15 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/06 14:25:27 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static int	dump_nb_cycles(t_vm *vm, int argc, char **argv, int *cur)
 	if (nb > 2147483647 || nb < 0)
 		nb = -1;
 	vm->dump = nb;
-	return(1);
+	return (1);
 }
 
 /*

@@ -6,16 +6,15 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/09 20:29:58 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/30 18:34:02 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/06 14:27:53 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-
 void	load_arena(t_vm *vm, t_process *proc, int index, int val)
 {
-	int 	i;
+	int		i;
 	int		mod_index;
 	int		byte_val;
 
