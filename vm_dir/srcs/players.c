@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:20:21 by emuckens          #+#    #+#             */
-/*   Updated: 2019/03/06 13:15:14 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/06 15:59:52 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,19 @@ void			update_nb_players(t_vm *vm)
 	vm->nb_players = res;
 }
 
+void			make_local_cpy(t_vm *vm, int i, int iter)
+{
+	if (!iter)
+	{
+		vm->local_player[i] = vm->player[i];
+		vm->local_player[i].color.value = 1;
+		vm->local_player[i].num = vm->nb;
+	}
+}
+
+
+
+
 /*
 ** store each player data to their respective starting point in the arena
 ** NB!!: arena and metarena MUST follow each other in structure declaration, for
@@ -43,6 +56,7 @@ void			dispatch_players_init(t_vm *vm)
 	int			i;
 	int			j;
 	int			start;
+	static int	iter;
 
 	i = -1;
 	index = 0;
@@ -60,10 +74,9 @@ void			dispatch_players_init(t_vm *vm)
 				*(vm->arena + start + j) = vm->player[i].algo[j];
 			}
 		}
-		vm->local_player[i] = vm->player[i];
-		vm->local_player[i].color.value = 1;
-		vm->local_player[i].num = vm->nb;
+		make_local_cpy(vm, i, iter);
 	}
+	++iter;
 }
 
 /*

@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:15:00 by emuckens          #+#    #+#             */
-/*   Updated: 2019/03/05 22:20:57 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/06 16:12:58 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@
 
 void			clear_vm(t_vm *vm)
 {
+	int		i;
+
+	i = -1;
 	vm->live = 0;
 	vm->nb = 1;
 	vm->total_cycle = 0;
@@ -31,8 +34,13 @@ void			clear_vm(t_vm *vm)
 		ft_lstpop(&vm->killed_proc);
 	while (vm->live_ok)
 		ft_lstpop(&vm->live_ok);
+	while (++i < MAX_PLAYERS)
+	{
+		vm->player[i].live = 0;
+		vm->player[i].last_live_cycle = 0;
+		vm->player[i].nb_proc = 1;
+	}
 }
-
 /*
 ** init_players function initializes each player's structures' parameters to
 ** their default value
