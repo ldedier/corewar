@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 17:10:34 by emuckens          #+#    #+#             */
-/*   Updated: 2019/03/06 13:51:03 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/06 14:00:22 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,16 @@
 ** the parameter has been attributed
 */
 
-static t_player	*get_player_num(t_vm *vm, t_list *lst, int num)
+static t_player	*get_player_num(t_vm *vm, int num)
 {
 	int		i;
 
-	(void)lst;
 	i = -1;
 	while (++i < MAX_PLAYERS)
 		if (vm->player[i].num == num && vm->player[i].relevant)
 			return (&vm->player[i]);
 	return (NULL);
 }
-
 
 /*
 ** [live] instruction declares the player whose number is [arg 1] alive.
@@ -47,11 +45,10 @@ int				ins_live(t_vm *vm, t_process *proc, t_parameter arg[3])
 	proc->live = 1;
 	++vm->issued_live;
 	proc->live_cycle = vm->total_cycle;
-	player = get_player_num(vm, vm->proc, arg[0].value);
+	player = get_player_num(vm, arg[0].value);
 	display_proc_ins(vm, proc);
-	if (player)
+	if (player && ++vm->live)
 	{
-		++vm->live;
 		player->live++;
 		player->last_live_cycle = vm->total_cycle;
 		vm->winner = player;
