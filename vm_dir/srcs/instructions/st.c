@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 19:29:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/02/22 18:22:03 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/06 13:49:57 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 
 int		ins_st(t_vm *vm, t_process *proc, t_parameter arg[3])
 {
+//	ft_printf("\nocp = %#x arg 0 type = %d mode = %d 1 type = %d mode = %d", proc->pending_ins.ocp, arg[0].type, arg[0].retrieval_mode, arg[1].type, arg[1].retrieval_mode); 
 	getval_param_dest(vm, proc, &arg[0], 1);
 	getval_param_dest(vm, proc, &arg[1], 1);
 	display_proc_ins(vm, proc);

@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 19:28:28 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/02/28 15:53:33 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/06 13:44:03 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int		ins_fork(t_vm *vm, t_process *proc, t_parameter arg[3])
 	arg[0].value %= IDX_MOD;
 	if (!vm->visu.active && (vm->display.code & (1 << MSG_INS)))
 		ft_printf(" (%d)", proc->pc + arg[0].value);
-	((t_process *)vm->proc->content)->pc = mod(proc->pc + arg[0].value, MEM_SIZE);
+	((t_process *)vm->proc->content)->pc = mod(proc->pc + arg[0].value,
+																	MEM_SIZE);
 	return (SUCCESS);
 }

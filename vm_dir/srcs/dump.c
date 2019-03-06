@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 18:15:26 by emuckens          #+#    #+#             */
-/*   Updated: 2019/03/04 18:54:25 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/06 13:43:44 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 ** value given by the user in the [dump] component of the [t_vm] structure.
 */
 
-int	dump_nb_cycles(t_vm *vm, int argc, char **argv, int *cur)
+int			dump_nb_cycles(t_vm *vm, int argc, char **argv, int *cur)
 {
 	long long int	nb;
 	int				i;
