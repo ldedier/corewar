@@ -6,11 +6,14 @@
 /*   By: cammapou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 17:23:19 by cammapou          #+#    #+#             */
-/*   Updated: 2019/02/25 16:15:45 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/03/06 19:03:42 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
+
+//	if (e->champ.header.prog_size > CHAMP_MAX_SIZE) //42_wrong.s
+//		return (ft_log_error(TOO_BIG_CHAMP, 0, e));
 
 int		ft_parse_param(char *str, int index, t_env *e)
 {
@@ -21,8 +24,6 @@ int		ft_parse_param(char *str, int index, t_env *e)
 	while (ft_isseparator(str[i]) && ft_addco(str[i], e))
 		i++;
 	ret = ft_process_parse_param(&(str[i]), index, e);
-	if (e->champ.header.prog_size > CHAMP_MAX_SIZE)
-		return (ft_log_error(TOO_BIG_CHAMP, 0, e));
 	return (ret);
 }
 
@@ -47,7 +48,8 @@ int		ft_parse_instruction(char *str, t_env *e)
 	while (ft_isseparator(str[start]) && ft_addco(str[start], e))
 		start++;
 	i = start;
-	while (str[i] && !ft_isseparator(str[i]) && str[i] != LABEL_CHAR)
+	while (str[i] && !ft_isseparator(str[i]) && str[i] != DIRECT_CHAR && 
+				str[i] != LABEL_CHAR)
 		i++;
 	if (!str[i])
 		return (ft_log_error(LEXICAL_ERROR, 0, e));

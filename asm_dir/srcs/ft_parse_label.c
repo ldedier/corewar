@@ -6,7 +6,7 @@
 /*   By: cammapou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 17:18:58 by cammapou          #+#    #+#             */
-/*   Updated: 2019/02/25 16:14:48 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/03/06 18:57:00 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int			ft_describe_label(char *str, int n, t_env *e)
 	{
 		if (!ft_is_in_str(LABEL_CHARS, str[i]))
 		{
+			ft_printf("dqdq\n");
 			ft_log_error(LEXICAL_ERROR, i, e);
 			return (0);
 		}
