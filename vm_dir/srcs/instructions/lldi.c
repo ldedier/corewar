@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 17:15:28 by emuckens          #+#    #+#             */
-/*   Updated: 2019/03/06 14:25:54 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/06 14:29:32 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ int		ins_lldi(t_vm *vm, t_process *proc, t_parameter arg[3])
 	int		ind;
 	int		val;
 
-	if (!is_reg(arg[2].value))
-		return (FAILURE);
 	getval_param_dest(vm, proc, &arg[0], 0);
 	getval_param_dest(vm, proc, &arg[1], 0);
 	arg[0].retrieval_mode = 1;
