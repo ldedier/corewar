@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/03/07 16:13:41 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/07 17:01:15 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,6 @@ typedef struct		s_metadata
 	int				death_color;
 	char			death_fade;	
 	char			write_fade;
-
-
-
 
 //	char			color_index;
 //	char			process_color_index;

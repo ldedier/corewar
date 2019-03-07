@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/11 17:08:36 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/05 20:25:25 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/07 17:23:38 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,7 @@ void		ft_draw_rect_surface(SDL_Surface *surface, SDL_Rect rect, int color)
 	}
 }
 
-int			ft_print_byte_composant(t_vm *vm, t_xy *dist,
-		t_metadata meta, int byte)
+int			ft_print_byte_composant(t_vm *vm, t_xy *dist, int pc, int byte)
 {
 	int			ascii_byte;
 	SDL_Rect	rect;
@@ -70,10 +69,10 @@ int			ft_print_byte_composant(t_vm *vm, t_xy *dist,
 		ascii_byte = byte + '0';
 	else
 		ascii_byte = byte + 'a' - 10;
-	if (meta.process_color_index)
+	if (vm->metarena[pc].process_color != -1)
 		color_index = 0;
 	else
-		color_index = meta.color_index;
+		color_index = vm->metarena[pc].content_color_index;
 	if (SDL_BlitScaled(
 				vm->visu.sdl.atlas[color_index % 8][ascii_byte].surface, NULL,
 				vm->visu.sdl.w_surface, &rect) < 0)
@@ -82,12 +81,33 @@ int			ft_print_byte_composant(t_vm *vm, t_xy *dist,
 	return (0);
 }
 
-int			ft_print_byte(t_vm *vm, int byte, t_metadata meta, t_xy *dist)
-{
-	if (ft_print_byte_composant(vm, dist, meta, (byte / 16) % 16))
+int			ft_print_byte(t_vm *vm, int pc, t_xy *dist)
+{	
+	int byte;
+
+	if (vm->phase == PHASE_PLAY)
+	{
+		if (vm->metarena[pc].live_fade)
+			ft_render_live(vm, pc);
+		else if (vm->metarena[pc].process_color != -1)
+			ft_render_process(vm, pc);
+		else if (vm->metarena[pc].write_fade)
+			ft_render_write(vm, pc);
+		else if (vm->metarena[pc].death_fade)
+			ft_render_fade(vm, pc);
+
+		if (vm->metarena[pc].death_fade)
+			vm->metarena[pc].death_fade--;
+		if (vm->metarena[pc].write_fade)
+			vm->metarena[pc].write_fade--;
+		if (vm->metarena[pc].live_fade)
+			vm->metarena[pc].live_fade--;
+	}
+	byte = vm->arena[pc];
+	if (ft_print_byte_composant(vm, dist, pc, vm->arena[(byte / 16) % 16]))
 		return (1);
 	dist->x += vm->visu.center.x_diff_byte;
-	if (ft_print_byte_composant(vm, dist, meta, byte % 16))
+	if (ft_print_byte_composant(vm, dist, pc, vm->arena[byte % 16]))
 		return (1);
 	return (0);
 }
@@ -108,9 +128,8 @@ int			ft_render_memory(t_vm *vm)
 		{
 			if (i * MEM_COLS + j < MEM_SIZE)
 			{
-				if (ft_print_byte(vm,
-					(unsigned char)vm->arena[i * MEM_COLS + j],
-						vm->metarena[i * MEM_COLS + j], &dist))
+
+				if (ft_print_byte(vm, i * MEM_COLS + j, &dist))
 					return (1);
 				dist.x += vm->visu.center.x_diff;
 			}
