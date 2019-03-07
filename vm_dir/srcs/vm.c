@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:15:00 by emuckens          #+#    #+#             */
-/*   Updated: 2019/03/07 16:37:27 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/07 19:44:48 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void			clear_vm(t_vm *vm)
 	vm->cycle = 0;
 	vm->c_to_die = CYCLE_TO_DIE;
 	ft_bzero(vm->arena, MEM_SIZE);
-	ft_memset(vm->metarena, sizeof(vm->metarena), MAX_PLAYERS);
 	while (vm->proc)
 		ft_lstpop(&vm->proc);
 	while (++i < MAX_PLAYERS)
@@ -55,6 +54,19 @@ static void		init_players(t_vm *vm)
 		vm->player[i].nb_proc = 0;
 		vm->player[i].num_type = -1;
 		ft_bzero(vm->player[i].aff_buf, MAX_AFF_LEN);
+	}
+}
+
+void			init_metarena(t_vm *vm)
+{
+	int	i;
+
+	i = -1;
+	while (++i < MEM_SIZE)
+	{
+		ft_bzero((void *)&vm->metarena[i], sizeof(t_metadata));
+		vm->metarena[i].process_color = -1;
+		vm->metarena[i].content_color_index = 0;
 	}
 }
 

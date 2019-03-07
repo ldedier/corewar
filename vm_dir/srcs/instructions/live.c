@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 17:10:34 by emuckens          #+#    #+#             */
-/*   Updated: 2019/03/07 16:38:30 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/07 19:30:56 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int				ins_live(t_vm *vm, t_process *proc, t_parameter arg[3])
 		player->live++;
 		player->last_live_cycle = vm->total_cycle;
 		vm->winner = player;
-		vm->metarena[proc->pc].live_color = proc->player->color.value;
+		vm->metarena[proc->pc].live_color = player->color.value;
 		vm->metarena[proc->pc].live_fade = FADE_LEN;
 		display_player_alive(vm, player);
 	}

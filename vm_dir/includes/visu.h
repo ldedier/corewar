@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/06 16:39:34 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/07 17:34:34 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -848,9 +848,9 @@ void					ft_sort_client_slots(t_vm *vm);
 int						ft_process_render_button(t_vm *vm, SDL_Rect rect,
 							SDL_Surface *surface, t_vscrollbar *vscrollbar);
 int						ft_render(t_vm *vm, t_sdl *sdl);
-int						ft_render_all_process(t_vm *vm);
-int						ft_render_all_dead_process(t_vm *vm);
-void					ft_render_alt_colors(t_vm *vm);
+void					ft_render_process(t_vm *vm, int pc);
+void					ft_render_fade(t_vm *vm, int pc);
+void					ft_render_write(t_vm *vm, int pc);
 int						ft_render_checks(t_vm *vm, int y);
 int						ft_render_crosses(t_vm *vm);
 int						ft_render_cycles_per_second(t_vm *vm, int y);
@@ -879,8 +879,7 @@ int						ft_render_vscrollbars(t_vm *vm);
 void					ft_render_init_lines(t_vm *vm);
 int						ft_render_phase(t_vm *vm);
 void					ft_render_dashboard_separator(t_vm *vm);
-int						ft_render_all_dead_process(t_vm *vm);
-int						ft_render_all_lives(t_vm *vm);
+void					ft_render_live(t_vm *vm, int pc);
 int						ft_render_trash_button(t_vm *vm, t_button *this);
 int						ft_render_switch_button(t_vm *vm, t_button *this);
 int						ft_render_play(t_vm *vm);

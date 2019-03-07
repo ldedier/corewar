@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 16:33:31 by emuckens          #+#    #+#             */
-/*   Updated: 2019/03/07 16:36:34 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/07 19:36:58 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,8 +135,8 @@ int			get_ins(char *arena, t_instruction *ins,
 	if (ins->op->has_ocp == OCP_YES)
 	{
 		if (!is_valid_ocp((unsigned char)ins->ocp, ins))
-			return (0);
-//			return (-get_bytelen(ins));
+//			return (0);
+			return (-get_bytelen(ins));
 	}
 	else
 	{
@@ -144,7 +144,7 @@ int			get_ins(char *arena, t_instruction *ins,
 		ins->params[0].nb_bytes = 4 - 2 * ins->op->describe_address;
 	}
 	if (store && getval_params(arena, ins, i + ins->op->has_ocp, MEM_SIZE))
-		return (1 + ins->op->has_ocp);
-//		return (-get_bytelen(ins));
+//		return (1 + ins->op->has_ocp);
+		return (-get_bytelen(ins));
 	return (get_bytelen(ins));
 }

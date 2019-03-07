@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 16:06:35 by emuckens          #+#    #+#             */
-/*   Updated: 2019/03/06 12:55:14 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/07 17:37:28 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void			dispatch_players_nodisplay(t_vm *vm)
 			start = (MEM_SIZE / vm->nb_players) * (index - 1);
 			while (++j < vm->player[i].algo_len)
 			{
-				vm->metarena[start + j].color_index = vm->player[i].color.index;
+				vm->metarena[start + j].content_color_index = vm->player[i].color.index;
 				*(vm->arena + start + j) = vm->player[i].algo[j];
 			}
 		}

@@ -6,25 +6,11 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 21:16:32 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/05 20:47:37 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/07 17:24:14 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
-
-void	ft_reset_metarena(t_vm *vm)
-{
-	t_list		*ptr;
-	t_process	*process;
-
-	ptr = vm->proc;
-	while (ptr != NULL)
-	{
-		process = (t_process *)(ptr->content);
-		vm->metarena[process->pc].process_color_index = 0;
-		ptr = ptr->next;
-	}
-}
 
 void	ft_render_play_lines(t_vm *vm)
 {
@@ -40,7 +26,7 @@ void	ft_render_play_lines(t_vm *vm)
 				vm->visu.center.live_breakdown_hp_y, LINE_COL);
 }
 
-int		ft_render_dashboard(t_vm *vm)
+int		ft_render_play_dashboard(t_vm *vm)
 {
 	ft_render_play_lines(vm);
 	if (ft_render_entries(vm))
@@ -66,17 +52,9 @@ int		ft_render_play(t_vm *vm)
 {
 	static double anim_rest = 0;
 
-	if (ft_render_all_dead_process(vm))
-		return (1);
-	ft_render_alt_colors(vm);
-	if (ft_render_all_process(vm))
-		return (1);
-	if (ft_render_all_lives(vm))
-		return (1);
 	if (ft_render_memory(vm))
 		return (1);
-	ft_reset_metarena(vm);
-	if (ft_render_dashboard(vm))
+	if (ft_render_play_dashboard(vm))
 		return (1);
 	if (!vm->visu.time_manager.pause)
 	{

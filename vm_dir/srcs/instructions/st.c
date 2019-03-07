@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 19:29:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/03/06 14:27:22 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/07 19:17:43 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int		ins_st(t_vm *vm, t_process *proc, t_parameter arg[3])
 		proc->reg[arg[1].value - 1] = proc->reg[arg[0].value - 1];
 		return (SUCCESS);
 	}
+	if (arg[0].value <= 0 || arg[0].value > 16)
+		return (SUCCESS); // 
 	load_arena(vm, proc, proc->pc + arg[1].value, proc->reg[arg[0].value - 1]);
 	return (SUCCESS);
 }

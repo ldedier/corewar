@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 19:27:27 by emuckens          #+#    #+#             */
-/*   Updated: 2019/03/06 13:15:05 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/07 18:25:27 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void		set_colors_term(t_vm *vm)
 		if (!vm->visu.active && vm->display.status == ON)
 			ft_memmove(vm->player[i].color.term, color[i], 11);
 		else
-			ft_bzero(&vm->player[i].color.term, 8);
+			ft_bzero(&vm->player[i].color.term, 11);
 	}
 	if (vm->visu.active || vm->display.status == OFF)
 	{

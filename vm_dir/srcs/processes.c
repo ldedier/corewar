@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:24:20 by emuckens          #+#    #+#             */
-/*   Updated: 2019/03/07 16:39:58 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/07 18:59:03 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int				kill_process(t_vm *vm, t_list **proc_lst, t_list **proc)
 
 	process = (t_process *)(*proc)->content;
 	(void)proc_lst;
+	vm->metarena[process->pc].process_color = -1;
 	vm->metarena[process->pc].death_color = process->player->color.value;
 	vm->metarena[process->pc].death_fade = MAX_FADE;
 	--process->player->nb_proc;
@@ -110,6 +111,7 @@ t_list			*add_process(t_vm *vm, int index, int start, t_process *src)
 	{
 		process->player = &vm->player[index];
 		process->pc = start;
+		vm->metarena[start].process_color = process->player->color.value;
 		process->reg[0] = process->player->num;
 	}
 	process->nb = ++nb;
