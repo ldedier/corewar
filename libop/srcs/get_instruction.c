@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 16:33:31 by emuckens          #+#    #+#             */
-/*   Updated: 2019/03/05 13:40:15 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/06 17:13:40 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,21 @@ int			getval_mod(char *arena, int index, int nb_bytes, int modulo)
 	return (val);
 }
 
+static int	valid_params(t_instruction *ins)
+{
+	int		op;
+
+	op = ins->op->opcode;
+	if (((op == LD || op == LLD) && ins->params[1].type != T_REG)
+		|| (op >= ADD && op <= XOR && ins->params[2].type != T_REG)
+		|| (op >= ADD && op <= SUB && ins->params[2].type != T_REG)
+		|| ((op == LDI || op == LLDI) && ins->params[2].type != T_REG)
+		|| (ins->params[0].type != T_REG
+			&& (op == STI || op == ST || op == AFF)))
+		return (0);
+	return (1);
+}
+
 /*
 ** store pointer on arg, loop to
 ** beginning if ptr located after mod len in arena
@@ -37,10 +52,8 @@ int			getval_params(char *arena, t_instruction *ins, int i, int mod)
 {
 	int			j;
 	t_parameter	*param;
-	int			op;
 
 	j = -1;
-	op = ins->op->opcode;
 	while (++j < ins->op->nb_params)
 	{
 		param = &ins->params[j];
@@ -51,12 +64,7 @@ int			getval_params(char *arena, t_instruction *ins, int i, int mod)
 				&& (param->value > REG_NUMBER || param->value <= 0)))
 			return (-1);
 	}
-	if ((ins->params[0].type != T_REG
-			&& (op == STI || op == ST || op == AFF))
-			|| ((op == LD || op == LLD) && ins->params[1].type != T_REG)
-			|| (op >= ADD && op <= XOR && ins->params[2].type != T_REG)
-			|| (op >= ADD && op <= SUB && ins->params[2].type != T_REG)
-			|| ((op == LDI || op == LLDI) && ins->params[2].type != T_REG))
+	if (!valid_params(ins))
 		return (-1);
 	return (0);
 }
