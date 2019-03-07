@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:15:00 by emuckens          #+#    #+#             */
-/*   Updated: 2019/03/06 16:12:58 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/07 16:37:27 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,6 @@ void			clear_vm(t_vm *vm)
 	ft_memset(vm->metarena, sizeof(vm->metarena), MAX_PLAYERS);
 	while (vm->proc)
 		ft_lstpop(&vm->proc);
-	while (vm->killed_proc)
-		ft_lstpop(&vm->killed_proc);
-	while (vm->live_ok)
-		ft_lstpop(&vm->live_ok);
 	while (++i < MAX_PLAYERS)
 	{
 		vm->player[i].live = 0;
@@ -84,8 +80,6 @@ void			init_vm(t_vm *vm, char **argv)
 	vm->nb_players = 0;
 	vm->display.code = 0;
 	vm->issued_live = 0;
-	vm->killed_proc = NULL;
-	vm->live_ok = NULL;
 	vm->proc = NULL;
 	vm->display.status = OFF;
 	ft_bzero(&vm->color, sizeof(t_color));

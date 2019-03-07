@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/03/07 16:13:41 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/07 16:41:13 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,9 @@ typedef struct		s_metadata
 
 
 
-//	char			color_index;
-//	char			process_color_index;
-//	int				alt_color;
+	char			color_index;
+	char			process_color_index;
+	int				alt_color;
 }					t_metadata;
 
 typedef struct		s_fade
@@ -117,8 +117,8 @@ typedef struct		s_vm
 	t_player		player[MAX_PLAYERS];
 	t_player		local_player[MAX_PLAYERS];
 	t_list			*proc;
-	t_list			*killed_proc;
-	t_list			*live_ok;
+	t_list			*killed_proc;//
+	t_list			*live_ok;//
 	int				live;
 	int				issued_live;
 	t_color_msg		color;
