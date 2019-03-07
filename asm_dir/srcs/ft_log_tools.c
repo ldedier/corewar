@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 22:00:06 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/04 14:10:27 by cammapou         ###   ########.fr       */
+/*   Updated: 2019/03/07 12:32:10 by cammapou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int		ft_log_error_no_line(char *str, t_env *e)
 
 int		ft_log_warning(char *str, int column, t_env *e)
 {
-	int 	col_true;
+	int	col_true;
 
 	col_true = column + e->parser.column_offset;
 	ft_printf("%s%s:%d:%d: %swarning: %s%s%s\n", BOLD WHITE,

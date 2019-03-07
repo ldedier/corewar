@@ -12,21 +12,9 @@
 
 #include "asm.h"
 
-void	ft_print_param(t_parameter param, int index)
+void	ft_print_param_suite(t_parameter param)
 {
-	ft_printf("parameter #%d\n", index);
-	if (param.type & T_DIR)
-	{
-		ft_printf("direct: ");
-		if (param.type & T_LAB)
-		{
-			ft_printf("(label): ");
-			ft_printf("%s\n", param.label_name);
-		}
-		ft_printf("%d\n", param.value);
-		return ;
-	}
-	else if (param.type & T_IND)
+	if (param.type & T_IND)
 	{
 		ft_printf("indirect: ");
 		if (param.type & T_LAB)
@@ -41,6 +29,23 @@ void	ft_print_param(t_parameter param, int index)
 		ft_printf("register: ");
 		ft_printf("%d\n", param.value);
 	}
+}
+
+void	ft_print_param(t_parameter param, int index)
+{
+	ft_printf("parameter #%d\n", index);
+	if (param.type & T_DIR)
+	{
+		ft_printf("direct: ");
+		if (param.type & T_LAB)
+		{
+			ft_printf("(label): ");
+			ft_printf("%s\n", param.label_name);
+		}
+		ft_printf("%d\n", param.value);
+		return ;
+	}
+	ft_print_param_suite(param);
 }
 
 void	ft_print_op(t_op *op)

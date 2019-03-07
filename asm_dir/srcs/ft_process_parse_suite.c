@@ -6,13 +6,13 @@
 /*   By: cammapou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 17:32:49 by cammapou          #+#    #+#             */
-/*   Updated: 2019/02/08 18:37:16 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/07 12:36:51 by cammapou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-int					ft_process_parse_direct(char *str, int index, t_env *e)
+int			ft_process_parse_direct(char *str, int index, t_env *e)
 {
 	if (e->parser.current_instruction->op->describe_address)
 	{
@@ -46,7 +46,7 @@ static int	ft_process_parse_register_suite(char *str, t_env *e)
 	return (0);
 }
 
-int					ft_process_parse_register(char *str, int index, t_env *e)
+int			ft_process_parse_register(char *str, int index, t_env *e)
 {
 	int		ret;
 	char	*str2;
@@ -73,7 +73,7 @@ int					ft_process_parse_register(char *str, int index, t_env *e)
 	return (0);
 }
 
-int					ft_process_parse_label(char *str, int index, int offset, t_env *e)
+int			ft_process_parse_label(char *str, int index, int offset, t_env *e)
 {
 	char	*label_name;
 	int		i;
@@ -93,7 +93,7 @@ int					ft_process_parse_label(char *str, int index, int offset, t_env *e)
 	return (0);
 }
 
-int					ft_process_fill_instruction_label_value(t_instruction *instruction,
+int			ft_process_fill_instruction_label_value(t_instruction *instruction,
 		int index, t_list *labels)
 {
 	t_list	*ptr;

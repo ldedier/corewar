@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:20:21 by emuckens          #+#    #+#             */
-/*   Updated: 2019/03/06 15:59:52 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/06 18:53:43 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,6 @@ void			make_local_cpy(t_vm *vm, int i, int iter)
 		vm->local_player[i].num = vm->nb;
 	}
 }
-
-
-
 
 /*
 ** store each player data to their respective starting point in the arena

@@ -6,7 +6,7 @@
 /*   By: cammapou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 17:30:46 by cammapou          #+#    #+#             */
-/*   Updated: 2019/02/25 16:17:32 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/03/06 16:56:12 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,7 @@ int		ft_process_populate_from_opcode(char *opcode_str, t_env *e)
 	return (1);
 }
 
-/*
-** if (ret < 0 || ret > REG_NUMBER)
-** return (ft_log_error(INVALID_IND_NUMBER, offset + 1, e));
-*/
-
-int		ft_process_parse_ind_value(char *str, int index,
-														int offset, t_env *e)
+int		ft_process_parse_ind_value(char *str, int index, int offset, t_env *e)
 {
 	int		ret;
 	char	*str2;
