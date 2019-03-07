@@ -6,14 +6,16 @@
 /*   By: cammapou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 17:23:19 by cammapou          #+#    #+#             */
-/*   Updated: 2019/03/06 19:03:42 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/07 12:34:38 by cammapou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-//	if (e->champ.header.prog_size > CHAMP_MAX_SIZE) //42_wrong.s
-//		return (ft_log_error(TOO_BIG_CHAMP, 0, e));
+/*
+** if (e->champ.header.prog_size > CHAMP_MAX_SIZE) //42_wrong.s
+** return (ft_log_error(TOO_BIG_CHAMP, 0, e));
+*/
 
 int		ft_parse_param(char *str, int index, t_env *e)
 {
@@ -39,16 +41,15 @@ int		ft_parse_opcode(char *str, int start, t_env *e)
 	return (ft_populate_from_opcode(str, start, i, e));
 }
 
-int		ft_parse_instruction(char *str, t_env *e)
+int		ft_parse_instruction(char *str, t_env *e, int start)
 {
-	int start;
 	int i;
 
 	start = 0;
 	while (ft_isseparator(str[start]) && ft_addco(str[start], e))
 		start++;
 	i = start;
-	while (str[i] && !ft_isseparator(str[i]) && str[i] != DIRECT_CHAR && 
+	while (str[i] && !ft_isseparator(str[i]) && str[i] != DIRECT_CHAR &&
 				str[i] != LABEL_CHAR)
 		i++;
 	if (!str[i])
@@ -95,7 +96,7 @@ int		ft_parse_line_source_code(char *str, t_env *e)
 	{
 		if (!(e->parser.current_instruction = ft_add_new_instruction(e)))
 			return (ft_log_error(MALLOC_ERROR, 0, e));
-		if (ft_parse_instruction(str, e))
+		if (ft_parse_instruction(str, e, 0))
 			return (1);
 	}
 	return (0);
