@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 16:06:35 by emuckens          #+#    #+#             */
-/*   Updated: 2019/03/06 12:55:14 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/08 18:53:50 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static void			dispatch_players_nodisplay(t_vm *vm)
 {
-	int	index;
-	int	i;
+	int			index;
+	int			i;
 	int			j;
 	int			start;
 
@@ -46,7 +46,7 @@ static void			dispatch_players_nodisplay(t_vm *vm)
 ** server for one-on-one match and subsequent score computation
 */
 
-int		fight_cores(t_vm *vm, t_player *pl1, t_player *pl2)
+int					fight_cores(t_vm *vm, t_player *pl1, t_player *pl2)
 {
 	clear_vm(vm);
 	ft_memmove(&vm->player[0], pl1, sizeof(t_player));

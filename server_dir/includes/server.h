@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 17:20:50 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/06 15:16:33 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/08 19:28:30 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,6 @@ int						ft_disconnect_player(t_server *server, int i);
 int						fight_cores(t_vm *vm, t_player *pl1, t_player *pl2);
 int						reset_shell(int ret);
 int						exit_server(t_server *server, int ret);
+void					print_players(t_list *players);
+void					ft_sort_server(t_server *server);
 #endif

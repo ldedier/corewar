@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/22 15:55:47 by emuckens          #+#    #+#             */
-/*   Updated: 2019/03/05 13:50:40 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/08 18:37:56 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@
 # define COLF_BCYAN		"\033[01;36m"
 # define COLF_BGREY		"\033[01;37m"
 # define COLF_OFF		"\033[0m"
-
 # define COL_CYCLES		COLF_BGREY
 # define COL_DEATH		COLF_BBLACK
 # define COL_RESIZE		COLF_BCYAN
@@ -62,7 +61,5 @@
 # define COL_BBLUE		0x5DADE2
 # define COL_RED		0xFF0461
 # define COL_OFF		0xFFFFFF
-
-
 
 #endif

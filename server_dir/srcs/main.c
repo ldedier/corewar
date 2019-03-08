@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 17:21:44 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/06 20:59:27 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/08 19:30:49 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int		main(int argc, char **argv)
 		return (exit_server(&server, 1));
 	if (ft_attribute_scores_init(&server))
 		return (exit_server(&server, 1));
+	ft_sort_server(&server);
 	ft_printf(GREEN"server successfuly deployed on port %d!\n\n"EOC,
 			server.port);
 	ft_printf("%s\n", ACTIVITY_SRCH);

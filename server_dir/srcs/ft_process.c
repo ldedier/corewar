@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 17:50:39 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/06 15:17:33 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/08 19:04:50 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ void	get_keys(t_server *server)
 	{
 		if (buffer[0] == 27 && !buffer[1] && !buffer[2] && !buffer[3])
 			server->running = 0;
+		else if (buffer[0] == 'p')
+			print_players(server->players);
 	}
 }
 

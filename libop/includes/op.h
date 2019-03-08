@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 19:01:37 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/05 13:39:00 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/08 18:43:09 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,8 @@
 # define LFORK_STR				"long fork"
 # define AFF_STR				"aff"
 
-
 typedef char					t_arg_type;
-typedef struct					s_instruction t_instruction;
+typedef struct s_instruction	t_instruction;
 
 typedef struct					s_op
 {
@@ -129,7 +128,8 @@ struct							s_instruction
 
 enum							e_op
 {
-	NA, LIVE, LD, ST, ADD, SUB, AND, OR, XOR, ZJMP, LDI, STI, FORK, LLD, LLDI, LFORK, AFF
+	NA, LIVE, LD, ST, ADD, SUB, AND, OR,
+	XOR, ZJMP, LDI, STI, FORK, LLD, LLDI, LFORK, AFF
 };
 
 enum							e_nb_args
@@ -151,17 +151,23 @@ t_op							g_op_tab[NB_INSTRUCTIONS + 1];
 
 int								get_bytelen(t_instruction *ins);
 int								invalid_param(int type, int op);
-int								getval_params(char *arena, t_instruction *ins, int i, int mod);
-int								is_valid_ocp(unsigned char hex, t_instruction *ins);
-
-int								getval_mod(char *arena,  int index, int nb_bytes,int mod);
-void							set_argval(t_parameter *arg, int index, int size);
-int								get_ins(char *arena, t_instruction *ins, unsigned int i, int store);
-int								read_ins(char *arena, t_instruction *ins, unsigned int *i, unsigned int mod);
-
-int								store_arg(char *arena, t_instruction *ins, int i, int ocp);
+int								getval_params(char *arena,
+									t_instruction *ins, int i, int mod);
+int								is_valid_ocp(unsigned char hex,
+									t_instruction *ins);
+int								getval_mod(char *arena, int index,
+									int nb_bytes, int mod);
+void							set_argval(t_parameter *arg,
+									int index, int size);
+int								get_ins(char *arena, t_instruction *ins,
+									unsigned int i, int store);
+int								read_ins(char *arena, t_instruction *ins,
+									unsigned int *i, unsigned int mod);
+int								store_arg(char *arena, t_instruction *ins,
+									int i, int ocp);
 void							set_optab(t_op **tab);
-int								ft_encode_instructions(int fd, t_list *instructions, char create_label);
+int								ft_encode_instructions(int fd,
+									t_list *instructions, char create_label);
 int								ft_parse_player_folder(char *folder_full_path,
 									t_list **players_list);
 

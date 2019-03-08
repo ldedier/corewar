@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 22:25:36 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/06 16:13:07 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/08 18:40:50 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ typedef struct		s_player
 	t_file_len		file_len;
 	int				live;
 	int				last_live_cycle;
-	int				color_index;;
+	int				color_index;
 	int				nb_proc;
 	int				header_size;
 	int				num;
@@ -71,7 +71,6 @@ typedef struct		s_player
 	t_list			*beaten_players;
 	t_list			*proc;
 }					t_player;
-
 int					ft_read_player(char *path, t_player *player);
 int					ft_process_read_player(char *data, int length,
 						t_player *player);

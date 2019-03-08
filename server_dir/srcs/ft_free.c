@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 20:47:04 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/06 15:14:49 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/08 18:53:23 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,18 @@ void		ft_free_all_server(t_server *server)
 	int i;
 
 	ft_lstdel(&server->players, free_player_lst);
-	SDLNet_TCP_Close(server->socket);
-	SDLNet_FreeSocketSet(server->socket_set);
+	if (server->socket)
+		SDLNet_TCP_Close(server->socket);
+	if (server->socket_set)
+		SDLNet_FreeSocketSet(server->socket_set);
 	clear_vm(&server->vm);
 	i = 0;
 	while (i < MAX_CLIENTS)
 	{
 		if (!server->client_sockets[i].isfree)
 		{
-			SDLNet_TCP_Close(server->client_sockets[i].socket);
+			if (server->client_sockets[i].socket)
+				SDLNet_TCP_Close(server->client_sockets[i].socket);
 			server->client_sockets[i].socket = NULL;
 			server->client_sockets[i].isfree = 1;
 		}

@@ -6,27 +6,11 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 16:33:31 by emuckens          #+#    #+#             */
-/*   Updated: 2019/03/06 17:13:40 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/08 18:45:23 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "op.h"
-
-int			getval_mod(char *arena, int index, int nb_bytes, int modulo)
-{
-	unsigned int	i;
-	int				val;
-
-	i = 0;
-	val = 0;
-	val |= arena[(index + i) % modulo];
-	while (++i < (unsigned int)nb_bytes)
-	{
-		val <<= 8;
-		val |= (unsigned char)arena[(index + i) % modulo];
-	}
-	return (val);
-}
 
 static int	valid_params(t_instruction *ins)
 {
