@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 20:43:24 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/21 20:04:11 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/06 20:58:31 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,7 @@ int		ft_process_add_to_db(char *path, t_list **players_list)
 	t_player	player;
 
 	if (ft_read_player(path, &player))
-	{
 		return (1);
-	}
 	if (ft_add_to_list_back(players_list, &player, sizeof(t_player)))
 		return (1);
 	return (0);

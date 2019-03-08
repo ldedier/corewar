@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 19:07:54 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/02 19:35:15 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/06 14:47:48 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int		ft_render_cycle_to_die(t_vm *vm, int y)
 {
 	char	*value;
 
-	if (!(value = ft_itoa(vm->c_to_die)))
+	if (!(value = ft_itoa(ft_max(0, vm->c_to_die))))
 		return (1);
 	if (ft_render_entry(vm, "cycle to die", value, y))
 		return (1);
@@ -44,7 +44,7 @@ int		ft_render_ctd_countdown(t_vm *vm, int y)
 	val = vm->cycle;
 	if (!(tmp = ft_itoa(val)))
 		return (1);
-	if (!(tmp2 = ft_itoa(vm->c_to_die)))
+	if (!(tmp2 = ft_itoa(ft_max(0, vm->c_to_die))))
 	{
 		free(tmp);
 		return (1);

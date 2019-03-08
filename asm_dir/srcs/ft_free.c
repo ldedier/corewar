@@ -54,6 +54,7 @@ void	ft_free_instruction_tlst(void *instruction, size_t dummy)
 void	ft_free_all(t_env *e)
 {
 	int i;
+
 	i = 0;
 	if (e->champ.cor_name)
 		free(e->champ.cor_name);

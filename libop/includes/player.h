@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 22:25:36 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/28 15:18:04 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/07 19:05:28 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ typedef struct		s_player
 	t_color			color;
 	char			aff_buf[MAX_AFF_LEN + 1];
 	int				nb_victories;
-	t_list			*beaten_players; // ??? WOWOWOWOWOWOWOW
+	t_list			*beaten_players;
 	t_list			*proc;
 }					t_player;
 

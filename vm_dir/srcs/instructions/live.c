@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 17:10:34 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/28 15:30:32 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/07 19:30:56 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,16 @@
 ** the parameter has been attributed
 */
 
-static t_player	*get_player_num(t_vm *vm, t_list *lst, int num)
+static t_player	*get_player_num(t_vm *vm, int num)
 {
 	int		i;
 
-	(void)lst;
 	i = -1;
 	while (++i < MAX_PLAYERS)
 		if (vm->player[i].num == num && vm->player[i].relevant)
 			return (&vm->player[i]);
 	return (NULL);
 }
-
 
 /*
 ** [live] instruction declares the player whose number is [arg 1] alive.
@@ -40,28 +38,21 @@ static t_player	*get_player_num(t_vm *vm, t_list *lst, int num)
 int				ins_live(t_vm *vm, t_process *proc, t_parameter arg[3])
 {
 	t_player	*player;
-	t_fade		*live;
 
-	live = NULL;
 	getval_param_dest(vm, proc, &arg[0], 1);
 	proc->live = 1;
 	++vm->issued_live;
-	proc->live_cycle = vm->total_cycle; // enlever, gere par proc->pending_ins.op
-	player = get_player_num(vm, vm->proc, arg[0].value);
+	proc->live_cycle = vm->total_cycle;
+	player = get_player_num(vm, arg[0].value);
 	display_proc_ins(vm, proc);
-	if (player)
+	if (player && ++vm->live)
 	{
-		++vm->live;
 		player->live++;
 		player->last_live_cycle = vm->total_cycle;
 		vm->winner = player;
-		live = (t_fade *)ft_memalloc(sizeof(t_fade));
-		live->pc = proc->pc;
-		live->color = player->color.value;
-		live->value = FADE_LEN;
+		vm->metarena[proc->pc].live_color = player->color.value;
+		vm->metarena[proc->pc].live_fade = FADE_LEN;
 		display_player_alive(vm, player);
-		if (ft_add_to_list_ptr(&vm->live_ok, (void *)live, sizeof(t_fade)))
-			return (FAILURE);
 	}
 	return (SUCCESS);
 }

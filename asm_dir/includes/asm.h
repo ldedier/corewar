@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 16:49:37 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/27 14:07:50 by cammapou         ###   ########.fr       */
+/*   Updated: 2019/03/06 16:39:40 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int								ft_parse_label(char *str, t_env *e);
 int								ft_is_only_label(char *str);
 int								ft_add_new_label(char *str, int length,
 								t_env *e);
-int								ft_parse_instruction(char *str, t_env *e);
+int								ft_parse_instruction(char *str, t_env *e, int start);
 t_label							*ft_get_label(t_list *labels, char *label_name);
 t_label							*ft_new_label(char *name, int address);
 int								ft_parse_opcode(char *str, int start, t_env *e);

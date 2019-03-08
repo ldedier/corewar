@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 17:19:23 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/02/28 21:47:34 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/07 19:46:00 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,36 +50,19 @@ static int	dump_nb_cycles(t_vm *vm, int argc, char **argv, int *cur)
 
 	*cur += 1;
 	if (*cur + 2 > argc && vm->nb_players == 0)
-		return (error_exit_msg(vm, WRG_DUMP));
+		return (0);
 	i = 0;
 	while (argv[*cur][i])
 	{
 		if (!(ft_strchr("-0123456789", argv[*cur][i])))
-			return (error_exit_msg(vm, WRG_DUMP));
+			return (0);
 		i++;
 	}
 	nb = ft_atoll(argv[*cur]);
 	if (nb > 2147483647 || nb < 0)
 		nb = -1;
 	vm->dump = nb;
-	return (SUCCESS);
-}
-
-/*
-** mng_players static function manages the case where the current argument
-** describes a player
-*/
-
-static int	mng_players(t_vm *vm, int argc, char **argv, int *cur)
-{
-	if (ft_strcmp("-n", argv[*cur]) == 0)
-		add_player_n(vm, argc, argv, cur);
-	else
-		vm->player[vm->nb_players].num = add_player(vm);
-	vm->player[vm->nb_players].cor_name = argv[*cur];
-	if (++vm->nb_players > MAX_PLAYERS)
-		return (error_exit_msg(vm, MAX_P_NUM));
-	return (0);
+	return (1);
 }
 
 /*
@@ -100,7 +83,7 @@ int			flags(t_vm *vm, int argc, char **argv)
 		if (!ft_strcmp("-dump", argv[cur]))
 		{
 			if (dump_nb_cycles(vm, argc, argv, &cur))
-				return (FAILURE);
+				return (0);
 		}
 		else if (argv[cur][0] == '-' && ft_isdigit(argv[cur][1]) && !(i = 0))
 		{
@@ -116,5 +99,5 @@ int			flags(t_vm *vm, int argc, char **argv)
 		else
 			mng_players(vm, argc, argv, &cur);
 	}
-	return (0);
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:48:19 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/02 21:41:52 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/07 17:34:34 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,16 @@
 # include "player.h"
 # include "color.h"
 # include "op.h"
+
+/*
+** PLAYER COLORS
+*/
+# define COL_BLUE		0x0D47A1
+# define COL_GREEN		0x21F500
+# define COL_BROWN		0xFFD707
+# define COL_BBLUE		0x5DADE2
+# define COL_RED		0xFF0461
+# define COL_OFF		0xFFFFFF
 
 # define INIT_MAX_PLAYERS		4
 # define INIT_CYCLES_PER_TURN	1
@@ -636,86 +646,75 @@ struct					s_visu
 	int					animation_index;
 };
 
-int						ft_init_all_visu(t_vm *vm, t_visu *v);
-
 /*
-** framerate functions
+** BUTTONS & RELATED ACTIONS
 */
 
-void					ft_process_delta_first(t_framerate *framerate);
-void					ft_process_delta(t_framerate *framerate);
-void					ft_print_fps(t_framerate *framerate);
-int						ft_process_events(t_vm *vm);
-int						ft_render(t_vm *vm, t_sdl *sdl);
-int						ft_render_memory(t_vm *vm);
-int						ft_render_players(t_vm *vm);
-int						ft_render_init_online(t_vm *vm);
-int						ft_render_offline(t_vm *vm);
-t_color_manager			ft_get_color(int color);
-t_color_manager			ft_get_color_sdl(int color);
-t_color_manager			ft_scale_color(t_color_manager color, double scale);
-t_color_manager			ft_scale_color_sdl(t_color_manager color, double scale);
-t_color_manager			ft_interpolate_color(int col1, int col2, double t);
-int						ft_render_player(t_vm *vm, t_player *player, t_xy xy,
-							t_player_source source);
-int						ft_render_dragged_player(t_vm *vm);
-int						ft_is_on_close(t_vm *vm, t_ixy xy,
-							t_button **button);
-int						ft_is_on_draggable(t_vm *vm, t_ixy xy,
-							t_drag_container *dc);
-int						ft_is_on_droppable(t_vm *vm, t_ixy mouse,
-							t_drop_container *dc);
-void					ft_drop_dragged_player(t_vm *vm, t_ixy xy);
-void					ft_update_cursor(t_vm *vm, t_ixy xy);
-void					ft_change_cursor(t_vm *vm, int index);
+int						ft_is_on_close(t_vm *vm, t_ixy xy, t_button **button);
 int						ft_is_on_button(t_vm *vm, t_ixy xy, t_button *button,
 							t_button **to_fill);
 int						ft_is_on_buttons(t_vm *vm, t_ixy xy, t_button **button);
-t_ixy					new_ixy(int x, int y);
-int						ft_render_button(t_vm *vm, t_button *button);
-int						ft_process_render_button(t_vm *vm, SDL_Rect rect,
-							SDL_Surface *surface, t_vscrollbar *vscrollbar);
+int						clean_arena(t_vm *vm, t_button *this, t_ixy xy);
+int						fight(t_vm *vm, t_button *this, t_ixy xy);
 int						ft_delete_player(t_vm *vm, t_button *this, t_ixy xy);
-int						ft_get_player_color(t_vm *vm, t_player *player,
-							int initial_color, float value);
-void					ft_render_horizontal_line_dashboard(t_vm *vm, int y,
-							int col);
+void					ft_init_buttons(t_vm *vm, t_visu *visu);
+void					ft_populate_closing_button(t_vm *vm, t_button *button,
+							t_player *player, t_ixy xy);
+int						ft_upload(t_vm *vm, t_button *this, t_ixy mouse);
+int						go_back(t_vm *vm, t_button *this, t_ixy xy);
+int						nothing_on_click(t_vm *vm, t_button *this, t_ixy xy);
+void					nothing_on_press(t_vm *vm, t_button *this);
+int						sort_alpha(t_vm *vm, t_button *this, t_ixy xy);
+int						sort_score(t_vm *vm, t_button *this, t_ixy xy);
+int						start_fight(t_vm *vm);
+void					ft_update_download_buttons_client_rect(t_vm *vm);
+int						switch_local(t_vm *vm, t_button *this, t_ixy xy);
+
+/*
+** COLOR, STRINGS AND FONT
+*/
+
+t_color_manager			ft_get_color(int color);
+int						ft_copied_char_surface_w(SDL_Rect rect, int len);
 int						ft_copy_str_to_surface(t_vm *vm, char *str,
 							SDL_Rect rect, t_ixy col_source);
-int						ft_get_vscrollbar_compressed_height(t_visu *v,
-							int nb_players);
-void					ft_init_players_list(t_vm *vm, t_visu *v);
-void					ft_init_vscrollbars_compressed_size(t_vm *vm,
-							t_visu *v);
-int						ft_blit_scaled_scrollbar(t_sdl *sdl, SDL_Surface *from,
-							SDL_Rect rect, t_vscrollbar v);
-int						ft_fill_rect_scrollbar(SDL_Surface *from, SDL_Rect *rct,
-							int color, t_vscrollbar vscrollbar);
-t_ixy					ft_get_vscrollbar_bar_height_y(t_vscrollbar vscrollbar);
-double					ft_get_vscrollbar_bar_height(t_vscrollbar vscrollbar);
-int						ft_to_print_scrollbar(t_vscrollbar vscrollbar);
-void					ft_update_scrollbar(t_vm *vm, t_vscrollbar *vscrollbar);
-int						get_vscrollbar(t_vm *vm, t_ixy mouse,
-							t_vscrollbar **vscrollbar);
-int						ft_get_scrolled_height(t_vscrollbar vscrollbar);
-void					ft_swing_scrollbar(t_vscrollbar *scrollbar, t_ixy xy);
-int						nothing_on_click(t_vm *vm, t_button *this, t_ixy xy);
-int						fight(t_vm *vm, t_button *this, t_ixy xy);
+int						ft_copy_str_to_surface_no_source(t_vm *vm, char *str,
+							SDL_Rect rect, int color_index);
+int						ft_init_atlas(t_vm *vm, t_sdl *sdl);
+t_color_manager			ft_interpolate_color(int col1, int col2, double t);
+t_color_manager			ft_scale_color(t_color_manager color, double scale);
 
-int						sort_score(t_vm *vm, t_button *this, t_ixy xy);
-int						sort_alpha(t_vm *vm, t_button *this, t_ixy xy);
+/*
+** MOUSE & CURSOR
+*/
 
-void					nothing_on_press(t_vm *vm, t_button *this);
-void					ft_wheel_event(t_vm *vm, SDL_Event event);
-void					ft_update_download_buttons_client_rect(t_vm *vm);
-int						ft_render_download_button(t_vm *vm, t_button *this);
-int						ft_render_vscrollbars(t_vm *vm);
-void					ft_render_init_lines(t_vm *vm);
-int						ft_render_crosses(t_vm *vm);
-int						ft_render_phase(t_vm *vm);
-int						ft_is_in_scrollbar_focus(t_vscrollbar vscrollbar);
-void					ft_scroll_up(t_vm *vm, t_button *button);
-void					ft_scroll_down(t_vm *vm, t_button *button);
+void					ft_change_cursor(t_vm *vm, int index);
+void					ft_update_cursor(t_vm *vm, t_ixy xy);
+void					ft_mouse_down(t_vm *vm, SDL_Event event);
+void					ft_mouse_up(t_vm *vm, SDL_Event event);
+void					ft_mouse_motion(t_vm *vm, SDL_Event event);
+
+/*
+** DRAG & DROP
+*/
+
+void					ft_copy(t_vm *vm, t_drop_container *dc);
+void					ft_drop_dragged_player(t_vm *vm, t_ixy xy);
+void					ft_fill_drag_container(t_drag_container *dc, t_ixy xy);
+int						ft_is_on_client_players(t_vm *vm, t_ixy xy,
+							t_drag_container *dc);
+int						ft_is_on_download_players(t_vm *vm, t_ixy xy,
+							t_drag_container *dc);
+int						ft_is_on_droppable(t_vm *vm, t_ixy mouse,
+							t_drop_container *dc);
+int						ft_is_on_draggable(t_vm *vm, t_ixy xy,
+							t_drag_container *dc);
+int						ft_is_on_player_scrollbar(t_vm *vm, t_ixy xy,
+							t_xy player_xy, t_vscrollbar vscrollbar);
+int						ft_is_on_scrollbars(t_vm *vm, t_ixy xy,
+							t_drag_container *dc);
+void					ft_place_or_swap(t_vm *vm, t_drop_container *dc);
+
 void					ft_populate_drag_container_player(t_drag_container *dc,
 							t_player *player, t_player_source source);
 void					ft_populate_drag_container_vscrollbar(t_drag_container
@@ -729,75 +728,160 @@ void					ft_populate_drag_container_player_download(
 void					ft_populate_drag_container_player_slot(t_drag_container
 							*dc, t_player *player, t_slot *slot,
 								t_player_source source);
-void					ft_fill_drag_container(t_drag_container *dc, t_ixy xy);
-int						ft_is_on_scrollbars(t_vm *vm, t_ixy xy,
-							t_drag_container *dc);
-void					ft_copy(t_vm *vm, t_drop_container *dc);
-void					ft_place(t_vm *vm, t_drop_container *dc);
-void					ft_place_or_swap(t_vm *vm, t_drop_container *dc);
-int						ft_is_on_player_scrollbar(t_vm *vm, t_ixy xy,
-							t_xy player_xy, t_vscrollbar vscrollbar);
-int						ft_is_on_client_players(t_vm *vm, t_ixy xy,
-							t_drag_container *dc);
-int						ft_is_on_download_players(t_vm *vm, t_ixy xy,
-							t_drag_container *dc);
-SDL_Surface				*ft_load_image(char *str);
-TTF_Font				*ft_load_font(char *str, int quality);
-int						ft_init_atlas(t_vm *vm, t_sdl *sdl);
-void					ft_init_center(t_visu *v, t_center *c);
-SDL_Surface				*ft_init_font_surface_sdl(char *str, t_sdl sdl);
-int						ft_init_textures(t_visu *visu);
+
+/*
+** EVENTS
+*/
+
+int						ft_process_events(t_vm *vm);
+void					ft_wheel_event(t_vm *vm, SDL_Event event);
+
+/*
+** FRAMERATE
+*/
+
+void					ft_process_delta_first(t_framerate *framerate);
+void					ft_process_delta(t_framerate *framerate);
+void					ft_print_fps(t_framerate *framerate);
+
+/*
+** INIT & FREE
+*/
+
+void					ft_free_all_visu(t_visu *v);
+void					ft_free_atlas(t_visu *v);
+void					ft_free_cursors(t_visu *v);
+void					ft_free_font(TTF_Font *font);
+void					ft_free_surfaces(t_visu *v);
+int						ft_init_all_visu(t_vm *vm, t_visu *v);
 int						ft_init_cursors(t_visu *v);
-void					ft_populate_upload_slot(t_vm *vm, t_visu *v);
-void					ft_populate_slots_positions(t_vm *vm, t_visu *v);
+void					ft_init_players_list(t_vm *vm, t_visu *v);
+int						ft_init_sdl(t_visu *v);
+int						ft_init_textures(t_visu *visu);
+void					ft_init_vscrollbars_compressed_size(t_vm *vm,
+							t_visu *v);
 void					ft_init_crosses(t_vm *vm);
 void					ft_init_client_slot_surface(t_vm *vm);
-void					ft_populate_closing_button(t_vm *vm, t_button *button,
-							t_player *player, t_ixy xy);
-int						ft_upload(t_vm *vm, t_button *this, t_ixy mouse);
-int						ft_render_upload_button(t_vm *vm, t_button *this);
-void					ft_init_buttons(t_vm *vm, t_visu *visu);
-void					ft_get_dimensions(t_visu *v);
+SDL_Surface				*ft_init_font_surface_sdl(char *str, t_sdl sdl);
+void					dispatch_players(t_vm *vm, t_player *player);
 void					ft_init_sdl_to_null(t_visu *v);
-int						ft_init_sdl(t_visu *v);
-int						ft_is_in_rect(t_ixy xy, SDL_Rect rect);
-void					ft_mouse_down(t_vm *vm, SDL_Event event);
-void					ft_mouse_up(t_vm *vm, SDL_Event event);
-void					ft_mouse_motion(t_vm *vm, SDL_Event event);
-int						ft_process_button_pressed(t_vm *vm);
-void					ft_render_dashboard_separator(t_vm *vm);
+int						ft_init_hp_surface(t_visu *visu);
+void					ft_init_center_memory(t_visu *visu, t_center *c);
+void					ft_init_center_entries(t_visu *visu, t_center *c);
+void					ft_init_center_player_entries(t_visu *visu,
+							t_center *c);
+void					ft_init_center_live_breakdown(t_visu *visu,
+							t_center *c);
+void					ft_init_center_hp(t_visu *visu, t_center *c);
+
+/*
+** NOTIFICATIONS
+*/
+
+void					ft_set_notification(t_vm *vm, int image_index);
+int						ft_remove_notification(t_vm *vm, t_button *button,
+							t_ixy xy);
+/*
+** POSITIONING
+*/
+
+void					ft_init_center(t_visu *v, t_center *c);
+void					ft_init_center_footer(t_visu *visu, t_center *c);
+void					ft_init_center_spec(t_visu *visu, t_center *c);
+void					ft_init_center_fight(t_visu *visu, t_center *c);
+void					ft_init_center_online(t_visu *visu, t_center *c);
+void					ft_init_center_players(t_visu *visu, t_center *c);
+
+/*
+** LOAD TOOLS
+*/
+
+SDL_Surface				*ft_load_image(char *str);
+TTF_Font				*ft_load_font(char *str, int quality);
+
+/*
+** PLAY
+*/
+
 int						process(t_vm *vm);
-int						ft_render_all_process(t_vm *vm);
-int						ft_render_all_dead_process(t_vm *vm);
-int						ft_render_all_lives(t_vm *vm);
-int						start_fight(t_vm *vm);
-int						clean_arena(t_vm *vm, t_button *this, t_ixy xy);
-int						switch_local(t_vm *vm, t_button *this, t_ixy xy);
-int						ft_render_trash_button(t_vm *vm, t_button *this);
-int						ft_render_switch_button(t_vm *vm, t_button *this);
-int						ft_process_upload(t_vm *vm, t_player player);
-int						ft_get_new_cores(int nb_bytes, t_vm *vm);
+
+/*
+** SCROLLBAR
+*/
+
+int						ft_get_vscrollbar_compressed_height(t_visu *v,
+							int nb_players);
+int						ft_blit_scaled_scrollbar(t_sdl *sdl, SDL_Surface *from,
+							SDL_Rect rect, t_vscrollbar v);
+int						ft_fill_rect_scrollbar(SDL_Surface *from, SDL_Rect *rct,
+							int color, t_vscrollbar vscrollbar);
+t_ixy					ft_get_vscrollbar_bar_height_y(t_vscrollbar vscrollbar);
+double					ft_get_vscrollbar_bar_height(t_vscrollbar vscrollbar);
+int						ft_to_print_scrollbar(t_vscrollbar vscrollbar);
+void					ft_update_scrollbar(t_vm *vm, t_vscrollbar *vscrollbar);
+int						get_vscrollbar(t_vm *vm, t_ixy mouse,
+							t_vscrollbar **vscrollbar);
+int						ft_get_scrolled_height(t_vscrollbar vscrollbar);
+void					ft_swing_scrollbar(t_vscrollbar *scrollbar, t_ixy xy);
+int						ft_is_in_scrollbar_focus(t_vscrollbar vscrollbar);
+void					ft_scroll_up(t_vm *vm, t_button *button);
+void					ft_scroll_down(t_vm *vm, t_button *button);
 void					ft_update_vscrollbar_server_compressed_size(t_vm *vm,
 							t_visu *v);
 void					ft_update_vscrollbar_downloads_compressed_size(t_vm *vm,
 							t_visu *v);
-int						ft_query_player_bin(t_vm *vm, t_client_slot *cs);
-int						ft_render_notification(t_vm *vm);
-void					ft_set_notification(t_vm *vm, int image_index);
-int						ft_remove_notification(t_vm *vm, t_button *button,
-							t_ixy xy);
-int						ft_copy_str_to_surface_no_source(t_vm *vm, char *str,
-							SDL_Rect rect, int color_index);
-int						ft_render_entry(t_vm *vm, char *entry, char *value,
-							int y);
+
+/*
+** SORT
+*/
+
+int						ft_sort_score(void *p1, void *p2);
+int						ft_sort_alpha(void *p1, void *p2);
+int						ft_sort_alpha_cs(void *p1, void *p2);
+int						ft_sort_score_cs(void *p1, void *p2);
+void					ft_sort_client_slots(t_vm *vm);
+
+/*
+** RENDERING
+*/
+
+int						ft_process_render_button(t_vm *vm, SDL_Rect rect,
+							SDL_Surface *surface, t_vscrollbar *vscrollbar);
+int						ft_render(t_vm *vm, t_sdl *sdl);
+void					ft_render_process(t_vm *vm, int pc);
+void					ft_render_fade(t_vm *vm, int pc);
+void					ft_render_write(t_vm *vm, int pc);
+int						ft_render_checks(t_vm *vm, int y);
+int						ft_render_crosses(t_vm *vm);
 int						ft_render_cycles_per_second(t_vm *vm, int y);
 int						ft_render_cycle(t_vm *vm, int y);
 int						ft_render_cycle_to_die(t_vm *vm, int y);
 int						ft_render_cycle_delta(t_vm *vm, int y);
 int						ft_render_ctd_countdown(t_vm *vm, int y);
+int						ft_render_entry(t_vm *vm, char *entry, char *value,
+							int y);
 int						ft_render_lives_current_period(t_vm *vm, int y);
-int						ft_render_checks(t_vm *vm, int y);
-int						process_cycle_all(t_vm *vm);
+int						ft_render_memory(t_vm *vm);
+int						ft_render_players(t_vm *vm);
+int						ft_render_init_online(t_vm *vm);
+int						ft_render_offline(t_vm *vm);
+int						ft_render_player(t_vm *vm, t_player *player, t_xy xy,
+							t_player_source source);
+int						ft_render_dragged_player(t_vm *vm);
+t_ixy					new_ixy(int x, int y);
+int						ft_render_button(t_vm *vm, t_button *button);
+int						ft_get_player_color(t_vm *vm, t_player *player,
+							int initial_color, float value);
+void					ft_render_horizontal_line_dashboard(t_vm *vm, int y,
+							int col);
+int						ft_render_download_button(t_vm *vm, t_button *this);
+int						ft_render_vscrollbars(t_vm *vm);
+void					ft_render_init_lines(t_vm *vm);
+int						ft_render_phase(t_vm *vm);
+void					ft_render_dashboard_separator(t_vm *vm);
+void					ft_render_live(t_vm *vm, int pc);
+int						ft_render_trash_button(t_vm *vm, t_button *this);
+int						ft_render_switch_button(t_vm *vm, t_button *this);
 int						ft_render_play(t_vm *vm);
 int						ft_render_entries(t_vm *vm);
 int						ft_render_player_entries(t_vm *vm);
@@ -805,18 +889,11 @@ int						ft_render_last_live(t_vm *vm, t_player player, int y);
 int						ft_render_nb_process(t_vm *vm, t_player player, int y);
 int						ft_render_live_breakdown(t_vm *vm);
 int						ft_render_live_breakdown_hp(t_vm *vm);
-int						go_back(t_vm *vm, t_button *this, t_ixy xy);
 int						ft_render_play_footer(t_vm *vm);
 int						ft_render_nb_live(t_vm *vm, t_player p, int y);
 int						ft_render_live_breakdown_title(t_vm *vm, SDL_Rect rect);
-int						ft_init_hp_surface(t_visu *visu);
-void					ft_copy_abbrev(char *abbrev, char *str);
-int						ft_sort_score(void *p1, void *p2);
-int						ft_sort_alpha(void *p1, void *p2);
-int						ft_sort_alpha_cs(void *p1, void *p2);
-int						ft_sort_score_cs(void *p1, void *p2);
-void					ft_sort_client_slots(t_vm *vm);
-int						ft_copied_char_surface_w(SDL_Rect rect, int len);
+int						ft_render_upload_button(t_vm *vm, t_button *this);
+int						ft_render_notification(t_vm *vm);
 void					ft_render_inner_name_value(t_vm *vm,
 							SDL_Rect inner_rect, t_player *player,
 								t_player_source source);
@@ -824,7 +901,6 @@ int						ft_render_inner_player(t_vm *vm, SDL_Rect player_rect,
 							t_player *player, t_player_source source);
 void					ft_render_inner_name(t_vm *vm, SDL_Rect inner_rect,
 							t_player *player, t_player_source source);
-void					ft_free_all_visu(t_visu *v);
 int						ft_render_inner_number(t_vm *vm, SDL_Rect inner_rect,
 							t_player *player, t_player_source source);
 void					ft_render_inner_name_full(t_vm *vm,
@@ -839,40 +915,35 @@ int						ft_render_title(t_vm *vm, int title_index, double x,
 int						ft_render_closing_cross(t_vm *vm, t_xy xy);
 int						ft_render_player_entry(t_vm *vm, char *entry,
 							char *value, int y);
-void					ft_free_font(TTF_Font *font);
-void					ft_free_surfaces(t_visu *v);
-void					ft_free_atlas(t_visu *v);
-void					ft_free_cursors(t_visu *v);
-void					ft_init_center_memory(t_visu *visu, t_center *c);
-void					ft_init_center_entries(t_visu *visu, t_center *c);
-void					ft_init_center_player_entries(t_visu *visu,
-							t_center *c);
-void					ft_init_center_live_breakdown(t_visu *visu,
-							t_center *c);
-void					ft_init_center_hp(t_visu *visu, t_center *c);
-void					ft_init_center_footer(t_visu *visu, t_center *c);
-void					ft_init_center_spec(t_visu *visu, t_center *c);
-void					ft_init_center_fight(t_visu *visu, t_center *c);
-void					ft_init_center_online(t_visu *visu, t_center *c);
-void					ft_init_center_players(t_visu *visu, t_center *c);
-double					get_magic_ratio(t_vm *vm,
-							int lives_player_1, int lives_player_2);
-void					ft_get_player_lives(t_vm *vm, int *nb_live_player_1,
-							int *nb_live_player_2);
 int						ft_render_button(t_vm *vm, t_button *button);
 int						ft_render_server_title(t_vm *vm, double y);
 int						ft_render_toolbar(t_vm *vm, double y);
 int						ft_render_client_slot(t_vm *vm,
 							t_client_slot *slot, int y);
+
+/*
+** NON TRIE
+*/
+
+void					ft_populate_upload_slot(t_vm *vm, t_visu *v);
+void					ft_populate_slots_positions(t_vm *vm, t_visu *v);
+void					ft_get_dimensions(t_visu *v);
+int						ft_is_in_rect(t_ixy xy, SDL_Rect rect);
+int						ft_process_button_pressed(t_vm *vm);
+int						ft_process_upload(t_vm *vm, t_player player);
+int						ft_get_new_cores(int nb_bytes, t_vm *vm);
+void					ft_copy_abbrev(char *abbrev, char *str);
+double					get_magic_ratio(t_vm *vm,
+							int lives_player_1, int lives_player_2);
+void					ft_get_player_lives(t_vm *vm, int *nb_live_player_1,
+							int *nb_live_player_2);
 SDL_Rect				get_rect_from_pc(t_vm *vm, int pc);
-int						ft_render_all_dead_process(t_vm *vm);
 void					ft_draw_rect_surface(SDL_Surface *surface,
 							SDL_Rect rect, int color);
 int						ft_moy(int val1, int val2);
 double					ft_fmoy(double val1, double val2);
 void					populate_hp_player_title_rect(t_vm *vm, SDL_Rect *rect);
 double					ft_flerp(double val1, double val2, double t);
-void					ft_render_alt_colors(t_vm *vm);
 void					dispatch_players(t_vm *vm, t_player *player);
 int						get_live_sum(t_vm *vm);
 #endif

@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 19:29:31 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/02/28 15:56:41 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/07 18:50:21 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ int		ins_zjmp(t_vm *vm, t_process *proc, t_parameter arg[3])
 	arg[0].value %= IDX_MOD;
 	if (proc->carry)
 	{
+		vm->metarena[proc->pc].process_color = -1;
 		proc->pc = mod(arg[0].value + proc->pc, MEM_SIZE);
+		vm->metarena[proc->pc].process_color = proc->player->color.value;
+		
 		if (!vm->visu.active && (vm->display.code & (1 << MSG_INS)))
 			ft_printf(" OK");
 	}

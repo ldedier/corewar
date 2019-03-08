@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 17:50:39 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/02 20:49:46 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/06 15:17:33 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int		ft_process_activity(t_server *server)
 			return (1);
 	}
 	i = 0;
-	while (i < MAX_PLAYERS)
+	while (i < MAX_CLIENTS)
 	{
 		if (ft_process_player_activity(server, i))
 			return (1);

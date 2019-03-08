@@ -1,0 +1,8 @@
+asm
+corewar
+decompiler
+scorewar
+*.o
+*.sw*
+myoutput
+zazoutput

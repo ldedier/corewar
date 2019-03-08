@@ -6,12 +6,11 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 17:19:23 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/03/02 20:56:06 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/07 18:02:16 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
-
 
 void __attribute__((destructor)) end();
 
@@ -21,6 +20,19 @@ void    end(void) //permet de mieux checker les leaks !
 //	while(1);
 }
 
+static int		valid_input(int argc, char **argv, t_vm *vm)
+{
+	if (!check_type(argc, argv))
+		return (error_exit_msg(vm, WRG_FILE_TYPE));
+	if (!check_header())
+		return (error_exit_msg(vm, ERR_HEADER));
+	if (!flags(vm, argc, argv))
+		return (error_exit_msg(vm, WRG_DUMP));
+	set_colors_term(vm);
+	if (read_files(vm))
+		return (error_exit_msg(vm, RD_ERROR));
+	return (SUCCESS);
+}
 
 int		main(int argc, char **argv)
 {
@@ -29,14 +41,8 @@ int		main(int argc, char **argv)
 	init_vm(&vm, argv);
 	if (argc <= 1)
 		return (error_exit_msg(&vm, USAGE));
-	if (!check_type(argc, argv))
-		return (error_exit_msg(&vm, WRG_FILE_TYPE));
-	check_header(&vm);
-	if (flags(&vm, argc, argv))
+	if (valid_input(argc, argv, &vm) == FAILURE)
 		return (FAILURE);
-	set_colors_term(&vm);
-	if (read_files(&vm))
-		return (error_exit_msg(&vm, RD_ERROR));
 	dispatch_players_init(&vm);
 	if (vm.client.active)
 		return (process_client(&vm));
@@ -45,8 +51,9 @@ int		main(int argc, char **argv)
 	if (!init_processes(&vm))
 		return (error_exit_msg(&vm, INIT_PROC_ERROR));
 	while (vm.proc)
-		play_one_cycle(&vm);
+		if (play_one_cycle(&vm) == FAILURE)
+			return (error_exit_msg(&vm, ERR_MALLOC));
 	display_winner(&vm);
 	clear_vm(&vm);
-	return (0);
+	return (SUCCESS);
 }

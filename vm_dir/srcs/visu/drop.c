@@ -6,42 +6,41 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 19:09:06 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/27 14:42:20 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/05 21:23:51 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-void	ft_process_drop_dragged_player(t_vm *vm, t_drop_container *dc)
+static void	ft_process_drop_dragged_player(t_vm *vm, t_drop_container *dc)
 {
-	if (vm->visu.drag_container.drag_union.drag_player.source ==
-			SERVER && !vm->visu.drag_container.drag_union.
+	t_player_source	source;
+
+	source = vm->visu.drag_container.drag_union.drag_player.source;
+	if (source == SERVER
+		&& !vm->visu.drag_container.drag_union.
 			drag_player.client_slot->downloaded)
 		ft_query_player(vm, vm->visu.drag_container.drag_union.
 				drag_player.client_slot);
-	if (vm->visu.drag_container.drag_union.drag_player.source
-			== LOCAL || vm->visu.drag_container.drag_union.
-			drag_player.source == DOWNLOADS || vm->visu.
-			drag_container.drag_union.
-			drag_player.source == SERVER)
+	if (source == LOCAL || source == DOWNLOADS || source == SERVER)
 		ft_copy(vm, dc);
 	else
 		ft_place_or_swap(vm, dc);
 }
 
-void	ft_drop_dragged_player(t_vm *vm, t_ixy mouse)
+void		ft_drop_dragged_player(t_vm *vm, t_ixy mouse)
 {
 	t_drop_container	dc;
+	t_player_source		source;
 
-	if (vm->visu.drag_container.drag_enum == DRAG_PLAYER &&
-			vm->visu.drag_container.drag_union.drag_player.player)
+	if (vm->visu.drag_container.drag_enum == DRAG_PLAYER
+		&& vm->visu.drag_container.drag_union.drag_player.player)
 	{
+		source = vm->visu.drag_container.drag_union.drag_player.source;
 		if (ft_is_on_droppable(vm, mouse, &dc))
 			ft_process_drop_dragged_player(vm, &dc);
-		else if (vm->visu.drag_container.drag_union.drag_player.player &&
-				(vm->visu.drag_container.drag_union.drag_player.source
-				== ARENA || vm->visu.drag_container.drag_union.
-				drag_player.source == UPLOAD))
+		else if (vm->visu.drag_container.drag_union.drag_player.player
+				&& (source == ARENA || source == UPLOAD))
 		{
 			vm->visu.drag_container.drag_union.drag_player.player->relevant = 0;
 			set_color_sdl(vm, vm->visu.drag_container.drag_union.

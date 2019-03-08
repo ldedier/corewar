@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 20:42:59 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/02 20:48:02 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/06 15:15:02 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int		ft_init_server(int argc, char **argv, t_server *server)
 	if (SDLNet_TCP_AddSocket(server->socket_set, server->socket) == -1)
 		return (ft_error());
 	i = 0;
-	while (i < MAX_PLAYERS)
+	while (i < MAX_CLIENTS)
 	{
 		ft_init_client_socket(&(server->client_sockets[i]));
 		i++;

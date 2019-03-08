@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/03 21:25:21 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/20 00:34:05 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/05 20:22:09 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ int		ft_render_magic_voldemort(t_vm *vm, SDL_Rect *rect, int *w)
 		ratio = ft_flerp(vm->visu.current_hp_ratio, ratio, 0.4);
 	if (!vm->visu.time_manager.pause)
 		vm->visu.current_hp_ratio = ratio;
-	rect->x = vm->visu.center.dashboard_x + 1 +
-		vm->visu.frames[vm->visu.animation_index].voldemort_ray.x_offset;
+	rect->x = vm->visu.center.dashboard_x + 1
+		+ vm->visu.frames[vm->visu.animation_index].voldemort_ray.x_offset;
 	rect->w = ((vm->visu.frames[vm->visu.animation_index].
 		harry_ray.x_offset - vm->visu.frames[vm->visu.animation_index].
 		voldemort_ray.x_offset) * ratio);
@@ -65,8 +65,8 @@ int		ft_render_magic_fight(t_vm *vm)
 		harry_ray.screen_width) - (vm->visu.frames[vm->visu.animation_index].
 		voldemort_ray.screen_width + vm->visu.frames[vm->visu.animation_index].
 		voldemort_ray.x_offset);
-	rect.w = vm->visu.center.dashboard_x + 1 +
-		vm->visu.frames[vm->visu.animation_index].harry_ray.x_offset - rect.x;
+	rect.w = vm->visu.center.dashboard_x + 1
+		+ vm->visu.frames[vm->visu.animation_index].harry_ray.x_offset - rect.x;
 	if (SDL_BlitScaled(vm->visu.frames[vm->visu.animation_index].
 				harry_ray.surface, NULL,
 			vm->visu.sdl.w_surface, &rect))
@@ -107,8 +107,8 @@ int		ft_render_live_breakdown_hp(t_vm *vm)
 	SDL_Rect rect;
 
 	rect.x = vm->visu.center.dashboard_x + vm->visu.center.entry_left;
-	rect.y = vm->visu.center.live_breakdown_hp_y +
-		vm->visu.center.live_breakdown_hp_title_top;
+	rect.y = vm->visu.center.live_breakdown_hp_y
+		+ vm->visu.center.live_breakdown_hp_title_top;
 	rect.w = vm->visu.center.live_breakdown_title_w;
 	rect.h = vm->visu.center.live_breakdown_title_h;
 	if (ft_render_live_breakdown_title(vm, rect))

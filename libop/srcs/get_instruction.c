@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 16:33:31 by emuckens          #+#    #+#             */
-/*   Updated: 2019/03/04 15:28:02 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/07 19:36:58 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,28 @@ int			getval_mod(char *arena, int index, int nb_bytes, int modulo)
 
 	i = 0;
 	val = 0;
-//	ft_printf("src = %s\n", arena);
 	val |= arena[(index + i) % modulo];
-//	ft_printf("intermediate val = %d\n", val);
-	while (++i < (unsigned int)nb_bytes) // avant <
+	while (++i < (unsigned int)nb_bytes)
 	{
 		val <<= 8;
 		val |= (unsigned char)arena[(index + i) % modulo];
-//		ft_printf("intermediate val = %d\n", val);
 	}
 	return (val);
+}
+
+static int	valid_params(t_instruction *ins)
+{
+	int		op;
+
+	op = ins->op->opcode;
+	if (((op == LD || op == LLD) && ins->params[1].type != T_REG)
+		|| (op >= ADD && op <= XOR && ins->params[2].type != T_REG)
+		|| (op >= ADD && op <= SUB && ins->params[2].type != T_REG)
+		|| ((op == LDI || op == LLDI) && ins->params[2].type != T_REG)
+		|| (ins->params[0].type != T_REG
+			&& (op == STI || op == ST || op == AFF)))
+		return (0);
+	return (1);
 }
 
 /*
@@ -40,10 +52,8 @@ int			getval_params(char *arena, t_instruction *ins, int i, int mod)
 {
 	int			j;
 	t_parameter	*param;
-	int			op;
 
 	j = -1;
-	op = ins->op->opcode;
 	while (++j < ins->op->nb_params)
 	{
 		param = &ins->params[j];
@@ -54,16 +64,10 @@ int			getval_params(char *arena, t_instruction *ins, int i, int mod)
 				&& (param->value > REG_NUMBER || param->value <= 0)))
 			return (-1);
 	}
-	if ((ins->params[0].type != T_REG
-			&& (op == STI || op == ST || op == AFF))
-			|| ((op == LD || op == LLD) && ins->params[1].type != T_REG)
-			|| (op >= ADD && op <= XOR && ins->params[2].type != T_REG)
-			|| (op >= ADD && op <= SUB && ins->params[2].type != T_REG)
-			|| ((op == LDI || op == LLDI) && ins->params[2].type != T_REG))
+	if (!valid_params(ins))
 		return (-1);
 	return (0);
 }
-
 
 /*
 ** Check validity of parameters encoding byte, store type and in instruction
@@ -81,26 +85,29 @@ int			is_valid_ocp(unsigned char hex, t_instruction *ins)
 
 	arg = 3;
 	op = hex;
-
-	ft_bzero((void *)ins->params, sizeof(t_parameter) * 3);
 	while (--arg >= 0 && (hex = hex >> 2) >= 0)
 	{
 		param = &ins->params[arg];
 		if ((param->type = hex & 3) >= 0 && param->type < 4)
 			param->nb_bytes = len[(int)param->type];
 		if (param->type == DIR_CODE)
-			param->nb_bytes -=
-					g_op_tab[ins->op->opcode - 1].describe_address * 2;
+			param->nb_bytes -= ins->op->describe_address * 2;
 		if (arg >= g_op_tab[ins->op->opcode - 1].nb_params)
-		{
-			param->type = NA;
-			param->nb_bytes = 0;
-		}
+			ft_bzero(param, sizeof(t_parameter));
 	}
-	if (ins->op->opcode == ST || ins->op->opcode == STI) // pas tres coherent de mettre juste ST, pas LD ou LLD en gestion 3e argument attendu vu le ocp
-		if (op & 0x3)
-			return (0);
 	return ((op));
+}
+
+int			get_bytelen(t_instruction *ins)
+{
+	int len;
+	int	i;
+
+	len = 1 + ins->op->has_ocp;
+	i = -1;
+	while (++i < 3)
+		len += ins->params[i].nb_bytes;
+	return (len);
 }
 
 /*
@@ -112,50 +119,32 @@ int			is_valid_ocp(unsigned char hex, t_instruction *ins)
 */
 
 int			get_ins(char *arena, t_instruction *ins,
-											unsigned int i, unsigned int mod)
+											unsigned int i, int store)
 {
 	unsigned char	hex;
-	int				len;
 
-	len = 0;
-	hex = *(unsigned char *)(arena + i);
-//	ft_printf("i = %zu hex = %d\n", i, hex);
-	if (++i == mod)
-		i -= mod;
-	if (!ins->op && (((int)hex > NB_INSTRUCTIONS) || (int)hex == 0))
-	{
-//		ft_printf("mauvais op\n");
-		return (0);
-	}
+	hex = *(unsigned char *)(arena + i++);
+	i -= (i == MEM_SIZE ? MEM_SIZE : 0);
 	if (!ins->op)
+	{
+		if ((int)hex > NB_INSTRUCTIONS || (int)hex == 0)
+			return (0);
 		ins->op = &g_op_tab[(int)hex - 1];
+	}
 	ins->ocp = (unsigned char)*(arena + i);
-//	ft_printf("op = %d ocp = %#x\n", ins->op->opcode, ins->ocp);
 	if (ins->op->has_ocp == OCP_YES)
 	{
 		if (!is_valid_ocp((unsigned char)ins->ocp, ins))
-		{
-//			ft_printf("invalid ocp\n");
-			len = ins->params[0].nb_bytes + ins->params[1].nb_bytes +
-			ins->params[2].nb_bytes + ins->op->has_ocp + 1;
-			return (-len);
-		}
+//			return (0);
+			return (-get_bytelen(ins));
 	}
 	else
 	{
-		if (ins->op->opcode != LIVE)
-			ins->params[0].type = IND_CODE;
-		else
-			ins->params[0].type = g_op_tab[ins->op->opcode - 1].arg_types[0];
-		ins->params[0].nb_bytes = 4
-			- 2 * g_op_tab[ins->op->opcode - 1].describe_address;
+		ins->params[0].type = ins->op->arg_types[0];
+		ins->params[0].nb_bytes = 4 - 2 * ins->op->describe_address;
 	}
-	len = ins->params[0].nb_bytes + ins->params[1].nb_bytes +
-						ins->params[2].nb_bytes + ins->op->has_ocp + 1;
-	if (getval_params(arena, ins, i + ins->op->has_ocp, mod) == -1)
-	{
-//			ft_printf("invalid params\n");
-		return (-len);
-	}
-	return (len);
+	if (store && getval_params(arena, ins, i + ins->op->has_ocp, MEM_SIZE))
+//		return (1 + ins->op->has_ocp);
+		return (-get_bytelen(ins));
+	return (get_bytelen(ins));
 }

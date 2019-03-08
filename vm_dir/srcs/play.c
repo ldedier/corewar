@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2019/03/04 14:47:59 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/07 19:20:40 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,12 @@ static int		reset_live_allprocesses(t_vm *vm)
 static void		move_forward(t_vm *vm, t_process *proc)
 {
 	display_move(vm, proc);
+	vm->metarena[proc->pc].process_color = -1;
 	if (proc->ins_bytelen <= 0
-			|| proc->pending_ins.op->opcode != ZJMP
+			||proc->pending_ins.op->opcode != ZJMP
 			|| !proc->carry)
 		proc->pc = mod(proc->pc + ft_abs(proc->ins_bytelen), MEM_SIZE);
+		vm->metarena[proc->pc].process_color = proc->player->color.value;
 	ft_bzero((t_instruction *)&proc->pending_ins, sizeof(t_instruction));
 	proc->ins_bytelen = 0;
 }
@@ -92,6 +94,7 @@ static int		next_process_action(t_vm *vm, t_process *proc)
 {
 	t_instruction	*ins;
 	int				op;
+	int				len;
 	static int		(*f_ins[NB_INSTRUCTIONS + 1])(t_vm *vm, t_process *proc,
 			t_parameter arg[3]) = {&no_ins, &ins_live, &ins_ld, &ins_st,
 			&ins_add, &ins_sub, &ins_and, &ins_or, &ins_xor, &ins_zjmp,
@@ -103,17 +106,24 @@ static int		next_process_action(t_vm *vm, t_process *proc)
 		return (SUCCESS);
 	if (proc->ins_cycle == 1)
 	{
-			proc->ins_bytelen = get_ins(vm->arena, ins, proc->pc, MEM_SIZE);
+		proc->ins_bytelen = get_ins(vm->arena, ins, proc->pc, 1);
 		op = (proc->ins_bytelen > 0) * ins->op->opcode;
-		if (f_ins[op](vm, proc, ins->params)
-				== FAILURE)
+		if (f_ins[op](vm, proc, ins->params) == FAILURE)
 			return (FAILURE);
+		vm->metarena[proc->pc].process_carry = proc->carry;
 		move_forward(vm, proc);
 	}
-	else if (get_ins_nostore(vm->arena, ins, proc->pc, MEM_SIZE))
+	else if ((proc->ins_bytelen = get_ins(vm->arena, ins, proc->pc, 0)) && (len = proc->ins_bytelen))
+	{
+		vm->metarena[proc->pc].ins_len = len;
 		proc->ins_cycle = ins->op->nb_cycles;
-	else if (++proc->pc == MEM_SIZE)
+	}
+	else if ((vm->metarena[proc->pc].process_color = -1)
+			&& ++proc->pc == MEM_SIZE)
+	{
 		proc->pc -= MEM_SIZE;
+		vm->metarena[proc->pc].process_color = proc->player->color.value;
+	}
 	return (SUCCESS);
 }
 

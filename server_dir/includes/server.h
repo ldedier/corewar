@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 17:20:50 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/02 18:46:16 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/06 15:16:33 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@
 # include <dirent.h>
 # include <sys/stat.h>
 # include <term.h>
-# define MAX_SOCKETS	MAX_PLAYERS + 1
+# define MAX_CLIENTS	16
+# define MAX_SOCKETS	MAX_CLIENTS + 1
 # define ACTIVITY_SRCH	"server is looking for activity..."
 
 typedef struct			s_client_socket
@@ -38,7 +39,7 @@ typedef struct			s_server
 	IPaddress			ip;
 	TCPsocket			socket;
 	int					port;
-	t_client_socket		client_sockets[MAX_PLAYERS];
+	t_client_socket		client_sockets[MAX_CLIENTS];
 	SDLNet_SocketSet	socket_set;
 	int					nb_players;
 	int					running;

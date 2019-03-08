@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/03 15:42:09 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/02 19:39:37 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/05 20:24:56 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int (*g_print_entry_value[NB_ENTRIES])(t_vm *, int y) = {
 	ft_render_cycle_delta
 };
 
-int		ft_render_entry(t_vm *vm, char *entry, char *value, int y)
+int			ft_render_entry(t_vm *vm, char *entry, char *value, int y)
 {
 	SDL_Rect rect;
 
@@ -46,7 +46,7 @@ int		ft_render_entry(t_vm *vm, char *entry, char *value, int y)
 	return (0);
 }
 
-int		ft_render_cycles_per_second(t_vm *vm, int y)
+int			ft_render_cycles_per_second(t_vm *vm, int y)
 {
 	char	*value;
 	double	val;
@@ -67,7 +67,7 @@ int		ft_render_cycles_per_second(t_vm *vm, int y)
 	return (0);
 }
 
-int		ft_render_cycle(t_vm *vm, int y)
+int			ft_render_cycle(t_vm *vm, int y)
 {
 	char	*value;
 
@@ -78,7 +78,7 @@ int		ft_render_cycle(t_vm *vm, int y)
 	return (0);
 }
 
-int		ft_render_entries(t_vm *vm)
+int			ft_render_entries(t_vm *vm)
 {
 	SDL_Rect	rect;
 	int			y;

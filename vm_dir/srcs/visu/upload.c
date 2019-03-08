@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/30 22:25:06 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/01 22:17:02 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/06 20:42:27 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int		ft_receive_upload_result(t_vm *vm)
 {
 	int nb_bytes;
 
-	if (SDLNet_CheckSockets(vm->client.socket_set, 1500))
+	if (SDLNet_CheckSockets(vm->client.socket_set, TIMEOUT_LIMIT))
 	{
 		if (SDLNet_SocketReady(vm->client.socket))
 		{

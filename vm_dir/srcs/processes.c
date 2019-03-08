@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:24:20 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/28 21:47:22 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/07 18:59:03 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,16 @@ static void		kill_adjust_ptr(t_list **proc_lst, t_list **proc)
 
 int				kill_process(t_vm *vm, t_list **proc_lst, t_list **proc)
 {
-	t_fade	*killed_proc;
+	t_process *process;
 
+	process = (t_process *)(*proc)->content;
 	(void)proc_lst;
-	if (!(killed_proc = (t_fade *)ft_memalloc(sizeof(t_fade))))
-		return (error_exit_msg(vm, ERR_MALLOC));
-	killed_proc->pc = ((t_process *)(*proc)->content)->pc;
-	killed_proc->color = ((t_process *)(*proc)->content)->player->color.value;
-	killed_proc->value = MAX_FADE;
-	--((t_process *)(*proc)->content)->player->nb_proc;
-	if (ft_add_to_list_ptr(&vm->killed_proc,
-				(void *)killed_proc, sizeof(t_fade)))
-		return (error_exit_msg(vm, ERR_MALLOC));
+	vm->metarena[process->pc].process_color = -1;
+	vm->metarena[process->pc].death_color = process->player->color.value;
+	vm->metarena[process->pc].death_fade = MAX_FADE;
+	--process->player->nb_proc;
 	kill_adjust_ptr(&vm->proc, proc);
-	display_last_live(vm, (t_process *)(*proc)->content);
+	display_last_live(vm, process);
 	ft_memdel((void **)&(*proc)->content);
 	ft_memdel((void **)proc);
 	return (SUCCESS);
@@ -115,6 +111,7 @@ t_list			*add_process(t_vm *vm, int index, int start, t_process *src)
 	{
 		process->player = &vm->player[index];
 		process->pc = start;
+		vm->metarena[start].process_color = process->player->color.value;
 		process->reg[0] = process->player->num;
 	}
 	process->nb = ++nb;

@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 15:05:42 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/18 23:09:50 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/05 21:16:55 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,19 +70,20 @@ void		ft_update_download_buttons_client_rect(t_vm *vm)
 	t_client_slot	*slot;
 	double			y;
 	double			x;
+	int				w;
 
-	y = vm->visu.players_list[SERVER].vscrollbar.pos.y +
-		vm->visu.center.player_top;
-	x = vm->visu.center.dashboard_x + vm->visu.center.labscore_left +
-		vm->visu.center.labscore_width + vm->visu.center.labscore_right +
-			vm->visu.center.score_width + vm->visu.center.score_right
-				+ vm->visu.center.player_w + vm->visu.center.download_side -
-					(ft_to_print_scrollbar(vm->visu.players_list[SERVER].
-						vscrollbar) ? vm->visu.center.scrollbar_width / 2 : 0);
+	y = vm->visu.players_list[SERVER].vscrollbar.pos.y
+		+ vm->visu.center.player_top;
+	w = 0;
+	if (ft_to_print_scrollbar(vm->visu.players_list[SERVER].vscrollbar))
+		w = vm->visu.center.scrollbar_width / 2;
+	x = vm->visu.center.dashboard_x + vm->visu.center.labscore_left
+		+ vm->visu.center.labscore_width + vm->visu.center.labscore_right
+		+ vm->visu.center.score_width + vm->visu.center.score_right
+		+ vm->visu.center.player_w + vm->visu.center.download_side - w;
 	ptr = vm->client.client_slots;
-	while (ptr != NULL)
+	while (ptr != NULL && (slot = (t_client_slot *)(ptr->content)))
 	{
-		slot = (t_client_slot *)(ptr->content);
 		slot->download.rect.x = x;
 		slot->download.rect.y = y;
 		slot->download.rect.w = vm->visu.center.player_h;

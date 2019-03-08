@@ -6,7 +6,7 @@
 /*   By: uboumedj <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 19:28:45 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/02/28 15:54:05 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/06 14:25:46 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	ldi_val(t_vm *vm, int *ind, int *val)
 	}
 }
 
-int		ins_ldi(t_vm *vm, t_process *proc, t_parameter arg[3])
+int			ins_ldi(t_vm *vm, t_process *proc, t_parameter arg[3])
 {
 	int		ind;
 	int		val;

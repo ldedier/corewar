@@ -6,16 +6,15 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/09 20:29:58 by emuckens          #+#    #+#             */
-/*   Updated: 2019/01/30 18:34:02 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/07 19:12:49 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-
 void	load_arena(t_vm *vm, t_process *proc, int index, int val)
 {
-	int 	i;
+	int		i;
 	int		mod_index;
 	int		byte_val;
 
@@ -27,8 +26,8 @@ void	load_arena(t_vm *vm, t_process *proc, int index, int val)
 			mod_index -= MEM_SIZE;
 		byte_val = val & (0xFF << ((3 - i) * 8));
 		vm->arena[mod_index] = byte_val >> ((3 - i) * 8);
-		vm->metarena[mod_index].color_index = proc->player->color.index;
-		vm->metarena[mod_index].alt_color = ALT_COLOR_VALUE;
+		vm->metarena[mod_index].content_color_index = proc->player->color.index;
+		vm->metarena[mod_index].write_fade = ALT_COLOR_VALUE;
 		++mod_index;
 	}
 }

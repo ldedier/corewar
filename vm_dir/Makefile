@@ -38,11 +38,11 @@ OK_COLOR = \x1b[32;01m
 EOC = \033[0m
 
 
-SRCS_NO_PREFIX =		arena.c error.c flags.c main.c \
+SRCS_NO_PREFIX =		dump.c error.c flags.c main.c \
 						tmp.c utils.c play.c \
 						net_tools.c \
-						test.c display.c display_player.c display_ins.c processes.c \
-						vm.c players.c parse.c color.c
+						display.c display_player.c display_ins.c processes.c \
+						vm.c players.c parse.c color.c 
 
 INS_NO_PREFIX =			get_val.c load_val.c no_ins.c \
 						live.c ld.c st.c add.c sub.c and.c or.c xor.c zjmp.c \
@@ -75,7 +75,7 @@ VISU_NO_PREFIX =		init_sdl.c visu.c events.c framerate.c render.c \
 						render_live_breakdown_hp_tools.c render_online_top.c\
 						render_online_2.c render_live.c render_fade.c\
 						render_activity.c client_get_new_cores.c render_alts.c \
-						init_players.c vm_tools.c
+						init_players.c vm_tools.c init_center_play_2.c
 
 
 INCLUDES_NO_PREFIX =	vm.h visu.h client.h

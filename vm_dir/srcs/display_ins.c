@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 19:05:47 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/28 20:29:15 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/06 13:43:36 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 
 void		display_proc_ins(t_vm *vm, t_process *proc)
 {
-	int i;
-	int arg_type;
-	int	val;
+	t_parameter *param;
+	int			i;
 
 	if (!(vm->display.code & (1 << MSG_INS)) || vm->visu.active)
 		return ;
@@ -24,19 +23,11 @@ void		display_proc_ins(t_vm *vm, t_process *proc)
 	ft_printf("\nP %4d | %s", proc->nb, proc->pending_ins.op->instruction_name);
 	while (++i < proc->pending_ins.op->nb_params)
 	{
-		if (proc->pending_ins.params[i].retrieval_mode)
-		{
-			ft_printf(" %d", proc->pending_ins.params[i].dest_value);
-		}
+		param = &proc->pending_ins.params[i];
+		if (param->retrieval_mode)
+			ft_printf(" %d", param->dest_value);
 		else
-		{
-			val = proc->pending_ins.params[i].value;
-			arg_type = proc->pending_ins.params[i].type;
-			if (!(proc->pending_ins.op->opcode == ST && i == 1)) // pas reussi a gerer autrement octobre rouge st r1 3 en 3265
-				ft_printf(" %s%d", arg_type == REG_CODE ? "r" : "", val);
-			else
-				ft_printf(" %d", val);
-		}
+			ft_printf(" %s%d", param->type == T_REG ? "r" : "", param->value);
 	}
 }
 

@@ -6,14 +6,14 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 20:50:21 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/04 15:31:16 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/05 21:23:24 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 #include <pthread.h>
 
-void	ft_populate_sdl_color_from_int(int color, SDL_Color *sdl_color)
+static void		ft_populate_sdl_color_from_int(int color, SDL_Color *sdl_color)
 {
 	t_color_manager col;
 
@@ -23,7 +23,7 @@ void	ft_populate_sdl_color_from_int(int color, SDL_Color *sdl_color)
 	sdl_color->b = col.b;
 }
 
-int		ft_init_atlas_color(t_sdl *sdl, int i, SDL_Color color)
+static int		ft_init_atlas_color(t_sdl *sdl, int i, SDL_Color color)
 {
 	int				j;
 	SDL_Surface		*tmp;
@@ -44,7 +44,7 @@ int		ft_init_atlas_color(t_sdl *sdl, int i, SDL_Color color)
 	return (0);
 }
 
-int		ft_init_atlas(t_vm *vm, t_sdl *sdl)
+int				ft_init_atlas(t_vm *vm, t_sdl *sdl)
 {
 	int				i;
 	SDL_Color		color;

@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/04 15:20:42 by ldedier           #+#    #+#              #
-#    Updated: 2019/03/02 20:47:46 by ldedier          ###   ########.fr        #
+#    Updated: 2019/03/06 14:18:25 by emuckens         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,7 @@ SRCS_NO_PREFIX =	main.c ft_process.c ft_fill_all.c tools.c ft_init.c \
 					ft_process_players.c fight_cores.c signals.c\
 					ft_free.c
 
-VM_NO_PREFIX =		arena.c error.c parse.c utils.c play.c display.c color.c \
+VM_NO_PREFIX =		dump.c error.c parse.c utils.c play.c display.c color.c \
 			  	vm.c players.c processes.c display_player.c display_ins.c
 
 VM_INS_NO_PREFIX =	get_val.c load_val.c live.c ld.c st.c add.c sub.c and.c \

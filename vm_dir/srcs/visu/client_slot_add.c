@@ -6,13 +6,13 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 18:09:54 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/19 00:44:18 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/05 21:28:52 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-int		ft_process_add_client_slot(t_vm *vm, t_player *player)
+int				ft_process_add_client_slot(t_vm *vm, t_player *player)
 {
 	t_client_slot	*slot;
 
@@ -33,7 +33,7 @@ int		ft_process_add_client_slot(t_vm *vm, t_player *player)
 	return (0);
 }
 
-int		ft_add_new_client_slot(t_vm *vm, int i, t_name_len name_len,
+static int		ft_add_new_client_slot(t_vm *vm, int i, t_name_len name_len,
 		t_score score)
 {
 	t_player		*player;
@@ -43,8 +43,8 @@ int		ft_add_new_client_slot(t_vm *vm, int i, t_name_len name_len,
 	return (ft_process_add_client_slot(vm, player));
 }
 
-int		ft_process_new_client_slot(t_vm *vm, int i, t_name_len name_len,
-		t_score score)
+int				ft_process_new_client_slot(t_vm *vm, int i, t_name_len name_len,
+					t_score score)
 {
 	t_client_slot	*slot;
 	t_player		*player;
@@ -61,7 +61,7 @@ int		ft_process_new_client_slot(t_vm *vm, int i, t_name_len name_len,
 		return (ft_process_add_client_slot(vm, player));
 }
 
-int		ft_process_process_add_client_slots(t_vm *vm, int nb_bytes,
+static int		ft_process_process_add_client_slots(t_vm *vm, int nb_bytes,
 			int i, t_nb_players nb_players)
 {
 	t_name_len		name_len;
@@ -87,7 +87,7 @@ int		ft_process_process_add_client_slots(t_vm *vm, int nb_bytes,
 	return (0);
 }
 
-int		ft_process_add_client_slots(int nb_bytes, t_vm *vm)
+int				ft_process_add_client_slots(int nb_bytes, t_vm *vm)
 {
 	t_nb_players	nb_players;
 	int				i;

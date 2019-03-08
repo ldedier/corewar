@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 15:05:42 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/18 23:09:04 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/05 21:17:12 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int			ft_render_server_title(t_vm *vm, double y)
 
 	rect.x = vm->visu.center.dashboard_x + vm->visu.center.s_title_side;
 	rect.y = y;
-	rect.w = vm->visu.center.dashboard_width -
-		2 * vm->visu.center.s_title_side;
+	rect.w = vm->visu.center.dashboard_width
+		- 2 * vm->visu.center.s_title_side;
 	rect.h = vm->visu.center.s_title_h;
 	if (SDL_BlitScaled(vm->visu.sdl.titles[SCOREWAR], NULL,
 				vm->visu.sdl.w_surface, &rect) < 0)
@@ -43,13 +43,14 @@ int			ft_render_toolbar_buttons(t_vm *vm, t_button buttons[NB_BUTTONS])
 
 void		ft_render_upload_link(t_vm *vm, t_xy xy)
 {
-	int i;
-	int color;
-	int *pixels;
+	int			i;
+	int			color;
+	int			*pixels;
+	t_player	*player;
 
-	if (vm->client.upload_player.relevant &&
-			vm->visu.drag_container.drag_union.drag_player.player !=
-				&vm->client.upload_player)
+	player = vm->visu.drag_container.drag_union.drag_player.player;
+	if (vm->client.upload_player.relevant
+		&& player != &vm->client.upload_player)
 		color = ft_scale_color(ft_get_color(UPLOAD_COLOR), 1.3).color;
 	else
 		color = ft_get_player_color(vm, &vm->client.upload_player,

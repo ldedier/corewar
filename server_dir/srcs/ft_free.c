@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 20:47:04 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/02 20:50:02 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/06 15:14:49 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void		ft_free_all_server(t_server *server)
 	SDLNet_FreeSocketSet(server->socket_set);
 	clear_vm(&server->vm);
 	i = 0;
-	while (i < MAX_PLAYERS)
+	while (i < MAX_CLIENTS)
 	{
 		if (!server->client_sockets[i].isfree)
 		{

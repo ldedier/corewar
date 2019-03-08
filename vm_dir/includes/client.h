@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 18:26:19 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/30 18:12:50 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/06 20:43:59 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include "player.h"
 # include "visu.h"
 
+
+# define TIMEOUT_LIMIT	1000000
 typedef struct s_vm		t_vm;
 
 typedef struct			s_client_slot
@@ -43,12 +45,12 @@ typedef struct			s_client
 }						t_client;
 
 int						ft_query_player(t_vm *vm, t_client_slot *cs);
+int						ft_query_player_bin(t_vm *vm, t_client_slot *cs);
 int						ft_net_error(void);
 int						ft_send_protected(TCPsocket socket, void *data,
 							size_t size);
 int						ft_process_client_events(t_vm *vm);
 int						ft_query_player_size(t_player *player);
-int						ft_free_all_client(t_client *client);
 int						ft_process_client_events(t_vm *vm);
 t_client_slot			*get_client_slot(t_vm *vm, char *name);
 t_client_slot			*ft_new_client_slot(t_vm *vm, t_player *player);

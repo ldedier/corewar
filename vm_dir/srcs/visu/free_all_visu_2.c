@@ -6,25 +6,25 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 16:07:26 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/01 22:30:30 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/05 21:26:29 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-void	ft_free_surface(SDL_Surface *surface)
+static void		ft_free_surface(SDL_Surface *surface)
 {
 	if (surface != NULL)
 		SDL_FreeSurface(surface);
 }
 
-void	ft_free_font(TTF_Font *font)
+void			ft_free_font(TTF_Font *font)
 {
 	if (font != NULL)
 		TTF_CloseFont(font);
 }
 
-void	ft_free_surfaces(t_visu *v)
+void			ft_free_surfaces(t_visu *v)
 {
 	int i;
 
@@ -50,7 +50,7 @@ void	ft_free_surfaces(t_visu *v)
 	}
 }
 
-void	ft_free_atlas(t_visu *v)
+void			ft_free_atlas(t_visu *v)
 {
 	int i;
 	int j;
@@ -68,7 +68,7 @@ void	ft_free_atlas(t_visu *v)
 	}
 }
 
-void	ft_free_cursors(t_visu *v)
+void			ft_free_cursors(t_visu *v)
 {
 	int i;
 

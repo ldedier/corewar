@@ -6,13 +6,13 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/08 23:37:36 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/02 23:32:26 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/05 21:26:39 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-void		ft_key_down(t_vm *vm, SDL_Keycode code)
+static int	ft_key_down(t_vm *vm, SDL_Keycode code)
 {
 	if (code == SDLK_SPACE)
 	{
@@ -22,23 +22,22 @@ void		ft_key_down(t_vm *vm, SDL_Keycode code)
 			vm->visu.time_manager.pause = !vm->visu.time_manager.pause;
 	}
 	else if (code == SDLK_RIGHT && vm->visu.time_manager.pause)
-		play_one_cycle(vm);
+	{
+		if (play_one_cycle(vm))
+			return (error_exit_msg(vm, ERR_MALLOC));
+	}
 	else if (code == SDLK_r)
 		display_registers(vm);
+	return (0);
 }
 
-void		ft_key_up(t_vm *vm, SDL_Keycode code)
+static void	ft_increment_cpt(t_vm *vm, int direction)
 {
-	(void)vm;
-	(void)code;
-}
+	double cycles;
 
-void		ft_increment_cpt(t_vm *vm, int direction)
-{
+	cycles = vm->visu.time_manager.cycles_per_turn + direction / 10.0;
 	if (vm->visu.time_manager.cycles_per_turn <= 4)
-		vm->visu.time_manager.cycles_per_turn =
-		ft_fmax(vm->visu.time_manager.cycles_per_turn +
-				(direction / 10.0), 0.0166);
+		vm->visu.time_manager.cycles_per_turn = ft_fmax(cycles, 0.0166);
 	else if (vm->visu.time_manager.cycles_per_turn >= 5000)
 		vm->visu.time_manager.cycles_per_turn = ft_fmin(20000,
 			vm->visu.time_manager.cycles_per_turn + direction * 1000);
@@ -48,14 +47,12 @@ void		ft_increment_cpt(t_vm *vm, int direction)
 		vm->visu.time_manager.cycles_per_turn += direction;
 }
 
-void		ft_process_keys(t_vm *vm, const Uint8 *keys)
+static void	ft_process_keys(t_vm *vm, const Uint8 *keys)
 {
 	if (keys[SDL_SCANCODE_UP])
 		ft_increment_cpt(vm, 1);
 	if (keys[SDL_SCANCODE_DOWN])
 		ft_increment_cpt(vm, -1);
-//	if (keys[SDLK_KP_6] && vm->visu.time_manager.pause)
-//		process_cycle(vm);
 }
 
 int			ft_process_events(t_vm *vm)
@@ -64,14 +61,14 @@ int			ft_process_events(t_vm *vm)
 
 	while (SDL_PollEvent(&event))
 	{
-		if (event.type == SDL_QUIT ||
-				(event.type == SDL_KEYDOWN &&
-					event.key.keysym.sym == SDLK_ESCAPE))
+		if ((event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE)
+			|| event.type == SDL_QUIT)
 			vm->visu.active = 0;
 		else if (event.type == SDL_KEYDOWN && !event.key.repeat)
-			ft_key_down(vm, event.key.keysym.sym);
-		else if (event.type == SDL_KEYUP)
-			ft_key_up(vm, event.key.keysym.sym);
+		{
+			if (ft_key_down(vm, event.key.keysym.sym))
+				return (error_exit_msg(vm, ERR_MALLOC));
+		}
 		else if (event.type == SDL_MOUSEBUTTONDOWN)
 			ft_mouse_down(vm, event);
 		else if (event.type == SDL_MOUSEWHEEL)

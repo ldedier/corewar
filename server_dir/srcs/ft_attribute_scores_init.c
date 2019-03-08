@@ -6,11 +6,24 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 14:46:58 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/25 16:27:05 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/03/06 20:30:15 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "server.h"
+
+int		ft_process_blood_bath(t_server *server, t_player *player1,
+			t_player *player2)
+{
+	if (fight_cores(&server->vm, player1, player2))
+		return (1);
+	server->vm.winner->nb_victories++;
+	if (ft_add_to_list_ptr(&server->vm.winner->beaten_players,
+				player1 == server->vm.winner ? player2 : player1,
+				sizeof(t_player)))
+		return (1);
+	return (0);
+}
 
 int		ft_blood_bath(t_server *server)
 {
@@ -18,8 +31,9 @@ int		ft_blood_bath(t_server *server)
 	t_player	*player1;
 	t_player	*player2;
 	t_list		*next;
-	int			ret;
+	int			i;
 
+	i = 0;
 	ptr = server->players;
 	while (ptr != NULL)
 	{
@@ -27,24 +41,13 @@ int		ft_blood_bath(t_server *server)
 		next = ptr->next;
 		while (next != NULL)
 		{
-			ft_printf("while\n");
 			player2 = (t_player *)next->content;
-			ret = fight_cores(&server->vm, player1, player2);
-			ft_printf("ret = %d\n", ret);
-			if (ret)
+			if (ft_process_blood_bath(server, player1, player2))
 				return (1);
-			server->vm.winner->nb_victories++;
-			ft_printf("server winner = %s victories = %d\n",
-					server->vm.winner->name, server->vm.winner->nb_victories);
-			if (ft_add_to_list_ptr(&server->vm.winner->beaten_players,
-										player1 == server->vm.winner ?
-										player2 : player1, sizeof(t_player)))
-			{
-				ft_printf("exit blood bath\n");
-				return (1);
-			}
 			next = next->next;
 		}
+		ft_printf("init players score: %d / %d (%s)\n", ++i,
+			ft_lstlength(server->players), player1->name);
 		ptr = ptr->next;
 	}
 	return (0);

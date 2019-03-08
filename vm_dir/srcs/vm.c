@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:15:00 by emuckens          #+#    #+#             */
-/*   Updated: 2019/03/04 15:30:31 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/07 19:44:48 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,56 @@
 
 void			clear_vm(t_vm *vm)
 {
+	int		i;
+
+	i = -1;
 	vm->live = 0;
 	vm->nb = 1;
 	vm->total_cycle = 0;
 	vm->cycle = 0;
 	vm->c_to_die = CYCLE_TO_DIE;
 	ft_bzero(vm->arena, MEM_SIZE);
-	ft_memset(vm->metarena, sizeof(vm->metarena), MAX_PLAYERS);
 	while (vm->proc)
 		ft_lstpop(&vm->proc);
-	while (vm->killed_proc)
-		ft_lstpop(&vm->killed_proc);
-	while (vm->live_ok)
-		ft_lstpop(&vm->live_ok);
+	while (++i < MAX_PLAYERS)
+	{
+		vm->player[i].live = 0;
+		vm->player[i].last_live_cycle = 0;
+		vm->player[i].nb_proc = 1;
+	}
+}
+/*
+** init_players function initializes each player's structures' parameters to
+** their default value
+*/
+
+static void		init_players(t_vm *vm)
+{
+	int		i;
+
+	i = -1;
+	while (++i < MAX_PLAYERS)
+	{
+		vm->player[i].relevant = 0;
+		vm->player[i].color.value = 1;
+		vm->player[i].last_live_cycle = 0;
+		vm->player[i].nb_proc = 0;
+		vm->player[i].num_type = -1;
+		ft_bzero(vm->player[i].aff_buf, MAX_AFF_LEN);
+	}
+}
+
+void			init_metarena(t_vm *vm)
+{
+	int	i;
+
+	i = -1;
+	while (++i < MEM_SIZE)
+	{
+		ft_bzero((void *)&vm->metarena[i], sizeof(t_metadata));
+		vm->metarena[i].process_color = -1;
+		vm->metarena[i].content_color_index = 0;
+	}
 }
 
 /*
@@ -55,8 +92,6 @@ void			init_vm(t_vm *vm, char **argv)
 	vm->nb_players = 0;
 	vm->display.code = 0;
 	vm->issued_live = 0;
-	vm->killed_proc = NULL;
-	vm->live_ok = NULL;
 	vm->proc = NULL;
 	vm->display.status = OFF;
 	ft_bzero(&vm->color, sizeof(t_color));

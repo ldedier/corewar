@@ -6,13 +6,13 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/19 00:29:34 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/19 00:31:07 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/05 16:28:58 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-int		ft_process_get_new_cores(t_vm *vm, int nb_bytes,
+static int		ft_process_get_new_cores(t_vm *vm, int nb_bytes,
 			int *i, t_name_len *name_len)
 {
 	t_score			score;
@@ -30,7 +30,7 @@ int		ft_process_get_new_cores(t_vm *vm, int nb_bytes,
 	return (0);
 }
 
-int		ft_get_new_cores(int nb_bytes, t_vm *vm)
+int				ft_get_new_cores(int nb_bytes, t_vm *vm)
 {
 	t_nb_players	nb_players;
 	t_name_len		name_len;

@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/04 00:00:48 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/02 19:26:25 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/05 20:47:50 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ int		ft_render_winner(t_vm *vm)
 	SDL_Rect	rect;
 
 	rect.x = vm->visu.center.dashboard_x + vm->visu.center.winner_left;
-	rect.y = vm->visu.center.game_entries_h + vm->visu.center.player_entries_h +
-		vm->visu.center.winner_top;
+	rect.y = vm->visu.center.game_entries_h + vm->visu.center.player_entries_h
+		+ vm->visu.center.winner_top;
 	rect.w = vm->visu.center.winner_width;
 	rect.h = vm->visu.center.winner_height;
 	if (vm->proc == NULL && vm->winner)

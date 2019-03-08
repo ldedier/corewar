@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 19:06:34 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/18 19:13:22 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/05 20:49:46 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int		ft_render_closing_cross(t_vm *vm, t_xy xy)
 
 	cross_rect.w = vm->visu.center.cross_border;
 	cross_rect.h = vm->visu.center.cross_border;
-	cross_rect.x = xy.x + vm->visu.center.player_w -
-			vm->visu.center.cross_border;
+	cross_rect.x = xy.x + vm->visu.center.player_w
+		- vm->visu.center.cross_border;
 	cross_rect.y = xy.y;
 	if (SDL_BlitScaled(vm->visu.sdl.images[CLOSE], NULL,
 			vm->visu.sdl.w_surface, &cross_rect) < 0)
@@ -32,9 +32,9 @@ int		ft_get_player_color_no_drag(t_vm *vm, t_player *player,
 {
 	t_color_manager c;
 
-	if (player != vm->visu.drop_container.player ||
-			player == vm->visu.drag_container.drag_union.drag_player.player ||
-				vm->visu.drag_container.drag_enum != DRAG_PLAYER)
+	if (player != vm->visu.drop_container.player
+			|| player == vm->visu.drag_container.drag_union.drag_player.player
+			|| vm->visu.drag_container.drag_enum != DRAG_PLAYER)
 		return (initial_color);
 	else
 	{
@@ -48,8 +48,8 @@ int		ft_get_player_color(t_vm *vm, t_player *player, int initial_color,
 {
 	t_color_manager c;
 
-	if (player != vm->visu.drop_container.player ||
-		vm->visu.drag_container.drag_enum != DRAG_PLAYER)
+	if (player != vm->visu.drop_container.player
+			|| vm->visu.drag_container.drag_enum != DRAG_PLAYER)
 		return (initial_color);
 	else
 	{
@@ -81,8 +81,8 @@ int		ft_render_title(t_vm *vm, int title_index, double x, double y)
 
 	rect.x = x;
 	rect.y = y;
-	rect.w = vm->visu.center.dashboard_mid_width -
-		2 * vm->visu.center.title_side;
+	rect.w = vm->visu.center.dashboard_mid_width
+		- 2 * vm->visu.center.title_side;
 	rect.h = vm->visu.center.title_h;
 	if (SDL_BlitScaled(vm->visu.sdl.titles[title_index],
 			NULL, vm->visu.sdl.w_surface, &rect) < 0)

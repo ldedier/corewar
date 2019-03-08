@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/29 17:38:52 by ldedier           #+#    #+#              #
-#    Updated: 2019/03/04 15:06:56 by emuckens         ###   ########.fr        #
+#    Updated: 2019/03/06 18:47:42 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,8 +24,7 @@ ASM_NAME		= asm
 DECOMPILER_NAME = decompiler
 SERVER_NAME		= scorewar
 
-opti:
-	@make all
+NAME			= project
 
 all:
 	@make -C $(LIBFTDIR) opti
@@ -39,8 +38,10 @@ all:
 	@cp $(DECOMPILERDIR)/$(DECOMPILER_NAME) .
 	@cp $(SERVERDIR)/$(SERVER_NAME) .
 
+$(NAME): all
+
 debug:
-	@make opti DEBUG=1
+	@make DEBUG=1
 
 redebug: fclean debug
 
@@ -65,6 +66,6 @@ fclean: clean
 	@rm -f $(DECOMPILER_NAME)
 	@rm -f $(SERVER_NAME)
 
-re: fclean opti
+re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re debug redebug
