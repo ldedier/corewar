@@ -19,6 +19,28 @@ int	isprint(int c)
 	return (0);
 }
 
+int			read_comment(char *line, t_env *env, int fd, int i)
+{
+	int		j;
+
+	j = 0;
+	if (env->champ.header.comment[j])
+		return (ft_log_error("Syntax error", 0, env));
+	i = ft_strlen(COMMENT_CMD_STRING);
+	while (line[++i] == ' ' || line[i] == '\t')
+		;
+	if (line[i] != '"')
+		return (ft_log_error(ERR_LX, i, env));
+	while (line[i] && line[i + 1] != '"')
+		env->champ.header.comment[j++] = line[++i];
+	env->champ.header.comment[j] = '\0';
+	if (line[i + 1] != '"' && line[i] != '\0')
+		return (ft_log_error(ERR_LX, i, env));
+	if (read_comment_continue(line, i, env, fd) == 1)
+		return (1);
+	return (0);
+}
+
 int	ft_parse_line_header(char *str, t_env *env, int i, int fd)
 {
 	if (ft_strstr(str, NAME_CMD_STRING))

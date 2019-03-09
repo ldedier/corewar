@@ -88,14 +88,6 @@ int		ft_log_warning(char *str, int column, t_env *e)
 	return (1);
 }
 
-int		ft_log_warning_no_line(char *str, t_env *e)
-{
-	ft_printf("%s%s%s: %swarning: %s%s%s\n", BOLD, WHITE,
-			e->champ.assembly_name, MAGENTA, WHITE, str, EOC);
-	e->parser.nb_warnings++;
-	return (1);
-}
-
 void	ft_print_logs_stats(t_env *e)
 {
 	if (e->parser.nb_errors && e->parser.nb_warnings)

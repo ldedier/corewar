@@ -49,8 +49,8 @@ int		ft_parse_instruction(char *str, t_env *e, int start)
 	while (ft_isseparator(str[start]) && ft_addco(str[start], e))
 		start++;
 	i = start;
-	while (str[i] && !ft_isseparator(str[i]) && str[i] != DIRECT_CHAR &&
-				str[i] != LABEL_CHAR)
+	while (str[i] && !ft_isseparator(str[i]) && str[i] != DIRECT_CHAR
+		&& str[i] != LABEL_CHAR)
 		i++;
 	if (!str[i])
 		return (ft_log_error(LEXICAL_ERROR, 0, e));

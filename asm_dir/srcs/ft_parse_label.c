@@ -42,6 +42,8 @@ int			ft_fill_instructions_labels_values(t_env *e)
 	int				i;
 
 	ptr = e->champ.instructions;
+	if (e->champ.labels == NULL)
+		return (ft_log_error_no_line("missing instructions in fille", e));
 	while (ptr != NULL)
 	{
 		instruction = (t_instruction *)(ptr->content);

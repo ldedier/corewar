@@ -33,8 +33,8 @@ int		ft_log_custom_nb_params_error(t_env *e)
 	}
 	free(nb_instruc);
 	if (!(str = ft_strjoin_free(str,
-					e->parser.current_instruction->op->nb_params == 1 ?
-					" argument !" : " arguments !")))
+					e->parser.current_instruction->op->nb_params == 1
+						? " argument !" : " arguments !")))
 		return (ft_log_error(MALLOC_ERROR, 0, e));
 	ft_log_error(str, 0, e);
 	free(str);
@@ -68,5 +68,13 @@ int		ft_log_custom_wrong_param_type(char *arg_type, int index, int offset,
 		return (ft_log_error(MALLOC_ERROR, 0, e));
 	ft_log_error(str, offset, e);
 	free(str);
+	return (1);
+}
+
+int		ft_log_warning_no_line(char *str, t_env *e)
+{
+	ft_printf("%s%s%s: %swarning: %s%s%s\n", BOLD, WHITE,
+			e->champ.assembly_name, MAGENTA, WHITE, str, EOC);
+	e->parser.nb_warnings++;
 	return (1);
 }

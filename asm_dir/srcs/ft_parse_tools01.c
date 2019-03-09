@@ -27,8 +27,8 @@ int				ft_nb_params_coherent(char *str, t_env *e)
 			return (0);
 		i++;
 	}
-	if (e->parser.parse_param && ++e->parser.nb_params ==
-			e->parser.current_instruction->op->nb_params)
+	if (e->parser.parse_param && ++e->parser.nb_params
+		== e->parser.current_instruction->op->nb_params)
 		return (1);
 	else
 	{
@@ -62,8 +62,8 @@ int				ft_addco(char c, t_env *e)
 {
 	if (c == '\t')
 	{
-		e->parser.column_offset += TAB_SIZE -
-			(e->parser.column_offset % TAB_SIZE);
+		e->parser.column_offset += TAB_SIZE
+			- (e->parser.column_offset % TAB_SIZE);
 	}
 	else
 		e->parser.column_offset++;

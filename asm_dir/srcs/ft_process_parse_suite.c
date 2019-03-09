@@ -80,8 +80,8 @@ int			ft_process_parse_label(char *str, int index, int offset, t_env *e)
 
 	if (!(label_name = ft_get_str(&str)))
 		ft_log_error(MALLOC_ERROR, offset, e);
-	e->parser.current_instruction->params[index].source_code_col = offset +
-		e->parser.column_offset;
+	e->parser.current_instruction->params[index].source_code_col = offset
+		+ e->parser.column_offset;
 	e->parser.current_instruction->params[index].label_name = label_name;
 	e->parser.current_instruction->params[index].type |= T_LAB;
 	i = 0;
@@ -93,7 +93,7 @@ int			ft_process_parse_label(char *str, int index, int offset, t_env *e)
 	return (0);
 }
 
-int			ft_process_fill_instruction_label_value(t_instruction *instruction,
+int			ft_process_fill_instruction_label_value(t_instruction *instru,
 		int index, t_list *labels)
 {
 	t_list	*ptr;
@@ -103,14 +103,14 @@ int			ft_process_fill_instruction_label_value(t_instruction *instruction,
 	while (ptr != NULL)
 	{
 		label = (t_label *)ptr->content;
-		if (!ft_strcmp(instruction->params[index].label_name, label->name))
+		if (!ft_strcmp(instru->params[index].label_name, label->name))
 		{
-			if (instruction->params[index].type & T_DIR)
-				instruction->params[index].value =
-					label->address - instruction->address;
+			if (instru->params[index].type & T_DIR)
+				instru->params[index].value =
+					label->address - instru->address;
 			else
-				instruction->params[index].value =
-					label->address - instruction->address;
+				instru->params[index].value =
+					label->address - instru->address;
 			return (0);
 		}
 		ptr = ptr->next;

@@ -56,6 +56,8 @@ typedef struct					s_env
 ** parse the filenamefile : print the error and return 1, else return 0
 ** updates the champion (especially its instructions list)
 */
+int								read_comment_continue(char *line, int i,
+									t_env *env, int fd);
 void							ft_init_parser(t_parser *parser);
 void							ft_init_env(t_env *e, char *filename);
 int								check_comment(char *str, t_env *env);

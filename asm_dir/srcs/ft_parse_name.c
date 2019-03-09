@@ -34,7 +34,7 @@ static int	read_name_continue(char *line, int i, t_env *env)
 	if (line[i + 1] != '\0')
 		while (line[++i] || line[i] == ' ' || line[i] == '\t')
 			if (isprint(line[i]))
-				return (ft_log_error(ERR_SXN, i - 2, env));
+				return (ft_log_error(ERR_SXN, i, env));
 	if (ft_strlen(env->champ.header.prog_name) > PROG_NAME_LENGTH)
 		return (ft_log_error_no_line(ERR_SIZEN, env));
 	return (0);

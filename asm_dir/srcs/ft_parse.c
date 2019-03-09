@@ -36,8 +36,8 @@ int			ft_parse_params(char *str, int i, t_env *e)
 	if (!str[i])
 	{
 		e->parser.column_offset = save;
-		return (ft_log_error(NO_PARAMETERS, -
-			ft_strlen(e->parser.current_instruction->op->instruction_name), e));
+		return (ft_log_error(NO_PARAMETERS,
+			- ft_strlen(e->parser.current_instruction->op->instruction_name), e));
 	}
 	if (!(params_split = ft_strsplit(&(str[i]), SEPARATOR_CHAR)))
 		return (ft_log_error(MALLOC_ERROR, 0, e));
