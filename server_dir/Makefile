@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/04 15:20:42 by ldedier           #+#    #+#              #
-#    Updated: 2019/03/08 19:29:08 by ldedier          ###   ########.fr        #
+#    Updated: 2019/03/09 21:28:27 by emuckens         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -88,6 +88,7 @@ SDL2_FRAMEWORKS = -framework SDL2 -framework SDL2_net
 
 opti:
 	@make all -j
+
 all:
 	@make -C $(LIBFTDIR) all
 	@make -C $(LIBOPDIR) all

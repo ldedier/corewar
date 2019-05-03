@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 12:53:10 by emuckens          #+#    #+#             */
-/*   Updated: 2019/03/05 15:01:34 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/10 17:42:47 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,24 +38,27 @@ static int		check_resize_cycle(t_vm *vm)
 static int		reset_live_allprocesses(t_vm *vm)
 {
 	t_list		*proc_lst;
-	t_process	*proc;
+	t_list		*prev;
 	t_list		*tmp;
+	t_process	*proc;
 
+	if (kill_process_at_head(vm) == FAILURE)
+		return (FAILURE);
 	proc_lst = vm->proc;
-	while (proc_lst && (proc = ((t_process *)proc_lst->content)))
+	prev = proc_lst;
+	while (proc_lst && proc_lst->next && (prev = proc_lst))
 	{
 		tmp = proc_lst->next;
+		proc = (t_process *)tmp->content;
+		proc->player->live = 0;
 		if (vm->total_cycle - proc->live_cycle >= vm->c_to_die)
 		{
-			if (kill_process(vm, &vm->proc, &proc_lst) == FAILURE)
+			prev->next = tmp->next;
+			if (kill_process(vm, &tmp) == FAILURE)
 				return (FAILURE);
 		}
 		else
-		{
-			proc->live = 0;
-			proc->player->live = 0;
-		}
-		proc_lst = tmp;
+			proc_lst = proc_lst->next;
 	}
 	vm->live = 0;
 	return (SUCCESS);

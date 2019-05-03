@@ -1,0 +1,120 @@
+
+//////////////////////////////////////////
+trace for ../database/cor_files/Kappa.cor:
+//////////////////////////////////////////
+
+==33147== Memcheck, a memory error detector
+==33147== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==33147== Using Valgrind-3.14.0 and LibVEX; rerun with -h for copyright info
+==33147== Command: ./decompiler -l ../database/cor_files/Kappa.cor
+==33147== Parent PID: 33138
+==33147== 
+==33147== Conditional jump or move depends on uninitialised value(s)
+==33147==    at 0x100001A69: isvalid_op (in ./decompiler)
+==33147==    by 0x1000018F1: read_ins (in ./decompiler)
+==33147==    by 0x1000011E8: ft_encode_asm (in ./decompiler)
+==33147==    by 0x1000013F4: ft_encode_to_assembly (in ./decompiler)
+==33147==    by 0x100000FBA: main (in ./decompiler)
+==33147== 
+==33147== Conditional jump or move depends on uninitialised value(s)
+==33147==    at 0x1000018F5: read_ins (in ./decompiler)
+==33147==    by 0x1000011E8: ft_encode_asm (in ./decompiler)
+==33147==    by 0x1000013F4: ft_encode_to_assembly (in ./decompiler)
+==33147==    by 0x100000FBA: main (in ./decompiler)
+==33147== 
+==33147== Use of uninitialised value of size 8
+==33147==    at 0x100001957: read_ins (in ./decompiler)
+==33147==    by 0x1000011E8: ft_encode_asm (in ./decompiler)
+==33147==    by 0x1000013F4: ft_encode_to_assembly (in ./decompiler)
+==33147==    by 0x100000FBA: main (in ./decompiler)
+==33147== 
+==33147== Use of uninitialised value of size 8
+==33147==    at 0x1000019FC: read_ins (in ./decompiler)
+==33147==    by 0x1000011E8: ft_encode_asm (in ./decompiler)
+==33147==    by 0x1000013F4: ft_encode_to_assembly (in ./decompiler)
+==33147==    by 0x100000FBA: main (in ./decompiler)
+==33147== 
+==33147== Use of uninitialised value of size 8
+==33147==    at 0x100001D0E: get_params (in ./decompiler)
+==33147==    by 0x100001A1F: read_ins (in ./decompiler)
+==33147==    by 0x1000011E8: ft_encode_asm (in ./decompiler)
+==33147==    by 0x1000013F4: ft_encode_to_assembly (in ./decompiler)
+==33147==    by 0x100000FBA: main (in ./decompiler)
+==33147== 
+==33147== 
+==33147== HEAP SUMMARY:
+==33147==     in use at exit: 18,183 bytes in 161 blocks
+==33147==   total heap usage: 463 allocs, 302 frees, 55,065 bytes allocated
+==33147== 
+==33147== LEAK SUMMARY:
+==33147==    definitely lost: 0 bytes in 0 blocks
+==33147==    indirectly lost: 0 bytes in 0 blocks
+==33147==      possibly lost: 0 bytes in 0 blocks
+==33147==    still reachable: 200 bytes in 6 blocks
+==33147==         suppressed: 17,983 bytes in 155 blocks
+==33147== Reachable blocks (those to which a pointer was found) are not shown.
+==33147== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==33147== 
+==33147== For counts of detected and suppressed errors, rerun with: -v
+==33147== Use --track-origins=yes to see where uninitialised values come from
+==33147== ERROR SUMMARY: 6 errors from 5 contexts (suppressed: 12 from 12)
+
+//////////////////////////////////////////
+trace for ../database/cor_files/loose.cor:
+//////////////////////////////////////////
+
+==33308== Memcheck, a memory error detector
+==33308== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==33308== Using Valgrind-3.14.0 and LibVEX; rerun with -h for copyright info
+==33308== Command: ./decompiler -l ../database/cor_files/loose.cor
+==33308== Parent PID: 33138
+==33308== 
+==33308== Conditional jump or move depends on uninitialised value(s)
+==33308==    at 0x100001A69: isvalid_op (in ./decompiler)
+==33308==    by 0x1000018F1: read_ins (in ./decompiler)
+==33308==    by 0x1000011E8: ft_encode_asm (in ./decompiler)
+==33308==    by 0x1000013F4: ft_encode_to_assembly (in ./decompiler)
+==33308==    by 0x100000FBA: main (in ./decompiler)
+==33308== 
+==33308== Conditional jump or move depends on uninitialised value(s)
+==33308==    at 0x1000018F5: read_ins (in ./decompiler)
+==33308==    by 0x1000011E8: ft_encode_asm (in ./decompiler)
+==33308==    by 0x1000013F4: ft_encode_to_assembly (in ./decompiler)
+==33308==    by 0x100000FBA: main (in ./decompiler)
+==33308== 
+==33308== Use of uninitialised value of size 8
+==33308==    at 0x100001957: read_ins (in ./decompiler)
+==33308==    by 0x1000011E8: ft_encode_asm (in ./decompiler)
+==33308==    by 0x1000013F4: ft_encode_to_assembly (in ./decompiler)
+==33308==    by 0x100000FBA: main (in ./decompiler)
+==33308== 
+==33308== Use of uninitialised value of size 8
+==33308==    at 0x1000019FC: read_ins (in ./decompiler)
+==33308==    by 0x1000011E8: ft_encode_asm (in ./decompiler)
+==33308==    by 0x1000013F4: ft_encode_to_assembly (in ./decompiler)
+==33308==    by 0x100000FBA: main (in ./decompiler)
+==33308== 
+==33308== Use of uninitialised value of size 8
+==33308==    at 0x100001D0E: get_params (in ./decompiler)
+==33308==    by 0x100001A1F: read_ins (in ./decompiler)
+==33308==    by 0x1000011E8: ft_encode_asm (in ./decompiler)
+==33308==    by 0x1000013F4: ft_encode_to_assembly (in ./decompiler)
+==33308==    by 0x100000FBA: main (in ./decompiler)
+==33308== 
+==33308== 
+==33308== HEAP SUMMARY:
+==33308==     in use at exit: 18,183 bytes in 161 blocks
+==33308==   total heap usage: 451 allocs, 290 frees, 53,769 bytes allocated
+==33308== 
+==33308== LEAK SUMMARY:
+==33308==    definitely lost: 0 bytes in 0 blocks
+==33308==    indirectly lost: 0 bytes in 0 blocks
+==33308==      possibly lost: 0 bytes in 0 blocks
+==33308==    still reachable: 200 bytes in 6 blocks
+==33308==         suppressed: 17,983 bytes in 155 blocks
+==33308== Reachable blocks (those to which a pointer was found) are not shown.
+==33308== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==33308== 
+==33308== For counts of detected and suppressed errors, rerun with: -v
+==33308== Use --track-origins=yes to see where uninitialised values come from
+==33308== ERROR SUMMARY: 6 errors from 5 contexts (suppressed: 12 from 12)

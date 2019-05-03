@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/17 10:54:59 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/05 20:57:43 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/11 16:29:42 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ int		ft_is_in_scrollbar_focus(t_vscrollbar scrollbar)
 
 int		ft_get_vscrollbar_compressed_height(t_visu *v, int nb_players)
 {
-	return (nb_players * v->center.player_h +
-			(nb_players - 1) * v->center.player_padding +
-			v->center.player_top + v->center.player_bottom);
+	return (nb_players * v->center.player_h
+			+ (nb_players - 1) * v->center.player_padding
+			+ v->center.player_top + v->center.player_bottom);
 }
 
 int		get_vscrollbar(t_vm *vm, t_ixy mouse, t_vscrollbar **vscrollbar)

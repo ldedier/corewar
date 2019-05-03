@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/03 21:23:05 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/05 20:19:31 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/11 16:28:08 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ int		ft_process_render_live_breakdown_bar(t_vm *vm, SDL_Rect *rect,
 	w = vm->visu.center.live_breakdown_bar_w;
 	if (vm->player[i_sum.x].relevant)
 	{
-		rect->x = vm->visu.center.dashboard_x +
-			vm->visu.center.live_breakdown_bar_left + *from;
+		rect->x = vm->visu.center.dashboard_x
+			+ vm->visu.center.live_breakdown_bar_left + *from;
 		if (!i_sum.y)
 			rect->w = w / (double)vm->nb_players;
 		else
@@ -61,8 +61,8 @@ int		ft_render_live_breakdown_bar(t_vm *vm)
 			return (1);
 		i_sum.x++;
 	}
-	rect.x = vm->visu.center.dashboard_x +
-		vm->visu.center.live_breakdown_bar_left;
+	rect.x = vm->visu.center.dashboard_x
+		+ vm->visu.center.live_breakdown_bar_left;
 	rect.w = vm->visu.center.live_breakdown_bar_w;
 	if (SDL_BlitScaled(vm->visu.sdl.images[BREAKDOWN_BAR],
 			NULL, vm->visu.sdl.w_surface, &rect))
@@ -83,9 +83,9 @@ int		ft_render_live_breakdown(t_vm *vm)
 	SDL_Rect rect;
 
 	rect.x = vm->visu.center.dashboard_x + vm->visu.center.entry_left;
-	rect.y = vm->visu.center.game_entries_h +
-		vm->visu.center.list_player_entries_h +
-			vm->visu.center.live_breakdown_title_top;
+	rect.y = vm->visu.center.game_entries_h
+		+ vm->visu.center.list_player_entries_h
+		+ vm->visu.center.live_breakdown_title_top;
 	rect.w = vm->visu.center.live_breakdown_title_w;
 	rect.h = vm->visu.center.live_breakdown_title_h;
 	if (ft_render_live_breakdown_title(vm, rect))

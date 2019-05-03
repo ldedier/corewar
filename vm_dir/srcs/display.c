@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 21:43:44 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/28 16:59:04 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/11 19:40:44 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void		display_resize(t_vm *vm)
 {
-	if (vm->display.code & (1 << MSG_CYCLE))
+	if (!vm->visu.active && vm->display.code & (1 << MSG_CYCLE))
 		ft_printf("%s\nCycle to die is now %d%s",
 				vm->color.resize,
 				vm->c_to_die,
@@ -23,7 +23,7 @@ void		display_resize(t_vm *vm)
 
 void		display_last_live(t_vm *vm, t_process *proc)
 {
-	if (vm->display.code & (1 << MSG_DEATH))
+	if (!vm->visu.active && vm->display.code & (1 << MSG_DEATH))
 		ft_printf("\n%sProcess %d hasn't lived for %d cycles (CTD %d)%s",
 				vm->color.death,
 				proc->nb,
@@ -34,7 +34,7 @@ void		display_last_live(t_vm *vm, t_process *proc)
 
 void		display_cycle(t_vm *vm)
 {
-	if (vm->display.code & (1 << MSG_CYCLE))
+	if (!vm->visu.active && vm->display.code & (1 << MSG_CYCLE))
 		ft_printf("\n%sIt is now cycle %d%s",
 				vm->color.cycle,
 				vm->total_cycle,

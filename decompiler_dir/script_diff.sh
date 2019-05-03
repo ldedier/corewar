@@ -15,9 +15,9 @@ make > /dev/null
 asm="./../zaz/asm"
 
 eval "$asm  $asm_file"
-./decompiler -l $cor_file
+./decompiler  $cor_file
 eval "$asm  $decomp_asm_file"
-./decompiler -l $decomp_cor_file
+./decompiler  $decomp_cor_file
 
 trace="/tmp/asm_trace"
 

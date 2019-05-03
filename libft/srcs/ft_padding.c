@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:07:06 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/31 03:58:49 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/11 16:20:24 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ void	ft_add_padding_pre_standard(t_pf *pf, int no_padding_byte)
 {
 	int i;
 
-	if (pf->flags.padding_style == e_padding_standard ||
-			(pf->precised_precision && pf->flags.padding_style
+	if (pf->flags.padding_style == e_padding_standard
+			|| (pf->precised_precision && pf->flags.padding_style
 				!= e_padding_negative))
 	{
 		i = 0;

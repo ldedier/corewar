@@ -6,7 +6,7 @@
 /*   By: cammapou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 17:26:08 by cammapou          #+#    #+#             */
-/*   Updated: 2019/02/25 16:18:15 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/03/14 23:48:51 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int				ft_addco(char c, t_env *e)
 	return (1);
 }
 
-int				ft_is_atouiable(char *s)
+int				ft_is_atoiable(char *s)
 {
 	long	res;
 	int		start;
@@ -85,8 +85,8 @@ int				ft_is_atouiable(char *s)
 		i++;
 	while (ft_isdigit(s[i]))
 	{
-		if ((s[start] != '-' && (res * 10 + s[i] - '0' <= 4294967295))
-				|| (s[start] == '-' && (res * 10 + s[i] - '0' <= 4294967296)))
+		if ((s[start] != '-' && (res * 10 + s[i] - '0' <= 2147483647))
+				|| (s[start] == '-' && (res * 10 + s[i] - '0' <= 2147483648)))
 			res = res * 10 + s[i] - '0';
 		else
 			return (0);

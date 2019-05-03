@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 18:26:19 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/06 20:43:59 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/09 21:03:06 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 # include "player.h"
 # include "visu.h"
 
-
 # define TIMEOUT_LIMIT	1000000
+
 typedef struct s_vm		t_vm;
 
 typedef struct			s_client_slot

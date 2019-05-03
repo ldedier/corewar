@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/03/06 14:32:37 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/11 18:17:21 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ typedef struct		s_process
 {
 	t_player		*player;
 	t_instruction	pending_ins;
-	int				live;
 	int				live_cycle;
 	unsigned int	reg[REG_NUMBER];
 	int				pc;
@@ -123,7 +122,7 @@ enum				e_display
 
 enum				e_console_display
 {
-	MSG_LIVE, MSG_CYCLE, MSG_INS, MSG_DEATH, MSG_MOVE, COLOR
+	MSG_LIVE, MSG_CYCLE, MSG_INS, MSG_DEATH, MSG_MOVE, COLOR, MSG_AFF
 };
 
 /*
@@ -163,7 +162,8 @@ int					read_files(t_vm *vm);
 void				clear_vm(t_vm *vm);
 void				init_vm(t_vm *vm, char **argv);
 void				update_nb_players(t_vm *vm);
-int					mng_players(t_vm *v, int argc, char **argv, int *cur);
+int					add_player(t_vm *vm);
+int					add_player_n(t_vm *vm, int argc, char **argv, int *cur);
 
 /*
 ** INSTRUCTIONS, LOADING AND STORING
@@ -198,7 +198,8 @@ int					no_ins(t_vm *vm, t_process *proc, t_parameter arg[3]);
 void				dispatch_players_init(t_vm *vm);
 void				dump(t_vm *vm);
 t_list				*add_process(t_vm *vm, int i, int start, t_process *src);
-int					kill_process(t_vm *vm, t_list **proc_lst, t_list **proc);
+int					kill_process(t_vm *vm, t_list **proc);
+int					kill_process_at_head(t_vm *vm);
 int					init_processes(t_vm *vm);
 int					play_one_cycle(t_vm *vm);
 

@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 20:38:48 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/05 21:20:49 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/11 16:23:37 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ void	ft_init_center_memory(t_visu *visu, t_center *c)
 	while (c->y_diff * (c->nb_lines - 1) > visu->dim.height
 				- c->top_margin - c->bottom_margin && c->y_diff > 0)
 		c->y_diff--;
-	while (c->x_diff * (c->nb_cols - 1) >
-				c->dashboard_x - 2 * c->nb_cols * c->x_diff_byte
-		&& c->x_diff > 0)
+	while (c->x_diff > 0
+			&& c->x_diff * (c->nb_cols - 1)
+				> c->dashboard_x - 2 * c->nb_cols * c->x_diff_byte)
 		c->x_diff--;
 	w = c->dashboard_x - c->left_margin - c->right_margin
 		- (c->nb_cols - 1) * c->x_diff - c->nb_cols * c->x_diff_byte;

@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 23:46:12 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/05 20:17:46 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/11 18:30:27 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int			ft_render_live(t_fade *fade, t_vm *vm)
 			fade->value / (double)MAX_FADE);
 	rect = get_rect_from_pc(vm, fade->pc);
 	SDL_FillRect(vm->visu.sdl.w_surface, &rect, fade->color);
-	if (!--fade->value)
+	if (!vm->visu.time_manager.pause && !--fade->value)
 		return (1);
 	return (0);
 }
@@ -47,8 +47,8 @@ void		ft_render_lives_at_body(t_list **temp, t_list **prev, t_vm *vm)
 {
 	while (*temp != NULL)
 	{
-		while (*temp != NULL &&
-			!ft_render_live((t_fade *)((*temp)->content), vm))
+		while (*temp != NULL
+				&& !ft_render_live((t_fade *)((*temp)->content), vm))
 		{
 			*prev = *temp;
 			*temp = (*temp)->next;

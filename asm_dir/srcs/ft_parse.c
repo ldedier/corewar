@@ -6,97 +6,76 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 20:06:08 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/06 19:03:59 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/14 22:28:21 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-int			ft_populate_from_opcode(char *str, int start, int i, t_env *e)
-{
-	char	*opcode_str;
-
-	if (!(opcode_str = ft_strndup(&(str[start]), i - start)))
-		return (ft_log_error(MALLOC_ERROR, 0, e));
-	if (ft_process_populate_from_opcode(opcode_str, e))
-		return (ft_log_error(UNKNOWN_INSTRUCTION, 0, e));
-	e->champ.header.prog_size++;
-	if (e->parser.current_instruction->op->has_ocp)
-		e->champ.header.prog_size++;
-	e->parser.column_offset += i - start;
-	return (ft_parse_params(str, i, e));
-}
-
-int			ft_parse_params(char *str, int i, t_env *e)
-{
-	char	**params_split;
-	int		save;
-
-	save = e->parser.column_offset;
-	if (!str[i])
-	{
-		e->parser.column_offset = save;
-		return (ft_log_error(NO_PARAMETERS,
-			- ft_strlen(e->parser.current_instruction->op->instruction_name), e));
-	}
-	if (!(params_split = ft_strsplit(&(str[i]), SEPARATOR_CHAR)))
-		return (ft_log_error(MALLOC_ERROR, 0, e));
-	if (!(ft_nb_params_coherent(&(str[i]), e)))
-	{
-		ft_free_split(params_split);
-		return (1);
-	}
-	e->parser.column_offset = save;
-	return (ft_process_parse_params(params_split, e));
-}
-
-int			ft_parse_line(char *str, t_env *e, int fd)
+int			ft_parse_line(char *str, t_env *e)
 {
 	char	*refined;
 	int		ret;
 
-	if (!(refined = ft_refine_line(str)))
+	if (!(refined = ft_refine_line(str, e)))
 		return (ft_log_error_no_line(MALLOC_ERROR, e));
 	if (!e->parser.parsed_comment || !e->parser.parsed_name)
 	{
 		ft_reset_parser(&(e->parser), str);
-		ret = ft_parse_line_header(refined, e, 0, fd);
+		ret = ft_parse_line_header(refined, e);
 		free(refined);
 	}
 	else
 	{
-		ret = (ft_parse_line_source_code(refined, e));
+		ret = ft_parse_line_source_code(refined, e);
 		free(refined);
 	}
 	return (ret);
 }
 
-static int	ft_parse_asm_suite(t_env *e)
+static int	ft_process_parse_asm_2(t_env *e)
 {
-	char	*line;
-
-	while (get_next_line(e->parser.fd, &line))
-	{
-		e->parser.nb_line++;
-		if (ft_is_relevant(line))
-		{
-			if (ft_parse_line(line, e, e->parser.fd) == 1)
-			{
-				free(line);
-				return (1);
-			}
-		}
-		free(line);
-	}
-	free(line);
 	if (!e->parser.parsed_name)
 		return (ft_log_error_no_line("no name found", e));
 	else if (!e->parser.parsed_comment)
 		return (ft_log_error_no_line("no comment found", e));
-	else if (ft_fill_instructions_labels_values(e))
-		return (1);
+	else
+		return (ft_fill_instructions_labels_values(e));
+}
+
+static int	ft_log_separator_error(t_env *e, int separator)
+{
+	if (separator == E_SEPARATOR_EOF)
+		return (ft_log_error_no_line(EOF_SEPARATOR, e));
+	else
+		return (ft_log_error_no_line(ZERO_SEPARATOR, e));
+}
+
+static int	ft_process_parse_asm(t_env *e)
+{
+	int			gnl_ret;
+	t_gnl_info	info;
+
+	while ((gnl_ret = get_next_line2(e->parser.fd, &info)) == 1)
+	{
+		e->parser.nb_line++;
+		if (info.separator != E_SEPARATOR_NL)
+		{
+			free(info.line);
+			return (ft_log_separator_error(e, info.separator));
+		}
+		if (ft_is_relevant(info.line, e))
+		{
+			if (ft_parse_line(info.line, e) == 1)
+				return (ft_free_turn(info.line, 1));
+		}
+		free(info.line);
+	}
 	close(e->parser.fd);
-	return (0);
+	if (gnl_ret == -1)
+		return (1);
+	free(info.line);
+	return (ft_process_parse_asm_2(e));
 }
 
 int			ft_parse_asm(char *str, t_env *e)
@@ -117,7 +96,7 @@ int			ft_parse_asm(char *str, t_env *e)
 			return (ft_log_error_no_line("File must be of extension \'.s\'",
 						e));
 	}
-	if (ft_parse_asm_suite(e) == 1)
+	if (ft_process_parse_asm(e) == 1)
 		return (1);
 	return (0);
 }

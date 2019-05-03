@@ -6,14 +6,13 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:13:27 by ldedier           #+#    #+#             */
-/*   Updated: 2018/02/06 22:52:18 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/11 16:19:03 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static t_get_val g_arr_getval_std[7] =
-{
+static t_get_val g_arr_getval_std[7] = {
 	ft_gtvar_none,
 	ft_gtvar_signed_char,
 	ft_gtvar_short_int,
@@ -23,8 +22,7 @@ static t_get_val g_arr_getval_std[7] =
 	ft_gtvar_intmax_t
 };
 
-static t_get_val g_arr_getval_u[7] =
-{
+static t_get_val g_arr_getval_u[7] = {
 	ft_gtvar_uint,
 	ft_gtvar_uchar,
 	ft_gtvar_ushort_int,
@@ -34,8 +32,7 @@ static t_get_val g_arr_getval_u[7] =
 	ft_gtvar_uintmax_t
 };
 
-static t_get_val g_arr_getval_ul[7] =
-{
+static t_get_val g_arr_getval_ul[7] = {
 	ft_gtvar_ulint,
 	ft_gtvar_uchar,
 	ft_gtvar_ulint,

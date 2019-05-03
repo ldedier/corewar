@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 19:04:17 by emuckens          #+#    #+#             */
-/*   Updated: 2019/03/06 13:13:48 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/11 19:47:10 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void		display_player_intro(t_vm *vm, t_player *player)
 		return ;
 	ft_printf("%s\n* Player %d, weighing %d bytes, \"%s\" (\"%s\") !%s",
 			player->color.term,
-			player->num_type * player->num,
+			player->num * player->num_type,
 			player->algo_len,
 			player->name,
 			player->comm[0] ? player->comm : "",
@@ -30,7 +30,7 @@ void		display_player_alive(t_vm *vm, t_player *player)
 	if (!vm->visu.active && vm->display.code & (1 << MSG_LIVE))
 		ft_printf("\n%sPlayer %d (%s) is said to be alive%s",
 				player->color.term,
-				player->num_type * player->num,
+				player->num * player->num_type,
 				player->name,
 				vm->color.off);
 }
@@ -39,9 +39,9 @@ void		display_winner(t_vm *vm)
 {
 	if (vm->visu.active)
 		return ;
-	ft_printf("%s\nContestant %d, \"%s\", has won !\n%s",
+	ft_printf("\n%sContestant %d, \"%s\", has won !\n%s",
 			vm->winner->color.term,
-			-vm->winner->num,
+			vm->winner->num * vm->winner->num_type,
 			vm->winner->name,
 			vm->color.off);
 }

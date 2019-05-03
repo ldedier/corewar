@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 21:21:32 by ldedier           #+#    #+#             */
-/*   Updated: 2019/01/18 21:37:13 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/11 16:32:56 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ int		ft_init_rays(t_visu *visu, int i)
 		free(str);
 		return (1);
 	}
-	visu->frames[i].voldemort_ray.screen_width =
-		visu->frames[i].voldemort_ray.surface->w * visu->react.anim_ratio;
+	visu->frames[i].voldemort_ray.screen_width = visu->frames[i].
+		voldemort_ray.surface->w * visu->react.anim_ratio;
 	free(str);
 	if (!(str = get_prefixed_str(PATH"/resources/hp_light_", i + 1)))
 		return (1);
@@ -49,8 +49,8 @@ int		ft_init_rays(t_visu *visu, int i)
 		free(str);
 		return (1);
 	}
-	visu->frames[i].harry_ray.screen_width =
-		visu->frames[i].harry_ray.surface->w * visu->react.anim_ratio;
+	visu->frames[i].harry_ray.screen_width = visu->frames[i].
+		harry_ray.surface->w * visu->react.anim_ratio;
 	free(str);
 	return (0);
 }
@@ -86,8 +86,8 @@ int		ft_init_hp_surface(t_visu *visu)
 		}
 		free(str);
 	}
-	visu->react.anim_ratio = (visu->center.dashboard_width - 1) /
-		(double)visu->frames[0].background->w;
+	visu->react.anim_ratio = (visu->center.dashboard_width - 1)
+		/ (double)visu->frames[0].background->w;
 	i = -1;
 	while (++i < NB_FRAMES)
 	{

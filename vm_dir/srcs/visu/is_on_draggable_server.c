@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/28 19:43:08 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/05 21:29:33 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/09 20:34:09 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,14 +81,12 @@ int			ft_is_on_download_players(t_vm *vm, t_ixy xy, t_drag_container *dc)
 	t_list		*ptr;
 	t_xy		player_pos;
 	t_center	c;
-	int			to_print;
 
 	c = vm->visu.center;
 	ptr = vm->visu.downloaded_players;
-	to_print = 0;
-	if (ft_to_print_scrollbar(vm->visu.players_list[DOWNLOADS].vscrollbar))
-		to_print = c.scrollbar_width / 2;
-	player_pos.x = c.dashboard_mid_x + c.player_left - to_print;
+	player_pos.x = c.dashboard_mid_x + c.player_left - (ft_to_print_scrollbar(
+		vm->visu.players_list[DOWNLOADS].vscrollbar) ? c.scrollbar_width
+		/ 2 : 0);
 	player_pos.y = vm->visu.players_list[DOWNLOADS].vscrollbar.pos.y
 		+ c.player_top;
 	while (ptr != NULL)

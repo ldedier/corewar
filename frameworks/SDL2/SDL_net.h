@@ -1,1 +1,0 @@
-../../Cellar/sdl2_net/2.0.1/include/SDL2/SDL_net.h

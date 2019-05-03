@@ -10,7 +10,6 @@ l1:	live	%1
 l3:	ldi	%:l2, r2, r4
 	sti	r4, %:l2, r2
 	add	r2, r3, r2
-.name "olalla"
 live:	zjmp	%:l1
 	xor	r4, r4, r4
 	zjmp	%:l3

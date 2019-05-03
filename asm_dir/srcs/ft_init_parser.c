@@ -6,7 +6,7 @@
 /*   By: cammapou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 17:07:52 by cammapou          #+#    #+#             */
-/*   Updated: 2019/03/04 14:06:48 by cammapou         ###   ########.fr       */
+/*   Updated: 2019/03/14 04:28:34 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	ft_init_parser(t_parser *parser)
 	parser->parsed_name = 0;
 	parser->parsed_comment = 0;
 	parser->too_much_errors_displayed = 0;
+	parser->parsing_comment = 0;
+	parser->parsing_name = 0;
 }
 
 void	ft_reset_parser(t_parser *parser, char *str)

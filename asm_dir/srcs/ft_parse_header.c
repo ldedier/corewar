@@ -3,63 +3,85 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parse_header.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cammapou <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/19 13:40:58 by cammapou          #+#    #+#             */
-/*   Updated: 2018/12/19 13:41:03 by cammapou         ###   ########.fr       */
+/*   Created: 2019/03/14 04:38:11 by ldedier           #+#    #+#             */
+/*   Updated: 2019/03/15 01:14:15 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-int	isprint(int c)
+void	end_parse(t_env *e)
 {
-	if ((c >= 33 && c <= 62) || (c >= 64 && c <= 126))
-		return (1);
-	return (0);
+	if (e->parser.parsing_name)
+	{
+		e->parser.parsing_name = 0;
+		e->parser.parsed_name = 1;
+	}
+	else
+	{
+		e->parser.parsing_comment = 0;
+		e->parser.parsed_comment = 1;
+	}
 }
 
-int			read_comment(char *line, t_env *env, int fd, int i)
+int		is_comment(char c)
 {
-	int		j;
-
-	j = 0;
-	if (env->champ.header.comment[j])
-		return (ft_log_error("Syntax error", 0, env));
-	i = ft_strlen(COMMENT_CMD_STRING);
-	while (line[++i] == ' ' || line[i] == '\t')
-		;
-	if (line[i] != '"')
-		return (ft_log_error(ERR_LX, i, env));
-	while (line[i] && line[i + 1] != '"')
-		env->champ.header.comment[j++] = line[++i];
-	env->champ.header.comment[j] = '\0';
-	if (line[i + 1] != '"' && line[i] != '\0')
-		return (ft_log_error(ERR_LX, i, env));
-	if (read_comment_continue(line, i, env, fd) == 1)
-		return (1);
-	return (0);
+	return (c == ';' || c == COMMENT_CHAR);
 }
 
-int	ft_parse_line_header(char *str, t_env *env, int i, int fd)
+int		ft_parse_comment(char *str, int i, t_env *e)
 {
-	if (ft_strstr(str, NAME_CMD_STRING))
+	if (e->parser.parsed_comment)
+		return (ft_log_error("comment already parsed", 0, e));
+	i += sizeof(COMMENT_CMD_STRING) - 1;
+	e->parser.column_offset += sizeof(COMMENT_CMD_STRING) - 1;
+	while (ft_isseparator(str[i]) && ft_addco(str[i], e))
+		i++;
+	if (str[i] != '"')
+		return (ft_log_error("expected\'\"\' character", 0, e));
+	else
+		return (ft_process_parse_comment(&str[++i], e));
+}
+
+int		ft_parse_name(char *str, int i, t_env *e)
+{
+	if (e->parser.parsed_name)
+		return (ft_log_error("name already parsed", 0, e));
+	i += sizeof(NAME_CMD_STRING) - 1;
+	e->parser.column_offset += sizeof(NAME_CMD_STRING) - 1;
+	while (ft_isseparator(str[i]) && ft_addco(str[i], e))
+		i++;
+	if (str[i] != '"')
+		return (ft_log_error("expected\'\"\' character", 0, e));
+	else
+		return (ft_process_parse_name(&str[++i], e));
+}
+
+int		ft_parse_line_header(char *str, t_env *e)
+{
+	int i;
+
+	if (e->parser.parsing_comment)
+		return (process_fill_buffer(str, COMMENT_LENGTH,
+					e->champ.header.comment, e));
+	else if (e->parser.parsing_name)
+		return (process_fill_buffer(str, PROG_NAME_LENGTH,
+					e->champ.header.prog_name, e));
+	else
 	{
-		if (check_name(str, env) == 1)
-			return (1);
-		if (read_name(str, env, i, 0) == 1)
-			return (1);
+		i = 0;
+		while (ft_isseparator(str[i]) && ft_addco(str[i], e))
+			i++;
+		if (is_comment(str[i]))
+			return (0);
+		else if (ft_strstr(&str[i], COMMENT_CMD_STRING) == &(str[i]))
+			return (ft_parse_comment(str, i, e));
+		else if (ft_strstr(&str[i], NAME_CMD_STRING) == &(str[i]))
+			return (ft_parse_name(str, i, e));
+		else
+			return (ft_log_error("unknown command", 0, e));
 	}
-	else if (ft_strstr(str, COMMENT_CMD_STRING))
-	{
-		if (check_comment(str, env))
-			return (1);
-		if (read_comment(str, env, fd, 0) == 1)
-			return (1);
-	}
-	else if (!ft_strcmp(env->champ.header.prog_name, ""))
-		return (ft_log_error_no_line(ERR_LXN, env));
-	else if (!ft_strcmp(env->champ.header.comment, ""))
-		return (ft_log_error_no_line(ERR_LXC, env));
 	return (0);
 }

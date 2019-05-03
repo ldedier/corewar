@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 16:21:43 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/05 21:04:33 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/11 17:27:51 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,10 @@ int		process_visu(t_vm *vm)
 	while (vm->visu.active)
 	{
 		if (process_process_visu(vm))
+		{
+			ft_dprintf(2, "internal malloc error\n");
 			return (1);
+		}
 	}
 	clear_vm(vm);
 	ft_free_all_visu(&(vm->visu));

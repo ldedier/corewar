@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 21:40:23 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/05 21:04:40 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/11 16:30:56 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,6 @@ t_ixy		new_ixy(int x, int y)
 
 int			ft_is_in_rect(t_ixy xy, SDL_Rect rect)
 {
-	return (xy.x > rect.x && xy.x < rect.x + rect.w &&
-			xy.y > rect.y && xy.y < rect.y + rect.h);
+	return (xy.x > rect.x && xy.x < rect.x + rect.w
+			&& xy.y > rect.y && xy.y < rect.y + rect.h);
 }

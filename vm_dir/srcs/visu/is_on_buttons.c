@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 21:54:50 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/05 21:20:31 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/11 18:39:30 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 static int		ft_is_in_scrolled_rect(t_ixy xy, SDL_Rect rect,
 		t_vscrollbar vscrollbar)
 {
-	if (xy.y > vscrollbar.pos.y &&
-			xy.y < vscrollbar.pos.y + vscrollbar.height)
+	if (xy.y > vscrollbar.pos.y
+			&& xy.y < vscrollbar.pos.y + vscrollbar.height)
 	{
 		xy.y += ft_get_scrolled_height(vscrollbar);
 		return (ft_is_in_rect(xy, rect));
@@ -28,12 +28,12 @@ int				ft_is_on_button(t_vm *vm, t_ixy xy, t_button *button,
 		t_button **to_fill)
 {
 	if (!button->visible || !button->enabled
-			|| button->phase != vm->visu.phase
-			|| (vm->visu.notification.image_index != -1
+			|| (((button->phase != vm->visu.phase)
+			|| vm->visu.notification.image_index != -1)
 				&& button != &vm->visu.buttons[OK_BUTTON]))
 		return (0);
-	if (button->vscrollbar == NULL ||
-			!ft_to_print_scrollbar(*button->vscrollbar))
+	if (button->vscrollbar == NULL
+			|| !ft_to_print_scrollbar(*button->vscrollbar))
 	{
 		if (ft_is_in_rect(xy, button->rect))
 		{

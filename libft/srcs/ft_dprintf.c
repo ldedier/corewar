@@ -6,14 +6,13 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/07 01:04:36 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/31 04:25:58 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/11 16:16:23 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static t_pf_func g_pf_arr[NB_CHARS] =
-{
+static t_pf_func g_pf_arr[NB_CHARS] = {
 	['d'] = ft_pf_d,
 	['D'] = ft_pf_d_maj,
 	['i'] = ft_pf_d,

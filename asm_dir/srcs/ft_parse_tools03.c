@@ -6,26 +6,11 @@
 /*   By: cammapou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 13:03:52 by cammapou          #+#    #+#             */
-/*   Updated: 2019/02/27 13:03:56 by cammapou         ###   ########.fr       */
+/*   Updated: 2019/03/14 22:06:54 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
-
-int		check_comment(char *str, t_env *env)
-{
-	int	i;
-
-	if (str[0] == '.')
-	{
-		i = ft_strlen(COMMENT_CMD_STRING);
-		if (isprint(str[i]) == 1)
-			return (ft_log_error_no_line(ERR_LXC, env));
-	}
-	else if (str[0] != '.')
-		return (ft_log_error_no_line(ERR_LXC, env));
-	return (0);
-}
 
 int		ft_process_nb_params_coherent(int *save, t_env *e, char c)
 {

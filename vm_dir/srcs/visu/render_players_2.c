@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 19:11:34 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/05 20:53:58 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/11 16:28:59 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,8 @@ int		ft_render_dragged_player(t_vm *vm)
 {
 	t_xy xy;
 
-	if (vm->visu.drag_container.drag_enum == DRAG_PLAYER &&
-		vm->visu.drag_container.drag_union.drag_player.player != NULL)
+	if (vm->visu.drag_container.drag_enum == DRAG_PLAYER
+			&& vm->visu.drag_container.drag_union.drag_player.player != NULL)
 	{
 		xy.x = ft_fclamp(0,
 			vm->visu.drag_container.x - vm->visu.drag_container.diff_x,

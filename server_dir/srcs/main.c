@@ -6,25 +6,18 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 17:21:44 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/08 19:30:49 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/11 18:55:36 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "server.h"
 
-static struct termios  g_term_init;
-
-void __attribute__((destructor)) end();
-void	end(void) //permet de mieux checker les leaks !
-{
-//	ft_printf("destructor loop\n");
-//	while(1);
-}
+static struct termios	g_term_init;
 
 int		ft_print_usage(char *name)
 {
 	ft_printf("%s [port (ex: 3001)]\n", name);
-	return (1);
+	return (2);
 }
 
 int		reset_shell(int ret)
@@ -73,7 +66,7 @@ int		main(int argc, char **argv)
 	if (init_term())
 		return (1);
 	if (ft_init_server(argc, argv, &server))
-		return (exit_server(&server, 1));
+		return (exit_server(&server, 2));
 	if (ft_parse_player_folder(PATH"/cores", &server.players))
 		return (exit_server(&server, 1));
 	if (ft_attribute_scores_init(&server))
@@ -84,5 +77,5 @@ int		main(int argc, char **argv)
 	ft_printf("%s\n", ACTIVITY_SRCH);
 	if (ft_process_server(&server))
 		return (exit_server(&server, 1));
-	return (exit_server(&server, 1));
+	return (exit_server(&server, 0));
 }

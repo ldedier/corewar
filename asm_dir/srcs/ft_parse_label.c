@@ -6,7 +6,7 @@
 /*   By: cammapou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 17:18:58 by cammapou          #+#    #+#             */
-/*   Updated: 2019/03/06 18:57:00 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/14 22:47:08 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int			ft_describe_label(char *str, int n, t_env *e)
 	{
 		if (!ft_is_in_str(LABEL_CHARS, str[i]))
 		{
-			ft_printf("dqdq\n");
 			ft_log_error(LEXICAL_ERROR, i, e);
 			return (0);
 		}
@@ -41,9 +40,9 @@ int			ft_fill_instructions_labels_values(t_env *e)
 	t_instruction	*instruction;
 	int				i;
 
+	if (e->champ.instructions == NULL && e->champ.labels == NULL)
+		return (ft_log_error_no_line("missing instructions in file", e));
 	ptr = e->champ.instructions;
-	if (e->champ.labels == NULL)
-		return (ft_log_error_no_line("missing instructions in fille", e));
 	while (ptr != NULL)
 	{
 		instruction = (t_instruction *)(ptr->content);
@@ -101,7 +100,7 @@ int			ft_add_new_label(char *str, int length, t_env *e)
 	if (ft_get_label(e->champ.labels, label_name))
 	{
 		free(label_name);
-		return (ft_log_error(EXISTS_LABEL, 0, e));
+		return (0);
 	}
 	if (!(label = ft_new_label(label_name, e->champ.header.prog_size)))
 	{

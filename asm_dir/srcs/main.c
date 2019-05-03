@@ -6,21 +6,11 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:44:16 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/25 16:16:26 by uboumedj         ###   ########.fr       */
+/*   Updated: 2019/03/14 20:30:10 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
-
-/*
-**void __attribute__((destructor)) end();
-**
-**void    end(void) //permet de mieux checker les leaks !
-**{
-**	ft_printf("destructor loop\n");
-**	while(1);
-**}
-*/
 
 int	ft_print_usage(char *progname)
 {
@@ -39,9 +29,11 @@ int	main(int argc, char **argv)
 	ft_init_env(&e, argv[argc - 1]);
 	if (ft_parse_asm(argv[argc - 1], &e))
 	{
+		ft_print_logs_stats(&e);
 		ft_free_all(&e);
 		return (1);
 	}
+	ft_print_logs_stats(&e);
 	if (ft_encode_to_cor(e.champ.cor_name, &e))
 		ret = 1;
 	else

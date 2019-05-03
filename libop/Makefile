@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/21 13:40:59 by ldedier           #+#    #+#              #
-#    Updated: 2019/03/08 18:44:16 by ldedier          ###   ########.fr        #
+#    Updated: 2019/03/14 02:36:10 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ OK_COLOR = \x1b[32;01m
 EOC = \033[0m
 
 SRCS_NO_PREFIX =	op.c ft_is_of_extension.c ft_switch_extension.c\
-					ft_encode_instructions.c ft_read_player.c ft_parse_player.c\
+					ft_read_player.c ft_parse_player.c\
 					player.c get_instruction.c ft_parse_player_folder.c\
 					net.c out_of_atlas_range.c instru_tools.c
 

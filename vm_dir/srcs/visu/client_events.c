@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 18:07:20 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/05 16:27:57 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/11 19:40:31 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int			ft_process_client_events(t_vm *vm)
 		}
 		else
 		{
-			printf("No response from the server for too long\n");
+			ft_printf("No response from the server for too long\n");
 			return (1);
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/30 22:57:11 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/08 19:29:43 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/11 15:42:08 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,14 @@ int		ft_process_send_new_players_to_all(t_server *server)
 		{
 			if (ft_send_protected(server->client_sockets[i].socket,
 					data, size))
+			{
+				free(data);
 				return (1);
+			}
 		}
 		i++;
 	}
+	free(data);
 	return (0);
 }
 

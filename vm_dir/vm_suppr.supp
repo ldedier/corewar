@@ -1,0 +1,239 @@
+{
+	<insert_a_suppression_name_here>
+		Memcheck:Leak
+		match-leak-kinds: possible
+		fun:malloc
+		fun:_ZN13list_array_ttI8method_t13method_list_tE11attachListsEPKPS1_j
+		fun:_ZL16attachCategoriesP10objc_classP26locstamped_category_list_tb
+		fun:_ZL12realizeClassP10objc_class
+		fun:_ZL12realizeClassP10objc_class
+			fun:look_up_class
+				fun:objc_getFutureClass
+					fun:__CFInitialize
+					   fun:_ZN16ImageLoaderMachO11doImageInitERKN11ImageLoader11LinkContextE
+					   fun:_ZN16ImageLoaderMachO16doInitializationERKN11ImageLoader11LinkContextE
+					   fun:_ZN11ImageLoader23recursiveInitializationERKNS_11LinkContextEjPKcRNS_21InitializerTimingListERNS_15UninitedUpwardsE
+					   fun:_ZN11ImageLoader23recursiveInitializationERKNS_11LinkContextEjPKcRNS_21InitializerTimingListERNS_15UninitedUpwardsE
+}
+{
+	<insert_a_suppression_name_here>
+		Memcheck:Leak
+		match-leak-kinds: possible
+		fun:malloc
+		fun:_ZN13list_array_ttIm15protocol_list_tE11attachListsEPKPS0_j
+		fun:_ZL16attachCategoriesP10objc_classP26locstamped_category_list_tb
+		fun:_ZL12realizeClassP10objc_class
+		fun:_ZL12realizeClassP10objc_class
+			fun:look_up_class
+				fun:objc_getFutureClass
+					fun:__CFInitialize
+					   fun:_ZN16ImageLoaderMachO11doImageInitERKN11ImageLoader11LinkContextE
+					   fun:_ZN16ImageLoaderMachO16doInitializationERKN11ImageLoader11LinkContextE
+					   fun:_ZN11ImageLoader23recursiveInitializationERKNS_11LinkContextEjPKcRNS_21InitializerTimingListERNS_15UninitedUpwardsE
+					   fun:_ZN11ImageLoader23recursiveInitializationERKNS_11LinkContextEjPKcRNS_21InitializerTimingListERNS_15UninitedUpwardsE
+}
+{
+	<insert_a_suppression_name_here>
+		Memcheck:Leak
+		match-leak-kinds: possible
+		fun:malloc
+		fun:_ZN13list_array_ttIm15protocol_list_tE11attachListsEPKPS0_j
+		fun:_ZL16attachCategoriesP10objc_classP26locstamped_category_list_tb
+		fun:_ZL12realizeClassP10objc_class
+		fun:look_up_class
+			fun:objc_getFutureClass
+				fun:__CFInitialize
+				   fun:_ZN16ImageLoaderMachO11doImageInitERKN11ImageLoader11LinkContextE
+				   fun:_ZN16ImageLoaderMachO16doInitializationERKN11ImageLoader11LinkContextE
+				   fun:_ZN11ImageLoader23recursiveInitializationERKNS_11LinkContextEjPKcRNS_21InitializerTimingListERNS_15UninitedUpwardsE
+				   fun:_ZN11ImageLoader23recursiveInitializationERKNS_11LinkContextEjPKcRNS_21InitializerTimingListERNS_15UninitedUpwardsE
+				   fun:_ZN11ImageLoader23recursiveInitializationERKNS_11LinkContextEjPKcRNS_21InitializerTimingListERNS_15UninitedUpwardsE
+}
+{
+	<insert_a_suppression_name_here>
+		Memcheck:Leak
+		match-leak-kinds: possible
+		fun:malloc
+		fun:_ZN13list_array_ttIm15protocol_list_tE11attachListsEPKPS0_j
+		fun:_ZL16attachCategoriesP10objc_classP26locstamped_category_list_tb
+		fun:_ZL12realizeClassP10objc_class
+		fun:_ZL12realizeClassP10objc_class
+			fun:_ZL12realizeClassP10objc_class
+				fun:_ZL12realizeClassP10objc_class
+					fun:look_up_class
+						fun:objc_getFutureClass
+							fun:__CFInitialize
+							   fun:_ZN16ImageLoaderMachO11doImageInitERKN11ImageLoader11LinkContextE
+							   fun:_ZN16ImageLoaderMachO16doInitializationERKN11ImageLoader11LinkContextE
+}
+{
+	<insert_a_suppression_name_here>
+		Memcheck:Leak
+		match-leak-kinds: possible
+		fun:malloc
+		fun:_ZN13list_array_ttI10property_t15property_list_tE11attachListsEPKPS1_j
+		fun:_ZL16attachCategoriesP10objc_classP26locstamped_category_list_tb
+		fun:_ZL12realizeClassP10objc_class
+		fun:_ZL12realizeClassP10objc_class
+			fun:_ZL12realizeClassP10objc_class
+				fun:look_up_class
+					fun:objc_getFutureClass
+						fun:__CFInitialize
+						   fun:_ZN16ImageLoaderMachO11doImageInitERKN11ImageLoader11LinkContextE
+						   fun:_ZN16ImageLoaderMachO16doInitializationERKN11ImageLoader11LinkContextE
+						   fun:_ZN11ImageLoader23recursiveInitializationERKNS_11LinkContextEjPKcRNS_21InitializerTimingListERNS_15UninitedUpwardsE
+}
+{
+	<insert_a_suppression_name_here>
+		Memcheck:Leak
+		match-leak-kinds: possible
+		fun:malloc
+		fun:_ZN13list_array_ttIm15protocol_list_tE11attachListsEPKPS0_j
+		fun:_ZL16attachCategoriesP10objc_classP26locstamped_category_list_tb
+		fun:_ZL12realizeClassP10objc_class
+		fun:_ZL12realizeClassP10objc_class
+			fun:_ZL12realizeClassP10objc_class
+				fun:look_up_class
+					fun:objc_getFutureClass
+						fun:__CFInitialize
+						   fun:_ZN16ImageLoaderMachO11doImageInitERKN11ImageLoader11LinkContextE
+						   fun:_ZN16ImageLoaderMachO16doInitializationERKN11ImageLoader11LinkContextE
+						   fun:_ZN11ImageLoader23recursiveInitializationERKNS_11LinkContextEjPKcRNS_21InitializerTimingListERNS_15UninitedUpwardsE
+}
+{
+	<insert_a_suppression_name_here>
+		Memcheck:Leak
+		match-leak-kinds: possible
+		fun:malloc
+		fun:_ZN13list_array_ttI8method_t13method_list_tE11attachListsEPKPS1_j
+		fun:_ZL16attachCategoriesP10objc_classP26locstamped_category_list_tb
+		fun:_ZL12realizeClassP10objc_class
+		fun:_ZL12realizeClassP10objc_class
+			fun:_ZL12realizeClassP10objc_class
+				fun:look_up_class
+					fun:objc_getFutureClass
+						fun:__CFInitialize
+						   fun:_ZN16ImageLoaderMachO11doImageInitERKN11ImageLoader11LinkContextE
+						   fun:_ZN16ImageLoaderMachO16doInitializationERKN11ImageLoader11LinkContextE
+						   fun:_ZN11ImageLoader23recursiveInitializationERKNS_11LinkContextEjPKcRNS_21InitializerTimingListERNS_15UninitedUpwardsE
+}
+{
+	<insert_a_suppression_name_here>
+		Memcheck:Leak
+		match-leak-kinds: possible
+		fun:malloc
+		fun:_ZN13list_array_ttIm15protocol_list_tE11attachListsEPKPS0_j
+		fun:_ZL16attachCategoriesP10objc_classP26locstamped_category_list_tb
+		fun:_ZL12realizeClassP10objc_class
+		fun:_ZL12realizeClassP10objc_class
+			fun:look_up_class
+				fun:objc_getFutureClass
+					fun:__CFInitialize
+					   fun:_ZN16ImageLoaderMachO11doImageInitERKN11ImageLoader11LinkContextE
+					   fun:_ZN16ImageLoaderMachO16doInitializationERKN11ImageLoader11LinkContextE
+					   fun:_ZN11ImageLoader23recursiveInitializationERKNS_11LinkContextEjPKcRNS_21InitializerTimingListERNS_15UninitedUpwardsE
+					   fun:_ZN11ImageLoader23recursiveInitializationERKNS_11LinkContextEjPKcRNS_21InitializerTimingListERNS_15UninitedUpwardsE
+}
+{
+	<insert_a_suppression_name_here>
+		Memcheck:Leak
+		match-leak-kinds: possible
+		fun:malloc
+		fun:_ZN13list_array_ttIm15protocol_list_tE11attachListsEPKPS0_j
+		fun:_ZL16attachCategoriesP10objc_classP26locstamped_category_list_tb
+		fun:_ZL12realizeClassP10objc_class
+		fun:look_up_class
+			fun:objc_getFutureClass
+				fun:__CFInitialize
+				   fun:_ZN16ImageLoaderMachO11doImageInitERKN11ImageLoader11LinkContextE
+				   fun:_ZN16ImageLoaderMachO16doInitializationERKN11ImageLoader11LinkContextE
+				   fun:_ZN11ImageLoader23recursiveInitializationERKNS_11LinkContextEjPKcRNS_21InitializerTimingListERNS_15UninitedUpwardsE
+				   fun:_ZN11ImageLoader23recursiveInitializationERKNS_11LinkContextEjPKcRNS_21InitializerTimingListERNS_15UninitedUpwardsE
+				   fun:_ZN11ImageLoader23recursiveInitializationERKNS_11LinkContextEjPKcRNS_21InitializerTimingListERNS_15UninitedUpwardsE
+}
+{
+	<insert_a_suppression_name_here>
+		Memcheck:Leak
+		match-leak-kinds: possible
+		fun:malloc
+		fun:_ZN13list_array_ttI8method_t13method_list_tE11attachListsEPKPS1_j
+		fun:_ZL16attachCategoriesP10objc_classP26locstamped_category_list_tb
+		fun:_ZL12realizeClassP10objc_class
+		fun:_ZL12realizeClassP10objc_class
+			fun:_ZL12realizeClassP10objc_class
+				fun:look_up_class
+					fun:objc_getFutureClass
+						fun:__CFInitialize
+						   fun:_ZN16ImageLoaderMachO11doImageInitERKN11ImageLoader11LinkContextE
+						   fun:_ZN16ImageLoaderMachO16doInitializationERKN11ImageLoader11LinkContextE
+						   fun:_ZN11ImageLoader23recursiveInitializationERKNS_11LinkContextEjPKcRNS_21InitializerTimingListERNS_15UninitedUpwardsE
+}
+{
+	<insert_a_suppression_name_here>
+		Memcheck:Leak
+		match-leak-kinds: possible
+		fun:malloc
+		fun:_ZN13list_array_ttI8method_t13method_list_tE11attachListsEPKPS1_j
+		fun:_ZL16attachCategoriesP10objc_classP26locstamped_category_list_tb
+		fun:_ZL12realizeClassP10objc_class
+		fun:_ZL12realizeClassP10objc_class
+			fun:look_up_class
+				fun:objc_getFutureClass
+					fun:__CFInitialize
+					   fun:_ZN16ImageLoaderMachO11doImageInitERKN11ImageLoader11LinkContextE
+					   fun:_ZN16ImageLoaderMachO16doInitializationERKN11ImageLoader11LinkContextE
+					   fun:_ZN11ImageLoader23recursiveInitializationERKNS_11LinkContextEjPKcRNS_21InitializerTimingListERNS_15UninitedUpwardsE
+					   fun:_ZN11ImageLoader23recursiveInitializationERKNS_11LinkContextEjPKcRNS_21InitializerTimingListERNS_15UninitedUpwardsE
+}
+{
+	<insert_a_suppression_name_here>
+		Memcheck:Leak
+		match-leak-kinds: possible
+		fun:malloc
+		fun:_ZN13list_array_ttI8method_t13method_list_tE11attachListsEPKPS1_j
+		fun:_ZL16attachCategoriesP10objc_classP26locstamped_category_list_tb
+		fun:_ZL12realizeClassP10objc_class
+		fun:_ZL12realizeClassP10objc_class
+			fun:_ZL12realizeClassP10objc_class
+				fun:_ZL12realizeClassP10objc_class
+					fun:look_up_class
+						fun:objc_getFutureClass
+							fun:__CFInitialize
+							   fun:_ZN16ImageLoaderMachO11doImageInitERKN11ImageLoader11LinkContextE
+							   fun:_ZN16ImageLoaderMachO16doInitializationERKN11ImageLoader11LinkContextE
+}
+{
+	<insert_a_suppression_name_here>
+		Memcheck:Leak
+		match-leak-kinds: possible
+		fun:malloc
+		fun:_ZN13list_array_ttI8method_t13method_list_tE11attachListsEPKPS1_j
+		fun:_ZL16attachCategoriesP10objc_classP26locstamped_category_list_tb
+		fun:_ZL12realizeClassP10objc_class
+		fun:_ZL12realizeClassP10objc_class
+			fun:look_up_class
+				fun:objc_getFutureClass
+					fun:__CFInitialize
+					   fun:_ZN16ImageLoaderMachO11doImageInitERKN11ImageLoader11LinkContextE
+					   fun:_ZN16ImageLoaderMachO16doInitializationERKN11ImageLoader11LinkContextE
+					   fun:_ZN11ImageLoader23recursiveInitializationERKNS_11LinkContextEjPKcRNS_21InitializerTimingListERNS_15UninitedUpwardsE
+					   fun:_ZN11ImageLoader23recursiveInitializationERKNS_11LinkContextEjPKcRNS_21InitializerTimingListERNS_15UninitedUpwardsE
+}
+{
+	<insert_a_suppression_name_here>
+		Memcheck:Leak
+		match-leak-kinds: possible
+		fun:malloc
+		fun:_ZN13list_array_ttI8method_t13method_list_tE11attachListsEPKPS1_j
+		fun:_ZL16attachCategoriesP10objc_classP26locstamped_category_list_tb
+		fun:_ZL12realizeClassP10objc_class
+		fun:_ZL12realizeClassP10objc_class
+			fun:look_up_class
+				fun:objc_getFutureClass
+					fun:__CFInitialize
+					   fun:_ZN16ImageLoaderMachO11doImageInitERKN11ImageLoader11LinkContextE
+					   fun:_ZN16ImageLoaderMachO16doInitializationERKN11ImageLoader11LinkContextE
+					   fun:_ZN11ImageLoader23recursiveInitializationERKNS_11LinkContextEjPKcRNS_21InitializerTimingListERNS_15UninitedUpwardsE
+					   fun:_ZN11ImageLoader23recursiveInitializationERKNS_11LinkContextEjPKcRNS_21InitializerTimingListERNS_15UninitedUpwardsE
+}
+

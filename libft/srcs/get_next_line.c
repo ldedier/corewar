@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/08 15:44:18 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/03 00:12:06 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/14 18:48:33 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ t_gnl	*ft_get_gnl(int fd, t_list **gnls)
 	}
 	ft_lstadd(gnls, new_node);
 	to_add->fd = fd;
+	to_add->size = 0;
 	if (!(to_add->rest = ft_strnew(BUFF_SIZE)))
 		return (NULL);
 	to_add->whole_buffer = to_add->rest;
@@ -90,8 +91,8 @@ int		ft_process_gnl(int const fd, char **line, t_gnl *gnl)
 	int			readd;
 
 	readd = (ft_strcmp(*line, "") == 0) ? 0 : 1;
-	while (((ret = read(fd, gnl->rest, BUFF_SIZE)) > 0 &&
-				((new_line_index = ft_strichr(gnl->rest, '\n')) == -1)))
+	while (((ret = read(fd, gnl->rest, BUFF_SIZE)) > 0
+				&& ((new_line_index = ft_strichr(gnl->rest, '\n')) == -1)))
 	{
 		readd = 1;
 		gnl->rest[ret] = '\0';

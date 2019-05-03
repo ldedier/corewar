@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 21:26:16 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/06 14:38:02 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/11 16:32:04 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,27 +96,29 @@ static inline int	ft_init_textures_4(t_visu *visu)
 
 static inline int	ft_init_textures_2(t_visu *visu)
 {
-	if (!(visu->sdl.images[TRASH] =
-			ft_load_image(PATH"/resources/trash.png")))
+	if (!(visu->sdl.images[TRASH] = ft_load_image(
+					PATH"/resources/trash.png")))
 		return (1);
-	if (!(visu->sdl.images[TRASH_DISABLED] =
-			ft_load_image(PATH"/resources/trash_disabled.png")))
+	if (!(visu->sdl.images[TRASH_DISABLED] = ft_load_image(
+					PATH"/resources/trash_disabled.png")))
 		return (1);
-	if (!(visu->sdl.images[BACK] =
-			ft_load_image(PATH"/resources/back.png")))
+	if (!(visu->sdl.images[BACK] = ft_load_image(
+					PATH"/resources/back.png")))
 		return (1);
-	if (!(visu->sdl.images[CLOSE] = ft_load_image(PATH"/resources/close.png")))
+	if (!(visu->sdl.images[CLOSE] = ft_load_image(
+					PATH"/resources/close.png")))
 		return (1);
-	if (!(visu->sdl.images[FIGHT] = ft_load_image(PATH"/resources/fight.png")))
+	if (!(visu->sdl.images[FIGHT] = ft_load_image(
+					PATH"/resources/fight.png")))
 		return (1);
-	if (!(visu->sdl.images[UL_DISABLED] =
-				ft_load_image(PATH"/resources/upload_disabled.png")))
+	if (!(visu->sdl.images[UL_DISABLED] = ft_load_image(
+					PATH"/resources/upload_disabled.png")))
 		return (1);
-	if (!(visu->sdl.images[DL_DISABLED] =
-				ft_load_image(PATH"/resources/download_disabled.png")))
+	if (!(visu->sdl.images[DL_DISABLED] = ft_load_image(
+					PATH"/resources/download_disabled.png")))
 		return (1);
-	if (!(visu->sdl.images[KEYS] =
-				ft_load_image(PATH"/resources/keys.png")))
+	if (!(visu->sdl.images[KEYS] = ft_load_image(
+					PATH"/resources/keys.png")))
 		return (1);
 	return (0);
 }

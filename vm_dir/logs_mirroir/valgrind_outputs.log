@@ -1,0 +1,240 @@
+
+///////////////////////////////////////////////
+trace for ../database/cor_files/fluttershy.cor:
+///////////////////////////////////////////////
+
+==76960== Memcheck, a memory error detector
+==76960== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==76960== Using Valgrind-3.14.0 and LibVEX; rerun with -h for copyright info
+==76960== Command: ./corewar ../database/cor_files/fluttershy.cor ../database/cor_files/fluttershy.cor
+==76960== Parent PID: 76167
+==76960== 
+==76960== Conditional jump or move depends on uninitialised value(s)
+==76960==    at 0x10001BBDF: getval_params (get_instruction.c:48)
+==76960==    by 0x10001C032: get_ins (get_instruction.c:129)
+==76960==    by 0x1000018E9: next_process_action (play.c:109)
+==76960==    by 0x100001791: play_one_cycle (play.c:137)
+==76960==    by 0x1000013FD: main (main.c:68)
+==76960== 
+==76960== Conditional jump or move depends on uninitialised value(s)
+==76960==    at 0x10001BBED: getval_params (get_instruction.c:46)
+==76960==    by 0x10001C032: get_ins (get_instruction.c:129)
+==76960==    by 0x1000018E9: next_process_action (play.c:109)
+==76960==    by 0x100001791: play_one_cycle (play.c:137)
+==76960==    by 0x1000013FD: main (main.c:68)
+==76960== 
+==76960== Conditional jump or move depends on uninitialised value(s)
+==76960==    at 0x10001BF33: get_ins (get_instruction.c:114)
+==76960==    by 0x100001991: next_process_action (play.c:115)
+==76960==    by 0x100001791: play_one_cycle (play.c:137)
+==76960==    by 0x1000013FD: main (main.c:68)
+==76960== 
+==76960== Conditional jump or move depends on uninitialised value(s)
+==76960==    at 0x10001BF40: get_ins (get_instruction.c:114)
+==76960==    by 0x100001991: next_process_action (play.c:115)
+==76960==    by 0x100001791: play_one_cycle (play.c:137)
+==76960==    by 0x1000013FD: main (main.c:68)
+==76960== 
+==76960== Conditional jump or move depends on uninitialised value(s)
+==76960==    at 0x1000016FE: mod (utils.c:17)
+==76960==    by 0x100004229: ins_zjmp (zjmp.c:30)
+==76960==    by 0x100001948: next_process_action (play.c:111)
+==76960==    by 0x100001791: play_one_cycle (play.c:137)
+==76960==    by 0x1000013FD: main (main.c:68)
+==76960== 
+==76960== Use of uninitialised value of size 8
+==76960==    at 0x10001BF01: get_ins (get_instruction.c:110)
+==76960==    by 0x100001991: next_process_action (play.c:115)
+==76960==    by 0x100001791: play_one_cycle (play.c:137)
+==76960==    by 0x1000013FD: main (main.c:68)
+==76960== 
+==76960== Conditional jump or move depends on uninitialised value(s)
+==76960==    at 0x1000019CD: next_process_action (play.c:117)
+==76960==    by 0x100001791: play_one_cycle (play.c:137)
+==76960==    by 0x1000013FD: main (main.c:68)
+==76960== 
+==76960== Use of uninitialised value of size 8
+==76960==    at 0x10001BF7A: get_ins (get_instruction.c:118)
+==76960==    by 0x100001991: next_process_action (play.c:115)
+==76960==    by 0x100001791: play_one_cycle (play.c:137)
+==76960==    by 0x1000013FD: main (main.c:68)
+==76960== 
+==76960== Use of uninitialised value of size 8
+==76960==    at 0x10001BF01: get_ins (get_instruction.c:110)
+==76960==    by 0x1000018E9: next_process_action (play.c:109)
+==76960==    by 0x100001791: play_one_cycle (play.c:137)
+==76960==    by 0x1000013FD: main (main.c:68)
+==76960== 
+==76960== Use of uninitialised value of size 8
+==76960==    at 0x10001BF7A: get_ins (get_instruction.c:118)
+==76960==    by 0x1000018E9: next_process_action (play.c:109)
+==76960==    by 0x100001791: play_one_cycle (play.c:137)
+==76960==    by 0x1000013FD: main (main.c:68)
+==76960== 
+==76960== Use of uninitialised value of size 8
+==76960==    at 0x10001C4F5: getval_mod (instru_tools.c:22)
+==76960==    by 0x10001BBA5: getval_params (get_instruction.c:44)
+==76960==    by 0x10001C032: get_ins (get_instruction.c:129)
+==76960==    by 0x1000018E9: next_process_action (play.c:109)
+==76960==    by 0x100001791: play_one_cycle (play.c:137)
+==76960==    by 0x1000013FD: main (main.c:68)
+==76960== 
+==76960== Conditional jump or move depends on uninitialised value(s)
+==76960==    at 0x1000016FE: mod (utils.c:17)
+==76960==    by 0x100001C2D: move_forward (play.c:80)
+==76960==    by 0x10000196A: next_process_action (play.c:113)
+==76960==    by 0x100001791: play_one_cycle (play.c:137)
+==76960==    by 0x1000013FD: main (main.c:68)
+==76960== 
+==76960== Use of uninitialised value of size 8
+==76960==    at 0x10001C52E: getval_mod (instru_tools.c:26)
+==76960==    by 0x10001BBA5: getval_params (get_instruction.c:44)
+==76960==    by 0x10001C032: get_ins (get_instruction.c:129)
+==76960==    by 0x1000018E9: next_process_action (play.c:109)
+==76960==    by 0x100001791: play_one_cycle (play.c:137)
+==76960==    by 0x1000013FD: main (main.c:68)
+==76960== 
+==76960== Conditional jump or move depends on uninitialised value(s)
+==76960==    at 0x1000016FE: mod (utils.c:17)
+==76960==    by 0x1000038EB: load_arena (load_val.c:22)
+==76960==    by 0x1000045E4: ins_sti (sti.c:38)
+==76960==    by 0x100001948: next_process_action (play.c:111)
+==76960==    by 0x100001791: play_one_cycle (play.c:137)
+==76960==    by 0x1000013FD: main (main.c:68)
+==76960== 
+==76960== Conditional jump or move depends on uninitialised value(s)
+==76960==    at 0x100003908: load_arena (load_val.c:25)
+==76960==    by 0x1000045E4: ins_sti (sti.c:38)
+==76960==    by 0x100001948: next_process_action (play.c:111)
+==76960==    by 0x100001791: play_one_cycle (play.c:137)
+==76960==    by 0x1000013FD: main (main.c:68)
+==76960== 
+==76960== Use of uninitialised value of size 8
+==76960==    at 0x100003954: load_arena (load_val.c:28)
+==76960==    by 0x1000045E4: ins_sti (sti.c:38)
+==76960==    by 0x100001948: next_process_action (play.c:111)
+==76960==    by 0x100001791: play_one_cycle (play.c:137)
+==76960==    by 0x1000013FD: main (main.c:68)
+==76960== 
+==76960== Use of uninitialised value of size 8
+==76960==    at 0x100003973: load_arena (load_val.c:29)
+==76960==    by 0x1000045E4: ins_sti (sti.c:38)
+==76960==    by 0x100001948: next_process_action (play.c:111)
+==76960==    by 0x100001791: play_one_cycle (play.c:137)
+==76960==    by 0x1000013FD: main (main.c:68)
+==76960== 
+==76960== Use of uninitialised value of size 8
+==76960==    at 0x100003983: load_arena (load_val.c:30)
+==76960==    by 0x1000045E4: ins_sti (sti.c:38)
+==76960==    by 0x100001948: next_process_action (play.c:111)
+==76960==    by 0x100001791: play_one_cycle (play.c:137)
+==76960==    by 0x1000013FD: main (main.c:68)
+==76960== 
+==76960== Conditional jump or move depends on uninitialised value(s)
+==76960==    at 0x1000016FE: mod (utils.c:17)
+==76960==    by 0x100003893: getval_ind (get_val.c:21)
+==76960==    by 0x1000037EE: getval_param_dest (get_val.c:49)
+==76960==    by 0x100003D33: ins_st (st.c:26)
+==76960==    by 0x100001948: next_process_action (play.c:111)
+==76960==    by 0x100001791: play_one_cycle (play.c:137)
+==76960==    by 0x1000013FD: main (main.c:68)
+==76960== 
+==76960== Use of uninitialised value of size 8
+==76960==    at 0x10001C4F5: getval_mod (instru_tools.c:22)
+==76960==    by 0x1000038A8: getval_ind (get_val.c:21)
+==76960==    by 0x1000037EE: getval_param_dest (get_val.c:49)
+==76960==    by 0x100003D33: ins_st (st.c:26)
+==76960==    by 0x100001948: next_process_action (play.c:111)
+==76960==    by 0x100001791: play_one_cycle (play.c:137)
+==76960==    by 0x1000013FD: main (main.c:68)
+==76960== 
+==76960== Use of uninitialised value of size 8
+==76960==    at 0x10001C52E: getval_mod (instru_tools.c:26)
+==76960==    by 0x1000038A8: getval_ind (get_val.c:21)
+==76960==    by 0x1000037EE: getval_param_dest (get_val.c:49)
+==76960==    by 0x100003D33: ins_st (st.c:26)
+==76960==    by 0x100001948: next_process_action (play.c:111)
+==76960==    by 0x100001791: play_one_cycle (play.c:137)
+==76960==    by 0x1000013FD: main (main.c:68)
+==76960== 
+==76960== Conditional jump or move depends on uninitialised value(s)
+==76960==    at 0x1000016FE: mod (utils.c:17)
+==76960==    by 0x1000038EB: load_arena (load_val.c:22)
+==76960==    by 0x100003DE5: ins_st (st.c:34)
+==76960==    by 0x100001948: next_process_action (play.c:111)
+==76960==    by 0x100001791: play_one_cycle (play.c:137)
+==76960==    by 0x1000013FD: main (main.c:68)
+==76960== 
+==76960== Conditional jump or move depends on uninitialised value(s)
+==76960==    at 0x100003908: load_arena (load_val.c:25)
+==76960==    by 0x100003DE5: ins_st (st.c:34)
+==76960==    by 0x100001948: next_process_action (play.c:111)
+==76960==    by 0x100001791: play_one_cycle (play.c:137)
+==76960==    by 0x1000013FD: main (main.c:68)
+==76960== 
+==76960== Use of uninitialised value of size 8
+==76960==    at 0x100003954: load_arena (load_val.c:28)
+==76960==    by 0x100003DE5: ins_st (st.c:34)
+==76960==    by 0x100001948: next_process_action (play.c:111)
+==76960==    by 0x100001791: play_one_cycle (play.c:137)
+==76960==    by 0x1000013FD: main (main.c:68)
+==76960== 
+==76960== Use of uninitialised value of size 8
+==76960==    at 0x100003973: load_arena (load_val.c:29)
+==76960==    by 0x100003DE5: ins_st (st.c:34)
+==76960==    by 0x100001948: next_process_action (play.c:111)
+==76960==    by 0x100001791: play_one_cycle (play.c:137)
+==76960==    by 0x1000013FD: main (main.c:68)
+==76960== 
+==76960== Use of uninitialised value of size 8
+==76960==    at 0x100003983: load_arena (load_val.c:30)
+==76960==    by 0x100003DE5: ins_st (st.c:34)
+==76960==    by 0x100001948: next_process_action (play.c:111)
+==76960==    by 0x100001791: play_one_cycle (play.c:137)
+==76960==    by 0x1000013FD: main (main.c:68)
+==76960== 
+==76960== Conditional jump or move depends on uninitialised value(s)
+==76960==    at 0x100004433: ldi_val (ldi.c:29)
+==76960==    by 0x1000043C9: ins_ldi (ldi.c:55)
+==76960==    by 0x100001948: next_process_action (play.c:111)
+==76960==    by 0x100001791: play_one_cycle (play.c:137)
+==76960==    by 0x1000013FD: main (main.c:68)
+==76960== 
+==76960== Use of uninitialised value of size 8
+==76960==    at 0x10000445D: ldi_val (ldi.c:32)
+==76960==    by 0x1000043C9: ins_ldi (ldi.c:55)
+==76960==    by 0x100001948: next_process_action (play.c:111)
+==76960==    by 0x100001791: play_one_cycle (play.c:137)
+==76960==    by 0x1000013FD: main (main.c:68)
+==76960== 
+==76960== Conditional jump or move depends on uninitialised value(s)
+==76960==    at 0x1000016FE: mod (utils.c:17)
+==76960==    by 0x10000499D: ins_lfork (lfork.c:32)
+==76960==    by 0x100001948: next_process_action (play.c:111)
+==76960==    by 0x100001791: play_one_cycle (play.c:137)
+==76960==    by 0x1000013FD: main (main.c:68)
+==76960== 
+==76960== Conditional jump or move depends on uninitialised value(s)
+==76960==    at 0x1000016FE: mod (utils.c:17)
+==76960==    by 0x1000046D3: ins_fork (fork.c:33)
+==76960==    by 0x100001948: next_process_action (play.c:111)
+==76960==    by 0x100001791: play_one_cycle (play.c:137)
+==76960==    by 0x1000013FD: main (main.c:68)
+==76960== 
+==76960== 
+==76960== HEAP SUMMARY:
+==76960==     in use at exit: 1,260,442 bytes in 810 blocks
+==76960==   total heap usage: 4,144 allocs, 3,334 frees, 2,809,970 bytes allocated
+==76960== 
+==76960== LEAK SUMMARY:
+==76960==    definitely lost: 0 bytes in 0 blocks
+==76960==    indirectly lost: 0 bytes in 0 blocks
+==76960==      possibly lost: 0 bytes in 0 blocks
+==76960==    still reachable: 25,716 bytes in 293 blocks
+==76960==         suppressed: 1,234,726 bytes in 517 blocks
+==76960== Reachable blocks (those to which a pointer was found) are not shown.
+==76960== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==76960== 
+==76960== For counts of detected and suppressed errors, rerun with: -v
+==76960== Use --track-origins=yes to see where uninitialised values come from
+==76960== ERROR SUMMARY: 849621 errors from 30 contexts (suppressed: 114 from 93)

@@ -6,7 +6,7 @@
 /*   By: cammapou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 17:30:46 by cammapou          #+#    #+#             */
-/*   Updated: 2019/03/06 16:56:12 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/14 23:50:44 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ int		ft_process_parse_ind_value(char *str, int index, int offset, t_env *e)
 	str2 = str;
 	if (str[0] == '\0')
 		return (ft_log_error(LEXICAL_ERROR, 0, e));
-	else if (!ft_is_atouiable(str))
-		return (ft_log_error(EXCESSIVE_VALUE, offset, e));
+	else if (!ft_is_atoiable(str))
+		ft_log_warning(EXCESSIVE_VALUE, offset, e);
 	ret = ft_patoui(&str);
 	if (str == str2)
 		return (ft_log_error(LEXICAL_ERROR, offset, e));
@@ -93,8 +93,8 @@ int		ft_process_parse_dir_value(char *str, int index, int offset, t_env *e)
 	str2 = str;
 	if (str[0] == '\0')
 		return (ft_log_error(LEXICAL_ERROR, 0, e));
-	else if (!ft_is_atouiable(str))
-		return (ft_log_error(EXCESSIVE_VALUE, offset, e));
+	else if (!ft_is_atoiable(str))
+		ft_log_warning(EXCESSIVE_VALUE, offset, e);
 	ret = ft_patoui(&str);
 	if (str == str2)
 		return (ft_log_error(LEXICAL_ERROR, offset, e));

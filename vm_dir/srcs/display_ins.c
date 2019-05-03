@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 19:05:47 by emuckens          #+#    #+#             */
-/*   Updated: 2019/03/06 13:43:36 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/11 19:53:27 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void		display_move(t_vm *vm, t_process *proc)
 	unsigned char	c;
 
 	len = ft_abs(proc->ins_bytelen);
-	if (!(vm->display.code & (1 << MSG_MOVE)))
+	if (!(vm->display.code & (1 << MSG_MOVE)) || vm->visu.active)
 		return ;
 	if (proc->pending_ins.op->opcode == ZJMP && proc->carry)
 		return ;

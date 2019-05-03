@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 22:34:24 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/31 04:04:01 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/11 16:17:46 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ int		ft_pf_digit(t_pf *pf, va_list va, char c)
 int		ft_pf_0(t_pf *pf, va_list va, char c)
 {
 	(void)va;
-	if (!pf->parse_padding && !pf->parse_precision &&
-			pf->flags.padding_style != e_padding_negative)
+	if (!pf->parse_padding && !pf->parse_precision
+			&& pf->flags.padding_style != e_padding_negative)
 		pf->flags.padding_style = e_padding_zeros;
 	return (ft_pf_digit(pf, va, c));
 }

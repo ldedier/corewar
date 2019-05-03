@@ -6,7 +6,7 @@
 /*   By: cammapou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 17:32:49 by cammapou          #+#    #+#             */
-/*   Updated: 2019/03/07 12:36:51 by cammapou         ###   ########.fr       */
+/*   Updated: 2019/03/14 23:49:44 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,13 @@ int			ft_process_parse_register(char *str, int index, t_env *e)
 		return (ft_log_custom_wrong_param_type("register", index, 0, e));
 	if (str[0] == '\0')
 		return (ft_log_error(LEXICAL_ERROR, 0, e));
-	else if (!ft_is_atouiable(str))
-		return (ft_log_error(EXCESSIVE_VALUE, 1, e));
+	else if (!ft_is_atoiable(str))
+		ft_log_warning(EXCESSIVE_VALUE, 1, e);
 	ret = ft_patoui(&str);
 	if (str == str2)
 		return (ft_log_error(LEXICAL_ERROR, 0, e));
 	if (ret <= 0 || ret > REG_NUMBER)
-		return (ft_log_error(INVALID_REG_NUMBER, 1, e));
+		return (ft_log_custom_invalid_reg_number(1, e));
 	e->parser.current_instruction->params[index].type = T_REG;
 	e->parser.current_instruction->params[index].value = ret;
 	e->parser.column_offset += str + 1 - str2;
@@ -106,11 +106,9 @@ int			ft_process_fill_instruction_label_value(t_instruction *instru,
 		if (!ft_strcmp(instru->params[index].label_name, label->name))
 		{
 			if (instru->params[index].type & T_DIR)
-				instru->params[index].value =
-					label->address - instru->address;
+				instru->params[index].value = label->address - instru->address;
 			else
-				instru->params[index].value =
-					label->address - instru->address;
+				instru->params[index].value = label->address - instru->address;
 			return (0);
 		}
 		ptr = ptr->next;

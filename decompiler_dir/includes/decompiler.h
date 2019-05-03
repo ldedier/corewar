@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:52:19 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/06 17:12:31 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/14 02:43:24 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include "player.h"
 # include <fcntl.h>
 # include <stdio.h>
-# define MALLOC(X) NULL
+
 # define CHUNK_SIZE 4096
 
 typedef struct		s_chunk
@@ -52,7 +52,7 @@ int					ft_read_ins(char *src, t_instruction *ins,
 int					ft_parse_cor(char *filename, t_env *e);
 int					get_next_chunk(int fd, t_chunk *chunk);
 int					ft_encode_to_assembly(t_env *e);
-int					ft_process_encode_asm(int fd, t_env *e);
+int					ft_process_encode_asm(t_env *e);
 void				ft_free_all(t_env *e);
 int					ft_attribute_asm_labels(t_env *e);
 int					ft_attribute_label(t_instruction *instruction,

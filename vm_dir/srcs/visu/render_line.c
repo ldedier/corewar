@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 19:04:57 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/05 20:16:30 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/11 16:27:10 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ void	ft_render_dashboard_separator(t_vm *vm)
 	pix = (int *)vm->visu.sdl.w_surface->pixels;
 	while (i < vm->visu.sdl.w_surface->h)
 	{
-		pix[(int)(i * vm->visu.sdl.w_surface->w +
-				vm->visu.center.dashboard_x)] = LINE_COL;
+		pix[(int)(i * vm->visu.sdl.w_surface->w
+			+ vm->visu.center.dashboard_x)] = LINE_COL;
 		i++;
 	}
 }
@@ -54,14 +54,14 @@ void	ft_render_init_lines(t_vm *vm)
 	ft_render_horizontal_line_dashboard(vm,
 		vm->visu.center.top_dashboard_height, LINE_COL);
 	ft_render_horizontal_line_dashboard(vm,
-		vm->visu.center.top_dashboard_height +
-			vm->visu.center.top_dashboard_fheight, LINE_COL);
+		vm->visu.center.top_dashboard_height
+		+ vm->visu.center.top_dashboard_fheight, LINE_COL);
 	i = 0;
 	while (i < vm->visu.center.top_dashboard_height
 			+ vm->visu.center.top_dashboard_fheight)
 	{
-		pix[(int)(i * vm->visu.sdl.w_surface->w +
-				vm->visu.center.dashboard_mid_x)] = LINE_COL;
+		pix[(int)(i * vm->visu.sdl.w_surface->w
+				+ vm->visu.center.dashboard_mid_x)] = LINE_COL;
 		i++;
 	}
 }

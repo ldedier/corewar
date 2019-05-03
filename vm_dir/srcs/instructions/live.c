@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 17:10:34 by emuckens          #+#    #+#             */
-/*   Updated: 2019/03/06 14:00:22 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/10 17:53:40 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,26 +40,26 @@ int				ins_live(t_vm *vm, t_process *proc, t_parameter arg[3])
 	t_player	*player;
 	t_fade		*live;
 
-	live = NULL;
 	getval_param_dest(vm, proc, &arg[0], 1);
-	proc->live = 1;
 	++vm->issued_live;
 	proc->live_cycle = vm->total_cycle;
 	player = get_player_num(vm, arg[0].value);
 	display_proc_ins(vm, proc);
-	if (player && ++vm->live)
+	if (player && ++vm->live && ++player->live && (vm->winner = player))
 	{
 		player->live++;
 		player->last_live_cycle = vm->total_cycle;
-		vm->winner = player;
-		if (!(live = (t_fade *)ft_memalloc(sizeof(t_fade))))
-			return (FAILURE);
-		live->pc = proc->pc;
-		live->color = player->color.value;
-		live->value = FADE_LEN;
+		if (vm->visu.active)
+		{
+			if (!(live = (t_fade *)ft_memalloc(sizeof(t_fade))))
+				return (FAILURE);
+			live->pc = proc->pc;
+			live->color = player->color.value;
+			live->value = FADE_LEN;
+			if (ft_add_to_list_ptr(&vm->live_ok, (void *)live, sizeof(t_fade)))
+				return (FAILURE);
+		}
 		display_player_alive(vm, player);
-		if (ft_add_to_list_ptr(&vm->live_ok, (void *)live, sizeof(t_fade)))
-			return (FAILURE);
 	}
 	return (SUCCESS);
 }

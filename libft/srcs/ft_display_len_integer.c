@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 23:39:16 by ldedier           #+#    #+#             */
-/*   Updated: 2018/02/06 21:19:32 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/11 16:13:04 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@ int		ft_pf_len_d(t_pf pf)
 	}
 	if (pf.precised_precision == 1)
 	{
-		return (ft_max(res, pf.flags.precision) + sign +
-			((pf.flags.prefix > 0) ? 1 : 0) * ((pf.var.integer < 0) ? 0 : 1));
+		return (ft_max(res, pf.flags.precision) + sign
+			+ ((pf.flags.prefix > 0) ? 1 : 0) * ((pf.var.integer < 0) ? 0 : 1));
 	}
 	else
-		return (res + sign + ((pf.flags.prefix > 0) ? 1 : 0) *
-		((pf.var.integer < 0) ? 0 : 1));
+		return (res + sign + ((pf.flags.prefix > 0) ? 1 : 0)
+			* ((pf.var.integer < 0) ? 0 : 1));
 }
 
 int		ft_pf_len_u(t_pf pf)
@@ -111,6 +111,6 @@ int		ft_pf_len_x(t_pf pf)
 		nb /= 16;
 		res++;
 	}
-	return (ft_max(res, pf.flags.precision) +
-		pf.flags.display_style * 2);
+	return (ft_max(res, pf.flags.precision)
+			+ pf.flags.display_style * 2);
 }

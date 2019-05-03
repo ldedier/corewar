@@ -1,3 +1,0 @@
-.name			"ah"
-.comment		"Hmmm"
-

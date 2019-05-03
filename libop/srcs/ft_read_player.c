@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 22:30:17 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/04 14:00:13 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/11 16:22:01 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ static int	check_mgc(t_player *player)
 	char	*bin;
 
 	bin = player->bin;
-	mgc = (((bin[0] & 0xFF) << 24) | ((bin[1] & 0xFF) << 16) |
-				((bin[2] & 0xFF) << 8) | (bin[3] & 0xFF));
+	mgc = (((bin[0] & 0xFF) << 24) | ((bin[1] & 0xFF) << 16)
+			| ((bin[2] & 0xFF) << 8) | (bin[3] & 0xFF));
 	return (mgc == COREWAR_EXEC_MAGIC);
 }
 

@@ -6,7 +6,7 @@
 /*   By: uboumedj <uboumedj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/31 15:53:10 by uboumedj          #+#    #+#             */
-/*   Updated: 2019/03/05 14:51:17 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/10 18:17:46 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@
 # define ERR_SXC "Syntax error AFTER COMMENT"
 # define ERR_SXN "Syntax error token AFTER NAME"
 # define ERR_MALLOC "Failed memory allocation"
+# define NO_PLAYER	"Game requires at least one player"
 
 /*
 ** PLAYER MESSAGES

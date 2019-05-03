@@ -6,14 +6,13 @@
 /*   By: zaz <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/10/04 11:43:01 by zaz               #+#    #+#             */
-/*   Updated: 2019/03/06 17:43:11 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/11 16:22:19 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "op.h"
 
-t_op	g_op_tab[NB_INSTRUCTIONS + 1] =
-{
+t_op	g_op_tab[NB_INSTRUCTIONS + 1] = {
 	{"live", ONE, {T_DIR}, LIVE, 10, LIVE_STR, OCP_NO, CARRY_NO, 0},
 	{"ld", TWO, {T_DIR | T_IND, T_REG}, LD, 5, LD_STR, OCP_YES, CARRY_YES, 0},
 	{"st", TWO, {T_REG, T_IND | T_REG}, ST, 5, ST_STR, OCP_YES, CARRY_NO, 0},

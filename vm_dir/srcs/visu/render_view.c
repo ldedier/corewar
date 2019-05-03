@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 18:59:39 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/05 20:54:56 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/11 16:29:14 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ int		ft_blit_scaled_scrollbar(t_sdl *sdl, SDL_Surface *from, SDL_Rect rect,
 	}
 	scrolled_height = ft_get_scrolled_height(vscrollbar);
 	true_y = rect.y - scrolled_height;
-	if (true_y > vscrollbar.pos.y + vscrollbar.height ||
-		true_y + rect.h < vscrollbar.pos.y)
+	if (true_y > vscrollbar.pos.y + vscrollbar.height
+			|| true_y + rect.h < vscrollbar.pos.y)
 		return (0);
 	from_rect.w = rect.w;
 	from_rect.x = 0;

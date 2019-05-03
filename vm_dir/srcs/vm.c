@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:15:00 by emuckens          #+#    #+#             */
-/*   Updated: 2019/03/06 16:12:58 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/11 18:50:47 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void			clear_vm(t_vm *vm)
 		vm->player[i].nb_proc = 1;
 	}
 }
+
 /*
 ** init_players function initializes each player's structures' parameters to
 ** their default value
@@ -57,7 +58,10 @@ static void		init_players(t_vm *vm)
 		vm->player[i].color.value = 1;
 		vm->player[i].last_live_cycle = 0;
 		vm->player[i].nb_proc = 0;
+		vm->player[i].num = 0;
 		vm->player[i].num_type = -1;
+		vm->player[i].algo_len = 0;
+		ft_bzero(&vm->player[i].color, sizeof(t_color));
 		ft_bzero(vm->player[i].aff_buf, MAX_AFF_LEN);
 	}
 }
@@ -88,6 +92,9 @@ void			init_vm(t_vm *vm, char **argv)
 	vm->live_ok = NULL;
 	vm->proc = NULL;
 	vm->display.status = OFF;
-	ft_bzero(&vm->color, sizeof(t_color));
+	vm->winner = NULL;
+	ft_bzero(&vm->color, sizeof(t_color_msg));
 	init_players(vm);
+	ft_bzero(vm->arena, MEM_SIZE);
+	ft_memset(vm->metarena, sizeof(vm->metarena), MAX_PLAYERS);
 }

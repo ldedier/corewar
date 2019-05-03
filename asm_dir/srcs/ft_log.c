@@ -6,11 +6,29 @@
 /*   By: cammapou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 17:22:41 by cammapou          #+#    #+#             */
-/*   Updated: 2019/02/08 18:37:19 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/14 23:34:03 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
+
+int		ft_log_custom_invalid_reg_number(int offset, t_env *e)
+{
+	char *str_nb_reg;
+	char *str;
+
+	if (!(str_nb_reg = ft_itoa(REG_NUMBER)))
+		return (ft_log_error(MALLOC_ERROR, 0, e));
+	if (!(str = ft_strjoin(INVALID_REG_NUMBER, str_nb_reg)))
+	{
+		free(str_nb_reg);
+		return (ft_log_error(MALLOC_ERROR, 0, e));
+	}
+	free(str_nb_reg);
+	ft_log_error(str, offset, e);
+	free(str);
+	return (1);
+}
 
 int		ft_log_custom_nb_params_error(t_env *e)
 {
@@ -68,13 +86,5 @@ int		ft_log_custom_wrong_param_type(char *arg_type, int index, int offset,
 		return (ft_log_error(MALLOC_ERROR, 0, e));
 	ft_log_error(str, offset, e);
 	free(str);
-	return (1);
-}
-
-int		ft_log_warning_no_line(char *str, t_env *e)
-{
-	ft_printf("%s%s%s: %swarning: %s%s%s\n", BOLD, WHITE,
-			e->champ.assembly_name, MAGENTA, WHITE, str, EOC);
-	e->parser.nb_warnings++;
 	return (1);
 }

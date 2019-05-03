@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 20:47:04 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/08 18:53:23 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/11 18:56:10 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,7 @@ void		ft_free_all_server(t_server *server)
 int			exit_server(t_server *server, int ret)
 {
 	ft_free_all_server(server);
+	if (ret == 1)
+		ft_dprintf(2, "internal malloc error\n");
 	return (reset_shell(ret));
 }

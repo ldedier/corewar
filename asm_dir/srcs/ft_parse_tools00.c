@@ -6,7 +6,7 @@
 /*   By: cammapou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 17:24:03 by cammapou          #+#    #+#             */
-/*   Updated: 2019/03/06 17:19:26 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/14 23:47:31 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,12 @@ char		*ft_get_str(char **line)
 	return (str);
 }
 
-int			ft_is_relevant(char *str)
+int			ft_is_relevant(char *str, t_env *e)
 {
 	int	i;
 
+	if (e->parser.parsing_name || e->parser.parsing_comment)
+		return (1);
 	i = 0;
 	while (str[i] && ft_isseparator(str[i]))
 		i++;
@@ -47,11 +49,14 @@ int			ft_is_relevant(char *str)
 	return (1);
 }
 
-char		*ft_refine_line(char *str)
+char		*ft_refine_line(char *str, t_env *e)
 {
 	int	i;
 
 	i = 0;
+	if (e->parser.parsing_name || e->parser.parsing_comment ||
+			!e->parser.parsed_comment || !e->parser.parsed_name)
+		return (ft_strdup(str));
 	while (str[i] && str[i] != COMMENT_CHAR && str[i] != ';')
 		i++;
 	return (ft_strndup(str, i));

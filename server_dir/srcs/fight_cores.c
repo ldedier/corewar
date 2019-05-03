@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 16:06:35 by emuckens          #+#    #+#             */
-/*   Updated: 2019/03/08 18:53:50 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/11 14:25:33 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int					fight_cores(t_vm *vm, t_player *pl1, t_player *pl2)
 	vm->player[2].relevant = 0;
 	vm->player[3].relevant = 0;
 	dispatch_players_nodisplay(vm);
-	if (!init_processes(vm))
+	if (init_processes(vm))
 		return (error_exit_msg(vm, INIT_PROC_ERROR));
 	while (vm->proc)
 		play_one_cycle(vm);

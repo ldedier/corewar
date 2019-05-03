@@ -6,7 +6,7 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:20:21 by emuckens          #+#    #+#             */
-/*   Updated: 2019/03/06 18:53:43 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/11 15:07:06 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void			dispatch_players_init(t_vm *vm)
 ** specified with the [-n] flag.
 */
 
-static int		add_player_n(t_vm *vm, int argc, char **argv, int *cur)
+int				add_player_n(t_vm *vm, int argc, char **argv, int *cur)
 {
 	int				i;
 
@@ -115,7 +115,7 @@ static int		add_player_n(t_vm *vm, int argc, char **argv, int *cur)
 ** number specified
 */
 
-static int		add_player(t_vm *vm)
+int				add_player(t_vm *vm)
 {
 	int			i;
 	static int	nb;
@@ -131,21 +131,4 @@ static int		add_player(t_vm *vm)
 		}
 	}
 	return (nb);
-}
-
-/*
-** mng_players static function manages the case where the current argument
-** describes a player
-*/
-
-int				mng_players(t_vm *vm, int argc, char **argv, int *cur)
-{
-	if (ft_strcmp("-n", argv[*cur]) == 0)
-		add_player_n(vm, argc, argv, cur);
-	else
-		vm->player[vm->nb_players].num = add_player(vm);
-	vm->player[vm->nb_players].cor_name = argv[*cur];
-	if (++vm->nb_players > MAX_PLAYERS)
-		return (error_exit_msg(vm, MAX_P_NUM));
-	return (0);
 }

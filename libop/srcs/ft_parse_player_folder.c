@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 20:43:24 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/06 20:58:31 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/03/11 15:55:21 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,25 @@ int		ft_process_add_to_db(char *path, t_list **players_list)
 	t_player	player;
 
 	if (ft_read_player(path, &player))
-		return (1);
+		return (2);
 	if (ft_add_to_list_back(players_list, &player, sizeof(t_player)))
 		return (1);
+	return (0);
+}
+
+int		ft_process_add_to_list(DIR *dir, char *full_path, struct dirent *entry,
+			t_list **players_list)
+{
+	int ret;
+
+	if ((ret = ft_process_add_to_db(full_path, players_list)) == 1)
+	{
+		closedir(dir);
+		return (ft_free_turn(full_path, 1));
+	}
+	else if (ret == 2)
+		ft_dprintf(2, "%s could not be parsed as a valid .cor\n",
+				entry->d_name);
 	return (0);
 }
 
@@ -41,14 +57,9 @@ int		ft_add_to_list(char *folder_full_name, DIR *dir,
 		free(full_path);
 		return (1);
 	}
-	if (S_ISREG(st.st_mode))
-	{
-		if (ft_process_add_to_db(full_path, players_list))
-		{
-			closedir(dir);
-			return (ft_free_turn(full_path, 1));
-		}
-	}
+	if (S_ISREG(st.st_mode)
+			&& ft_process_add_to_list(dir, full_path, entry, players_list))
+		return (1);
 	free(full_path);
 	return (0);
 }

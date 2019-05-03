@@ -6,42 +6,42 @@
 /*   By: emuckens <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:24:20 by emuckens          #+#    #+#             */
-/*   Updated: 2019/02/28 21:47:22 by emuckens         ###   ########.fr       */
+/*   Updated: 2019/03/11 15:07:38 by emuckens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-static void		kill_adjust_ptr(t_list **proc_lst, t_list **proc)
+int				kill_process_at_head(t_vm *vm)
 {
 	t_list *tmp;
 
-	if (*proc == *proc_lst)
+	while ((tmp = vm->proc) && (t_process *)tmp->content && vm->total_cycle
+			- ((t_process *)tmp->content)->live_cycle >= vm->c_to_die)
 	{
-		*proc_lst = (*proc_lst)->next;
-		return ;
+		vm->proc = vm->proc->next;
+		if (kill_process(vm, &tmp) == FAILURE)
+			return (FAILURE);
 	}
-	tmp = *proc_lst;
-	while (tmp && tmp->next && tmp->next != *proc)
-		tmp = tmp->next;
-	tmp->next = (*proc)->next;
+	return (SUCCESS);
 }
 
-int				kill_process(t_vm *vm, t_list **proc_lst, t_list **proc)
+int				kill_process(t_vm *vm, t_list **proc)
 {
-	t_fade	*killed_proc;
+	t_fade	*killed;
 
-	(void)proc_lst;
-	if (!(killed_proc = (t_fade *)ft_memalloc(sizeof(t_fade))))
-		return (error_exit_msg(vm, ERR_MALLOC));
-	killed_proc->pc = ((t_process *)(*proc)->content)->pc;
-	killed_proc->color = ((t_process *)(*proc)->content)->player->color.value;
-	killed_proc->value = MAX_FADE;
+	if (vm->visu.active)
+	{
+		if (!(killed = (t_fade *)ft_memalloc(sizeof(t_fade))))
+			return (error_exit_msg(vm, ERR_MALLOC));
+		killed->pc = ((t_process *)(*proc)->content)->pc;
+		killed->color = ((t_process *)(*proc)->content)->player->color.value;
+		killed->value = MAX_FADE;
+		if (ft_add_to_list_ptr(&vm->killed_proc, (void *)killed,
+					sizeof(t_fade)))
+			return (error_exit_msg(vm, ERR_MALLOC));
+	}
 	--((t_process *)(*proc)->content)->player->nb_proc;
-	if (ft_add_to_list_ptr(&vm->killed_proc,
-				(void *)killed_proc, sizeof(t_fade)))
-		return (error_exit_msg(vm, ERR_MALLOC));
-	kill_adjust_ptr(&vm->proc, proc);
 	display_last_live(vm, (t_process *)(*proc)->content);
 	ft_memdel((void **)&(*proc)->content);
 	ft_memdel((void **)proc);
@@ -60,18 +60,24 @@ int				init_processes(t_vm *vm)
 
 	i = -1;
 	index = 1;
+	if (!vm->nb_players)
+		return (error_exit_msg(vm, NO_PLAYER));
 	while (++i < MAX_PLAYERS)
 	{
 		start = (MEM_SIZE / vm->nb_players) * (index - 1);
 		if (vm->player[i].relevant
 			&& ++index
 			&& !add_process(vm, i, start, NULL))
-			return (0);
-		vm->player[i].nb_proc = 1;
+		{
+			return (error_exit_msg(vm, ERR_MALLOC));
+		}
 		if (vm->player[i].relevant)
+		{
+			vm->player[i].nb_proc = 1;
 			vm->winner = ((t_process *)(vm->proc->content))->player;
+		}
 	}
-	return (1);
+	return (SUCCESS);
 }
 
 /*
@@ -92,7 +98,6 @@ void			copy_process_stat(t_process *proc, t_process *src)
 	proc->carry = src->carry;
 	proc->cycle = src->cycle;
 	proc->ins_cycle = src->ins_cycle;
-	proc->live = 0;
 	++proc->player->nb_proc;
 }
 
