@@ -1,0 +1,149 @@
+# The configurations that used for the recording, feel free to edit them
+config:
+
+  # Specify a command to be executed
+  # like `/bin/bash -l`, `ls`, or any other commands
+  # the default is bash for Linux
+  # or powershell.exe for Windows
+  command: bash -l
+  
+  # Specify the current working directory path
+  # the default is the current working directory path
+  cwd: /Users/ldedier/Projects/algo/corewar/server_dir
+  
+  # Export additional ENV variables
+  env:
+    recording: true
+  
+  # Explicitly set the number of columns
+  # or use `auto` to take the current
+  # number of columns of your shell
+  cols: 70
+  
+  # Explicitly set the number of rows
+  # or use `auto` to take the current
+  # number of rows of your shell
+  rows: 29
+  
+  # Amount of times to repeat GIF
+  # If value is -1, play once
+  # If value is 0, loop indefinitely
+  # If value is a positive number, loop n times
+  repeat: 0
+  
+  # Quality
+  # 1 - 100
+  quality: 100
+  
+  # Delay between frames in ms
+  # If the value is `auto` use the actual recording delays
+  frameDelay: auto
+  
+  # Maximum delay between frames in ms
+  # Ignored if the `frameDelay` isn't set to `auto`
+  # Set to `auto` to prevent limiting the max idle time
+  maxIdleTime: 2000
+  
+  # The surrounding frame box
+  # The `type` can be null, window, floating, or solid`
+  # To hide the title use the value null
+  # Don't forget to add a backgroundColor style with a null as type
+  frameBox:
+    type: floating
+    title: server
+    style:
+      border: 0px black solid
+      # boxShadow: none
+      # margin: 0px
+  
+  # Add a watermark image to the rendered gif
+  # You need to specify an absolute path for
+  # the image on your machine or a URL, and you can also
+  # add your own CSS styles
+  watermark:
+    imagePath: null
+    style:
+      position: absolute
+      right: 15px
+      bottom: 15px
+      width: 100px
+      opacity: 0.9
+  
+  # Cursor style can be one of
+  # `block`, `underline`, or `bar`
+  cursorStyle: block
+  
+  # Font family
+  # You can use any font that is installed on your machine
+  # in CSS-like syntax
+  fontFamily: "Monaco, Lucida Console, Ubuntu Mono, Monospace"
+  
+  # The size of the font
+  fontSize: 12
+  
+  # The height of lines
+  lineHeight: 1
+  
+  # The spacing between letters
+  letterSpacing: 0
+  
+  # Theme
+  theme:
+    background: "transparent"
+    foreground: "#afafaf"
+    cursor: "#c7c7c7"
+    black: "#232628"
+    red: "#fc4384"
+    green: "#b3e33b"
+    yellow: "#ffa727"
+    blue: "#75dff2"
+    magenta: "#ae89fe"
+    cyan: "#708387"
+    white: "#d5d5d0"
+    brightBlack: "#626566"
+    brightRed: "#ff7fac"
+    brightGreen: "#c8ed71"
+    brightYellow: "#ebdf86"
+    brightBlue: "#75dff2"
+    brightMagenta: "#ae89fe"
+    brightCyan: "#b1c6ca"
+    brightWhite: "#f9f9f4"
+  
+# Records, feel free to edit them
+records:
+  - delay: 542
+    content: 'server_dir$ '
+  - delay: 862
+    content: .
+  - delay: 55
+    content: /
+  - delay: 184
+    content: s
+  - delay: 168
+    content: c
+  - delay: 129
+    content: 'orewar '
+  - delay: 438
+    content: '3'
+  - delay: 129
+    content: '0'
+  - delay: 145
+    content: '0'
+  - delay: 262
+    content: '1'
+  - delay: 281
+    content: "\r\n"
+  - delay: 68
+    content: "init players score: 1 / 5 (Survivor)\r\n"
+  - delay: 48
+    content: "init players score: 2 / 5 (Programme infected)\r\n"
+  - delay: 26
+    content: "init players score: 3 / 5 (zork)\r\n"
+  - delay: 42
+    content: "init players score: 4 / 5 (Ultima)\r\ninit players score: 5 / 5 (Kittystrophic)\r\n\e[32mserver successfuly deployed on port 3001!\r\n\r\n\e[0mserver is looking for activity...\r\n"
+  - delay: 935
+    content: "\r\n\r\n\e[31m--ARENA RESULTS--\e[4m\e[0m\r\n\r\n\e[1m\e[4m\e[31mPlayer #1: Ultima\e[0m\r\n\e[33mscore: 10 \e[0m(with \e[32m4\e[0m beaten players)\r\n\t\t\e[34mKittystrophic (0 beaten players => + 1)\e[0m\r\n\t\t\e[34mzork (1 beaten players => + 2)\e[0m\r\n\t\t\e[34mProgramme infected (3 beaten players => + 4)\e[0m\r\n\t\t\e[34mSurvivor (2 beaten players => + 3)\e[0m\r\n\e[1m\e[4m\e[31mPlayer #2: Programme infected\e[0m\r\n\e[33mscore: 6 \e[0m(with \e[32m3\e[0m beaten players)\r\n\t\t\e[34mKittystrophic (0 beaten players => + 1)\e[0m\r\n\t\t\e[34mzork (1 beaten players => + 2)\e[0m\r\n\t\t\e[34mSurvivor (2 beaten players => + 3)\e[0m\r\n\e[1m\e[4m\e[31mPlayer #3: Survivor\e[0m\r\n\e[33mscore: 3 \e[0m(with \e[32m2\e[0m beaten players)\r\n\t\t\e[34mKittystrophic (0 beaten players => + 1)\e[0m\r\n\t\t\e[34mzork (1 beaten players => + 2)\e[0m\r\n\e[1m\e[4m\e[31mPlayer #4: zork\e[0m\r\n\e[33mscore: 1 \e[0m(with \e[32m1\e[0m beaten players)\r\n\t\t\e[34mKittystrophic (0 beaten players => + 1)\e[0m\r\n\e[1m\e[4m\e[31mPlayer #5: Kittystrophic\e[0m\r\n\e[33mscore: 0 \e[0m(with \e[32m0\e[0m beaten players)\r\n"
+  - delay: 7728
+    content: "\r\nserver_dir$ "
+  - delay: 523
+    content: "logout\r\n"
