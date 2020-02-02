@@ -72,4 +72,4 @@ When launching the **corewar** program with -w **IP** **Port** to that server, o
 
 ## Usage
 
-**./scorewar** **<port>**
+**./scorewar** *<port>*
