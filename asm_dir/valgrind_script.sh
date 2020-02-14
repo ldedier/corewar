@@ -6,6 +6,8 @@
 #dir=champions
 dir=../database/asm_files
 
+vsfg=../vsfg/vsfg
+
 log_dir=valgrind_logs
 trace="${log_dir}/valgrind_outputs.log"
 errors_file_list="${log_dir}/errors_files.log"
@@ -13,6 +15,8 @@ tmp_trace=tmp_val_output
 
 error_exit_code=42
 valgrind_supps=valgrind_supps.supp
+
+./${vsfg} -f $valgrind_supps
 
 green="\033[32m"
 red="\033[91m"

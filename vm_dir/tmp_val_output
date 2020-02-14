@@ -1,29 +1,29 @@
-==53860== Memcheck, a memory error detector
-==53860== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==53860== Using Valgrind-3.14.0 and LibVEX; rerun with -h for copyright info
-==53860== Command: ./corewar ../database/cor_files/MarineKing.cor
-==53860== Parent PID: 53813
-==53860== 
-==53860== 
-==53860== Process terminating with default action of signal 2 (SIGINT)
-==53860==    at 0x10013A2E9: ImageLoader::hash(char const*) (in /usr/lib/dyld)
-==53860==    by 0x1001347C1: dyld::loadPhase5(char const*, char const*, dyld::LoadContext const&, unsigned int&, std::__1::vector<char const*, std::__1::allocator<char const*> >*) (in /usr/lib/dyld)
-==53860==    by 0x10013468E: dyld::loadPhase4(char const*, char const*, dyld::LoadContext const&, unsigned int&, std::__1::vector<char const*, std::__1::allocator<char const*> >*) (in /usr/lib/dyld)
-==53860==    by 0x1001343FE: dyld::loadPhase3(char const*, char const*, dyld::LoadContext const&, unsigned int&, std::__1::vector<char const*, std::__1::allocator<char const*> >*) (in /usr/lib/dyld)
-==53860==    by 0x100133B82: dyld::loadPhase1(char const*, char const*, dyld::LoadContext const&, unsigned int&, std::__1::vector<char const*, std::__1::allocator<char const*> >*) (in /usr/lib/dyld)
-==53860==    by 0x10012E8FE: dyld::loadPhase0(char const*, char const*, dyld::LoadContext const&, unsigned int&, std::__1::vector<char const*, std::__1::allocator<char const*> >*) (in /usr/lib/dyld)
-==53860==    by 0x10012E530: dyld::load(char const*, dyld::LoadContext const&, unsigned int&) (in /usr/lib/dyld)
-==53860==    by 0x100134FEF: dyld::libraryLocator(char const*, bool, char const*, ImageLoader::RPathChain const*, unsigned int&) (in /usr/lib/dyld)
-==53860==    by 0x10013BA45: ImageLoader::recursiveLoadLibraries(ImageLoader::LinkContext const&, bool, ImageLoader::RPathChain const&, char const*) (in /usr/lib/dyld)
-==53860==    by 0x10013BC15: ImageLoader::recursiveLoadLibraries(ImageLoader::LinkContext const&, bool, ImageLoader::RPathChain const&, char const*) (in /usr/lib/dyld)
-==53860==    by 0x10013BC15: ImageLoader::recursiveLoadLibraries(ImageLoader::LinkContext const&, bool, ImageLoader::RPathChain const&, char const*) (in /usr/lib/dyld)
-==53860==    by 0x10013BC15: ImageLoader::recursiveLoadLibraries(ImageLoader::LinkContext const&, bool, ImageLoader::RPathChain const&, char const*) (in /usr/lib/dyld)
-==53860== 
-==53860== HEAP SUMMARY:
-==53860==     in use at exit: 0 bytes in 0 blocks
-==53860==   total heap usage: 0 allocs, 0 frees, 0 bytes allocated
-==53860== 
-==53860== All heap blocks were freed -- no leaks are possible
-==53860== 
-==53860== For counts of detected and suppressed errors, rerun with: -v
-==53860== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 25 from 4)
+==97075== Memcheck, a memory error detector
+==97075== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==97075== Using Valgrind-3.16.0.GIT and LibVEX; rerun with -h for copyright info
+==97075== Command: ./corewar ../database/cor_files/MarineKing.cor
+==97075== Parent PID: 97017
+==97075== 
+==97075== 
+==97075== Process terminating with default action of signal 2 (SIGINT)
+==97075==    at 0x258058240: ???
+==97075==    by 0x10012CF67: dyld::loadPhase6(int, stat const&, char const*, dyld::LoadContext const&) (in /usr/lib/dyld)
+==97075==    by 0x100133CC5: dyld::loadPhase5(char const*, char const*, dyld::LoadContext const&, unsigned int&, std::__1::vector<char const*, std::__1::allocator<char const*> >*) (in /usr/lib/dyld)
+==97075==    by 0x100133846: dyld::loadPhase4(char const*, char const*, dyld::LoadContext const&, unsigned int&, std::__1::vector<char const*, std::__1::allocator<char const*> >*) (in /usr/lib/dyld)
+==97075==    by 0x1001335A0: dyld::loadPhase3(char const*, char const*, dyld::LoadContext const&, unsigned int&, std::__1::vector<char const*, std::__1::allocator<char const*> >*) (in /usr/lib/dyld)
+==97075==    by 0x100132D17: dyld::loadPhase1(char const*, char const*, dyld::LoadContext const&, unsigned int&, std::__1::vector<char const*, std::__1::allocator<char const*> >*) (in /usr/lib/dyld)
+==97075==    by 0x10012CAC9: dyld::loadPhase0(char const*, char const*, dyld::LoadContext const&, unsigned int&, std::__1::vector<char const*, std::__1::allocator<char const*> >*) (in /usr/lib/dyld)
+==97075==    by 0x10012C658: dyld::load(char const*, dyld::LoadContext const&, unsigned int&) (in /usr/lib/dyld)
+==97075==    by 0x1001345D4: dyld::libraryLocator(char const*, bool, char const*, ImageLoader::RPathChain const*, bool, unsigned int&) (in /usr/lib/dyld)
+==97075==    by 0x10013C260: ImageLoader::recursiveLoadLibraries(ImageLoader::LinkContext const&, bool, ImageLoader::RPathChain const&, char const*) (in /usr/lib/dyld)
+==97075==    by 0x10013C41A: ImageLoader::recursiveLoadLibraries(ImageLoader::LinkContext const&, bool, ImageLoader::RPathChain const&, char const*) (in /usr/lib/dyld)
+==97075==    by 0x10013C41A: ImageLoader::recursiveLoadLibraries(ImageLoader::LinkContext const&, bool, ImageLoader::RPathChain const&, char const*) (in /usr/lib/dyld)
+==97075== 
+==97075== HEAP SUMMARY:
+==97075==     in use at exit: 0 bytes in 0 blocks
+==97075==   total heap usage: 0 allocs, 0 frees, 0 bytes allocated
+==97075== 
+==97075== All heap blocks were freed -- no leaks are possible
+==97075== 
+==97075== For lists of detected and suppressed errors, rerun with: -s
+==97075== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 628 from 10)

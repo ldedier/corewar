@@ -1,0 +1,3 @@
+[submodule "vsfg"]
+	path = vsfg
+	url = https://github.com/ldedier/vsfg

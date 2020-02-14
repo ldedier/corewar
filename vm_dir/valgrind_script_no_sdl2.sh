@@ -12,6 +12,9 @@ tmp_trace=tmp_val_output
 error_exit_code=42
 valgrind_supps=sdl2_suppressions.supp
 
+vsfg=../vsfg/vsfg
+./${vsfg} -f $valgrind_supps
+
 green="\033[32m"
 red="\033[91m"
 eoc="\033[39m"
